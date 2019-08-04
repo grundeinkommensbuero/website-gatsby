@@ -18,7 +18,7 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Contentful starter',
+    title: 'Grundeinkommensbuero',
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
@@ -27,8 +27,15 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
     {
+      resolve: 'gatsby-plugin-mailchimp',
+      options: {
+        endpoint: 'https://me.us3.list-manage.com/subscribe/post?u=5e7dad90662c1041d87f23a29&amp;id=e305aa882c',
+      },
+    },
+    {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
     }
+
   ],
 }

@@ -4,7 +4,8 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
-import ArticlePreview from '../components/article-preview'
+import ArticlePreview from '../components/article-preview';
+import EmailListForm from '../components/email-list-form';
 
 class RootIndex extends React.Component {
   render() {
@@ -18,7 +19,7 @@ class RootIndex extends React.Component {
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
           <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
+            <h2 className="section-headline">Current campaigns</h2>
             <ul className="article-list">
               {posts.map(({ node }) => {
                 return (
@@ -29,6 +30,15 @@ class RootIndex extends React.Component {
               })}
             </ul>
           </div>
+        </div>
+        <div className="section-gray">
+          <div className="wrapper">
+            <h2 className="section-headline">Newsletter signup</h2>
+            <EmailListForm/>
+          </div>
+        </div>
+        <div style={{ background: '#fff' }}>
+          <div><h2 className="section-headline"></h2></div>
         </div>
       </Layout>
     )

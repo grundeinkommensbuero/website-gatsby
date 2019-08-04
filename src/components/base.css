@@ -61,6 +61,13 @@ a {
 /**
  *
  */
+.section-gray {
+  background: #f2f2f2;
+}
+
+/**
+ *
+ */
 .list-inline {
   margin: 0;
   padding: 0;
