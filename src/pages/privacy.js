@@ -7,9 +7,7 @@ import Layout from '../components/layout'
 class Privacy extends React.Component {
   render() {
     const [content] = get(this.props, 'data.allContentfulStaticContent.edges');
-    console.log('bla:', content);
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    console.log('blub:', siteTitle);
 
     return (
       <Layout location={this.props.location} >

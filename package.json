@@ -11,7 +11,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grundeinkommensbuero/website.git"
+    "url": "git+https://github.com/grundeinkommensbuero/grundeinkommensbuero.github.io.git"
   },
   "author": "Johann Barbie <johannbarbie@me.com>",
   "scripts": {
@@ -48,7 +48,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.12.4",
     "gatsby": "^2.3.22",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "2.0.1",
     "inquirer": "^6.2.2",
     "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
