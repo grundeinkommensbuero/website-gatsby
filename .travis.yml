@@ -8,6 +8,11 @@ cache: yarn
 script:
   - yarn
   - yarn run lint
+  - |
+    cat > .env.production << EOF
+    CONTENTFUL_SPACE_ID='`$CONTENTFUL_SPACE_ID`'
+    CONTENTFUL_ACCESS_TOKEN='`$CONTENTFUL_ACCESS_TOKEN`'
+    EOF
   - yarn run build
 
 deploy:
