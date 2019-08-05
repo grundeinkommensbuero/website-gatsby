@@ -10,7 +10,7 @@ function EmailListForm() {
 
     addToMailchimp(email)
       .then((data) => {
-        alert(data.result);
+        alert(`${data.result} - ${data.msg}`);
       })
       .catch((error) => {
         // Errors in here are client side
