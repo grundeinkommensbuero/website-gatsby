@@ -26,15 +26,24 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
     {
-      resolve: 'gatsby-plugin-mailchimp',
-      options: {
-        endpoint: 'https://me.us3.list-manage.com/subscribe/post?u=5e7dad90662c1041d87f23a29&id=e305aa882c',
-      },
-    },
-    {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
+    },{
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-145625294-1",
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+        // Delays sending pageview hits on route update (in milliseconds)
+        pageTransitionDelay: 0,
+        sampleRate: 5,
+        siteSpeedSampleRate: 10,
+        cookieDomain: "xn--grundeinkommensbro-16b.de",
+      },
     }
-
   ],
 }

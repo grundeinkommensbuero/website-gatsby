@@ -1,39 +1,14 @@
 import React, { useState } from 'react';
-import addToMailchimp from 'gatsby-plugin-mailchimp';
 import styles from './email-list-form.module.css';
 
 function EmailListForm() {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    addToMailchimp(email)
-      .then((data) => {
-        alert(`${data.result} - ${data.msg}`);
-      })
-      .catch((error) => {
-        // Errors in here are client side
-        // Mailchimp always returns a 200
-      });
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.currentTarget.value);
-  };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.emailListForm}>
-      <div className={styles.wrapper}>
-        <input
-          placeholder="Email address"
-          name="email"
-          type="text"
-          onChange={handleEmailChange}
-        />
-        <button type="submit">Subscribe</button>
-      </div>
-    </form>
+    <div class="ml-form-embed"
+      data-account="1629538:k8n3g9j9x8"
+      data-form="1447292:a4q8c2">
+    </div>
+
   );
 };
 
