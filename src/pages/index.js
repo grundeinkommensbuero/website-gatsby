@@ -43,33 +43,32 @@ class RootIndex extends React.Component {
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
           <div className="wrapper">
-            <h2 className="section-headline">Current campaigns</h2>
-            <ul className="article-list">
-              {posts.map(({ node }) => {
-                return (
-                  <li key={node.slug}>
-                    <ArticlePreview article={node} />
-                  </li>
-                )
-              })}
-            </ul>
+            <h2 className="section-headline" id="anliegen">Unser Anliegen</h2>
+            <p>Wir wollen endlich fundiert wissen, inwiefern uns das Grundeinkommen dabei hilft unser aller Potentiale zu entfalten und Antworten auf die Herausforderungen unserer Zeit zu finden.</p>
+            <p>Lass uns gemeinsam der Politik den Auftrag erteilen Grundeinkommen zu erforschen.</p>
           </div>
         </div>
         <div className="section-gray">
           <div className="wrapper">
-            <h2 className="section-headline">Bist du dabei? Dann trage dich in unser Newsletter ein!</h2>
-            <p>Trage dich in unsere Mailingliste ein und erhalte regelmäßig alle Neuigkeiten zum Projekt.</p>
-            <EmailListForm/>
+            <h2 className="section-headline" id="vorhaben">Wie machen wir das?</h2>
+            <p>Wir werden dafuer sorgen, dass in Deutschland ab 2022 ein staatliches Experiment zum Grundeinkommen stattfindet. Dazu entwickeln wir die wissenschaftlichen und rechtlichen Rahmenbedingungen fier ein solches Experiment und initiieren dann in mehreren deutschen Bundeslaendern einen Volksentscheid.</p>
           </div>
         </div>
         <div style={{ background: '#fff' }}>
           <div className="wrapper">
-            <h2 className="section-headline">Unterstuetzen</h2>
+            <h2 className="section-headline" id="newsletter">Bist du dabei? Dann trage dich in unser Newsletter ein!</h2>
+            <p>Trage dich in unsere Mailingliste ein und erhalte regelmäßig alle Neuigkeiten zum Projekt.</p>
+            <EmailListForm/>
+          </div>
+        </div>
+        <div className="section-gray">
+          <div className="wrapper">
+            <h2 className="section-headline" id="support">Unterstuetzen</h2>
             <p>Wir sind ein gemeinnuetziger Verein und sind auf Spenden angewiesen. Mit jeder Spende unterstuetzt du unsere Kampagnenarbeit mit dem Ziel unser Anliegen zu verbreiten.</p>
             <button type="button">Jetzt spenden!</button>
           </div>
         </div>
-        <div className="section-gray">
+        <div style={{ background: '#fff' }}>
           <div className="wrapper">
             <ul className="article-list">
               <li key="map">

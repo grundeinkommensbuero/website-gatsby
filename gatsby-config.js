@@ -18,7 +18,25 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'Grundeinkommensbuero',
+    title: 'Grundeinkommensb&uuml;ro',
+    menuLinks:[
+      {
+         name:'Anliegen',
+         link:'/#anliegen'
+      },
+      {
+         name:'Vorhaben',
+         link:'/#vorhaben'
+      },
+      {
+         name:'Newsletter',
+         link:'/#newsletter'
+      },
+      {
+         name:'Unterstuetzen',
+         link:'/support'
+      }
+    ]
   },
   plugins: [
     'gatsby-transformer-remark',
