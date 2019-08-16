@@ -34,24 +34,21 @@ class RootIndex extends React.Component {
 
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const posts = get(this, 'props.data.allContentfulBlogPost.edges')
-    const [author] = get(this, 'props.data.allContentfulPerson.edges')
-
+    const [content] = get(this, 'props.data.allContentfulLandingPage.edges')
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
-          <Hero data={author.node} />
+          <Hero data={content.node} />
           <div className="wrapper">
             <h2 className="section-headline" id="anliegen">Unser Anliegen</h2>
-            <p>Wir wollen endlich fundiert wissen, inwiefern uns das Grundeinkommen dabei hilft unser aller Potentiale zu entfalten und Antworten auf die Herausforderungen unserer Zeit zu finden.</p>
-            <p>Lass uns gemeinsam der Politik den Auftrag erteilen Grundeinkommen zu erforschen.</p>
+            <p>{content.node.anliegen.anliegen}</p>
           </div>
         </div>
         <div className="section-gray">
           <div className="wrapper">
             <h2 className="section-headline" id="vorhaben">Wie machen wir das?</h2>
-            <p>Wir werden dafuer sorgen, dass in Deutschland ab 2022 ein staatliches Experiment zum Grundeinkommen stattfindet. Dazu entwickeln wir die wissenschaftlichen und rechtlichen Rahmenbedingungen fier ein solches Experiment und initiieren dann in mehreren deutschen Bundeslaendern einen Volksentscheid.</p>
+            <p>{content.node.vorhaben.vorhaben}</p>
           </div>
         </div>
         <div style={{ background: '#fff' }}>
@@ -99,34 +96,16 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
+    allContentfulLandingPage(filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }) {
       edges {
         node {
           title
-          slug
-          publishDate(formatString: "MMMM Do, YYYY")
-          tags
-          heroImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-             ...GatsbyContentfulFluid_tracedSVG
-            }
+          vorhaben {
+            vorhaben
           }
-          description {
-            childMarkdownRemark {
-              html
-            }
+          anliegen {
+            anliegen
           }
-        }
-      }
-    }
-    allContentfulPerson(filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }) {
-      edges {
-        node {
-          name
-          shortBio {
-            shortBio
-          }
-          title
           heroImage: image {
             fluid(
               maxWidth: 1180
