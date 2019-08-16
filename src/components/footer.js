@@ -6,7 +6,7 @@ export default () => (
   <footer className={styles.siteFooter}>
     <div className={styles.siteFooterContent}>
       <section className="copyright">
-        &copy; Grundeinkommensbüro 2019 | <Link to="/privacy">Dateschutz</Link> | <Link to="/imprint">Impressum</Link>
+        &copy; Grundeinkommensbüro 2019 | <Link to="/privacy">Datenschutz</Link> | <Link to="/imprint">Impressum</Link>
       </section>
     </div>
   </footer>
