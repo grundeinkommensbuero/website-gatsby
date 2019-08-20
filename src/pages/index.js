@@ -65,7 +65,7 @@ class RootIndex extends React.Component {
                 <a target="_blank" href="https://www.openstreetmap.org/?mlat=52.4831&mlon=13.4310#map=15/52.4831/13.4310&layers=H"><img alt="Bildbeschreibungs-Text" src="geb.png" border="0"/></a>
               </li>
               <li key="sumary">
-                <p>Fragen? Antworten? Schreib uns! <br/> info@grundeinkommensbuero.de <br/><br/><br/>Grundeinkommensbüro<br/>Karl-Marx-Strasse 50<br/>12043 Berlin</p>
+                <p>Fragen? Antworten? Schreib uns! <br/> info@grundeinkommensbüro.de <br/><br/><br/>Grundeinkommensbüro<br/>Karl-Marx-Strasse 50<br/>12043 Berlin</p>
               </li>
             </ul>
           </div>
