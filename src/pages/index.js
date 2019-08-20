@@ -60,13 +60,6 @@ class RootIndex extends React.Component {
         </div>
         <div className="section-gray">
           <div className="wrapper">
-            <h2 className="section-headline" id="support">Unterstuetzen</h2>
-            <p>Wir sind ein gemeinnuetziger Verein und sind auf Spenden angewiesen. Mit jeder Spende unterstuetzt du unsere Kampagnenarbeit mit dem Ziel unser Anliegen zu verbreiten.</p>
-            <button type="button">Jetzt spenden!</button>
-          </div>
-        </div>
-        <div style={{ background: '#fff' }}>
-          <div className="wrapper">
             <ul className="article-list">
               <li key="map">
                 <a target="_blank" href="https://www.openstreetmap.org/?mlat=52.4831&mlon=13.4310#map=15/52.4831/13.4310&layers=H"><img alt="Bildbeschreibungs-Text" src="geb.png" border="0"/></a>

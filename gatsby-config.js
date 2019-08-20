@@ -31,10 +31,6 @@ module.exports = {
       {
          name:'Newsletter',
          link:'/#newsletter'
-      },
-      {
-         name:'Unterstuetzen',
-         link:'/support'
       }
     ]
   },
