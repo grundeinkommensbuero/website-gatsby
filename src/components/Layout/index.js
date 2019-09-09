@@ -1,7 +1,8 @@
 import React from 'react'
 import Navigation from './Navigation'
 import Footer from './Footer'
-import './base.css'
+import './style.css'
+import '../style/base.less'
 
 class Template extends React.Component {
   render() {
