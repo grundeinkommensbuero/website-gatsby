@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/Layout'
-import ArticlePreview from '../components/article-preview'
+import ArticlePreview from '../components/ArticlePreview'
 import EmailListForm from '../components/email-list-form'
 
 class RootIndex extends React.Component {
