@@ -2,15 +2,15 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 
 class Privacy extends React.Component {
   render() {
-    const [content] = get(this.props, 'data.allContentfulStaticContent.edges');
+    const [content] = get(this.props, 'data.allContentfulStaticContent.edges')
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
 
     return (
-      <Layout location={this.props.location} >
+      <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <div className="wrapper">
@@ -43,7 +43,9 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulStaticContent(filter: { contentful_id: { eq: "4EVOtD0augmhLxaQRbSpzO" } }) {
+    allContentfulStaticContent(
+      filter: { contentful_id: { eq: "4EVOtD0augmhLxaQRbSpzO" } }
+    ) {
       edges {
         node {
           title
