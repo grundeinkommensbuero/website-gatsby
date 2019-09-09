@@ -1,11 +1,11 @@
 require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-  host: process.env.CONTENTFUL_HOST
+  host: process.env.CONTENTFUL_HOST,
 }
 
 const { spaceId, accessToken } = contentfulConfig
@@ -19,20 +19,20 @@ if (!spaceId || !accessToken) {
 module.exports = {
   siteMetadata: {
     title: 'Grundeinkommensb&uuml;ro',
-    menuLinks:[
+    menuLinks: [
       {
-         name:'Anliegen',
-         link:'/#anliegen'
+        name: 'Anliegen',
+        link: '/#anliegen',
       },
       {
-         name:'Vorhaben',
-         link:'/#vorhaben'
+        name: 'Vorhaben',
+        link: '/#vorhaben',
       },
       {
-         name:'Newsletter',
-         link:'/#newsletter'
-      }
-    ]
+        name: 'Newsletter',
+        link: '/#newsletter',
+      },
+    ],
   },
   plugins: [
     'gatsby-transformer-remark',
@@ -40,17 +40,24 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
     {
+      resolve: `gatsby-plugin-less`,
+      options: {
+        strictMath: true,
+      },
+    },
+    {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
-    },{
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: "UA-145625294-1",
+        trackingId: 'UA-145625294-1',
         // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: true,
         // Setting this parameter is optional
         anonymize: true,
       },
-    }
+    },
   ],
 }
