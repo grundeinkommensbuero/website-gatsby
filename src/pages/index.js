@@ -4,46 +4,16 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import Hero from '../components/Hero'
 import Layout from '../components/Layout'
-import ArticlePreview from '../components/ArticlePreview'
+import MailerLite from '../components/MailerLite'
 import EmailListForm from '../components/EmailListForm'
 
 class RootIndex extends React.Component {
-  // add mailerlite code
-  componentDidMount() {
-    let r
-    window['MailerLiteObject'] = 'ml'
-    function f() {
-      var c = {
-        a: arguments,
-        q: [],
-      }
-      var r = this.push(c)
-      return 'number' != typeof r ? r : f.bind(c.q)
-    }
-    f.q = f.q || []
-    window['ml'] = window['ml'] || f.bind(f.q)
-    window['ml'].q = window['ml'].q || f.q
-    r = document.createElement('script')
-    var _ = document.getElementsByTagName('script')[0]
-    r.async = 1
-    r.src =
-      'https://static.mailerlite.com/js/universal.js?v' +
-      ~~(new Date().getTime() / 1000000)
-    _.parentNode.insertBefore(r, _)
-
-    window['ml_account'] = window.ml(
-      'accounts',
-      '1629538',
-      'k8n3g9j9x8',
-      'load'
-    )
-  }
-
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const [content] = get(this, 'props.data.allContentfulLandingPage.edges')
     return (
       <Layout location={this.props.location}>
+        <MailerLite />
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <Hero data={content.node} />
