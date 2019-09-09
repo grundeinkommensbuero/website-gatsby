@@ -1,5 +1,5 @@
 import React from 'react'
-import Navigation from './Navigation'
+import Header from './Header'
 import Footer from './Footer'
 import './style.css'
 import '../style/base.less'
@@ -10,7 +10,7 @@ class Template extends React.Component {
 
     return (
       <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-        <Navigation />
+        <Header />
         {children}
         <Footer />
       </div>
