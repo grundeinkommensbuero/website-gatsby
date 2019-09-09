@@ -11,17 +11,11 @@ class Privacy extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <div style={{ background: '#fff' }}>
+        <div>
           <Helmet title={siteTitle} />
           <div className="wrapper">
             <h1 className="section-headline">{content.node.title}</h1>
-            <p
-              style={{
-                display: 'block',
-              }}
-            >
-              {content.node.lastModified}
-            </p>
+            <p>{content.node.lastModified}</p>
             <div
               dangerouslySetInnerHTML={{
                 __html: content.node.body.childMarkdownRemark.html,

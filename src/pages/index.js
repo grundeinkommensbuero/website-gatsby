@@ -14,7 +14,7 @@ class RootIndex extends React.Component {
     return (
       <Layout location={this.props.location}>
         <MailerLite />
-        <div style={{ background: '#fff' }}>
+        <div>
           <Helmet title={siteTitle} />
           <Hero data={content.node} />
           <div className="wrapper">
@@ -32,7 +32,7 @@ class RootIndex extends React.Component {
             <p>{content.node.vorhaben.vorhaben}</p>
           </div>
         </div>
-        <div style={{ background: '#fff' }}>
+        <div>
           <div className="wrapper">
             <h2 className="section-headline" id="newsletter">
               Bist du dabei? Dann trage dich in unser Newsletter ein!
@@ -71,7 +71,7 @@ class RootIndex extends React.Component {
             </ul>
           </div>
         </div>
-        <div style={{ background: '#fff' }}>
+        <div>
           <div>
             <h2 className="section-headline"></h2>
           </div>
