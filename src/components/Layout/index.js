@@ -9,7 +9,7 @@ class Template extends React.Component {
     const { children } = this.props
 
     return (
-      <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+      <div>
         <Header />
         {children}
         <Footer />
