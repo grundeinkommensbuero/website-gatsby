@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/Layout'
 import ArticlePreview from '../components/ArticlePreview'
-import EmailListForm from '../components/email-list-form'
+import EmailListForm from '../components/EmailListForm'
 
 class RootIndex extends React.Component {
   // add mailerlite code

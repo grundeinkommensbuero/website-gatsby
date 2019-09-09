@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import styles from './email-list-form.module.css'
+import React from 'react'
 
 function EmailListForm() {
   return (
