@@ -1,6 +1,6 @@
 import React from 'react'
-import Navigation from '../navigation'
-import Footer from '../Footer'
+import Navigation from './Navigation'
+import Footer from './Footer'
 import './base.css'
 
 class Template extends React.Component {
