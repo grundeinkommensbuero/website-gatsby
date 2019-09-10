@@ -16,7 +16,7 @@ class RootIndex extends React.Component {
         <MailerLite />
         <div>
           <Helmet title={siteTitle} />
-          <Hero data={content.node} />
+          {/* <Hero data={content.node} /> */}
           <div className="wrapper">
             <h2 className="section-headline" id="anliegen">
               Unser Anliegen
