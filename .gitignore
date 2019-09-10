@@ -67,3 +67,5 @@ public
 .contentful.json
 .env*
 !.env.example
+
+webfonts
