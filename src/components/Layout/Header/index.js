@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './style.module.css'
+import style from './style.module.less'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 
 const Header = () => {

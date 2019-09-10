@@ -1,0 +1,24 @@
+@import '../../style/vars.less';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: @grey;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr minmax(0, 30rem) minmax(0, 30rem) 1fr;
+}
+
+.titleLink {
+  text-decoration: none;
+}
+
+.title {
+  grid-column: 2;
+}
+
+.nav {
+  grid-column: 3;
+}
