@@ -1,6 +1,6 @@
-import React from 'react'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import s from './style.module.less'
+import React from 'react';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import s from './style.module.less';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -13,6 +13,6 @@ export default function Sections({ sections }) {
           </section>
         ))}
       </div>
-    )
+    );
   }
 }

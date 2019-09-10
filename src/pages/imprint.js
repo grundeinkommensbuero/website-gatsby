@@ -1,13 +1,13 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
-import Layout from '../components/Layout'
+import React from 'react';
+import { graphql } from 'gatsby';
+import get from 'lodash/get';
+import Helmet from 'react-helmet';
+import Layout from '../components/Layout';
 
 class Privacy extends React.Component {
   render() {
-    const [content] = get(this.props, 'data.allContentfulStaticContent.edges')
-    const siteTitle = get(this.props, 'data.site.siteMetadata.title')
+    const [content] = get(this.props, 'data.allContentfulStaticContent.edges');
+    const siteTitle = get(this.props, 'data.site.siteMetadata.title');
 
     return (
       <Layout location={this.props.location}>
@@ -24,11 +24,11 @@ class Privacy extends React.Component {
           </div>
         </div>
       </Layout>
-    )
+    );
   }
 }
 
-export default Privacy
+export default Privacy;
 
 export const pageQuery = graphql`
   query ImprintQuery {
@@ -53,4 +53,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

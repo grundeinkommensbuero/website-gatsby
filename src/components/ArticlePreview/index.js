@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import Img from 'gatsby-image'
+import React from 'react';
+import { Link } from 'gatsby';
+import Img from 'gatsby-image';
 
-import style from './style.module.css'
+import style from './style.module.css';
 
 export default ({ article }) => (
   <div className={style.preview}>
@@ -22,4 +22,4 @@ export default ({ article }) => (
       </p>
     ))}
   </div>
-)
+);

@@ -1,7 +1,7 @@
-import React from 'react'
-import Img from 'gatsby-image'
+import React from 'react';
+import Img from 'gatsby-image';
 
-import style from './style.module.css'
+import style from './style.module.css';
 
 export default ({ data }) => (
   <div className={style.hero}>
@@ -14,4 +14,4 @@ export default ({ data }) => (
       <h3 className={style.heroHeadline}>{data.title}</h3>
     </div>
   </div>
-)
+);

@@ -1,6 +1,6 @@
-import React from 'react'
-import style from './style.module.less'
-import { Link, useStaticQuery, graphql } from 'gatsby'
+import React from 'react';
+import style from './style.module.less';
+import { Link, useStaticQuery, graphql } from 'gatsby';
 
 const Header = () => {
   const data = useStaticQuery(graphql`
@@ -15,7 +15,7 @@ const Header = () => {
         }
       }
     }
-  `)
+  `);
 
   return (
     <header className={style.header}>
@@ -36,7 +36,7 @@ const Header = () => {
         </ul>
       </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
