@@ -6,7 +6,7 @@ import EmailListForm from '../EmailListForm';
 export default function Sections({ sections }) {
   if (sections && sections.length) {
     return (
-      <div>
+      <>
         {sections.map((section, index) => (
           <section key={index}>
             {section.title && <h1>{section.title}</h1>}
@@ -14,7 +14,7 @@ export default function Sections({ sections }) {
             {section.emailSignup && <EmailListForm />}
           </section>
         ))}
-      </div>
+      </>
     );
   }
 }
