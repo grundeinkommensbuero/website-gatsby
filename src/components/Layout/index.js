@@ -1,12 +1,12 @@
-import React from 'react'
-import Header from './Header'
-import Footer from './Footer'
-import './style.css'
-import '../style/base.less'
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import './style.css';
+import '../style/base.less';
 
 class Template extends React.Component {
   render() {
-    const { children } = this.props
+    const { children } = this.props;
 
     return (
       <div>
@@ -14,8 +14,8 @@ class Template extends React.Component {
         {children}
         <Footer />
       </div>
-    )
+    );
   }
 }
 
-export default Template
+export default Template;

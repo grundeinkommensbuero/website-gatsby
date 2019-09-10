@@ -1,6 +1,6 @@
-import React from 'react'
-import Link from 'gatsby-link'
-import style from './style.module.css'
+import React from 'react';
+import Link from 'gatsby-link';
+import style from './style.module.css';
 
 export default () => (
   <footer className={style.siteFooter}>
@@ -11,4 +11,4 @@ export default () => (
       </section>
     </div>
   </footer>
-)
+);
