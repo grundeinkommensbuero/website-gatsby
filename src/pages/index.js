@@ -4,7 +4,6 @@ import get from 'lodash/get';
 import Helmet from 'react-helmet';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
-import MailerLite from '../components/MailerLite';
 import EmailListForm from '../components/EmailListForm';
 import Sections from '../components/Sections';
 
