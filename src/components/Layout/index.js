@@ -3,15 +3,19 @@ import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
 import '../style/base.less';
+import Sections from '../Sections';
 
 class Template extends React.Component {
   render() {
-    const { children } = this.props;
+    const { children, sections } = this.props;
 
     return (
       <>
-        <Header />
-        <main>{children}</main>
+        <Header sections={sections} />
+        <main className={s.main}>
+          {children}
+          <Sections sections={sections} />
+        </main>
         <Footer />
       </>
     );

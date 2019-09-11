@@ -1,17 +1,14 @@
 import React from 'react';
 import style from './style.module.less';
 import { Link, useStaticQuery, graphql } from 'gatsby';
+import { stringToId } from '../../utils';
 
-const Header = () => {
+const Header = ({ sections }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
         siteMetadata {
           title
-          menuLinks {
-            name
-            link
-          }
         }
       }
     }
@@ -26,15 +23,23 @@ const Header = () => {
           dangerouslySetInnerHTML={{ __html: data.site.siteMetadata.title }} // do this for the umlaut
         ></Link>
       </h1>
-      <nav className={style.nav}>
-        <ul>
-          {data.site.siteMetadata.menuLinks.map(link => (
-            <li key={link.name}>
-              <Link to={link.link}>{link.name}</Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {sections && (
+        <nav className={style.nav}>
+          <ul>
+            {sections.map(section => {
+              const id = stringToId(section.titleShort);
+
+              if (id) {
+                return (
+                  <li key={id}>
+                    <a href={`#${id}`}>{section.titleShort}</a>
+                  </li>
+                );
+              }
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 };
