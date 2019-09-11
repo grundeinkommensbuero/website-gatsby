@@ -1,0 +1,22 @@
+@import '../../style/vars.less';
+
+.footer {
+    .headerFooterGrid();
+    .globeBackground();
+    min-height: 15rem;
+    padding: 1rem 0;
+    font-size: @fontSizeM;
+}
+
+.copyright {
+    grid-column: 2;
+}
+
+.nav {
+    grid-column: 3;
+    text-align: right;
+
+    a + a {
+        margin-left: 0.5em;
+    }
+}

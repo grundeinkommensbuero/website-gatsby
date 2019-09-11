@@ -7,6 +7,35 @@
 @grey: #f0f0f0;
 @white: white;
 
+@fontSizeM: 1.5rem;
+
+
 @headerHeight: 5rem;
 
 @breakPointM: 800px;
+
+.headerFooterGrid() {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr minmax(0, 30rem) minmax(0, 30rem)  1fr;
+}
+
+.globeBackground() {
+    background:
+        repeating-linear-gradient(
+            -5deg,
+            transparent,
+            @red 1px,
+            transparent 2px,
+            transparent 10rem
+        ),
+        repeating-linear-gradient(
+            -95deg,
+            transparent,
+            @red 1px,
+            transparent 2px,
+            transparent 10rem
+        ),
+        @yellow
+    ;
+}
