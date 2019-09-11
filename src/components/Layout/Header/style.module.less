@@ -1,14 +1,12 @@
 @import '../../style/vars.less';
 
 .header {
+  .headerFooterGrid();
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   background: @grey;
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr minmax(0, 30rem) minmax(0, 30rem) 1fr;
   grid-template-rows: 5rem;
   height: @headerHeight;
 }
@@ -19,7 +17,7 @@
 
 .title {
   grid-column: 2;
-  margin: 0.5rem 0;
+  margin: 0.8rem 0;
 }
 
 .logo {
@@ -30,7 +28,7 @@
 .nav {
   grid-column: 3;
   align-self: stretch;
-  font-size: 1.5rem;
+  font-size: @fontSizeM;
 
   @media (max-width: @breakPointM) {
     display: none;
