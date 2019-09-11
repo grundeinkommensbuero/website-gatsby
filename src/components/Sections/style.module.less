@@ -1,2 +1,30 @@
 @import '../style/vars.less';
 
+.section {
+    padding: 3rem 1rem;
+
+    &:nth-child(3n+1) {
+        background: @grey;
+        color: @red;
+    }
+
+    &:nth-child(3n+2) {
+        background: @yellow;
+        color: @red;
+    }
+
+    &:nth-child(3n+3) {
+        background: @red;
+        color: @white;
+    }
+}
+
+.sectionBody {
+    max-width: 45rem;
+    margin: 0 auto;
+    font-size: @fontSizeL;
+}
+
+.title {
+    font-size: @fontSizeXL;
+}
