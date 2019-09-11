@@ -1,7 +1,8 @@
 import React from 'react';
-import style from './style.module.less';
+import s from './style.module.less';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import { stringToId } from '../../utils';
+import Logo from './logo.svg';
 
 const Header = ({ sections }) => {
   const data = useStaticQuery(graphql`
@@ -15,23 +16,25 @@ const Header = ({ sections }) => {
   `);
 
   return (
-    <header className={style.header}>
-      <h1 className={style.title}>
-        <Link
-          className={style.titleLink}
-          to="/"
-          dangerouslySetInnerHTML={{ __html: data.site.siteMetadata.title }} // do this for the umlaut
-        ></Link>
+    <header className={s.header}>
+      <h1 className={s.title}>
+        <Link to="/">
+          <img
+            src={Logo}
+            className={s.logo}
+            alt="Expedition Grundeinkommen Home"
+          />
+        </Link>
       </h1>
       {sections && (
-        <nav className={style.nav}>
-          <ul>
+        <nav className={s.nav}>
+          <ul className={s.navList}>
             {sections.map(section => {
               const id = stringToId(section.titleShort);
 
               if (id) {
                 return (
-                  <li key={id}>
+                  <li key={id} className={s.navItem}>
                     <a href={`#${id}`}>{section.titleShort}</a>
                   </li>
                 );

@@ -9,6 +9,7 @@
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 1fr minmax(0, 30rem) minmax(0, 30rem) 1fr;
+  grid-template-rows: 5rem;
   height: @headerHeight;
 }
 
@@ -18,8 +19,36 @@
 
 .title {
   grid-column: 2;
+  margin: 0.5rem 0;
+}
+
+.logo {
+  height: 100%;
+  display: block;
 }
 
 .nav {
   grid-column: 3;
+  align-self: stretch;
+  font-size: 1.5rem;
+
+  @media (max-width: @breakPointM) {
+    display: none;
+  }
+}
+
+.navList {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  height: 100%;
+}
+
+.navItem {
+  & + & {
+    margin-left: 0.5rem;
+  }
 }
