@@ -13,12 +13,16 @@
 
 @headerHeight: 5rem;
 
+@contentWidth: 45rem;
+@contentWidthL: 60rem;
+
 @breakPointM: 800px;
 
 .headerFooterGrid() {
+  @half: calc(@contentWidthL / 2 - 1rem);
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 1fr minmax(0, 30rem) minmax(0, 30rem) 1fr;
+  grid-template-columns: 1fr minmax(0, @half) minmax(0, @half) 1fr;
 }
 
 .globeBackground() {

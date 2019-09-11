@@ -1,0 +1,24 @@
+@import '../style/vars.less';
+
+.container {
+  .globeBackground();
+  background-attachment: fixed;
+  padding: 4rem 1rem;
+}
+
+.stage {
+  min-height: 25rem;
+  max-width: @contentWidthL;
+  margin: 0 auto;
+  position: relative;
+}
+
+.figure {
+  position: absolute;
+  height: 100%;
+  top: 0;
+
+  &2 {
+    right: 0;
+  }
+}
