@@ -1,20 +1,10 @@
 import React from 'react';
 import s from './style.module.less';
-import { Link, useStaticQuery, graphql } from 'gatsby';
+import { Link } from 'gatsby';
 import { stringToId } from '../../utils';
 import Logo from './logo.svg';
 
 const Header = ({ sections }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `);
-
   return (
     <header className={s.header}>
       <h1 className={s.title}>
