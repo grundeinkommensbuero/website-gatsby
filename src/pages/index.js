@@ -8,7 +8,7 @@ class RootIndex extends React.Component {
   render() {
     const [content] = get(this, 'props.data.allContentfulLandingPage.edges');
     const sections = get(content, 'node.sections');
-    console.log(content);
+
     return (
       <Layout location={this.props.location} sections={sections}>
         <MainIllustration />
