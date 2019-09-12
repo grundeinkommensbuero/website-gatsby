@@ -12,7 +12,8 @@ export default function Sections({ sections }) {
           const { title, titleShort, body, emailSignup } = section;
           const id = stringToId(titleShort);
           return (
-            <section key={index} id={id} className={s.section}>
+            <section key={index} className={s.section}>
+              <div id={id} className={s.jumpToAnchor} />
               <div className={s.sectionBody}>
                 {title && <h1 className={s.title}>{title}</h1>}
                 {documentToReactComponents(
