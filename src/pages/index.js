@@ -1,16 +1,14 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import get from 'lodash/get';
-import Helmet from 'react-helmet';
-import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import MainIllustration from '../components/MainIllustration';
 
 class RootIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title');
     const [content] = get(this, 'props.data.allContentfulLandingPage.edges');
     const sections = get(content, 'node.sections');
+    console.log(content);
     return (
       <Layout location={this.props.location} sections={sections}>
         <MainIllustration />
