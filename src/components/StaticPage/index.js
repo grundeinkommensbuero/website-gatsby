@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
+import s from './style.module.less';
 
 class StaticPage extends React.Component {
   render() {
@@ -20,13 +21,15 @@ class StaticPage extends React.Component {
             />
           )}
         </Helmet>
-        <h1>{page.title}</h1>
-        <p>{page.publishDate}</p>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: page.body.childMarkdownRemark.html,
-          }}
-        />
+        <div className={s.body}>
+          <h1>{page.title}</h1>
+          <p>{page.publishDate}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: page.body.childMarkdownRemark.html,
+            }}
+          />
+        </div>
       </Layout>
     );
   }
