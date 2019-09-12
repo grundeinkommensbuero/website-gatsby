@@ -27,9 +27,14 @@ function Template({ children, sections }) {
   return (
     <>
       <Header sections={sections} />
-      <Helmet>
-        <title>{globalStuff.siteTitle}</title>
-        <description>{globalStuff.siteDescription}</description>
+      <Helmet
+        defaultTitle={globalStuff.siteTitle}
+        titleTemplate={`${globalStuff.siteTitle} - %s`}
+      >
+        <meta
+          name="description"
+          content={globalStuff.siteDescription.siteDescription}
+        />
         <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
         <link rel="icon" type="image/png" href="favicon.png" />
       </Helmet>
