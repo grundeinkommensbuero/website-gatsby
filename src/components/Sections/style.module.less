@@ -28,9 +28,16 @@
 .sectionBody {
   max-width: @contentWidth;
   margin: 0 auto;
-  font-size: @fontSizeL;
+
+  @media (min-width: @breakPointM) {
+    font-size: @fontSizeL;
+  }
 }
 
 .title {
   font-size: @fontSizeXL;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeL;
+  }
 }
