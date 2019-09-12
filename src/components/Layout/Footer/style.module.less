@@ -7,17 +7,40 @@
   min-height: 15rem;
   padding: 1rem 0;
   font-size: @fontSizeM;
+  align-content: start;
 }
 
 .copyright {
   grid-column: 2;
+
+  @media (max-width: @breakPointM) {
+    grid-column-end: span 2;
+  }
 }
 
 .nav {
   grid-column: 3;
   text-align: right;
 
-  a + a {
-    margin-left: 0.5em;
+  @media (max-width: @breakPointM) {
+    grid-column: 2;
+    grid-column-end: span 2;
+    text-align: left;
+  }
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin: 0;
+  display: inline;
+  & + & {
+    &:before {
+      content: ' ';
+    }
   }
 }

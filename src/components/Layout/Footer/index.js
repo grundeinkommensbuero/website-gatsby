@@ -6,11 +6,15 @@ export default ({ footerText, footerMenu }) => (
   <footer className={s.footer}>
     <div className={s.copyright}>{footerText}</div>
     <nav className={s.nav}>
-      {footerMenu.map((item, index) => (
-        <Link to={`/${item.slug}/`} key={index}>
-          {item.title}
-        </Link>
-      ))}
+      <ul className={s.navList}>
+        {footerMenu.map((item, index) => (
+          <li className={s.navItem}>
+            <Link to={`/${item.slug}/`} key={index}>
+              {item.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </nav>
   </footer>
 );
