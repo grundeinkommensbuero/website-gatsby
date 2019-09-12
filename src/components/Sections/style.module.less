@@ -2,6 +2,7 @@
 
 .section {
     padding: 3rem 1rem;
+    position: relative;
 
     &:nth-child(3n+1) {
         background: @grey;
@@ -17,6 +18,11 @@
         background: @red;
         color: @white;
     }
+}
+
+.jumpToAnchor {
+    position: absolute;
+    top: -@headerHeight;
 }
 
 .sectionBody {
