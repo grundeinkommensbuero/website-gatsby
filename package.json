@@ -37,12 +37,14 @@
     "gatsby-source-contentful": "^2.0.48",
     "gatsby-transformer-remark": "^2.3.8",
     "gatsby-transformer-sharp": "^2.1.18",
+    "interactjs": "^1.4.0-rc.13",
     "less": "^3.10.3",
     "lodash": "^4.17.14",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "sharp": "^0.22.0"
+    "sharp": "^0.22.0",
+    "svg-inline-loader": "^0.8.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
