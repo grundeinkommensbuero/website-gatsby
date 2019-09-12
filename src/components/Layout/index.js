@@ -42,6 +42,7 @@ function Template({ children, sections }) {
         />
         <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
         <link rel="icon" type="image/png" href="favicon.png" />
+        <html lang="de" />
       </Helmet>
       <main className={s.main}>
         {children}
