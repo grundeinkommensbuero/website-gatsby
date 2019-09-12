@@ -8,8 +8,6 @@ class StaticPage extends React.Component {
   render() {
     const page = get(this.props, 'data.contentfulStaticContent');
 
-    console.log(page);
-
     return (
       <Layout location={this.props.location} title={page.title}>
         <Helmet>
