@@ -20,6 +20,11 @@ function Template({ children, sections }) {
             src
           }
         }
+        footerText
+        footerMenu {
+          slug
+          title
+        }
       }
     }
   `);
@@ -42,7 +47,10 @@ function Template({ children, sections }) {
         {children}
         <Sections sections={sections} />
       </main>
-      <Footer />
+      <Footer
+        footerText={globalStuff.footerText}
+        footerMenu={globalStuff.footerMenu}
+      />
     </>
   );
 }
