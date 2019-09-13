@@ -16,7 +16,7 @@
   "author": "Johann Barbie <johannbarbie@me.com>",
   "scripts": {
     "dev": "npm run develop",
-    "dev-m": "gatsby develop -p 8000",
+    "dev-m": "gatsby develop -H 0.0.0.0",
     "develop": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1",

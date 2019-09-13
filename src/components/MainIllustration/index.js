@@ -22,6 +22,33 @@ function Illustration({ illustration, className }) {
   const containerRef = useRef(null);
   useEffect(() => {
     const svg = document.getElementsByTagName('svg')[0];
+    const viewBox = svg.getAttribute('viewBox').split(' ');
+
+    const ratioScroll = svg.scrollWidth / svg.scrollHeight;
+    const ratioViewBox = parseInt(viewBox[2]) / parseInt(viewBox[3]);
+    const ratioCorrection = ratioScroll / ratioViewBox;
+
+    const postionCorrections = {
+      x: getCorrectionFactor(
+        svg.scrollWidth,
+        parseInt(viewBox[2]),
+        ratioScroll > ratioViewBox
+      ),
+      y: getCorrectionFactor(
+        svg.scrollHeight,
+        parseInt(viewBox[3]),
+        ratioScroll < ratioViewBox
+      ),
+    };
+
+    function getCorrectionFactor(scroll, viewBox, applyRatioCorrection) {
+      const basicCorrection = scroll / viewBox;
+      if (applyRatioCorrection) {
+        return basicCorrection / ratioCorrection;
+      } else {
+        return basicCorrection;
+      }
+    }
 
     Array.from(svg.children).forEach((element, index) => {
       if (
@@ -29,7 +56,7 @@ function Illustration({ illustration, className }) {
         element.tagName === 'polygon' ||
         element.tagName === 'g'
       ) {
-        makeDraggable(element);
+        makeDraggable(element, postionCorrections);
       }
     });
   });
@@ -43,19 +70,15 @@ function Illustration({ illustration, className }) {
   );
 }
 
-function makeDraggable(element) {
+function makeDraggable(element, postionCorrections) {
   const position = { x: 0, y: 0 };
 
   interact(element).draggable({
     inertia: false,
     listeners: {
-      start(event) {
-        console.log(event.type, event.target);
-      },
       move(event) {
-        // console.log(event);
-        position.x += event.dx;
-        position.y += event.dy;
+        position.x += event.dx / postionCorrections.x;
+        position.y += event.dy / postionCorrections.y;
 
         event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
       },
