@@ -1,9 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import s from './style.module.less';
-import Figure1svg from '!svg-inline-loader!./figure-1.svg';
+import Figure1svg from '!svg-inline-loader!./figure-1-groups_stage-1.svg';
 import interact from 'interactjs';
-import Figure1 from './figure-1.svg';
-import Figure2 from './figure-2.svg';
 
 import cN from 'classnames';
 
@@ -11,8 +9,6 @@ export default function() {
   return (
     <div className={s.container} aria-hidden="true">
       <div className={s.stage}>
-        {/* <img className={cN(s.figure, s.figure1)} src={Figure1} />
-        <img className={cN(s.figure, s.figure2)} src={Figure2} /> */}
         <Illustration
           className={cN(s.figure, s.figure1)}
           illustration={Figure1svg}
@@ -27,15 +23,17 @@ function Illustration({ illustration, className }) {
   useEffect(() => {
     const svg = document.getElementsByTagName('svg')[0];
 
-    console.log(svg.children);
     Array.from(svg.children).forEach((element, index) => {
-      console.log(index, element);
-
-      if (element.tagName === 'path' || element.tagName === 'polygon') {
+      if (
+        element.tagName === 'path' ||
+        element.tagName === 'polygon' ||
+        element.tagName === 'g'
+      ) {
         makeDraggable(element);
       }
     });
   });
+
   return (
     <div
       className={cN(className, s.illustration)}
@@ -49,19 +47,13 @@ function makeDraggable(element) {
   const position = { x: 0, y: 0 };
 
   interact(element).draggable({
-    // make the element fire drag events
-    //   origin: 'self', // (0, 0) will be the element's top-left
-    inertia: true, // start inertial movement if thrown
-    //   modifiers: [
-    //     interact.modifiers.restrict({
-    //       restriction: 'self', // keep the drag coords within the element
-    //     }),
-    //   ],
+    inertia: false,
     listeners: {
       start(event) {
         console.log(event.type, event.target);
       },
       move(event) {
+        // console.log(event);
         position.x += event.dx;
         position.y += event.dy;
 
