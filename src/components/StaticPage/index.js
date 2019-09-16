@@ -23,7 +23,7 @@ class StaticPage extends React.Component {
         </Helmet>
         <div className={s.body}>
           <h1>{page.title}</h1>
-          <p>{page.publishDate}</p>
+          {/* <p>{page.publishDate}</p> */}
           <div
             dangerouslySetInnerHTML={{
               __html: page.body.childMarkdownRemark.html,
