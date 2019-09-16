@@ -11,7 +11,15 @@ export default function Sections({ sections }) {
     return (
       <div className={s.sections}>
         {sections.map((section, index) => {
-          const { title, titleShort, body, emailSignup } = section;
+          const {
+            title,
+            titleShort,
+            body,
+            emailSignup,
+            videoLink,
+            callToActionLink,
+            callToActionText,
+          } = section;
           const id = stringToId(titleShort);
           return (
             <section key={index} className={s.section}>
@@ -27,11 +35,15 @@ export default function Sections({ sections }) {
                   </>
                 )}
                 {emailSignup && <EmailListForm />}
-                {section.videoLink && <YoutubeEmbed url={section.videoLink} />}
+                {videoLink && <YoutubeEmbed url={videoLink} />}
+                {callToActionText && callToActionLink && (
+                  <CallToAction
+                    callToActionText={callToActionText}
+                    callToActionLink={callToActionLink}
+                  />
+                )}
               </div>
-              {section.videoLink && (
-                <MainIllustration className={s.illustration} />
-              )}
+              {videoLink && <MainIllustration className={s.illustration} />}
             </section>
           );
         })}
@@ -41,16 +53,28 @@ export default function Sections({ sections }) {
   return null;
 }
 
+function CallToAction({ callToActionText, callToActionLink }) {
+  return (
+    <div className={s.callToActionContainer}>
+      <a className={s.callToActionLink} href={callToActionLink}>
+        {callToActionText}
+      </a>
+    </div>
+  );
+}
+
 function YoutubeEmbed({ url }) {
   return (
-    <iframe
-      width="560"
-      height="315"
-      src={`https://www.youtube.com/embed/${url}`}
-      frameBorder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
+    <div className={s.youtubeContainer}>
+      <iframe
+        width="560"
+        height="315"
+        src={`https://www.youtube.com/embed/${url}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
   );
 }
 
