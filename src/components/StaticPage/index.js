@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import s from './style.module.less';
+import Sections from '../Sections';
 
 class StaticPage extends React.Component {
   render() {
@@ -21,15 +22,17 @@ class StaticPage extends React.Component {
             />
           )}
         </Helmet>
-        <div className={s.body}>
-          <h1>{page.title}</h1>
-          {/* <p>{page.publishDate}</p> */}
-          <div
-            dangerouslySetInnerHTML={{
-              __html: page.body.childMarkdownRemark.html,
-            }}
-          />
-        </div>
+        {page.body && (
+          <div className={s.body}>
+            <h1>{page.title}</h1>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: page.body.childMarkdownRemark.html,
+              }}
+            />
+          </div>
+        )}
+        {page.sections && <Sections sections={page.sections} />}
       </Layout>
     );
   }
@@ -49,6 +52,23 @@ export const pageQuery = graphql`
       description {
         internal {
           content
+        }
+      }
+      sections {
+        ... on ContentfulPageSection {
+          id
+          title
+          titleShort
+          body {
+            json
+          }
+          callToActionLink
+          callToActionText
+          emailSignup
+        }
+        ... on ContentfulPageSectionVideo {
+          id
+          videoLink
         }
       }
     }

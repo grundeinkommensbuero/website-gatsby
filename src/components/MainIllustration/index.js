@@ -1,13 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import s from './style.module.less';
+import cN from 'classnames';
 import Figure1svg from '!svg-inline-loader!./figure-1-groups_stage-1.svg';
 import interact from 'interactjs';
 
-import cN from 'classnames';
-
-export default function() {
+export default function({ className }) {
   return (
-    <div className={s.container} aria-hidden="true">
+    <div className={cN(className, s.container)} aria-hidden="true">
       <div className={s.stage}>
         <Illustration
           className={cN(s.figure, s.figure1)}

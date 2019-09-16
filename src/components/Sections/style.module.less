@@ -28,6 +28,8 @@
 .sectionBody {
     max-width: @contentWidth;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 
     @media (min-width: @breakPointM) {
         font-size: @fontSizeL;
@@ -40,4 +42,12 @@
     @media (max-width: @breakPointM) {
         font-size: @fontSizeL;
     }
+}
+
+.illustration {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
