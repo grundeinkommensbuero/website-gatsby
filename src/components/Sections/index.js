@@ -1,8 +1,10 @@
 import React from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import s from './style.module.less';
+import cN from 'classnames';
 import EmailListForm from '../EmailListForm';
 import { stringToId } from '../utils';
+import MainIllustration from '../MainIllustration';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -16,12 +18,20 @@ export default function Sections({ sections }) {
               <div id={id} className={s.jumpToAnchor} />
               <div className={s.sectionBody}>
                 {title && <h1 className={s.title}>{title}</h1>}
-                {documentToReactComponents(
-                  body.json,
-                  documentToREactComponentsOptions
+                {body && (
+                  <>
+                    {documentToReactComponents(
+                      body.json,
+                      documentToREactComponentsOptions
+                    )}
+                  </>
                 )}
                 {emailSignup && <EmailListForm />}
+                {section.videoLink && <YoutubeEmbed url={section.videoLink} />}
               </div>
+              {section.videoLink && (
+                <MainIllustration className={s.illustration} />
+              )}
             </section>
           );
         })}
@@ -29,6 +39,19 @@ export default function Sections({ sections }) {
     );
   }
   return null;
+}
+
+function YoutubeEmbed({ url }) {
+  return (
+    <iframe
+      width="560"
+      height="315"
+      src={`https://www.youtube.com/embed/${url}`}
+      frameBorder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  );
 }
 
 // needed so that line breaks are properly added.
