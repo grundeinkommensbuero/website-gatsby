@@ -61,8 +61,9 @@ exports.createPages = ({ graphql, actions }) => {
 
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
+          const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
           createPage({
-            path: `/${page.node.slug}/`,
+            path: path,
             component: staticPage,
             context: {
               slug: page.node.slug,
