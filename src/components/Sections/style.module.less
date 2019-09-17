@@ -5,16 +5,22 @@
     position: relative;
 
     &:nth-child(3n+1) {
+        --bg-color: @grey;
+        --font-color: @red;
         background: @grey;
         color: @red;
     }
 
     &:nth-child(3n+2) {
+        --bg-color: @yellow;
+        --font-color: @red;
         background: @yellow;
         color: @red;
     }
 
     &:nth-child(3n+3) {
+        --bg-color: @red;
+        --font-color: @white;
         background: @red;
         color: @white;
     }
@@ -73,7 +79,12 @@
 
 .callToActionLink {
     padding: .8rem .8rem .5rem;
-    border: currentColor solid 3px;
+    border: var(--font-color) solid 3px;
     border-radius: 1rem;
     text-decoration: none;
+
+    &:hover {
+        color: var(--bg-color);
+        background: var(--font-color);
+    }
 }
