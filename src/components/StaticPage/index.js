@@ -4,7 +4,6 @@ import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import s from './style.module.less';
-import Sections from '../Sections';
 
 class StaticPage extends React.Component {
   render() {
