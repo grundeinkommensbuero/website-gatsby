@@ -27,7 +27,12 @@ export default function Sections({ sections }) {
           return (
             <section key={index} className={s.section}>
               <div id={id} className={s.jumpToAnchor} />
-              <div className={s.sectionBody}>
+              <div
+                className={cN(s.sectionBody, {
+                  [s.sectionBodyNoEvents]:
+                    __typename === 'ContentfulPageSectionIllustration',
+                })}
+              >
                 {title && <h1 className={s.title}>{title}</h1>}
                 {__typename === 'ContentfulPageSectionIllustration' && (
                   <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
