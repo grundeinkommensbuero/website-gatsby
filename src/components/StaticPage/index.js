@@ -36,7 +36,6 @@ class StaticPage extends React.Component {
             />
           </div>
         )}
-        {page.sections && <Sections sections={page.sections} />}
       </Layout>
     );
   }
