@@ -55,20 +55,26 @@ export const pageQuery = graphql`
         }
       }
       sections {
-        ... on ContentfulPageSection {
-          id
-          title
-          titleShort
-          body {
-            json
+        ... on Node {
+          ... on ContentfulPageSection {
+            id
+            title
+            titleShort
+            body {
+              json
+            }
+            callToActionLink
+            callToActionText
+            emailSignup
           }
-          callToActionLink
-          callToActionText
-          emailSignup
-        }
-        ... on ContentfulPageSectionVideo {
-          id
-          videoLink
+          ... on ContentfulPageSectionVideo {
+            id
+            videoLink
+          }
+          ... on ContentfulPageSectionIllustration {
+            sloganLine1
+            sloganLine2
+          }
         }
       }
     }
