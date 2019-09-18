@@ -9,9 +9,14 @@ import Sections from '../Sections';
 class StaticPage extends React.Component {
   render() {
     const page = get(this.props, 'data.contentfulStaticContent');
+    console.log(page);
 
     return (
-      <Layout location={this.props.location} title={page.title}>
+      <Layout
+        location={this.props.location}
+        title={page.title}
+        sections={page.sections}
+      >
         <Helmet>
           <title>{page.title}</title>
 
