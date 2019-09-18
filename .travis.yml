@@ -20,24 +20,27 @@ script:
   - yarn run build
 
 deploy:
-  - provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-    target_branch: master
-    local_dir: public
-    on:
-      branch: dev
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: $PROD_S3_BUCKET
+    bucket: $S3_BUCKET
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
     region: 'eu-central-1'
     on:
-      branch: release
+      branch: dev
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $S3_BUCKET
+    acl: public_read
+    local_dir: 'public'
+    skip_cleanup: true
+    region: 'eu-central-1'
+    on:
+      branch: master
 
 after_deploy:
   - aws configure set preview.cloudfront true
-  - aws cloudfront create-invalidation --distribution-id $PROD_CLOUDFRONT_DISTRIBUTION --paths "/*"
+  - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION --paths "/*"
