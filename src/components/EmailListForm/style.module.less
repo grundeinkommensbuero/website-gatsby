@@ -1,0 +1,80 @@
+@import '../style/vars.less';
+
+.container {
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-embedBody
+      .ml-form-horizontalRow
+      input) {
+    .buttonAndInput();
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-embedBody
+      .ml-form-horizontalRow
+      button) {
+    .buttonAndInput();
+    width: auto;
+    &:hover {
+      color: var(--bg-color) !important;
+      background: var(--font-color) !important;
+      border: var(--font-color) @borderWidth solid !important;
+    }
+  }
+
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-successBody
+      .ml-form-successContent
+      h4),
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-embedBody
+      .ml-form-embedContent
+      h4),
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-successBody
+      .ml-form-successContent
+      p),
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-embedBody
+      .ml-form-embedContent
+      p) {
+    color: var(--font-color) !important;
+    font-family: inherit;
+    font-weight: normal;
+    font-size: @fontSizeM;
+    line-height: inherit;
+  }
+
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-successBody
+      .ml-form-successContent
+      h4),
+  :global(#mlb2-1447292.ml-form-embedContainer
+      .ml-form-embedWrapper
+      .ml-form-embedBody
+      .ml-form-embedContent
+      h4) {
+    font-size: @fontSizeL;
+  }
+}
+
+.buttonAndInput() {
+  background: transparent !important;
+  border: currentColor @borderWidth solid !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  border-radius: @borderRadius !important;
+  font-size: inherit !important;
+  padding: @buttonPadding !important;
+  line-height: inherit;
+}
