@@ -26,6 +26,11 @@
     grid-template-columns: 1fr minmax(0, @half) minmax(0, @half)  1fr;
 }
 
+.contentGrid() {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+
 .globeBackground() {
     background:
         repeating-linear-gradient(
