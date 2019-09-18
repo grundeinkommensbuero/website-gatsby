@@ -19,6 +19,9 @@ export default function Sections({ sections }) {
             videoLink,
             callToActionLink,
             callToActionText,
+            sloganLine1,
+            sloganLine2,
+            __typename,
           } = section;
           const id = stringToId(titleShort);
           return (
@@ -26,6 +29,9 @@ export default function Sections({ sections }) {
               <div id={id} className={s.jumpToAnchor} />
               <div className={s.sectionBody}>
                 {title && <h1 className={s.title}>{title}</h1>}
+                {__typename === 'ContentfulPageSectionIllustration' && (
+                  <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
+                )}
                 {body && (
                   <>
                     {documentToReactComponents(
@@ -43,7 +49,10 @@ export default function Sections({ sections }) {
                   />
                 )}
               </div>
-              {videoLink && <MainIllustration className={s.illustration} />}
+              {(__typename === 'ContentfulPageSectionIllustration' ||
+                __typename === 'ContentfulPageSectionVideo') && (
+                <MainIllustration className={s.illustration} />
+              )}
             </section>
           );
         })}
@@ -60,6 +69,15 @@ function CallToAction({ callToActionText, callToActionLink }) {
         {callToActionText}
       </a>
     </div>
+  );
+}
+
+function Slogan({ sloganLine1, sloganLine2 }) {
+  return (
+    <h1 className={s.slogan}>
+      <span className={s.sloganLine1}>{sloganLine1}</span>
+      <span className={s.sloganLine2}>{sloganLine2}</span>
+    </h1>
   );
 }
 

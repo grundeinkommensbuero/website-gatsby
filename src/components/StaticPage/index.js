@@ -57,7 +57,7 @@ export const pageQuery = graphql`
       sections {
         ... on Node {
           ... on ContentfulPageSection {
-            id
+            __typename
             title
             titleShort
             body {
@@ -68,10 +68,11 @@ export const pageQuery = graphql`
             emailSignup
           }
           ... on ContentfulPageSectionVideo {
-            id
+            __typename
             videoLink
           }
           ... on ContentfulPageSectionIllustration {
+            __typename
             sloganLine1
             sloganLine2
           }
