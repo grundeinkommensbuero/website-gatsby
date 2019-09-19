@@ -22,7 +22,7 @@ export default function({ className }) {
 function Illustration({ illustration, className }) {
   const containerRef = useRef(null);
   useEffect(() => {
-    const svg = document.getElementsByTagName('svg')[0];
+    const svg = containerRef.current.getElementsByTagName('svg')[0];
     const viewBox = svg.getAttribute('viewBox').split(' ');
 
     const ratioScroll = svg.scrollWidth / svg.scrollHeight;
