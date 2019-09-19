@@ -1,16 +1,18 @@
 import React, { useRef, useEffect } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
-import Figure1svg from '!svg-inline-loader!./figure-1-groups_stage-1.svg';
+import Stage from '!svg-inline-loader?classPrefix=b-!./figure-1-groups_stage-1.svg';
+import StageVertical from '!svg-inline-loader?classPrefix=a-&idPrefix=b-!./figure-1-groups_stage-1-vertical.svg';
 import interact from 'interactjs';
 
 export default function({ className }) {
   return (
     <div className={cN(className, s.container)} aria-hidden="true">
       <div className={s.stage}>
+        <Illustration className={cN(s.figure, s.stage1)} illustration={Stage} />
         <Illustration
-          className={cN(s.figure, s.figure1)}
-          illustration={Figure1svg}
+          className={cN(s.figure, s.stage1Vertical)}
+          illustration={StageVertical}
         />
       </div>
     </div>

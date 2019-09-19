@@ -27,9 +27,17 @@
     height: 100%;
     width: 100%;
   }
+}
 
-  &2 {
-    right: 0;
+.stage1 {
+  @media (max-width: @breakPointM) {
+    display: none;
+  }
+}
+
+.stage1Vertical {
+  @media (min-width: @breakPointM) {
+    display: none;
   }
 }
 
