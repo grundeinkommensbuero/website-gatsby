@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './style.module.less';
+import cN from 'classnames';
 
 class EmailListForm extends React.Component {
   componentDidMount() {
@@ -33,9 +34,10 @@ class EmailListForm extends React.Component {
     );
   }
   render() {
+    const { className } = this.props;
     return (
       <div
-        className={'ml-form-embed ' + s.container}
+        className={cN('ml-form-embed ' + s.container, className)}
         data-account="1629538:k8n3g9j9x8"
         data-form="1447292:a4q8c2"
         id="#mailerlite"
