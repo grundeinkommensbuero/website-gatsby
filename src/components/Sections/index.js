@@ -41,12 +41,12 @@ export default function Sections({ sections }) {
                   <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
                 )}
                 {body && (
-                  <>
+                  <div className={s.bodyText}>
                     {documentToReactComponents(
                       body.json,
                       documentToREactComponentsOptions
                     )}
-                  </>
+                  </div>
                 )}
                 {emailSignup && <EmailListForm />}
                 {videoLink && <YoutubeEmbed url={videoLink} />}
