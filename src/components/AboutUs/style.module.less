@@ -1,0 +1,68 @@
+@import '../style/vars.less';
+
+.aboutUs {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    grid-gap: 4rem;
+    font-size: @fontSizeM;
+
+    @media (max-width: @breakPointM) {
+        grid-gap: 2rem;
+    }
+}
+
+.member {
+    margin: 0;
+    text-align: center;
+
+    @media (max-width: @breakPointM) {
+        padding: 0 2rem;
+    }
+
+    &:nth-child(7n+1) .image {
+        mask-image: url(./shapes/1.svg);
+    }
+
+    &:nth-child(7n+2) .image {
+        mask-image: url(./shapes/2.svg);
+    }
+
+    &:nth-child(7n+3) .image {
+        mask-image: url(./shapes/3.svg);
+    }
+
+    &:nth-child(7n+4) .image {
+        mask-image: url(./shapes/4.svg);
+    }
+
+    &:nth-child(7n+5) .image {
+        mask-image: url(./shapes/5.svg);
+    }
+
+    &:nth-child(7n+6) .image {
+        mask-image: url(./shapes/6.svg);
+    }
+
+    &:nth-child(7n+7) .image {
+        mask-image: url(./shapes/7.svg);
+    }
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    object-fit: cover;
+}
+
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    margin: 0 0 1rem;
+}
