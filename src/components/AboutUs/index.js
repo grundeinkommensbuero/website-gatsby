@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './style.module.less';
+import cN from 'classnames';
 
-const AboutUs = ({ members }) => {
+const AboutUs = ({ members, className }) => {
   return (
-    <ul className={s.aboutUs}>
+    <ul className={cN(s.aboutUs, className)}>
       {members.map((member, index) => {
         const { name, image } = member;
         return (

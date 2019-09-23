@@ -48,9 +48,11 @@ export default function Sections({ sections }) {
                     )}
                   </div>
                 )}
-                {emailSignup && <EmailListForm />}
+                {emailSignup && <EmailListForm className={s.emailSignup} />}
                 {videoLink && <YoutubeEmbed url={videoLink} />}
-                {teamMembers && <AboutUs members={teamMembers} />}
+                {teamMembers && (
+                  <AboutUs className={s.aboutUs} members={teamMembers} />
+                )}
                 {callToActionText && callToActionLink && (
                   <CallToAction
                     callToActionText={callToActionText}
