@@ -1,8 +1,12 @@
 @import '../style/vars.less';
 
 .section {
-  padding: 3rem 1rem;
+  padding: 5rem 1rem;
   position: relative;
+
+  @media (max-width: @breakPointM) {
+    padding: 3rem 1rem;
+  }
 
   &:nth-child(3n + 3) {
     --bg-color: @grey;
@@ -42,15 +46,23 @@
   }
 }
 
+.bodyText {
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
 .sectionBodyNoEvents {
   pointer-events: none;
 }
 
 .title {
   font-size: @fontSizeXL;
+  margin-top: 0;
 
   @media (max-width: @breakPointM) {
     font-size: @fontSizeL;
+    margin-bottom: 1rem;
   }
 }
 
@@ -79,6 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 .callToActionLink {
