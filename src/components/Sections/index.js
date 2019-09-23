@@ -5,6 +5,7 @@ import cN from 'classnames';
 import EmailListForm from '../EmailListForm';
 import { stringToId } from '../utils';
 import MainIllustration from '../MainIllustration';
+import AboutUs from '../AboutUs';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -22,7 +23,9 @@ export default function Sections({ sections }) {
             sloganLine1,
             sloganLine2,
             __typename,
+            teamMembers,
           } = section;
+
           const id = stringToId(titleShort);
           return (
             <section key={index} className={s.section}>
@@ -47,6 +50,7 @@ export default function Sections({ sections }) {
                 )}
                 {emailSignup && <EmailListForm />}
                 {videoLink && <YoutubeEmbed url={videoLink} />}
+                {teamMembers && <AboutUs members={teamMembers} />}
                 {callToActionText && callToActionLink && (
                   <CallToAction
                     callToActionText={callToActionText}

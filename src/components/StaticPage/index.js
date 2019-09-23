@@ -68,6 +68,15 @@ export const pageQuery = graphql`
             callToActionLink
             callToActionText
             emailSignup
+            teamMembers {
+              image {
+                fluid(maxWidth: 500) {
+                  srcSet
+                  src
+                }
+              }
+              name
+            }
           }
           ... on ContentfulPageSectionVideo {
             __typename
