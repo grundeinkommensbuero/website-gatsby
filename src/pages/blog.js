@@ -5,20 +5,6 @@ import Helmet from 'react-helmet';
 import styles from './blog.module.css';
 import Layout from '../components/Layout';
 import ArticlePreview from '../components/ArticlePreview';
-import Amplify from 'aws-amplify';
-import authConfig from './../../cognito-config';
-
-//configure AWS Amplify to use Cognito for Authentication
-//if there are gonna be more pages in the future, we need to put this somewhere else
-//(e.g. a wrapper around all pages (gatsby browser API))
-Amplify.configure({
-  Auth: {
-    region: authConfig.REGION,
-    userPoolId: authConfig.USER_POOL_ID,
-    userPooldWebClientId: authConfig.APP_CLIENT_ID 
-  }
-});
-
 
 class BlogIndex extends React.Component {
   render() {

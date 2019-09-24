@@ -10,6 +10,7 @@ class Login extends Component {
       isAuthenticated: false
     };
   }
+  
   // Function to sign up user through AWS Cognito 
   // Tutorial: https://aws.amazon.com/de/blogs/mobile/implementing-passwordless-email-authentication-with-amazon-cognito/
   signUp = async (email) => {
