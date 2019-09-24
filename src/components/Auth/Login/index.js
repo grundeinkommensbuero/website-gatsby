@@ -10,7 +10,7 @@ class Login extends Component {
       isAuthenticated: false
     };
   }
-  
+
   // Function to sign up user through AWS Cognito 
   // Tutorial: https://aws.amazon.com/de/blogs/mobile/implementing-passwordless-email-authentication-with-amazon-cognito/
   signUp = async (email) => {
@@ -58,6 +58,15 @@ class Login extends Component {
       }
     } catch (error) {
       console.log('User entered wrong code three times');
+    }
+  }
+
+  signOut = async () => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+        //TODO: Error handling in UI: Sign out error
+      console.log('Error while signing out', error);
     }
   }
 
