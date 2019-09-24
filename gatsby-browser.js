@@ -1,5 +1,5 @@
 import Amplify from 'aws-amplify';
-import cognitoConfig from './congito-config';
+import { cognitoConfig } from './cognito-config';
 
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,

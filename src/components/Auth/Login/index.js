@@ -42,7 +42,7 @@ class Login extends Component {
     // Send the answer to the User Pool
     try {
       // sendCustomChallengeAnswer() will throw an error if it’s the 3rd wrong answer
-      this.setState({ cognitoUser: await Auth.sendCustomChallengeAnswer(cognitoUser, answer) });
+      const user = await Auth.sendCustomChallengeAnswer(cognitoUser, answer);
 
       // It we get here, the answer was sent successfully,
       // but it might have been wrong (1st or 2nd time)
@@ -51,7 +51,7 @@ class Login extends Component {
         // This will throw an error if the user is not yet authenticated:
         await Auth.currentSession();
         //User is now signed in
-        this.setState({ isAuthenticated: true });
+        this.setState({ cognitoUser: user, isAuthenticated: true });
       } catch (error) {
         //TODO: Error handling in UI: wrong code
         console.log('Apparently the user did not enter the right code', error);
@@ -64,8 +64,9 @@ class Login extends Component {
   signOut = async () => {
     try {
       await Auth.signOut();
+      this.setState({ cognitoUser: null, isAuthenticated: false });
     } catch (error) {
-        //TODO: Error handling in UI: Sign out error
+      //TODO: Error handling in UI: Sign out error
       console.log('Error while signing out', error);
     }
   }
