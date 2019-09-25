@@ -25,7 +25,6 @@ export default function Sections({ sections }) {
             sloganLine2,
             __typename,
             teamMembers,
-            donateButton,
           } = section;
 
           const id = stringToId(titleShort);
@@ -61,7 +60,6 @@ export default function Sections({ sections }) {
                     callToActionLink={callToActionLink}
                   />
                 )}
-                {donateButton && <DonateButton className={s.donateButton} />}
               </div>
               {(__typename === 'ContentfulPageSectionIllustration' ||
                 __typename === 'ContentfulPageSectionVideo') && (
