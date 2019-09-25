@@ -6,7 +6,6 @@ import EmailListForm from '../EmailListForm';
 import { stringToId } from '../utils';
 import MainIllustration from '../MainIllustration';
 import AboutUs from '../AboutUs';
-import DonateButton from '../DonateButton';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
