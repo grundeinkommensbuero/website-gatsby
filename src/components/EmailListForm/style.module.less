@@ -34,7 +34,46 @@
     :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent h4) {
         font-size: @fontSizeL;
     }
-}
+
+    :global(#mlb2-1447292.ml-form-embedContainer) {
+        margin: 0;
+    }
+
+    :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody) {
+        padding: 0;
+    }
+
+    :global(.ml-form-formContent.horozintalForm .ml-form-horizontalRow .horizontal-fields) {
+        padding: 0;
+        margin-right: 2rem;
+        float: none;
+    }
+
+    :global(.ml-form-formContent.horozintalForm .ml-form-horizontalRow .ml-input-horizontal) {
+        width: auto;
+        float: none;
+        flex: 1 1 auto;
+    }
+
+    :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-horizontalRow) {
+        height: auto;
+        display: flex;
+    }
+
+    :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper.embedForm) {
+        max-width: none;
+    }
+
+    :global(.ml-form-formContent.horozintalForm .ml-form-horizontalRow .ml-button-horizontal) {
+        float: none;
+        width: auto;
+        margin-left: 2rem;
+
+        @media (max-width: @breakPointM) {
+            margin-left: 1rem;
+        }
+    }
+ }
 
 .buttonAndInput() {
     background: transparent !important;
