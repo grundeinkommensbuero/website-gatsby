@@ -68,7 +68,7 @@
 
   @media (max-width: @breakPointM) {
     font-size: @fontSizeL;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 }
 
@@ -126,6 +126,10 @@
 .aboutUs,
 .emailSignup {
   margin-top: 2rem;
+
+  @media (max-width: @breakPointM) {
+    margin-top: 0;
+  }
 }
 
 .slogan {
@@ -139,6 +143,12 @@
 
   @media (max-width: @breakPointM) {
     font-size: @fontSizeL;
+  }
+
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeM;
+    grid-row-gap: 1rem;
+    margin: 8rem 0;
   }
 }
 
