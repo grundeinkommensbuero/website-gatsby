@@ -6,6 +6,7 @@ import EmailListForm from '../EmailListForm';
 import { stringToId } from '../utils';
 import MainIllustration from '../MainIllustration';
 import AboutUs from '../AboutUs';
+import DonateButton from '../DonateButton';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -24,6 +25,7 @@ export default function Sections({ sections }) {
             sloganLine2,
             __typename,
             teamMembers,
+            donateButton,
           } = section;
 
           const id = stringToId(titleShort);
@@ -59,6 +61,7 @@ export default function Sections({ sections }) {
                     callToActionLink={callToActionLink}
                   />
                 )}
+                {donateButton && <DonateButton className={s.donateButton} />}
               </div>
               {(__typename === 'ContentfulPageSectionIllustration' ||
                 __typename === 'ContentfulPageSectionVideo') && (
