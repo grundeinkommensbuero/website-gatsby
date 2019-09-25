@@ -47,6 +47,7 @@
         padding: 0;
         margin-right: 2rem;
         float: none;
+        margin-bottom: 0 !important;
     }
 
     :global(.ml-form-formContent.horozintalForm .ml-form-horizontalRow .ml-input-horizontal) {
@@ -68,10 +69,15 @@
         float: none;
         width: auto;
         margin-left: 2rem;
+        flex: 0 2 auto;
 
         @media (max-width: @breakPointM) {
             margin-left: 1rem;
         }
+    }
+
+    :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-formContent.horozintalForm) {
+        padding: 0;
     }
  }
 
