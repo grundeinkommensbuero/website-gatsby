@@ -70,7 +70,6 @@ export const pageQuery = graphql`
             callToActionLink
             callToActionText
             emailSignup
-            donateButton
             teamMembers {
               image {
                 fluid(maxWidth: 500) {
