@@ -88,6 +88,7 @@ function Slogan({ sloganLine1, sloganLine2 }) {
     <h1 className={s.slogan}>
       <span className={s.sloganLine1}>{sloganLine1}</span>
       <span className={s.sloganLine2}>{sloganLine2}</span>
+      {/* <EmailListForm className={s.sloganLineSignup} /> */}
     </h1>
   );
 }

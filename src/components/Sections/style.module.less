@@ -176,3 +176,19 @@
     grid-column-start: 2;
   }
 }
+
+.sloganLineSignup {
+  grid-column: 5 / -3;
+  pointer-events: all;
+  font-size: @fontSizeM;
+
+  @media (max-width: @breakPointM) {
+    grid-column-start: 4;
+    grid-column-end: -2;
+  }
+
+  @media (max-width: @breakPointS) {
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
+}
