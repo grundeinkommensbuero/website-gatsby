@@ -27,12 +27,14 @@ class StaticPage extends React.Component {
         </Helmet>
         {page.body && (
           <div className={s.body}>
-            <h1>{page.title}</h1>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: page.body.childMarkdownRemark.html,
-              }}
-            />
+            <div className={s.bodyInner}>
+              <h1>{page.title}</h1>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: page.body.childMarkdownRemark.html,
+                }}
+              />
+            </div>
           </div>
         )}
       </Layout>
