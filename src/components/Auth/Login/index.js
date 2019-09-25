@@ -3,13 +3,6 @@ import Auth from 'aws-amplify';
 import { getRandomString } from '../../utils'
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cognitoUser: null, // Track authentication flow state in this object
-      isAuthenticated: false
-    };
-  }
 
   // Function to sign up user through AWS Cognito 
   // Tutorial: https://aws.amazon.com/de/blogs/mobile/implementing-passwordless-email-authentication-with-amazon-cognito/
@@ -31,7 +24,7 @@ class Login extends Component {
     try {
       // This will initiate the custom flow, which will lead to the user receiving a mail.
       // The code will timeout after 3 minutes (enforced server side by AWS Cognito). 
-      this.setState({ cognitoUser: await Auth.singIn(email) });
+      await Auth.signIn(email);
     } catch (error) {
       //TODO: Error handling in UI?
       console.log('Error while signing in', error);
@@ -51,7 +44,9 @@ class Login extends Component {
         // This will throw an error if the user is not yet authenticated:
         await Auth.currentSession();
         //User is now signed in
-        this.setState({ cognitoUser: user, isAuthenticated: true });
+        //a function to set the user somewhere else (e.g. global state via context api)
+        this.props.setUser(user);
+        this.props.setIsAuthenticated(true);
       } catch (error) {
         //TODO: Error handling in UI: wrong code
         console.log('Apparently the user did not enter the right code', error);
@@ -64,7 +59,9 @@ class Login extends Component {
   signOut = async () => {
     try {
       await Auth.signOut();
-      this.setState({ cognitoUser: null, isAuthenticated: false });
+      //a function to set the user somewhere else (e.g. global state via context api)
+      this.props.setUser(null);
+      this.props.setIsAuthenticated(false);
     } catch (error) {
       //TODO: Error handling in UI: Sign out error
       console.log('Error while signing out', error);
