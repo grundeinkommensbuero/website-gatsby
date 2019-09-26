@@ -9,28 +9,35 @@ class Login extends Component {
   // and signIn (which starts the custom flow of sending the magic code to the mail address)
   startSignInProcess = async () => {
     const mail = "example@mail.com";
-    await this.signUp(mail);
-    await this.signIn(mail);
+    try {
+      await this.signUp(mail);
+      await this.signIn(mail);
+    } catch (error) {
+      //We have to check, if the error happened due to the user already existing
+      //If that's the case we call signIn() anyway
+      if (error.code === "UsernameExistsException") {
+        await this.signIn(mail);
+      } else {
+        //TODO: Error handling in UI?
+        console.log('Error while signing up', error);
+      }
+    }
   }
 
   // Function to sign up user through AWS Cognito 
   // Tutorial: https://aws.amazon.com/de/blogs/mobile/implementing-passwordless-email-authentication-with-amazon-cognito/
   signUp = async (email) => {
-    try {
-      // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-      console.log(await Auth.signUp({
-        username: email,
-        password: getRandomString(30),
-        attributes: {
-          name: "testperson2"
-          //Custom attribute: iban
-          //Custom attribute: isDonationActive
-        }
-      }));
-    } catch (error) {
-      //TODO: Error handling in UI?
-      console.log('Error while signing up', error);
-    }
+    // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
+    console.log(await Auth.signUp({
+      username: email,
+      password: getRandomString(30),
+      attributes: {
+        name: "testperson2"
+        //Custom attribute: iban
+        //Custom attribute: isDonationActive
+      }
+    }));
+
   }
 
   // Sign in user through AWS Cognito (passwordless)
@@ -89,13 +96,13 @@ class Login extends Component {
 
   render() {
     return (
-   /*   
-      If we do the container-presenter (or controller-view if you will) model, this could look
-      something like this...
-      <LoginView
-        sendCode={() => this.answerCustomChallenge(code)}
-        signIn={() => this.startSignInProcess()}
-      /> */
+      /*   
+         If we do the container-presenter (or controller-view if you will) model, this could look
+         something like this...
+         <LoginView
+           sendCode={() => this.answerCustomChallenge(code)}
+           signIn={() => this.startSignInProcess()}
+         /> */
       <div></div>
     );
   }
