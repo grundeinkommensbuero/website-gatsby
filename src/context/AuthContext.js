@@ -37,6 +37,7 @@ class AuthProvider extends Component {
       } catch (error) {
         console.log('Error while updating iban');
       }
+
     }
   }
 
