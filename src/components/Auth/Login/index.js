@@ -33,8 +33,6 @@ class Login extends Component {
       password: getRandomString(30),
       attributes: {
         name: "testperson2"
-        //Custom attribute: iban
-        //Custom attribute: isDonationActive
       }
     }));
 
