@@ -8,12 +8,12 @@ import { AuthProvider } from './src/context/AuthContext';
 // so it only gets configured once, not every time a page changes
 export const wrapRootElement = ({ element }) => {
 
-  /*Amplify.configure({
+  Amplify.configure({
     region: cognitoConfig.REGION,
     userPoolId: cognitoConfig.USER_POOL_ID,
     userPoolWebClientId: cognitoConfig.APP_CLIENT_ID,
   });
-*/
+
   return (
     <AuthProvider>{element}</AuthProvider>
   )
