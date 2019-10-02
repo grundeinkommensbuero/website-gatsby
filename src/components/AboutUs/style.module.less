@@ -4,12 +4,14 @@
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   grid-gap: 4rem;
   font-size: @fontSizeM;
 
   @media (max-width: @breakPointM) {
     grid-gap: 2rem;
+    font-size: @fontSizeS;
+    margin-top: 1rem;
   }
 }
 
@@ -18,7 +20,7 @@
   text-align: center;
 
   @media (max-width: @breakPointM) {
-    padding: 0 2rem;
+    padding: 0 1rem;
   }
 
   &:nth-child(6n + 1) .image {
