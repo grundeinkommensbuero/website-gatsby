@@ -33,14 +33,25 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    @media (max-width: @breakPointS) {
+        display: block
+    }
 }
 
 .navItem {
     margin: 0;
     display: inline;
 
-    & + & {
-        margin-left: 1rem;
+    &:not(:last-child) {
+        margin-right: 1rem;
+    }
+
+    @media (max-width: @breakPointS) {
+        display: block
     }
 }
 
