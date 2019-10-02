@@ -10,6 +10,7 @@ body {
     background: @grey;
     margin: 0;
     color: @red;
+    --bg-color: @grey;
 }
 
 h1, h2, h3 {
@@ -19,4 +20,17 @@ h1, h2, h3 {
 
 a {
     color: currentColor;
+}
+
+p {
+    line-height: 1.5;
+
+    a {
+        text-decoration: none;
+        box-shadow: 0 0.1em 0 var(--bg-color), 0 0.2em 0 currentColor;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
 }
