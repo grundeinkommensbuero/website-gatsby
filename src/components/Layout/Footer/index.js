@@ -9,7 +9,9 @@ export default ({ footerText, footerMenu }) => (
       <ul className={s.navList}>
         {footerMenu.map((item, index) => (
           <li className={s.navItem} key={index}>
-            <Link to={`/${item.slug}/`}>{item.title}</Link>
+            <Link to={`/${item.slug}/`} className={s.link}>
+              {item.title}
+            </Link>
           </li>
         ))}
       </ul>
