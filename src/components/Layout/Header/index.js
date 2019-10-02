@@ -25,7 +25,9 @@ const Header = ({ sections }) => {
               if (id) {
                 return (
                   <li key={id} className={s.navItem}>
-                    <a href={`#${id}`}>{section.titleShort}</a>
+                    <a className={s.link} href={`#${id}`}>
+                      {section.titleShort}
+                    </a>
                   </li>
                 );
               }
