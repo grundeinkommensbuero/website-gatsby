@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - '8.11'
+  - '10.16.3'
 
 before_install:
   - pip install --user awscli
@@ -16,6 +16,7 @@ script:
     cat > .env.production << EOF
     CONTENTFUL_SPACE_ID='`$CONTENTFUL_SPACE_ID`'
     CONTENTFUL_ACCESS_TOKEN='`$CONTENTFUL_ACCESS_TOKEN`'
+    COGNITO_APP_CLIENT_ID='`$COGNITO_APP_CLIENT_ID`'
     EOF
   - yarn run build
 
