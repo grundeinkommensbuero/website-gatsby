@@ -24,6 +24,7 @@ export default function Sections({ sections }) {
             sloganLine2,
             __typename,
             teamMembers,
+            bodyTextSizeHuge,
           } = section;
 
           const id = stringToId(titleShort);
@@ -46,7 +47,11 @@ export default function Sections({ sections }) {
                   <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
                 )}
                 {body && (
-                  <div className={s.bodyText}>
+                  <div
+                    className={cN(s.bodyText, {
+                      [s.bodyTextHuge]: bodyTextSizeHuge,
+                    })}
+                  >
                     {documentToReactComponents(
                       body.json,
                       documentToREactComponentsOptions

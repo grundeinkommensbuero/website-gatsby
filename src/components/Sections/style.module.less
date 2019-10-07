@@ -45,10 +45,6 @@
   margin: 0 auto;
   position: relative;
   z-index: 1;
-
-  @media (min-width: @breakPointM) {
-    font-size: @fontSizeL;
-  }
 }
 
 .bodyText {
@@ -58,6 +54,12 @@
 
   > :first-child {
     margin-top: 0;
+  }
+}
+
+.bodyTextHuge {
+  @media (min-width: @breakPointM) {
+    font-size: @fontSizeL;
   }
 }
 
