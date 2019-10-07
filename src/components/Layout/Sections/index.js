@@ -2,10 +2,10 @@ import React from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import s from './style.module.less';
 import cN from 'classnames';
-import EmailListForm from '../EmailListForm';
-import { stringToId } from '../utils';
-import MainIllustration from '../MainIllustration';
-import AboutUs from '../AboutUs';
+import EmailListForm from '../../EmailListForm';
+import { stringToId } from '../../utils';
+import MainIllustration from '../../MainIllustration';
+import AboutUs from '../../AboutUs';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
