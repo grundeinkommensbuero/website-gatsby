@@ -6,6 +6,7 @@ import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
+import { LinkButton } from '../../Button';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -88,9 +89,9 @@ export default function Sections({ sections }) {
 function CallToAction({ callToActionText, callToActionLink }) {
   return (
     <div className={s.callToActionContainer}>
-      <a className={s.callToActionLink} href={callToActionLink}>
+      <LinkButton className={s.callToActionLink} href={callToActionLink}>
         {callToActionText}
-      </a>
+      </LinkButton>
     </div>
   );
 }

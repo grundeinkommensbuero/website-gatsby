@@ -121,19 +121,10 @@
   justify-content: left;
 }
 
-.callToActionLink {
-  padding: @buttonPadding;
-  border: var(--font-color) solid @borderWidth;
-  border-radius: @borderRadius;
-  text-decoration: none;
-
+.callToActionLink,
+.emailSignup {
   @media (min-width: @breakPointM) {
     font-size: @fontSizeL;
-  }
-
-  &:hover {
-    color: var(--bg-color);
-    background: var(--font-color);
   }
 }
 
