@@ -123,6 +123,10 @@
     border-radius: @borderRadius;
     text-decoration: none;
 
+    @media (min-width: @breakPointM) {
+        font-size: @fontSizeL;
+    }
+
     &:hover {
         color: var(--bg-color);
         background: var(--font-color);
