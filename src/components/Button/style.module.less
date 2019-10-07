@@ -1,0 +1,13 @@
+@import '../style/vars.less';
+
+.button {
+    padding: @buttonPadding;
+    border: var(--font-color) solid @borderWidth;
+    border-radius: @borderRadius;
+    text-decoration: none;
+
+    &:hover {
+        color: var(--bg-color);
+        background: var(--font-color);
+    }
+}
