@@ -3,7 +3,6 @@ import { graphql } from 'gatsby';
 import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
-import Body from '../Layout/Body';
 
 class StaticPage extends React.Component {
   render() {
@@ -25,17 +24,6 @@ class StaticPage extends React.Component {
             />
           )}
         </Helmet>
-
-        {page.body && (
-          <Body>
-            <h1>{page.title}</h1>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: page.body.childMarkdownRemark.html,
-              }}
-            />
-          </Body>
-        )}
       </Layout>
     );
   }
@@ -47,11 +35,6 @@ export const pageQuery = graphql`
   query StaticPageBySlug($slug: String!) {
     contentfulStaticContent(slug: { eq: $slug }) {
       title
-      body {
-        childMarkdownRemark {
-          html
-        }
-      }
       description {
         internal {
           content
