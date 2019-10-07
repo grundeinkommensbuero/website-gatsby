@@ -52,10 +52,12 @@ export default function Sections({ sections }) {
                       [s.bodyTextHuge]: bodyTextSizeHuge,
                     })}
                   >
-                    {documentToReactComponents(
-                      body.json,
-                      documentToREactComponentsOptions
-                    )}
+                    {body.json
+                      ? documentToReactComponents(
+                          body.json,
+                          documentToREactComponentsOptions
+                        )
+                      : body}
                   </div>
                 )}
                 {emailSignup && <EmailListForm className={s.emailSignup} />}
