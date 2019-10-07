@@ -3,7 +3,6 @@ import { graphql } from 'gatsby';
 import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
-import s from './style.module.less';
 import Body from '../Layout/Body';
 
 class StaticPage extends React.Component {
@@ -69,6 +68,7 @@ export const pageQuery = graphql`
             }
             callToActionLink
             callToActionText
+            bodyTextSizeHuge
             emailSignup
             teamMembers {
               image {
