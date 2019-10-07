@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import s from './style.module.less';
+import Body from '../Layout/Body';
 
 class StaticPage extends React.Component {
   render() {
@@ -25,17 +26,16 @@ class StaticPage extends React.Component {
             />
           )}
         </Helmet>
+
         {page.body && (
-          <div className={s.body}>
-            <div className={s.bodyInner}>
-              <h1>{page.title}</h1>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: page.body.childMarkdownRemark.html,
-                }}
-              />
-            </div>
-          </div>
+          <Body>
+            <h1>{page.title}</h1>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: page.body.childMarkdownRemark.html,
+              }}
+            />
+          </Body>
         )}
       </Layout>
     );
