@@ -28,7 +28,12 @@ export default function Sections({ sections }) {
 
           const id = stringToId(titleShort);
           return (
-            <section key={index} className={s.section}>
+            <section
+              key={index}
+              className={cN(s.section, {
+                [s.sectionVideo]: __typename === 'ContentfulPageSectionVideo',
+              })}
+            >
               <div id={id} className={s.jumpToAnchor} />
               <div
                 className={cN(s.sectionBody, {
