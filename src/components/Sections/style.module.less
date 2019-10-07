@@ -12,13 +12,6 @@
         padding: 3rem 1rem 5rem;
     }
 
-    &:nth-child(3n+3) {
-        --bg-color: @grey;
-        --font-color: @red;
-        background: @grey;
-        color: @red;
-    }
-
     &:nth-child(3n+1) {
         --bg-color: @yellow;
         --font-color: @red;
@@ -31,6 +24,13 @@
         --font-color: @greyBright;
         background: @red;
         color: @greyBright;
+    }
+
+    &:nth-child(3n+3), &:only-child {
+        --bg-color: @grey;
+        --font-color: @red;
+        background: @grey;
+        color: @red;
     }
 }
 
