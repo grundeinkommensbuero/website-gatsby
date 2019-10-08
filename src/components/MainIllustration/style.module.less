@@ -1,7 +1,9 @@
 @import '../style/vars.less';
 
 .container {
-    .globeBackground();
+    @media (max-width: @breakPointM) {
+        .globeBackground();
+    }
     background-attachment: fixed;
 }
 
