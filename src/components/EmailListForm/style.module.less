@@ -2,15 +2,23 @@
 
 .container {
     :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-horizontalRow input) {
-        .buttonAndInput();
+        background: @white !important;
+        border: none !important;
+        color: inherit !important;
+        font-family: inherit !important;
+        border-radius: 0 !important;
+        font-size: inherit !important;
+        padding: @buttonPadding !important;
+        line-height: inherit;
 
         &::placeholder {
-            color: inherit;
+            color: @grey;
+        }
         }
     }
 
     :global(#mlb2-1447292.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-horizontalRow button) {
-        .buttonAndInput();
+        .button();
         width: auto;
         &:hover {
             color: var(--bg-color) !important;
@@ -81,7 +89,7 @@
     }
  }
 
-.buttonAndInput() {
+.button() {
     background: transparent !important;
     border: currentColor @borderWidth solid !important;
     color: inherit !important;
