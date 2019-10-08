@@ -40,7 +40,8 @@ export default function Sections({ sections }) {
               <div
                 className={cN(s.sectionBody, {
                   [s.sectionBodyNoEvents]:
-                    __typename === 'ContentfulPageSectionIllustration',
+                    __typename === 'ContentfulPageSectionIllustration' ||
+                    __typename === 'ContentfulPageSectionVideo',
                 })}
               >
                 {title && <h1 className={s.title}>{title}</h1>}
