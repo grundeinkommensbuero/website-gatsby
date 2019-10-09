@@ -38,9 +38,6 @@ export function contentfulJsonToHtml(json) {
             target={`${
               node.data.uri.startsWith(website_url) ? '_blank' : '_self'
             }`}
-            rel={`${
-              node.data.uri.startsWith(website_url) ? '' : 'noopener noreferrer'
-            }`}
           >
             {node.content[0].value}
           </a>
