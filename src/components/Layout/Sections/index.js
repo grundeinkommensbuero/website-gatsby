@@ -1,9 +1,8 @@
 import React from 'react';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import s from './style.module.less';
 import cN from 'classnames';
 import EmailListForm from '../../EmailListForm';
-import { stringToId } from '../../utils';
+import { stringToId, contentfulJsonToHtml } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import { LinkButton } from '../../Button';
@@ -54,12 +53,7 @@ export default function Sections({ sections }) {
                       [s.bodyTextHuge]: bodyTextSizeHuge,
                     })}
                   >
-                    {body.json
-                      ? documentToReactComponents(
-                          body.json,
-                          documentToREactComponentsOptions
-                        )
-                      : body}
+                    {body.json ? contentfulJsonToHtml(body.json) : body}
                   </div>
                 )}
                 {emailSignup && <EmailListForm className={s.emailSignup} />}
@@ -121,12 +115,3 @@ function YoutubeEmbed({ url }) {
     </div>
   );
 }
-
-// needed so that line breaks are properly added.
-const documentToREactComponentsOptions = {
-  renderText: text => {
-    return text.split('\n').reduce((children, textSegment, index) => {
-      return [...children, index > 0 && <br key={index} />, textSegment];
-    }, []);
-  },
-};
