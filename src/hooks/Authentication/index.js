@@ -7,12 +7,39 @@ import { useContext } from 'react';
 import AuthContext from '../../context/Authentication';
 
 export const useAuthentication = () => {
-  return [startSignInProcess, answerCustomChallenge];
+  return [signUp];
 };
 
 export const useGlobalState = () => {
   return useContext(AuthContext);
 };
+
+const signUp = async email => {
+  try {
+    // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
+    console.log(
+      await Auth.signUp({
+        username: email,
+        password: getRandomString(30),
+        attributes: {
+          name: getRandomString(10),
+        },
+      })
+    );
+  } catch (error) {
+    //We have to check, if the error happened due to the user already existing
+    if (error.code === 'UsernameExistsException') {
+      console.log('user already exists');
+    } else {
+      //TODO: Error handling in UI?
+      console.log('Error while signing up', error);
+    }
+  }
+};
+
+/*
+  Not needed anymore until we really need a login
+
 
 // This functions calls signUp (which creates the user in aws user pool)
 // and signIn (which starts the custom flow of sending the magic code to the mail address)
@@ -113,3 +140,5 @@ const signIn = async (email, context) => {
     console.log('Error while signing in', error);
   }
 };
+
+*/

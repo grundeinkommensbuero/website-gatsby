@@ -8,17 +8,13 @@ export default class PlayingAround extends Component {
 }
 
 const TestComponent = () => {
-  const [startSignInProcess, answerCustomChallenge] = useAuthentication();
-  const context = useGlobalState();
+  const [signUp] = useAuthentication();
   const [state, setState] = useState({ value: '' });
+  const context = useGlobalState();
   console.log('context inside header', context);
   return (
     <div>
-      <button
-        onClick={() =>
-          startSignInProcess('valentin@grundeinkommensbuero.de', context)
-        }
-      >
+      <button onClick={() => signUp('valentin@grundeinkommensbuero.de')}>
         Click me
       </button>
       <input
