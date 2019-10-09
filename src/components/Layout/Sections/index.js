@@ -84,7 +84,11 @@ export default function Sections({ sections }) {
 function CallToAction({ callToActionText, callToActionLink }) {
   return (
     <div className={s.callToActionContainer}>
-      <LinkButton className={s.callToActionLink} href={callToActionLink}>
+      <LinkButton
+        target="_blank"
+        className={s.callToActionLink}
+        href={callToActionLink}
+      >
         {callToActionText}
       </LinkButton>
     </div>
