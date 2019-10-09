@@ -41,6 +41,7 @@ module.exports = {
         siteId: '1',
         matomoUrl: 'https://expeditiongrundeinkommen.matomo.cloud',
         siteUrl: 'https://www.expedition-grundeinkommen.de',
+        disableCookies: true,
       },
     },
   ],
