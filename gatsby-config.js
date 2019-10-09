@@ -36,13 +36,11 @@ module.exports = {
       options: contentfulConfig,
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-matomo',
       options: {
-        trackingId: 'UA-145625294-1',
-        // Defines where to place the tracking script - `true` in the head and `false` in the body
-        head: true,
-        // Setting this parameter is optional
-        anonymize: true,
+        siteId: '1',
+        matomoUrl: 'https://expeditiongrundeinkommen.matomo.cloud',
+        siteUrl: 'https://www.expedition-grundeinkommen.de',
       },
     },
   ],
