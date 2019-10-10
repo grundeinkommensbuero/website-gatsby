@@ -1,12 +1,19 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
+import { usePledgeApi } from '../../../hooks/Api/Pledge';
 
 export default ({}) => {
+  const [pledgeApi] = usePledgeApi();
+
   return (
     <Form
       onSubmit={e => {
         console.log('sumbmitting...', e);
+        const foo = pledgeApi(e);
+        foo.then(e => {
+          console.log('finally', e);
+        });
       }}
       validate={validate}
       render={({ handleSubmit }) => (
@@ -64,7 +71,7 @@ export default ({}) => {
           </FormSection>
 
           <FormSection label="Wie erreichen wir dich?">
-            <Field name="mail" label="E-Mail" component={TextInput}></Field>
+            <Field name="email" label="E-Mail" component={TextInput}></Field>
           </FormSection>
 
           <FormSection label="Wie möchtest du genannt werden?">
@@ -94,8 +101,8 @@ const validate = values => {
     errors.privacyConcent = 'Wir benötigen dein Einverständnis';
   }
 
-  if (!validateEmail(values.mail)) {
-    errors.mail = 'Wir benötigen eine valide E-Mail Adresse.';
+  if (!validateEmail(values.email)) {
+    errors.email = 'Wir benötigen eine valide E-Mail Adresse.';
   }
   return errors;
 };
