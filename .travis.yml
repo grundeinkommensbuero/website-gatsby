@@ -76,7 +76,7 @@ deploy:
     skip_cleanup: true
     region: 'eu-central-1'
     on:
-      all_branches: true
+      branch: $TRAVIS_BRANCH
       tags: true
 
 after_deploy:
