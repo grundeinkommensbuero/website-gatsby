@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
+import { validateEmail } from '../../utils';
 
 export default ({}) => {
   return (
@@ -80,6 +81,10 @@ const validate = values => {
   if (!values.privacyConcent) {
     errors.privacyConcent = 'Wir benötigen dein Einverständnis';
   }
+
+  if (!validateEmail(values.mail)) {
+    errors.mail = 'Wir benötigen eine valide E-Mail Adresse.';
+  }
   return errors;
 };
 
@@ -99,17 +104,19 @@ const Checkbox = ({ input, label, meta }) => (
   </label>
 );
 
-const TextInputOneLine = ({ input, label }) => (
+const TextInputOneLine = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <span>{label}</span>
     <input {...input} />
+    {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
 
-const TextInput = ({ input, label }) => (
+const TextInput = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <div>{label}</div>
     <input {...input} />
+    {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
 
