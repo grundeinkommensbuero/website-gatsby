@@ -76,6 +76,7 @@ deploy:
     skip_cleanup: true
     region: 'eu-central-1'
     on:
+      all_branches: true
       tags: true
 
 after_deploy:
