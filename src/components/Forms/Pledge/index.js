@@ -16,6 +16,8 @@ export default ({}) => {
               label="Wie engagiert bist du?"
               component={EngagementSlider}
               type="range"
+              min={1}
+              max={5}
             />
           </FormSection>
 
@@ -111,10 +113,10 @@ const TextInput = ({ input, label }) => (
   </label>
 );
 
-const EngagementSlider = ({ input, label }) => (
+const EngagementSlider = ({ input, label, min, max }) => (
   <div>
     <label htmlFor={`slider_${input.name}`}>{label}</label>
     <br />
-    <input id={`slider_${input.name}`} {...input} />
+    <input id={`slider_${input.name}`} min={min} max={max} {...input} />
   </div>
 );
