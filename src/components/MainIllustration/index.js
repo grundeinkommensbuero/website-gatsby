@@ -52,7 +52,7 @@ function Illustration({ illustration, className }) {
     }
 
     Array.from(svg.children).forEach(element => {
-      if (element.id !== 'background') {
+      if (!element.id.includes('background')) {
         Array.from(element.children).forEach(element => {
           if (
             element.tagName === 'path' ||
