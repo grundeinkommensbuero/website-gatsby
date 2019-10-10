@@ -15,10 +15,11 @@ before_install:
       eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
     elif [ "$TRAVIS_BRANCH" = "master" ]; then
       eval export CLOUDFRONT_DISTRIBUTION="$PROD_CLOUDFRONT_DISTRIBUTION"
-    elif [ "$TRAVIS_BRANCH" = "dev" && "$TRAVIS_TAG" ]; then
+    elif [ "$TRAVIS_BRANCH" = "dev" ]; then
       eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
     fi
   - echo $CLOUDFRONT_DISTRIBUTION
+  - echo $TRAVIS_BRANCH
 
 cache: yarn
 
