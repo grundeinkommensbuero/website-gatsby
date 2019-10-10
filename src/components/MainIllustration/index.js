@@ -52,15 +52,17 @@ function Illustration({ illustration, className }) {
     }
 
     Array.from(svg.children).forEach(element => {
-      Array.from(element.children).forEach(element => {
-        if (
-          element.tagName === 'path' ||
-          element.tagName === 'polygon' ||
-          element.tagName === 'g'
-        ) {
-          makeDraggable(element, postionCorrections);
-        }
-      });
+      if (!element.id.includes('background')) {
+        Array.from(element.children).forEach(element => {
+          if (
+            element.tagName === 'path' ||
+            element.tagName === 'polygon' ||
+            element.tagName === 'g'
+          ) {
+            makeDraggable(element, postionCorrections);
+          }
+        });
+      }
     });
   });
 

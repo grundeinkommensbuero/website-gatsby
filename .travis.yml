@@ -6,6 +6,20 @@ node_js:
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
+  - |
+    if [ "$TRAVIS_TAG" ]; then
+      eval export CLOUDFRONT_DISTRIBUTION="$DEMO_CLOUDFRONT_DISTRIBUTION"
+    fi
+  - |
+    if [ "$TRAVIS_BRANCH" = "master" && "$IS_CONTENTFUL" = "true" ]; then
+      eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
+    elif [ "$TRAVIS_BRANCH" = "master" ]; then
+      eval export CLOUDFRONT_DISTRIBUTION="$PROD_CLOUDFRONT_DISTRIBUTION"
+    elif [ "$TRAVIS_BRANCH" = "dev" ]; then
+      eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
+    fi
+  - echo $CLOUDFRONT_DISTRIBUTION
+  - echo $TRAVIS_BRANCH
 
 cache: yarn
 
