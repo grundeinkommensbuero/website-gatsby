@@ -38,7 +38,8 @@ const savePledge = async pledge => {
         body: JSON.stringify(data),
       };
       const response = await fetch(config.API.INVOKE_URL + '/pledge', request);
-      return await response.json();
+      const jsonResponse = await response.json();
+      return jsonResponse;
     } else {
       console.log('User already exists or other error');
       return null;
