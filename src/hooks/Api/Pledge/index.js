@@ -5,20 +5,20 @@
 import { config } from '../../../../aws-config';
 import { signUp } from '../../Authentication';
 
+/*
+  email
+  name
+  engagementLevel: number 1-5,
+  wouldVisitLocalGroup: boolean,
+  wouldDonate: boolean,
+  wouldEngageCustom: string (can be left out),
+  zipCode: number,
+  eligibleToVote: string (2019, 2020, 2021, laterThan2021)
+*/
+
 export const usePledgeApi = () => {
   return [savePledge];
 };
-
-/*
-pledge = {
-  engagementLevel: number (0,1,2,...),
-  groupMeetings: boolean,
-  financialAid: boolean,
-  customOption: string (can be left out),
-  zipCode: number,
-  eligible: number (0 = ja, 1 = ab 2020, etc)
-}
-*/
 
 // Function which calls the aws api to create a new pledge
 const savePledge = async pledge => {
