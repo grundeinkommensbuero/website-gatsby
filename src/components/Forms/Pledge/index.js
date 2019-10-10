@@ -24,15 +24,13 @@ export default ({}) => {
 
           <FormSection label="Wie möchtest du dich einbringen?">
             <Field
-              name="engagementActions"
-              value="visitLocalGroup"
+              name="wouldVisitLocalGroup"
               type="checkbox"
               label="Zu lokalen Gruppen gehen"
               component={Checkbox}
             ></Field>
             <Field
-              name="engagementActions"
-              value="donate"
+              name="wouldDonate"
               type="checkbox"
               label="Ich möchte euch finanziell unterstützen"
               component={Checkbox}
