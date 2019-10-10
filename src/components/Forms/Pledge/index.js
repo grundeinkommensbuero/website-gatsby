@@ -7,6 +7,7 @@ export default ({}) => {
       onSubmit={e => {
         console.log('sumbmitting...', e);
       }}
+      validate={validate}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <FormSection>
@@ -55,11 +56,29 @@ export default ({}) => {
             <Field name="name" label="Dein Name" component={TextInput}></Field>
           </FormSection>
 
+          <FormSection>
+            <Field
+              name="privacyConcent"
+              label="Datenschutz und so"
+              type="checkbox"
+              component={Checkbox}
+            ></Field>
+          </FormSection>
+
           <button type="submit">Ich bin dabei!</button>
         </form>
       )}
     ></Form>
   );
+};
+
+const validate = values => {
+  const errors = {};
+
+  if (!values.privacyConcent) {
+    errors.privacyConcent = 'Wir benötigen dein Einverständnis';
+  }
+  return errors;
 };
 
 const FormSection = ({ label, children }) => (
@@ -70,10 +89,11 @@ const FormSection = ({ label, children }) => (
   </>
 );
 
-const Checkbox = ({ input, label }) => (
+const Checkbox = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <input {...input} />
     <span>{label}</span>
+    {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
 
