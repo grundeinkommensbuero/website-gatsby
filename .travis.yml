@@ -9,20 +9,6 @@ before_install:
 
 cache: yarn
 
-before_install:
-  - |
-      if [ "$TRAVIS_BRANCH" == "master" && "$IS_CONTENTFUL" == "true" ]; then
-        CLOUDFRONT_DISTRIBUTION = $STAGING_CLOUDFRONT_DISTRIBUTION
-      elif [ "$TRAVIS_BRANCH" = "master" ]; then
-        CLOUDFRONT_DISTRIBUTION = $PROD_CLOUDFRONT_DISTRIBUTION
-      elif [ "$TRAVIS_BRANCH" == "develop" ]; then
-        CLOUDFRONT_DISTRIBUTION = $DEV_CLOUDFRONT_DISTRIBUTION
-      elif [ "$TRAVIS_BRANCH" == "develop" && "$$TRAVIS_TAG" ]; then
-        CLOUDFRONT_DISTRIBUTION = $DEMO_CLOUDFRONT_DISTRIBUTION
-      elif [ "$$TRAVIS_TAG" ]; then
-        CLOUDFRONT_DISTRIBUTION = $DEMO_CLOUDFRONT_DISTRIBUTION
-      fi
-
 script:
   - yarn
   - yarn run lint
@@ -42,6 +28,7 @@ deploy:
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$PROD_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       branch: master
@@ -52,6 +39,7 @@ deploy:
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$STAGING_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       branch: master
@@ -63,6 +51,7 @@ deploy:
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$DEV_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       branch: dev
@@ -74,6 +63,7 @@ deploy:
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$DEMO_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       tags: true
