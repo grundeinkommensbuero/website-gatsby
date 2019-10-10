@@ -46,6 +46,7 @@ deploy:
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$PROD_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       branch: master
@@ -56,6 +57,7 @@ deploy:
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$STAGING_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       branch: master
