@@ -49,6 +49,20 @@ export default ({}) => {
             <Field name="PLZ" label="PLZ" component={TextInput}></Field>
           </FormSection>
 
+          <FormSection>
+            <Field
+              name="eligibleToVote"
+              label="Bist du wahlberechtigt?"
+              component={Select}
+            >
+              <option />
+              <option value="2019">Ja</option>
+              <option value="2020">ab 2020</option>
+              <option value="2021">ab 2021</option>
+              <option value="laterThan2021">später</option>
+            </Field>
+          </FormSection>
+
           <FormSection label="Wie erreichen wir dich?">
             <Field name="mail" label="E-Mail" component={TextInput}></Field>
           </FormSection>
@@ -114,6 +128,14 @@ const TextInput = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <div>{label}</div>
     <input {...input} />
+    {meta.error && meta.touched && <div>{meta.error}</div>}
+  </label>
+);
+
+const Select = ({ input, children, label, meta }) => (
+  <label style={{ display: 'block' }}>
+    <div>{label}</div>
+    <select {...input}>{children}</select>
     {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
