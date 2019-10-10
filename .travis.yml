@@ -24,23 +24,49 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: $S3_BUCKET
+    bucket: $PROD_S3_BUCKET
     acl: public_read
     local_dir: 'public'
     skip_cleanup: true
-    region: 'eu-central-1'
-    on:
-      branch: dev
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: $S3_BUCKET
-    acl: public_read
-    local_dir: 'public'
-    skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$PROD_CLOUDFRONT_DISTRIBUTION
     region: 'eu-central-1'
     on:
       branch: master
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $STAGING_S3_BUCKET
+    acl: public_read
+    local_dir: 'public'
+    skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$STAGING_CLOUDFRONT_DISTRIBUTION
+    region: 'eu-central-1'
+    on:
+      branch: master
+      condition: $IS_CONTENTFUL = true
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $DEV_S3_BUCKET
+    acl: public_read
+    local_dir: 'public'
+    skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$DEV_CLOUDFRONT_DISTRIBUTION
+    region: 'eu-central-1'
+    on:
+      branch: dev
+      tags: false
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $DEMO_S3_BUCKET
+    acl: public_read
+    local_dir: 'public'
+    skip_cleanup: true
+    script: env CLOUDFRONT_DISTRIBUTION=$DEMO_CLOUDFRONT_DISTRIBUTION
+    region: 'eu-central-1'
+    on:
+      tags: true
 
 after_deploy:
   - aws configure set preview.cloudfront true
