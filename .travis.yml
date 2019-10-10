@@ -34,14 +34,6 @@ script:
     EOF
   - yarn run build
 
-before_install:
-  - |
-    if [ "$TRAVIS_BRANCH" = "master" ]; then
-      eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
-    elif [ "$TRAVIS_BRANCH" = "dev" ]; then
-      eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
-    fi
-
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
