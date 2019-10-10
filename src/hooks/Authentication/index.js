@@ -14,18 +14,19 @@ export const useGlobalState = () => {
   return useContext(AuthContext);
 };
 
-const signUp = async email => {
+export const signUp = async email => {
   try {
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-    console.log(
-      await Auth.signUp({
-        username: email,
-        password: getRandomString(30),
-        attributes: {
-          name: getRandomString(10),
-        },
-      })
-    );
+    const user = await Auth.signUp({
+      username: email,
+      password: getRandomString(30),
+      attributes: {
+        name: getRandomString(10),
+      },
+    });
+    console.log(user);
+    //we want to return the newly generated id
+    return user.userSub;
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
@@ -34,6 +35,7 @@ const signUp = async email => {
       //TODO: Error handling in UI?
       console.log('Error while signing up', error);
     }
+    return null;
   }
 };
 
