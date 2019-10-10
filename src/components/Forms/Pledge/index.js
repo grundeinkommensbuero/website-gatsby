@@ -43,7 +43,7 @@ export default ({}) => {
               component={Checkbox}
             ></Field>
             <Field
-              name="otherEngagement"
+              name="wouldEngageCustom"
               label="Anderes: "
               component={TextInputOneLine}
             ></Field>
@@ -53,7 +53,7 @@ export default ({}) => {
             label="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
             Wo wohnst du?"
           >
-            <Field name="PLZ" label="PLZ" component={TextInput}></Field>
+            <Field name="zipCode" label="PLZ" component={TextInput}></Field>
           </FormSection>
 
           <FormSection>
