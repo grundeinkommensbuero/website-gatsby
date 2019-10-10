@@ -2,11 +2,12 @@ import React from 'react';
 import Layout from '../components/Layout';
 import Helmet from 'react-helmet';
 import Sections from '../components/Layout/Sections';
+import Pledge from '../components/Forms/Pledge';
 
 const sections = [
   {
     title: 'Playground',
-    body: <p>Hier werden Dinge ausprobiert.</p>,
+    body: <Pledge />,
   },
 ];
 
