@@ -6,6 +6,12 @@ node_js:
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
+  - |
+    if [ "$TRAVIS_BRANCH" = "master" ]; then
+      eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
+    elif [ "$TRAVIS_BRANCH" = "dev" ]; then
+      eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
+    fi
 
 cache: yarn
 
@@ -19,14 +25,6 @@ script:
     COGNITO_APP_CLIENT_ID='`$COGNITO_APP_CLIENT_ID`'
     EOF
   - yarn run build
-
-before_install:
-  - |
-    if [ "$TRAVIS_BRANCH" = "master" ]; then
-      eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
-    elif [ "$TRAVIS_BRANCH" = "dev" ]; then
-      eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
-    fi
 
 deploy:
   - provider: s3
