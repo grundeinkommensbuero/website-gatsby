@@ -5,6 +5,10 @@ import { usePledgeApi } from '../../../hooks/Api/Pledge';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
+  /* 
+    state (string) can be:
+    null (before form is submitted), "saving", "saved", "userExists", "error"
+  */
   console.log('pledge state', state);
   return (
     <Form
