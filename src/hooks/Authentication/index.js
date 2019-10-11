@@ -1,7 +1,7 @@
 /**
  * This file holds several hook functions regarding everything concerning authentication
  */
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { getRandomString } from '../../components/utils';
 import { useContext } from 'react';
 import AuthContext from '../../context/Authentication';

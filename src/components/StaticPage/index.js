@@ -1,12 +1,11 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
 
 class StaticPage extends React.Component {
   render() {
-    const page = get(this.props, 'data.contentfulStaticContent');
+    const page = this.props.data.contentfulStaticContent;
 
     return (
       <Layout
@@ -55,9 +54,8 @@ export const pageQuery = graphql`
             emailSignup
             teamMembers {
               image {
-                fluid(maxWidth: 500) {
-                  srcSet
-                  src
+                fluid(maxWidth: 200, quality: 80) {
+                  ...GatsbyContentfulFluid
                 }
               }
               name
