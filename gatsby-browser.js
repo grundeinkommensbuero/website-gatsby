@@ -1,6 +1,6 @@
 import React from 'react';
-import Amplify from 'aws-amplify';
-import { config } from './aws-config';
+// import Amplify from 'aws-amplify';
+// import { config } from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
