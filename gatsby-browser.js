@@ -15,3 +15,6 @@ export const wrapRootElement = ({ element }) => {
   */
   return <AuthProvider>{element}</AuthProvider>;
 };
+
+window.commitHash = COMMITHASH;
+window.version = VERSION;
