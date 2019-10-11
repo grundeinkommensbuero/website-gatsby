@@ -4,13 +4,13 @@ import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 
 export default ({}) => {
-  const [pledgeApi] = usePledgeApi();
-
+  const [state, savePledge] = usePledgeApi();
+  console.log('pledge state', state);
   return (
     <Form
       onSubmit={e => {
         console.log('sumbmitting...', e);
-        const foo = pledgeApi(e);
+        const foo = savePledge(e);
         foo.then(e => {
           console.log('finally', e);
         });
