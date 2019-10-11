@@ -28,8 +28,8 @@
     "heroku-postbuild": "gatsby build"
   },
   "dependencies": {
+    "@aws-amplify/auth": "^1.4.2",
     "@contentful/rich-text-react-renderer": "^13.4.0",
-    "aws-amplify": "^1.1.40",
     "classnames": "^2.2.6",
     "final-form": "^4.18.5",
     "gatsby-image": "^2.0.38",
@@ -38,6 +38,7 @@
     "gatsby-plugin-matomo": "^0.7.2",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-sharp": "^2.0.34",
+    "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-source-contentful": "^2.0.48",
     "gatsby-transformer-remark": "^2.3.8",
     "gatsby-transformer-sharp": "^2.1.18",
