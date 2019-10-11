@@ -1,12 +1,11 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import get from 'lodash/get';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
 
 class StaticPage extends React.Component {
   render() {
-    const page = get(this.props, 'data.contentfulStaticContent');
+    const page = this.props.data.contentfulStaticContent;
 
     return (
       <Layout
