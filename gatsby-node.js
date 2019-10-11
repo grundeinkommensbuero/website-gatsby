@@ -1,5 +1,8 @@
 const Promise = require('bluebird');
 const path = require('path');
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const webpack = require('webpack');
+const gitRevisionPlugin = new GitRevisionPlugin();
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
@@ -40,5 +43,22 @@ exports.createPages = ({ graphql, actions }) => {
         });
       })
     );
+  });
+};
+
+exports.onCreateWebpackConfig = ({
+  stage,
+  rules,
+  loaders,
+  plugins,
+  actions,
+}) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.DefinePlugin({
+        VERSION: JSON.stringify(gitRevisionPlugin.version()),
+        COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
+      }),
+    ],
   });
 };

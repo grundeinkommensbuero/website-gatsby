@@ -41,6 +41,7 @@
     "gatsby-source-contentful": "^2.0.48",
     "gatsby-transformer-remark": "^2.3.8",
     "gatsby-transformer-sharp": "^2.1.18",
+    "git-revision-webpack-plugin": "^3.0.4",
     "interactjs": "^1.4.0-rc.13",
     "less": "^3.10.3",
     "lodash": "^4.17.14",
