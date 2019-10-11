@@ -55,9 +55,8 @@ export const pageQuery = graphql`
             emailSignup
             teamMembers {
               image {
-                fluid(maxWidth: 500) {
-                  srcSet
-                  src
+                fluid(maxWidth: 500, quality: 80) {
+                  ...GatsbyContentfulFluid
                 }
               }
               name
