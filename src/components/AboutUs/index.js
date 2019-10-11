@@ -12,7 +12,7 @@ const AboutUs = ({ members, className }) => {
           <li key={index} className={s.member}>
             {image && (
               <div className={s.imageContainer}>
-                <Img fluid={image.fluid} className={s.image} />
+                <Img fluid={image.fluid} className={s.image} loading="lazy" />
               </div>
             )}
             <span>{name}</span>
