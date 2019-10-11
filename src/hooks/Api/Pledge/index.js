@@ -20,7 +20,7 @@ import { useState } from 'react';
 export const usePledgeApi = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our savePledge function, so we can set the state from there
-  const [state, setState] = useState();
+  const [state, setState] = useState(null);
   return [state, pledge => savePledge(pledge, setState)];
 };
 
