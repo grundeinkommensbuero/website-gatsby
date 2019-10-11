@@ -14,7 +14,7 @@ export const useGlobalState = () => {
   return useContext(AuthContext);
 };
 
-export const signUp = async email => {
+const signUp = async email => {
   try {
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
     const user = await Auth.signUp({
