@@ -59,7 +59,6 @@ function Illustration({ illustration, className }) {
             element.tagName === 'polygon' ||
             element.tagName === 'g'
           ) {
-            console.log(element);
             makeDraggable(element, postionCorrections);
           }
         });
