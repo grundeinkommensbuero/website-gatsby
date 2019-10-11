@@ -6,13 +6,17 @@ import { AuthProvider } from './src/context/Authentication';
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
 export const wrapRootElement = ({ element }) => {
-  console.log('userpoolid', config.COGNITO.USER_POOL_ID);
-  console.log('web client id', process.env.COGNITO_APP_CLIENT_ID);
-  Amplify.configure({
-    region: config.COGNITO.REGION,
-    userPoolId: config.COGNITO.USER_POOL_ID,
-    userPoolWebClientId: process.env.COGNITO_APP_CLIENT_ID,
-  });
+  const clientId = process.env.COGNITO_APP_CLIENT_ID;
+  console.log('client id', clientId);
+  if (clientId) {
+    Amplify.configure({
+      region: config.COGNITO.REGION,
+      userPoolId: config.COGNITO.USER_POOL_ID,
+      userPoolWebClientId: clientId,
+    });
+  } else {
+    console.log('no userPoolWebClientId provided');
+  }
 
   return <AuthProvider>{element}</AuthProvider>;
 };
