@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { TextInput, TextInputInline, TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
-import Checkbox from '../Checkbox';
+import { Checkbox } from '../Checkbox';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
