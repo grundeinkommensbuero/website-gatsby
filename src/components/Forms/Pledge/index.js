@@ -2,10 +2,11 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
+import { Button } from '../../Button';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
-  /* 
+  /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
@@ -91,7 +92,7 @@ export default ({}) => {
             ></Field>
           </FormSection>
 
-          <button type="submit">Ich bin dabei!</button>
+          <Button type="submit">Ich bin dabei!</Button>
         </form>
       )}
     ></Form>
