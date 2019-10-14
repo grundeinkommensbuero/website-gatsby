@@ -89,7 +89,12 @@ export default () => {
             heading="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
             Wo wohnst du?"
           >
-            <Field name="zipCode" label="PLZ" component={TextInput}></Field>
+            <Field
+              name="zipCode"
+              label="Postleitzahl"
+              placeholder="12345"
+              component={TextInputWrapped}
+            ></Field>
           </FormSection>
 
           <FormSection>
@@ -110,6 +115,7 @@ export default () => {
             <Field
               name="email"
               label="E-Mail"
+              placeholder="beispiel@blubb.de"
               component={TextInputWrapped}
             ></Field>
           </FormSection>
@@ -118,6 +124,7 @@ export default () => {
             <Field
               name="name"
               label="Dein Name"
+              placeholder="Max Musterfrau"
               component={TextInputWrapped}
             ></Field>
           </FormSection>
