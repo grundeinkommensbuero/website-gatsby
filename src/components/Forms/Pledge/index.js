@@ -3,6 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
+import { TextInput } from '../TextInput';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
@@ -76,11 +77,19 @@ export default ({}) => {
           </FormSection>
 
           <FormSection label="Wie erreichen wir dich?">
-            <Field name="email" label="E-Mail" component={TextInput}></Field>
+            <Field
+              name="email"
+              label="E-Mail"
+              component={TextInputField}
+            ></Field>
           </FormSection>
 
           <FormSection label="Wie möchtest du genannt werden?">
-            <Field name="name" label="Dein Name" component={TextInput}></Field>
+            <Field
+              name="name"
+              label="Dein Name"
+              component={TextInputField}
+            ></Field>
           </FormSection>
 
           <FormSection>
@@ -136,10 +145,10 @@ const TextInputOneLine = ({ input, label, meta }) => (
   </label>
 );
 
-const TextInput = ({ input, label, meta }) => (
+const TextInputField = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <div>{label}</div>
-    <input {...input} />
+    <TextInput {...input} />
     {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
