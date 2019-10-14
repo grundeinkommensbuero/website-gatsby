@@ -1,0 +1,21 @@
+@import '../../style/vars.less';
+
+.textInput {
+    background: @white ;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    border-radius: 0;
+    font-size: inherit;
+    padding: @buttonPadding;
+    line-height: inherit;
+
+    &::placeholder {
+        color: @grey;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 @borderWidthThick var(--font-color);
+    }
+}
