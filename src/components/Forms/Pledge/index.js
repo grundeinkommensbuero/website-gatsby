@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
-import { TextInput } from '../TextInput';
+import { TextInput, TextInputInline } from '../TextInput';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
@@ -140,7 +140,7 @@ const Checkbox = ({ input, label, meta }) => (
 const TextInputOneLine = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <span>{label}</span>
-    <input {...input} />
+    <TextInputInline {...input} />
     {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
