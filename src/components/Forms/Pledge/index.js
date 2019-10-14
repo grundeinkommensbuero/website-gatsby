@@ -5,9 +5,9 @@ import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
 import { TextInput, TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
-import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { Checkbox } from '../Checkbox';
 import { SelectWrapped } from '../Select';
+import { EngagementSlider } from '../EngagementSlider';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
@@ -70,7 +70,7 @@ export default ({}) => {
             <Field
               name="eligibleToVote"
               label="Bist du wahlberechtigt?"
-              component={Select}
+              component={SelectWrapped}
             >
               <option />
               <option value="2019">Ja</option>
@@ -124,10 +124,3 @@ const validate = values => {
   }
   return errors;
 };
-const EngagementSlider = ({ input, label, min, max }) => (
-  <div>
-    <label htmlFor={`slider_${input.name}`}>{label}</label>
-    <br />
-    <input id={`slider_${input.name}`} min={min} max={max} {...input} />
-  </div>
-);
