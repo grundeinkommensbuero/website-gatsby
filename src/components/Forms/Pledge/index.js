@@ -7,6 +7,7 @@ import { TextInput, TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { Checkbox } from '../Checkbox';
+import { SelectWrapped } from '../Select';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
@@ -123,13 +124,6 @@ const validate = values => {
   }
   return errors;
 };
-
-const Select = ({ input, children, label, meta }) => (
-  <LabelInputErrorWrapper label={label} meta={meta}>
-    <select {...input}>{children}</select>
-  </LabelInputErrorWrapper>
-);
-
 const EngagementSlider = ({ input, label, min, max }) => (
   <div>
     <label htmlFor={`slider_${input.name}`}>{label}</label>
