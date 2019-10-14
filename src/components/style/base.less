@@ -16,7 +16,16 @@ body {
 h1,
 h2,
 h3 {
-  font-size: 2rem;
+  font-size: @fontSizeL;
+  font-weight: normal;
+
+  @media (max-width: @breakPointM) {
+    hyphens: auto;
+  }
+}
+
+h4 {
+  font-size: @fontSizeM;
   font-weight: normal;
 
   @media (max-width: @breakPointM) {
