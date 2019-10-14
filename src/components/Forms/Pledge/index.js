@@ -4,6 +4,8 @@ import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
 import { TextInput, TextInputInline } from '../TextInput';
+import FormSection from '../FormSection';
+import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
@@ -35,7 +37,7 @@ export default ({}) => {
             />
           </FormSection>
 
-          <FormSection label="Wie möchtest du dich einbringen?">
+          <FormSection heading="Wie möchtest du dich einbringen?">
             <Field
               name="wouldVisitLocalGroup"
               type="checkbox"
@@ -56,7 +58,7 @@ export default ({}) => {
           </FormSection>
 
           <FormSection
-            label="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
+            heading="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
             Wo wohnst du?"
           >
             <Field name="zipCode" label="PLZ" component={TextInput}></Field>
@@ -76,7 +78,7 @@ export default ({}) => {
             </Field>
           </FormSection>
 
-          <FormSection label="Wie erreichen wir dich?">
+          <FormSection heading="Wie erreichen wir dich?">
             <Field
               name="email"
               label="E-Mail"
@@ -84,7 +86,7 @@ export default ({}) => {
             ></Field>
           </FormSection>
 
-          <FormSection label="Wie möchtest du genannt werden?">
+          <FormSection heading="Wie möchtest du genannt werden?">
             <Field
               name="name"
               label="Dein Name"
@@ -121,14 +123,6 @@ const validate = values => {
   return errors;
 };
 
-const FormSection = ({ label, children }) => (
-  <>
-    {label && <div>{label}</div>}
-    {children}
-    <br />
-  </>
-);
-
 const Checkbox = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
     <input {...input} />
@@ -146,19 +140,15 @@ const TextInputOneLine = ({ input, label, meta }) => (
 );
 
 const TextInputField = ({ input, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <div>{label}</div>
+  <LabelInputErrorWrapper label={label} meta={meta}>
     <TextInput {...input} />
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
+  </LabelInputErrorWrapper>
 );
 
 const Select = ({ input, children, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <div>{label}</div>
+  <LabelInputErrorWrapper label={label} meta={meta}>
     <select {...input}>{children}</select>
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
+  </LabelInputErrorWrapper>
 );
 
 const EngagementSlider = ({ input, label, min, max }) => (
