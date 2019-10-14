@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
-import { TextInput, TextInputInline } from '../TextInput';
+import { TextInput, TextInputInline, TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 
@@ -82,7 +82,7 @@ export default ({}) => {
             <Field
               name="email"
               label="E-Mail"
-              component={TextInputField}
+              component={TextInputWrapped}
             ></Field>
           </FormSection>
 
@@ -90,7 +90,7 @@ export default ({}) => {
             <Field
               name="name"
               label="Dein Name"
-              component={TextInputField}
+              component={TextInputWrapped}
             ></Field>
           </FormSection>
 
@@ -137,12 +137,6 @@ const TextInputOneLine = ({ input, label, meta }) => (
     <TextInputInline {...input} />
     {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
-);
-
-const TextInputField = ({ input, label, meta }) => (
-  <LabelInputErrorWrapper label={label} meta={meta}>
-    <TextInput {...input} />
-  </LabelInputErrorWrapper>
 );
 
 const Select = ({ input, children, label, meta }) => (
