@@ -5,3 +5,7 @@ import cN from 'classnames';
 export function TextInput({ children, className, ...other }) {
   return <input className={cN(s.textInput, className)} {...other} />;
 }
+
+export function TextInputInline({ children, className, ...other }) {
+  return <input className={cN(s.textInputInline, className)} {...other} />;
+}
