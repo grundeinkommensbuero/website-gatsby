@@ -6,6 +6,7 @@ import { Button } from '../Button';
 import { TextInput, TextInputInline, TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
+import Checkbox from '../Checkbox';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
@@ -122,14 +123,6 @@ const validate = values => {
   }
   return errors;
 };
-
-const Checkbox = ({ input, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <input {...input} />
-    <span>{label}</span>
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
-);
 
 const TextInputOneLine = ({ input, label, meta }) => (
   <label style={{ display: 'block' }}>
