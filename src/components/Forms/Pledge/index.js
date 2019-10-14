@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
-import { Button } from '../../Button';
+import { Button } from '../Button';
 
 export default ({}) => {
   const [state, savePledge] = usePledgeApi();
