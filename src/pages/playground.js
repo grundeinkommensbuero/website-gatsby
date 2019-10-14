@@ -6,7 +6,7 @@ import Pledge from '../components/Forms/Pledge';
 
 const sections = [
   {
-    title: 'Playground',
+    title: 'Bist du dabei?',
     body: <Pledge />,
   },
 ];
