@@ -26,6 +26,10 @@ export const usePledgeApi = () => {
 
 // Function which calls the aws api to create a new pledge
 const savePledge = async (pledge, setState) => {
+  // check url params, if current user came from referral (e.g newsletter)
+  const urlParams = new URLSearchParams(window.location.search);
+  // the pk_source param was generated in matomo
+  const referral = urlParams.get('pk_source');
   const [signUp] = useAuthentication();
   try {
     setState('saving');
@@ -42,6 +46,9 @@ const savePledge = async (pledge, setState) => {
       }
       if ('wouldVisitLocalGroup' in data === false) {
         data.wouldVisitLocalGroup = false;
+      }
+      if (referral) {
+        data.referral = referral;
       }
 
       const request = {
