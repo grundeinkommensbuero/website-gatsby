@@ -7,9 +7,9 @@ export function TextInput({ children, className, ...other }) {
   return <input className={cN(s.textInput, className)} {...other} />;
 }
 
-export const TextInputWrapped = ({ input, label, meta }) => (
+export const TextInputWrapped = ({ input, label, meta, placeholder }) => (
   <LabelInputErrorWrapper label={label} meta={meta}>
-    <TextInput {...input} />
+    <TextInput {...input} placeholder={placeholder} />
   </LabelInputErrorWrapper>
 );
 
@@ -17,10 +17,10 @@ export function TextInputInline({ children, className, ...other }) {
   return <input className={cN(s.textInputInline, className)} {...other} />;
 }
 
-export const TextInputOneLine = ({ input, label, meta }) => (
+export const TextInputOneLine = ({ input, label, meta, placeholder }) => (
   <label style={{ display: 'block' }}>
     <span>{label}</span>
-    <TextInputInline {...input} />
+    <TextInputInline {...input} placeholder={placeholder} />
     {meta.error && meta.touched && <div>{meta.error}</div>}
   </label>
 );
