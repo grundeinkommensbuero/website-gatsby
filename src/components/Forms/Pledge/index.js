@@ -9,13 +9,39 @@ import { Checkbox } from '../Checkbox';
 import { SelectWrapped } from '../Select';
 import { EngagementSlider } from '../EngagementSlider';
 
-export default ({}) => {
+export default () => {
   const [state, savePledge] = usePledgeApi();
   /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
   console.log('pledge state', state);
+  if (state === 'saving') {
+    return <p>Wird abgeschickt...</p>;
+  }
+
+  if (state === 'saved') {
+    return (
+      <p>Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.</p>
+    );
+  }
+
+  if (state === 'userExists') {
+    return <p>Du bist schon im System.</p>;
+  }
+
+  if (state === 'error') {
+    return (
+      <p>
+        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </p>
+    );
+  }
+
   return (
     <Form
       onSubmit={e => {
