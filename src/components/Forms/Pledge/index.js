@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
-import { TextInput, TextInputInline, TextInputWrapped } from '../TextInput';
+import { TextInput, TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { Checkbox } from '../Checkbox';
@@ -123,14 +123,6 @@ const validate = values => {
   }
   return errors;
 };
-
-const TextInputOneLine = ({ input, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <span>{label}</span>
-    <TextInputInline {...input} />
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
-);
 
 const Select = ({ input, children, label, meta }) => (
   <LabelInputErrorWrapper label={label} meta={meta}>

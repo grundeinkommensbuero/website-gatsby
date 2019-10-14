@@ -16,3 +16,11 @@ export const TextInputWrapped = ({ input, label, meta }) => (
 export function TextInputInline({ children, className, ...other }) {
   return <input className={cN(s.textInputInline, className)} {...other} />;
 }
+
+export const TextInputOneLine = ({ input, label, meta }) => (
+  <label style={{ display: 'block' }}>
+    <span>{label}</span>
+    <TextInputInline {...input} />
+    {meta.error && meta.touched && <div>{meta.error}</div>}
+  </label>
+);
