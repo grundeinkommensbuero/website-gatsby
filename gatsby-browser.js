@@ -1,5 +1,5 @@
 import React from 'react';
-import Amplify from '@aws-amplify/core';
+import Amplify from '@aws-amplify/auth';
 import { config } from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
 
@@ -9,6 +9,7 @@ export const wrapRootElement = ({ element }) => {
   const clientId = process.env.COGNITO_APP_CLIENT_ID;
   console.log('client id', clientId);
   if (clientId) {
+    console.log('configuring amplify...');
     Amplify.configure({
       region: config.COGNITO.REGION,
       userPoolId: config.COGNITO.USER_POOL_ID,
