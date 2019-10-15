@@ -52,6 +52,9 @@ export default () => {
           console.log('finally', e);
         });
       }}
+      initialValues={{
+        signatureCount: 1,
+      }}
       validate={validate}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className={s.container}>
