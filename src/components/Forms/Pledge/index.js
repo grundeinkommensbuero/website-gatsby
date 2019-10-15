@@ -3,12 +3,12 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
-import { TextInput, TextInputWrapped, TextInputOneLine } from '../TextInput';
+import { TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
-import { SelectWrapped } from '../Select';
-import { EngagementSlider } from '../EngagementSlider';
+import { SignatureCountSlider } from '../SignatureCountSlider';
 import { Link } from 'gatsby';
+import s from './style.module.less';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
@@ -54,15 +54,15 @@ export default () => {
       }}
       validate={validate}
       render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={s.container}>
           <FormSection>
             <Field
               name="signatureCount"
               label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
-              component={EngagementSlider}
+              component={SignatureCountSlider}
               type="range"
               min={1}
-              max={5}
+              max={10}
             />
           </FormSection>
 
