@@ -3,17 +3,26 @@
  */
 import Auth from '@aws-amplify/auth';
 import { getRandomString } from '../../components/utils';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import AuthContext from '../../context/Authentication';
 
 export const useAuthentication = () => {
   return [signUp];
 };
 
+export const useVerification = () => {
+  const [verificationState, setVerificationState] = useState('verifying');
+  return [
+    verificationState,
+    (email, code) => confirmSignUp(email, code, setVerificationState),
+  ];
+};
+
 export const useGlobalState = () => {
   return useContext(AuthContext);
 };
 
+// Amplifys Auth class is used to sign up user
 const signUp = async email => {
   try {
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
@@ -37,6 +46,21 @@ const signUp = async email => {
       console.log('Error while signing up', error);
       return 'error';
     }
+  }
+};
+
+// Amplifys Auth Class is used to send a confirmation code to verify the mail address
+const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
+  try {
+    //use auth class to confirm sing up
+    const response = await Auth.confirmSignUp(email, confirmationCode);
+    console.log('response', response);
+    setVerificationState('verified');
+    return true;
+  } catch (error) {
+    console.log('error confirming email');
+    setVerificationState('error');
+    return false;
   }
 };
 
