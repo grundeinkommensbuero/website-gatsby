@@ -31,11 +31,12 @@ const signUp = async email => {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
       console.log('user already exists');
+      return 'userExists';
     } else {
       //TODO: Error handling in UI?
       console.log('Error while signing up', error);
+      return 'error';
     }
-    return null;
   }
 };
 
