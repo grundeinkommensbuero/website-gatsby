@@ -7,7 +7,17 @@ import Pledge from '../components/Forms/Pledge';
 const sections = [
   {
     title: 'Bist du dabei?',
-    body: <Pledge />,
+    bodyTextSizeHuge: true,
+    body: (
+      <>
+        <p>
+          Um zum Ziel zu kommen, brauchen wir viele Unterstützer. Gibt uns ein
+          bisschen Info, damit wir dich passend kontaktieren können, wenn es
+          soweit ist:
+        </p>
+        <Pledge />
+      </>
+    ),
   },
 ];
 
