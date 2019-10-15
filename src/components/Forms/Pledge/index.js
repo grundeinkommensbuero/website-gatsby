@@ -16,7 +16,7 @@ export default () => {
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
-  console.log('pledge state', state);
+
   if (state === 'saving') {
     return <p>Wird abgeschickt...</p>;
   }
@@ -46,7 +46,6 @@ export default () => {
   return (
     <Form
       onSubmit={e => {
-        console.log('sumbmitting...', e);
         const foo = savePledge(e);
         foo.then(e => {
           console.log('finally', e);
