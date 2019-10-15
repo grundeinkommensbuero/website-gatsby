@@ -8,6 +8,7 @@ import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SelectWrapped } from '../Select';
 import { EngagementSlider } from '../EngagementSlider';
+import { Link } from 'gatsby';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
@@ -67,13 +68,13 @@ export default () => {
 
           <FormSection heading="Wie möchtest du dich einbringen?">
             <Field
-              name="wouldSpreadAndCollectSignatures"
+              name="wouldPutAndCollectSignatureLists"
               type="checkbox"
               label="Listen an öffentlichen Orten auslegen & einsammeln"
               component={Checkbox}
             ></Field>
             <Field
-              name="wouldSpreadAndCollectSignatures"
+              name="wouldCollectSignaturesInPublicSpaces"
               type="checkbox"
               label="An öffentlich Orten Unterschriften von Fremden sammeln"
               component={Checkbox}
@@ -97,19 +98,21 @@ export default () => {
             ></Field>
           </FormSection>
 
-          <FormSection
-            heading="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
-            Wo wohnst du?"
-          >
+          <FormSection heading="Wer bist du?">
             <Field
               name="zipCode"
               label="Postleitzahl"
               placeholder="12345"
+              description="optional, für gezieltere Ansprache"
               component={TextInputWrapped}
             ></Field>
-          </FormSection>
-
-          <FormSection heading="Wie erreichen wir dich?">
+            <Field
+              name="name"
+              label="Benutzername"
+              placeholder="Max Musterfrau"
+              description="optional"
+              component={TextInputWrapped}
+            ></Field>
             <Field
               name="email"
               label="E-Mail"
@@ -118,19 +121,15 @@ export default () => {
             ></Field>
           </FormSection>
 
-          <FormSection heading="Wie möchtest du genannt werden?">
-            <Field
-              name="name"
-              label="Dein Name"
-              placeholder="Max Musterfrau"
-              component={TextInputWrapped}
-            ></Field>
-          </FormSection>
-
           <FormSection>
             <Field
               name="privacyConcent"
-              label="Datenschutz und so"
+              label={
+                <>
+                  Ich stimme den{' '}
+                  <Link to="/datenschutz/">Datenschutzbestimmungen</Link> zu.
+                </>
+              }
               type="checkbox"
               component={Checkbox}
             ></Field>
