@@ -52,6 +52,7 @@ export const pageQuery = graphql`
             callToActionText
             bodyTextSizeHuge
             emailSignup
+            pledge
             teamMembers {
               image {
                 fluid(maxWidth: 200, quality: 80) {
