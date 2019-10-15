@@ -35,7 +35,7 @@ const savePledge = async (pledge, setState) => {
     setState('saving');
     //register user
     const userId = await signUp(pledge.email);
-    if (userId !== null) {
+    if (userId !== 'userExists' && userId !== 'error') {
       const data = pledge;
       //add userId to data, because we need it in the backend
       data.userId = userId;
@@ -68,9 +68,12 @@ const savePledge = async (pledge, setState) => {
       }
       setState('error');
       return false;
-    } else {
+    } else if (userId === 'userExists') {
       console.log('User already exists');
       setState('userExists');
+      return false;
+    } else {
+      setState('error');
       return false;
     }
   } catch (error) {
