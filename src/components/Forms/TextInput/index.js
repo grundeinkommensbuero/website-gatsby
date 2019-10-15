@@ -7,8 +7,17 @@ export function TextInput({ children, className, ...other }) {
   return <input className={cN(s.textInput, className)} {...other} />;
 }
 
-export const TextInputWrapped = ({ input, label, meta, placeholder }) => (
-  <LabelInputErrorWrapper label={label} meta={meta}>
+export const TextInputWrapped = ({
+  input,
+  label,
+  meta,
+  placeholder,
+  description,
+}) => (
+  <LabelInputErrorWrapper
+    label={description ? `${label} (${description})` : label}
+    meta={meta}
+  >
     <TextInput {...input} placeholder={placeholder} />
   </LabelInputErrorWrapper>
 );
