@@ -8,6 +8,7 @@ import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SelectWrapped } from '../Select';
 import { EngagementSlider } from '../EngagementSlider';
+import { Link } from 'gatsby';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
@@ -123,7 +124,12 @@ export default () => {
           <FormSection>
             <Field
               name="privacyConcent"
-              label="Datenschutz und so"
+              label={
+                <>
+                  Ich stimme den{' '}
+                  <Link to="/datenschutz/">Datenschutzbestimmungen</Link> zu.
+                </>
+              }
               type="checkbox"
               component={Checkbox}
             ></Field>
