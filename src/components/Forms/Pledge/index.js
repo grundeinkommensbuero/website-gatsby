@@ -109,20 +109,6 @@ export default () => {
             ></Field>
           </FormSection>
 
-          <FormSection>
-            <Field
-              name="eligibleToVote"
-              label="Bist du wahlberechtigt?"
-              component={SelectWrapped}
-            >
-              <option />
-              <option value="2019">Ja</option>
-              <option value="2020">ab 2020</option>
-              <option value="2021">ab 2021</option>
-              <option value="laterThan2021">später</option>
-            </Field>
-          </FormSection>
-
           <FormSection heading="Wie erreichen wir dich?">
             <Field
               name="email"
