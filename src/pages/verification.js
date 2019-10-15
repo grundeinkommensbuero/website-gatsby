@@ -3,14 +3,17 @@ import Layout from '../components/Layout';
 import { useVerification } from '../hooks/Authentication';
 
 const Verification = () => {
-  const [confirmSignUp, verificationState] = useVerification();
+  const [verificationState, confirmSignUp] = useVerification();
   //get the verification code from the url
   const urlParams = new URLSearchParams(window.location.search);
   const confirmationCode = urlParams.get('code');
   const email = urlParams.get('email');
-  confirmSignUp(email, confirmationCode).then(success =>
-    console.log('success confirming ?', success)
-  );
+  //only call confirm sign up the first time rendering
+  if (verificationState === 'verifying') {
+    confirmSignUp(email, confirmationCode).then(success =>
+      console.log('success confirming ?', success)
+    );
+  }
 
   let message = '';
   if (verificationState === 'verifying') {

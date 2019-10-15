@@ -39,7 +39,6 @@ const savePledge = async (pledge, setState) => {
       const data = pledge;
       //add userId to data, because we need it in the backend
       data.userId = userId;
-      data.engagementLevel = 2;
       //if checkboxes are not set to clicked, we want to manually add the properties
       if ('wouldDonate' in data === false) {
         data.wouldDonate = false;
