@@ -28,7 +28,6 @@ export default function Sections({ sections }) {
             bodyTextSizeHuge,
             pledge,
           } = section;
-          console.log(section);
 
           const id = stringToId(titleShort);
           return (
