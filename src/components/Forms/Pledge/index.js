@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import {  TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
-import { EngagementSlider } from '../EngagementSlider';
+import { SignatureCountSlider } from '../SignatureCountSlider';
 import { Link } from 'gatsby';
 import s from './style.module.less'
 
@@ -59,7 +59,7 @@ export default () => {
             <Field
               name="signatureCount"
               label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
-              component={EngagementSlider}
+              component={SignatureCountSlider}
               type="range"
               min={1}
               max={5}
