@@ -18,20 +18,40 @@ const Verification = () => {
     }
   });
 
-  let message = '';
-  if (verificationState === 'verifying') {
-    message = 'verifizierung...';
-  } else if (verificationState === 'verified') {
-    message = 'Deine E-Mail wurde erfolgreich verifiziert';
-  } else if (verificationState === 'error') {
-    message = 'Verifizierung fehlgeschlagen';
-  }
+  const sections = [
+    {
+      title: (
+        <>
+          {verificationState === 'verifying' && 'Verifizierung...'}
+          {verificationState === 'verified' && 'Super! Du bist dabei!'}
+          {verificationState === 'error' && 'Verifizierung fehlgeschlagen 😕'}
+        </>
+      ),
+      bodyTextSizeHuge: true,
+      body: (
+        <>
+          {verificationState === 'verified' && (
+            <p>
+              Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu
+              tun gibt, was deinen Interessen entspricht.
+            </p>
+          )}
+          {verificationState === 'error' && (
+            <p>
+              Das hat leider nicht geklappt. Bitte probiere es noch ein mal,
+              oder schreib uns an{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </p>
+          )}
+        </>
+      ),
+    },
+  ];
 
-  return (
-    <Layout>
-      <p>{message}</p>
-    </Layout>
-  );
+  return <Layout sections={sections} />;
 };
 
 export default Verification;
