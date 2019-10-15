@@ -2,14 +2,46 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
+import { Button } from '../Button';
+import { TextInput, TextInputWrapped, TextInputOneLine } from '../TextInput';
+import FormSection from '../FormSection';
+import { Checkbox } from '../Checkbox';
+import { SelectWrapped } from '../Select';
+import { EngagementSlider } from '../EngagementSlider';
 
-export default ({}) => {
+export default () => {
   const [state, savePledge] = usePledgeApi();
-  /* 
+  /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
   console.log('pledge state', state);
+  if (state === 'saving') {
+    return <p>Wird abgeschickt...</p>;
+  }
+
+  if (state === 'saved') {
+    return (
+      <p>Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.</p>
+    );
+  }
+
+  if (state === 'userExists') {
+    return <p>Du bist schon im System.</p>;
+  }
+
+  if (state === 'error') {
+    return (
+      <p>
+        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </p>
+    );
+  }
+
   return (
     <Form
       onSubmit={e => {
@@ -24,8 +56,8 @@ export default ({}) => {
         <form onSubmit={handleSubmit}>
           <FormSection>
             <Field
-              name="engagementLevel"
-              label="Wie engagiert bist du?"
+              name="signatureCount"
+              label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
               component={EngagementSlider}
               type="range"
               min={1}
@@ -33,11 +65,23 @@ export default ({}) => {
             />
           </FormSection>
 
-          <FormSection label="Wie möchtest du dich einbringen?">
+          <FormSection heading="Wie möchtest du dich einbringen?">
+            <Field
+              name="wouldSpreadAndCollectSignatures"
+              type="checkbox"
+              label="Listen an öffentlichen Orten auslegen & einsammeln"
+              component={Checkbox}
+            ></Field>
+            <Field
+              name="wouldSpreadAndCollectSignatures"
+              type="checkbox"
+              label="An öffentlich Orten Unterschriften von Fremden sammeln"
+              component={Checkbox}
+            ></Field>
             <Field
               name="wouldVisitLocalGroup"
               type="checkbox"
-              label="Zu lokalen Gruppen gehen"
+              label="An lokalen Treffen teilnehmen"
               component={Checkbox}
             ></Field>
             <Field
@@ -48,23 +92,28 @@ export default ({}) => {
             ></Field>
             <Field
               name="wouldEngageCustom"
-              label="Anderes: "
+              label="Weitere Möglichkeit: "
               component={TextInputOneLine}
             ></Field>
           </FormSection>
 
           <FormSection
-            label="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
+            heading="Im Falle lokaler Aktionen würden wir dich gern gezielt ansprechen.
             Wo wohnst du?"
           >
-            <Field name="zipCode" label="PLZ" component={TextInput}></Field>
+            <Field
+              name="zipCode"
+              label="Postleitzahl"
+              placeholder="12345"
+              component={TextInputWrapped}
+            ></Field>
           </FormSection>
 
           <FormSection>
             <Field
               name="eligibleToVote"
               label="Bist du wahlberechtigt?"
-              component={Select}
+              component={SelectWrapped}
             >
               <option />
               <option value="2019">Ja</option>
@@ -74,12 +123,22 @@ export default ({}) => {
             </Field>
           </FormSection>
 
-          <FormSection label="Wie erreichen wir dich?">
-            <Field name="email" label="E-Mail" component={TextInput}></Field>
+          <FormSection heading="Wie erreichen wir dich?">
+            <Field
+              name="email"
+              label="E-Mail"
+              placeholder="beispiel@blubb.de"
+              component={TextInputWrapped}
+            ></Field>
           </FormSection>
 
-          <FormSection label="Wie möchtest du genannt werden?">
-            <Field name="name" label="Dein Name" component={TextInput}></Field>
+          <FormSection heading="Wie möchtest du genannt werden?">
+            <Field
+              name="name"
+              label="Dein Name"
+              placeholder="Max Musterfrau"
+              component={TextInputWrapped}
+            ></Field>
           </FormSection>
 
           <FormSection>
@@ -91,7 +150,7 @@ export default ({}) => {
             ></Field>
           </FormSection>
 
-          <button type="submit">Ich bin dabei!</button>
+          <Button type="submit">Ich bin dabei!</Button>
         </form>
       )}
     ></Form>
@@ -110,51 +169,3 @@ const validate = values => {
   }
   return errors;
 };
-
-const FormSection = ({ label, children }) => (
-  <>
-    {label && <div>{label}</div>}
-    {children}
-    <br />
-  </>
-);
-
-const Checkbox = ({ input, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <input {...input} />
-    <span>{label}</span>
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
-);
-
-const TextInputOneLine = ({ input, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <span>{label}</span>
-    <input {...input} />
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
-);
-
-const TextInput = ({ input, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <div>{label}</div>
-    <input {...input} />
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
-);
-
-const Select = ({ input, children, label, meta }) => (
-  <label style={{ display: 'block' }}>
-    <div>{label}</div>
-    <select {...input}>{children}</select>
-    {meta.error && meta.touched && <div>{meta.error}</div>}
-  </label>
-);
-
-const EngagementSlider = ({ input, label, min, max }) => (
-  <div>
-    <label htmlFor={`slider_${input.name}`}>{label}</label>
-    <br />
-    <input id={`slider_${input.name}`} min={min} max={max} {...input} />
-  </div>
-);
