@@ -1,4 +1,4 @@
-import { cognitoConfig } from './aws-config';
+//import { cognitoConfig } from './aws-config';
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
