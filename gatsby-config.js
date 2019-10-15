@@ -8,15 +8,7 @@ const contentfulConfig = {
   host: process.env.CONTENTFUL_HOST,
 };
 
-const { spaceId, accessToken } = contentfulConfig;
-
-if (!spaceId || !accessToken) {
-  throw new Error(
-    'Contentful spaceId and the access token need to be provided.'
-  );
-}
-
-module.exports = {
+const config = {
   siteMetadata: {
     title: 'Grundeinkommensb&uuml;ro',
   },
@@ -30,10 +22,6 @@ module.exports = {
       options: {
         strictMath: true,
       },
-    },
-    {
-      resolve: 'gatsby-source-contentful',
-      options: contentfulConfig,
     },
     {
       resolve: 'gatsby-plugin-matomo',
@@ -53,3 +41,14 @@ module.exports = {
     // },
   ],
 };
+
+if (contentfulConfig.spaceId || contentfulConfig.accessToken) {
+  config.plugins.push({
+    resolve: 'gatsby-source-contentful',
+    options: contentfulConfig,
+  });
+} else {
+  console.log('Contentful spaceId and the access token need to be provided.');
+}
+
+module.exports = config;
