@@ -25,6 +25,7 @@
     "deploy": "gatsby build --prefix-paths && gh-pages -d public -b master",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix *.js bin/*.js",
     "start": "npm run develop",
+    "serve": "gatsby serve",
     "heroku-postbuild": "gatsby build"
   },
   "dependencies": {
