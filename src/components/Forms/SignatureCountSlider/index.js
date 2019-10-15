@@ -5,5 +5,7 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
     <label htmlFor={`slider_${input.name}`}>{label}</label>
     <br />
     <input id={`slider_${input.name}`} min={min} max={max} {...input} />
+    <br />
+    {input.value}
   </div>
 );

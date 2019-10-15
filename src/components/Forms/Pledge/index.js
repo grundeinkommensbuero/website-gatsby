@@ -3,12 +3,12 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { Button } from '../Button';
-import {  TextInputWrapped, TextInputOneLine } from '../TextInput';
+import { TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SignatureCountSlider } from '../SignatureCountSlider';
 import { Link } from 'gatsby';
-import s from './style.module.less'
+import s from './style.module.less';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
@@ -62,7 +62,7 @@ export default () => {
               component={SignatureCountSlider}
               type="range"
               min={1}
-              max={5}
+              max={10}
             />
           </FormSection>
 
