@@ -56,8 +56,8 @@ export default () => {
         <form onSubmit={handleSubmit}>
           <FormSection>
             <Field
-              name="engagementLevel"
-              label="Wie engagiert bist du?"
+              name="signatureCount"
+              label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
               component={EngagementSlider}
               type="range"
               min={1}
@@ -67,9 +67,21 @@ export default () => {
 
           <FormSection heading="Wie möchtest du dich einbringen?">
             <Field
+              name="wouldSpreadAndCollectSignatures"
+              type="checkbox"
+              label="Listen an öffentlichen Orten auslegen & einsammeln"
+              component={Checkbox}
+            ></Field>
+            <Field
+              name="wouldSpreadAndCollectSignatures"
+              type="checkbox"
+              label="An öffentlich Orten Unterschriften von Fremden sammeln"
+              component={Checkbox}
+            ></Field>
+            <Field
               name="wouldVisitLocalGroup"
               type="checkbox"
-              label="Zu lokalen Gruppen gehen"
+              label="An lokalen Treffen teilnehmen"
               component={Checkbox}
             ></Field>
             <Field
@@ -80,7 +92,7 @@ export default () => {
             ></Field>
             <Field
               name="wouldEngageCustom"
-              label="Anderes: "
+              label="Weitere Möglichkeit: "
               component={TextInputOneLine}
             ></Field>
           </FormSection>
