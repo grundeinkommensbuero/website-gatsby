@@ -58,8 +58,17 @@ const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
     setVerificationState('verified');
     return true;
   } catch (error) {
-    console.log('error confirming email');
-    setVerificationState('error');
+    console.log('error confirming email', error);
+    const errorCode = error.code;
+    if (errorCode === 'UserNotFoundException') {
+      setVerificationState('userNotFound');
+    } else if (errorCode === 'CodeMismatchException') {
+      setVerificationState('wrongCode');
+    } else if (errorCode === 'NotAuthorizedException') {
+      setVerificationState('alreadyVerified');
+    } else {
+      setVerificationState('error');
+    }
     return false;
   }
 };
