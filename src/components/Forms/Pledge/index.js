@@ -55,91 +55,102 @@ export default () => {
         signatureCount: 1,
       }}
       validate={validate}
-      render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit} className={s.container}>
-          <FormSection>
-            <Field
-              name="signatureCount"
-              label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
-              component={SignatureCountSlider}
-              type="range"
-              min={1}
-              max={10}
-            />
-          </FormSection>
+      render={({ handleSubmit, form }) => {
+        const signatureCountState = form.getFieldState('signatureCount');
+        const showAllFields =
+          signatureCountState &&
+          (signatureCountState.touched || signatureCountState.active);
 
-          <FormSection heading="Wie möchtest du dich einbringen?">
-            <Field
-              name="wouldPutAndCollectSignatureLists"
-              type="checkbox"
-              label="Listen an öffentlichen Orten auslegen & einsammeln"
-              component={Checkbox}
-            ></Field>
-            <Field
-              name="wouldCollectSignaturesInPublicSpaces"
-              type="checkbox"
-              label="An öffentlich Orten Unterschriften von Fremden sammeln"
-              component={Checkbox}
-            ></Field>
-            <Field
-              name="wouldVisitLocalGroup"
-              type="checkbox"
-              label="An lokalen Treffen teilnehmen"
-              component={Checkbox}
-            ></Field>
-            <Field
-              name="wouldDonate"
-              type="checkbox"
-              label="Ich möchte euch finanziell unterstützen"
-              component={Checkbox}
-            ></Field>
-            <Field
-              name="wouldEngageCustom"
-              label="Weitere Möglichkeit: "
-              component={TextInputOneLine}
-            ></Field>
-          </FormSection>
+        return (
+          <form onSubmit={handleSubmit} className={s.container}>
+            <FormSection>
+              <Field
+                name="signatureCount"
+                label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
+                component={SignatureCountSlider}
+                type="range"
+                min={1}
+                max={10}
+              />
+            </FormSection>
+            {showAllFields && (
+              <>
+                <FormSection heading="Wie möchtest du dich einbringen?">
+                  <Field
+                    name="wouldPutAndCollectSignatureLists"
+                    type="checkbox"
+                    label="Listen an öffentlichen Orten auslegen & einsammeln"
+                    component={Checkbox}
+                  ></Field>
+                  <Field
+                    name="wouldCollectSignaturesInPublicSpaces"
+                    type="checkbox"
+                    label="An öffentlich Orten Unterschriften von Fremden sammeln"
+                    component={Checkbox}
+                  ></Field>
+                  <Field
+                    name="wouldVisitLocalGroup"
+                    type="checkbox"
+                    label="An lokalen Treffen teilnehmen"
+                    component={Checkbox}
+                  ></Field>
+                  <Field
+                    name="wouldDonate"
+                    type="checkbox"
+                    label="Ich möchte euch finanziell unterstützen"
+                    component={Checkbox}
+                  ></Field>
+                  <Field
+                    name="wouldEngageCustom"
+                    label="Weitere Möglichkeit: "
+                    component={TextInputOneLine}
+                  ></Field>
+                </FormSection>
 
-          <FormSection heading="Wer bist du?">
-            <Field
-              name="zipCode"
-              label="Postleitzahl"
-              placeholder="12345"
-              description="optional, für gezieltere Ansprache"
-              component={TextInputWrapped}
-            ></Field>
-            <Field
-              name="name"
-              label="Benutzername"
-              placeholder="Max Musterfrau"
-              description="optional"
-              component={TextInputWrapped}
-            ></Field>
-            <Field
-              name="email"
-              label="E-Mail"
-              placeholder="beispiel@blubb.de"
-              component={TextInputWrapped}
-            ></Field>
-          </FormSection>
+                <FormSection heading="Wer bist du?">
+                  <Field
+                    name="zipCode"
+                    label="Postleitzahl"
+                    placeholder="12345"
+                    description="optional, für gezieltere Ansprache"
+                    component={TextInputWrapped}
+                  ></Field>
+                  <Field
+                    name="name"
+                    label="Benutzername"
+                    placeholder="Max Musterfrau"
+                    description="optional"
+                    component={TextInputWrapped}
+                  ></Field>
+                  <Field
+                    name="email"
+                    label="E-Mail"
+                    placeholder="beispiel@blubb.de"
+                    component={TextInputWrapped}
+                  ></Field>
+                </FormSection>
 
-          <FormSection>
-            <Field
-              name="privacyConcent"
-              label={
-                <>
-                  Ich stimme den{' '}
-                  <Link to="/datenschutz/">Datenschutzbestimmungen</Link> zu.
-                </>
-              }
-              type="checkbox"
-              component={Checkbox}
-            ></Field>
-          </FormSection>
+                <FormSection>
+                  <Field
+                    name="privacyConcent"
+                    label={
+                      <>
+                        Ich stimme den{' '}
+                        <Link to="/datenschutz/">Datenschutzbestimmungen</Link>{' '}
+                        zu.
+                      </>
+                    }
+                    type="checkbox"
+                    component={Checkbox}
+                  ></Field>
+                </FormSection>
 
-          <Button type="submit">Ich bin dabei!</Button>
-        </form>
-      )}
+                <Button type="submit">Ich bin dabei!</Button>
+              </>
+            )}
+          </form>
+        );
+      }}
     ></Form>
   );
 };
