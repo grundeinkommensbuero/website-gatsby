@@ -1,8 +1,13 @@
 @import '../../style/vars.less';
 
-.sliderContainer {
+.inputContainer {
   display: flex;
   margin-top: 1rem;
+  align-items: center;
+}
+
+.sliderContainer {
+  flex: 1 0 auto;
 }
 
 .textInput {
@@ -14,16 +19,16 @@
 // DA SLIDER 👇
 
 @track-color: var(--font-color);
-@thumb-color: var(--font-color);
+@thumb-color: var(--bg-color);
 
 @thumb-radius: 50%;
 @thumb-height: 3rem;
 @thumb-width: 3rem;
-@thumb-border-width: 0;
-@thumb-border-color: white;
+@thumb-border-width: 1px;
+@thumb-border-color: var(--font-color);
 
 @track-width: 100%;
-@track-height: 0.5rem;
+@track-height: 0.3rem;
 @track-border-width: 0;
 @track-border-color: black;
 
@@ -45,13 +50,26 @@
   cursor: pointer;
 }
 
+.thumbFocus() {
+  border-width: 0.2rem;
+  cursor: pointer;
+}
+
 .input {
   -webkit-appearance: none;
   margin: (@thumb-height / 2) 0;
   width: @track-width;
+  height: @track-height;
 
   &:focus {
     outline: none;
+    &::-webkit-slider-thumb {
+      .thumbFocus();
+    }
+
+    &::-moz-range-thumb {
+      .thumbFocus();
+    }
   }
 
   &::-webkit-slider-runnable-track {
