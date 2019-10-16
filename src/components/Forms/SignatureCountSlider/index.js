@@ -5,14 +5,16 @@ import { TextInputInline } from '../TextInput';
 export const SignatureCountSlider = ({ input, label, min, max }) => (
   <>
     <label htmlFor={`slider_${input.name}`}>{label}</label>
-    <div className={s.sliderContainer}>
-      <input
-        className={s.input}
-        id={`slider_${input.name}`}
-        min={min}
-        max={max}
-        {...input}
-      />
+    <div className={s.inputContainer}>
+      <div className={s.sliderContainer}>
+        <input
+          className={s.input}
+          id={`slider_${input.name}`}
+          min={min}
+          max={max}
+          {...input}
+        />
+      </div>
       <TextInputInline
         type="number"
         min={min}
