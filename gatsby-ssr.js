@@ -1,5 +1,5 @@
 import wrapWithProvider from './wrap-with-provider';
-export const wrapRootElement = wrapWithProvider;
+export const wrapPageElement = wrapWithProvider;
 
 /*  TODO: also needed here?
 
