@@ -8,7 +8,6 @@ import { AuthProvider } from './src/context/Authentication';
 export default ({ element }) => {
   // APP_CLIENT_ID was in onCreateWebpackConfig callback in gatsby-node
   const clientId = APP_CLIENT_ID;
-  console.log('client id', clientId);
   if (clientId) {
     console.log('configuring amplify...');
     Amplify.configure({
