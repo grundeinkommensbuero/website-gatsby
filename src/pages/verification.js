@@ -18,6 +18,15 @@ const Verification = () => {
     }
   });
 
+  /*
+    verificationState can now be: 
+    - verifying
+    - verified
+    - alreadyVerified
+    - userNotFound
+    - wrongCode
+    - error (which is every other error)
+  */
   const sections = [
     {
       title: (
