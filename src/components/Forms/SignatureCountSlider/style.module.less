@@ -1,19 +1,32 @@
+@import '../../style/vars.less';
+
+.sliderContainer {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.textInput {
+    margin-left: 1rem;
+    font-size: @fontSizeL;
+}
+
+// DA SLIDER 👇
+
 @track-color: var(--font-color);
 @thumb-color: var(--font-color);
 
 @thumb-radius: 50%;
-@thumb-height: 30px;
-@thumb-width: 30px;
+@thumb-height: 3rem;
+@thumb-width: 3rem;
 @thumb-border-width: 0;
 @thumb-border-color: white;
 
 @track-width: 100%;
-@track-height: 10px;
+@track-height: 0.5rem;
 @track-border-width: 0;
 @track-border-color: black;
 
-@track-radius: 5px;
-@contrast: 5%;
+@track-radius: 0;
 
 .track() {
   width: @track-width;
