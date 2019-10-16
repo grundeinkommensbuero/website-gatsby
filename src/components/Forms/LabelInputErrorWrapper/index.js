@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
+import { ValidationError } from '../ValidationError';
 
 export default function LabelInputErrorWrapper({
   children,
@@ -13,7 +14,7 @@ export default function LabelInputErrorWrapper({
       <div className={s.label}>{label}</div>
       <div className={s.inputContainer}>{children}</div>
       {meta.error && meta.touched && (
-        <div className={s.error}>{meta.error}</div>
+        <ValidationError className={s.error}>{meta.error}</ValidationError>
       )}
     </label>
   );
