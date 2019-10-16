@@ -10,6 +10,8 @@ const Verification = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const confirmationCode = urlParams.get('code');
     const email = urlParams.get('email');
+    console.log('urlparams', urlParams);
+    console.log('email param', email);
     //only call confirm sign up the first time rendering
     if (verificationState === 'verifying') {
       confirmSignUp(email, confirmationCode).then(success =>
