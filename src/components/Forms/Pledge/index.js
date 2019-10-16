@@ -70,7 +70,7 @@ export default () => {
                 component={SignatureCountSlider}
                 type="range"
                 min={1}
-                max={10}
+                max={30}
               />
             </FormSection>
             {showAllFields && (
