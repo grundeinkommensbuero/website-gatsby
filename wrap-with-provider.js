@@ -3,7 +3,7 @@ import Amplify from '@aws-amplify/auth';
 import { config } from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
 
-const clientId = process.env.COGNITO_APP_CLIENT_ID;
+const clientId = process.env.GATSBY_APP_CLIENT_ID;
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
 export default ({ element }) => {
