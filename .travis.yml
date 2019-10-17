@@ -12,7 +12,7 @@ before_install:
       eval export CLOUDFRONT_DISTRIBUTION="$DEMO_CLOUDFRONT_DISTRIBUTION"
     fi
   - |
-    if [ $TRAVIS_BRANCH == "master" && $IS_CONTENTFUL == "yes" ]; then
+    if [ $TRAVIS_BRANCH == "master" ] && [ $IS_CONTENTFUL == "yes" ]; then
       echo "is from contentful"
       eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
     elif [ $TRAVIS_BRANCH == "master" ]; then
