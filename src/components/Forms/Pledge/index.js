@@ -9,6 +9,7 @@ import { Checkbox } from '../Checkbox';
 import { SignatureCountSlider } from '../SignatureCountSlider';
 import { Link } from 'gatsby';
 import s from './style.module.less';
+import AnimateHeight from 'react-animate-height';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
@@ -73,8 +74,8 @@ export default () => {
                 max={30}
               />
             </FormSection>
-            {showAllFields && (
-              <>
+            <AnimateHeight height={showAllFields ? 'auto' : 0}>
+              <div>
                 <FormSection heading="Wie möchtest du dich einbringen?">
                   <Field
                     name="wouldPutAndCollectSignatureLists"
@@ -146,8 +147,8 @@ export default () => {
                 </FormSection>
 
                 <Button type="submit">Ich bin dabei!</Button>
-              </>
-            )}
+              </div>
+            </AnimateHeight>
           </form>
         );
       }}
