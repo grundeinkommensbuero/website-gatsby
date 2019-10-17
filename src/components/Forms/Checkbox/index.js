@@ -8,7 +8,10 @@ export const Checkbox = ({ input, label, meta }) => (
     <div className={s.label}>
       {label}
       {meta.error && meta.touched && (
-        <ValidationError>{meta.error}</ValidationError>
+        <>
+          <br />
+          <ValidationError>{meta.error}</ValidationError>
+        </>
       )}
     </div>
   </label>
