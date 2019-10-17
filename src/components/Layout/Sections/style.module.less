@@ -26,6 +26,10 @@
     --font-color: @red;
     background: @yellow;
     color: @red;
+
+    &.sectionNewsletter {
+      background-image: url('./newsletter_red.svg');
+    }
   }
 
   &:nth-child(3n + 2) {
@@ -41,6 +45,27 @@
     --font-color: @red;
     background: @grey;
     color: @red;
+  }
+
+  &:nth-child(3n + 2),
+  &:nth-child(3n + 3),
+  &:only-child {
+    &.sectionNewsletter {
+      background-image: url('./newsletter_yellow.svg');
+    }
+  }
+
+  &.sectionNewsletter {
+    background-size: 25em;
+    background-repeat: no-repeat;
+    background-position: bottom -1px left -1px;
+    padding-bottom: 12rem;
+
+    @media (max-width: @breakPointM) {
+      background-size: 20rem;
+      background-position: bottom -1px left -1px;
+      padding-bottom: 10rem;
+    }
   }
 }
 
