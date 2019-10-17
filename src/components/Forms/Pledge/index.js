@@ -20,8 +20,15 @@ export default () => {
   */
 
   if (state) {
+    let finallyState;
+    if (state === 'saved') {
+      finallyState = 'success';
+    }
+    if (state === 'error' || state === 'userExists') {
+      finallyState = 'error';
+    }
     return (
-      <FinallyMessage state={state}>
+      <FinallyMessage state={finallyState}>
         {state === 'saving' && 'Wird abgeschickt...'}
         {state === 'saved' &&
           'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}

@@ -15,7 +15,7 @@ export const FinallyMessage = ({ state, children }) => {
 
   return (
     <div className={s.container}>
-      {state === 'saved' && (
+      {state === 'success' && (
         <div className={s.savedStage}>
           <img src={Flowers} className={s.savedStageFlowers} />
           <img src={Hat} className={s.savedStageHat} />
@@ -26,7 +26,7 @@ export const FinallyMessage = ({ state, children }) => {
       <div className={s.message} ref={messageRef}>
         <div
           className={cN({
-            [s.blinkShort]: state === 'saved' || state === 'error',
+            [s.blinkShort]: state === 'success' || state === 'error',
           })}
         >
           {children}

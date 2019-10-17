@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useVerification } from '../hooks/Authentication';
+import { FinallyMessage } from '../components/Forms/FinallyMessage';
 
 const Verification = () => {
   const [verificationState, confirmSignUp] = useVerification();
@@ -47,24 +48,22 @@ const Verification = () => {
       ),
       bodyTextSizeHuge: true,
       body: (
-        <>
-          {isOk && (
-            <p>
-              Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu
-              tun gibt, was deinen Interessen entspricht.
-            </p>
-          )}
-          {hasError && (
-            <p>
-              Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
-              oder schreib uns auch gerne eine Mail an{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </p>
-          )}
-        </>
+        <FinallyMessage state={isOk && 'success'}>
+          <p>
+            {isOk &&
+              'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
+            {hasError && (
+              <>
+                Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
+                oder schreib uns auch gerne eine Mail an{' '}
+                <a href="mailto:support@expedition-grundeinkommen.de">
+                  support@expedition-grundeinkommen.de
+                </a>
+                .
+              </>
+            )}
+          </p>
+        </FinallyMessage>
       ),
     },
   ];
