@@ -25,11 +25,12 @@ export const FinallyMessage = ({ state, children }) => {
       )}
       <div className={s.message} ref={messageRef}>
         <div
-          className={cN({
+          className={cN(s.messageInner, {
             [s.blinkShort]: state === 'success' || state === 'error',
           })}
         >
-          {children}
+          {state === 'progress' && <div className={s.savingIndicator} />}
+          <div>{children}</div>
         </div>
       </div>
     </div>

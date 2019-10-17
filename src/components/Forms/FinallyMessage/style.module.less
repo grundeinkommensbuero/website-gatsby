@@ -9,6 +9,33 @@
     z-index: 1;
 }
 
+.messageInner {
+    display: flex;
+    align-items: center;
+}
+
+.savingIndicator {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1.5rem;
+    background: currentColor;
+    flex: 0 0 auto;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: rotate;
+    align-self: flex-start;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .blinkShort {
     animation-duration: .3s;
     animation-iteration-count: 4;

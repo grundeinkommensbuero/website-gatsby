@@ -37,6 +37,16 @@ const Verification = () => {
 
   const isOk = ['verified', 'alreadyVerified'].includes(verificationState);
 
+  let finallyMessageState;
+
+  if (isOk) {
+    finallyMessageState = 'success';
+  }
+
+  if (verificationState === 'verifying') {
+    finallyMessageState = 'progress';
+  }
+
   const sections = [
     {
       title: (
@@ -48,7 +58,8 @@ const Verification = () => {
       ),
       bodyTextSizeHuge: true,
       body: (
-        <FinallyMessage state={isOk && 'success'}>
+        <FinallyMessage state={finallyMessageState}>
+          {verificationState === 'verifying' && 'Warte auf Verifizierung...'}
           {isOk &&
             'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
           {hasError && (
