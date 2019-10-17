@@ -24,6 +24,8 @@ before_install:
     fi
   - echo $CLOUDFRONT_DISTRIBUTION
   - echo $TRAVIS_BRANCH
+  - echo $IS_CONTENTFUL
+  - echo IS_CONTENTFUL
 
 cache: yarn
 
