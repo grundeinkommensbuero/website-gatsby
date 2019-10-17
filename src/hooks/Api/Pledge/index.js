@@ -46,6 +46,12 @@ const savePledge = async (pledge, setState) => {
       if ('wouldVisitLocalGroup' in data === false) {
         data.wouldVisitLocalGroup = false;
       }
+      if ('wouldPutAndCollectSignatureLists' in data === false) {
+        data.wouldPutAndCollectSignatureLists = false;
+      }
+      if ('wouldCollectSignaturesInPublicSpaces' in data === false) {
+        data.wouldCollectSignaturesInPublicSpaces = false;
+      }
       if (referral) {
         data.referral = referral;
       }
