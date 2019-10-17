@@ -58,7 +58,7 @@ export default () => {
         });
       }}
       initialValues={{
-        signatureCount: 1,
+        signatureCount: 10,
       }}
       validate={validate}
       render={({ handleSubmit, form }) => {
