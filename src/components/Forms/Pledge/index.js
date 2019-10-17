@@ -55,7 +55,9 @@ export default () => {
         const signatureCountState = form.getFieldState('signatureCount');
         const showAllFields =
           signatureCountState &&
-          (signatureCountState.touched || signatureCountState.active);
+          (signatureCountState.touched ||
+            signatureCountState.active ||
+            signatureCountState.dirty);
 
         return (
           <form onSubmit={handleSubmit} className={s.container}>
