@@ -1,7 +1,7 @@
 export const config = {
   COGNITO: {
     REGION: 'eu-central-1',
-    USER_POOL_ID: 'eu-central-1_2qXI035IJ',
+    USER_POOL_ID: 'eu-central-1_74vNy5Iw0',
   },
   API: {
     INVOKE_URL:
