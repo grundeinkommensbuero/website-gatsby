@@ -29,9 +29,6 @@ const signUp = async email => {
     const user = await Auth.signUp({
       username: email,
       password: getRandomString(30),
-      attributes: {
-        name: getRandomString(10),
-      },
     });
     console.log(user);
     //we want to return the newly generated id
