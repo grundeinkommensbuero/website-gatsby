@@ -7,15 +7,19 @@ before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
   - |
-    if [ "$TRAVIS_TAG" ]; then
+    if [ $TRAVIS_TAG ]; then
+      echo "has tag"
       eval export CLOUDFRONT_DISTRIBUTION="$DEMO_CLOUDFRONT_DISTRIBUTION"
     fi
   - |
-    if [ "$TRAVIS_BRANCH" == "master" && "$IS_CONTENTFUL" == yes ]; then
+    if [ $TRAVIS_BRANCH == "master" && $IS_CONTENTFUL == "yes" ]; then
+      echo "is from contentful"
       eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
-    elif [ "$TRAVIS_BRANCH" == "master" ]; then
+    elif [ $TRAVIS_BRANCH == "master" ]; then
+      echo "is from master"
       eval export CLOUDFRONT_DISTRIBUTION="$PROD_CLOUDFRONT_DISTRIBUTION"
-    elif [ "$TRAVIS_BRANCH" == "dev" ]; then
+    elif [ $TRAVIS_BRANCH == "dev" ]; then
+      echo "is from dev"
       eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
     fi
   - echo $CLOUDFRONT_DISTRIBUTION
