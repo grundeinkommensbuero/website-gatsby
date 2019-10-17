@@ -21,7 +21,7 @@ const Verification = () => {
   });
 
   /*
-    verificationState can now be: 
+    verificationState can now be:
     - verifying
     - verified
     - alreadyVerified
@@ -34,8 +34,9 @@ const Verification = () => {
       title: (
         <>
           {verificationState === 'verifying' && 'Verifizierung...'}
-          {verificationState === 'verified' && 'Super! Du bist dabei!'}
-          {verificationState === 'error' && 'Verifizierung fehlgeschlagen 😕'}
+          {verificationState === 'verified' && 'Juhuu - Du bist dabei!'}
+          {verificationState === 'error' &&
+            'Oooooops - Verifizierung fehlgeschlagen 😕'}
         </>
       ),
       bodyTextSizeHuge: true,
@@ -49,8 +50,8 @@ const Verification = () => {
           )}
           {verificationState === 'error' && (
             <p>
-              Das hat leider nicht geklappt. Bitte probiere es noch ein mal,
-              oder schreib uns an{' '}
+              Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
+              oder schreib uns auch gerne eine Mail an{' '}
               <a href="mailto:support@expedition-grundeinkommen.de">
                 support@expedition-grundeinkommen.de
               </a>

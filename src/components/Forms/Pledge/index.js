@@ -75,30 +75,30 @@ export default () => {
                   <Field
                     name="wouldPutAndCollectSignatureLists"
                     type="checkbox"
-                    label="Listen an öffentlichen Orten auslegen & einsammeln"
+                    label="Ich lege Listen aus an Orten wie z.B. in Läden, beim Bäcker, auf dem Uni-Campus oder in Cafés und sammle sie später wieder ein!"
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldCollectSignaturesInPublicSpaces"
                     type="checkbox"
-                    label="An öffentlich Orten Unterschriften von Fremden sammeln"
+                    label="Ich spreche aktiv Passantinnen und Passanten an und sammle Unterschriften vor Ort!"
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldVisitLocalGroup"
                     type="checkbox"
-                    label="An lokalen Treffen teilnehmen"
+                    label="Ich nehme an Treffen in meiner Nähe teil!"
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldDonate"
                     type="checkbox"
-                    label="Ich möchte euch finanziell unterstützen"
+                    label="Ich möchte euch finanziell unterstützen!"
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldEngageCustom"
-                    label="Weitere Möglichkeit: "
+                    label="Ich hab’ eine andere Idee, nämlich: "
                     component={TextInputOneLine}
                   ></Field>
                 </FormSection>
@@ -131,9 +131,11 @@ export default () => {
                     name="privacyConcent"
                     label={
                       <>
-                        Ich stimme den{' '}
+                        Hiermit bestätige ich, dass ich die{' '}
                         <Link to="/datenschutz/">Datenschutzbestimmungen</Link>{' '}
-                        zu.
+                        gelesen habe und damit einverstanden bin, über
+                        Neuigkeiten zum Projekt und Aktionen informiert zu
+                        werden.
                       </>
                     }
                     type="checkbox"
