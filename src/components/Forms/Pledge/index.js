@@ -27,6 +27,9 @@ export default () => {
     if (state === 'error' || state === 'userExists') {
       finallyState = 'error';
     }
+    if (state === 'saving') {
+      finallyState = 'progress';
+    }
     return (
       <FinallyMessage state={finallyState}>
         {state === 'saving' && 'Wird abgeschickt...'}
