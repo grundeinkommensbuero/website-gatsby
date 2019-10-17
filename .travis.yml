@@ -11,7 +11,7 @@ before_install:
       eval export CLOUDFRONT_DISTRIBUTION="$DEMO_CLOUDFRONT_DISTRIBUTION"
     fi
   - |
-    if [ "$TRAVIS_BRANCH" = "master" && "$IS_CONTENTFUL" = "true" ]; then
+    if [ "$TRAVIS_BRANCH" = "master" && "$IS_CONTENTFUL" = "yes" ]; then
       eval export CLOUDFRONT_DISTRIBUTION="$STAGING_CLOUDFRONT_DISTRIBUTION"
     elif [ "$TRAVIS_BRANCH" = "master" ]; then
       eval export CLOUDFRONT_DISTRIBUTION="$PROD_CLOUDFRONT_DISTRIBUTION"
@@ -45,6 +45,7 @@ deploy:
     region: 'eu-central-1'
     on:
       branch: master
+      tags: true
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -55,7 +56,7 @@ deploy:
     region: 'eu-central-1'
     on:
       branch: master
-      condition: $IS_CONTENTFUL=true
+      condition: $IS_CONTENTFUL=yes
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -76,9 +77,9 @@ deploy:
     skip_cleanup: true
     region: 'eu-central-1'
     on:
+      all_branches: true
       tags: true
 
 after_deploy:
-  - echo $CLOUDFRONT_DISTRIBUTION
   - aws configure set preview.cloudfront true
   - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION --paths "/*"
