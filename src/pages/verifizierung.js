@@ -49,20 +49,18 @@ const Verification = () => {
       bodyTextSizeHuge: true,
       body: (
         <FinallyMessage state={isOk && 'success'}>
-          <p>
-            {isOk &&
-              'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
-            {hasError && (
-              <>
-                Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
-                oder schreib uns auch gerne eine Mail an{' '}
-                <a href="mailto:support@expedition-grundeinkommen.de">
-                  support@expedition-grundeinkommen.de
-                </a>
-                .
-              </>
-            )}
-          </p>
+          {isOk &&
+            'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
+          {hasError && (
+            <>
+              Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
+              oder schreib uns auch gerne eine Mail an{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </>
+          )}
         </FinallyMessage>
       ),
     },
