@@ -29,26 +29,32 @@ const Verification = () => {
     - wrongCode
     - error (which is every other error)
   */
+
+  const hasError = ['userNotFound', 'wrongCode', 'error'].includes(
+    verificationState
+  );
+
+  const isOk = ['verified', 'alreadyVerified'].includes(verificationState);
+
   const sections = [
     {
       title: (
         <>
           {verificationState === 'verifying' && 'Verifizierung...'}
-          {verificationState === 'verified' && 'Juhuu - Du bist dabei!'}
-          {verificationState === 'error' &&
-            'Oooooops - Verifizierung fehlgeschlagen 😕'}
+          {isOk && 'Juhuu - Du bist dabei!'}
+          {hasError && 'Oooooops - Verifizierung fehlgeschlagen 😕'}
         </>
       ),
       bodyTextSizeHuge: true,
       body: (
         <>
-          {verificationState === 'verified' && (
+          {isOk && (
             <p>
               Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu
               tun gibt, was deinen Interessen entspricht.
             </p>
           )}
-          {verificationState === 'error' && (
+          {hasError && (
             <p>
               Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
               oder schreib uns auch gerne eine Mail an{' '}
