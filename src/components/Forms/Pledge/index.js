@@ -10,6 +10,7 @@ import { SignatureCountSlider } from '../SignatureCountSlider';
 import { Link } from 'gatsby';
 import s from './style.module.less';
 import AnimateHeight from 'react-animate-height';
+import { FinallyMessage } from '../FinallyMessage';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
@@ -18,29 +19,23 @@ export default () => {
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
 
-  if (state === 'saving') {
-    return <p>Wird abgeschickt...</p>;
-  }
-
-  if (state === 'saved') {
+  if (state) {
     return (
-      <p>Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.</p>
-    );
-  }
-
-  if (state === 'userExists') {
-    return <p>Du bist schon im System.</p>;
-  }
-
-  if (state === 'error') {
-    return (
-      <p>
-        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
-        <a href="mailto:support@expedition-grundeinkommen.de">
-          support@expedition-grundeinkommen.de
-        </a>
-        .
-      </p>
+      <FinallyMessage state={state}>
+        {state === 'saving' && 'Wird abgeschickt...'}
+        {state === 'saved' &&
+          'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
+        {state === 'userExists' && 'Du bist schon im System.'}
+        {state === 'error' && (
+          <>
+            Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+            <a href="mailto:support@expedition-grundeinkommen.de">
+              support@expedition-grundeinkommen.de
+            </a>
+            .
+          </>
+        )}
+      </FinallyMessage>
     );
   }
 
