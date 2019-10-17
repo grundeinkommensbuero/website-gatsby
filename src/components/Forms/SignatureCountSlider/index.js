@@ -4,7 +4,7 @@ import { TextInputInline } from '../TextInput';
 
 export const SignatureCountSlider = ({ input, label, min, max }) => (
   <>
-    <label htmlFor={`slider_${input.name}`}>{label}</label>
+    {/* <label htmlFor={`slider_${input.name}`}>{label}</label> */}
     <div className={s.inputContainer}>
       <div className={s.sliderContainer}>
         <input
@@ -12,6 +12,7 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
           id={`slider_${input.name}`}
           min={min}
           max={max}
+          aria-label={label}
           {...input}
         />
       </div>
@@ -24,6 +25,7 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
         onBlur={input.onBlur}
         onChange={input.onChange}
         className={s.textInput}
+        aria-label={label}
       />
     </div>
   </>
