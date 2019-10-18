@@ -58,7 +58,7 @@ export default () => {
         });
       }}
       initialValues={{
-        signatureCount: 10,
+        signatureCount: 30,
       }}
       validate={validate}
       render={({ handleSubmit, form }) => {
@@ -78,7 +78,7 @@ export default () => {
                 component={SignatureCountSlider}
                 type="range"
                 min={1}
-                max={30}
+                max={100}
               />
             </FormSection>
             <AnimateHeight height={showAllFields ? 'auto' : 0}>
