@@ -15,7 +15,7 @@ const HAND_ILLUSTRATIONS = [
 
 const MAX_HANDS = 100;
 const MAX_TILT = 10;
-const sides = ['left', 'bottom', 'right'];
+const sides = ['left', 'bottom', 'bottom', 'right'];
 
 const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map(() => {
   return {
@@ -23,6 +23,7 @@ const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map(() => {
     tilt: Math.round(Math.random() * MAX_TILT),
     position: Math.round(Math.random() * 100),
     side: sides[Math.floor(Math.random() * sides.length)],
+    size: Math.random(),
   };
 });
 
@@ -84,10 +85,15 @@ const Hand = ({ index, hand, count }) => {
   }
 
   return (
-    <img
-      className={cN(s.hand, s[`hand_${hand.side}`])}
-      src={HAND_ILLUSTRATIONS[hand.hand]}
+    <div
       style={style}
-    />
+      className={cN(s.handContainer, s[`handContainer_${hand.side}`])}
+    >
+      <img
+        className={s.hand}
+        src={HAND_ILLUSTRATIONS[hand.hand]}
+        style={{ transform: `translateY(${hand.size * -2}rem)` }}
+      />
+    </div>
   );
 };
