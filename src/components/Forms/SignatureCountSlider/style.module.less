@@ -26,12 +26,21 @@
 }
 
 .hand {
-    height: 6rem;
-}
-
-.handContainer {
+    height: 8rem;
     position: absolute;
-    bottom: -1rem;
+
+    &_bottom {
+        bottom: -1rem;
+    }
+
+    &_left {
+        transform: rotate(90deg);
+        left: -1rem;
+    }
+    &_right {
+        right: -1rem;
+        transform: rotate(-90deg);
+    }
 }
 
 // DA SLIDER 👇
