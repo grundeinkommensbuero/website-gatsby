@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
@@ -14,6 +14,7 @@ import { FinallyMessage } from '../FinallyMessage';
 
 export default () => {
   const [state, savePledge] = usePledgeApi();
+  const [isSecondPartOpen, openSecondPart] = useState(false);
   /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
@@ -62,12 +63,13 @@ export default () => {
       }}
       validate={validate}
       render={({ handleSubmit, form }) => {
-        const signatureCountState = form.getFieldState('signatureCount');
-        const showAllFields =
-          signatureCountState &&
-          (signatureCountState.touched ||
-            signatureCountState.active ||
-            signatureCountState.dirty);
+        // console.log(form.subscribe('signatureCount'));
+        // const signatureCountState = form.getFieldState('signatureCount');
+        // const showAllFields =
+        //   signatureCountState &&
+        //   (signatureCountState.touched ||
+        //     signatureCountState.active ||
+        //     signatureCountState.dirty);
 
         return (
           <form onSubmit={handleSubmit} className={s.container}>
@@ -79,9 +81,13 @@ export default () => {
                 type="range"
                 min={1}
                 max={100}
+                openSecondPart={() => {
+                  openSecondPart(true);
+                }}
+                isSecondPartOpen={isSecondPartOpen}
               />
             </FormSection>
-            <AnimateHeight height={showAllFields ? 'auto' : 0}>
+            <AnimateHeight height={isSecondPartOpen ? 'auto' : 0}>
               <div>
                 <FormSection heading="Wie möchtest du dich einbringen?">
                   <Field
