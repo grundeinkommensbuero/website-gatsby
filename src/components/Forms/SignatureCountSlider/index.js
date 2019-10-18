@@ -15,7 +15,7 @@ const HAND_ILLUSTRATIONS = [
 
 const MAX_HANDS = 100;
 const MAX_TILT = 10;
-const sides = ['left', 'bottom', 'bottom', 'right'];
+const sides = ['left', 'bottom', 'right'];
 
 const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map(() => {
   return {
