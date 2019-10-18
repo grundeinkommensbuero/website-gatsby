@@ -2,6 +2,7 @@ import React from 'react';
 import s from './style.module.less';
 import { TextInputInline } from '../TextInput';
 import { Button } from '../Button';
+import cN from 'classnames';
 
 const HAND_ILLUSTRATIONS = [
   require('./hand_1.svg'),
@@ -35,7 +36,6 @@ export const SignatureCountSlider = ({
 }) => (
   <>
     {/* <label htmlFor={`slider_${input.name}`}>{label}</label> */}
-    {console.log(HAND_ILLUSTRATIONS)}
     <div className={s.inputContainer}>
       <div className={s.sliderContainer}>
         <input
@@ -74,9 +74,20 @@ const Hand = ({ index, hand, count }) => {
   if (count < index + 1) {
     return null;
   }
+
+  let style;
+
+  if (hand.side === 'bottom') {
+    style = { left: hand.position + '%' };
+  } else {
+    style = { bottom: hand.position + '%' };
+  }
+
   return (
-    <div className={s.handContainer} style={{ left: hand.position + '%' }}>
-      <img className={s.hand} src={HAND_ILLUSTRATIONS[hand.hand]} />
-    </div>
+    <img
+      className={cN(s.hand, s[`hand_${hand.side}`])}
+      src={HAND_ILLUSTRATIONS[hand.hand]}
+      style={style}
+    />
   );
 };
