@@ -36,7 +36,7 @@ HANDS_ARRAY.unshift({
 });
 
 HANDS_ARRAY.unshift({
-  hand: Math.floor(Math.random() * HAND_ILLUSTRATIONS.length),
+  hand: 1,
   tilt: Math.round(Math.random() * MAX_TILT),
   position: 0.25,
   size: Math.random(),
@@ -68,7 +68,12 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
         aria-label={label}
       />
     </div>
-    <div className={s.stage}>
+    <div
+      className={cN(s.stage, {
+        [s.many]: input.value > 50,
+        [s.more]: input.value > 75,
+      })}
+    >
       <div className={s.stageInner}>
         <div className={s.stageInnerInner}>
           {HANDS_ARRAY.map((hand, index) => (
