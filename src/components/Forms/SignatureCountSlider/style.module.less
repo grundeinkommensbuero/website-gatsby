@@ -2,7 +2,7 @@
 
 .inputContainer {
   display: flex;
-  margin-top: 1rem;
+  margin-top: 4rem;
   align-items: center;
 }
 
@@ -20,10 +20,17 @@
   height: 100%;
   width: 100%;
   position: absolute;
-  bottom: 0;
   left: 0;
   pointer-events: none;
+  z-index: 0;
+}
+
+.stageInner {
   overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  transform: translateY(-50%);
 }
 
 .hand {

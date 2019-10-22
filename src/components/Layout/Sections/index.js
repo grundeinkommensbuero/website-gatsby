@@ -36,6 +36,7 @@ export default function Sections({ sections }) {
               className={cN(s.section, {
                 [s.sectionVideo]: __typename === 'ContentfulPageSectionVideo',
                 [s.sectionNewsletter]: emailSignup,
+                [s.sectionPledge]: pledge,
               })}
             >
               <div id={id} className={s.jumpToAnchor} />

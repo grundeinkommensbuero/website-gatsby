@@ -3,6 +3,7 @@ import s from './style.module.less';
 import { TextInputInline } from '../TextInput';
 import { Button } from '../Button';
 import cN from 'classnames';
+import { shuffle } from '../../utils';
 
 const HAND_ILLUSTRATIONS = [
   require('./hand_1.svg'),
@@ -15,17 +16,19 @@ const HAND_ILLUSTRATIONS = [
 
 const MAX_HANDS = 100;
 const MAX_TILT = 10;
-const sides = ['left', 'bottom', 'right'];
+const BOTTOM_SIDE_RATIO = 0.3;
 
-const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map(() => {
+const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map((hand, index) => {
   return {
     hand: Math.floor(Math.random() * HAND_ILLUSTRATIONS.length),
     tilt: Math.round(Math.random() * MAX_TILT),
-    position: Math.round(Math.random() * 100),
-    side: sides[Math.floor(Math.random() * sides.length)],
+    position: (1 / MAX_HANDS) * index,
+    // side: sides[Math.floor(Math.random() * sides.length)],
     size: Math.random(),
   };
 });
+
+shuffle(HANDS_ARRAY);
 
 export const SignatureCountSlider = ({ input, label, min, max }) => (
   <>
@@ -54,9 +57,11 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
       />
     </div>
     <div className={s.stage}>
-      {HANDS_ARRAY.map((hand, index) => (
-        <Hand key={index} index={index} hand={hand} count={input.value} />
-      ))}
+      <div className={s.stageInner}>
+        {HANDS_ARRAY.map((hand, index) => (
+          <Hand key={index} index={index} hand={hand} count={input.value} />
+        ))}
+      </div>
     </div>
   </>
 );
@@ -67,17 +72,34 @@ const Hand = ({ index, hand, count }) => {
   }
 
   let style;
+  let side;
+  let position;
 
-  if (hand.side === 'bottom') {
-    style = { left: hand.position + '%' };
+  if (hand.position < BOTTOM_SIDE_RATIO) {
+    side = 'left';
+    position = hand.position / BOTTOM_SIDE_RATIO;
+  } else if (hand.position > 1 - BOTTOM_SIDE_RATIO) {
+    side = 'right';
+    position = (hand.position - 1 + BOTTOM_SIDE_RATIO) / BOTTOM_SIDE_RATIO;
   } else {
-    style = { bottom: hand.position + '%' };
+    const range = 1 - BOTTOM_SIDE_RATIO * 2;
+    side = 'bottom';
+    position =
+      hand.position / (BOTTOM_SIDE_RATIO + BOTTOM_SIDE_RATIO * range) -
+      1 +
+      BOTTOM_SIDE_RATIO;
+  }
+
+  if (side === 'bottom') {
+    style = { left: position * 100 + '%' };
+  } else {
+    style = { bottom: position * 100 + '%' };
   }
 
   return (
     <div
       style={style}
-      className={cN(s.handContainer, s[`handContainer_${hand.side}`])}
+      className={cN(s.handContainer, s[`handContainer_${side}`])}
     >
       <img
         className={s.hand}
