@@ -63,7 +63,7 @@ export default () => {
         });
       }}
       initialValues={{
-        signatureCount: 30,
+        signatureCount: 1,
       }}
       validate={validate}
       render={({ handleSubmit }) => {
@@ -72,7 +72,7 @@ export default () => {
             <FormSection>
               <Field
                 name="signatureCount"
-                label="Wie viele Unterschriften Wahlberechtigter könntest du einsammeln?"
+                label="Du kannst du noch weitere Menschen in deinem Umfeld aktivieren? Sag uns, wie viele Unterschriften von anderen  Menschen in Schleswig-Holstein du realistisch einsammeln kannst!"
                 component={SignatureCountSlider}
                 type="range"
                 min={1}
@@ -81,57 +81,57 @@ export default () => {
             </FormSection>
             <AnimateHeight height={isSecondPartOpen ? 'auto' : 0}>
               <div>
-                <FormSection heading="Wie möchtest du dich einbringen?">
+                <FormSection heading="Wie möchtest du die Expedition unterstützen?">
+                  <Field
+                    name="wouldPrintAndSendSignatureLists"
+                    type="checkbox"
+                    label="Ich drucke die Unterschriftenliste aus und schicke sie unterschrieben ans Expeditionsbüro."
+                    component={Checkbox}
+                  ></Field>
                   <Field
                     name="wouldPutAndCollectSignatureLists"
                     type="checkbox"
-                    label="Ich lege Listen aus an Orten wie z.B. in Läden, beim Bäcker, auf dem Uni-Campus oder in Cafés und sammle sie später wieder ein!"
+                    label="Ich lege Listen aus an Orten wie z. B. beim Bäcker, in Cafés, auf dem Uni-Campus oder beim Sportverein und sammle sie später wieder ein."
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldCollectSignaturesInPublicSpaces"
                     type="checkbox"
-                    label="Ich spreche aktiv Passantinnen und Passanten an und sammle Unterschriften vor Ort!"
-                    component={Checkbox}
-                  ></Field>
-                  <Field
-                    name="wouldVisitLocalGroup"
-                    type="checkbox"
-                    label="Ich nehme an Treffen in meiner Nähe teil!"
+                    label="Ich spreche aktiv Passantinnen und Passanten an und sammle Unterschriften vor Ort."
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldDonate"
                     type="checkbox"
-                    label="Ich möchte euch finanziell unterstützen!"
+                    label="Ich kann mir vorstellen, die Expedition finanziell zu unterstützen."
                     component={Checkbox}
                   ></Field>
                   <Field
                     name="wouldEngageCustom"
-                    label="Ich hab’ eine andere Idee, nämlich: "
+                    label="Ich habe eine andere Idee: "
                     component={TextInputOneLine}
                   ></Field>
                 </FormSection>
 
                 <FormSection heading="Wer bist du?">
                   <Field
-                    name="zipCode"
-                    label="Postleitzahl"
-                    placeholder="12345"
-                    description="optional, für gezieltere Ansprache"
-                    component={TextInputWrapped}
-                  ></Field>
-                  <Field
                     name="name"
-                    label="Benutzername"
+                    label="Name"
                     placeholder="Max Musterfrau"
                     description="optional"
                     component={TextInputWrapped}
                   ></Field>
                   <Field
                     name="email"
-                    label="E-Mail"
+                    label="E-Mail (Pflichtfeld)"
                     placeholder="beispiel@blubb.de"
+                    component={TextInputWrapped}
+                  ></Field>
+                  <Field
+                    name="zipCode"
+                    label="Postleitzahl"
+                    placeholder="12345"
+                    description="optional, für gezieltere Ansprache"
                     component={TextInputWrapped}
                   ></Field>
                 </FormSection>
@@ -143,9 +143,19 @@ export default () => {
                       <>
                         Hiermit bestätige ich, dass ich die{' '}
                         <Link to="/datenschutz/">Datenschutzbestimmungen</Link>{' '}
-                        gelesen habe und damit einverstanden bin, über
-                        Neuigkeiten zum Projekt und Aktionen informiert zu
-                        werden.
+                        gelesen habe.
+                      </>
+                    }
+                    type="checkbox"
+                    component={Checkbox}
+                  ></Field>
+                  <Field
+                    name="newsletterConcent"
+                    label={
+                      <>
+                        Schreibt mir, wenn die Unterschriftslisten da sind, und
+                        haltet mich über alle weiteren Kampagnenschritte auf dem
+                        Laufenden.
                       </>
                     }
                     type="checkbox"
