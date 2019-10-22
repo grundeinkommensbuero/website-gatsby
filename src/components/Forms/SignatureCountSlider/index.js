@@ -27,16 +27,9 @@ const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map(() => {
   };
 });
 
-export const SignatureCountSlider = ({
-  input,
-  label,
-  min,
-  max,
-  openSecondPart,
-  isSecondPartOpen,
-}) => (
+export const SignatureCountSlider = ({ input, label, min, max }) => (
   <>
-    {/* <label htmlFor={`slider_${input.name}`}>{label}</label> */}
+    <label htmlFor={`slider_${input.name}`}>{label}</label>
     <div className={s.inputContainer}>
       <div className={s.sliderContainer}>
         <input
@@ -60,9 +53,6 @@ export const SignatureCountSlider = ({
         aria-label={label}
       />
     </div>
-    {!isSecondPartOpen && (
-      <Button onClick={openSecondPart}>So ist's recht!</Button>
-    )}
     <div className={s.stage}>
       {HANDS_ARRAY.map((hand, index) => (
         <Hand key={index} index={index} hand={hand} count={input.value} />
