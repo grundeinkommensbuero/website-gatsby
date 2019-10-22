@@ -16,14 +16,12 @@ const HAND_ILLUSTRATIONS = [
 
 const MAX_HANDS = 100;
 const MAX_TILT = 10;
-const BOTTOM_SIDE_RATIO = 0.3;
 
 const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map((hand, index) => {
   return {
     hand: Math.floor(Math.random() * HAND_ILLUSTRATIONS.length),
     tilt: Math.round(Math.random() * MAX_TILT),
     position: (1 / MAX_HANDS) * index,
-    // side: sides[Math.floor(Math.random() * sides.length)],
     size: Math.random(),
   };
 });
@@ -58,9 +56,11 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
     </div>
     <div className={s.stage}>
       <div className={s.stageInner}>
-        {HANDS_ARRAY.map((hand, index) => (
-          <Hand key={index} index={index} hand={hand} count={input.value} />
-        ))}
+        <div className={s.stageInnerInner}>
+          {HANDS_ARRAY.map((hand, index) => (
+            <Hand key={index} index={index} hand={hand} count={input.value} />
+          ))}
+        </div>
       </div>
     </div>
   </>
@@ -75,19 +75,12 @@ const Hand = ({ index, hand, count }) => {
   let side;
   let position;
 
-  if (hand.position < BOTTOM_SIDE_RATIO) {
+  if (hand.position < 0.5) {
     side = 'left';
-    position = hand.position / BOTTOM_SIDE_RATIO;
-  } else if (hand.position > 1 - BOTTOM_SIDE_RATIO) {
-    side = 'right';
-    position = (hand.position - 1 + BOTTOM_SIDE_RATIO) / BOTTOM_SIDE_RATIO;
+    position = hand.position / 0.5;
   } else {
-    const range = 1 - BOTTOM_SIDE_RATIO * 2;
-    side = 'bottom';
-    position =
-      hand.position / (BOTTOM_SIDE_RATIO + BOTTOM_SIDE_RATIO * range) -
-      1 +
-      BOTTOM_SIDE_RATIO;
+    side = 'right';
+    position = (hand.position - 0.5) / 0.5;
   }
 
   if (side === 'bottom') {
