@@ -28,6 +28,20 @@ const HANDS_ARRAY = Array.apply(null, Array(MAX_HANDS)).map((hand, index) => {
 
 shuffle(HANDS_ARRAY);
 
+HANDS_ARRAY.unshift({
+  hand: Math.floor(Math.random() * HAND_ILLUSTRATIONS.length),
+  tilt: Math.round(Math.random() * MAX_TILT),
+  position: 0.75,
+  size: Math.random(),
+});
+
+HANDS_ARRAY.unshift({
+  hand: Math.floor(Math.random() * HAND_ILLUSTRATIONS.length),
+  tilt: Math.round(Math.random() * MAX_TILT),
+  position: 0.25,
+  size: Math.random(),
+});
+
 export const SignatureCountSlider = ({ input, label, min, max }) => (
   <>
     <label htmlFor={`slider_${input.name}`}>{label}</label>
