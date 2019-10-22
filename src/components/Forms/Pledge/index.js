@@ -50,6 +50,10 @@ export default () => {
     );
   }
 
+  if (!isSecondPartOpen) {
+    return <Button onClick={() => openSecondPart(true)}>Ich bin dabei!</Button>;
+  }
+
   return (
     <Form
       onSubmit={e => {
@@ -62,15 +66,7 @@ export default () => {
         signatureCount: 30,
       }}
       validate={validate}
-      render={({ handleSubmit, form }) => {
-        // console.log(form.subscribe('signatureCount'));
-        // const signatureCountState = form.getFieldState('signatureCount');
-        // const showAllFields =
-        //   signatureCountState &&
-        //   (signatureCountState.touched ||
-        //     signatureCountState.active ||
-        //     signatureCountState.dirty);
-
+      render={({ handleSubmit }) => {
         return (
           <form onSubmit={handleSubmit} className={s.container}>
             <FormSection>
@@ -81,10 +77,6 @@ export default () => {
                 type="range"
                 min={1}
                 max={100}
-                openSecondPart={() => {
-                  openSecondPart(true);
-                }}
-                isSecondPartOpen={isSecondPartOpen}
               />
             </FormSection>
             <AnimateHeight height={isSecondPartOpen ? 'auto' : 0}>
