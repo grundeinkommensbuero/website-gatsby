@@ -118,12 +118,12 @@ export default () => {
                     name="name"
                     label="Name"
                     placeholder="Max Musterfrau"
-                    description="optional"
                     component={TextInputWrapped}
                   ></Field>
                   <Field
                     name="email"
-                    label="E-Mail (Pflichtfeld)"
+                    label="E-Mail"
+                    description="Pflichtfeld"
                     placeholder="beispiel@blubb.de"
                     component={TextInputWrapped}
                   ></Field>
@@ -131,7 +131,6 @@ export default () => {
                     name="zipCode"
                     label="Postleitzahl"
                     placeholder="12345"
-                    description="optional, für gezieltere Ansprache"
                     component={TextInputWrapped}
                   ></Field>
                 </FormSection>
