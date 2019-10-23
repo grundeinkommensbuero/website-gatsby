@@ -50,20 +50,33 @@
 }
 
 .hand {
-  height: 12rem;
   transition: height 0.3s ease;
 
-  .many & {
-    height: 8rem;
+  @media (min-width: @breakPointM) {
+    height: 12rem;
+
+    .many & {
+      height: 8rem;
+    }
+
+    .more & {
+      height: 6rem;
+    }
   }
 
-  .more & {
-    height: 6rem;
+  @media (max-width: @breakPointM) {
+    height: 4rem;
   }
 }
 
 .handContainer {
   position: absolute;
+
+  &:first-child {
+    .hand {
+      height: 12rem;
+    }
+  }
 
   &_left {
     transform: rotate(90deg);
