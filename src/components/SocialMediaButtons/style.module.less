@@ -1,10 +1,15 @@
 @import '../style/vars.less';
 
 .container {
-  display: flex;
-  justify-content: space-around;
+  position: relative;
+  z-index: 1;
 
-  a:hover {
-    opacity: 0.7;
+  .iconContainer {
+    display: flex;
+    justify-content: space-around;
+
+    a:hover {
+      opacity: 0.7;
+    }
   }
 }
