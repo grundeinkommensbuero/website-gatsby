@@ -1,16 +1,36 @@
 import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
-import { LinkButton } from '../../Forms/Button';
+import { LinkButton, Button } from '../../Forms/Button';
+import POINT_LEFT from './figure_point_left.svg';
+import POINT_LEFT_MOBILE from './figure_point_left_mobile.svg';
 
-export default ({ callToActionText, callToActionLink, className }) => (
-  <div className={cN(s.callToActionContainer, className)}>
-    <LinkButton
-      target="_blank"
-      className={s.callToActionLink}
-      href={callToActionLink}
-    >
-      {callToActionText}
-    </LinkButton>
+export default ({ children, href, className, illustration, onClick }) => (
+  <div
+    className={cN(s.container, className, {
+      [s.hasIllustration]: illustration,
+    })}
+  >
+    <div className={s.inner}>
+      {href && (
+        <LinkButton target="_blank" className={s.button} href={href}>
+          {children}
+        </LinkButton>
+      )}
+      {onClick && (
+        <Button className={s.button} onClick={onClick}>
+          {children}
+        </Button>
+      )}
+      {illustration === 'POINT_LEFT' && (
+        <>
+          <img src={POINT_LEFT} className={s.illustrationPointLeft} />
+          <img
+            src={POINT_LEFT_MOBILE}
+            className={s.illustrationPointLeftMobile}
+          />
+        </>
+      )}
+    </div>
   </div>
 );

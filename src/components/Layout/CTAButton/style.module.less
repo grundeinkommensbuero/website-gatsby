@@ -1,13 +1,42 @@
 @import '../../style/vars.less';
 
-.callToActionContainer {
-  display: flex;
-  align-items: center;
-  justify-content: left;
+.container {
+  &.hasIllustration {
+    @media (max-width: @breakPointS) {
+      margin-bottom: 5rem;
+    }
+  }
 }
 
-.callToActionLink {
+.inner {
+  position: relative;
+  display: inline-flex;
+}
+
+.button {
   @media (min-width: @breakPointM) {
     font-size: @fontSizeL;
+  }
+}
+
+.illustrationPointLeft {
+  position: absolute;
+  width: 13rem;
+  top: calc(100% - 7rem);
+  left: calc(100% + 4rem);
+
+  @media (max-width: @breakPointS) {
+    display: none;
+  }
+}
+
+.illustrationPointLeftMobile {
+  position: absolute;
+  width: 10rem;
+  top: calc(100% + 1rem);
+  left: 10rem;
+
+  @media (min-width: @breakPointS) {
+    display: none;
   }
 }

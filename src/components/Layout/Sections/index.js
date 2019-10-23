@@ -70,9 +70,10 @@ export default function Sections({ sections }) {
                 {callToActionText && callToActionLink && (
                   <CTAButton
                     className={s.callToActionContainer}
-                    callToActionText={callToActionText}
-                    callToActionLink={callToActionLink}
-                  />
+                    href={callToActionLink}
+                  >
+                    {callToActionText}
+                  </CTAButton>
                 )}
               </div>
               {(__typename === 'ContentfulPageSectionIllustration' ||
