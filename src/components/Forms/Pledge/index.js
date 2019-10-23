@@ -12,6 +12,7 @@ import s from './style.module.less';
 import AnimateHeight from 'react-animate-height';
 import { FinallyMessage } from '../FinallyMessage';
 import cN from 'classnames';
+import SocialMediaButtons from '../../SocialMediaButtons';
 
 export default ({ className }) => {
   const [state, savePledge] = usePledgeApi();
@@ -33,21 +34,25 @@ export default ({ className }) => {
       finallyState = 'progress';
     }
     return (
-      <FinallyMessage state={finallyState} className={className}>
-        {state === 'saving' && 'Wird abgeschickt...'}
-        {state === 'saved' &&
-          'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
-        {state === 'userExists' && 'Du bist schon im System.'}
-        {state === 'error' && (
-          <>
-            Da ist was schief gegangen. Melde dich bitte bei uns{' '}
-            <a href="mailto:support@expedition-grundeinkommen.de">
-              support@expedition-grundeinkommen.de
-            </a>
-            .
-          </>
-        )}
-      </FinallyMessage>
+      <>
+        <FinallyMessage state={finallyState} className={className}>
+          {state === 'saving' && 'Wird abgeschickt...'}
+          {state === 'saved' &&
+            'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
+          {state === 'userExists' && 'Du bist schon im System.'}
+          {state === 'error' && (
+            <>
+              Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </>
+          )}
+        </FinallyMessage>
+        <p>Folge uns in den Sozialen Medien!</p>
+        <SocialMediaButtons />
+      </>
     );
   }
 
