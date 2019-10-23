@@ -13,6 +13,7 @@ import AnimateHeight from 'react-animate-height';
 import { FinallyMessage } from '../FinallyMessage';
 import cN from 'classnames';
 import SocialMediaButtons from '../../SocialMediaButtons';
+import CTAButton from '../../Layout/CTAButton';
 
 export default ({ className }) => {
   const [state, savePledge] = usePledgeApi();
@@ -57,9 +58,13 @@ export default ({ className }) => {
 
   if (!isSecondPartOpen) {
     return (
-      <div className={className}>
-        <Button onClick={() => openSecondPart(true)}>Ich bin dabei!</Button>
-      </div>
+      <CTAButton
+        className={className}
+        illustration="POINT_LEFT"
+        onClick={() => openSecondPart(true)}
+      >
+        Ich bin dabei!
+      </CTAButton>
     );
   }
 
