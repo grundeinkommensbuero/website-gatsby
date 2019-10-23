@@ -21,17 +21,25 @@
   margin: 0.8rem 0;
 }
 
+.inner {
+  grid-column: 2 / 4;
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo {
   height: 100%;
   display: block;
 }
 
 .nav {
-  grid-column: 3;
-  align-self: stretch;
   font-size: @fontSizeM;
 
-  @media (max-width: @breakPointM) {
+  @media (max-width: 900px) {
+    font-size: @fontSizeS;
+  }
+
+  @media (max-width: 750px) {
     display: none;
   }
 }
