@@ -160,6 +160,7 @@ export default ({ className }) => {
                   <Field
                     name="zipCode"
                     label="Postleitzahl"
+                    description="Pflichtfeld"
                     placeholder="12345"
                     component={TextInputWrapped}
                   ></Field>
@@ -209,6 +210,10 @@ const validate = values => {
 
   if (!values.privacyConcent) {
     errors.privacyConcent = 'Wir benötigen dein Einverständnis';
+  }
+
+  if (!values.zipCode) {
+    errors.zipCode = 'Wir benötigen deine Postleitzahl';
   }
 
   if (!validateEmail(values.email)) {
