@@ -146,24 +146,24 @@ export default ({ className }) => {
 
                 <FormSection>
                   <Field
-                    name="privacyConcent"
-                    label={
-                      <>
-                        Hiermit bestätige ich, dass ich die{' '}
-                        <Link to="/datenschutz/">Datenschutzbestimmungen</Link>{' '}
-                        gelesen habe.
-                      </>
-                    }
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
-                  <Field
                     name="newsletterConcent"
                     label={
                       <>
                         Schreibt mir, wenn die Unterschriftslisten da sind, und
                         haltet mich über alle weiteren Kampagnenschritte auf dem
                         Laufenden.
+                      </>
+                    }
+                    type="checkbox"
+                    component={Checkbox}
+                  ></Field>
+                  <Field
+                    name="privacyConcent"
+                    label={
+                      <>
+                        Hiermit bestätige ich, dass ich die{' '}
+                        <Link to="/datenschutz/">Datenschutzbestimmungen</Link>{' '}
+                        gelesen habe.
                       </>
                     }
                     type="checkbox"
