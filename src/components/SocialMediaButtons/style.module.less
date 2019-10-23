@@ -1,15 +1,10 @@
 @import '../style/vars.less';
 
-.container {
-  position: relative;
-  z-index: 1;
+.iconContainer {
+  display: flex;
+  justify-content: space-around;
 
-  .iconContainer {
-    display: flex;
-    justify-content: space-around;
-
-    a:hover {
-      opacity: 0.7;
-    }
+  a:hover {
+    color: var(--secondary-color);
   }
 }

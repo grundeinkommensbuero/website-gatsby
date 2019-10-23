@@ -48,6 +48,9 @@ export default ({ className }) => {
     }
     return (
       <>
+        <SocialMediaButtons>
+          Folge uns in den sozialen Medien!
+        </SocialMediaButtons>
         <FinallyMessage state={finallyState} className={className}>
           {state === 'saving' && 'Wird abgeschickt...'}
           {state === 'saved' &&
@@ -63,9 +66,6 @@ export default ({ className }) => {
             </>
           )}
         </FinallyMessage>
-        <SocialMediaButtons>
-          Folge uns in den sozialen Medien!
-        </SocialMediaButtons>
       </>
     );
   }
