@@ -7,14 +7,14 @@ import Hat from './hat.svg';
 import Crowd1 from './crowd1.svg';
 import Crowd2 from './crowd2.svg';
 
-export const FinallyMessage = ({ state, children }) => {
+export const FinallyMessage = ({ state, children, className }) => {
   useEffect(() => {
     scrollIntoView(messageRef.current);
   });
   const messageRef = useRef(null);
 
   return (
-    <div className={s.container}>
+    <div className={cN(s.container, className)}>
       {state === 'success' && (
         <div className={s.savedStage}>
           <img src={Flowers} className={s.savedStageFlowers} />

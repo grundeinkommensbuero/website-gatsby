@@ -33,7 +33,7 @@ export default ({ className }) => {
       finallyState = 'progress';
     }
     return (
-      <FinallyMessage state={finallyState}>
+      <FinallyMessage state={finallyState} className={className}>
         {state === 'saving' && 'Wird abgeschickt...'}
         {state === 'saved' &&
           'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
