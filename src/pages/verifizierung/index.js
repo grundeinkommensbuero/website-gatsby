@@ -55,7 +55,7 @@ const Verification = () => {
       title: (
         <>
           {verificationState === 'verifying' && 'Verifizierung...'}
-          {isOk && 'Juhuu - Du bist dabei!'}
+          {isOk && 'Juhuu - du bist dabei!'}
           {hasError && 'Oooooops - Verifizierung fehlgeschlagen 😕'}
         </>
       ),
@@ -71,8 +71,8 @@ const Verification = () => {
                 'Warte auf Verifizierung...'}
               {hasError && (
                 <>
-                  Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
-                  oder schreib uns auch gerne eine Mail an{' '}
+                  Das hat leider nicht geklappt. Bitte probiere es noch einmal,
+                  oder schreib uns eine E-Mail an{' '}
                   <a href="mailto:support@expedition-grundeinkommen.de">
                     support@expedition-grundeinkommen.de
                   </a>
@@ -83,7 +83,7 @@ const Verification = () => {
           )}
           {isOk && <HurrayCrowd />}
           <SocialMediaButtons className={s.socialMedia}>
-            Folge uns in den sozialen Medien!
+            Folge uns in den sozialen Medien:
           </SocialMediaButtons>
         </>
       ),
