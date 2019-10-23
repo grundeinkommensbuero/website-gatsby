@@ -7,15 +7,15 @@ import {
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 
-export default props => {
+export default ({ children }) => {
   const iconSize = 'lg';
   const facebookIcon = <FontAwesomeIcon icon={faFacebook} size={iconSize} />;
   const instagramIcon = <FontAwesomeIcon icon={faInstagram} size={iconSize} />;
   const twitterIcon = <FontAwesomeIcon icon={faTwitter} size={iconSize} />;
-  console.log('props', props);
+
   return (
     <div className={s.container}>
-      {props.message !== '' && <p>{props.message}</p>}
+      {children && <p>{children}</p>}
       <div className={s.iconContainer}>
         <a target="_blank" href="https://www.facebook.com/expeditionbge/">
           {facebookIcon}

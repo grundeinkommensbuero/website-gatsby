@@ -63,7 +63,9 @@ export default ({ className }) => {
             </>
           )}
         </FinallyMessage>
-        <SocialMediaButtons message="Folge uns in den sozialen Medien!" />
+        <SocialMediaButtons>
+          Folge uns in den sozialen Medien!
+        </SocialMediaButtons>
       </>
     );
   }
