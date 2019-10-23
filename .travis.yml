@@ -18,8 +18,8 @@ before_install:
     elif [ $TRAVIS_BRANCH == "master" ]; then
       echo "is from master"
       eval export CLOUDFRONT_DISTRIBUTION="$PROD_CLOUDFRONT_DISTRIBUTION"
-    elif [ $TRAVIS_BRANCH == "dev" ] && [ $TRAVIS_TAG != "dev"]; then
-      echo "is from dev without tag"
+    elif [ $TRAVIS_BRANCH == "dev" ]; then
+      echo "is from dev"
       eval export CLOUDFRONT_DISTRIBUTION="$DEV_CLOUDFRONT_DISTRIBUTION"
     fi
   - echo $CLOUDFRONT_DISTRIBUTION
