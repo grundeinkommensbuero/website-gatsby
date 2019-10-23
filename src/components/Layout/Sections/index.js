@@ -58,14 +58,12 @@ export default function Sections({ sections }) {
                     })}
                   >
                     {body.json ? contentfulJsonToHtml(body.json) : body}
-                    {pledge && <Pledge />}
+                    {pledge && <Pledge className={s.pledge} />}
                   </div>
                 )}
                 {emailSignup && <EmailListForm className={s.emailSignup} />}
                 {videoLink && <YoutubeEmbed url={videoLink} />}
-                {teamMembers && (
-                  <AboutUs className={s.aboutUs} members={teamMembers} />
-                )}
+                {teamMembers && <AboutUs members={teamMembers} />}
                 {callToActionText && callToActionLink && (
                   <CallToAction
                     callToActionText={callToActionText}
