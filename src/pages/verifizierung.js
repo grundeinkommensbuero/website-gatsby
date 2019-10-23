@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useVerification } from '../hooks/Authentication';
 import { FinallyMessage } from '../components/Forms/FinallyMessage';
+import SocialMediaButtons from '../components/SocialMediaButtons';
 
 const Verification = () => {
   const [verificationState, confirmSignUp] = useVerification();
@@ -58,21 +59,25 @@ const Verification = () => {
       ),
       bodyTextSizeHuge: true,
       body: (
-        <FinallyMessage state={finallyMessageState}>
-          {verificationState === 'verifying' && 'Warte auf Verifizierung...'}
-          {isOk &&
-            'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
-          {hasError && (
-            <>
-              Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
-              oder schreib uns auch gerne eine Mail an{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </>
-          )}
-        </FinallyMessage>
+        <>
+          <FinallyMessage state={finallyMessageState}>
+            {verificationState === 'verifying' && 'Warte auf Verifizierung...'}
+            {isOk &&
+              'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
+            {hasError && (
+              <>
+                Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
+                oder schreib uns auch gerne eine Mail an{' '}
+                <a href="mailto:support@expedition-grundeinkommen.de">
+                  support@expedition-grundeinkommen.de
+                </a>
+                .
+              </>
+            )}
+          </FinallyMessage>
+          <p>Folge uns in den Sozialen Medien!</p>
+          <SocialMediaButtons />
+        </>
       ),
     },
   ];
