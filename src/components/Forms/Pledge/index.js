@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
-import { Button } from '../Button';
 import { TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
@@ -18,6 +17,19 @@ import CTAButton from '../../Layout/CTAButton';
 export default ({ className }) => {
   const [state, savePledge] = usePledgeApi();
   const [isSecondPartOpen, openSecondPart] = useState(false);
+
+  useEffect(() => {
+    function handleJumpTo() {
+      openSecondPart(true);
+    }
+
+    window.addEventListener('#pledge', handleJumpTo);
+
+    return function cleanup() {
+      window.removeEventListener('#pledge', handleJumpTo);
+    };
+  });
+
   /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
@@ -62,6 +74,7 @@ export default ({ className }) => {
         className={className}
         illustration="POINT_LEFT"
         onClick={() => openSecondPart(true)}
+        id="pledge"
       >
         Ich bin dabei!
       </CTAButton>
@@ -83,6 +96,7 @@ export default ({ className }) => {
       render={({ handleSubmit }) => {
         return (
           <form onSubmit={handleSubmit} className={cN(s.container, className)}>
+            <div className={s.jumpToAnchor} id="pledge" />
             <FormSection>
               <Field
                 name="signatureCount"
@@ -151,7 +165,7 @@ export default ({ className }) => {
 
                 <FormSection>
                   <Field
-                    name="newsletterConsent"
+                    name="newsletterConcent"
                     label={
                       <>
                         Schreibt mir, wenn die Unterschriftslisten da sind, und
@@ -163,7 +177,7 @@ export default ({ className }) => {
                     component={Checkbox}
                   ></Field>
                   <Field
-                    name="privacyConsent"
+                    name="privacyConcent"
                     label={
                       <>
                         Hiermit bestätige ich, dass ich die{' '}
@@ -191,8 +205,8 @@ export default ({ className }) => {
 const validate = values => {
   const errors = {};
 
-  if (!values.privacyConsent) {
-    errors.privacyConsent = 'Wir benötigen dein Einverständnis';
+  if (!values.privacyConcent) {
+    errors.privacyConcent = 'Wir benötigen dein Einverständnis';
   }
 
   if (!validateEmail(values.email)) {
