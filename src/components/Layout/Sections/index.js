@@ -5,7 +5,6 @@ import EmailListForm from '../../EmailListForm';
 import { stringToId, contentfulJsonToHtml } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
-import { LinkButton } from '../../Forms/Button';
 import Pledge from '../../Forms/Pledge';
 import CTAButton from '../CTAButton';
 

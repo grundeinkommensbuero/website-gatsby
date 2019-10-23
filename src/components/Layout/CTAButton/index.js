@@ -25,6 +25,11 @@ export default ({
             target={href.startsWith('#') ? '' : '_blank'}
             className={s.button}
             href={href}
+            onClick={() => {
+              if (href.startsWith('#')) {
+                dispatchEvent(href);
+              }
+            }}
             {...other}
           >
             {children}
@@ -48,3 +53,7 @@ export default ({
     </div>
   );
 };
+
+function dispatchEvent(id) {
+  window.dispatchEvent(new Event(id));
+}
