@@ -151,7 +151,7 @@ export default ({ className }) => {
 
                 <FormSection>
                   <Field
-                    name="newsletterConcent"
+                    name="newsletterConsent"
                     label={
                       <>
                         Schreibt mir, wenn die Unterschriftslisten da sind, und
@@ -163,7 +163,7 @@ export default ({ className }) => {
                     component={Checkbox}
                   ></Field>
                   <Field
-                    name="privacyConcent"
+                    name="privacyConsent"
                     label={
                       <>
                         Hiermit bestätige ich, dass ich die{' '}

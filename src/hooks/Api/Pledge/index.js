@@ -43,14 +43,17 @@ const savePledge = async (pledge, setState) => {
       if ('wouldDonate' in data === false) {
         data.wouldDonate = false;
       }
-      if ('wouldVisitLocalGroup' in data === false) {
-        data.wouldVisitLocalGroup = false;
+      if ('wouldPrintAndSendSignatureLists' in data === false) {
+        data.wouldPrintAndSendSignatureLists = false;
       }
       if ('wouldPutAndCollectSignatureLists' in data === false) {
         data.wouldPutAndCollectSignatureLists = false;
       }
       if ('wouldCollectSignaturesInPublicSpaces' in data === false) {
         data.wouldCollectSignaturesInPublicSpaces = false;
+      }
+      if ('newsletterConsent' in data === false) {
+        data.newsletterConsent = false;
       }
       if (referral) {
         data.referral = referral;
