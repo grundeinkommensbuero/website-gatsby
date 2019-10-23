@@ -2,8 +2,13 @@
 
 .inputContainer {
     display: flex;
-    margin-top: 4rem;
+    margin-top: 2rem;
     align-items: center;
+
+    @media (max-width: @breakPointM) {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
 .sliderContainer {
@@ -14,6 +19,11 @@
     margin-left: 1rem;
     font-size: @fontSizeL;
     width: 6.1rem;
+
+
+    @media (max-width: @breakPointM) {
+        align-self: center;
+    }
 }
 
 .stage {

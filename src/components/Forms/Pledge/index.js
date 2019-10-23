@@ -11,8 +11,9 @@ import { Link } from 'gatsby';
 import s from './style.module.less';
 import AnimateHeight from 'react-animate-height';
 import { FinallyMessage } from '../FinallyMessage';
+import cN from 'classnames';
 
-export default () => {
+export default ({ className }) => {
   const [state, savePledge] = usePledgeApi();
   const [isSecondPartOpen, openSecondPart] = useState(false);
   /*
@@ -51,7 +52,11 @@ export default () => {
   }
 
   if (!isSecondPartOpen) {
-    return <Button onClick={() => openSecondPart(true)}>Ich bin dabei!</Button>;
+    return (
+      <div className={className}>
+        <Button onClick={() => openSecondPart(true)}>Ich bin dabei!</Button>
+      </div>
+    );
   }
 
   return (
@@ -68,7 +73,7 @@ export default () => {
       validate={validate}
       render={({ handleSubmit }) => {
         return (
-          <form onSubmit={handleSubmit} className={s.container}>
+          <form onSubmit={handleSubmit} className={cN(s.container, className)}>
             <FormSection>
               <Field
                 name="signatureCount"
