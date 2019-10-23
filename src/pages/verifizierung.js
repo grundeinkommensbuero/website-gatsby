@@ -75,8 +75,7 @@ const Verification = () => {
               </>
             )}
           </FinallyMessage>
-          <p>Folge uns in den Sozialen Medien!</p>
-          <SocialMediaButtons />
+          <SocialMediaButtons message="Folge uns in den sozialen Medien!" />
         </>
       ),
     },
