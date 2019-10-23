@@ -216,8 +216,13 @@ const validate = values => {
     errors.zipCode = 'Wir benötigen deine Postleitzahl';
   }
 
+  if (values.email && values.email.includes('+')) {
+    errors.email = 'Zurzeit unterstützen wir kein + in E-Mails.';
+  }
+
   if (!validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse.';
   }
+
   return errors;
 };
