@@ -7,6 +7,7 @@ import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import { LinkButton } from '../../Forms/Button';
 import Pledge from '../../Forms/Pledge';
+import CTAButton from '../CTAButton';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -67,7 +68,8 @@ export default function Sections({ sections }) {
                   <AboutUs className={s.aboutUs} members={teamMembers} />
                 )}
                 {callToActionText && callToActionLink && (
-                  <CallToAction
+                  <CTAButton
+                    className={s.callToActionContainer}
                     callToActionText={callToActionText}
                     callToActionLink={callToActionLink}
                   />
@@ -84,20 +86,6 @@ export default function Sections({ sections }) {
     );
   }
   return null;
-}
-
-function CallToAction({ callToActionText, callToActionLink }) {
-  return (
-    <div className={s.callToActionContainer}>
-      <LinkButton
-        target="_blank"
-        className={s.callToActionLink}
-        href={callToActionLink}
-      >
-        {callToActionText}
-      </LinkButton>
-    </div>
-  );
 }
 
 function Slogan({ sloganLine1, sloganLine2 }) {
