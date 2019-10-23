@@ -20,9 +20,9 @@
     font-size: @fontSizeL;
     width: 6.1rem;
 
-
     @media (max-width: @breakPointM) {
         align-self: center;
+        margin: 1rem 0 0;
     }
 }
 
@@ -122,6 +122,10 @@
     border-radius: @thumb-radius;
     background: @thumb-color;
     cursor: pointer;
+
+    animation-name: wiggle;
+    animation-iteration-count: 3;
+    animation-duration: .2s;
 }
 
 .thumbFocus() {
@@ -199,5 +203,22 @@
     }
     &:focus::-ms-fill-upper {
         background: @track-color;
+    }
+}
+
+
+
+@keyframes wiggle {
+    0% {
+        transform: translateX(0);
+    }
+    33% {
+        transform: translateX(0.3rem);
+    }
+    66% {
+        transform: translateX(-0.3rem);
+    }
+    100% {
+        transform: translateX(0);
     }
 }
