@@ -12,32 +12,39 @@ export default ({
   illustration,
   onClick,
   ...other
-}) => (
-  <div
-    className={cN(s.container, className, {
-      [s.hasIllustration]: illustration,
-    })}
-  >
-    <div className={s.inner}>
-      {href && (
-        <LinkButton target="_blank" className={s.button} href={href} {...other}>
-          {children}
-        </LinkButton>
-      )}
-      {!href && (
-        <Button className={s.button} onClick={onClick} {...other}>
-          {children}
-        </Button>
-      )}
-      {illustration === 'POINT_LEFT' && (
-        <>
-          <img src={POINT_LEFT} className={s.illustrationPointLeft} />
-          <img
-            src={POINT_LEFT_MOBILE}
-            className={s.illustrationPointLeftMobile}
-          />
-        </>
-      )}
+}) => {
+  return (
+    <div
+      className={cN(s.container, className, {
+        [s.hasIllustration]: illustration,
+      })}
+    >
+      <div className={s.inner}>
+        {href && (
+          <LinkButton
+            target={href.startsWith('#') ? '' : '_blank'}
+            className={s.button}
+            href={href}
+            {...other}
+          >
+            {children}
+          </LinkButton>
+        )}
+        {!href && (
+          <Button className={s.button} onClick={onClick} {...other}>
+            {children}
+          </Button>
+        )}
+        {illustration === 'POINT_LEFT' && (
+          <>
+            <img src={POINT_LEFT} className={s.illustrationPointLeft} />
+            <img
+              src={POINT_LEFT_MOBILE}
+              className={s.illustrationPointLeftMobile}
+            />
+          </>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
