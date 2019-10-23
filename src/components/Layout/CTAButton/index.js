@@ -5,7 +5,14 @@ import { LinkButton, Button } from '../../Forms/Button';
 import POINT_LEFT from './figure_point_left.svg';
 import POINT_LEFT_MOBILE from './figure_point_left_mobile.svg';
 
-export default ({ children, href, className, illustration, onClick }) => (
+export default ({
+  children,
+  href,
+  className,
+  illustration,
+  onClick,
+  ...other
+}) => (
   <div
     className={cN(s.container, className, {
       [s.hasIllustration]: illustration,
@@ -13,12 +20,12 @@ export default ({ children, href, className, illustration, onClick }) => (
   >
     <div className={s.inner}>
       {href && (
-        <LinkButton target="_blank" className={s.button} href={href}>
+        <LinkButton target="_blank" className={s.button} href={href} {...other}>
           {children}
         </LinkButton>
       )}
-      {onClick && (
-        <Button className={s.button} onClick={onClick}>
+      {!href && (
+        <Button className={s.button} onClick={onClick} {...other}>
           {children}
         </Button>
       )}

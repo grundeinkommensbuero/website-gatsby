@@ -176,7 +176,9 @@ export default ({ className }) => {
                   ></Field>
                 </FormSection>
 
-                <Button type="submit">Ich bin dabei!</Button>
+                <CTAButton type="submit" illustration="POINT_LEFT">
+                  Ich bin dabei!
+                </CTAButton>
               </div>
             </AnimateHeight>
           </form>
