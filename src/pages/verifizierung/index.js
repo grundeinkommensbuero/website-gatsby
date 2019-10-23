@@ -5,6 +5,7 @@ import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import SocialMediaButtons from '../../components/SocialMediaButtons';
 import s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
+import cN from 'classnames';
 
 const Verification = () => {
   const [verificationState, confirmSignUp] = useVerification();
@@ -82,7 +83,9 @@ const Verification = () => {
             </FinallyMessage>
           )}
           {isOk && <HurrayCrowd />}
-          <SocialMediaButtons className={s.socialMedia}>
+          <SocialMediaButtons
+            className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
+          >
             Folge uns in den sozialen Medien:
           </SocialMediaButtons>
         </>
