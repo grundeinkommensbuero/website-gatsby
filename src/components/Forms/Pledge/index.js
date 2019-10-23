@@ -191,8 +191,8 @@ export default ({ className }) => {
 const validate = values => {
   const errors = {};
 
-  if (!values.privacyConcent) {
-    errors.privacyConcent = 'Wir benötigen dein Einverständnis';
+  if (!values.privacyConsent) {
+    errors.privacyConsent = 'Wir benötigen dein Einverständnis';
   }
 
   if (!validateEmail(values.email)) {
