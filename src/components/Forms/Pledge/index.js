@@ -90,7 +90,7 @@ export default ({ className }) => {
                 component={SignatureCountSlider}
                 type="range"
                 min={1}
-                max={100}
+                max={50}
               />
             </FormSection>
             <AnimateHeight height={isSecondPartOpen ? 'auto' : 0}>
