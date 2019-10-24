@@ -1,61 +1,81 @@
 @import '../../style/vars.less';
 
 .footer {
-    .headerFooterGrid();
-    .globeBackground();
-    background-attachment: fixed;
-    min-height: 15rem;
-    padding: 2rem 0;
-    font-size: @fontSizeM;
-    align-content: start;
-    position: relative;
+  .footerGrid();
+  .globeBackground();
+  background-attachment: fixed;
+  min-height: 15rem;
+  padding: 2rem 0;
+  font-size: @fontSizeM;
+  align-content: start;
+  position: relative;
+  --secondary-color: @white;
 }
 
 .copyright {
-    grid-column: 2;
+  grid-column: 2;
 
-    @media (max-width: @breakPointM) {
-        grid-column-end: span 2;
-    }
+  @media (max-width: @breakPointM) {
+    grid-column-end: span 2;
+  }
 }
 
 .nav {
-    grid-column: 3;
-    text-align: right;
+  grid-column: 4;
+  text-align: right;
 
-    @media (max-width: @breakPointM) {
-        grid-column: 2;
-        grid-column-end: span 2;
-        text-align: left;
-    }
+  @media (max-width: @breakPointM) {
+    grid-column: 3;
+    grid-column-end: span 2;
+    text-align: left;
+  }
+
+  @media (max-width: @breakPointS) {
+    grid-column: 2;
+    grid-column-end: span 2;
+  }
 }
 
 .navList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 
-    @media (max-width: @breakPointS) {
-        display: block
-    }
+  @media (max-width: @breakPointS) {
+    display: block;
+  }
 }
 
 .navItem {
-    margin: 0;
-    display: inline;
+  margin: 0;
+  display: inline;
 
-    &:not(:last-child) {
-        margin-right: 1rem;
-    }
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
 
-    @media (max-width: @breakPointS) {
-        display: block
-    }
+  @media (max-width: @breakPointS) {
+    display: block;
+  }
 }
 
 .link {
-    .menuLink();
+  .menuLink();
+}
+
+.socialMedia {
+  grid-column: 3;
+  @media (max-width: @breakPointM) {
+    grid-column: 4;
+    grid-column-end: span 2;
+    text-align: left;
+  }
+  @media (max-width: @breakPointS) {
+    grid-column: 2;
+    grid-column-end: span 2;
+    text-align: left;
+  }
 }

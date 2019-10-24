@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { useVerification } from '../../hooks/Authentication';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
-import SocialMediaButtons from '../../components/SocialMediaButtons';
+import SocialMediaButtons from '../../components/SocialMedia/Share';
 
 const Verification = () => {
   const [verificationState, confirmSignUp] = useVerification();
