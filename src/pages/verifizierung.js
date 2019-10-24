@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import Layout from '../../components/Layout';
-import { useVerification } from '../../hooks/Authentication';
-import { FinallyMessage } from '../../components/Forms/FinallyMessage';
-import SocialMediaButtons from '../../components/SocialMedia/Share';
-import s from './style.module.less';
-import { HurrayCrowd } from '../../components/HurrayCrowd';
-import cN from 'classnames';
+import Layout from '../components/Layout';
+import { useVerification } from '../hooks/Authentication';
+import { FinallyMessage } from '../components/Forms/FinallyMessage';
+import SocialMediaButtons from '../components/SocialMedia/Share';
 
 const Verification = () => {
   const [verificationState, confirmSignUp] = useVerification();
@@ -56,38 +53,29 @@ const Verification = () => {
       title: (
         <>
           {verificationState === 'verifying' && 'Verifizierung...'}
-          {isOk && 'Juhuu - du bist dabei!'}
+          {isOk && 'Juhuu - Du bist dabei!'}
           {hasError && 'Oooooops - Verifizierung fehlgeschlagen 😕'}
         </>
       ),
       bodyTextSizeHuge: true,
       body: (
         <>
-          {!isOk && (
-            <FinallyMessage
-              className={s.finallyMessage}
-              state={finallyMessageState}
-            >
-              {verificationState === 'verifying' &&
-                'Warte auf Verifizierung...'}
-              {hasError && (
-                <>
-                  Das hat leider nicht geklappt. Bitte probiere es noch einmal,
-                  oder schreib uns eine E-Mail an{' '}
-                  <a href="mailto:support@expedition-grundeinkommen.de">
-                    support@expedition-grundeinkommen.de
-                  </a>
-                  .
-                </>
-              )}
-            </FinallyMessage>
-          )}
-          {isOk && <HurrayCrowd />}
-          <SocialMediaButtons
-            className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
-          >
-            Folge uns in den sozialen Medien:
-          </SocialMediaButtons>
+          <FinallyMessage state={finallyMessageState}>
+            {verificationState === 'verifying' && 'Warte auf Verifizierung...'}
+            {isOk &&
+              'Super! Du bist dabei! Du bekommst Mails von uns, wenn es etwas zu tun gibt, was deinen Interessen entspricht.'}
+            {hasError && (
+              <>
+                Das hat leider nicht geklappt. Bitte probiere es noch ein Mal,
+                oder schreib uns auch gerne eine Mail an{' '}
+                <a href="mailto:support@expedition-grundeinkommen.de">
+                  support@expedition-grundeinkommen.de
+                </a>
+                .
+              </>
+            )}
+          </FinallyMessage>
+          <SocialMediaButtons message="Folge uns in den sozialen Medien!" />
         </>
       ),
     },

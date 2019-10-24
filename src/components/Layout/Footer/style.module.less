@@ -1,7 +1,7 @@
 @import '../../style/vars.less';
 
 .footer {
-  .headerFooterGrid();
+  .footerGrid();
   .globeBackground();
   background-attachment: fixed;
   min-height: 15rem;
@@ -9,6 +9,7 @@
   font-size: @fontSizeM;
   align-content: start;
   position: relative;
+  --secondary-color: @white;
 }
 
 .copyright {
@@ -20,13 +21,18 @@
 }
 
 .nav {
-  grid-column: 3;
+  grid-column: 4;
   text-align: right;
 
   @media (max-width: @breakPointM) {
-    grid-column: 2;
+    grid-column: 3;
     grid-column-end: span 2;
     text-align: left;
+  }
+
+  @media (max-width: @breakPointS) {
+    grid-column: 2;
+    grid-column-end: span 2;
   }
 }
 
@@ -58,4 +64,18 @@
 
 .link {
   .menuLink();
+}
+
+.socialMedia {
+  grid-column: 3;
+  @media (max-width: @breakPointM) {
+    grid-column: 4;
+    grid-column-end: span 2;
+    text-align: left;
+  }
+  @media (max-width: @breakPointS) {
+    grid-column: 2;
+    grid-column-end: span 2;
+    text-align: left;
+  }
 }

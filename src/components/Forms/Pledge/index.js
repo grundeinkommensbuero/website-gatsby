@@ -11,7 +11,7 @@ import s from './style.module.less';
 import AnimateHeight from 'react-animate-height';
 import { FinallyMessage } from '../FinallyMessage';
 import cN from 'classnames';
-import SocialMediaButtons from '../../SocialMediaButtons';
+import SocialMediaButtons from '../../SocialMedia/Share';
 import CTAButton from '../../Layout/CTAButton';
 
 export default ({ className }) => {
