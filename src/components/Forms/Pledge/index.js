@@ -189,7 +189,7 @@ export default ({ className }) => {
 
                 <FormSection>
                   <Field
-                    name="newsletterConcent"
+                    name="newsletterConsent"
                     label={
                       <>
                         Schreibt mir, wenn die Unterschriftslisten da sind und
@@ -201,7 +201,7 @@ export default ({ className }) => {
                     component={Checkbox}
                   ></Field>
                   <Field
-                    name="privacyConcent"
+                    name="privacyConsent"
                     label={
                       <>
                         Ich stimme zu, dass meine eingegebenen Daten gespeichert
@@ -228,8 +228,8 @@ export default ({ className }) => {
 const validate = values => {
   const errors = {};
 
-  if (!values.privacyConcent) {
-    errors.privacyConcent = 'Wir benötigen dein Einverständnis';
+  if (!values.privacyConsent) {
+    errors.privacyConsent = 'Wir benötigen dein Einverständnis';
   }
 
   if (!values.zipCode) {
