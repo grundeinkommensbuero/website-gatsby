@@ -75,9 +75,6 @@ export function shuffle(a) {
 // usage for matomo https://matomo.org/docs/event-tracking/
 export function trackEvent({ category, action, name, value }) {
   if (window._paq) {
-    console.log('tracked', event);
     window._paq.push(['trackEvent', category, action, name, value]);
-  } else {
-    console.log('did not track', { category, action, name, value });
   }
 }
