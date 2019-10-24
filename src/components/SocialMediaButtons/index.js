@@ -9,25 +9,32 @@ import {
 import cN from 'classnames';
 
 export default ({ children, className }) => {
-  const iconSize = 'lg';
-  const facebookIcon = <FontAwesomeIcon icon={faFacebook} size={iconSize} />;
-  const instagramIcon = <FontAwesomeIcon icon={faInstagram} size={iconSize} />;
-  const twitterIcon = <FontAwesomeIcon icon={faTwitter} size={iconSize} />;
-
   return (
     <div className={cN(s.container, className)}>
       {children && <p>{children}</p>}
       <div className={s.iconContainer}>
-        <a target="_blank" href="https://www.facebook.com/expeditionbge/">
-          {facebookIcon}
-        </a>
-        <a target="_blank" href="https://www.instagram.com/expedition.bge/">
-          {instagramIcon}
-        </a>
-        <a target="_blank" href="https://twitter.com/expeditionbge">
-          {twitterIcon}
-        </a>
+        <LinkIcon
+          link="https://www.facebook.com/expeditionbge/"
+          icon={faFacebook}
+          label="Teile auf Facebook"
+        />
+        <LinkIcon
+          link="https://www.instagram.com/expedition.bge/"
+          icon={faInstagram}
+          label="Teile auf Instagram"
+        />
+        <LinkIcon
+          link="https://twitter.com/expeditionbge"
+          icon={faTwitter}
+          label="Teile auf Twitter"
+        />
       </div>
     </div>
   );
 };
+
+const LinkIcon = ({ link, icon, label }) => (
+  <a target="_blank" href={link} aria-label={label} className={s.link}>
+    <FontAwesomeIcon icon={icon} size="3x" />
+  </a>
+);
