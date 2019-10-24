@@ -55,7 +55,20 @@ export default ({ className }) => {
           {state === 'saving' && 'Wird abgeschickt...'}
           {state === 'saved' &&
             'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
-          {state === 'userExists' && 'Du bist schon im System.'}
+          {state === 'userExists' && (
+            <>
+              Danke! Diese E-Mail-Adresse kennen wir schon - Hast du unsere
+              Antwort-Mail bekommen? Dann fehlt nur noch der letzte Klick zum
+              Bestätigen. <br />
+              <br />
+              Nichts gefunden? Dann schau doch bitte noch einmal in deinen
+              Spam-Ordner, oder schreibe uns an{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </>
+          )}
           {state === 'error' && (
             <>
               Da ist was schief gegangen. Melde dich bitte bei uns{' '}
@@ -99,10 +112,10 @@ export default ({ className }) => {
         return (
           <form onSubmit={handleSubmit} className={cN(s.container, className)}>
             <div className={s.jumpToAnchor} id="pledge" />
-            <FormSection>
+            <FormSection heading="Schön, dass du dabei bist!">
               <Field
                 name="signatureCount"
-                label="Du kannst du noch weitere Menschen in deinem Umfeld aktivieren? Sag uns, wie viele Unterschriften von anderen  Menschen in Schleswig-Holstein du realistisch einsammeln kannst!"
+                label="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
                 component={SignatureCountSlider}
                 type="range"
                 min={1}
@@ -111,7 +124,7 @@ export default ({ className }) => {
             </FormSection>
             <AnimateHeight height={isSecondPartOpen ? 'auto' : 0}>
               <div>
-                <FormSection heading="Wie möchtest du die Expedition unterstützen?">
+                <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
                   <Field
                     name="wouldPrintAndSendSignatureLists"
                     type="checkbox"
@@ -121,7 +134,7 @@ export default ({ className }) => {
                   <Field
                     name="wouldPutAndCollectSignatureLists"
                     type="checkbox"
-                    label="Ich lege Listen aus an Orten wie z. B. beim Bäcker, in Cafés, auf dem Uni-Campus oder beim Sportverein und sammle sie später wieder ein."
+                    label="Ich lege Listen an Orten aus wie z. B. beim Bäcker, in Cafés, auf dem Uni-Campus oder beim Sportverein und sammle sie später wieder ein."
                     component={Checkbox}
                   ></Field>
                   <Field
@@ -146,15 +159,15 @@ export default ({ className }) => {
                 <FormSection heading="Wer bist du?">
                   <Field
                     name="name"
-                    label="Name"
-                    placeholder="Max Musterfrau"
+                    label="So möchte ich angesprochen werden"
+                    placeholder="Name"
                     component={TextInputWrapped}
                   ></Field>
                   <Field
                     name="email"
                     label="E-Mail"
                     description="Pflichtfeld"
-                    placeholder="beispiel@blubb.de"
+                    placeholder="E-Mail"
                     component={TextInputWrapped}
                   ></Field>
                   <Field
@@ -171,7 +184,7 @@ export default ({ className }) => {
                     name="newsletterConcent"
                     label={
                       <>
-                        Schreibt mir, wenn die Unterschriftslisten da sind, und
+                        Schreibt mir, wenn die Unterschriftslisten da sind und
                         haltet mich über alle weiteren Kampagnenschritte auf dem
                         Laufenden.
                       </>
@@ -183,9 +196,8 @@ export default ({ className }) => {
                     name="privacyConcent"
                     label={
                       <>
-                        Hiermit bestätige ich, dass ich die{' '}
-                        <Link to="/datenschutz/">Datenschutzbestimmungen</Link>{' '}
-                        gelesen habe.
+                        Ich stimme zu, dass meine eingegebenen Daten gespeichert
+                        werden.
                       </>
                     }
                     type="checkbox"
@@ -194,7 +206,7 @@ export default ({ className }) => {
                 </FormSection>
 
                 <CTAButton type="submit" illustration="POINT_LEFT">
-                  Ich bin dabei!
+                  Ich bin dabei, sobald es losgeht!
                 </CTAButton>
               </div>
             </AnimateHeight>
@@ -213,15 +225,16 @@ const validate = values => {
   }
 
   if (!values.zipCode) {
-    errors.zipCode = 'Wir benötigen deine Postleitzahl';
+    errors.zipCode =
+      'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
   }
 
   if (values.email && values.email.includes('+')) {
-    errors.email = 'Zurzeit unterstützen wir kein + in E-Mails.';
+    errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
   }
 
   if (!validateEmail(values.email)) {
-    errors.email = 'Wir benötigen eine valide E-Mail Adresse.';
+    errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
   return errors;
