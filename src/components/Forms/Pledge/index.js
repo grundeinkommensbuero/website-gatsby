@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
-import { validateEmail } from '../../utils';
+import { validateEmail, trackEvent } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
@@ -20,7 +20,8 @@ export default ({ className }) => {
 
   useEffect(() => {
     function handleJumpTo() {
-      openSecondPart(true);
+      openSecondPartTracked(true);
+      trackEvent({ category: 'Pledge', action: 'click', name: 'jumptToLink' });
     }
 
     window.addEventListener('#pledge', handleJumpTo);
@@ -29,6 +30,11 @@ export default ({ className }) => {
       window.removeEventListener('#pledge', handleJumpTo);
     };
   });
+
+  function openSecondPartTracked(open) {
+    openSecondPart(open);
+    trackEvent({ category: 'Pledge', action: 'click', name: 'openPledge' });
+  }
 
   /*
     state (string) can be:
@@ -39,9 +45,11 @@ export default ({ className }) => {
     let finallyState;
     if (state === 'saved') {
       finallyState = 'success';
+      trackEvent({ category: 'Pledge', action: 'sentSuccess' });
     }
     if (state === 'error' || state === 'userExists') {
       finallyState = 'error';
+      trackEvent({ category: 'Pledge', action: 'sentError', name: state });
     }
     if (state === 'saving') {
       finallyState = 'progress';
@@ -88,7 +96,7 @@ export default ({ className }) => {
       <CTAButton
         className={className}
         illustration="POINT_LEFT"
-        onClick={() => openSecondPart(true)}
+        onClick={() => openSecondPartTracked(true)}
         id="pledge"
       >
         Ich bin dabei!
