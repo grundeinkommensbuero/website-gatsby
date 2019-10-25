@@ -5,7 +5,7 @@ import cN from 'classnames';
 import SocialMediaButton from '../Button';
 
 export default ({ children, className }) => {
-  const iconSize = 'lg';
+  const iconSize = '3x';
 
   const facebookText = `
   Hey+Leute%21%0D%0AIch+unterst%C3%BCtze+die+neue+
@@ -32,16 +32,18 @@ export default ({ children, className }) => {
   return (
     <div className={cN(s.container, className)}>
       {children && <p>{children}</p>}
-      <div className={s.iconContainer}>
+      <div className={`${s.iconContainer} ${s.shareButtons}`}>
         <SocialMediaButton
           icon={faFacebook}
           link={`https://www.facebook.com/share.php?u=https://expedition-grundeinkommen.de&quote=${facebookText}`}
           iconSize={iconSize}
+          label="Teile auf Facebook"
         />
         <SocialMediaButton
           icon={faTwitter}
           link={`https://www.twitter.com/intent/tweet?status=${twitterText}`}
           iconSize={iconSize}
+          label="Teile auf Twitter"
         />
       </div>
     </div>
