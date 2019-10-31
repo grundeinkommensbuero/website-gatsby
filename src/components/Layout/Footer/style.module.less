@@ -1,7 +1,7 @@
 @import '../../style/vars.less';
 
 .footer {
-  .footerGrid();
+  .headerFooterGrid();
   .globeBackground();
   background-attachment: fixed;
   min-height: 15rem;
@@ -21,7 +21,7 @@
 }
 
 .nav {
-  grid-column: 4;
+  grid-column: 3;
   text-align: right;
 
   @media (max-width: @breakPointM) {
@@ -67,15 +67,5 @@
 }
 
 .socialMedia {
-  grid-column: 3;
-  @media (max-width: @breakPointM) {
-    grid-column: 4;
-    grid-column-end: span 2;
-    text-align: left;
-  }
-  @media (max-width: @breakPointS) {
-    grid-column: 2;
-    grid-column-end: span 2;
-    text-align: left;
-  }
+  margin-top: 1rem;
 }

@@ -5,8 +5,10 @@ import SocialMediaButtons from '../../SocialMedia/Follow';
 
 export default ({ footerText, footerMenu }) => (
   <footer className={s.footer}>
-    <div className={s.copyright}>{footerText}</div>
-    <SocialMediaButtons className={s.socialMedia} />
+    <div className={s.copyright}>
+      <div className={s.footerText}>{footerText}</div>
+      <SocialMediaButtons className={s.socialMedia} />
+    </div>
     <nav className={s.nav}>
       <ul className={s.navList}>
         {footerMenu.map((item, index) => (

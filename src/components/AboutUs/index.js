@@ -8,7 +8,6 @@ const AboutUs = ({ members, className }) => {
     <ul className={cN(s.aboutUs, className)}>
       {members.map((member, index) => {
         const { name, image } = member;
-        console.log('here');
         return (
           <li key={index} className={s.member}>
             {image && (
