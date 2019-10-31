@@ -28,24 +28,11 @@
 @breakPointM: 800px;
 @breakPointS: 500px;
 
-.headerGrid() {
+.headerFooterGrid() {
   @half: calc(@contentWidthL / 2 - 1rem);
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 1fr minmax(0, @half) minmax(0, @half) 1fr;
-}
-
-.footerGrid() {
-  @half: calc(@contentWidthL / 2 - 4.5rem);
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns:
-    1fr minmax(0, @half) 7rem minmax(0, @half)
-    1fr;
-
-  @media (max-width: @breakPointS) {
-    grid-template-columns: 1fr minmax(0, @half) minmax(0, @half) 1fr;
-  }
 }
 
 .contentGrid() {
