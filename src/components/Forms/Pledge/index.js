@@ -118,10 +118,34 @@ export default ({ className }) => {
         return (
           <form onSubmit={handleSubmit} className={cN(s.container, className)}>
             <div className={s.jumpToAnchor} id="pledge" />
+
             <FormSection heading="Schön, dass du dabei bist!">
               <Field
+                name="name"
+                label="So möchte ich angesprochen werden"
+                placeholder="Name"
+                component={TextInputWrapped}
+              ></Field>
+              <Field
+                name="email"
+                label="E-Mail"
+                description="Pflichtfeld"
+                placeholder="E-Mail"
+                component={TextInputWrapped}
+              ></Field>
+              <Field
+                name="zipCode"
+                label="Postleitzahl"
+                description="Pflichtfeld"
+                placeholder="12345"
+                component={TextInputWrapped}
+              ></Field>
+            </FormSection>
+
+            <FormSection heading="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:">
+              <Field
                 name="signatureCount"
-                label="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
+                labelHidden="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
                 component={SignatureCountSlider}
                 type="range"
                 min={1}
@@ -129,7 +153,7 @@ export default ({ className }) => {
               />
             </FormSection>
 
-            <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
+            {/* <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
               <Field
                 name="wouldPrintAndSendSignatureLists"
                 type="checkbox"
@@ -159,30 +183,7 @@ export default ({ className }) => {
                 label="Ich habe eine andere Idee: "
                 component={TextInputOneLine}
               ></Field>
-            </FormSection>
-
-            <FormSection heading="Wer bist du?">
-              <Field
-                name="name"
-                label="So möchte ich angesprochen werden"
-                placeholder="Name"
-                component={TextInputWrapped}
-              ></Field>
-              <Field
-                name="email"
-                label="E-Mail"
-                description="Pflichtfeld"
-                placeholder="E-Mail"
-                component={TextInputWrapped}
-              ></Field>
-              <Field
-                name="zipCode"
-                label="Postleitzahl"
-                description="Pflichtfeld"
-                placeholder="12345"
-                component={TextInputWrapped}
-              ></Field>
-            </FormSection>
+            </FormSection> */}
 
             <FormSection>
               <Field

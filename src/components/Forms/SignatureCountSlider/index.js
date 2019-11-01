@@ -42,7 +42,13 @@ HANDS_ARRAY.unshift({
   size: Math.random(),
 });
 
-export const SignatureCountSlider = ({ input, label, min, max }) => (
+export const SignatureCountSlider = ({
+  input,
+  label,
+  labelHidden,
+  min,
+  max,
+}) => (
   <>
     <label htmlFor={`slider_${input.name}`}>{label}</label>
     <div className={s.inputContainer}>
@@ -52,7 +58,7 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
           id={`slider_${input.name}`}
           min={min}
           max={max}
-          aria-label={label}
+          aria-label={label || labelHidden}
           {...input}
         />
       </div>
@@ -65,7 +71,7 @@ export const SignatureCountSlider = ({ input, label, min, max }) => (
         onBlur={input.onBlur}
         onChange={input.onChange}
         className={s.textInput}
-        aria-label={label}
+        aria-label={label || labelHidden}
       />
     </div>
     <div
