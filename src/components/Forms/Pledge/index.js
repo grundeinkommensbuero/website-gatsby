@@ -119,7 +119,7 @@ export default ({ className }) => {
           <form onSubmit={handleSubmit} className={cN(s.container, className)}>
             <div className={s.jumpToAnchor} id="pledge" />
 
-            <FormSection heading="Schön, dass du dabei bist!">
+            <FormSection>
               <Field
                 name="name"
                 label="So möchte ich angesprochen werden"
