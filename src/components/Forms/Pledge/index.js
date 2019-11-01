@@ -16,7 +16,7 @@ import CTAButton from '../../Layout/CTAButton';
 
 export default ({ className }) => {
   const [state, savePledge] = usePledgeApi();
-  const [isSecondPartOpen, openSecondPart] = useState(false);
+  const [isSecondPartOpen, openSecondPart] = useState(true);
 
   useEffect(() => {
     function handleJumpTo() {
