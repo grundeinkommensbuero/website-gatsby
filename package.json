@@ -51,7 +51,6 @@
     "less": "^3.10.3",
     "lodash": "^4.17.14",
     "react": "^16.8.6",
-    "react-animate-height": "^2.0.16",
     "react-dom": "^16.8.6",
     "react-final-form": "^6.3.0",
     "react-helmet": "^5.2.0",

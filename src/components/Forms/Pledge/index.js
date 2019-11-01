@@ -6,9 +6,7 @@ import { TextInputWrapped, TextInputOneLine } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SignatureCountSlider } from '../SignatureCountSlider';
-import { Link } from 'gatsby';
 import s from './style.module.less';
-import AnimateHeight from 'react-animate-height';
 import { FinallyMessage } from '../FinallyMessage';
 import cN from 'classnames';
 import SocialMediaButtons from '../../SocialMedia/Share';
@@ -130,94 +128,91 @@ export default ({ className }) => {
                 max={50}
               />
             </FormSection>
-            <AnimateHeight height={isSecondPartOpen ? 'auto' : 0}>
-              <div>
-                <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
-                  <Field
-                    name="wouldPrintAndSendSignatureLists"
-                    type="checkbox"
-                    label="Ich drucke die Unterschriftenliste aus und schicke sie unterschrieben ans Expeditionsbüro."
-                    component={Checkbox}
-                  ></Field>
-                  <Field
-                    name="wouldPutAndCollectSignatureLists"
-                    type="checkbox"
-                    label="Ich lege Listen an Orten aus wie z. B. beim Bäcker, in Cafés, auf dem Uni-Campus oder beim Sportverein und sammle sie später wieder ein."
-                    component={Checkbox}
-                  ></Field>
-                  <Field
-                    name="wouldCollectSignaturesInPublicSpaces"
-                    type="checkbox"
-                    label="Ich spreche aktiv Passantinnen und Passanten an und sammle Unterschriften vor Ort."
-                    component={Checkbox}
-                  ></Field>
-                  <Field
-                    name="wouldDonate"
-                    type="checkbox"
-                    label="Ich kann mir vorstellen, die Expedition finanziell zu unterstützen."
-                    component={Checkbox}
-                  ></Field>
-                  <Field
-                    name="wouldEngageCustom"
-                    label="Ich habe eine andere Idee: "
-                    component={TextInputOneLine}
-                  ></Field>
-                </FormSection>
 
-                <FormSection heading="Wer bist du?">
-                  <Field
-                    name="name"
-                    label="So möchte ich angesprochen werden"
-                    placeholder="Name"
-                    component={TextInputWrapped}
-                  ></Field>
-                  <Field
-                    name="email"
-                    label="E-Mail"
-                    description="Pflichtfeld"
-                    placeholder="E-Mail"
-                    component={TextInputWrapped}
-                  ></Field>
-                  <Field
-                    name="zipCode"
-                    label="Postleitzahl"
-                    description="Pflichtfeld"
-                    placeholder="12345"
-                    component={TextInputWrapped}
-                  ></Field>
-                </FormSection>
+            <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
+              <Field
+                name="wouldPrintAndSendSignatureLists"
+                type="checkbox"
+                label="Ich drucke die Unterschriftenliste aus und schicke sie unterschrieben ans Expeditionsbüro."
+                component={Checkbox}
+              ></Field>
+              <Field
+                name="wouldPutAndCollectSignatureLists"
+                type="checkbox"
+                label="Ich lege Listen an Orten aus wie z. B. beim Bäcker, in Cafés, auf dem Uni-Campus oder beim Sportverein und sammle sie später wieder ein."
+                component={Checkbox}
+              ></Field>
+              <Field
+                name="wouldCollectSignaturesInPublicSpaces"
+                type="checkbox"
+                label="Ich spreche aktiv Passantinnen und Passanten an und sammle Unterschriften vor Ort."
+                component={Checkbox}
+              ></Field>
+              <Field
+                name="wouldDonate"
+                type="checkbox"
+                label="Ich kann mir vorstellen, die Expedition finanziell zu unterstützen."
+                component={Checkbox}
+              ></Field>
+              <Field
+                name="wouldEngageCustom"
+                label="Ich habe eine andere Idee: "
+                component={TextInputOneLine}
+              ></Field>
+            </FormSection>
 
-                <FormSection>
-                  <Field
-                    name="newsletterConsent"
-                    label={
-                      <>
-                        Schreibt mir, wenn die Unterschriftslisten da sind und
-                        haltet mich über alle weiteren Kampagnenschritte auf dem
-                        Laufenden.
-                      </>
-                    }
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
-                  <Field
-                    name="privacyConsent"
-                    label={
-                      <>
-                        Ich stimme zu, dass meine eingegebenen Daten gespeichert
-                        werden.
-                      </>
-                    }
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
-                </FormSection>
+            <FormSection heading="Wer bist du?">
+              <Field
+                name="name"
+                label="So möchte ich angesprochen werden"
+                placeholder="Name"
+                component={TextInputWrapped}
+              ></Field>
+              <Field
+                name="email"
+                label="E-Mail"
+                description="Pflichtfeld"
+                placeholder="E-Mail"
+                component={TextInputWrapped}
+              ></Field>
+              <Field
+                name="zipCode"
+                label="Postleitzahl"
+                description="Pflichtfeld"
+                placeholder="12345"
+                component={TextInputWrapped}
+              ></Field>
+            </FormSection>
 
-                <CTAButton type="submit" illustration="POINT_LEFT">
-                  Ich bin dabei, sobald es losgeht!
-                </CTAButton>
-              </div>
-            </AnimateHeight>
+            <FormSection>
+              <Field
+                name="newsletterConsent"
+                label={
+                  <>
+                    Schreibt mir, wenn die Unterschriftslisten da sind und
+                    haltet mich über alle weiteren Kampagnenschritte auf dem
+                    Laufenden.
+                  </>
+                }
+                type="checkbox"
+                component={Checkbox}
+              ></Field>
+              <Field
+                name="privacyConsent"
+                label={
+                  <>
+                    Ich stimme zu, dass meine eingegebenen Daten gespeichert
+                    werden.
+                  </>
+                }
+                type="checkbox"
+                component={Checkbox}
+              ></Field>
+            </FormSection>
+
+            <CTAButton type="submit" illustration="POINT_LEFT">
+              Ich bin dabei, sobald es losgeht!
+            </CTAButton>
           </form>
         );
       }}
