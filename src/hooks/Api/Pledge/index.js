@@ -61,6 +61,8 @@ const savePledge = async (pledge, setState) => {
         data.referral = referral;
       }
 
+      data.signatureCount = parseInt(data.signatureCount);
+
       const request = {
         method: 'POST',
         mode: 'cors',
