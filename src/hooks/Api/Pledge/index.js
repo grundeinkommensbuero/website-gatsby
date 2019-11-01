@@ -40,6 +40,8 @@ const savePledge = async (pledge, setState) => {
       //add userId to data, because we need it in the backend
       data.userId = userId;
       //if checkboxes are not set to clicked, we want to manually add the properties
+      /* Not needed anymore for test phase with smaller form
+      
       if ('wouldDonate' in data === false) {
         data.wouldDonate = false;
       }
@@ -51,7 +53,7 @@ const savePledge = async (pledge, setState) => {
       }
       if ('wouldCollectSignaturesInPublicSpaces' in data === false) {
         data.wouldCollectSignaturesInPublicSpaces = false;
-      }
+      }*/
       if ('newsletterConsent' in data === false) {
         data.newsletterConsent = false;
       }
