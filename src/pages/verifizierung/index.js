@@ -32,6 +32,7 @@ const Verification = () => {
     - alreadyVerified
     - userNotFound
     - wrongCode
+    - expiredCode
     - error (which is every other error)
   */
 
