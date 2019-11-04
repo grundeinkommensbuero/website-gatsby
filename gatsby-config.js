@@ -18,6 +18,7 @@ const config = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-netlify-cache',
     {
       resolve: `gatsby-plugin-less`,
       options: {
