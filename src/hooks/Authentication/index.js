@@ -63,6 +63,8 @@ const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
       setVerificationState('wrongCode');
     } else if (errorCode === 'NotAuthorizedException') {
       setVerificationState('alreadyVerified');
+    } else if (errorCode === 'ExpiredCodeException') {
+      setVerificationState('expiredCode');
     } else {
       setVerificationState('error');
     }
