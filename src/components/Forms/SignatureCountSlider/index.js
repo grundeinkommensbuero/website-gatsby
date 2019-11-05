@@ -95,7 +95,6 @@ const Hand = ({ index, hand, count }) => {
   if (count < index + 1) {
     return null;
   }
-
   let style;
   let side;
   let position;
