@@ -15,6 +15,7 @@ export const useVerification = () => {
   return [
     verificationState,
     (email, code) => confirmSignUp(email, code, setVerificationState),
+    email => resendEmail(email, setVerificationState),
   ];
 };
 
@@ -68,6 +69,21 @@ const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
     } else {
       setVerificationState('error');
     }
+    return false;
+  }
+};
+
+// Amplifys Auth Class is used to resend the confirmation mail
+const resendEmail = async (email, setVerificationState) => {
+  try {
+    setVerificationState('resendingEmail');
+    await Auth.resendSignUp(email);
+    setVerificationState('resentEmail');
+    return true;
+  } catch (error) {
+    console.log('error resending confirmation mail');
+    setVerificationState('error');
+    //TODO: more specific error states
     return false;
   }
 };

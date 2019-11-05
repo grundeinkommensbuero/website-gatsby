@@ -33,6 +33,8 @@ const Verification = () => {
     - userNotFound
     - wrongCode
     - expiredCode
+    - resendingEmail
+    - resentEmail
     - error (which is every other error)
   */
 
