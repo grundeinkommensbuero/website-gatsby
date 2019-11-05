@@ -6,17 +6,16 @@ import SocialMediaButtons from '../../components/SocialMedia/Share';
 import s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
 import cN from 'classnames';
+import { Button } from '../../components/Forms/Button';
 
 const Verification = () => {
-  const [verificationState, confirmSignUp] = useVerification();
+  const [verificationState, confirmSignUp, resendEmail] = useVerification();
   //call the following in use effect, because window is not available during server side rendering
   useEffect(() => {
     //get the verification code from the url
     const urlParams = new URLSearchParams(window.location.search);
     const confirmationCode = urlParams.get('code');
     const email = urlParams.get('email');
-    console.log('urlparams', urlParams);
-    console.log('email param', email);
     //only call confirm sign up the first time rendering
     if (verificationState === 'verifying') {
       confirmSignUp(email, confirmationCode).then(success =>
@@ -50,7 +49,10 @@ const Verification = () => {
     finallyMessageState = 'success';
   }
 
-  if (verificationState === 'verifying') {
+  if (
+    verificationState === 'verifying' ||
+    verificationState === 'resendingEmail'
+  ) {
     finallyMessageState = 'progress';
   }
 
@@ -83,6 +85,22 @@ const Verification = () => {
                   .
                 </>
               )}
+              {verificationState === 'expiredCode' && (
+                <>
+                  Dein Verfikationslink ist abgelaufen. Bitte klicke diese
+                  Button, um einen neuen zu erhalten: <br /> <br />
+                  <Button
+                    onClick={() => {
+                      resendEmail(urlParams.get('email'));
+                    }}
+                  >
+                    Sende neue Verifikations-E-mail
+                  </Button>
+                </>
+              )}
+              {verificationState === 'resendingEmail' && 'Sende neue E-Mail...'}
+              {verificationState === 'resentEmail' &&
+                'Wir haben dir eine neue E-Mail geschickt. Bitte klicke darin den Link, und dann bist du dabei!'}
             </FinallyMessage>
           )}
           {isOk && <HurrayCrowd />}
