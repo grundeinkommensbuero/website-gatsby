@@ -42,10 +42,15 @@ export default ({
         )}
         {illustration === 'POINT_LEFT' && (
           <>
-            <img src={POINT_LEFT} className={s.illustrationPointLeft} />
+            <img
+              src={POINT_LEFT}
+              className={s.illustrationPointLeft}
+              aria-hidden="true"
+            />
             <img
               src={POINT_LEFT_MOBILE}
               className={s.illustrationPointLeftMobile}
+              aria-hidden="true"
             />
           </>
         )}
