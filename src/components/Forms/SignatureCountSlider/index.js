@@ -79,6 +79,7 @@ export const SignatureCountSlider = ({
         [s.many]: input.value > 50,
         [s.more]: input.value > 75,
       })}
+      aria-hidden="true"
     >
       <div className={s.stageInner}>
         <div className={s.stageInnerInner}>
