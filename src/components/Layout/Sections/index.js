@@ -27,6 +27,7 @@ export default function Sections({ sections }) {
             teamMembers,
             bodyTextSizeHuge,
             pledge,
+            pledgeId,
           } = section;
 
           const id = stringToId(titleShort);
@@ -58,7 +59,9 @@ export default function Sections({ sections }) {
                     })}
                   >
                     {body.json ? contentfulJsonToHtml(body.json) : body}
-                    {pledge && <Pledge className={s.pledge} />}
+                    {pledge && (
+                      <Pledge pledgeId={pledgeId} className={s.pledge} />
+                    )}
                   </div>
                 )}
                 {emailSignup && <EmailListForm className={s.emailSignup} />}
