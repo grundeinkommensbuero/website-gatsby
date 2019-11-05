@@ -12,14 +12,18 @@ import cN from 'classnames';
 import SocialMediaButtons from '../../SocialMedia/Share';
 import CTAButton from '../../Layout/CTAButton';
 
-export default ({ className }) => {
+export default ({ className, pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
   const [isSecondPartOpen, openSecondPart] = useState(true);
 
   useEffect(() => {
     function handleJumpTo() {
       openSecondPartTracked(true);
-      trackEvent({ category: 'Pledge', action: 'click', name: 'jumptToLink' });
+      trackEvent({
+        category: 'Pledge',
+        action: addActionTrackingId('click', pledgeId),
+        name: 'jumptToLink',
+      });
     }
 
     window.addEventListener('#pledge', handleJumpTo);
@@ -31,7 +35,11 @@ export default ({ className }) => {
 
   function openSecondPartTracked(open) {
     openSecondPart(open);
-    trackEvent({ category: 'Pledge', action: 'click', name: 'openPledge' });
+    trackEvent({
+      category: 'Pledge',
+      action: addActionTrackingId('click', pledgeId),
+      name: 'openPledge',
+    });
   }
 
   /*
@@ -43,11 +51,18 @@ export default ({ className }) => {
     let finallyState;
     if (state === 'saved') {
       finallyState = 'success';
-      trackEvent({ category: 'Pledge', action: 'sentSuccess' });
+      trackEvent({
+        category: 'Pledge',
+        action: addActionTrackingId('sentSuccess', pledgeId),
+      });
     }
     if (state === 'error' || state === 'userExists') {
       finallyState = 'error';
-      trackEvent({ category: 'Pledge', action: 'sentError', name: state });
+      trackEvent({
+        category: 'Pledge',
+        action: addActionTrackingId('sentError', pledgeId),
+        name: state,
+      });
     }
     if (state === 'saving') {
       finallyState = 'progress';
@@ -242,4 +257,8 @@ const validate = values => {
   }
 
   return errors;
+};
+
+const addActionTrackingId = (action, id) => {
+  return id ? `${action}-${id}` : action;
 };
