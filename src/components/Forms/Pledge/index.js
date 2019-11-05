@@ -120,10 +120,8 @@ export default ({ className, pledgeId }) => {
   return (
     <Form
       onSubmit={e => {
-        const foo = savePledge(e);
-        foo.then(e => {
-          console.log('finally', e);
-        });
+        e.pledgeId = pledgeId;
+        savePledge(e);
       }}
       initialValues={{
         signatureCount: 1,
