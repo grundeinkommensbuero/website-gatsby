@@ -11,11 +11,12 @@ import { Button } from '../../components/Forms/Button';
 const Verification = () => {
   const [verificationState, confirmSignUp, resendEmail] = useVerification();
   //call the following in use effect, because window is not available during server side rendering
+  let email;
   useEffect(() => {
     //get the verification code from the url
     const urlParams = new URLSearchParams(window.location.search);
     const confirmationCode = urlParams.get('code');
-    const email = urlParams.get('email');
+    email = urlParams.get('email');
     //only call confirm sign up the first time rendering
     if (verificationState === 'verifying') {
       confirmSignUp(email, confirmationCode).then(success =>
@@ -87,20 +88,20 @@ const Verification = () => {
               )}
               {verificationState === 'expiredCode' && (
                 <>
-                  Dein Verfikationslink ist abgelaufen. Bitte klicke diese
+                  Dein Verifizierungslink ist abgelaufen. Bitte klicke diesen
                   Button, um einen neuen zu erhalten: <br /> <br />
                   <Button
                     onClick={() => {
-                      resendEmail(urlParams.get('email'));
+                      resendEmail(email);
                     }}
                   >
-                    Sende neue Verifikations-E-mail
+                    Sende neue Verifizierungs-E-Mail
                   </Button>
                 </>
               )}
               {verificationState === 'resendingEmail' && 'Sende neue E-Mail...'}
               {verificationState === 'resentEmail' &&
-                'Wir haben dir eine neue E-Mail geschickt. Bitte klicke darin den Link, und dann bist du dabei!'}
+                'Wir haben dir eine neue E-Mail geschickt. Bitte klicke darin den Link, dann bist du dabei!'}
             </FinallyMessage>
           )}
           {isOk && <HurrayCrowd />}
