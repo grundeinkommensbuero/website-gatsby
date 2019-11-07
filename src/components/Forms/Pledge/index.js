@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail, trackEvent } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
-import { TextInputWrapped, TextInputOneLine } from '../TextInput';
+import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SignatureCountSlider } from '../SignatureCountSlider';
-import s from './style.module.less';
 import { FinallyMessage } from '../FinallyMessage';
-import cN from 'classnames';
 import SocialMediaButtons from '../../SocialMedia/Share';
 import CTAButton from '../../Layout/CTAButton';
+import FormWrapper from '../FormWrapper';
 
 export default ({ className, pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
@@ -129,44 +128,43 @@ export default ({ className, pledgeId }) => {
       validate={validate}
       render={({ handleSubmit }) => {
         return (
-          <form onSubmit={handleSubmit} className={cN(s.container, className)}>
-            <div className={s.jumpToAnchor} id="pledge" />
+          <FormWrapper className={className}>
+            <form onSubmit={handleSubmit}>
+              <FormSection>
+                <Field
+                  name="name"
+                  label="So möchte ich angesprochen werden"
+                  placeholder="Name"
+                  component={TextInputWrapped}
+                ></Field>
+                <Field
+                  name="email"
+                  label="E-Mail"
+                  description="Pflichtfeld"
+                  placeholder="E-Mail"
+                  component={TextInputWrapped}
+                ></Field>
+                <Field
+                  name="zipCode"
+                  label="Postleitzahl"
+                  description="Pflichtfeld"
+                  placeholder="12345"
+                  component={TextInputWrapped}
+                ></Field>
+              </FormSection>
 
-            <FormSection>
-              <Field
-                name="name"
-                label="So möchte ich angesprochen werden"
-                placeholder="Name"
-                component={TextInputWrapped}
-              ></Field>
-              <Field
-                name="email"
-                label="E-Mail"
-                description="Pflichtfeld"
-                placeholder="E-Mail"
-                component={TextInputWrapped}
-              ></Field>
-              <Field
-                name="zipCode"
-                label="Postleitzahl"
-                description="Pflichtfeld"
-                placeholder="12345"
-                component={TextInputWrapped}
-              ></Field>
-            </FormSection>
+              <FormSection heading="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:">
+                <Field
+                  name="signatureCount"
+                  labelHidden="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
+                  component={SignatureCountSlider}
+                  type="range"
+                  min={1}
+                  max={50}
+                />
+              </FormSection>
 
-            <FormSection heading="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:">
-              <Field
-                name="signatureCount"
-                labelHidden="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
-                component={SignatureCountSlider}
-                type="range"
-                min={1}
-                max={50}
-              />
-            </FormSection>
-
-            {/* <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
+              {/* <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
               <Field
                 name="wouldPrintAndSendSignatureLists"
                 type="checkbox"
@@ -198,36 +196,37 @@ export default ({ className, pledgeId }) => {
               ></Field>
             </FormSection> */}
 
-            <FormSection>
-              <Field
-                name="newsletterConsent"
-                label={
-                  <>
-                    Schreibt mir, wenn die Unterschriftslisten da sind und
-                    haltet mich über alle weiteren Kampagnenschritte auf dem
-                    Laufenden.
-                  </>
-                }
-                type="checkbox"
-                component={Checkbox}
-              ></Field>
-              <Field
-                name="privacyConsent"
-                label={
-                  <>
-                    Ich stimme zu, dass meine eingegebenen Daten gespeichert
-                    werden.
-                  </>
-                }
-                type="checkbox"
-                component={Checkbox}
-              ></Field>
-            </FormSection>
+              <FormSection>
+                <Field
+                  name="newsletterConsent"
+                  label={
+                    <>
+                      Schreibt mir, wenn die Unterschriftslisten da sind und
+                      haltet mich über alle weiteren Kampagnenschritte auf dem
+                      Laufenden.
+                    </>
+                  }
+                  type="checkbox"
+                  component={Checkbox}
+                ></Field>
+                <Field
+                  name="privacyConsent"
+                  label={
+                    <>
+                      Ich stimme zu, dass meine eingegebenen Daten gespeichert
+                      werden.
+                    </>
+                  }
+                  type="checkbox"
+                  component={Checkbox}
+                ></Field>
+              </FormSection>
 
-            <CTAButton type="submit" illustration="POINT_LEFT">
-              Ich bin dabei, sobald es losgeht!
-            </CTAButton>
-          </form>
+              <CTAButton type="submit" illustration="POINT_LEFT">
+                Ich bin dabei, sobald es losgeht!
+              </CTAButton>
+            </form>
+          </FormWrapper>
         );
       }}
     ></Form>
