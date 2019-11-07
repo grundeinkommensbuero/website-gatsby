@@ -7,6 +7,7 @@ import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
 import CTAButton from '../CTAButton';
+import Signatures from '../../Forms/Signatures';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -27,6 +28,7 @@ export default function Sections({ sections }) {
             teamMembers,
             bodyTextSizeHuge,
             pledgeId,
+            signaturesId,
           } = section;
 
           const id = stringToId(titleShort);
@@ -60,6 +62,12 @@ export default function Sections({ sections }) {
                     {body.json ? contentfulJsonToHtml(body.json) : body}
                     {pledgeId && (
                       <Pledge pledgeId={pledgeId} className={s.pledge} />
+                    )}
+                    {signaturesId && (
+                      <Signatures
+                        pledgeId={signaturesId}
+                        className={s.pledge}
+                      />
                     )}
                   </div>
                 )}
