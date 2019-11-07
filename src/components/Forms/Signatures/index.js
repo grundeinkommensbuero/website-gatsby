@@ -6,6 +6,7 @@ import CTAButton from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { Checkbox } from '../Checkbox';
 import FormWrapper from '../FormWrapper';
+import s from './style.module.less';
 
 export default ({ className, signatureId }) => {
   return (
@@ -57,8 +58,11 @@ export default ({ className, signatureId }) => {
               </FormSection>
 
               <CTAButton type="submit" illustration="POINT_LEFT">
-                Ich bin dabei, sobald es losgeht!
+                Unterschriftenliste Herunterladen
               </CTAButton>
+              <a className={s.directDownloadButton} href="#">
+                ohne Erinnerungen anonym herunterladen
+              </a>
             </form>
           </FormWrapper>
         );
