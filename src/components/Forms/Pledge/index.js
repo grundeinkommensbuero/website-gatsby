@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
-import { validateEmail, trackEvent } from '../../utils';
+import { validateEmail, trackEvent, addActionTrackingId } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SignatureCountSlider } from '../SignatureCountSlider';
-import { FinallyMessage } from '../FinallyMessage';
-import SocialMediaButtons from '../../SocialMedia/Share';
 import CTAButton from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
+import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 
 export default ({ className, pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
@@ -47,59 +46,12 @@ export default ({ className, pledgeId }) => {
   */
 
   if (state) {
-    let finallyState;
-    if (state === 'saved') {
-      finallyState = 'success';
-      trackEvent({
-        category: 'Pledge',
-        action: addActionTrackingId('sentSuccess', pledgeId),
-      });
-    }
-    if (state === 'error' || state === 'userExists') {
-      finallyState = 'error';
-      trackEvent({
-        category: 'Pledge',
-        action: addActionTrackingId('sentError', pledgeId),
-        name: state,
-      });
-    }
-    if (state === 'saving') {
-      finallyState = 'progress';
-    }
     return (
-      <>
-        <SocialMediaButtons>
-          Folge uns in den sozialen Medien!
-        </SocialMediaButtons>
-        <FinallyMessage state={finallyState} className={className}>
-          {state === 'saving' && 'Wird abgeschickt...'}
-          {state === 'saved' &&
-            'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
-          {state === 'userExists' && (
-            <>
-              Danke! Diese E-Mail-Adresse kennen wir schon - Hast du unsere
-              Antwort-Mail bekommen? Dann fehlt nur noch der letzte Klick zum
-              Bestätigen. <br />
-              <br />
-              Nichts gefunden? Dann schau doch bitte noch einmal in deinen
-              Spam-Ordner, oder schreibe uns an{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </>
-          )}
-          {state === 'error' && (
-            <>
-              Da ist was schief gegangen. Melde dich bitte bei uns{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </>
-          )}
-        </FinallyMessage>
-      </>
+      <SignUpFeedbackMessage
+        state={state}
+        trackingId={pledgeId}
+        trackingCategory="Pledge"
+      />
     );
   }
 
@@ -254,8 +206,4 @@ const validate = values => {
   }
 
   return errors;
-};
-
-const addActionTrackingId = (action, id) => {
-  return id ? `${action}-${id}` : action;
 };
