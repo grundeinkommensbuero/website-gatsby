@@ -26,7 +26,6 @@ export default function Sections({ sections }) {
             __typename,
             teamMembers,
             bodyTextSizeHuge,
-            pledge,
             pledgeId,
           } = section;
 
@@ -37,7 +36,7 @@ export default function Sections({ sections }) {
               className={cN(s.section, {
                 [s.sectionVideo]: __typename === 'ContentfulPageSectionVideo',
                 [s.sectionNewsletter]: emailSignup,
-                [s.sectionPledge]: pledge,
+                [s.sectionPledge]: pledgeId,
               })}
             >
               <div id={id} className={s.jumpToAnchor} />
@@ -59,7 +58,7 @@ export default function Sections({ sections }) {
                     })}
                   >
                     {body.json ? contentfulJsonToHtml(body.json) : body}
-                    {pledge && (
+                    {pledgeId && (
                       <Pledge pledgeId={pledgeId} className={s.pledge} />
                     )}
                   </div>

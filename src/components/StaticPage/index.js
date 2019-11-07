@@ -52,7 +52,6 @@ export const pageQuery = graphql`
             callToActionText
             bodyTextSizeHuge
             emailSignup
-            pledge
             pledgeId
             teamMembers {
               image {
