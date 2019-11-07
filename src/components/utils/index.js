@@ -78,3 +78,7 @@ export function trackEvent({ category, action, name, value }) {
     window._paq.push(['trackEvent', category, action, name, value]);
   }
 }
+
+export function addActionTrackingId(action, id) {
+  return id ? `${action}-${id}` : action;
+}
