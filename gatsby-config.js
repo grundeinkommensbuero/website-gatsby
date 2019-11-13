@@ -10,9 +10,6 @@ const contentfulConfig = {
 };
 
 const config = {
-  siteMetadata: {
-    title: 'Grundeinkommensb&uuml;ro',
-  },
   plugins: [
     'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
