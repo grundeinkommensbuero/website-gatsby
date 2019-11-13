@@ -1,4 +1,4 @@
-export default MatomoTrackingStuff = `
+const MatomoTrackingStuff = `
     var _paq = _paq || [];
     _paq.push(['AbTesting::create', {
         name: 'PledgeBrandenburg', // you can also use '1' (ID of the experiment) to hide the name
@@ -24,3 +24,5 @@ export default MatomoTrackingStuff = `
         }
     }]);
 `;
+
+export default MatomoTrackingStuff;
