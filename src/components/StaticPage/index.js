@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
-import matomoTrackingStuff from './matomoTrackingStuff';
+import MatomoTrackingStuff from './MatomoTrackingStuff';
 
 class StaticPage extends React.Component {
   render() {
@@ -23,7 +23,7 @@ class StaticPage extends React.Component {
               content={page.description.internal.content}
             />
           )}
-          <script type="text/javascript">{matomoTrackingStuff}</script>
+          <script type="text/javascript">{MatomoTrackingStuff}</script>
         </Helmet>
       </Layout>
     );
