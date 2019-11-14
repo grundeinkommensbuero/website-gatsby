@@ -29,6 +29,7 @@ export default function Sections({ sections }) {
             bodyTextSizeHuge,
             pledgeId,
             signaturesId,
+            callToActionReference,
           } = section;
 
           const id = stringToId(titleShort);
@@ -75,6 +76,17 @@ export default function Sections({ sections }) {
                 {videoLink && <YoutubeEmbed url={videoLink} />}
                 {teamMembers && (
                   <AboutUs className={s.aboutUs} members={teamMembers} />
+                )}
+                {callToActionReference && (
+                  <CTAButtonContainer className={s.callToActionContainer}>
+                    {callToActionReference.map(
+                      ({ title, shortTitle, slug }, index) => (
+                        <CTALink key={index} href={slug}>
+                          {shortTitle || title}
+                        </CTALink>
+                      )
+                    )}
+                  </CTAButtonContainer>
                 )}
                 {callToActionText && callToActionLink && (
                   <CTAButtonContainer className={s.callToActionContainer}>
