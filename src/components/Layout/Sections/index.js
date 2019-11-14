@@ -6,8 +6,8 @@ import { stringToId, contentfulJsonToHtml } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
-import CTAButton from '../CTAButton';
 import Signatures from '../../Forms/Signatures';
+import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -77,12 +77,11 @@ export default function Sections({ sections }) {
                   <AboutUs className={s.aboutUs} members={teamMembers} />
                 )}
                 {callToActionText && callToActionLink && (
-                  <CTAButton
-                    className={s.callToActionContainer}
-                    href={callToActionLink}
-                  >
-                    {callToActionText}
-                  </CTAButton>
+                  <CTAButtonContainer className={s.callToActionContainer}>
+                    <CTALinkExternal href={callToActionLink}>
+                      {callToActionText}
+                    </CTALinkExternal>
+                  </CTAButtonContainer>
                 )}
               </div>
               {(__typename === 'ContentfulPageSectionIllustration' ||
