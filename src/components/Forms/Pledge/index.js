@@ -13,7 +13,7 @@ import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
 import { SignatureCountSlider } from '../SignatureCountSlider';
-import CTAButton from '../../Layout/CTAButton';
+import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import PartnerLogos from '../../PartnerLogos';
@@ -66,14 +66,11 @@ export default ({ className, pledgeId }) => {
 
   if (!isSecondPartOpen) {
     return (
-      <CTAButton
-        className={className}
-        illustration="POINT_LEFT"
-        onClick={() => openSecondPartTracked(true)}
-        id="pledge"
-      >
-        Ich bin dabei!
-      </CTAButton>
+      <CTAButtonContainer className={className} illustration="POINT_LEFT">
+        <CTAButton onClick={() => openSecondPartTracked(true)}>
+          Ich bin dabei!
+        </CTAButton>
+      </CTAButtonContainer>
     );
   }
 
@@ -205,9 +202,11 @@ export default ({ className, pledgeId }) => {
                 ></Field>
               </FormSection>
 
-              <CTAButton type="submit" illustration="POINT_LEFT">
-                Ich bin dabei, wenn's losgeht!
-              </CTAButton>
+              <CTAButtonContainer illustration="POINT_LEFT">
+                <CTAButton type="submit">
+                  Ich bin dabei, wenn's losgeht!
+                </CTAButton>
+              </CTAButtonContainer>
             </form>
           </FormWrapper>
         );
