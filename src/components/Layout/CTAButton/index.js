@@ -1,18 +1,11 @@
 import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
-import { LinkButton, Button } from '../../Forms/Button';
+import { LinkButton, Button, LinkButtonLocal } from '../../Forms/Button';
 import POINT_LEFT from './figure_point_left.svg';
 import POINT_LEFT_MOBILE from './figure_point_left_mobile.svg';
 
-export default ({
-  children,
-  href,
-  className,
-  illustration,
-  onClick,
-  ...other
-}) => {
+export function CTAButtonContainer({ children, className, illustration }) {
   return (
     <div
       className={cN(s.container, className, {
@@ -20,26 +13,7 @@ export default ({
       })}
     >
       <div className={s.inner}>
-        {href && (
-          <LinkButton
-            target={href.startsWith('#') ? '' : '_blank'}
-            className={s.button}
-            href={href}
-            onClick={() => {
-              if (href.startsWith('#')) {
-                dispatchEvent(href);
-              }
-            }}
-            {...other}
-          >
-            {children}
-          </LinkButton>
-        )}
-        {!href && (
-          <Button className={s.button} onClick={onClick} {...other}>
-            {children}
-          </Button>
-        )}
+        {children}
         {illustration === 'POINT_LEFT' && (
           <>
             <img
@@ -57,7 +31,47 @@ export default ({
       </div>
     </div>
   );
-};
+}
+
+export function CTAButton({ children, className, ...other }) {
+  return (
+    <Button className={cN(s.button, className)} {...other}>
+      {children}
+    </Button>
+  );
+}
+
+export function CTALink({ children, className, ...other }) {
+  return (
+    <LinkButtonLocal className={cN(s.button, className)} {...other}>
+      {children}
+    </LinkButtonLocal>
+  );
+}
+
+export function CTALinkExternal({
+  children,
+  href,
+  className,
+  onClick,
+  ...other
+}) {
+  return (
+    <LinkButton
+      target={href.startsWith('#') ? '' : '_blank'}
+      className={cN(className, s.button)}
+      href={href}
+      onClick={() => {
+        if (href.startsWith('#')) {
+          dispatchEvent(href);
+        }
+      }}
+      {...other}
+    >
+      {children}
+    </LinkButton>
+  );
+}
 
 function dispatchEvent(id) {
   window.dispatchEvent(new Event(id));
