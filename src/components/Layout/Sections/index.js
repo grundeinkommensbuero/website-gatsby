@@ -81,7 +81,7 @@ export default function Sections({ sections }) {
                   <CTAButtonContainer className={s.callToActionContainer}>
                     {callToActionReference.map(
                       ({ title, shortTitle, slug }, index) => (
-                        <CTALink key={index} href={slug}>
+                        <CTALink key={index} to={`/${slug}/`}>
                           {shortTitle || title}
                         </CTALink>
                       )
