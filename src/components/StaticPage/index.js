@@ -56,6 +56,11 @@ export const pageQuery = graphql`
             emailSignup
             pledgeId
             signaturesId
+            callToActionReference {
+              slug
+              title
+              shortTitle
+            }
             teamMembers {
               image {
                 fluid(maxWidth: 200, quality: 80) {
