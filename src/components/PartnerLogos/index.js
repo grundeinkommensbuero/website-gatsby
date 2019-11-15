@@ -10,12 +10,13 @@ const partners = [
   },
 ];
 
-export default ({ className }) => {
+export default ({ className, style }) => {
   if (!shouldShowPartners()) {
     return null;
   }
   return (
     <ul className={cN(className, s.list)}>
+    <ul style={style} className={cN(className, s.list)}>
       {partners.map((partner, index) => (
         <li key={index}>
           <div>In Kooperation mit</div>
