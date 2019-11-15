@@ -51,6 +51,12 @@ const createSignatureListNewUser = async (formData, setState) => {
     const userId = await signUp(formData.email);
     if (userId !== 'userExists' && userId !== 'error') {
       data.userId = userId;
+      //new user: save referral and newsletterConsent
+      const success = await updateUser(userId, referral);
+      if (!success) {
+        setState('error');
+        return null;
+      }
     } else if (userId === 'userExists') {
       //instead of the user id we pass the email to the api
       data.email = formData.email;
@@ -119,4 +125,30 @@ const openPdf = signatureList => {
   if (signatureList !== null) {
     window.open(signatureList.url, '_blank');
   }
+};
+
+//Makes api call to update user in db, returns true if successful, false otherwise
+const updateUser = async (userId, referral) => {
+  //make api call to save newsletter consent and referral
+  //we don't send newsletter consent, because we set it as true anyway
+  const data = {};
+  if (referral) {
+    data.referral = referral;
+  }
+  const request = {
+    method: 'PATCH',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+  const response = await fetch(
+    `${config.API.INVOKE_URL}/users/${userId}`,
+    request
+  );
+  if (response.status === 204) {
+    return true;
+  }
+  return false;
 };
