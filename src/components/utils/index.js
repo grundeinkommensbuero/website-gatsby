@@ -82,3 +82,10 @@ export function trackEvent({ category, action, name, value }) {
 export function addActionTrackingId(action, id) {
   return id ? `${action}-${id}` : action;
 }
+
+const testURLs = ['brandenburg-4', 'brandenburg-5'];
+export function shouldShowPartners() {
+  return !!testURLs.find(
+    url => typeof window !== 'undefined' && window.location.href.includes(url)
+  );
+}
