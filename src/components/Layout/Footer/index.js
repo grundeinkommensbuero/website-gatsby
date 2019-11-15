@@ -3,7 +3,6 @@ import Link from 'gatsby-link';
 import s from './style.module.less';
 import SocialMediaButtons from '../../SocialMedia/Follow';
 import PartnerLogos from '../../PartnerLogos';
-import { shouldShowPartners } from '../../utils';
 
 export default ({ footerText, footerMenu }) => (
   <footer className={s.footer}>
@@ -21,7 +20,7 @@ export default ({ footerText, footerMenu }) => (
           </li>
         ))}
       </ul>
-      {shouldShowPartners() && <PartnerLogos className={s.partnerLogos} />}
+      <PartnerLogos className={s.partnerLogos} />
     </nav>
   </footer>
 );

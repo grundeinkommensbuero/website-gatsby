@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
+import { shouldShowPartners } from '../utils';
 
 const partners = [
   {
@@ -10,6 +11,9 @@ const partners = [
 ];
 
 export default ({ className }) => {
+  if (!shouldShowPartners()) {
+    return null;
+  }
   return (
     <ul className={cN(className, s.list)}>
       {partners.map((partner, index) => (
