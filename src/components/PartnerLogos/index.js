@@ -6,7 +6,7 @@ import { shouldShowPartners } from '../utils';
 const partners = [
   {
     name: 'Mein Grundeinkommen',
-    image: require('./meinbge_red.svg'),
+    image: require('./meinbge_blue.svg'),
   },
 ];
 
@@ -15,7 +15,6 @@ export default ({ className, style }) => {
     return null;
   }
   return (
-    <ul className={cN(className, s.list)}>
     <ul style={style} className={cN(className, s.list)}>
       {partners.map((partner, index) => (
         <li key={index}>
