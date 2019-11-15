@@ -1,4 +1,6 @@
 import React from 'react';
+import s from './style.module.less';
+import cN from 'classnames';
 
 const partners = [
   {
@@ -7,12 +9,13 @@ const partners = [
   },
 ];
 
-export default () => {
+export default ({ className }) => {
   return (
-    <ul>
+    <ul className={cN(className, s.list)}>
       {partners.map((partner, index) => (
         <li key={index}>
-          <img src={partner.image} alt={partner.name} />
+          <div>In Kooperation mit</div>
+          <img src={partner.image} alt={partner.name} className={s.image} />
         </li>
       ))}
     </ul>
