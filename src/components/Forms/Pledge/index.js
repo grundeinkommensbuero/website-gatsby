@@ -9,6 +9,7 @@ import { SignatureCountSlider } from '../SignatureCountSlider';
 import CTAButton from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
+import PartnerLogos from '../../PartnerLogos';
 
 export default ({ className, pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
@@ -82,6 +83,8 @@ export default ({ className, pledgeId }) => {
         return (
           <FormWrapper className={className}>
             <form onSubmit={handleSubmit}>
+              <PartnerLogos style={{ 'margin-bottom': '2rem' }} />
+
               <FormSection>
                 <Field
                   name="name"
