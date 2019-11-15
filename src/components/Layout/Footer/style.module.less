@@ -39,8 +39,9 @@
   flex-wrap: wrap;
   justify-content: flex-end;
 
-  @media (max-width: @breakPointS) {
+  @media (max-width: @breakPointM) {
     display: block;
+    margin: 1rem 0 2rem;
   }
 }
 
@@ -48,9 +49,10 @@
   margin: 0;
   display: inline;
   margin: .5rem;
+  display: block;
 
-  @media (max-width: @breakPointS) {
-    display: block;
+  @media (max-width: @breakPointM) {
+    margin: 0;
   }
 }
 
@@ -60,4 +62,8 @@
 
 .socialMedia {
   margin-top: 1rem;
+}
+
+.partnerLogos {
+  margin: 1rem 0 0;
 }
