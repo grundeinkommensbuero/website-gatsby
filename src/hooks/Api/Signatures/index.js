@@ -2,6 +2,14 @@ import { useAuthentication } from '../../Authentication';
 import { useState } from 'react';
 import { config } from '../../../../aws-config';
 
+/*
+  States: 
+  - null
+  - error 
+  - creating
+  - created
+*/
+
 export const useSignaturesApi = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our createSignatureList function, so we can set the state from there
@@ -18,7 +26,7 @@ export const useSignaturesApi = () => {
 //formData does not have to hold email or userId
 const createSignatureListAnonymous = async (formData, setState) => {
   try {
-    setState('saving');
+    setState('creating');
     const data = {};
     //handle campaign code
     data.campaignCode = formData.campaignCode;
@@ -37,7 +45,7 @@ const createSignatureListAnonymous = async (formData, setState) => {
 //formData needs to contain email, user is first registered through cognito
 const createSignatureListNewUser = async (formData, setState) => {
   try {
-    setState('saving');
+    setState('creating');
 
     const [signUp] = useAuthentication();
     // check url params, if current user came from referral (e.g newsletter)
@@ -82,7 +90,7 @@ const createSignatureListNewUser = async (formData, setState) => {
 //userId is passed, user is not registeres through cognito
 const createSignatureListOldUser = async (userId, setState) => {
   try {
-    setState('saving');
+    setState('creating');
     const data = { userId: userId };
     //handle campaign code
     data.campaignCode = formData.campaignCode;
