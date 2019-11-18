@@ -6,6 +6,7 @@ import {
   addActionTrackingId,
   shouldHidePledgeMedium,
   shouldHidePledgeMinimal,
+  getAbTestId,
 } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { TextInputWrapped } from '../TextInput';
@@ -79,6 +80,7 @@ export default ({ className, pledgeId }) => {
     <Form
       onSubmit={e => {
         e.pledgeId = pledgeId;
+        e.abTestId = getAbTestId();
         savePledge(e);
       }}
       initialValues={{
@@ -92,7 +94,7 @@ export default ({ className, pledgeId }) => {
         return (
           <FormWrapper className={className}>
             <form onSubmit={handleSubmit}>
-              <PartnerLogos style={{ 'margin-bottom': '2rem' }} />
+              <PartnerLogos style={{ marginBottom: '2rem' }} />
 
               <FormSection>
                 <Field

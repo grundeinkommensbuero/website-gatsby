@@ -100,3 +100,21 @@ function testUrls(urls) {
     url => typeof window !== 'undefined' && window.location.href.includes(url)
   );
 }
+
+export function getAbTestId() {
+  const URLpart = 'brandenburg';
+  const href = typeof window !== 'undefined' && window.location.href;
+  const indexOf = href.indexOf(URLpart);
+
+  if (indexOf !== -1) {
+    const URLpartDash = URLpart + '-';
+    const indexDash = href.indexOf(URLpartDash);
+
+    if (indexDash !== -1) {
+      return parseInt(href[indexDash + URLpartDash.length]);
+    }
+
+    return 0;
+  }
+  return -1;
+}
