@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './style.module.less';
 import { Link } from 'gatsby';
+import { stringToId } from '../../utils';
 import Logo from './logo.svg';
 
-const Header = ({ menu }) => {
+const Header = ({ sections }) => {
   return (
     <header className={s.header}>
       <div className={s.inner}>
@@ -16,16 +17,22 @@ const Header = ({ menu }) => {
             />
           </Link>
         </h1>
-        {menu && (
+        {sections && (
           <nav className={s.nav}>
             <ul className={s.navList}>
-              {menu.map((item, index) => (
-                <li key={index} className={s.navItem}>
-                  <Link className={s.link} to={`/${item.slug}/`}>
-                    {item.shortTitle || item.title}
-                  </Link>
-                </li>
-              ))}
+              {sections.map(section => {
+                const id = stringToId(section.titleShort);
+
+                if (id) {
+                  return (
+                    <li key={id} className={s.navItem}>
+                      <a className={s.link} href={`#${id}`}>
+                        {section.titleShort}
+                      </a>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </nav>
         )}

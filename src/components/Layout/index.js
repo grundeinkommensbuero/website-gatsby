@@ -25,18 +25,13 @@ function Template({ children, sections }) {
           slug
           title
         }
-        mainMenu {
-          slug
-          title
-          shortTitle
-        }
       }
     }
   `);
 
   return (
     <>
-      <Header menu={globalStuff.mainMenu} />
+      <Header sections={sections} />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
