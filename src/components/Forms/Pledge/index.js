@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
-import { validateEmail, trackEvent, addActionTrackingId } from '../../utils';
+import {
+  validateEmail,
+  trackEvent,
+  addActionTrackingId,
+  shouldHidePledgeMedium,
+  shouldHidePledgeMinimal,
+} from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
@@ -77,6 +83,9 @@ export default ({ className, pledgeId }) => {
       }}
       initialValues={{
         signatureCount: 1,
+        newsletterConsent: shouldHidePledgeMinimal(),
+        privacyConsent: shouldHidePledgeMinimal(),
+        zipCode: shouldHidePledgeMinimal() ? '1' : undefined,
       }}
       validate={validate}
       render={({ handleSubmit }) => {
@@ -91,6 +100,7 @@ export default ({ className, pledgeId }) => {
                   label="So möchte ich angesprochen werden"
                   placeholder="Name"
                   component={TextInputWrapped}
+                  hide={shouldHidePledgeMinimal()}
                 ></Field>
                 <Field
                   name="email"
@@ -105,10 +115,16 @@ export default ({ className, pledgeId }) => {
                   description="Pflichtfeld"
                   placeholder="12345"
                   component={TextInputWrapped}
+                  hide={shouldHidePledgeMinimal()}
                 ></Field>
               </FormSection>
 
-              <FormSection heading="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:">
+              <FormSection
+                heading={
+                  !(shouldHidePledgeMinimal() || shouldHidePledgeMedium()) &&
+                  'Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:'
+                }
+              >
                 <Field
                   name="signatureCount"
                   labelHidden="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
@@ -116,6 +132,7 @@ export default ({ className, pledgeId }) => {
                   type="range"
                   min={1}
                   max={50}
+                  hide={shouldHidePledgeMinimal() || shouldHidePledgeMedium()}
                 />
               </FormSection>
 
@@ -162,6 +179,7 @@ export default ({ className, pledgeId }) => {
                     </>
                   }
                   type="checkbox"
+                  hide={shouldHidePledgeMinimal()}
                   component={Checkbox}
                 ></Field>
                 <Field
@@ -173,6 +191,7 @@ export default ({ className, pledgeId }) => {
                     </>
                   }
                   type="checkbox"
+                  hide={shouldHidePledgeMinimal()}
                   component={Checkbox}
                 ></Field>
               </FormSection>

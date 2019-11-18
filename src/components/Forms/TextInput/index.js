@@ -14,14 +14,20 @@ export const TextInputWrapped = ({
   meta,
   placeholder,
   description,
-}) => (
-  <LabelInputErrorWrapper
-    label={description ? `${label} (${description})` : label}
-    meta={meta}
-  >
-    <TextInput {...input} placeholder={placeholder} />
-  </LabelInputErrorWrapper>
-);
+  hide,
+}) => {
+  if (hide) {
+    return null;
+  }
+  return (
+    <LabelInputErrorWrapper
+      label={description ? `${label} (${description})` : label}
+      meta={meta}
+    >
+      <TextInput {...input} placeholder={placeholder} />
+    </LabelInputErrorWrapper>
+  );
+};
 
 export function TextInputInline({ children, className, ...other }) {
   return <input className={cN(s.textInputInline, className)} {...other} />;
