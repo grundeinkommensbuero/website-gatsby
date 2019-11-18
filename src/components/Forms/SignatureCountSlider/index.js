@@ -48,49 +48,56 @@ export const SignatureCountSlider = ({
   labelHidden,
   min,
   max,
-}) => (
-  <>
-    <label htmlFor={`slider_${input.name}`}>{label}</label>
-    <div className={s.inputContainer}>
-      <div className={s.sliderContainer}>
-        <input
-          className={s.input}
-          id={`slider_${input.name}`}
+  hide,
+}) => {
+  if (hide) {
+    return null;
+  }
+
+  return (
+    <>
+      <label htmlFor={`slider_${input.name}`}>{label}</label>
+      <div className={s.inputContainer}>
+        <div className={s.sliderContainer}>
+          <input
+            className={s.input}
+            id={`slider_${input.name}`}
+            min={min}
+            max={max}
+            aria-label={label || labelHidden}
+            {...input}
+          />
+        </div>
+        <TextInputInline
+          type="number"
           min={min}
           max={max}
+          name={input.name}
+          value={input.value}
+          onBlur={input.onBlur}
+          onChange={input.onChange}
+          className={s.textInput}
           aria-label={label || labelHidden}
-          {...input}
         />
       </div>
-      <TextInputInline
-        type="number"
-        min={min}
-        max={max}
-        name={input.name}
-        value={input.value}
-        onBlur={input.onBlur}
-        onChange={input.onChange}
-        className={s.textInput}
-        aria-label={label || labelHidden}
-      />
-    </div>
-    <div
-      className={cN(s.stage, {
-        [s.many]: input.value > 50,
-        [s.more]: input.value > 75,
-      })}
-      aria-hidden="true"
-    >
-      <div className={s.stageInner}>
-        <div className={s.stageInnerInner}>
-          {HANDS_ARRAY.map((hand, index) => (
-            <Hand key={index} index={index} hand={hand} count={input.value} />
-          ))}
+      <div
+        className={cN(s.stage, {
+          [s.many]: input.value > 50,
+          [s.more]: input.value > 75,
+        })}
+        aria-hidden="true"
+      >
+        <div className={s.stageInner}>
+          <div className={s.stageInnerInner}>
+            {HANDS_ARRAY.map((hand, index) => (
+              <Hand key={index} index={index} hand={hand} count={input.value} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 const Hand = ({ index, hand, count }) => {
   if (count < index + 1) {
