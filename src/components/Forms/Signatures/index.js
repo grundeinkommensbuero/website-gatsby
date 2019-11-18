@@ -2,11 +2,11 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import FormSection from '../FormSection';
 import { TextInputWrapped } from '../TextInput';
+import CTAButton from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { Checkbox } from '../Checkbox';
 import FormWrapper from '../FormWrapper';
 import s from './style.module.less';
-import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 
 export default ({ className, signatureId }) => {
   return (
@@ -57,11 +57,9 @@ export default ({ className, signatureId }) => {
                 ></Field>
               </FormSection>
 
-              <CTAButtonContainer illustration="POINT_LEFT">
-                <CTAButton type="submit">
-                  Unterschriftenliste Herunterladen
-                </CTAButton>
-              </CTAButtonContainer>
+              <CTAButton type="submit" illustration="POINT_LEFT">
+                Unterschriftenliste Herunterladen
+              </CTAButton>
               <a className={s.directDownloadButton} href="#">
                 ohne Erinnerungen anonym herunterladen
               </a>
