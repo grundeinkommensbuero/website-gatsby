@@ -21,11 +21,7 @@ const Header = ({ menu }) => {
             <ul className={s.navList}>
               {menu.map((item, index) => (
                 <li key={index} className={s.navItem}>
-                  <Link
-                    className={s.link}
-                    activeClassName={s.linkActive}
-                    to={`/${item.slug}/`}
-                  >
+                  <Link className={s.link} to={`/${item.slug}/`}>
                     {item.shortTitle || item.title}
                   </Link>
                 </li>
