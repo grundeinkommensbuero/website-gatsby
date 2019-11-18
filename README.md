@@ -30,3 +30,4 @@ Run a production build into `./public`. The result is ready to be put on any sta
 ### `yarn run deploy`
 
 Run a production build into `./public` and publish the site to GitHub pages.
+
