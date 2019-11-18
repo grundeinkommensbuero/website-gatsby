@@ -11,13 +11,20 @@ export default class PlayingAround extends Component {
 const TestComponent = () => {
   const [
     state,
-    createUserSignatureList,
-    createAnonymousSignatureList,
+    createSignatureListOldUser,
+    createSignatureListNewUser,
+    createSignatureListAnonymous,
   ] = useSignaturesApi();
   console.log('state', state);
   return (
     <div>
-      <button onClick={() => createAnonymousSignatureList({})}>Click me</button>
+      <button
+        onClick={() =>
+          createSignatureListNewUser({ email: 'vali_schagerl@web.de' })
+        }
+      >
+        Click me
+      </button>
       <p>{state === null ? 'no state' : state}</p>
     </div>
   );
