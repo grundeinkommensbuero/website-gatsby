@@ -101,7 +101,9 @@ export default ({ className, pledgeId }) => {
                 <div className={s.jumpToAnchor} id="pledge" />
               </div>
 
-              <FormSection>
+              <FormSection
+                heading={!shouldHidePledgeMinimal() && 'Wer bist du?'}
+              >
                 <Field
                   name="name"
                   label="So möchte ich angesprochen werden"
@@ -129,12 +131,12 @@ export default ({ className, pledgeId }) => {
               <FormSection
                 heading={
                   !(shouldHidePledgeMinimal() || shouldHidePledgeMedium()) &&
-                  'Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:'
+                  signatureCountLabels[pledgeId]
                 }
               >
                 <Field
                   name="signatureCount"
-                  labelHidden="Sag uns, wie viele Unterschriften von anderen Menschen in Schleswig-Holstein du realistischerweise mit einsammeln kannst:"
+                  labelHidden={signatureCountLabels[pledgeId]}
                   component={SignatureCountSlider}
                   type="range"
                   min={1}
@@ -204,7 +206,7 @@ export default ({ className, pledgeId }) => {
               </FormSection>
 
               <CTAButton type="submit" illustration="POINT_LEFT">
-                Ich bin dabei, sobald es losgeht!
+                Ich bin dabei, wenn's losgeht!
               </CTAButton>
             </form>
           </FormWrapper>
@@ -235,4 +237,11 @@ const validate = values => {
   }
 
   return errors;
+};
+
+const signatureCountLabels = {
+  'brandenburg-1':
+    'Was denkst du? Wie viele Unterschriften von anderen Menschen in Brandenburg kannst du noch mit einsammeln?',
+  'schleswig-holstein-1':
+    'Was denkst du? Wie viele Unterschriften von anderen Menschen in Schleswig-Holstein kannst du noch mit einsammeln?',
 };
