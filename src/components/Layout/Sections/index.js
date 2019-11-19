@@ -38,6 +38,8 @@ export default function Sections({ sections }) {
               key={index}
               className={cN(s.section, {
                 [s.sectionVideo]: __typename === 'ContentfulPageSectionVideo',
+                [s.sectionIllustration]:
+                  __typename === 'ContentfulPageSectionIllustration',
                 [s.sectionNewsletter]: emailSignup,
                 [s.sectionPledge]: pledgeId,
               })}
