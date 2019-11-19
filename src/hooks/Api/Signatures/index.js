@@ -25,7 +25,7 @@ export const useSignaturesApi = () => {
 export const useCreatePdfWithUser = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our createSignatureList function, so we can set the state from there
-  const [state, setState] = useState(null);
+  const [state, setState] = useState({});
   return [state, formData => createSignatureListNewUser(formData, setState)];
 };
 
@@ -85,7 +85,7 @@ const createSignatureListNewUser = async (formData, setState) => {
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data, setState);
     // openPdf(signatureList);
-    setState({ state: 'success', pdf: signatureList });
+    setState({ state: 'created', pdf: signatureList });
   } catch (error) {
     console.log('Error while creating signature list', error);
     setState({ state: 'error' });

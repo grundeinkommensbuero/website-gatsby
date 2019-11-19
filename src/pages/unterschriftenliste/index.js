@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
-import { Button } from '../../components/Forms/Button';
-import {
-  useSignaturesApi,
-  useCreatePdfWithUser,
-} from '../../hooks/Api/Signatures';
+import { LinkButton } from '../../components/Forms/Button';
+import { useCreatePdfWithUser } from '../../hooks/Api/Signatures';
 
 const Unterschriftenliste = () => {
-  const [download, createPdf] = useCreatePdfWithUser();
-
-  console.log('download', download);
+  const [state, createPdf] = useCreatePdfWithUser({});
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams.get('email'));
     createPdf({
       email: urlParams.get('email'),
       campaignCode: urlParams.get('campaignCode'),
@@ -24,7 +18,17 @@ const Unterschriftenliste = () => {
     {
       title: <>Lade deine Unterschriftenliste herunter!</>,
       bodyTextSizeHuge: true,
-      body: <>hu</>,
+      body: (
+        <>
+          {state.state === 'creating' && 'Liste wird generiert'}
+          {state.state === 'error' && 'Da ist was schief gegangen :-/'}
+          {state.pdf && (
+            <LinkButton target="_blank" href={state.pdf.url}>
+              Download!
+            </LinkButton>
+          )}
+        </>
+      ),
     },
   ];
 
