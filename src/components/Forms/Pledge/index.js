@@ -204,7 +204,7 @@ export default ({ className, pledgeId }) => {
 
               <CTAButtonContainer illustration="POINT_LEFT">
                 <CTAButton type="submit">
-                  Ich bin dabei, wenn's losgeht!
+                  Ich bin dabei, wenn’s losgeht!
                 </CTAButton>
               </CTAButtonContainer>
             </form>
