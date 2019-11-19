@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
-import { useGlobalState, useAuthentication } from '../hooks/Authentication';
-import { useSignaturesApi } from '../hooks/Api/Signatures';
+import { useGlobalState, useAuthentication } from '../../hooks/Authentication';
+import { useSignaturesApi } from '../../hooks/Api/Signatures';
 
 export default class PlayingAround extends Component {
   render() {
