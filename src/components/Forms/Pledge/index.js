@@ -137,7 +137,7 @@ export default ({ className, pledgeId }) => {
                   component={SignatureCountSlider}
                   type="range"
                   min={1}
-                  max={50}
+                  max={30}
                   hide={shouldHidePledgeMinimal() || shouldHidePledgeMedium()}
                 />
               </FormSection>
@@ -240,7 +240,7 @@ const validate = values => {
 
 const signatureCountLabels = {
   'brandenburg-1':
-    'Was denkst du? Wie viele Unterschriften von anderen Menschen in Brandenburg kannst du noch mit einsammeln?',
+    'Wie viele Unterschriften von anderen Menschen in Brandenburg kannst du noch mit einsammeln?',
   'schleswig-holstein-1':
-    'Was denkst du? Wie viele Unterschriften von anderen Menschen in Schleswig-Holstein kannst du noch mit einsammeln?',
+    'Wie viele Unterschriften von anderen Menschen in Schleswig-Holstein kannst du noch mit einsammeln?',
 };
