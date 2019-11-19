@@ -22,6 +22,13 @@ export const useSignaturesApi = () => {
   ];
 };
 
+export const useCreatePdfWithUser = () => {
+  // we are calling useState to 1) return the state and 2) pass the setState function
+  // to our createSignatureList function, so we can set the state from there
+  const [state, setState] = useState(null);
+  return [state, formData => createSignatureListNewUser(formData, setState)];
+};
+
 //Function to create (or get) a signature list for anonymous user
 //formData does not have to hold email or userId
 const createSignatureListAnonymous = async (formData, setState) => {
@@ -45,7 +52,7 @@ const createSignatureListAnonymous = async (formData, setState) => {
 //formData needs to contain email, user is first registered through cognito
 const createSignatureListNewUser = async (formData, setState) => {
   try {
-    setState('creating');
+    setState({ state: 'creating' });
 
     const [signUp] = useAuthentication();
     // check url params, if current user came from referral (e.g newsletter)
@@ -62,7 +69,7 @@ const createSignatureListNewUser = async (formData, setState) => {
       //new user: save referral and newsletterConsent
       const success = await updateUser(userId, referral);
       if (!success) {
-        setState('error');
+        setState({ state: 'error' });
         return null;
       }
     } else if (userId === 'userExists') {
@@ -70,18 +77,18 @@ const createSignatureListNewUser = async (formData, setState) => {
       data.email = formData.email;
       //setState('userExists');
     } else {
-      setState('error');
+      setState({ state: 'error' });
       return null;
     }
     //handle campaign code
     data.campaignCode = formData.campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data, setState);
-    openPdf(signatureList);
-    return signatureList;
+    // openPdf(signatureList);
+    setState({ state: 'success', pdf: signatureList });
   } catch (error) {
     console.log('Error while creating signature list', error);
-    setState('error');
+    setState({ state: 'error' });
     return null;
   }
 };
