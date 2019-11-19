@@ -1,3 +1,5 @@
+console.log('PROCESS ENV IN aws configure', process.env.NODE_ENV);
+
 export const config = {
   COGNITO: {
     REGION: 'eu-central-1',
@@ -5,6 +7,8 @@ export const config = {
   },
   API: {
     INVOKE_URL:
-      'https://vmhbaao23c.execute-api.eu-central-1.amazonaws.com/prod',
+      process.env.NODE_ENV === 'development'
+        ? 'https://vmhbaao23c.execute-api.eu-central-1.amazonaws.com/dev'
+        : 'https://vmhbaao23c.execute-api.eu-central-1.amazonaws.com/prod',
   },
 };
