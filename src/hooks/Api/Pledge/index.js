@@ -8,13 +8,7 @@ import { useState } from 'react';
 
 /*
   email
-  name
-  engagementLevel: number 1-5,
-  wouldVisitLocalGroup: boolean,
-  wouldDonate: boolean,
-  wouldEngageCustom: string (can be left out),
-  zipCode: number,
-  eligibleToVote: string (2019, 2020, 2021, laterThan2021)
+  TODO: update schema after a/b testing
 */
 
 export const usePledgeApi = () => {
@@ -35,25 +29,16 @@ const savePledge = async (pledge, setState) => {
     setState('saving');
     //register user
     const userId = await signUp(pledge.email);
-    if (userId !== 'userExists' && userId !== 'error') {
+    if (userId !== 'error') {
       const data = pledge;
-      //add userId to data, because we need it in the backend
-      data.userId = userId;
-      //if checkboxes are not set to clicked, we want to manually add the properties
-      /* Not needed anymore for test phase with smaller form
-      
-      if ('wouldDonate' in data === false) {
-        data.wouldDonate = false;
+      //add userId or email to data, because we need it in the backend
+      //it might need to be email in case the user already exists
+      if (userId !== 'userExists') {
+        data.userId = userId;
+      } else {
+        data.email = pledge.email;
       }
-      if ('wouldPrintAndSendSignatureLists' in data === false) {
-        data.wouldPrintAndSendSignatureLists = false;
-      }
-      if ('wouldPutAndCollectSignatureLists' in data === false) {
-        data.wouldPutAndCollectSignatureLists = false;
-      }
-      if ('wouldCollectSignaturesInPublicSpaces' in data === false) {
-        data.wouldCollectSignaturesInPublicSpaces = false;
-      }*/
+
       if ('newsletterConsent' in data === false) {
         data.newsletterConsent = false;
       }
@@ -77,12 +62,12 @@ const savePledge = async (pledge, setState) => {
         console.log('successful');
         setState('saved');
         return true;
+      } else if (response.status === 401) {
+        console.log('User has already given the same pledge');
+        setState('userExists');
+        return false;
       }
       setState('error');
-      return false;
-    } else if (userId === 'userExists') {
-      console.log('User already exists');
-      setState('userExists');
       return false;
     } else {
       setState('error');
