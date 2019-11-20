@@ -7,6 +7,10 @@ import s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
 import cN from 'classnames';
 import { Button } from '../../components/Forms/Button';
+import {
+  CTAButtonContainer,
+  CTALinkExternal,
+} from '../../components/Layout/CTAButton';
 
 const Verification = () => {
   const [verificationState, confirmSignUp, resendEmail] = useVerification();
@@ -104,12 +108,25 @@ const Verification = () => {
                 'Wir haben dir eine neue E-Mail geschickt. Bitte klicke darin den Link, dann bist du dabei!'}
             </FinallyMessage>
           )}
-          {isOk && <HurrayCrowd />}
+          {isOk && <HurrayCrowd color="RED" />}
           <SocialMediaButtons
             className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
           >
             Folge uns in den sozialen Medien:
           </SocialMediaButtons>
+        </>
+      ),
+    },
+    {
+      bodyTextSizeHuge: true,
+      body: (
+        <>
+          <h2>Spende jetzt für die Expedition Grundeinkommen:</h2>
+          <CTAButtonContainer illustration="POINT_LEFT">
+            <CTALinkExternal href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8W54KDCT69GNU&source=url">
+              Spenden mit Paypal/Kreditkarte
+            </CTALinkExternal>
+          </CTAButtonContainer>
         </>
       ),
     },
