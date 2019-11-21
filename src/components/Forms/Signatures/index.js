@@ -8,7 +8,7 @@ import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { useCreateSignatureList } from '../../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
-import { LinkButton } from '../Button';
+import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 
 export default ({ className, signaturesId }) => {
@@ -72,14 +72,14 @@ export default ({ className, signaturesId }) => {
                   Unterschriftenliste Herunterladen
                 </CTAButton>
               </CTAButtonContainer>
-              <button
+              <InlineButton
                 className={s.directDownloadButton}
                 onClick={() => {
                   createPdf(signaturesId);
                 }}
               >
                 ohne Erinnerungen anonym herunterladen
-              </button>
+              </InlineButton>
             </form>
           </FormWrapper>
         );
