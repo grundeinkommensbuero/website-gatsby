@@ -1,7 +1,5 @@
 import React, { Component, useState } from 'react';
-import { useGlobalState, useAuthentication } from '../hooks/Authentication';
-import { useSignaturesApi } from '../hooks/Api/Signatures';
-import { useNewsletterApi } from '../hooks/Api/Newsletter';
+import { useNewsletterApi } from '../../hooks/Api/Newsletter';
 
 export default class PlayingAround extends Component {
   render() {
