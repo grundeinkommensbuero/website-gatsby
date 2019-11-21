@@ -7,6 +7,7 @@ const ICONS = {
   stack: require('./stack.svg'),
   print: require('./print.svg'),
   send: require('./send.svg'),
+  download: require('./download.svg'),
 };
 
 export function StepList({ children, className }) {
