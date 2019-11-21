@@ -26,3 +26,11 @@ export function Button({ children, className, ...other }) {
     </button>
   );
 }
+
+export function InlineButton({ children, className, ...other }) {
+  return (
+    <button className={cN(s.inlineButton, className)} {...other}>
+      {children}
+    </button>
+  );
+}
