@@ -11,23 +11,6 @@ import { updateUser } from '../../utils';
   - created
 */
 
-export const useSignaturesApi = () => {
-  // we are calling useState to 1) return the state and 2) pass the setState function
-  // to our createSignatureList function, so we can set the state from there
-  const [state, setState] = useState(null);
-  return [
-    state,
-    userId => createSignatureListOldUser(userId, setState),
-    formData => createSignatureListNewUser(formData, setState),
-    formData => createSignatureListAnonymous(formData, setState),
-  ];
-};
-
-export const useCreatePdfWithUser = () => {
-  const [state, setState] = useState({});
-  return [state, formData => createSignatureListNewUser(formData, setState)];
-};
-
 export const useCreateSignatureList = () => {
   const [state, setState] = useState({});
   return [
