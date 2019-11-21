@@ -112,7 +112,7 @@ const Verification = () => {
           <SocialMediaButtons
             className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
           >
-            Folge uns in den sozialen Medien:
+            Erzähl' auch anderen davon!
           </SocialMediaButtons>
         </>
       ),

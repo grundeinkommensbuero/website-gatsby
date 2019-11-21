@@ -27,12 +27,17 @@ export default ({ className, state, trackingId, trackingCategory }) => {
   return (
     <div className={className}>
       <SocialMediaButtons className={s.socialMediaButtons}>
-        Folge uns in den sozialen Medien!
+        Erzähl' auch anderen davon!
       </SocialMediaButtons>
       <FinallyMessage state={finallyState}>
         {state === 'saving' && 'Wird abgeschickt...'}
-        {state === 'saved' &&
-          'Yay, danke! Du solltest demnächst eine E-Mail von uns bekommen.'}
+        {state === 'saved' && (
+          <>
+            Yay, danke! Bitte geh in dein E-Mail-Postfach und bestätige, dass
+            wir deine Daten speichern dürfen. Falls du unsere E-Mail nicht
+            findest, sieh bitte auch in deinem Spam-Ordner nach!
+          </>
+        )}
         {state === 'userExists' && (
           <>
             Danke! Diese E-Mail-Adresse kennen wir schon - Hast du unsere
