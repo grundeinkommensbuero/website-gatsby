@@ -38,6 +38,12 @@ export default ({ className, state, trackingId, trackingCategory }) => {
             findest, sieh bitte auch in deinem Spam-Ordner nach!
           </>
         )}
+        {state === 'updated' && (
+          <>
+            Yay, danke! Wir haben deine E-Mail-Adresse schon im System. Ab jetzt
+            bekommst du Neuigkeiten zu dieser Unterschriftensammlung!
+          </>
+        )}
         {state === 'userExists' && (
           <>
             Danke! Diese E-Mail-Adresse kennen wir schon - Hast du unsere
