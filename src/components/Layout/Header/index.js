@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './style.module.less';
-import { Link } from 'gatsby';
+import Link from 'gatsby-link';
 import Logo from './logo.svg';
 
 const Header = ({ menu }) => {
@@ -24,7 +24,7 @@ const Header = ({ menu }) => {
                   <Link
                     className={s.link}
                     activeClassName={s.linkActive}
-                    to={`/${item.slug}/`}
+                    to={item.slug === '/' ? '/' : `/${item.slug}/`}
                   >
                     {item.shortTitle || item.title}
                   </Link>
