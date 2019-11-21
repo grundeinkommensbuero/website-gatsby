@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { LinkButton } from '../../components/Forms/Button';
-import { useCreatePdfWithUser } from '../../hooks/Api/Signatures';
+import { useCreateSignatureList } from '../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 
 const Unterschriftenliste = () => {
-  const [state, createPdf] = useCreatePdfWithUser({});
+  const [state, createPdf] = useCreateSignatureList({});
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
