@@ -3,18 +3,54 @@ import { Form, Field } from 'react-final-form';
 import FormSection from '../FormSection';
 import { TextInputWrapped } from '../TextInput';
 import { validateEmail } from '../../utils';
-import { Checkbox } from '../Checkbox';
 import FormWrapper from '../FormWrapper';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
+import { useCreatePdfWithUser } from '../../../hooks/Api/Signatures';
+import DownloadListsNextSteps from '../DownloadListsNextSteps';
+import { LinkButton } from '../Button';
+import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ className, signatureId }) => {
+export default ({ className, signaturesId }) => {
+  const [state, createPdf] = useCreatePdfWithUser({});
+
+  if (state.state === 'creating') {
+    return (
+      <FinallyMessage state="progress">
+        Liste wird generiert, bitte einen Moment Geduld...
+      </FinallyMessage>
+    );
+  }
+
+  if (state.state === 'error') {
+    return (
+      <FinallyMessage state="error">
+        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </FinallyMessage>
+    );
+  }
+
+  if (state.state === 'created') {
+    return (
+      <DownloadListsNextSteps needsVerification={false}>
+        <LinkButton target="_blank" href={state.pdf.url}>
+          Liste Herunterladen
+        </LinkButton>
+      </DownloadListsNextSteps>
+    );
+  }
+
   return (
     <Form
       onSubmit={e => {
-        e.signatureId = signatureId;
-        console.log(e);
-        //   savePledge(e);
+        createPdf({
+          email: e.email,
+          campaignCode: signaturesId,
+        });
       }}
       validate={validate}
       render={({ handleSubmit }) => {
@@ -28,32 +64,6 @@ export default ({ className, signatureId }) => {
                   description="Pflichtfeld"
                   placeholder="E-Mail"
                   component={TextInputWrapped}
-                ></Field>
-              </FormSection>
-
-              <FormSection>
-                <Field
-                  name="newsletterConsent"
-                  label={
-                    <>
-                      Schreibt mir, wenn die Unterschriftslisten da sind und
-                      haltet mich über alle weiteren Kampagnenschritte auf dem
-                      Laufenden.
-                    </>
-                  }
-                  type="checkbox"
-                  component={Checkbox}
-                ></Field>
-                <Field
-                  name="privacyConsent"
-                  label={
-                    <>
-                      Ich stimme zu, dass meine eingegebenen Daten gespeichert
-                      werden.
-                    </>
-                  }
-                  type="checkbox"
-                  component={Checkbox}
                 ></Field>
               </FormSection>
 
@@ -75,15 +85,6 @@ export default ({ className, signatureId }) => {
 
 const validate = values => {
   const errors = {};
-
-  if (!values.privacyConsent) {
-    errors.privacyConsent = 'Wir benötigen dein Einverständnis';
-  }
-
-  // if (!values.zipCode) {
-  //   errors.zipCode =
-  //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
-  // }
 
   if (values.email && values.email.includes('+')) {
     errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
