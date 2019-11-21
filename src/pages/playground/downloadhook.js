@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
-import { useGlobalState, useAuthentication } from '../../hooks/Authentication';
-import { useSignaturesApi } from '../../hooks/Api/Signatures';
+import { useGlobalState, useAuthentication } from '../hooks/Authentication';
+import { useSignaturesApi } from '../hooks/Api/Signatures';
+import { useNewsletterApi } from '../hooks/Api/Newsletter';
 
 export default class PlayingAround extends Component {
   render() {
@@ -9,20 +10,11 @@ export default class PlayingAround extends Component {
 }
 
 const TestComponent = () => {
-  const [
-    state,
-    createSignatureListOldUser,
-    createSignatureListNewUser,
-    createSignatureListAnonymous,
-  ] = useSignaturesApi();
+  const [state, subscribeToNewsletter] = useNewsletterApi();
   console.log('state', state);
   return (
     <div>
-      <button
-        onClick={() =>
-          createSignatureListNewUser({ email: 'vali_schagerl@web.de' })
-        }
-      >
+      <button onClick={() => subscribeToNewsletter('vali_schagerl@web.de')}>
         Click me
       </button>
       <p>{state === null ? 'no state' : state}</p>
