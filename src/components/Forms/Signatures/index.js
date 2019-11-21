@@ -6,13 +6,13 @@ import { validateEmail } from '../../utils';
 import FormWrapper from '../FormWrapper';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
-import { useCreatePdfWithUser } from '../../../hooks/Api/Signatures';
+import { useCreateSignatureList } from '../../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 
 export default ({ className, signaturesId }) => {
-  const [state, createPdf] = useCreatePdfWithUser({});
+  const [state, createPdf] = useCreateSignatureList({});
 
   if (state.state === 'creating') {
     return (
@@ -72,9 +72,14 @@ export default ({ className, signaturesId }) => {
                   Unterschriftenliste Herunterladen
                 </CTAButton>
               </CTAButtonContainer>
-              <a className={s.directDownloadButton} href="#">
+              <button
+                className={s.directDownloadButton}
+                onClick={() => {
+                  createPdf(signaturesId);
+                }}
+              >
                 ohne Erinnerungen anonym herunterladen
-              </a>
+              </button>
             </form>
           </FormWrapper>
         );
