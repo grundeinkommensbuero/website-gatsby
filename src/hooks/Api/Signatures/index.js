@@ -24,34 +24,50 @@ export const useSignaturesApi = () => {
 };
 
 export const useCreatePdfWithUser = () => {
-  // we are calling useState to 1) return the state and 2) pass the setState function
-  // to our createSignatureList function, so we can set the state from there
   const [state, setState] = useState({});
   return [state, formData => createSignatureListNewUser(formData, setState)];
 };
 
+export const useCreateSignatureList = () => {
+  const [state, setState] = useState({});
+  return [
+    state,
+    data => {
+      if (data.email) {
+        return createSignatureListNewUser(data, setState);
+      }
+      if (data.userId) {
+        return createSignatureListOldUser(data, setState);
+      }
+      return createSignatureListAnonymous(data, setState);
+    },
+  ];
+};
+
 //Function to create (or get) a signature list for anonymous user
 //formData does not have to hold email or userId
-const createSignatureListAnonymous = async (formData, setState) => {
+const createSignatureListAnonymous = async ({ campaignCode }, setState) => {
   try {
-    setState('creating');
+    setState({ state: 'creating' });
     const data = {};
     //handle campaign code
-    data.campaignCode = formData.campaignCode;
+    data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data, setState);
-    openPdf(signatureList);
-    return signatureList;
+    setState({ state: 'created', pdf: signatureList });
   } catch (error) {
     console.log('Error while creating anonymous signature list', error);
-    setState('error');
+    setState({ state: 'error' });
     return null;
   }
 };
 
 //Function to create (or get) a signature list for (possibly) new user
 //formData needs to contain email, user is first registered through cognito
-const createSignatureListNewUser = async (formData, setState) => {
+const createSignatureListNewUser = async (
+  { email, campaignCode },
+  setState
+) => {
   try {
     setState({ state: 'creating' });
 
@@ -64,7 +80,7 @@ const createSignatureListNewUser = async (formData, setState) => {
 
     const data = {};
     //register user
-    const userId = await signUp(formData.email);
+    const userId = await signUp(email);
     if (userId !== 'userExists' && userId !== 'error') {
       data.userId = userId;
       //new user: save referral and newsletterConsent
@@ -75,14 +91,14 @@ const createSignatureListNewUser = async (formData, setState) => {
       }
     } else if (userId === 'userExists') {
       //instead of the user id we pass the email to the api
-      data.email = formData.email;
+      data.email = email;
       //setState('userExists');
     } else {
       setState({ state: 'error' });
       return null;
     }
     //handle campaign code
-    data.campaignCode = formData.campaignCode;
+    data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data, setState);
     // openPdf(signatureList);
@@ -96,19 +112,21 @@ const createSignatureListNewUser = async (formData, setState) => {
 
 //Function to create (or get) a signature list an already registered user
 //userId is passed, user is not registeres through cognito
-const createSignatureListOldUser = async (userId, setState) => {
+const createSignatureListOldUser = async (
+  { userId, campaignCode },
+  setState
+) => {
   try {
-    setState('creating');
+    setState({ state: 'creating' });
     const data = { userId: userId };
     //handle campaign code
-    data.campaignCode = formData.campaignCode;
+    data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data, setState);
-    openPdf(signatureList);
     return signatureList;
   } catch (error) {
     console.log('Error while creating signature list', error);
-    setState('error');
+    setState({ state: 'error' });
     return null;
   }
 };
