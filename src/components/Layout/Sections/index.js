@@ -68,7 +68,7 @@ export default function Sections({ sections }) {
                     )}
                     {signaturesId && (
                       <Signatures
-                        pledgeId={signaturesId}
+                        signaturesId={signaturesId}
                         className={s.pledge}
                       />
                     )}
