@@ -103,7 +103,7 @@ export default ({ className, pledgeId }) => {
               >
                 <Field
                   name="name"
-                  label="So möchte ich angesprochen werden"
+                  label="Mit diesem Namen möchte ich angesprochen werden"
                   placeholder="Name"
                   component={TextInputWrapped}
                   hide={shouldHidePledgeMinimal()}
