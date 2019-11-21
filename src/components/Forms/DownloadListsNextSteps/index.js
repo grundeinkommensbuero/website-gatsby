@@ -1,9 +1,10 @@
 import React from 'react';
 import { StepList, StepListItem } from '../../StepList';
 
-export default ({ needsVerification }) => (
+export default ({ needsVerification, children }) => (
   <>
     <StepList>
+      {children && <StepListItem icon="download">{children}</StepListItem>}
       {needsVerification && (
         <StepListItem icon="mail">
           Check deine Mails, klick den Link, damit du dabei bist
