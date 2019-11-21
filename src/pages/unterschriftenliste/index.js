@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { LinkButton } from '../../components/Forms/Button';
 import { useCreatePdfWithUser } from '../../hooks/Api/Signatures';
+import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreatePdfWithUser({});
@@ -23,9 +24,11 @@ const Unterschriftenliste = () => {
           {state.state === 'creating' && 'Liste wird generiert'}
           {state.state === 'error' && 'Da ist was schief gegangen :-/'}
           {state.pdf && (
-            <LinkButton target="_blank" href={state.pdf.url}>
-              Download!
-            </LinkButton>
+            <DownloadListsNextSteps needsVerification={false}>
+              <LinkButton target="_blank" href={state.pdf.url}>
+                Liste Herunterladen
+              </LinkButton>
+            </DownloadListsNextSteps>
           )}
         </>
       ),
