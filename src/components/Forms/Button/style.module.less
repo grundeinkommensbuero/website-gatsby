@@ -29,3 +29,20 @@
     color: inherit;
     cursor: pointer;
 }
+
+.inlineButton {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0.1em 0 var(--bg-color), 0 0.2em 0 currentColor;
+
+    &:hover {
+        box-shadow: none;
+    }
+}
