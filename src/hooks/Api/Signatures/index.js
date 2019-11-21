@@ -1,6 +1,7 @@
 import { useAuthentication } from '../../Authentication';
 import { useState } from 'react';
 import { config } from '../../../../aws-config';
+import { updateUser } from '../../utils';
 
 /*
   States: 
@@ -140,30 +141,4 @@ const openPdf = signatureList => {
   if (signatureList !== null) {
     window.open(signatureList.url, '_blank');
   }
-};
-
-//Makes api call to update user in db, returns true if successful, false otherwise
-const updateUser = async (userId, referral) => {
-  //make api call to save newsletter consent and referral
-  //we don't send newsletter consent, because we set it as true anyway
-  const data = {};
-  if (referral) {
-    data.referral = referral;
-  }
-  const request = {
-    method: 'PATCH',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  };
-  const response = await fetch(
-    `${config.API.INVOKE_URL}/users/${userId}`,
-    request
-  );
-  if (response.status === 204) {
-    return true;
-  }
-  return false;
 };
