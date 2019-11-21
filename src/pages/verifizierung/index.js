@@ -67,7 +67,7 @@ const Verification = () => {
         <>
           {verificationState === 'verifying' && 'Verifizierung...'}
           {isOk && 'Juhuu - du bist dabei!'}
-          {hasError && 'Oooooops - Verifizierung fehlgeschlagen 😕'}
+          {hasError && 'Oooooops - Verifizierung fehlgeschlagen'}
         </>
       ),
       bodyTextSizeHuge: true,
