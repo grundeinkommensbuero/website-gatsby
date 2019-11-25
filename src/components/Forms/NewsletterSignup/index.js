@@ -8,14 +8,63 @@ import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { TextInputWrapped } from '../TextInput';
+import { FinallyMessage } from '../FinallyMessage';
 
 export default ({ className }) => {
   const [state, saveNewsletter] = useNewsletterApi();
+
+  if (state === 'saving') {
+    return (
+      <FinallyMessage state="progress" className={className}>
+        Speichere...
+      </FinallyMessage>
+    );
+  }
+
+  if (state === 'error') {
+    return (
+      <FinallyMessage state="error" className={className}>
+        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </FinallyMessage>
+    );
+  }
+
+  if (state === 'userExists') {
+    return (
+      <FinallyMessage state="error" className={className}>
+        Danke! Diese E-Mail-Adresse kennen wir schon - Hast du unsere
+        Antwort-Mail bekommen? Dann fehlt nur noch der letzte Klick zum
+        Bestätigen. <br />
+        <br />
+        Nichts gefunden? Dann schau doch bitte noch einmal in deinen
+        Spam-Ordner, oder schreibe uns an{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </FinallyMessage>
+    );
+  }
+
+  if (state === 'saved') {
+    return (
+      <FinallyMessage className={className}>
+        Yay, danke! Bitte geh in dein E-Mail-Postfach und bestätige, dass wir
+        deine Daten speichern dürfen. Falls du unsere E-Mail nicht findest, sieh
+        bitte auch in deinem Spam-Ordner nach!
+      </FinallyMessage>
+    );
+  }
 
   return (
     <Form
       onSubmit={data => {
         console.log(data);
+        saveNewsletter(data.email);
       }}
       validate={validate}
       render={({ handleSubmit }) => {
@@ -26,16 +75,13 @@ export default ({ className }) => {
                 <Field
                   name="email"
                   label="E-Mail"
-                  description="Pflichtfeld"
                   placeholder="E-Mail"
                   component={TextInputWrapped}
                 ></Field>
               </FormSection>
 
               <CTAButtonContainer>
-                <CTAButton type="submit">
-                  Ich bin dabei, wenn’s losgeht!
-                </CTAButton>
+                <CTAButton type="submit">Eintragen</CTAButton>
               </CTAButtonContainer>
             </form>
           </FormWrapper>
