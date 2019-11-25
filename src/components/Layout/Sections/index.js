@@ -8,7 +8,6 @@ import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
 import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
-import NewsletterSignup from '../../Forms/NewsletterSignup';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -75,7 +74,7 @@ export default function Sections({ sections }) {
                     )}
                   </div>
                 )}
-                {emailSignup && <NewsletterSignup className={s.emailSignup} />}
+                {emailSignup && <EmailListForm className={s.emailSignup} />}
                 {videoLink && <YoutubeEmbed url={videoLink} />}
                 {teamMembers && (
                   <AboutUs className={s.aboutUs} members={teamMembers} />
