@@ -4,8 +4,6 @@ import {
   validateEmail,
   trackEvent,
   addActionTrackingId,
-  shouldHidePledgeMedium,
-  shouldHidePledgeMinimal,
   getAbTestId,
 } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
@@ -83,9 +81,6 @@ export default ({ className, pledgeId }) => {
       }}
       initialValues={{
         signatureCount: 1,
-        newsletterConsent: shouldHidePledgeMinimal(),
-        privacyConsent: shouldHidePledgeMinimal(),
-        zipCode: shouldHidePledgeMinimal() ? '1' : undefined,
       }}
       validate={validate}
       render={({ handleSubmit }) => {
@@ -98,15 +93,12 @@ export default ({ className, pledgeId }) => {
                 <div className={s.jumpToAnchor} id="pledge" />
               </div>
 
-              <FormSection
-                heading={!shouldHidePledgeMinimal() && 'Wer bist du?'}
-              >
+              <FormSection heading={'Wer bist du?'}>
                 <Field
                   name="name"
                   label="Mit diesem Namen möchte ich angesprochen werden"
                   placeholder="Name"
                   component={TextInputWrapped}
-                  hide={shouldHidePledgeMinimal()}
                 ></Field>
                 <Field
                   name="email"
@@ -121,16 +113,10 @@ export default ({ className, pledgeId }) => {
                   description="Pflichtfeld"
                   placeholder="12345"
                   component={TextInputWrapped}
-                  hide={shouldHidePledgeMinimal()}
                 ></Field>
               </FormSection>
 
-              <FormSection
-                heading={
-                  !(shouldHidePledgeMinimal() || shouldHidePledgeMedium()) &&
-                  signatureCountLabels[pledgeId]
-                }
-              >
+              <FormSection heading={signatureCountLabels[pledgeId]}>
                 <Field
                   name="signatureCount"
                   labelHidden={signatureCountLabels[pledgeId]}
@@ -138,7 +124,6 @@ export default ({ className, pledgeId }) => {
                   type="range"
                   min={1}
                   max={30}
-                  hide={shouldHidePledgeMinimal() || shouldHidePledgeMedium()}
                 />
               </FormSection>
 
@@ -185,7 +170,6 @@ export default ({ className, pledgeId }) => {
                     </>
                   }
                   type="checkbox"
-                  hide={shouldHidePledgeMinimal()}
                   component={Checkbox}
                 ></Field>
                 <Field
@@ -197,7 +181,6 @@ export default ({ className, pledgeId }) => {
                     </>
                   }
                   type="checkbox"
-                  hide={shouldHidePledgeMinimal()}
                   component={Checkbox}
                 ></Field>
               </FormSection>

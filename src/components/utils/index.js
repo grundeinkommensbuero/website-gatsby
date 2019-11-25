@@ -87,14 +87,6 @@ export function shouldShowPartners() {
   return testUrls(['brandenburg-4', 'brandenburg-5']);
 }
 
-export function shouldHidePledgeMedium() {
-  return testUrls(['brandenburg-2']);
-}
-
-export function shouldHidePledgeMinimal() {
-  return testUrls(['brandenburg-3', 'brandenburg-5']);
-}
-
 function testUrls(urls) {
   return !!urls.find(
     url => typeof window !== 'undefined' && window.location.href.includes(url)
