@@ -32,24 +32,19 @@ const subscribeToNewsletter = async (email, setState) => {
 
         //if successful set state and return true
         setState('saved');
-        return true;
       } catch (error) {
         console.log('Error while updating user in dynamo', error);
 
         setState('error');
-        return false;
       }
     } else if (userId === 'userExists') {
       setState('userExists');
-      return false;
     } else {
       setState('error');
-      return false;
     }
   } catch (error) {
     console.log('Error while signing up user (newsletter)', error);
 
     setState('error');
-    return false;
   }
 };
