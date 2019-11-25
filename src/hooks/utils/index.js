@@ -25,8 +25,7 @@ export const updateUser = async (userId, referral) => {
     `${config.API.INVOKE_URL}/users/${userId}`,
     request
   );
-  if (response.status === 204) {
-    return true;
+  if (response.status !== 204) {
+    throw new Error(`Api response was ${response.status}`);
   }
-  return false;
 };

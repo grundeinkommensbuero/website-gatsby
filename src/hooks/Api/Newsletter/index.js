@@ -28,12 +28,8 @@ const subscribeToNewsletter = async (email, setState) => {
     if (userId !== 'userExists' && userId !== 'error') {
       try {
         //new user: save referral and newsletterConsent
-        const success = await updateUser(userId, referral);
+        await updateUser(userId, referral);
 
-        if (!success) {
-          setState('error');
-          return null;
-        }
         //if successful set state and return true
         setState('saved');
         return true;

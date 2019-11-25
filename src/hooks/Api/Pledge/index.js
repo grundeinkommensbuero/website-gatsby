@@ -66,21 +66,17 @@ const savePledge = async (pledge, setState) => {
         } else {
           setState('saved');
         }
-        return true;
       } else if (response.status === 401) {
         console.log('User has already given the same pledge');
         setState('userExists');
-        return false;
+      } else {
+        setState('error');
       }
-      setState('error');
-      return false;
     } else {
       setState('error');
-      return false;
     }
   } catch (error) {
     console.log('Error while saving pledge', error);
     setState('error');
-    return false;
   }
 };
