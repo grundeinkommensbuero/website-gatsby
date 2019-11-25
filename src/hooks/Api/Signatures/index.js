@@ -36,12 +36,11 @@ const createSignatureListAnonymous = async ({ campaignCode }, setState) => {
     //handle campaign code
     data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
-    const signatureList = await makeApiCall(data, setState);
+    const signatureList = await makeApiCall(data);
     setState({ state: 'created', pdf: signatureList });
   } catch (error) {
     console.log('Error while creating anonymous signature list', error);
     setState({ state: 'error' });
-    return null;
   }
 };
 
@@ -67,29 +66,22 @@ const createSignatureListNewUser = async (
     if (userId !== 'userExists' && userId !== 'error') {
       data.userId = userId;
       //new user: save referral and newsletterConsent
-      const success = await updateUser(userId, referral);
-      if (!success) {
-        setState({ state: 'error' });
-        return null;
-      }
+      await updateUser(userId, referral);
     } else if (userId === 'userExists') {
       //instead of the user id we pass the email to the api
       data.email = email;
-      //setState('userExists');
     } else {
       setState({ state: 'error' });
-      return null;
+      return;
     }
     //handle campaign code
     data.campaignCode = campaignCode;
-    //call function to make api request, returns signature list if successful (null otherwise)
-    const signatureList = await makeApiCall(data, setState);
-    // openPdf(signatureList);
+    //call function to make api request, returns signature list if successful (throws error otherwise)
+    const signatureList = await makeApiCall(data);
     setState({ state: 'created', pdf: signatureList });
   } catch (error) {
     console.log('Error while creating signature list', error);
     setState({ state: 'error' });
-    return null;
   }
 };
 
@@ -105,18 +97,17 @@ const createSignatureListOldUser = async (
     //handle campaign code
     data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
-    const signatureList = await makeApiCall(data, setState);
-    return signatureList;
+    const signatureList = await makeApiCall(data);
+    setState({ state: 'created', pdf: signatureList });
   } catch (error) {
     console.log('Error while creating signature list', error);
     setState({ state: 'error' });
-    return null;
   }
 };
 
 //Function which calls our api to create a (new) signature list
 //returns the list {id, url} or null
-const makeApiCall = async (data, setState) => {
+const makeApiCall = async data => {
   //make api call to create new singature list and get pdf
   const request = {
     method: 'POST',
@@ -130,16 +121,10 @@ const makeApiCall = async (data, setState) => {
   const json = await response.json();
   //status might also be 200 in case there already was an existing pdf
   if (response.status === 201 || response.status === 200) {
-    setState('created');
     return json.signatureList;
   }
-  console.log('error', json.message);
-  setState('error');
-  return null;
-};
-
-const openPdf = signatureList => {
-  if (signatureList !== null) {
-    window.open(signatureList.url, '_blank');
-  }
+  //throw error, if not successful
+  throw new Error(
+    `Api did not respond with list, status is ${response.status}`
+  );
 };
