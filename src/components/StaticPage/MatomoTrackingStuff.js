@@ -14,11 +14,13 @@ _paq.push(['AbTesting::create', {
         },
         {
             name: '8', // you can also use '8' (ID of the variation) to hide the name
+            percentage: 0,
             activate: function(event) {
                 event.redirect('https://expedition-grundeinkommen.de/brandenburg-1/');
             }
         },                        {
             name: '9', // you can also use '9' (ID of the variation) to hide the name
+            percentage: 50,
             activate: function(event) {
                 event.redirect('https://expedition-grundeinkommen.de/brandenburg-2/');
             }
