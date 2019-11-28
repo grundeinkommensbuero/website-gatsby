@@ -10,7 +10,7 @@ const Unterschriftenliste = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     createPdf({
-      email: urlParams.get('email'),
+      userId: urlParams.get('userId'),
       campaignCode: urlParams.get('campaignCode'),
     });
   }, []);
