@@ -10,6 +10,7 @@ import { useCreateSignatureList } from '../../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
+import { Link } from 'gatsby';
 
 export default ({ className, signaturesId }) => {
   const [state, createPdf] = useCreateSignatureList({});
@@ -55,33 +56,36 @@ export default ({ className, signaturesId }) => {
       validate={validate}
       render={({ handleSubmit }) => {
         return (
-          <FormWrapper className={className}>
-            <form onSubmit={handleSubmit}>
-              <FormSection>
-                <Field
-                  name="email"
-                  label="E-Mail"
-                  description="Pflichtfeld"
-                  placeholder="E-Mail"
-                  component={TextInputWrapped}
-                ></Field>
-              </FormSection>
-
-              <CTAButtonContainer illustration="POINT_LEFT">
-                <CTAButton type="submit">
-                  Unterschriftenliste Herunterladen
-                </CTAButton>
-              </CTAButtonContainer>
+          <form onSubmit={handleSubmit} className={s.form}>
+            <p className={s.hint}>
+              Wenn du uns deine E-Mail-Adresse verrätst, errinnern wir dich, die
+              Unterschriftenlisten zurück zu schicken und halten dich weiterhin
+              auf dem Laufenden. Du erklärst dich dabei mit unserer{' '}
+              <Link to="datenschutz">Datenschutzerklärung</Link> einverstanden.
+              Natürlich kannst du die Liste auch{' '}
               <InlineButton
-                className={s.directDownloadButton}
                 onClick={() => {
                   createPdf(signaturesId);
                 }}
               >
-                ohne Erinnerungen anonym herunterladen
+                ohne Angabe der Adresse herunterladen
               </InlineButton>
-            </form>
-          </FormWrapper>
+              .
+            </p>
+            <div className={s.textInputContainer}>
+              <Field
+                name="email"
+                label="E-Mail"
+                placeholder="E-Mail"
+                component={TextInputWrapped}
+              ></Field>
+            </div>
+            <CTAButtonContainer illustration="POINT_LEFT">
+              <CTAButton type="submit">
+                Unterschriftenliste Herunterladen
+              </CTAButton>
+            </CTAButtonContainer>
+          </form>
         );
       }}
     />
