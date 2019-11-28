@@ -3,6 +3,7 @@ import Layout from '../../components/Layout';
 import { LinkButton } from '../../components/Forms/Button';
 import { useCreateSignatureList } from '../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
+import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreateSignatureList({});
@@ -21,8 +22,16 @@ const Unterschriftenliste = () => {
       bodyTextSizeHuge: true,
       body: (
         <>
-          {state.state === 'creating' && 'Liste wird generiert'}
-          {state.state === 'error' && 'Da ist was schief gegangen :-/'}
+          {state.state === 'creating' && (
+            <FinallyMessage state="progress">
+              Liste wird generiert, bitte einen Moment Geduld...
+            </FinallyMessage>
+          )}
+          {state.state === 'error' && (
+            <FinallyMessage state="error">
+              Da ist was schief gegangen
+            </FinallyMessage>
+          )}
           {state.pdf && (
             <DownloadListsNextSteps needsVerification={false}>
               <LinkButton target="_blank" href={state.pdf.url}>
