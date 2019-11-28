@@ -11,10 +11,12 @@ export default ({ needsVerification, children }) => (
         </StepListItem>
       )}
       <StepListItem icon="print">
-        Drucke so viele Listen aus, wie du sammeln möchtest.
+        Drucke so viele Listen, wie du Unterschriften sammeln möchtest.
       </StepListItem>
       <StepListItem icon="stack">Sammel, so viel du kannst!</StepListItem>
-      <StepListItem icon="send">Ab die Post an uns geschickt.</StepListItem>
+      <StepListItem icon="send">
+        Ab die Post: Schicke volle Listen immer möglichst bald los.
+      </StepListItem>
     </StepList>
   </>
 );
