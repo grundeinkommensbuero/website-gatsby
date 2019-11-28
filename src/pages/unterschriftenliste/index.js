@@ -4,6 +4,7 @@ import { LinkButton } from '../../components/Forms/Button';
 import { useCreateSignatureList } from '../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
+import s from './style.module.less';
 
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreateSignatureList({});
@@ -18,10 +19,10 @@ const Unterschriftenliste = () => {
 
   const sections = [
     {
-      title: <>Lade deine Unterschriftenliste herunter!</>,
       bodyTextSizeHuge: true,
       body: (
         <>
+          <p>Schön, dass du mit uns sammelst. So geht’s:</p>
           {state.state === 'creating' && (
             <FinallyMessage state="progress">
               Liste wird generiert, bitte einen Moment Geduld...
@@ -34,7 +35,11 @@ const Unterschriftenliste = () => {
           )}
           {state.pdf && (
             <DownloadListsNextSteps needsVerification={false}>
-              <LinkButton target="_blank" href={state.pdf.url}>
+              <LinkButton
+                target="_blank"
+                href={state.pdf.url}
+                className={s.button}
+              >
                 Liste Herunterladen
               </LinkButton>
             </DownloadListsNextSteps>
