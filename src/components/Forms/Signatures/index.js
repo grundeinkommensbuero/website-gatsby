@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
-import { validateEmail, addActionTrackingId } from '../../utils';
+import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { useCreateSignatureList } from '../../../hooks/Api/Signatures';
