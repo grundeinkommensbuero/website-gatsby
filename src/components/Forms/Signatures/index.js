@@ -75,7 +75,7 @@ export default ({ signaturesId }) => {
               Natürlich kannst du die Liste auch{' '}
               <InlineButton
                 onClick={() => {
-                  createPdf(signaturesId);
+                  createPdf({ campaignCode: signaturesId });
                 }}
                 type="button"
               >
