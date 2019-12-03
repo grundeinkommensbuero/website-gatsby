@@ -1,9 +1,7 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import FormSection from '../FormSection';
 import { TextInputWrapped } from '../TextInput';
-import { validateEmail } from '../../utils';
-import FormWrapper from '../FormWrapper';
+import { validateEmail, addActionTrackingId } from '../../utils';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { useCreateSignatureList } from '../../../hooks/Api/Signatures';
@@ -12,7 +10,7 @@ import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
 
-export default ({ className, signaturesId }) => {
+export default ({ signaturesId }) => {
   const [state, createPdf] = useCreateSignatureList({});
 
   if (state.state === 'creating') {
@@ -24,6 +22,11 @@ export default ({ className, signaturesId }) => {
   }
 
   if (state.state === 'error') {
+    trackEvent({
+      category: trackingCategory,
+      action: addActionTrackingId('downloadCreattionError', signaturesId),
+    });
+
     return (
       <FinallyMessage state="error">
         Da ist was schief gegangen. Melde dich bitte bei uns{' '}
@@ -36,6 +39,11 @@ export default ({ className, signaturesId }) => {
   }
 
   if (state.state === 'created') {
+    trackEvent({
+      category: trackingCategory,
+      action: addActionTrackingId('downloadCreated', signaturesId),
+    });
+
     return (
       <DownloadListsNextSteps needsVerification={false}>
         <LinkButton target="_blank" href={state.pdf.url}>
