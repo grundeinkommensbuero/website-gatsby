@@ -77,6 +77,7 @@ export default ({ signaturesId }) => {
                 onClick={() => {
                   createPdf(signaturesId);
                 }}
+                type="button"
               >
                 ohne Angabe der Adresse herunterladen
               </InlineButton>
