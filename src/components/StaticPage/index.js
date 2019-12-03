@@ -69,6 +69,7 @@ export const pageQuery = graphql`
               }
               name
             }
+            twitterFeed
           }
           ... on ContentfulPageSectionVideo {
             __typename
