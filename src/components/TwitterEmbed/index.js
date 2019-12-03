@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import s from './style.module.less';
 
 export default () => {
   const placeholder = useCallback(node => {
@@ -11,18 +12,19 @@ export default () => {
   }, []);
 
   return (
-    <>
+    <div className={s.container}>
       <a
         class="twitter-timeline"
         data-dnt="true"
         data-theme="light"
         data-tweet-limit="3"
+        data-chrome="nofooter noborders noheader transparent"
         href="https://twitter.com/expeditionbge?ref_src=twsrc%5Etfw"
       >
         Tweets by expeditionbge
       </a>
       <div ref={placeholder} />
-    </>
+    </div>
   );
 };
 
