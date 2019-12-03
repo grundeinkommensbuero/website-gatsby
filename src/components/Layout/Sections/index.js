@@ -8,6 +8,7 @@ import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
 import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
+import TwitterEmbed from '../../TwitterEmbed';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -30,6 +31,7 @@ export default function Sections({ sections }) {
             pledgeId,
             signaturesId,
             callToActionReference,
+            twitterFeed,
           } = section;
 
           const id = stringToId(titleShort);
@@ -96,6 +98,12 @@ export default function Sections({ sections }) {
                       {callToActionText}
                     </CTALinkExternal>
                   </CTAButtonContainer>
+                )}
+
+                {twitterFeed && (
+                  <div className={s.tweetContainer}>
+                    <TwitterEmbed />
+                  </div>
                 )}
               </div>
               {(__typename === 'ContentfulPageSectionIllustration' ||
