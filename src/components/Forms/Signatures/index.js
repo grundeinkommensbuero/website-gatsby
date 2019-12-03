@@ -10,6 +10,8 @@ import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
 
+const trackingCategory = 'ListDownload';
+
 export default ({ signaturesId }) => {
   const [state, createPdf] = useCreateSignatureList({});
 
