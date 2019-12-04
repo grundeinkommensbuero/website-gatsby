@@ -13,7 +13,7 @@ import TwitterEmbed from '../../TwitterEmbed';
 export default function Sections({ sections }) {
   if (sections && sections.length) {
     return (
-      <div className={s.sections}>
+      <SectionWrapper>
         {sections.map((section, index) => {
           const {
             title,
@@ -36,87 +36,118 @@ export default function Sections({ sections }) {
 
           const id = stringToId(titleShort);
           return (
-            <section
+            <Section
               key={index}
-              className={cN(s.section, {
-                [s.sectionVideo]: __typename === 'ContentfulPageSectionVideo',
-                [s.sectionIllustration]:
-                  __typename === 'ContentfulPageSectionIllustration',
-                [s.sectionNewsletter]: emailSignup,
-                [s.sectionPledge]: pledgeId,
-              })}
+              title={title}
+              jumpToId={id}
+              isVideoSection={__typename === 'ContentfulPageSectionVideo'}
+              isIllustrationSection={
+                __typename === 'ContentfulPageSectionIllustration'
+              }
+              isNewsletter={!!emailSignup}
+              isPledge={!!pledgeId}
+              afterBodyContent={
+                (__typename === 'ContentfulPageSectionIllustration' ||
+                  __typename === 'ContentfulPageSectionVideo') && (
+                  <MainIllustration className={s.illustration} />
+                )
+              }
             >
-              <div id={id} className={s.jumpToAnchor} />
-              <div
-                className={cN(s.sectionBody, {
-                  [s.sectionBodyNoEvents]:
-                    __typename === 'ContentfulPageSectionIllustration' ||
-                    __typename === 'ContentfulPageSectionVideo',
-                })}
-              >
-                {title && <h1 className={s.title}>{title}</h1>}
-                {__typename === 'ContentfulPageSectionIllustration' && (
-                  <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
-                )}
-                {body && (
-                  <div
-                    className={cN(s.bodyText, {
-                      [s.bodyTextHuge]: bodyTextSizeHuge,
-                    })}
-                  >
-                    {body.json ? contentfulJsonToHtml(body.json) : body}
-                    {pledgeId && (
-                      <Pledge pledgeId={pledgeId} className={s.pledge} />
-                    )}
-                    {signaturesId && (
-                      <Signatures
-                        signaturesId={signaturesId}
-                        className={s.pledge}
-                      />
-                    )}
-                  </div>
-                )}
-                {emailSignup && <EmailListForm className={s.emailSignup} />}
-                {videoLink && <YoutubeEmbed url={videoLink} />}
-                {teamMembers && (
-                  <AboutUs className={s.aboutUs} members={teamMembers} />
-                )}
-                {callToActionReference && (
-                  <CTAButtonContainer className={s.callToActionContainer}>
-                    {callToActionReference.map(
-                      ({ title, shortTitle, slug }, index) => (
-                        <CTALink key={index} to={`/${slug}/`}>
-                          {shortTitle || title}
-                        </CTALink>
-                      )
-                    )}
-                  </CTAButtonContainer>
-                )}
-                {callToActionText && callToActionLink && (
-                  <CTAButtonContainer className={s.callToActionContainer}>
-                    <CTALinkExternal href={callToActionLink}>
-                      {callToActionText}
-                    </CTALinkExternal>
-                  </CTAButtonContainer>
-                )}
-
-                {twitterFeed && (
-                  <div className={s.tweetContainer}>
-                    <TwitterEmbed />
-                  </div>
-                )}
-              </div>
-              {(__typename === 'ContentfulPageSectionIllustration' ||
-                __typename === 'ContentfulPageSectionVideo') && (
-                <MainIllustration className={s.illustration} />
+              {__typename === 'ContentfulPageSectionIllustration' && (
+                <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
               )}
-            </section>
+              {body && (
+                <div
+                  className={cN(s.bodyText, {
+                    [s.bodyTextHuge]: bodyTextSizeHuge,
+                  })}
+                >
+                  {body.json ? contentfulJsonToHtml(body.json) : body}
+                  {pledgeId && (
+                    <Pledge pledgeId={pledgeId} className={s.pledge} />
+                  )}
+                  {signaturesId && (
+                    <Signatures
+                      signaturesId={signaturesId}
+                      className={s.pledge}
+                    />
+                  )}
+                </div>
+              )}
+              {emailSignup && <EmailListForm className={s.emailSignup} />}
+              {videoLink && <YoutubeEmbed url={videoLink} />}
+              {teamMembers && (
+                <AboutUs className={s.aboutUs} members={teamMembers} />
+              )}
+              {callToActionReference && (
+                <CTAButtonContainer className={s.callToActionContainer}>
+                  {callToActionReference.map(
+                    ({ title, shortTitle, slug }, index) => (
+                      <CTALink key={index} to={`/${slug}/`}>
+                        {shortTitle || title}
+                      </CTALink>
+                    )
+                  )}
+                </CTAButtonContainer>
+              )}
+              {callToActionText && callToActionLink && (
+                <CTAButtonContainer className={s.callToActionContainer}>
+                  <CTALinkExternal href={callToActionLink}>
+                    {callToActionText}
+                  </CTALinkExternal>
+                </CTAButtonContainer>
+              )}
+
+              {twitterFeed && (
+                <div className={s.tweetContainer}>
+                  <TwitterEmbed />
+                </div>
+              )}
+            </Section>
           );
         })}
-      </div>
+      </SectionWrapper>
     );
   }
   return null;
+}
+
+export function SectionWrapper({ children, className }) {
+  return <div className={cN(s.sections, className)}>{children}</div>;
+}
+
+export function Section({
+  children,
+  className,
+  title,
+  jumpToId,
+  isVideoSection,
+  isIllustrationSection,
+  isNewsletter,
+  isPledge,
+  afterBodyContent,
+}) {
+  return (
+    <section
+      className={cN(s.section, className, {
+        [s.sectionVideo]: isVideoSection,
+        [s.sectionIllustration]: isIllustrationSection,
+        [s.sectionNewsletter]: isNewsletter,
+        [s.sectionPledge]: isPledge,
+      })}
+    >
+      {jumpToId && <div id={jumpToId} className={s.jumpToAnchor} />}
+      <div
+        className={cN(s.sectionBody, {
+          [s.sectionBodyNoEvents]: isIllustrationSection || isVideoSection,
+        })}
+      >
+        {title && <h1 className={s.title}>{title}</h1>}
+        {children}
+      </div>
+      {afterBodyContent}
+    </section>
+  );
 }
 
 function Slogan({ sloganLine1, sloganLine2 }) {
