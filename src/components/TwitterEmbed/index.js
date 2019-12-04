@@ -21,7 +21,8 @@ export default () => {
         data-chrome="nofooter noborders noheader transparent"
         href="https://twitter.com/expeditionbge?ref_src=twsrc%5Etfw"
       >
-        Tweets by expeditionbge
+        Du hast den Twitter-Embed geblockt. Kein Problem – hier geht‘s zu den
+        Neuigkeiten rund um die Expedition.
       </a>
       <div ref={placeholder} />
     </div>
