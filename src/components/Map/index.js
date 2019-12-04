@@ -1,9 +1,13 @@
-import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef } from 'react';
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
+let mapboxgl;
+
+if (!process.env.STATIC) {
+  mapboxgl = require('mapbox-gl');
+  mapboxgl.accessToken =
+    'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
+}
 
 export default ({ points, bounds }) => {
   const container = useRef(null);

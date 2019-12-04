@@ -61,6 +61,9 @@ exports.onCreateWebpackConfig = ({
         VERSION: JSON.stringify(gitRevisionPlugin.version()),
         COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
         APP_CLIENT_ID: JSON.stringify(clientId),
+        'process.env': {
+          STATIC: stage === 'build-html',
+        },
       }),
     ],
   });
