@@ -57,11 +57,7 @@ export default function Sections({ sections }) {
                 <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
               )}
               {body && (
-                <div
-                  className={cN(s.bodyText, {
-                    [s.bodyTextHuge]: bodyTextSizeHuge,
-                  })}
-                >
+                <SectionInner hugeText={bodyTextSizeHuge}>
                   {body.json ? contentfulJsonToHtml(body.json) : body}
                   {pledgeId && (
                     <Pledge pledgeId={pledgeId} className={s.pledge} />
@@ -72,36 +68,46 @@ export default function Sections({ sections }) {
                       className={s.pledge}
                     />
                   )}
-                </div>
+                </SectionInner>
               )}
-              {emailSignup && <EmailListForm className={s.emailSignup} />}
+              {emailSignup && (
+                <SectionInner>
+                  <EmailListForm className={s.emailSignup} />
+                </SectionInner>
+              )}
               {videoLink && <YoutubeEmbed url={videoLink} />}
               {teamMembers && (
-                <AboutUs className={s.aboutUs} members={teamMembers} />
+                <SectionInner wide={true}>
+                  <AboutUs members={teamMembers} />
+                </SectionInner>
               )}
               {callToActionReference && (
-                <CTAButtonContainer className={s.callToActionContainer}>
-                  {callToActionReference.map(
-                    ({ title, shortTitle, slug }, index) => (
-                      <CTALink key={index} to={`/${slug}/`}>
-                        {shortTitle || title}
-                      </CTALink>
-                    )
-                  )}
-                </CTAButtonContainer>
+                <SectionInner>
+                  <CTAButtonContainer>
+                    {callToActionReference.map(
+                      ({ title, shortTitle, slug }, index) => (
+                        <CTALink key={index} to={`/${slug}/`}>
+                          {shortTitle || title}
+                        </CTALink>
+                      )
+                    )}
+                  </CTAButtonContainer>
+                </SectionInner>
               )}
               {callToActionText && callToActionLink && (
-                <CTAButtonContainer className={s.callToActionContainer}>
-                  <CTALinkExternal href={callToActionLink}>
-                    {callToActionText}
-                  </CTALinkExternal>
-                </CTAButtonContainer>
+                <SectionInner>
+                  <CTAButtonContainer>
+                    <CTALinkExternal href={callToActionLink}>
+                      {callToActionText}
+                    </CTALinkExternal>
+                  </CTAButtonContainer>
+                </SectionInner>
               )}
 
               {twitterFeed && (
-                <div className={s.tweetContainer}>
+                <SectionInner>
                   <TwitterEmbed />
-                </div>
+                </SectionInner>
               )}
             </Section>
           );
@@ -147,6 +153,19 @@ export function Section({
       </div>
       {afterBodyContent}
     </section>
+  );
+}
+
+export function SectionInner({ children, hugeText, wide }) {
+  return (
+    <div
+      className={cN(s.inner, {
+        [s.innerTextHuge]: hugeText,
+        [s.innerWide]: wide,
+      })}
+    >
+      {children}
+    </div>
   );
 }
 
