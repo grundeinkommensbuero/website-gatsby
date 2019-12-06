@@ -1,7 +1,11 @@
 import React from 'react';
 import Layout from '../../components/Layout';
 import Helmet from 'react-helmet';
-import Sections from '../../components/Layout/Sections';
+import {
+  SectionWrapper,
+  Section,
+  SectionInner,
+} from '../../components/Layout/Sections';
 import Map from '../../components/Map';
 
 const points = [
@@ -15,21 +19,19 @@ const points = [
   },
 ];
 
-const sections = [
-  {
-    title: 'karte.',
-    bodyTextSizeHuge: true,
-    body: <Map points={points} bounds={[8.226, 53.4095, 11.6428, 54.9823]} />,
-  },
-];
-
 export default () => {
   return (
     <Layout>
       <Helmet>
         <title>Playground</title>
       </Helmet>
-      <Sections sections={sections}></Sections>
+      <SectionWrapper>
+        <Section title="karte">
+          <SectionInner wide={true}>
+            <Map points={points} bounds={[8.226, 53.4095, 11.6428, 54.9823]} />
+          </SectionInner>
+        </Section>
+      </SectionWrapper>
     </Layout>
   );
 };
