@@ -41,8 +41,18 @@ export default ({ state }) => {
   `);
 
   const container = useRef(null);
-
   let map;
+
+  const collectSignaturesLocationsOnlyFuture = collectSignaturesLocations.filter(
+    ({ node: location }) => {
+      if (!location.date) {
+        return true;
+      }
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      return +new Date(location.date) > +yesterday;
+    }
+  );
 
   useEffect(() => {
     map = new mapboxgl.Map({
@@ -51,7 +61,7 @@ export default ({ state }) => {
       maxBounds: BOUNDS[state],
     }).addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-    collectSignaturesLocations.forEach(({ node: location }) => {
+    collectSignaturesLocationsOnlyFuture.forEach(({ node: location }) => {
       if (location.location) {
         new mapboxgl.Marker()
           .setLngLat([location.location.lon, location.location.lat])
