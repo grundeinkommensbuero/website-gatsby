@@ -110,3 +110,25 @@ export function getAbTestId() {
   }
   return -1;
 }
+
+export function formatDateTime(date) {
+  return `${formatDate(date)}, ${formatTime(date)} Uhr`;
+}
+
+export function formatDate(date) {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  return new Intl.DateTimeFormat('de-DE', options).format(date);
+}
+
+export function formatTime(date) {
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  };
+  return new Intl.DateTimeFormat('de-DE', options).format(date);
+}
