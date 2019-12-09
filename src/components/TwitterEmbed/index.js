@@ -14,7 +14,7 @@ export default () => {
   return (
     <div className={s.container}>
       <a
-        class="twitter-timeline"
+        className="twitter-timeline"
         data-dnt="true"
         data-theme="light"
         data-tweet-limit="3"
