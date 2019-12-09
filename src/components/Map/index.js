@@ -69,7 +69,7 @@ export default ({ state }) => {
     };
   }, []);
 
-  return <div ref={container} style={{ height: '500px' }}></div>;
+  return <div ref={container} className={s.container}></div>;
 };
 
 const PopupContent = ({ title, description, date, phone, mail }) => (
