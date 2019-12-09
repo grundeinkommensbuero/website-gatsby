@@ -1,7 +1,8 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { contentfulJsonToHtml } from '../utils';
+import { contentfulJsonToHtml, formatDateTime } from '../utils';
+import s from './style.module.less';
 
 let mapboxgl;
 
@@ -43,11 +44,28 @@ export default ({ locations, bounds }) => {
   return <div ref={container} style={{ height: '500px' }}></div>;
 };
 
-const PopupContent = ({ title, description, date }) => (
-  <>
-    <b>{title}</b>
-    <br />
-    {description && contentfulJsonToHtml(description.json)}
-    {date}
-  </>
+const PopupContent = ({ title, description, date, phone, mail }) => (
+  <div className={s.tooltip}>
+    {date && (
+      <div className={s.tooltopDate}>{formatDateTime(new Date(date))}</div>
+    )}
+    <div className={s.tooltopTitle}>{title}</div>
+    {description && (
+      <div className={s.tooltipDescription}>
+        <hr />
+        {contentfulJsonToHtml(description.json)}
+      </div>
+    )}
+    {(phone || mail) && <hr />}
+    {phone && (
+      <div>
+        📞 <a href={`tel:${mail}`}>{phone}</a>
+      </div>
+    )}
+    {mail && (
+      <div>
+        ✉️ <a href={`mailto:${mail}`}>{mail}</a>
+      </div>
+    )}
+  </div>
 );
