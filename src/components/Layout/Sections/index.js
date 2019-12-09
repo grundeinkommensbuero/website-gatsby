@@ -9,6 +9,7 @@ import Pledge from '../../Forms/Pledge';
 import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
+import Map from '../../Map';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -32,6 +33,7 @@ export default function Sections({ sections }) {
             signaturesId,
             callToActionReference,
             twitterFeed,
+            map,
           } = section;
 
           const id = stringToId(titleShort);
@@ -103,10 +105,14 @@ export default function Sections({ sections }) {
                   </CTAButtonContainer>
                 </SectionInner>
               )}
-
               {twitterFeed && (
                 <SectionInner>
                   <TwitterEmbed />
+                </SectionInner>
+              )}
+              {map && (
+                <SectionInner wide={true}>
+                  <Map state={map} />
                 </SectionInner>
               )}
             </Section>
