@@ -7,6 +7,7 @@ import {
   SectionInner,
 } from '../../components/Layout/Sections';
 import Map from '../../components/Map';
+import { useStaticQuery } from 'gatsby';
 
 const points = [
   {
@@ -20,6 +21,30 @@ const points = [
 ];
 
 export default () => {
+  const {
+    allContentfulSammelort: { edges: collectSignaturesLocation },
+  } = useStaticQuery(graphql`
+    query CollectSignaturesLocations {
+      allContentfulSammelort {
+        edges {
+          node {
+            mail
+            title
+            phone
+            location {
+              lat
+              lon
+            }
+            description {
+              json
+            }
+            date
+          }
+        }
+      }
+    }
+  `);
+
   return (
     <Layout>
       <Helmet>
@@ -28,7 +53,10 @@ export default () => {
       <SectionWrapper>
         <Section title="karte">
           <SectionInner wide={true}>
-            <Map points={points} bounds={[8.226, 53.4095, 11.6428, 54.9823]} />
+            <Map
+              locations={collectSignaturesLocation}
+              bounds={[8.226, 53.4095, 11.6428, 54.9823]}
+            />
           </SectionInner>
         </Section>
       </SectionWrapper>
