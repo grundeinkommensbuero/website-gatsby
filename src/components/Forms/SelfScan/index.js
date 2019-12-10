@@ -34,6 +34,7 @@ export default ({ className }) => {
           setState('saved');
         }, 2000);
       }}
+      validate={validate}
       render={({ handleSubmit }) => {
         return (
           <FormWrapper className={className}>
@@ -58,4 +59,14 @@ export default ({ className }) => {
       }}
     />
   );
+};
+
+const validate = values => {
+  const errors = {};
+
+  if (!values.count) {
+    errors.count = 'Muss ausgefüllt sein';
+  }
+
+  return errors;
 };
