@@ -15,6 +15,8 @@ export const TextInputWrapped = ({
   placeholder,
   description,
   hide,
+  className,
+  inputClassName,
 }) => {
   if (hide) {
     return null;
@@ -23,8 +25,13 @@ export const TextInputWrapped = ({
     <LabelInputErrorWrapper
       label={description ? `${label} (${description})` : label}
       meta={meta}
+      className={className}
     >
-      <TextInput {...input} placeholder={placeholder} />
+      <TextInput
+        {...input}
+        placeholder={placeholder}
+        className={inputClassName}
+      />
     </LabelInputErrorWrapper>
   );
 };

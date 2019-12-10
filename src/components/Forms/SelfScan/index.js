@@ -5,6 +5,7 @@ import FormSection from '../FormSection';
 import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import s from './style.module.less';
 
 export default ({ className }) => {
   const [state, setState] = useState(null);
@@ -20,7 +21,11 @@ export default ({ className }) => {
   }
 
   if (state === 'saved') {
-    return <FinallyMessage>Supi danke!</FinallyMessage>;
+    return (
+      <FinallyMessage state="success">
+        Supi danke! Und jetzt ab die Post an uns geschickt!
+      </FinallyMessage>
+    );
   }
 
   return (
@@ -39,7 +44,7 @@ export default ({ className }) => {
         return (
           <FormWrapper className={className}>
             <form onSubmit={handleSubmit}>
-              <FormSection>
+              <FormSection className={s.formSection}>
                 <Field
                   name="count"
                   label="Anzahl der Unterschriften auf diesem Bogen"
@@ -47,6 +52,7 @@ export default ({ className }) => {
                   component={TextInputWrapped}
                   type="number"
                   min={1}
+                  inputClassName={s.countField}
                 ></Field>
               </FormSection>
 

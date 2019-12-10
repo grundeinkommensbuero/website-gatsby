@@ -18,6 +18,10 @@ export default () => {
       <SectionWrapper>
         <Section title="Trag deine Unterschriften ein">
           <SectionInner hugeText={true}>
+            Sehr gut, du hast den Code auf einer Unterschriftenliste gescannt!
+            Bitte sage uns, wie viel Unterschriften drauf sind.
+          </SectionInner>
+          <SectionInner hugeText={true}>
             <SelfScan />
           </SectionInner>
         </Section>
