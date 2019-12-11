@@ -47,7 +47,9 @@ export default ({ signaturesId }) => {
     });
 
     return (
-      <DownloadListsNextSteps needsVerification={false}>
+      <DownloadListsNextSteps
+        needsVerification={!state.anonymous && !state.existingUser}
+      >
         <LinkButton target="_blank" href={state.pdf.url}>
           Liste Herunterladen
         </LinkButton>
