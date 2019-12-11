@@ -6,9 +6,10 @@ import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
+import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 
 export default ({ className }) => {
-  const [state, setState] = useState(null);
+  const [state, updateSignatureList] = useUpdateSignatureListByUser();
   const [listId, setListId] = useState({});
 
   useEffect(() => {
@@ -28,16 +29,24 @@ export default ({ className }) => {
     );
   }
 
+  if (state === 'error') {
+    return (
+      <FinallyMessage state="error">
+        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </FinallyMessage>
+    );
+  }
+
   return (
     <Form
       onSubmit={data => {
         data.listId = listId;
-        console.log('fake saving...', data);
-        setState('saving');
-        setTimeout(() => {
-          console.log('fake saved.');
-          setState('saved');
-        }, 2000);
+        console.log('saving...', data);
+        updateSignatureList(data);
       }}
       validate={validate}
       render={({ handleSubmit }) => {
