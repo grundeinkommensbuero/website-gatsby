@@ -5,13 +5,17 @@ import { useCreateSignatureList } from '../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import s from './style.module.less';
-import { trackEvent } from '../../components/utils';
+import { trackEvent, addActionTrackingId } from '../../components/utils';
+
+const trackingCategory = 'ListDownload';
 
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreateSignatureList({});
+  let campaignCode;
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    campaignCode = urlParams.get('campaignCode');
     createPdf({
       userId: urlParams.get('userId'),
       campaignCode: urlParams.get('campaignCode'),
@@ -21,14 +25,14 @@ const Unterschriftenliste = () => {
   if (state.state === 'error') {
     trackEvent({
       category: trackingCategory,
-      action: addActionTrackingId('downloadCreationDirectError', signaturesId),
+      action: addActionTrackingId('downloadCreationDirectError', campaignCode),
     });
   }
 
   if (state.state === 'created') {
     trackEvent({
       category: trackingCategory,
-      action: addActionTrackingId('downloadCreatedFromMail', signaturesId),
+      action: addActionTrackingId('downloadCreatedFromMail', campaignCode),
     });
   }
 
