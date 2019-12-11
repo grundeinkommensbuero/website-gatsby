@@ -67,9 +67,11 @@ const createSignatureListNewUser = async (
       data.userId = userId;
       //new user: save referral and newsletterConsent
       await updateUser(userId, referral);
+      data.isNewUser = true;
     } else if (userId === 'userExists') {
       //instead of the user id we pass the email to the api
       data.email = email;
+      data.isNewUser = false;
     } else {
       setState({ state: 'error' });
       return;
@@ -100,6 +102,7 @@ const createSignatureListOldUser = async (
     const data = { userId: userId };
     //handle campaign code
     data.campaignCode = campaignCode;
+    data.isNewUser = false;
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data);
     setState({ state: 'created', pdf: signatureList });
