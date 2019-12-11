@@ -4,9 +4,9 @@ import { config } from '../../../../aws-config';
 import { updateUser } from '../../utils';
 
 /*
-  States: 
+  States:
   - null
-  - error 
+  - error
   - creating
   - created
 */
@@ -37,7 +37,7 @@ const createSignatureListAnonymous = async ({ campaignCode }, setState) => {
     data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data);
-    setState({ state: 'created', pdf: signatureList });
+    setState({ state: 'created', pdf: signatureList, anonymous: true });
   } catch (error) {
     console.log('Error while creating anonymous signature list', error);
     setState({ state: 'error' });
@@ -78,7 +78,11 @@ const createSignatureListNewUser = async (
     data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (throws error otherwise)
     const signatureList = await makeApiCall(data);
-    setState({ state: 'created', pdf: signatureList });
+    setState({
+      state: 'created',
+      pdf: signatureList,
+      existingUser: userId === 'userExists',
+    });
   } catch (error) {
     console.log('Error while creating signature list', error);
     setState({ state: 'error' });
