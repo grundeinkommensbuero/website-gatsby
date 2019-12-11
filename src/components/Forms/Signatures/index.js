@@ -26,7 +26,7 @@ export default ({ signaturesId }) => {
   if (state.state === 'error') {
     trackEvent({
       category: trackingCategory,
-      action: addActionTrackingId('downloadCreattionError', signaturesId),
+      action: addActionTrackingId('downloadCreationError', signaturesId),
     });
 
     return (
@@ -41,10 +41,20 @@ export default ({ signaturesId }) => {
   }
 
   if (state.state === 'created') {
-    trackEvent({
-      category: trackingCategory,
-      action: addActionTrackingId('downloadCreated', signaturesId),
-    });
+    if (state.anonymous) {
+      trackEvent({
+        category: trackingCategory,
+        action: addActionTrackingId('downloadCreatedAnonymous', signaturesId),
+      });
+    } else {
+      trackEvent({
+        category: trackingCategory,
+        action: addActionTrackingId(
+          'downloadCreated' + state.existingUser ? 'ExistingUser' : 'NewUser',
+          signaturesId
+        ),
+      });
+    }
 
     return (
       <DownloadListsNextSteps
