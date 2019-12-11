@@ -1,5 +1,5 @@
 /**
- * This file holds hooks which serve as api calls regarding pledges
+ *  This file holds hooks which serve as api calls regarding pledges
  */
 
 import { config } from '../../../../aws-config';
