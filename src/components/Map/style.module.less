@@ -1,3 +1,5 @@
+@import '../style/vars.less';
+
 .container {
   height: 30rem;
   max-height: 60vh;
@@ -27,4 +29,11 @@
 
 .tooltopDate {
   font-style: italic;
+}
+
+.popUpOutside {
+  margin-top: 1rem;
+  @media (min-width: @breakPointS) {
+    display: none;
+  }
 }

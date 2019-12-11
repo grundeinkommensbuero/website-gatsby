@@ -1,5 +1,5 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { contentfulJsonToHtml, formatDateTime } from '../utils';
 import s from './style.module.less';
@@ -41,6 +41,7 @@ export default ({ state }) => {
   `);
 
   const container = useRef(null);
+  const [highlightedPoint, setHighlightedPoint] = useState([]);
   let map;
 
   const collectSignaturesLocationsOnlyFuture = collectSignaturesLocations.filter(
@@ -67,9 +68,16 @@ export default ({ state }) => {
           .setLngLat([location.location.lon, location.location.lat])
           .addTo(map)
           .setPopup(
-            new mapboxgl.Popup().setHTML(
-              renderToStaticMarkup(<PopupContent {...location} />)
-            )
+            new mapboxgl.Popup()
+              .setHTML(renderToStaticMarkup(<PopupContent {...location} />))
+              .on('open', () => {
+                highlightedPoint.push(location);
+                setHighlightedPoint([...highlightedPoint]);
+              })
+              .on('close', () => {
+                highlightedPoint.shift();
+                setHighlightedPoint([...highlightedPoint]);
+              })
           );
       }
     });
@@ -79,7 +87,16 @@ export default ({ state }) => {
     };
   }, []);
 
-  return <div ref={container} className={s.container}></div>;
+  return (
+    <div>
+      <div ref={container} className={s.container} />
+      {highlightedPoint.length !== 0 && (
+        <div className={s.popUpOutside}>
+          <PopupContent {...highlightedPoint[0]} />
+        </div>
+      )}
+    </div>
+  );
 };
 
 const PopupContent = ({ title, description, date, phone, mail }) => (
