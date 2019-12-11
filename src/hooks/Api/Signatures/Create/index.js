@@ -1,11 +1,15 @@
-import { useAuthentication } from '../../Authentication';
+/**
+ *  This file holds a hook which serves as api call to create a signature list
+ *  in the backend
+ */
+
+import { useAuthentication } from '../../../Authentication';
 import { useState } from 'react';
-import { config } from '../../../../aws-config';
-import { updateUser } from '../../utils';
+import { config } from '../../../../../aws-config';
+import { updateUser } from '../../../utils';
 
 /*
   States:
-  - null
   - error
   - creating
   - created

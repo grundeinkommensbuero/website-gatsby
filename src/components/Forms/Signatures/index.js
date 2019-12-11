@@ -4,7 +4,7 @@ import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
-import { useCreateSignatureList } from '../../../hooks/Api/Signatures';
+import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
