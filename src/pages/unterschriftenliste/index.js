@@ -5,6 +5,7 @@ import { useCreateSignatureList } from '../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import s from './style.module.less';
+import { trackEvent } from '../../components/utils';
 
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreateSignatureList({});
