@@ -11,8 +11,8 @@ import { config } from '../../../../../aws-config';
   States: 
   - null
   - error 
-  - updating
-  - updated
+  - saving
+  - saved
 */
 
 export const useUpdateSignatureListByUser = () => {
@@ -24,7 +24,7 @@ export const useUpdateSignatureListByUser = () => {
 //for a specific list after user has scanned the qr code
 const updateSignatureListByUser = async ({ listId, count }, setState) => {
   //make api call to create new singature list and get pdf
-  setState('updating');
+  setState('saving');
   try {
     const request = {
       method: 'PATCH',
@@ -39,7 +39,7 @@ const updateSignatureListByUser = async ({ listId, count }, setState) => {
       request
     );
     if (response.status === 204) {
-      setState('updated');
+      setState('saved');
     } else {
       console.log('Response code not 204', response.status);
       setState('error');
