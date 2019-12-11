@@ -17,6 +17,20 @@ const Unterschriftenliste = () => {
     });
   }, []);
 
+  if (state.state === 'error') {
+    trackEvent({
+      category: trackingCategory,
+      action: addActionTrackingId('downloadCreationDirectError', signaturesId),
+    });
+  }
+
+  if (state.state === 'created') {
+    trackEvent({
+      category: trackingCategory,
+      action: addActionTrackingId('downloadCreatedFromMail', signaturesId),
+    });
+  }
+
   const sections = [
     {
       bodyTextSizeHuge: true,
