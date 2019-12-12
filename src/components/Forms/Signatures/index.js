@@ -9,6 +9,7 @@ import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
+import { StepListItem } from '../../StepList';
 
 const trackingCategory = 'ListDownload';
 
@@ -57,61 +58,89 @@ export default ({ signaturesId }) => {
     }
 
     return (
-      <DownloadListsNextSteps
-        needsVerification={!state.anonymous && !state.existingUser}
-      >
-        <LinkButton target="_blank" href={state.pdf.url}>
-          Liste Herunterladen
-        </LinkButton>
-      </DownloadListsNextSteps>
+      <>
+        {state.existingUser ? (
+          <>
+            <p>
+              Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
+              deinem Postfach. Du kannst sie dir auch{' '}
+              <a target="_blank" href={state.pdf.url}>
+                direkt im Browser herunterladen
+              </a>
+              .
+            </p>
+            <p>So geht’s weiter:</p>
+          </>
+        ) : (
+          <p>Schön, dass du mit uns sammelst. So geht’s weiter:</p>
+        )}
+
+        <DownloadListsNextSteps>
+          {(state.anonymous || !state.existingUser) && (
+            <StepListItem icon="download">
+              <LinkButton target="_blank" href={state.pdf.url}>
+                Liste Herunterladen
+              </LinkButton>
+            </StepListItem>
+          )}
+          {!state.anonymous && !state.existingUser && (
+            <StepListItem icon="mail">
+              Check deine Mails und klick den Link, damit du dabei bist.
+            </StepListItem>
+          )}
+        </DownloadListsNextSteps>
+      </>
     );
   }
 
   return (
-    <Form
-      onSubmit={e => {
-        createPdf({
-          email: e.email,
-          campaignCode: signaturesId,
-        });
-      }}
-      validate={validate}
-      render={({ handleSubmit }) => {
-        return (
-          <form onSubmit={handleSubmit} className={s.form}>
-            <p className={s.hint}>
-              Wenn du uns deine E-Mail-Adresse verrätst, errinnern wir dich, die
-              Unterschriftenlisten zurück zu schicken und halten dich weiterhin
-              auf dem Laufenden. Du erklärst dich dabei mit unserer{' '}
-              <Link to="datenschutz">Datenschutzerklärung</Link> einverstanden.
-              Natürlich kannst du die Liste auch{' '}
-              <InlineButton
-                onClick={() => {
-                  createPdf({ campaignCode: signaturesId });
-                }}
-                type="button"
-              >
-                ohne Angabe der Adresse herunterladen
-              </InlineButton>
-              .
-            </p>
-            <div className={s.textInputContainer}>
-              <Field
-                name="email"
-                label="E-Mail"
-                placeholder="E-Mail"
-                component={TextInputWrapped}
-              ></Field>
-            </div>
-            <CTAButtonContainer illustration="POINT_LEFT">
-              <CTAButton type="submit">
-                Unterschriftenliste Herunterladen
-              </CTAButton>
-            </CTAButtonContainer>
-          </form>
-        );
-      }}
-    />
+    <>
+      <p>
+        Die Listen sind da! Ab sofort kannst du sie dir ausdrucken,
+        unterschreiben und Unterschriften sammeln. So starten wir zusammen den
+        Modellversuch in Schleswig-Holstein!
+      </p>
+      <p>An welche E-Mail-Adresse dürfen wir dir die Listen schicken?</p>
+      <Form
+        onSubmit={e => {
+          createPdf({
+            email: e.email,
+            campaignCode: signaturesId,
+          });
+        }}
+        validate={validate}
+        render={({ handleSubmit }) => {
+          return (
+            <form onSubmit={handleSubmit} className={s.form}>
+              <div className={s.textInputContainer}>
+                <Field
+                  name="email"
+                  label="E-Mail"
+                  placeholder="E-Mail"
+                  component={TextInputWrapped}
+                ></Field>
+              </div>
+              <p className={s.hint}>
+                Bitte erinnert mich an das Zurücksenden der Listen und haltet
+                mich auf dem Laufenden. Du kannst die Listen auch{' '}
+                <InlineButton
+                  onClick={() => {
+                    createPdf({ campaignCode: signaturesId });
+                  }}
+                  type="button"
+                >
+                  anonym herunterladen
+                </InlineButton>
+                .
+              </p>
+              <CTAButtonContainer illustration="POINT_LEFT">
+                <CTAButton type="submit">Her mit den Listen</CTAButton>
+              </CTAButtonContainer>
+            </form>
+          );
+        }}
+      />
+    </>
   );
 };
 
