@@ -51,7 +51,7 @@ export default ({ signaturesId }) => {
       trackEvent({
         category: trackingCategory,
         action: addActionTrackingId(
-          'downloadCreated' + state.existingUser ? 'ExistingUser' : 'NewUser',
+          'downloadCreated' + (state.existingUser ? 'ExistingUser' : 'NewUser'),
           signaturesId
         ),
       });
