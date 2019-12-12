@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { contentfulJsonToHtml, formatDateTime } from '../utils';
 import s from './style.module.less';
 import { useStaticQuery } from 'gatsby';
+import { SectionInner } from '../Layout/Sections';
 
 let mapboxgl;
 
@@ -88,14 +89,18 @@ export default ({ state }) => {
   }, []);
 
   return (
-    <div>
-      <div ref={container} className={s.container} />
+    <>
+      <SectionInner wide={true}>
+        <div ref={container} className={s.container} />
+      </SectionInner>
       {highlightedPoint.length !== 0 && (
-        <div className={s.popUpOutside}>
-          <PopupContent {...highlightedPoint[0]} />
-        </div>
+        <SectionInner className={s.popUpOutside}>
+          <div>
+            <PopupContent {...highlightedPoint[0]} />
+          </div>
+        </SectionInner>
       )}
-    </div>
+    </>
   );
 };
 
