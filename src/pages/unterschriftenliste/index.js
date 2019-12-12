@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import { LinkButtonLocal, LinkButton } from '../../components/Forms/Button';
-import { useCreateSignatureList } from '../../hooks/Api/Signatures';
+import { useCreateSignatureList } from '../../hooks/Api/Signatures/Create';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import s from './style.module.less';
