@@ -108,11 +108,7 @@ export default function Sections({ sections }) {
                   <TwitterEmbed />
                 </SectionInner>
               )}
-              {map && (
-                <SectionInner wide={true}>
-                  <Map state={map} />
-                </SectionInner>
-              )}
+              {map && <Map state={map} />}
             </Section>
           );
         })}
@@ -160,10 +156,10 @@ export function Section({
   );
 }
 
-export function SectionInner({ children, hugeText, wide }) {
+export function SectionInner({ children, hugeText, wide, className }) {
   return (
     <div
-      className={cN(s.inner, {
+      className={cN(s.inner, className, {
         [s.innerTextHuge]: hugeText,
         [s.innerWide]: wide,
       })}
