@@ -1,15 +1,10 @@
 import React from 'react';
 import { StepList, StepListItem } from '../../StepList';
 
-export default ({ needsVerification, children }) => (
+export default ({ children }) => (
   <>
     <StepList>
-      {children && <StepListItem icon="download">{children}</StepListItem>}
-      {needsVerification && (
-        <StepListItem icon="mail">
-          Check deine Mails, klick den Link, damit du dabei bist
-        </StepListItem>
-      )}
+      {children}
       <StepListItem icon="print">
         Drucke so viele Listen, wie du Unterschriften sammeln möchtest.
       </StepListItem>

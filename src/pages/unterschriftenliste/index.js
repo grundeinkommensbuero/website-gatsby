@@ -1,21 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
-import { LinkButton } from '../../components/Forms/Button';
+import { LinkButtonLocal, LinkButton } from '../../components/Forms/Button';
 import { useCreateSignatureList } from '../../hooks/Api/Signatures';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import s from './style.module.less';
 import { trackEvent, addActionTrackingId } from '../../components/utils';
+import { CTAButtonContainer } from '../../components/Layout/CTAButton';
+import { StepListItem } from '../../components/StepList';
 
 const trackingCategory = 'ListDownload';
 
+const CTAs = {
+  'schleswig-holstein-1': {
+    text: 'Mehr Infos',
+    link: 'schleswig-holstein',
+  },
+};
+
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreateSignatureList({});
-  let campaignCode;
+  const [campaignCode, setCampaignCode] = useState(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    campaignCode = urlParams.get('campaignCode');
+    setCampaignCode(urlParams.get('campaignCode'));
     createPdf({
       userId: urlParams.get('userId'),
       campaignCode: urlParams.get('campaignCode'),
@@ -41,7 +50,7 @@ const Unterschriftenliste = () => {
       bodyTextSizeHuge: true,
       body: (
         <>
-          <p>Schön, dass du mit uns sammelst. So geht’s:</p>
+          <p>Schön, dass du mit uns sammelst. So geht’s weiter:</p>
           {state.state === 'creating' && (
             <FinallyMessage state="progress">
               Liste wird generiert, bitte einen Moment Geduld...
@@ -53,15 +62,22 @@ const Unterschriftenliste = () => {
             </FinallyMessage>
           )}
           {state.pdf && (
-            <DownloadListsNextSteps needsVerification={false}>
-              <LinkButton
-                target="_blank"
-                href={state.pdf.url}
-                className={s.button}
-              >
-                Liste Herunterladen
-              </LinkButton>
-            </DownloadListsNextSteps>
+            <>
+              <DownloadListsNextSteps>
+                <StepListItem icon="download">
+                  <LinkButton target="_blank" href={state.pdf.url}>
+                    Listen herunterladen
+                  </LinkButton>
+                </StepListItem>
+              </DownloadListsNextSteps>
+              {CTAs[campaignCode] && (
+                <CTAButtonContainer>
+                  <LinkButtonLocal to={CTAs[campaignCode].link}>
+                    {CTAs[campaignCode].text}
+                  </LinkButtonLocal>
+                </CTAButtonContainer>
+              )}
+            </>
           )}
         </>
       ),

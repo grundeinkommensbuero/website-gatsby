@@ -58,20 +58,18 @@ export default function Sections({ sections }) {
               {__typename === 'ContentfulPageSectionIllustration' && (
                 <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
               )}
-              {body && (
-                <SectionInner hugeText={bodyTextSizeHuge}>
-                  {body.json ? contentfulJsonToHtml(body.json) : body}
-                  {pledgeId && (
-                    <Pledge pledgeId={pledgeId} className={s.pledge} />
-                  )}
-                  {signaturesId && (
-                    <Signatures
-                      signaturesId={signaturesId}
-                      className={s.pledge}
-                    />
-                  )}
-                </SectionInner>
-              )}
+              <SectionInner hugeText={bodyTextSizeHuge}>
+                {body && body.json ? contentfulJsonToHtml(body.json) : body}
+                {pledgeId && (
+                  <Pledge pledgeId={pledgeId} className={s.pledge} />
+                )}
+                {signaturesId && (
+                  <Signatures
+                    signaturesId={signaturesId}
+                    className={s.pledge}
+                  />
+                )}
+              </SectionInner>
               {emailSignup && (
                 <SectionInner>
                   <EmailListForm className={s.emailSignup} />
