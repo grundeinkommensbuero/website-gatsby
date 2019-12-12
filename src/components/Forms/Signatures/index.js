@@ -122,7 +122,7 @@ export default ({ signaturesId }) => {
               </div>
               <p className={s.hint}>
                 Bitte erinnert mich an das Zurücksenden der Listen und haltet
-                mich auf dem Laufenden. Du kannst die Listen auch{' '}
+                mich auf dem Laufenden. Ich kann die Listen auch{' '}
                 <InlineButton
                   onClick={() => {
                     createPdf({ campaignCode: signaturesId });
