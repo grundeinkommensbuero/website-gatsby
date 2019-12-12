@@ -76,16 +76,16 @@ export default ({ signaturesId }) => {
         )}
 
         <DownloadListsNextSteps>
-          {(state.anonymous || !state.existingUser) && (
-            <StepListItem icon="download">
-              <LinkButton target="_blank" href={state.pdf.url}>
-                Liste Herunterladen
-              </LinkButton>
-            </StepListItem>
-          )}
           {!state.anonymous && !state.existingUser && (
             <StepListItem icon="mail">
               Check deine Mails und klick den Link, damit du dabei bist.
+            </StepListItem>
+          )}
+          {(state.anonymous || !state.existingUser) && (
+            <StepListItem icon="download">
+              <LinkButton target="_blank" href={state.pdf.url}>
+                Listen Herunterladen
+              </LinkButton>
             </StepListItem>
           )}
         </DownloadListsNextSteps>
