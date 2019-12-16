@@ -36,19 +36,21 @@ export default () => {
 
   return (
     <>
+      <label htmlFor="gemeindenInput">gemeinde</label>
+      <br />
       <input
-        list="suggestionList"
-        id="answerInput"
+        list="gemeinden"
+        id="gemeindenInput"
         onChange={e => {
           if (gemeindenByName[e.target.value]) {
             setSelectedAmt(sorted[gemeindenByName[e.target.value]]);
           }
         }}
       />
-      <datalist id="suggestionList">
         {Object.keys(gemeindenByName).map(gemeinde => (
           <option key={gemeinde} value={gemeinde} />
         ))}
+      <datalist id="gemeinden">
       </datalist>
 
       {selectedAmt && (
