@@ -30,7 +30,7 @@ export default () => {
 
   Object.entries(sorted).forEach(([key, amt]) => {
     amt.gemeinden.forEach(gemeinde => {
-      gemeindenByName[gemeinde] = key;
+      gemeindenByName[`${gemeinde} (${amt.amt})`] = key;
     });
   });
 
