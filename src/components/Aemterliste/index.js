@@ -39,6 +39,7 @@ export default () => {
       <label htmlFor="gemeindenInput">gemeinde</label>
       <br />
       <input
+      <TextInput
         list="gemeinden"
         id="gemeindenInput"
         onChange={e => {
