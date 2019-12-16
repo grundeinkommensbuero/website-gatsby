@@ -6,45 +6,48 @@ import s from './style.module.less';
 
 export default () => {
   const [selectedAmt, setSelectedAmt] = useState(null);
-  const sorted = {};
   const source = parseCSV(sourceCSV, { delimiter: ';' });
 
-  source.forEach((amt, forIndex) => {
-    if (amt[2] === '') {
-      // starts with 0 means does only have one gemeinde
-      if (amt[0].startsWith('0')) {
-        let index = 0;
-        let amtExtended = generateAmtId(amt[0], index);
+  const [{ sorted, gemeindenByName }] = useState(() => {
+    const sorted = {};
+    const gemeindenByName = {};
 
-        while (sorted[amtExtended] !== undefined) {
-          index++;
-          amtExtended = generateAmtId(amt[0], index);
+    source.forEach((amt, forIndex) => {
+      if (amt[2] === '') {
+        // starts with 0 means does only have one gemeinde
+        if (amt[0].startsWith('0')) {
+          let index = 0;
+          let amtExtended = generateAmtId(amt[0], index);
+
+          while (sorted[amtExtended] !== undefined) {
+            index++;
+            amtExtended = generateAmtId(amt[0], index);
+          }
+
+          sorted[amtExtended] = {
+            amt: amt[1],
+            gemeinden: [`${source[forIndex + 1][2]} ${amt[1]}`],
+          };
+        } else {
+          sorted[amt[0]] = { amt: amt[1], gemeinden: [] };
         }
-
-        sorted[amtExtended] = {
-          amt: amt[1],
-          gemeinden: [`${source[forIndex + 1][2]} ${amt[1]}`],
-        };
-      } else {
-        sorted[amt[0]] = { amt: amt[1], gemeinden: [] };
       }
-    }
-  });
-
-  source.forEach(gemeinde => {
-    if (gemeinde[2] !== '') {
-      if (sorted[gemeinde[0]]) {
-        sorted[gemeinde[0]].gemeinden.push(`${gemeinde[2]} ${gemeinde[1]}`);
-      }
-    }
-  });
-
-  const gemeindenByName = {};
-
-  Object.entries(sorted).forEach(([key, amt]) => {
-    amt.gemeinden.forEach(gemeinde => {
-      gemeindenByName[`${gemeinde} (${amt.amt})`] = key;
     });
+
+    source.forEach(gemeinde => {
+      if (gemeinde[2] !== '') {
+        if (sorted[gemeinde[0]]) {
+          sorted[gemeinde[0]].gemeinden.push(`${gemeinde[2]} ${gemeinde[1]}`);
+        }
+      }
+    });
+
+    Object.entries(sorted).forEach(([key, amt]) => {
+      amt.gemeinden.forEach(gemeinde => {
+        gemeindenByName[`${gemeinde} (${amt.amt})`] = key;
+      });
+    });
+    return { sorted, gemeindenByName };
   });
 
   return (
