@@ -8,7 +8,7 @@ export default () => {
   const sorted = {};
   const source = parseCSV(sourceCSV, { delimiter: ';' });
 
-  source.forEach(amt => {
+  source.forEach((amt, forIndex) => {
     if (amt[2] === '') {
       if (amt[0].startsWith('0')) {
         let index = 0;
@@ -18,7 +18,10 @@ export default () => {
           amtExtended = generateAmtId(amt[0], index);
         }
 
-        sorted[amtExtended] = { amt: amt[1], gemeinden: [amt[1]] };
+        sorted[amtExtended] = {
+          amt: amt[1],
+          gemeinden: [`${source[forIndex + 1][2]} ${amt[1]}`],
+        };
       } else {
         sorted[amt[0]] = { amt: amt[1], gemeinden: [] };
       }
@@ -28,7 +31,7 @@ export default () => {
   source.forEach(gemeinde => {
     if (gemeinde[2] !== '') {
       if (sorted[gemeinde[0]]) {
-        sorted[gemeinde[0]].gemeinden.push(gemeinde[1]);
+        sorted[gemeinde[0]].gemeinden.push(`${gemeinde[2]} ${gemeinde[1]}`);
       }
     }
   });
