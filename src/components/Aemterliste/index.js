@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
-import { AEMTER, GEMEINDEN } from './aemter';
 import { TextInput } from '../Forms/TextInput';
+import sourceCSV from 'raw-loader!./source.csv';
+import parseCSV from 'csv-parse/lib/sync';
 
 export default () => {
   const [selectedAmt, setSelectedAmt] = useState(null);
   const sorted = {};
+  const source = parseCSV(sourceCSV, { delimiter: ';' });
 
-  AEMTER.forEach(amt => {
-    if (amt[1].startsWith('0')) {
-      let index = 0;
-      let amtExtended = generateAmtId(amt[1], index);
-      while (sorted[amtExtended] !== undefined) {
-        index++;
-        amtExtended = generateAmtId(amt[1], index);
+  source.forEach(amt => {
+    if (amt[2] === '') {
+      if (amt[0].startsWith('0')) {
+        let index = 0;
+        let amtExtended = generateAmtId(amt[0], index);
+        while (sorted[amtExtended] !== undefined) {
+          index++;
+          amtExtended = generateAmtId(amt[0], index);
+        }
+
+        sorted[amtExtended] = { amt: amt[1], gemeinden: [amt[1]] };
+      } else {
+        sorted[amt[0]] = { amt: amt[1], gemeinden: [] };
       }
-
-      sorted[amtExtended] = { amt: amt[0], gemeinden: [amt[0]] };
-    } else {
-      sorted[amt[1]] = { amt: amt[0], gemeinden: [] };
     }
   });
 
-  GEMEINDEN.forEach(gemeinde => {
-    if (sorted[gemeinde[1]]) {
-      sorted[gemeinde[1]].gemeinden.push(gemeinde[0]);
+  source.forEach(gemeinde => {
+    if (gemeinde[2] !== '') {
+      if (sorted[gemeinde[0]]) {
+        sorted[gemeinde[0]].gemeinden.push(gemeinde[1]);
+      }
     }
   });
 
