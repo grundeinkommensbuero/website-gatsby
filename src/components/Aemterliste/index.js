@@ -47,10 +47,12 @@ export default () => {
           }
         }}
       />
-        {Object.keys(gemeindenByName).map(gemeinde => (
-          <option key={gemeinde} value={gemeinde} />
-        ))}
       <datalist id="gemeinden">
+        {Object.keys(gemeindenByName)
+          .sort()
+          .map(gemeinde => (
+            <option key={gemeinde} value={gemeinde} />
+          ))}
       </datalist>
 
       {selectedAmt && (
