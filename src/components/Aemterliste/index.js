@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AEMTER, GEMEINDEN } from './aemter';
+import { TextInput } from '../Forms/TextInput';
 
 export default () => {
   const [selectedAmt, setSelectedAmt] = useState(null);
@@ -38,7 +39,6 @@ export default () => {
     <>
       <label htmlFor="gemeindenInput">gemeinde</label>
       <br />
-      <input
       <TextInput
         list="gemeinden"
         id="gemeindenInput"
@@ -55,7 +55,6 @@ export default () => {
             <option key={gemeinde} value={gemeinde} />
           ))}
       </datalist>
-
       {selectedAmt && (
         <dl>
           <dt>Amt</dt>
@@ -66,6 +65,7 @@ export default () => {
           ))}
         </dl>
       )}
+      <hr />
     </>
   );
 };
