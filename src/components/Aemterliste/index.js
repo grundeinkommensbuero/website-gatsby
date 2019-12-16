@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextInput } from '../Forms/TextInput';
 import sourceCSV from 'raw-loader!./source.csv';
 import parseCSV from 'csv-parse/lib/sync';
+import s from './style.module.less';
 
 export default () => {
   const [selectedAmt, setSelectedAmt] = useState(null);
@@ -53,6 +54,7 @@ export default () => {
       <TextInput
         list="gemeinden"
         id="gemeindenInput"
+        className={s.input}
         onChange={e => {
           if (gemeindenByName[e.target.value]) {
             setSelectedAmt(sorted[gemeindenByName[e.target.value]]);
