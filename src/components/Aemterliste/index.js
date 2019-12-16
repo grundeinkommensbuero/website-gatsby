@@ -10,9 +10,11 @@ export default () => {
 
   source.forEach((amt, forIndex) => {
     if (amt[2] === '') {
+      // starts with 0 means does only have one gemeinde
       if (amt[0].startsWith('0')) {
         let index = 0;
         let amtExtended = generateAmtId(amt[0], index);
+
         while (sorted[amtExtended] !== undefined) {
           index++;
           amtExtended = generateAmtId(amt[0], index);
