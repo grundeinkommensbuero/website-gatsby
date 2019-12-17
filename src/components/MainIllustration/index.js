@@ -3,7 +3,11 @@ import s from './style.module.less';
 import cN from 'classnames';
 import Stage from '!svg-inline-loader?classPrefix=b-!./figure-1-groups_stage-1.svg';
 import StageVertical from '!svg-inline-loader?classPrefix=a-&idPrefix=b-!./figure-1-groups_stage-1-vertical.svg';
-import interact from 'interactjs';
+let interact;
+
+if (!process.env.STATIC) {
+  interact = require('interactjs');
+}
 
 export default function({ className }) {
   return (
