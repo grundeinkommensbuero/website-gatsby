@@ -1,0 +1,32 @@
+@import '../style/vars.less';
+
+.bar {
+    position: relative;
+    height: 8rem;
+}
+
+.barGoal {
+    position: absolute;
+    background: var(--font-color);
+    color: var(--bg-color);
+    height: 5rem;
+    width: 100%;
+    font-size: @fontSizeL;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+}
+
+.barCurrent {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5rem;
+    font-size: @fontSizeXL;
+    background: var(--secondary-color);
+    color: var(--text-on-secondary-color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.5rem;
+}
