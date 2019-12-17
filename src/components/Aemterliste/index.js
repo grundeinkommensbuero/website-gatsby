@@ -75,6 +75,7 @@ export default () => {
         <dl>
           <dt>Amt</dt>
           <dd>{selectedAmt.amt}</dd>
+          <br />
           <dt>Gemeinden</dt>
           {selectedAmt.gemeinden.map(gemeinde => (
             <dd key={gemeinde}>{gemeinde}</dd>
