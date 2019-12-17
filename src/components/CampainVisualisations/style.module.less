@@ -34,11 +34,11 @@
 .barCurrent {
     position: absolute;
     bottom: 0;
-    width: 100%;
     height: 5rem;
     font-size: @fontSizeXXXL;
     color: var(--text-on-secondary-color);
     display: flex;
+    transition: width 1s ease;
 
     &::before {
         content: '';
