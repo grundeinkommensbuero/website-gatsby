@@ -2,7 +2,7 @@
 
 .bar {
   position: relative;
-  height: 8rem;
+  height: 7.5rem;
 }
 
 .barGoal {
@@ -11,7 +11,7 @@
   color: var(--bg-color);
   height: 5rem;
   width: 100%;
-  font-size: @fontSizeL;
+  font-size: @fontSizeM;
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem;
@@ -22,11 +22,25 @@
   bottom: 0;
   width: 100%;
   height: 5rem;
-  font-size: @fontSizeXL;
+  font-size: @fontSizeXXXL;
   background: var(--secondary-color);
   color: var(--text-on-secondary-color);
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0.5rem;
+
+  > div {
+    position: absolute;
+    bottom: -1rem;
+    right: 1rem;
+  }
+
+  &.outside {
+    > div {
+      left: calc(100% + 1rem);
+      right: auto;
+      color: var(--font-color);
+      @w: 2px;
+      text-shadow: @w @w 0 var(--bg-color), -@w @w 0 var(--bg-color),
+        @w -@w 0 var(--bg-color), -@w -@w 0 var(--bg-color);
+    }
+  }
 }
