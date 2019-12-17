@@ -33,7 +33,9 @@ const Visualisation = ({
   title,
   currentCount,
 }) => {
-  const percentage = currentCount ? (currentCount / goal) * 100 : 0;
+  const percentage = currentCount
+    ? Math.min((currentCount / goal) * 100, 100)
+    : 0;
   const countOutside = percentage < 40;
   return (
     <SectionInner>
