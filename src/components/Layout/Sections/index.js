@@ -10,6 +10,7 @@ import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import Map from '../../Map';
+import CampainVisualisations from '../../CampainVisualisations';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -34,8 +35,9 @@ export default function Sections({ sections }) {
             callToActionReference,
             twitterFeed,
             map,
+            campainVisualisations,
           } = section;
-
+          console.log(campainVisualisations);
           const id = stringToId(titleShort);
           return (
             <Section
@@ -109,6 +111,9 @@ export default function Sections({ sections }) {
                 </SectionInner>
               )}
               {map && <Map state={map} />}
+              {campainVisualisations && (
+                <CampainVisualisations visualisations={campainVisualisations} />
+              )}
             </Section>
           );
         })}

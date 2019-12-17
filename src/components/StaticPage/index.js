@@ -71,6 +71,12 @@ export const pageQuery = graphql`
             }
             twitterFeed
             map
+            campainVisualisations {
+              campainCode
+              goal
+              startDate
+              title
+            }
           }
           ... on ContentfulPageSectionVideo {
             __typename
