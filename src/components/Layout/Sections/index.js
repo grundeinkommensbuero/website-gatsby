@@ -37,7 +37,6 @@ export default function Sections({ sections }) {
             map,
             campainVisualisations,
           } = section;
-          console.log(campainVisualisations);
           const id = stringToId(titleShort);
           return (
             <Section
