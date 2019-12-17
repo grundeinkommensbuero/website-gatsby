@@ -6,8 +6,10 @@ import cN from 'classnames';
 export default ({ visualisations }) => {
   const [currentCounts, setCurrentCounts] = useState(() => {
     // fake API call
-    setTimeout(() => {
-      setCurrentCounts({ 'schleswig-holstein-1': 13000 });
+    setInterval(() => {
+      setCurrentCounts({
+        'schleswig-holstein-1': Math.round(Math.random() * 30000),
+      });
     }, 2000);
   });
 
@@ -42,13 +44,13 @@ const Visualisation = ({
       {title && <h2>{title}</h2>}
       <div className={s.bar}>
         <div className={s.barGoal}>
-          <div>{goal}</div>
+          <div>{goal && goal.toLocaleString('de')}</div>
         </div>
         <div
           className={cN(s.barCurrent, { [s.outside]: countOutside })}
           style={{ width: `${percentage}%` }}
         >
-          <div>{currentCount}</div>
+          <div>{currentCount && currentCount.toLocaleString('de')}</div>
         </div>
       </div>
     </SectionInner>
