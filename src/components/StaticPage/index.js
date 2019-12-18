@@ -76,6 +76,7 @@ export const pageQuery = graphql`
               goal
               startDate
               title
+              minimum
             }
           }
           ... on ContentfulPageSectionVideo {
