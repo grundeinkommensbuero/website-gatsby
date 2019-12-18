@@ -3,25 +3,34 @@ import s from './style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 
-export function LinkButton({ children, className, ...other }) {
+export function LinkButton({ children, className, size, ...other }) {
   return (
-    <a className={cN(s.linkButton, className)} {...other}>
+    <a
+      className={cN(s.linkButton, className, { [s.medium]: size === 'MEDIUM' })}
+      {...other}
+    >
       {children}
     </a>
   );
 }
 
-export function LinkButtonLocal({ children, className, ...other }) {
+export function LinkButtonLocal({ children, className, size, ...other }) {
   return (
-    <Link className={cN(s.linkButton, className)} {...other}>
+    <Link
+      className={cN(s.linkButton, className, { [s.medium]: size === 'MEDIUM' })}
+      {...other}
+    >
       {children}
     </Link>
   );
 }
 
-export function Button({ children, className, ...other }) {
+export function Button({ children, className, size, ...other }) {
   return (
-    <button className={cN(s.button, className)} {...other}>
+    <button
+      className={cN(s.button, className, { [s.medium]: size === 'MEDIUM' })}
+      {...other}
+    >
       {children}
     </button>
   );
