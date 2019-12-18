@@ -3,6 +3,7 @@ import s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateShort } from '../utils';
+import { LinkButtonLocal } from '../Forms/Button';
 
 export default ({ visualisations }) => {
   const [currentCounts, setCurrentCounts] = useState(() => {
@@ -23,6 +24,7 @@ export default ({ visualisations }) => {
           currentCount={
             currentCounts && currentCounts[visualisation.campainCode]
           }
+          showCTA={visualisations.length !== 1}
         />
       ))}
     </>
@@ -36,6 +38,8 @@ const Visualisation = ({
   title,
   currentCount,
   minimum,
+  showCTA,
+  ctaLink,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -65,21 +69,28 @@ const Visualisation = ({
   const countOutside = percentage < 40;
 
   return (
-    <SectionInner>
+    <SectionInner wide={true}>
       {title && <h2>{title}</h2>}
-      <div className={s.bar} ref={barEl}>
-        <div className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
-          <div>{goal && goal.toLocaleString('de')}</div>
-        </div>
-        {hasStarted && (
-          <div
-            className={cN(s.barCurrent, { [s.outside]: countOutside })}
-            style={{ width: `${percentage}%` }}
-          >
-            <div>{count && count.toLocaleString('de')}</div>
+      <div className={cN(s.body, { [s.showCTA]: showCTA })}>
+        <div className={s.bar} ref={barEl}>
+          <div className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
+            <div>{goal && goal.toLocaleString('de')}</div>
           </div>
+          {hasStarted && (
+            <div
+              className={cN(s.barCurrent, { [s.outside]: countOutside })}
+              style={{ width: `${percentage}%` }}
+            >
+              <div>{count && count.toLocaleString('de')}</div>
+            </div>
+          )}
+          {!hasStarted && <div className={s.starts}>Start {dateString}</div>}
+        </div>
+        {showCTA && (
+          <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
+            Jetzt unterstützen
+          </LinkButtonLocal>
         )}
-        {!hasStarted && <div className={s.starts}>Start {dateString}</div>}
       </div>
     </SectionInner>
   );
