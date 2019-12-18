@@ -8,7 +8,8 @@ export default ({ visualisations }) => {
     // fake API call
     setTimeout(() => {
       setCurrentCounts({
-        'schleswig-holstein-1': Math.round(Math.random() * 30000),
+        // 'schleswig-holstein-1': Math.round(Math.random() * 30000),
+        'schleswig-holstein-1': 5000,
       });
     }, 2000);
   });
@@ -34,6 +35,7 @@ const Visualisation = ({
   startDate,
   title,
   currentCount,
+  minimum,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -55,8 +57,9 @@ const Visualisation = ({
     observer.observe(barEl.current);
   }, []);
 
+  const count = Math.max(currentCount || 0, minimum);
   const percentage =
-    currentCount && isInView ? Math.min((currentCount / goal) * 100, 100) : 0;
+    count && isInView ? Math.min((count / goal) * 100, 100) : 0;
   const countOutside = percentage < 40;
   return (
     <SectionInner>
@@ -69,7 +72,7 @@ const Visualisation = ({
           className={cN(s.barCurrent, { [s.outside]: countOutside })}
           style={{ width: `${percentage}%` }}
         >
-          <div>{currentCount && currentCount.toLocaleString('de')}</div>
+          <div>{count && count.toLocaleString('de')}</div>
         </div>
       </div>
     </SectionInner>
