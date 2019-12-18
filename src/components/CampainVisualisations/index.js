@@ -70,7 +70,7 @@ const Visualisation = ({
 
   return (
     <SectionInner wide={true}>
-      {title && <h2>{title}</h2>}
+      {title && <h2 className={s.title}>{title}</h2>}
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
         <div className={s.bar} ref={barEl}>
           <div className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
