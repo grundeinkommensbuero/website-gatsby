@@ -8,8 +8,7 @@ export default ({ visualisations }) => {
     // fake API call
     setTimeout(() => {
       setCurrentCounts({
-        // 'schleswig-holstein-1': Math.round(Math.random() * 30000),
-        'schleswig-holstein-1': 5000,
+        'schleswig-holstein-1': Math.round(Math.random() * 30000),
       });
     }, 2000);
   });
