@@ -20,6 +20,16 @@
     padding: 0.5rem;
   }
 
+  &.hasStarted {
+    color: var(--font-color);
+
+    &::before {
+      background: transparent;
+      border: var(--bg-color);
+      border: 1px solid var(--font-color);
+    }
+  }
+
   &::before {
     content: '';
     background: var(--font-color);
@@ -29,6 +39,15 @@
     z-index: 0;
     transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
   }
+}
+
+.starts {
+  font-size: @fontSizeXXXL;
+  position: absolute;
+  width: 100%;
+  bottom: -1rem;
+  left: 1rem;
+  // color: var(--secondary-color);
 }
 
 .barCurrent {

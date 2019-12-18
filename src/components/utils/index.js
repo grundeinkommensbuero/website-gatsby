@@ -124,6 +124,15 @@ export function formatDate(date) {
   return new Intl.DateTimeFormat('de-DE', options).format(date);
 }
 
+export function formatDateShort(date) {
+  const options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  };
+  return new Intl.DateTimeFormat('de-DE', options).format(date);
+}
+
 export function formatTime(date) {
   const options = {
     hour: 'numeric',
