@@ -62,6 +62,18 @@
   }
 }
 
+.menuItemParentChildren {
+  position: absolute;
+  top: 100%;
+  list-style: none;
+  padding: 1rem 0 0;
+  display: none;
+
+  .navItemParent:hover & {
+    display: block;
+  }
+}
+
 .navItemParent {
   position: relative;
 }
