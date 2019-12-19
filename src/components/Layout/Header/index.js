@@ -20,15 +20,13 @@ const Header = ({ menu }) => {
         {menu && (
           <nav className={s.nav}>
             <ul className={s.navList}>
-              {menu.map((item, index) => (
-                <>
-                  {item.__typename === 'ContentfulStaticContent' ? (
-                    <MenuItem key={index} {...item} />
-                  ) : (
-                    <MenuItemParent key={index} {...item} />
-                  )}
-                </>
-              ))}
+              {menu.map((item, index) => {
+                if (item.__typename === 'ContentfulStaticContent') {
+                  return <MenuItem key={index} {...item} />;
+                } else {
+                  return <MenuItemParent key={index} {...item} />;
+                }
+              })}
             </ul>
           </nav>
         )}
@@ -53,7 +51,6 @@ const MenuItemParent = ({ title, contentfulchildren }) => {
 
 const MenuItem = ({ slug, shortTitle, title, child }) => (
   <li className={cN(s.navItem, { [s.navItemChild]: child })}>
-    {console.log('huhu', slug)}
     <Link
       className={s.link}
       activeClassName={s.linkActive}
