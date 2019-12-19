@@ -10,7 +10,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
     query SiteTitleQuery {
-      contentfulGlobalStuff(contentful_id: { eq: "4JZiSwNaoH4hsCp4sZd2G" }) {
+      contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
         siteTitle
         siteDescription {
           siteDescription
@@ -32,6 +32,15 @@ function Template({ children, sections }) {
               slug
               title
               shortTitle
+            }
+            ... on ContentfulMenuOberpunkt {
+              __typename
+              title
+              contentfulchildren {
+                title
+                slug
+                shortTitle
+              }
             }
           }
         }

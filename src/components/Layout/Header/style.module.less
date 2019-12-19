@@ -55,9 +55,15 @@
 }
 
 .navItem {
-  & + & {
-    margin-left: 1rem;
+  &:not(.navItemChild) {
+    & + & {
+      margin-left: 1rem;
+    }
   }
+}
+
+.navItemParent {
+  position: relative;
 }
 
 .link {
