@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
+import CampainVisualisations from '../../CampainVisualisations';
 import EmailListForm from '../../EmailListForm';
 import { stringToId, contentfulJsonToHtml } from '../../utils';
 import MainIllustration from '../../MainIllustration';
@@ -10,7 +11,6 @@ import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import Map from '../../Map';
-import CampainVisualisations from '../../CampainVisualisations';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -20,6 +20,7 @@ export default function Sections({ sections }) {
           const {
             title,
             titleShort,
+            campainVisualisations,
             body,
             emailSignup,
             videoLink,
@@ -35,7 +36,6 @@ export default function Sections({ sections }) {
             callToActionReference,
             twitterFeed,
             map,
-            campainVisualisations,
           } = section;
           const id = stringToId(titleShort);
           return (
@@ -58,6 +58,9 @@ export default function Sections({ sections }) {
             >
               {__typename === 'ContentfulPageSectionIllustration' && (
                 <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
+              )}
+              {campainVisualisations && (
+                <CampainVisualisations visualisations={campainVisualisations} />
               )}
               <SectionInner hugeText={bodyTextSizeHuge}>
                 {body && body.json ? contentfulJsonToHtml(body.json) : body}
@@ -110,9 +113,6 @@ export default function Sections({ sections }) {
                 </SectionInner>
               )}
               {map && <Map state={map} />}
-              {campainVisualisations && (
-                <CampainVisualisations visualisations={campainVisualisations} />
-              )}
             </Section>
           );
         })}
