@@ -4,16 +4,11 @@ import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateShort } from '../utils';
 import { LinkButtonLocal } from '../Forms/Button';
+import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 
 export default ({ visualisations }) => {
-  const [currentCounts, setCurrentCounts] = useState(() => {
-    // fake API call
-    setTimeout(() => {
-      setCurrentCounts({
-        'schleswig-holstein-1': Math.round(Math.random() * 30000),
-      });
-    }, 2000);
-  });
+  const currentCounts = useSignatureCount();
+  console.log('current counts', currentCounts);
 
   return (
     <>
@@ -22,7 +17,8 @@ export default ({ visualisations }) => {
           key={index}
           {...visualisation}
           currentCount={
-            currentCounts && currentCounts[visualisation.campainCode]
+            currentCounts &&
+            currentCounts[visualisation.campainCode].withoutMixed
           }
           showCTA={visualisations.length !== 1}
         />
@@ -32,6 +28,7 @@ export default ({ visualisations }) => {
 };
 
 const Visualisation = ({
+  //typo: also in contentful 'campainCode', so no big day
   campainCode,
   goal,
   startDate,
