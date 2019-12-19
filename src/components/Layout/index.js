@@ -26,9 +26,14 @@ function Template({ children, sections }) {
           title
         }
         mainMenu {
-          slug
-          title
-          shortTitle
+          ... on Node {
+            ... on ContentfulStaticContent {
+              __typename
+              slug
+              title
+              shortTitle
+            }
+          }
         }
       }
     }
