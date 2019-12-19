@@ -38,10 +38,6 @@
   @media (max-width: 900px) {
     font-size: @fontSizeS;
   }
-
-  @media (max-width: 750px) {
-    display: none;
-  }
 }
 
 .navList {
@@ -52,6 +48,24 @@
   justify-content: flex-end;
   margin: 0;
   height: 100%;
+
+  @media (max-width: @breakPointM) {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    padding: 1rem;
+    background: @grey;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+
+    &.isOpen,
+    &:focus-within {
+      height: auto;
+      padding: 1rem;
+    }
+  }
 }
 
 .navItem {
@@ -65,6 +79,12 @@
 .navItemChild {
   & + & {
     margin-top: 1rem;
+  }
+}
+
+.menuButton {
+  @media (min-width: @breakPointM) {
+    display: none;
   }
 }
 
