@@ -52,7 +52,7 @@ export default () => {
 
   return (
     <>
-      <label htmlFor="gemeindenInput">gemeinde</label>
+      <label htmlFor="gemeindenInput">Gemeinde</label>
       <br />
       <TextInput
         list="gemeinden"
