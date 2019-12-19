@@ -11,12 +11,46 @@
 5690;Neuendeich;25436
 0000;Flensburg, Stadt;
 0000;Flensburg, Stadt;24937
+0000;Flensburg, Stadt;24939
+0000;Flensburg, Stadt;24941
+0000;Flensburg, Stadt;24943
+0000;Flensburg, Stadt;24944
 0000;Kiel, Landeshauptstadt;
 0000;Kiel, Landeshauptstadt;24103
+0000;Kiel, Landeshauptstadt;24105
+0000;Kiel, Landeshauptstadt;24106
+0000;Kiel, Landeshauptstadt;24107
+0000;Kiel, Landeshauptstadt;24109
+0000;Kiel, Landeshauptstadt;24111
+0000;Kiel, Landeshauptstadt;24113
+0000;Kiel, Landeshauptstadt;24114
+0000;Kiel, Landeshauptstadt;24116
+0000;Kiel, Landeshauptstadt;24118
+0000;Kiel, Landeshauptstadt;24143
+0000;Kiel, Landeshauptstadt;24145
+0000;Kiel, Landeshauptstadt;24146
+0000;Kiel, Landeshauptstadt;24147
+0000;Kiel, Landeshauptstadt;24148
+0000;Kiel, Landeshauptstadt;24149
+0000;Kiel, Landeshauptstadt;24159
 0000;Lübeck, Hansestadt;
 0000;Lübeck, Hansestadt;23539
+0000;Lübeck, Hansestadt;23552
+0000;Lübeck, Hansestadt;23554
+0000;Lübeck, Hansestadt;23556
+0000;Lübeck, Hansestadt;23558
+0000;Lübeck, Hansestadt;23560
+0000;Lübeck, Hansestadt;23562
+0000;Lübeck, Hansestadt;23564
+0000;Lübeck, Hansestadt;23566
+0000;Lübeck, Hansestadt;23568
+0000;Lübeck, Hansestadt;23569
+0000;Lübeck, Hansestadt;23570
 0000;Neumünster, Stadt;
 0000;Neumünster, Stadt;24534
+0000;Neumünster, Stadt;24536
+0000;Neumünster, Stadt;24537
+0000;Neumünster, Stadt;24539
 0001;Ahrensbök;
 0001;Ahrensbök;23623
 0001;Ascheberg (Holstein);
@@ -55,6 +89,8 @@
 0012;Eutin, Stadt;23701
 0015;Elmshorn, Stadt;
 0015;Elmshorn, Stadt;25335
+0015;Elmshorn, Stadt;25336
+0015;Elmshorn, Stadt;25337
 0016;Grömitz;
 0016;Grömitz;23743
 0018;Grube;
@@ -90,7 +126,10 @@
 0034;Büdelsdorf, Stadt;
 0034;Büdelsdorf, Stadt;24782
 0035;Ratekau;
+0035;Ratekau;23611
 0035;Ratekau;23626
+0035;Ratekau;23669
+0035;Ratekau;23689
 0039;Pinneberg, Stadt;
 0039;Pinneberg, Stadt;25421
 0039;Henstedt-Ulzburg;
@@ -110,13 +149,16 @@
 0044;Heide, Stadt;
 0044;Heide, Stadt;25746
 0044;Scharbeutz;
+0044;Scharbeutz;23629
 0044;Scharbeutz;23683
+0044;Scharbeutz;23684
 0044;Schenefeld, Stadt;
 0044;Schenefeld, Stadt;22869
 0044;Kaltenkirchen, Stadt;
 0044;Kaltenkirchen, Stadt;24568
 0045;Kappeln, Stadt;
 0045;Kappeln, Stadt;24376
+0045;Kappeln, Stadt;24404
 0046;Fehmarn, Stadt;
 0046;Fehmarn, Stadt;23769
 0046;Itzehoe, Stadt;
@@ -135,12 +177,17 @@
 0057;Plön, Stadt;24306
 0060;Reinbek, Stadt;
 0060;Reinbek, Stadt;21465
+0060;Reinbek, Stadt;21521
 0061;Reinfeld (Holstein), Stadt;
 0061;Reinfeld (Holstein), Stadt;23858
 0062;Preetz, Stadt;
 0062;Preetz, Stadt;24211
 0063;Norderstedt, Stadt;
+0063;Norderstedt, Stadt;22844
 0063;Norderstedt, Stadt;22846
+0063;Norderstedt, Stadt;22848
+0063;Norderstedt, Stadt;22850
+0063;Norderstedt, Stadt;22851
 0075;Schleswig, Stadt;
 0075;Schleswig, Stadt;24837
 0076;Tangstedt;
@@ -152,6 +199,7 @@
 0090;Ammersbek;
 0090;Ammersbek;22949
 0091;Schwentinental, Stadt;
+0091;Schwentinental, Stadt;24222
 0091;Schwentinental, Stadt;24223
 0092;Kronshagen;
 0092;Kronshagen;24119
@@ -180,6 +228,7 @@
 0169;Wasbek;
 0169;Wasbek;24647
 0183;Handewitt;
+0183;Handewitt;24976
 0183;Handewitt;24983
 5005;Bad Bramstedt-Land;
 5005;Armstedt;24616
@@ -211,12 +260,14 @@
 5034;Nahe;23866
 5034;Oering;23845
 5034;Seth;23845
+5034;Sülfeld;23845
 5034;Sülfeld;23867
 5043;Kaltenkirchen-Land;
 5043;Alveslohe;25486
 5043;Hartenholm;24628
 5043;Hasenmoor;24640
 5043;Lentföhrden;24632
+5043;Lentföhrden;24640
 5043;Nützen;24568
 5043;Schmalfeld;24640
 5048;Kisdorf;
@@ -298,6 +349,7 @@
 5134;Hohenfelde;25358
 5134;Horst (Holstein);25358
 5134;Kiebitzreihe;25368
+5134;Krempdorf;25361
 5134;Krempdorf;25376
 5134;Neuendorf b. Elmshorn;25335
 5134;Sommerland;25358
@@ -331,6 +383,7 @@
 5153;Krempe, Stadt;25361
 5153;Kremperheide;25569
 5153;Krempermoor;25569
+5153;Neuenbrook;25361
 5153;Neuenbrook;25578
 5153;Rethwisch;25566
 5153;Süderau;25361
@@ -488,6 +541,7 @@
 5179;Brokdorf;25576
 5179;Büttel;25572
 5179;Dammfleth;25554
+5179;Dammfleth;25573
 5179;Ecklak;25572
 5179;Kudensee;25572
 5179;Landrecht;25554
@@ -552,6 +606,7 @@
 5262;Siek;
 5262;Braak;22145
 5262;Hoisdorf;22955
+5262;Hoisdorf;22961
 5262;Siek;22962
 5262;Stapelfeld;22145
 5262;Brunsbek;22946
@@ -613,6 +668,7 @@
 5323;Escheburg;21039
 5323;Hamwarde;21502
 5323;Hohenhorn;21526
+5323;Kröppelshagen-Fahrendorf;21039
 5323;Kröppelshagen-Fahrendorf;21529
 5323;Wiershop;21502
 5323;Wohltorf;21521
@@ -649,7 +705,10 @@
 5358;Mustin;23911
 5358;Pogeez;23911
 5358;Römnitz;23909
+5358;Salem;23883
 5358;Salem;23911
+5358;Schmilau;23883
+5358;Schmilau;23909
 5358;Schmilau;23911
 5358;Seedorf;23883
 5358;Sterley;23883
@@ -724,6 +783,7 @@
 5439;Wenningstedt-Braderup (Sylt);25996
 5453;Viöl;
 5453;Ahrenviöl;25885
+5453;Ahrenviölfeld;24896
 5453;Ahrenviölfeld;25885
 5453;Behrendorf;25850
 5453;Bondelum;25850
@@ -917,6 +977,7 @@
 5739;Kalübbe;24326
 5739;Lebrade;24306
 5739;Nehmten;24326
+5739;Rantzau;24321
 5739;Rantzau;24329
 5739;Rathjensdorf;24306
 5739;Wittmoldt;24306
@@ -995,10 +1056,13 @@
 5822;Schwedeneck;24229
 5822;Strande;24229
 5824;Dänischer Wohld;
+5824;Felm;24161
+5824;Felm;24214
 5824;Felm;24244
 5824;Gettorf;24214
 5824;Lindau;24214
 5824;Neudorf-Bornstein;24214
+5824;Neuwittenbek;24161
 5824;Neuwittenbek;24214
 5824;Osdorf;24251
 5824;Schinkel;24214
@@ -1009,10 +1073,13 @@
 5830;Schönhorst;24220
 5830;Techelsdorf;24220
 5833;Fockbek;
+5833;Alt Duvenstedt;24782
 5833;Alt Duvenstedt;24791
+5833;Alt Duvenstedt;24811
 5833;Fockbek;24787
 5833;Nübbel;24809
 5833;Rickert;24782
+5833;Rickert;24787
 5847;Hohner Harde;
 5847;Bargstall;24806
 5847;Breiholz;24797
@@ -1068,7 +1135,10 @@
 5888;Ostenfeld (Rendsburg);24790
 5888;Osterrönfeld;24783
 5888;Rade b. Rendsburg;24790
+5888;Rade b. Rendsburg;24794
 5888;Schacht-Audorf;24783
+5888;Schacht-Audorf;24790
+5888;Schacht-Audorf;24794
 5888;Schülldorf;24790
 5889;Bordesholm;
 5889;Bissee;24582
@@ -1097,8 +1167,10 @@
 5890;Holzbunge;24361
 5890;Hütten;24358
 5890;Klein Wittensee;24361
+5890;Neu Duvenstedt;24791
 5890;Neu Duvenstedt;24794
 5890;Osterby;24367
+5890;Owschlag;24811
 5890;Owschlag;24848
 5890;Sehestedt;24814
 5890;Ahlefeld-Bistensee;24358
@@ -1150,6 +1222,7 @@
 5895;Remmels;24594
 5895;Seefeld;25557
 5895;Steenfeld;25557
+5895;Tackesdorf;24797
 5895;Tackesdorf;25585
 5895;Tappendorf;24594
 5895;Thaden;25557
@@ -1163,6 +1236,7 @@
 5912;Langstedt;24852
 5912;Sollerup;24852
 5912;Süderhackstedt;24852
+5912;Süderhackstedt;24992
 5912;Wanderup;24997
 5915;Haddeby;
 5915;Borgwedel;24857
@@ -1170,6 +1244,7 @@
 5915;Dannewerk;24867
 5915;Fahrdorf;24857
 5915;Geltorf;24884
+5915;Jagel;24848
 5915;Jagel;24878
 5915;Lottorf;24878
 5915;Selk;24884
@@ -1184,6 +1259,7 @@
 5920;Kappeln-Land;
 5920;Arnis, Stadt;24399
 5920;Grödersby;24376
+5920;Grödersby;24399
 5920;Oersberg;24407
 5920;Rabenkirchen-Faulück;24407
 5937;Langballig;
@@ -1218,10 +1294,14 @@
 5952;Lindewitt;24969
 5974;Süderbrarup;
 5974;Böel;24401
+5974;Böel;24405
+5974;Böel;24891
 5974;Brebel;24392
 5974;Dollrottfeld;24392
 5974;Loit;24888
+5974;Mohrkirch;24392
 5974;Mohrkirch;24405
+5974;Mohrkirch;24891
 5974;Norderbrarup;24392
 5974;Nottfeld;24392
 5974;Rügge;24405
@@ -1273,6 +1353,7 @@
 5993;Hüsby;24850
 5993;Jübek;24855
 5993;Lürschau;24850
+5993;Schuby;24837
 5993;Schuby;24850
 5993;Silberstedt;24887
 5993;Treia;24896
@@ -1284,9 +1365,11 @@
 5996;Erfde;24803
 5996;Groß Rheide;24848
 5996;Klein Bennebek;24848
+5996;Klein Bennebek;24863
 5996;Klein Rheide;24848
 5996;Kropp;24848
 5996;Meggerdorf;24799
+5996;Meggerdorf;24861
 5996;Norderstapel;25868
 5996;Süderstapel;25879
 5996;Tetenhusen;24817
