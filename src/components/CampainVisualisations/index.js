@@ -81,7 +81,7 @@ const Visualisation = ({
               <div>{count && count.toLocaleString('de')}</div>
             </div>
           )}
-          {!hasStarted && <div className={s.starts}>Start {dateString}</div>}
+          {!hasStarted && <div className={s.starts}>{dateString}</div>}
         </div>
         {showCTA && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
