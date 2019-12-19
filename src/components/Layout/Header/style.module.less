@@ -62,15 +62,28 @@
   }
 }
 
+.navItemChild {
+  & + & {
+    margin-top: 1rem;
+  }
+}
+
 .menuItemParentChildren {
   position: absolute;
   top: 100%;
+  width: 20rem;
+  right: -1rem;
+  text-align: right;
   list-style: none;
-  padding: 1rem 0 0;
-  display: none;
+  height: 1px;
+  overflow: hidden;
+  background: @grey;
+  padding: 0;
 
-  .navItemParent:hover & {
-    display: block;
+  .navItemParent:hover &,
+  .navItemParent:focus-within & {
+    height: auto;
+    padding: 1rem;
   }
 }
 
