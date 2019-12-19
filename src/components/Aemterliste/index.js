@@ -52,7 +52,7 @@ export default () => {
 
   return (
     <>
-      <label htmlFor="gemeindenInput">Gemeinde</label>
+      <label htmlFor="gemeindenInput">PLZ Ort (Amt)</label>
       <br />
       <TextInput
         list="gemeinden"
@@ -76,7 +76,7 @@ export default () => {
           <dt>Amt</dt>
           <dd>{selectedAmt.amt}</dd>
           <br />
-          <dt>Gemeinden</dt>
+          <dt>Alle Orte</dt>
           {selectedAmt.gemeinden.map(gemeinde => (
             <dd key={gemeinde}>{gemeinde}</dd>
           ))}
