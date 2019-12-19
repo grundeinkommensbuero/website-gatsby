@@ -25,6 +25,7 @@
 .bar {
     position: relative;
     height: 7.5rem;
+    line-height: 1;
 }
 
 .barGoal {
@@ -67,9 +68,12 @@
     font-size: @fontSizeXXXL;
     position: absolute;
     width: 100%;
-    bottom: -1rem;
+    bottom: -.3rem;
     left: 1rem;
-    // color: var(--secondary-color);
+
+    @media (max-width: @breakPointM) {
+        line-height: 0.9;
+    }
 }
 
 .barCurrent {
@@ -94,7 +98,7 @@
     > div {
         position: absolute;
         z-index: 1;
-        bottom: -1rem;
+        bottom: -.3rem;
         right: 1rem;
     }
 
