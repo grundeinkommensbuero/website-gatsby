@@ -369,6 +369,7 @@
 5168;Besdorf;25584
 5168;Bokelrehm;25596
 5168;Bokhorst;25560
+5168;Bokhorst;25572
 5168;Christinenthal;25593
 5168;Gribbohm;25596
 5168;Hadenfeld;25560
@@ -382,6 +383,7 @@
 5168;Puls;25560
 5168;Reher;25593
 5168;Schenefeld;25560
+5168;Vaale;25572
 5168;Vaale;25594
 5168;Vaalermoor;25594
 5168;Wacken;25596
@@ -401,9 +403,11 @@
 5169;Hövede;25782
 5169;Hollingstedt;25788
 5169;Karolinenkoog;25774
+5169;Kleve;25776
 5169;Kleve;25779
 5169;Krempel;25774
 5169;Lehe;25774
+5169;Lehe;25776
 5169;Linden;25791
 5169;Lunden;25774
 5169;Norderheistedt;25779
@@ -480,6 +484,7 @@
 5179;Wilstermarsch;
 5179;Aebtissinwisch;25572
 5179;Beidenfleth;25573
+5179;Brokdorf;25554
 5179;Brokdorf;25576
 5179;Büttel;25572
 5179;Dammfleth;25554
@@ -735,6 +740,8 @@
 5459;Gröde;25869
 5459;Hallig Hooge;25859
 5459;Langeneß;25863
+5459;Langeneß;25867
+5459;Pellworm;25845
 5459;Pellworm;25849
 5488;Föhr-Amrum;
 5488;Alkersum;25938
@@ -785,6 +792,7 @@
 5489;Enge-Sande;25917
 5492;Nordsee-Treene;
 5492;Arlewatt;25860
+5492;Drage;25840
 5492;Drage;25878
 5492;Elisabeth-Sophien-Koog;25845
 5492;Fresendelf;25876
@@ -801,10 +809,12 @@
 5492;Ramstedt;25876
 5492;Rantrum;25873
 5492;Schwabstedt;25876
+5492;Seeth;25840
 5492;Seeth;25878
 5492;Simonsberg;25813
 5492;Süderhöft;25876
 5492;Südermarsch;25813
+5492;Südermarsch;25840
 5492;Uelvesbüll;25889
 5492;Winnert;25887
 5492;Wisch;25876
@@ -816,6 +826,8 @@
 5494;Almdorf;25821
 5494;Bargum;25842
 5494;Bohmstedt;25853
+5494;Bordelum;25821
+5494;Bordelum;25842
 5494;Bordelum;25852
 5494;Bredstedt, Stadt;25821
 5494;Breklum;25821
@@ -1114,9 +1126,11 @@
 5895;Arpsdorf;24634
 5895;Aukrug;24613
 5895;Beldorf;25557
+5895;Beldorf;25567
 5895;Bendorf;25557
 5895;Beringstedt;25575
 5895;Bornholt;25557
+5895;Bornholt;25725
 5895;Ehndorf;24647
 5895;Gokels;25557
 5895;Grauel;24594
