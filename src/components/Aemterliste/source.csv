@@ -9,48 +9,48 @@
 5690;Holm;25488
 5690;Moorrege;25436
 5690;Neuendeich;25436
-0000;Flensburg, Stadt;
-0000;Flensburg, Stadt;24937
-0000;Flensburg, Stadt;24939
-0000;Flensburg, Stadt;24941
-0000;Flensburg, Stadt;24943
-0000;Flensburg, Stadt;24944
-0000;Kiel, Landeshauptstadt;
-0000;Kiel, Landeshauptstadt;24103
-0000;Kiel, Landeshauptstadt;24105
-0000;Kiel, Landeshauptstadt;24106
-0000;Kiel, Landeshauptstadt;24107
-0000;Kiel, Landeshauptstadt;24109
-0000;Kiel, Landeshauptstadt;24111
-0000;Kiel, Landeshauptstadt;24113
-0000;Kiel, Landeshauptstadt;24114
-0000;Kiel, Landeshauptstadt;24116
-0000;Kiel, Landeshauptstadt;24118
-0000;Kiel, Landeshauptstadt;24143
-0000;Kiel, Landeshauptstadt;24145
-0000;Kiel, Landeshauptstadt;24146
-0000;Kiel, Landeshauptstadt;24147
-0000;Kiel, Landeshauptstadt;24148
-0000;Kiel, Landeshauptstadt;24149
-0000;Kiel, Landeshauptstadt;24159
-0000;Lübeck, Hansestadt;
-0000;Lübeck, Hansestadt;23539
-0000;Lübeck, Hansestadt;23552
-0000;Lübeck, Hansestadt;23554
-0000;Lübeck, Hansestadt;23556
-0000;Lübeck, Hansestadt;23558
-0000;Lübeck, Hansestadt;23560
-0000;Lübeck, Hansestadt;23562
-0000;Lübeck, Hansestadt;23564
-0000;Lübeck, Hansestadt;23566
-0000;Lübeck, Hansestadt;23568
-0000;Lübeck, Hansestadt;23569
-0000;Lübeck, Hansestadt;23570
-0000;Neumünster, Stadt;
-0000;Neumünster, Stadt;24534
-0000;Neumünster, Stadt;24536
-0000;Neumünster, Stadt;24537
-0000;Neumünster, Stadt;24539
+1000;Flensburg, Stadt;
+1000;Flensburg, Stadt;24937
+1000;Flensburg, Stadt;24939
+1000;Flensburg, Stadt;24941
+1000;Flensburg, Stadt;24943
+1000;Flensburg, Stadt;24944
+1001;Kiel, Landeshauptstadt;
+1001;Kiel, Landeshauptstadt;24103
+1001;Kiel, Landeshauptstadt;24105
+1001;Kiel, Landeshauptstadt;24106
+1001;Kiel, Landeshauptstadt;24107
+1001;Kiel, Landeshauptstadt;24109
+1001;Kiel, Landeshauptstadt;24111
+1001;Kiel, Landeshauptstadt;24113
+1001;Kiel, Landeshauptstadt;24114
+1001;Kiel, Landeshauptstadt;24116
+1001;Kiel, Landeshauptstadt;24118
+1001;Kiel, Landeshauptstadt;24143
+1001;Kiel, Landeshauptstadt;24145
+1001;Kiel, Landeshauptstadt;24146
+1001;Kiel, Landeshauptstadt;24147
+1001;Kiel, Landeshauptstadt;24148
+1001;Kiel, Landeshauptstadt;24149
+1001;Kiel, Landeshauptstadt;24159
+1002;Lübeck, Hansestadt;
+1002;Lübeck, Hansestadt;23539
+1002;Lübeck, Hansestadt;23552
+1002;Lübeck, Hansestadt;23554
+1002;Lübeck, Hansestadt;23556
+1002;Lübeck, Hansestadt;23558
+1002;Lübeck, Hansestadt;23560
+1002;Lübeck, Hansestadt;23562
+1002;Lübeck, Hansestadt;23564
+1002;Lübeck, Hansestadt;23566
+1002;Lübeck, Hansestadt;23568
+1002;Lübeck, Hansestadt;23569
+1002;Lübeck, Hansestadt;23570
+1003;Neumünster, Stadt;
+1003;Neumünster, Stadt;24534
+1003;Neumünster, Stadt;24536
+1003;Neumünster, Stadt;24537
+1003;Neumünster, Stadt;24539
 0001;Ahrensbök;
 0001;Ahrensbök;23623
 0001;Ascheberg (Holstein);
@@ -87,10 +87,10 @@
 0011;Brunsbüttel, Stadt;25541
 0012;Eutin, Stadt;
 0012;Eutin, Stadt;23701
-0015;Elmshorn, Stadt;
-0015;Elmshorn, Stadt;25335
-0015;Elmshorn, Stadt;25336
-0015;Elmshorn, Stadt;25337
+1015;Elmshorn, Stadt;
+1015;Elmshorn, Stadt;25335
+1015;Elmshorn, Stadt;25336
+1015;Elmshorn, Stadt;25337
 0016;Grömitz;
 0016;Grömitz;23743
 0018;Grube;
@@ -125,11 +125,11 @@
 0033;Oldenburg in Holstein, Stadt;23758
 0034;Büdelsdorf, Stadt;
 0034;Büdelsdorf, Stadt;24782
-0035;Ratekau;
-0035;Ratekau;23611
-0035;Ratekau;23626
-0035;Ratekau;23669
-0035;Ratekau;23689
+1035;Ratekau;
+1035;Ratekau;23611
+1035;Ratekau;23626
+1035;Ratekau;23669
+1035;Ratekau;23689
 0039;Pinneberg, Stadt;
 0039;Pinneberg, Stadt;25421
 0039;Henstedt-Ulzburg;
@@ -148,17 +148,17 @@
 0043;Eckernförde, Stadt;24340
 0044;Heide, Stadt;
 0044;Heide, Stadt;25746
-0044;Scharbeutz;
-0044;Scharbeutz;23629
-0044;Scharbeutz;23683
-0044;Scharbeutz;23684
+1044;Scharbeutz;
+1044;Scharbeutz;23629
+1044;Scharbeutz;23683
+1044;Scharbeutz;23684
 0044;Schenefeld, Stadt;
 0044;Schenefeld, Stadt;22869
 0044;Kaltenkirchen, Stadt;
 0044;Kaltenkirchen, Stadt;24568
-0045;Kappeln, Stadt;
-0045;Kappeln, Stadt;24376
-0045;Kappeln, Stadt;24404
+1045;Kappeln, Stadt;
+1045;Kappeln, Stadt;24376
+1045;Kappeln, Stadt;24404
 0046;Fehmarn, Stadt;
 0046;Fehmarn, Stadt;23769
 0046;Itzehoe, Stadt;
@@ -175,19 +175,19 @@
 0056;Husum, Stadt;25813
 0057;Plön, Stadt;
 0057;Plön, Stadt;24306
-0060;Reinbek, Stadt;
-0060;Reinbek, Stadt;21465
-0060;Reinbek, Stadt;21521
+1060;Reinbek, Stadt;
+1060;Reinbek, Stadt;21465
+1060;Reinbek, Stadt;21521
 0061;Reinfeld (Holstein), Stadt;
 0061;Reinfeld (Holstein), Stadt;23858
 0062;Preetz, Stadt;
 0062;Preetz, Stadt;24211
-0063;Norderstedt, Stadt;
-0063;Norderstedt, Stadt;22844
-0063;Norderstedt, Stadt;22846
-0063;Norderstedt, Stadt;22848
-0063;Norderstedt, Stadt;22850
-0063;Norderstedt, Stadt;22851
+1063;Norderstedt, Stadt;
+1063;Norderstedt, Stadt;22844
+1063;Norderstedt, Stadt;22846
+1063;Norderstedt, Stadt;22848
+1063;Norderstedt, Stadt;22850
+1063;Norderstedt, Stadt;22851
 0075;Schleswig, Stadt;
 0075;Schleswig, Stadt;24837
 0076;Tangstedt;
@@ -198,9 +198,9 @@
 0090;Mölln, Stadt;23879
 0090;Ammersbek;
 0090;Ammersbek;22949
-0091;Schwentinental, Stadt;
-0091;Schwentinental, Stadt;24222
-0091;Schwentinental, Stadt;24223
+1091;Schwentinental, Stadt;
+1091;Schwentinental, Stadt;24222
+1091;Schwentinental, Stadt;24223
 0092;Kronshagen;
 0092;Kronshagen;24119
 0092;Wahlstedt, Stadt;
@@ -227,9 +227,9 @@
 0168;Sylt;25980
 0169;Wasbek;
 0169;Wasbek;24647
-0183;Handewitt;
-0183;Handewitt;24976
-0183;Handewitt;24983
+1183;Handewitt;
+1183;Handewitt;24976
+1183;Handewitt;24983
 5005;Bad Bramstedt-Land;
 5005;Armstedt;24616
 5005;Bimöhlen;24576
