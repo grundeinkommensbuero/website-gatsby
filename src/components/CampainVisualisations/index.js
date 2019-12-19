@@ -8,7 +8,6 @@ import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
-  console.log('current counts', currentCounts);
 
   return (
     <>
@@ -18,6 +17,7 @@ export default ({ visualisations }) => {
           {...visualisation}
           currentCount={
             currentCounts &&
+            currentCounts[visualisation.campainCode] &&
             currentCounts[visualisation.campainCode].withoutMixed
           }
           showCTA={visualisations.length !== 1}
