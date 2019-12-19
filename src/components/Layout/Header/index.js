@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import s from './style.module.less';
 import Link from 'gatsby-link';
 import Logo from './logo.svg';
 import cN from 'classnames';
 
 const Header = ({ menu }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    console.log('click', menuOpen);
+  };
+
   return (
     <header className={s.header}>
       <div className={s.inner}>
@@ -19,19 +26,28 @@ const Header = ({ menu }) => {
         </h1>
         {menu && (
           <nav className={s.nav}>
-            <ul className={s.navList}>
-              {menu.map((item, index) => {
-                if (item.__typename === 'ContentfulStaticContent') {
-                  return <MenuItem key={index} {...item} />;
-                } else {
-                  return <MenuItemParent key={index} {...item} />;
-                }
-              })}
-            </ul>
+            <button className={s.menuButton} onClick={() => toggleMenu()}>
+              Menu
+            </button>
+            <Menu menu={menu} menuOpen={menuOpen} />
           </nav>
         )}
       </div>
     </header>
+  );
+};
+
+const Menu = ({ menu, menuOpen }) => {
+  return (
+    <ul className={cN(s.navList, { [s.isOpen]: menuOpen })}>
+      {menu.map((item, index) => {
+        if (item.__typename === 'ContentfulStaticContent') {
+          return <MenuItem key={index} {...item} />;
+        } else {
+          return <MenuItemParent key={index} {...item} />;
+        }
+      })}
+    </ul>
   );
 };
 
