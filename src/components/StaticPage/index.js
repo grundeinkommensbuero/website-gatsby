@@ -47,6 +47,14 @@ export const pageQuery = graphql`
             __typename
             title
             titleShort
+            campainVisualisations {
+              campainCode
+              goal
+              startDate
+              title
+              minimum
+              ctaLink
+            }
             body {
               json
             }
@@ -71,14 +79,6 @@ export const pageQuery = graphql`
             }
             twitterFeed
             map
-            campainVisualisations {
-              campainCode
-              goal
-              startDate
-              title
-              minimum
-              ctaLink
-            }
           }
           ... on ContentfulPageSectionVideo {
             __typename
