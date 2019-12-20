@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
-import { formatDateShort } from '../utils';
+import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 
