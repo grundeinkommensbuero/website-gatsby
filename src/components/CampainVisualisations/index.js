@@ -58,7 +58,7 @@ const Visualisation = ({
     observer.observe(barEl.current);
   }, []);
 
-  const dateString = formatDateShort(new Date(startDate));
+  const dateString = formatDateMonthYear(new Date(startDate));
   const hasStarted = new Date().getTime() > new Date(startDate);
   const count = Math.max(currentCount || 0, minimum);
   const percentage =
