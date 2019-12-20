@@ -133,6 +133,14 @@ export function formatDateShort(date) {
   return new Intl.DateTimeFormat('de-DE', options).format(date);
 }
 
+export function formatDateMonthYear(date) {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+  };
+  return new Intl.DateTimeFormat('de-DE', options).format(date);
+}
+
 export function formatTime(date) {
   const options = {
     hour: 'numeric',
