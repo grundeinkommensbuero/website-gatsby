@@ -47,7 +47,7 @@ if (contentfulConfig.spaceId || contentfulConfig.accessToken) {
     options: contentfulConfig,
   });
 } else {
-  console.log('Contentful spaceId and the access token need to be provided.');
+  console.log(`Contentful spaceId and the access token need to be provided in .env.${process.env.NODE_ENV}`);
 }
 
 module.exports = config;
