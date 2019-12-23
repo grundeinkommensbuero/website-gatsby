@@ -58,6 +58,7 @@ export const pageQuery = graphql`
             body {
               json
             }
+            map
             callToActionLink
             callToActionText
             bodyTextSizeHuge
@@ -78,7 +79,6 @@ export const pageQuery = graphql`
               name
             }
             twitterFeed
-            map
           }
           ... on ContentfulPageSectionVideo {
             __typename
