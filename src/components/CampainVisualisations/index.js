@@ -20,7 +20,8 @@ export default ({ visualisations }) => {
             currentCounts[visualisation.campainCode] &&
             currentCounts[visualisation.campainCode].withoutMixed
           }
-          showCTA={visualisations.length !== 1}
+          //only show CTA if multiple visualisations AND ctaLink not empty
+          showCTA={visualisations.length !== 1 && visualisation.ctaLink}
         />
       ))}
     </>
@@ -70,18 +71,40 @@ const Visualisation = ({
       {title && <h2 className={s.title}>{title}</h2>}
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
         <div className={s.bar} ref={barEl}>
-          <div className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
-            <div>{goal && goal.toLocaleString('de')}</div>
-          </div>
-          {hasStarted && (
-            <div
-              className={cN(s.barCurrent, { [s.outside]: countOutside })}
-              style={{ width: `${percentage}%` }}
-            >
-              <div>{count && count.toLocaleString('de')}</div>
+          
+          {showCTA 
+            ? 
+            <a href={ctaLink}>
+              <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
+                <span>{goal && goal.toLocaleString('de')}</span>
+              </span>
+              {hasStarted && (
+                <span
+                  className={cN(s.barCurrent, { [s.outside]: countOutside })}
+                  style={{ width: `${percentage}%` }}
+                >
+                  <span>{count && count.toLocaleString('de')}</span>
+                </span>
+              )}
+              {!hasStarted && <span className={s.starts}>{dateString}</span>}
+            </a>
+            : 
+            <div>
+              <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
+                <span>{goal && goal.toLocaleString('de')}</span>
+              </span>
+              {hasStarted && (
+                <span
+                  className={cN(s.barCurrent, { [s.outside]: countOutside })}
+                  style={{ width: `${percentage}%` }}
+                >
+                  <span>{count && count.toLocaleString('de')}</span>
+                </span>
+              )}
+              {!hasStarted && <span className={s.starts}>{dateString}</span>}
             </div>
-          )}
-          {!hasStarted && <div className={s.starts}>{dateString}</div>}
+          }
+        
         </div>
         {showCTA && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
