@@ -37,7 +37,7 @@
     display: flex;
     justify-content: flex-end;
 
-    > div {
+    > div, span {
         position: relative;
         z-index: 1;
         padding: 0.5rem;
@@ -95,7 +95,7 @@
         transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
     }
 
-    > div {
+    > div, span {
         position: absolute;
         z-index: 1;
         bottom: -.3rem;
@@ -103,7 +103,7 @@
     }
 
     &.outside {
-        > div {
+        > div, span {
             left: calc(100% + 1rem);
             right: auto;
             color: var(--font-color);
