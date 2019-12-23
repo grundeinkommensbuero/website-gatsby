@@ -12,14 +12,14 @@ export default () => {
   return (
     <Layout>
       <Helmet>
-        <title>Selbsteingabe Unterschriftenlist</title>
+        <title>Selbsteingabe Unterschriftsliste</title>
       </Helmet>
 
       <SectionWrapper>
-        <Section title="Trag deine Unterschriften ein">
+        <Section title="Unterschriften zählen">
           <SectionInner hugeText={true}>
-            Sehr gut, du hast den Code auf einer Unterschriftenliste gescannt!
-            Bitte sage uns, wie viel Unterschriften drauf sind.
+            Du hast den Code auf einer Unterschriftsliste gescannt.
+            Bitte sag uns, wie viel Unterschriften drauf sind.
           </SectionInner>
           <SectionInner hugeText={true}>
             <SelfScan />
