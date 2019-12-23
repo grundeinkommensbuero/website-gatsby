@@ -24,7 +24,7 @@ export default ({ className }) => {
   if (state === 'saved') {
     return (
       <FinallyMessage state="success">
-        Supi danke! Und jetzt ab die Post an uns geschickt!
+        Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf.
       </FinallyMessage>
     );
   }
@@ -32,11 +32,11 @@ export default ({ className }) => {
   if (state === 'error') {
     return (
       <FinallyMessage state="error">
-        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        Da ist was schief gegangen. Melde dich bitte bei{' '}
         <a href="mailto:support@expedition-grundeinkommen.de">
           support@expedition-grundeinkommen.de
         </a>
-        .
+        {' '}und sende uns folgenden Text: listId={listId}.
       </FinallyMessage>
     );
   }
@@ -56,7 +56,7 @@ export default ({ className }) => {
               <FormSection className={s.formSection}>
                 <Field
                   name="count"
-                  label="Anzahl der Unterschriften auf diesem Bogen"
+                  label="Anzahl Unterschriften. Du kannst auch die Unterschriften mehrerer Bögen auf einmal eingeben."
                   placeholder="1"
                   component={TextInputWrapped}
                   type="number"
