@@ -2,6 +2,7 @@ import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampainVisualisations from '../../CampainVisualisations';
+import Map from '../../Map';
 import EmailListForm from '../../EmailListForm';
 import { stringToId, contentfulJsonToHtml } from '../../utils';
 import MainIllustration from '../../MainIllustration';
@@ -10,7 +11,6 @@ import Pledge from '../../Forms/Pledge';
 import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
-import Map from '../../Map';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -74,6 +74,7 @@ export default function Sections({ sections }) {
                   />
                 )}
               </SectionInner>
+              {map && <Map state={map} />}
               {emailSignup && (
                 <SectionInner>
                   <EmailListForm className={s.emailSignup} />
@@ -112,7 +113,6 @@ export default function Sections({ sections }) {
                   <TwitterEmbed />
                 </SectionInner>
               )}
-              {map && <Map state={map} />}
             </Section>
           );
         })}
