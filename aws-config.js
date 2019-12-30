@@ -1,12 +1,15 @@
 export default {
   COGNITO: {
     REGION: 'eu-central-1',
-    USER_POOL_ID: 'eu-central-1_74vNy5Iw0',
+    USER_POOL_ID:
+      process.env.NODE_ENV === 'development'
+        ? 'eu-central-1_i3iswzMTa'
+        : 'eu-central-1_ficPCl5Rl',
   },
   API: {
     INVOKE_URL:
       process.env.NODE_ENV === 'development'
-        ? 'https://vmhbaao23c.execute-api.eu-central-1.amazonaws.com/dev'
-        : 'https://vmhbaao23c.execute-api.eu-central-1.amazonaws.com/prod',
+        ? 'https://o6nxpo1o34.execute-api.eu-central-1.amazonaws.com/dev'
+        : ' https://o6nxpo1o34.execute-api.eu-central-1.amazonaws.com/prod',
   },
 };
