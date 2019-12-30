@@ -1,6 +1,6 @@
 import React from 'react';
 import Amplify from '@aws-amplify/auth';
-import { config } from './aws-config';
+import CONFIG from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
@@ -10,8 +10,8 @@ export default ({ element }) => {
   const clientId = APP_CLIENT_ID;
   if (clientId) {
     Amplify.configure({
-      region: config.COGNITO.REGION,
-      userPoolId: config.COGNITO.USER_POOL_ID,
+      region: CONFIG.COGNITO.REGION,
+      userPoolId: CONFIG.COGNITO.USER_POOL_ID,
       userPoolWebClientId: clientId,
     });
   } else {

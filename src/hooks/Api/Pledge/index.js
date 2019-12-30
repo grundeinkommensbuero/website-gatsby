@@ -2,7 +2,7 @@
  *  This file holds hooks which serve as api calls regarding pledges
  */
 
-import { config } from '../../../../aws-config';
+import CONFIG from '../../../../aws-config';
 import { useAuthentication } from '../../Authentication';
 import { useState } from 'react';
 
@@ -56,7 +56,7 @@ const savePledge = async (pledge, setState) => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(config.API.INVOKE_URL + '/pledge', request);
+      const response = await fetch(CONFIG.API.INVOKE_URL + '/pledge', request);
       console.log('response code', response.status);
       if (response.status === 204) {
         //if the user already existed, we want to set a different state

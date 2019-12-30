@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react';
-import { config } from '../../../../../aws-config';
+import CONFIG from '../../../../../aws-config';
 
 /*
   States: 
@@ -35,7 +35,7 @@ const updateSignatureListByUser = async ({ listId, count }, setState) => {
       body: JSON.stringify({ count: count }),
     };
     const response = await fetch(
-      `${config.API.INVOKE_URL}/signatures/${listId}`,
+      `${CONFIG.API.INVOKE_URL}/signatures/${listId}`,
       request
     );
     if (response.status === 204) {

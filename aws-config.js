@@ -1,4 +1,4 @@
-export const config = {
+export default {
   COGNITO: {
     REGION: 'eu-central-1',
     USER_POOL_ID: 'eu-central-1_74vNy5Iw0',
