@@ -1,4 +1,4 @@
-import { config } from '../../../aws-config';
+import CONFIG from '../../../aws-config';
 
 /**
  * Util functions (or shared functionality which is needed
@@ -22,7 +22,7 @@ export const updateUser = async (userId, referral) => {
     body: JSON.stringify(data),
   };
   const response = await fetch(
-    `${config.API.INVOKE_URL}/users/${userId}`,
+    `${CONFIG.API.INVOKE_URL}/users/${userId}`,
     request
   );
   if (response.status !== 204) {

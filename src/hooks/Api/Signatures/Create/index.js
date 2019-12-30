@@ -5,7 +5,7 @@
 
 import { useAuthentication } from '../../../Authentication';
 import { useState } from 'react';
-import { config } from '../../../../../aws-config';
+import CONFIG from '../../../../../aws-config';
 import { updateUser } from '../../../utils';
 
 /*
@@ -128,7 +128,7 @@ const makeApiCall = async data => {
     },
     body: JSON.stringify(data),
   };
-  const response = await fetch(config.API.INVOKE_URL + '/signatures', request);
+  const response = await fetch(CONFIG.API.INVOKE_URL + '/signatures', request);
   const json = await response.json();
   //status might also be 200 in case there already was an existing pdf
   if (response.status === 201 || response.status === 200) {
