@@ -10,6 +10,6 @@ export default {
     INVOKE_URL:
       process.env.NODE_ENV === 'development'
         ? 'https://ftwey058f0.execute-api.eu-central-1.amazonaws.com/dev'
-        : ' https://9jvbvaehkd.execute-api.eu-central-1.amazonaws.com/prod',
+        : 'https://9jvbvaehkd.execute-api.eu-central-1.amazonaws.com/prod',
   },
 };
