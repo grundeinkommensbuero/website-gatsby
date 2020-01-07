@@ -9,6 +9,7 @@ exports.createPages = ({ graphql, actions }) => {
 
   return new Promise((resolve, reject) => {
     const staticPage = path.resolve('./src/components/StaticPage/index.js');
+    const blogPost = path.resolve('./src/components/BlogPost/index.js');
 
     resolve(
       graphql(
@@ -19,6 +20,13 @@ exports.createPages = ({ graphql, actions }) => {
                 node {
                   title
                   slug
+                }
+              }
+            }
+            allWordpressPost {
+              edges {
+                node {
+                  path
                 }
               }
             }
@@ -38,6 +46,18 @@ exports.createPages = ({ graphql, actions }) => {
             component: staticPage,
             context: {
               slug: page.node.slug,
+            },
+          });
+        });
+
+        const blogPosts = result.data.allWordpressPost.edges;
+
+        blogPosts.forEach(post => {
+          createPage({
+            path: post.node.path,
+            component: blogPost,
+            context: {
+              slug: post.node.path,
             },
           });
         });
