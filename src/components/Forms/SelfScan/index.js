@@ -24,7 +24,8 @@ export default ({ className }) => {
   if (state === 'saved') {
     return (
       <FinallyMessage state="success">
-        Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf.
+        Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner,
+        Postfach 1104, 24585 Nortorf.
       </FinallyMessage>
     );
   }
@@ -35,8 +36,8 @@ export default ({ className }) => {
         Da ist was schief gegangen. Melde dich bitte bei{' '}
         <a href="mailto:support@expedition-grundeinkommen.de">
           support@expedition-grundeinkommen.de
-        </a>
-        {' '}und sende uns folgenden Text: listId={listId}.
+        </a>{' '}
+        und sende uns folgenden Text: listId={listId}.
       </FinallyMessage>
     );
   }
