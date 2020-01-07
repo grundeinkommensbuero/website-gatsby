@@ -1,5 +1,3 @@
-console.log('PROCESS ENV IN aws configure', process.env.NODE_ENV);
-
 export const config = {
   COGNITO: {
     REGION: 'eu-central-1',
