@@ -56,22 +56,29 @@
     width: 100%;
     padding: 1rem;
     background: @grey;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
+    display: none;
+    height: auto;
 
     &.isOpen,
     &:focus-within {
-      height: auto;
-      padding: 1rem;
+      display: block;
     }
   }
 }
 
 .navItem {
-  &:not(.navItemChild) {
-    & + & {
-      margin-left: 1rem;
+  @media (min-width: @breakPointM) {
+    &:not(.navItemChild) {
+      & + & {
+        margin-left: 1rem;
+      }
+    }
+  }
+  @media (max-width: @breakPointM) {
+    &:not(.navItemChild) {
+      & + & {
+        margin-top: 0.5rem;
+      }
     }
   }
 }
@@ -83,27 +90,57 @@
 }
 
 .menuButton {
+  width: 5rem;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: transparent;
+  border: none;
+
   @media (min-width: @breakPointM) {
     display: none;
   }
 }
 
-.menuItemParentChildren {
-  position: absolute;
-  top: 100%;
-  width: 20rem;
-  right: -1rem;
-  text-align: right;
-  list-style: none;
-  height: 1px;
-  overflow: hidden;
-  background: @grey;
-  padding: 0;
+.menuButtonBars {
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+  cursor: pointer;
+}
 
-  .navItemParent:hover &,
-  .navItemParent:focus-within & {
-    height: auto;
-    padding: 2rem 1rem 1rem;
+.menuButtonBar {
+  background: @red;
+  height: 0.4rem;
+}
+
+.menuItemParentChildren {
+  list-style: none;
+  background: @grey;
+
+  @media (max-width: @breakPointM) {
+    padding: 0.5rem 0 0 1rem;
+  }
+
+  @media (min-width: @breakPointM) {
+    height: 1px;
+    padding: 0;
+    text-align: right;
+    position: absolute;
+    top: 100%;
+    width: 20rem;
+    right: -1rem;
+    overflow: hidden;
+
+    .navItemParent:hover &,
+    .navItemParent:focus-within & {
+      height: auto;
+      padding: 2rem 1rem 1rem;
+    }
   }
 }
 
