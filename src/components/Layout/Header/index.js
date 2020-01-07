@@ -26,7 +26,13 @@ const Header = ({ menu }) => {
         </h1>
         {menu && (
           <nav className={s.nav}>
-            <button className={s.menuButton} onClick={() => toggleMenu()}>
+            <button
+              className={s.menuButton}
+              onClick={() => toggleMenu()}
+              aria-label="menu"
+              aria-expanded={menuOpen}
+              aria-controls="menuHeader"
+            >
               Menu
             </button>
             <Menu menu={menu} menuOpen={menuOpen} />
@@ -39,7 +45,7 @@ const Header = ({ menu }) => {
 
 const Menu = ({ menu, menuOpen }) => {
   return (
-    <ul className={cN(s.navList, { [s.isOpen]: menuOpen })}>
+    <ul className={cN(s.navList, { [s.isOpen]: menuOpen })} id="menuHeader">
       {menu.map((item, index) => {
         if (item.__typename === 'ContentfulStaticContent') {
           return <MenuItem key={index} {...item} />;
