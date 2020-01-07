@@ -53,6 +53,7 @@ export const pageQuery = graphql`
               startDate
               title
               minimum
+              addToSignatureCount
               ctaLink
             }
             body {
