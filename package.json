@@ -13,7 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/grundeinkommensbuero/grundeinkommensbuero.github.io.git"
   },
-  "author": "Johann Barbie <johannbarbie@me.com>",
+  "author": "Timur Celikel <me@timurcelikel.com>",
+  "contributors": [
+    "Valentin Schagerl <Vali_Schagerl@web.de>",
+    "Johann Barbie <johannbarbie@me.com>"
+  ],
   "scripts": {
     "dev": "npm run develop",
     "dev-m": "gatsby develop -H 0.0.0.0",
