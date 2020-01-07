@@ -73,18 +73,29 @@ const Visualisation = ({
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
         <div className={s.bar} ref={barEl}>
           <WrapInLink link={showCTA && ctaLink}>
-            <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
+            <span
+              className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}
+              aria-hidden="true"
+            >
               <span>{goal && goal.toLocaleString('de')}</span>
             </span>
             {hasStarted && (
               <span
                 className={cN(s.barCurrent, { [s.outside]: countOutside })}
                 style={{ width: `${percentage}%` }}
+                aria-label={`${count} von ${goal} Unterschriften`}
               >
                 <span>{count && count.toLocaleString('de')}</span>
               </span>
             )}
-            {!hasStarted && <span className={s.starts}>{dateString}</span>}
+            {!hasStarted && (
+              <span
+                aria-label={`Noch nicht gestartet. Ziel: ${goal}. Startet ${dateString}.`}
+                className={s.starts}
+              >
+                {dateString}
+              </span>
+            )}
           </WrapInLink>
         </div>
         {showCTA && (
