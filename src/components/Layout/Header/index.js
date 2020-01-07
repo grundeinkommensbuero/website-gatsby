@@ -9,7 +9,6 @@ const Header = ({ menu }) => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    console.log('click', menuOpen);
   };
 
   return (
@@ -29,11 +28,15 @@ const Header = ({ menu }) => {
             <button
               className={s.menuButton}
               onClick={() => toggleMenu()}
-              aria-label="menu"
+              aria-label="Hauptmenü"
               aria-expanded={menuOpen}
               aria-controls="menuHeader"
             >
-              Menu
+              <div className={s.menuButtonBars}>
+                <div className={s.menuButtonBar} />
+                <div className={s.menuButtonBar} />
+                <div className={s.menuButtonBar} />
+              </div>
             </button>
             <Menu menu={menu} menuOpen={menuOpen} />
           </nav>
