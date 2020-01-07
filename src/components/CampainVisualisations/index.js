@@ -5,6 +5,7 @@ import cN from 'classnames';
 import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
+import { Link } from 'gatsby';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
@@ -71,10 +72,8 @@ const Visualisation = ({
       {title && <h2 className={s.title}>{title}</h2>}
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
         <div className={s.bar} ref={barEl}>
-          
-          {showCTA 
-            ? 
-            <a href={ctaLink}>
+          {showCTA ? (
+            <Link to={ctaLink}>
               <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
                 <span>{goal && goal.toLocaleString('de')}</span>
               </span>
@@ -87,8 +86,8 @@ const Visualisation = ({
                 </span>
               )}
               {!hasStarted && <span className={s.starts}>{dateString}</span>}
-            </a>
-            : 
+            </Link>
+          ) : (
             <div>
               <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
                 <span>{goal && goal.toLocaleString('de')}</span>
@@ -103,8 +102,7 @@ const Visualisation = ({
               )}
               {!hasStarted && <span className={s.starts}>{dateString}</span>}
             </div>
-          }
-        
+          )}
         </div>
         {showCTA && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
