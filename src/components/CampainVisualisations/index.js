@@ -72,37 +72,20 @@ const Visualisation = ({
       {title && <h2 className={s.title}>{title}</h2>}
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
         <div className={s.bar} ref={barEl}>
-          {showCTA ? (
-            <Link to={ctaLink}>
-              <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
-                <span>{goal && goal.toLocaleString('de')}</span>
+          <WrapInLink link={showCTA && ctaLink}>
+            <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
+              <span>{goal && goal.toLocaleString('de')}</span>
+            </span>
+            {hasStarted && (
+              <span
+                className={cN(s.barCurrent, { [s.outside]: countOutside })}
+                style={{ width: `${percentage}%` }}
+              >
+                <span>{count && count.toLocaleString('de')}</span>
               </span>
-              {hasStarted && (
-                <span
-                  className={cN(s.barCurrent, { [s.outside]: countOutside })}
-                  style={{ width: `${percentage}%` }}
-                >
-                  <span>{count && count.toLocaleString('de')}</span>
-                </span>
-              )}
-              {!hasStarted && <span className={s.starts}>{dateString}</span>}
-            </Link>
-          ) : (
-            <div>
-              <span className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}>
-                <span>{goal && goal.toLocaleString('de')}</span>
-              </span>
-              {hasStarted && (
-                <span
-                  className={cN(s.barCurrent, { [s.outside]: countOutside })}
-                  style={{ width: `${percentage}%` }}
-                >
-                  <span>{count && count.toLocaleString('de')}</span>
-                </span>
-              )}
-              {!hasStarted && <span className={s.starts}>{dateString}</span>}
-            </div>
-          )}
+            )}
+            {!hasStarted && <span className={s.starts}>{dateString}</span>}
+          </WrapInLink>
         </div>
         {showCTA && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
@@ -112,4 +95,11 @@ const Visualisation = ({
       </div>
     </SectionInner>
   );
+};
+
+const WrapInLink = ({ link, children }) => {
+  if (link) {
+    return <Link to={link}>{children}</Link>;
+  }
+  return <>{children}</>;
 };
