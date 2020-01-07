@@ -9,7 +9,6 @@ import { Link } from 'gatsby';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
-  console.log(('signatureCounts', currentCounts));
 
   return (
     <>
@@ -66,22 +65,14 @@ const Visualisation = ({
   const hasStarted = new Date().getTime() > new Date(startDate);
 
   let count = currentCount || 0;
-  console.log('---');
-  console.log(campainCode);
-
-  console.log('current: ', count);
 
   if (addToSignatureCount) {
     count += addToSignatureCount;
   }
 
-  console.log('added: ', count);
-
   if (minimum) {
     count = Math.max(count, minimum);
   }
-
-  console.log('with minimum: ', count);
 
   const percentage =
     count && isInView ? Math.min((count / goal) * 100, 100) : 0;
