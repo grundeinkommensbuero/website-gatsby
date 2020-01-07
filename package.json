@@ -20,13 +20,9 @@
     "develop": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --trailing-comma es5 --single-quote --write 'src/**/*.js' 'src/**/*.md' 'bin/*.js'",
     "build": "gatsby build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public -b master",
-    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix *.js bin/*.js",
     "start": "npm run develop",
-    "serve": "gatsby serve",
-    "heroku-postbuild": "gatsby build"
+    "serve": "gatsby serve"
   },
   "dependencies": {
     "@aws-amplify/auth": "^1.5.0",
@@ -37,17 +33,14 @@
     "classnames": "^2.2.6",
     "csv-parse": "^4.8.2",
     "final-form": "^4.18.6",
+    "gatsby": "^2.18.12",
     "gatsby-image": "^2.2.36",
-    "gatsby-plugin-google-analytics": "^2.1.31",
     "gatsby-plugin-less": "^3.0.17",
     "gatsby-plugin-matomo": "^0.7.2",
     "gatsby-plugin-netlify": "^2.1.30",
     "gatsby-plugin-react-helmet": "^3.1.18",
-    "gatsby-plugin-sharp": "^2.3.8",
     "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-source-contentful": "^2.1.70",
-    "gatsby-transformer-remark": "^2.6.42",
-    "gatsby-transformer-sharp": "^2.3.9",
     "git-revision-webpack-plugin": "^3.0.4",
     "interactjs": "^1.7.2",
     "less": "^3.10.3",
@@ -57,21 +50,14 @@
     "react-dom": "^16.12.0",
     "react-final-form": "^6.3.3",
     "react-helmet": "^5.2.0",
-    "sharp": "^0.22.0",
     "svg-inline-loader": "^0.8.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "chalk": "^2.4.2",
-    "contentful-import": "^7.6.2",
     "dotenv": "^8.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.17.0",
-    "gatsby": "^2.18.12",
-    "gh-pages": "2.0.1",
-    "inquirer": "^6.2.2",
     "prettier": "^1.19.1",
-    "rimraf": "^2.6.3",
     "yargs-parser": "^13.0.0"
   }
 }
