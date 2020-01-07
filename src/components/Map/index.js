@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { contentfulJsonToHtml, formatDateTime } from '../utils';
 import s from './style.module.less';
-import { useStaticQuery } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 import { SectionInner } from '../Layout/Sections';
 
 let mapboxgl;
