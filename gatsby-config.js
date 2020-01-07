@@ -27,6 +27,32 @@ const config = {
         disableCookies: true,
       },
     },
+    {
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        /*
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+         */
+        baseUrl: 'xbge.uber.space',
+        protocol: 'http',
+        hostingWPCOM: false,
+        useACF: false,
+        acfOptionPageIds: [],
+        verboseOutput: false,
+        perPage: 100,
+        concurrentRequests: 10,
+        includedRoutes: [
+          // "**/categories",
+          '**/posts',
+          // "**/pages",
+          '**/media',
+          // "**/tags",
+          // "**/taxonomies",
+          // "**/users",
+        ],
+      },
+    },
     // {
     //   resolve: 'gatsby-plugin-webpack-bundle-analyzer',
     //   options: {

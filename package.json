@@ -45,6 +45,7 @@
     "gatsby-plugin-react-helmet": "^3.1.18",
     "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-source-contentful": "^2.1.70",
+    "gatsby-source-wordpress": "^3.1.54",
     "git-revision-webpack-plugin": "^3.0.4",
     "interactjs": "^1.7.2",
     "less": "^3.10.3",
