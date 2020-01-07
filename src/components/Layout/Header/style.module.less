@@ -8,8 +8,11 @@
   left: 0;
   right: 0;
   background: @grey;
-  grid-template-rows: 5rem;
-  height: @headerHeight;
+  grid-template-rows: @headerHeight;
+
+  @media (max-width: @breakPointS) {
+    grid-template-rows: @headerHeightS;
+  }
 }
 
 .titleLink {
@@ -103,8 +106,8 @@
 }
 
 .menuButtonBars {
-  height: 3rem;
-  width: 3rem;
+  height: 2rem;
+  width: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -114,7 +117,7 @@
 
 .menuButtonBar {
   background: @red;
-  height: .4rem;
+  height: .3rem;
 }
 
 .menuItemParentChildren {
