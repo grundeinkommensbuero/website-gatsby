@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import s from './style.module.less';
 
 export const BlogList = ({ posts }) => {
   return (
@@ -13,8 +14,8 @@ export const BlogList = ({ posts }) => {
 
 export const BlogSnippet = ({ title, excerpt, path }) => {
   return (
-    <article>
-      <h1>
+    <article className={s.article}>
+      <h1 className={s.title}>
         <Link to={path}>{title}</Link>
       </h1>
       <div
