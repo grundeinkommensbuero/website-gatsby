@@ -24,7 +24,7 @@ export const useUpdateSignatureListByUser = () => {
 // function, which makes an api call to set the signature count
 // for a specific list after user has scanned the qr code
 const updateSignatureListByUser = async (
-  { listId, userId, count },
+  { listId, userId, email, count },
   setState
 ) => {
   // make api call to create new singature list and get pdf
@@ -39,6 +39,8 @@ const updateSignatureListByUser = async (
     body.listId = listId;
   } else if (userId) {
     body.userId = userId;
+  } else if (email) {
+    body.email = email;
   }
 
   try {
