@@ -4,13 +4,17 @@ import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import { Section, SectionInner } from '../Layout/Sections';
 import Img from 'gatsby-image';
+import s from './style.module.less';
+import { formatDate } from '../utils';
 
 export default ({
   data: {
-    wordpressPost: { title, content, featured_media },
+    wordpressPost: { title, content, featured_media, date },
   },
   location,
 }) => {
+  const dateObject = new Date(date);
+
   return (
     <Layout location={location} title={title}>
       <Helmet>
@@ -31,7 +35,15 @@ export default ({
         )}
       </Helmet>
 
-      <Section title={title}>
+      <Section>
+        <SectionInner>
+          <header>
+            <h1 className={s.title}>{title}</h1>
+            <time dateTime={dateObject.toISOString()} className={s.date}>
+              {formatDate(dateObject)}
+            </time>
+          </header>
+        </SectionInner>
         {featured_media && (
           <SectionInner wide={true}>
             <Img fluid={featured_media.localFile.childImageSharp.hero} />
@@ -54,6 +66,7 @@ export const pageQuery = graphql`
     wordpressPost(path: { eq: $path }) {
       title
       content
+      date
       featured_media {
         localFile {
           childImageSharp {
