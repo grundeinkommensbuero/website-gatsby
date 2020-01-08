@@ -17,6 +17,7 @@ export default ({ className }) => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    // Will be null, if param does not exist
     setListId(urlParams.get('listId'));
     setUserId(urlParams.get('userId'));
   }, []);
@@ -57,8 +58,11 @@ export default ({ className }) => {
   return (
     <Form
       onSubmit={data => {
+        // We can set both the list id and user id here,
+        // because if the param is not set it will just be null
         data.listId = listId;
         data.userId = userId;
+
         console.log('saving...', data);
         updateSignatureList(data);
       }}
