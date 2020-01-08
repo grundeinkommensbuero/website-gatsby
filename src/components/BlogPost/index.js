@@ -4,7 +4,12 @@ import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import { Section, SectionInner } from '../Layout/Sections';
 
-export default ({ title, content }) => {
+export default ({
+  data: {
+    wordpressPost: { title, content, featured_media },
+  },
+  location,
+}) => {
   return (
     <Layout location={this.props.location} title={title}>
       <Helmet>
