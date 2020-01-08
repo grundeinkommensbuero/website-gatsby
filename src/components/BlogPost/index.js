@@ -25,10 +25,12 @@ export default ({
       </Helmet>
 
       <Section title={title}>
-        <SectionInner>
-          {featured_media && (
+        {featured_media && (
+          <SectionInner wide={true}>
             <Img fluid={featured_media.localFile.childImageSharp.fluid} />
-          )}
+          </SectionInner>
+        )}
+        <SectionInner>
           <div
             dangerouslySetInnerHTML={{
               __html: content,
