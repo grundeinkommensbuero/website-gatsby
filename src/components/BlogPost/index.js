@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import { Section, SectionInner } from '../Layout/Sections';
+import Img from 'gatsby-image';
 
 export default ({
   data: {
@@ -11,7 +12,7 @@ export default ({
   location,
 }) => {
   return (
-    <Layout location={this.props.location} title={title}>
+    <Layout location={location} title={title}>
       <Helmet>
         <title>{title}</title>
 
@@ -25,6 +26,9 @@ export default ({
 
       <Section title={title}>
         <SectionInner>
+          {featured_media && (
+            <Img fluid={featured_media.localFile.childImageSharp.fluid} />
+          )}
           <div
             dangerouslySetInnerHTML={{
               __html: content,
@@ -41,12 +45,11 @@ export const pageQuery = graphql`
     wordpressPost(path: { eq: $path }) {
       title
       content
-      excerpt
       featured_media {
         localFile {
           childImageSharp {
-            fluid {
-              srcSet
+            fluid(maxWidth: 800) {
+              ...GatsbyImageSharpFluid_noBase64
             }
           }
         }
