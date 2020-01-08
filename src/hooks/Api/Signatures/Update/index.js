@@ -13,6 +13,7 @@ import CONFIG from '../../../../../aws-config';
   - error 
   - saving
   - saved
+  - noListFound
 */
 
 export const useUpdateSignatureListByUser = () => {
@@ -20,11 +21,26 @@ export const useUpdateSignatureListByUser = () => {
   return [state, data => updateSignatureListByUser(data, setState)];
 };
 
-//function, which makes an api call to set the signature count
-//for a specific list after user has scanned the qr code
-const updateSignatureListByUser = async ({ listId, count }, setState) => {
-  //make api call to create new singature list and get pdf
+// function, which makes an api call to set the signature count
+// for a specific list after user has scanned the qr code
+const updateSignatureListByUser = async (
+  { listId, userId, count },
+  setState
+) => {
+  // make api call to create new singature list and get pdf
   setState('saving');
+
+  const body = { count: count };
+
+  // Depending on whether a list id or a user id was provided
+  // we send a either list id or user id
+
+  if (listId) {
+    body.listId = listId;
+  } else if (userId) {
+    body.userId = userId;
+  }
+
   try {
     const request = {
       method: 'PATCH',
@@ -32,17 +48,24 @@ const updateSignatureListByUser = async ({ listId, count }, setState) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ count: count }),
+      body: JSON.stringify(body),
     };
+
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/signatures/${listId}`,
+      `${CONFIG.API.INVOKE_URL}/signatures`,
       request
     );
+
     if (response.status === 204) {
       setState('saved');
     } else {
       console.log('Response code not 204', response.status);
-      setState('error');
+
+      if (response.status === 404) {
+        setState('noListFound');
+      } else {
+        setState('error');
+      }
     }
   } catch (error) {
     console.log('Error while updating signature list', error);
