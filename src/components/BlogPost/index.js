@@ -22,12 +22,19 @@ export default ({
               content={page.description.internal.content}
             />
           )} */}
+
+        {featured_media && (
+          <meta
+            property="og:image"
+            content={featured_media.localFile.childImageSharp.og.src}
+          />
+        )}
       </Helmet>
 
       <Section title={title}>
         {featured_media && (
           <SectionInner wide={true}>
-            <Img fluid={featured_media.localFile.childImageSharp.fluid} />
+            <Img fluid={featured_media.localFile.childImageSharp.hero} />
           </SectionInner>
         )}
         <SectionInner>
@@ -50,8 +57,11 @@ export const pageQuery = graphql`
       featured_media {
         localFile {
           childImageSharp {
-            fluid(maxWidth: 800) {
+            hero: fluid(maxWidth: 800) {
               ...GatsbyImageSharpFluid_noBase64
+            }
+            og: fixed(width: 1200, quality: 90) {
+              src
             }
           }
         }
