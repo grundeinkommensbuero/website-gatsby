@@ -126,7 +126,6 @@
 
 .menuItemParentChildren {
   list-style: none;
-  background: @grey;
 
   @media (max-width: @breakPointM) {
     padding: .5rem 0 0 1rem;
@@ -138,14 +137,24 @@
     text-align: right;
     position: absolute;
     top: 100%;
-    width: 20rem;
-    right: -1rem;
+    width: 30rem;
+    right: -2rem;
     overflow: hidden;
 
     .navItemParent:hover &, .navItemParent:focus-within & {
       height: auto;
-      padding: 2rem 1rem 1rem;
     }
+  }
+}
+
+.menuItemParentChildrenInner {
+  list-style: none;
+  padding: 0;
+
+  @media (min-width: @breakPointM) {
+    background: @grey;
+    padding: 2rem 2rem 2rem;
+    display: inline-block;
   }
 }
 

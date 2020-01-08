@@ -65,11 +65,13 @@ const MenuItemParent = ({ title, contentfulchildren }) => {
   return (
     <li className={cN(s.navItem, s.navItemParent)}>
       <div className={s.menuItemParentTitle}>{title}</div>
-      <ul className={s.menuItemParentChildren}>
-        {children.map((item, index) => (
-          <MenuItem key={index} child={true} {...item} />
-        ))}
-      </ul>
+      <div className={s.menuItemParentChildren}>
+        <ul className={s.menuItemParentChildrenInner}>
+          {children.map((item, index) => (
+            <MenuItem key={index} child={true} {...item} />
+          ))}
+        </ul>
+      </div>
     </li>
   );
 };
