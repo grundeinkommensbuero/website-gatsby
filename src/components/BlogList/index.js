@@ -29,7 +29,9 @@ export const BlogSnippet = ({ title, excerpt, path, featured_media }) => {
           __html: excerpt,
         }}
       />
-      <Link to={path}>Mehr...</Link>
+      <p>
+        <Link to={path}>Mehr...</Link>
+      </p>
     </article>
   );
 };
