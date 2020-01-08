@@ -51,6 +51,7 @@ export default ({
         )}
         <SectionInner>
           <div
+            className={s.body}
             dangerouslySetInnerHTML={{
               __html: content,
             }}
