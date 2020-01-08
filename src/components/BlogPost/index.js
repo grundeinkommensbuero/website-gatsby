@@ -4,39 +4,32 @@ import Layout from '../Layout';
 import Helmet from 'react-helmet';
 import { Section, SectionInner } from '../Layout/Sections';
 
-class BlogPost extends React.Component {
-  render() {
-    const page = this.props.data.wordpressPost;
-    const { title, content } = this.props.data.wordpressPost;
+export default ({ title, content }) => {
+  return (
+    <Layout location={this.props.location} title={title}>
+      <Helmet>
+        <title>{title}</title>
 
-    return (
-      <Layout location={this.props.location} title={page.title}>
-        <Helmet>
-          <title>{title}</title>
-
-          {/* {page.description && (
+        {/* {page.description && (
             <meta
               name="description"
               content={page.description.internal.content}
             />
           )} */}
-        </Helmet>
+      </Helmet>
 
-        <Section title={title}>
-          <SectionInner>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: content,
-              }}
-            />
-          </SectionInner>
-        </Section>
-      </Layout>
-    );
-  }
-}
-
-export default BlogPost;
+      <Section title={title}>
+        <SectionInner>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: content,
+            }}
+          />
+        </SectionInner>
+      </Section>
+    </Layout>
+  );
+};
 
 export const pageQuery = graphql`
   query WordpressPostByPath($path: String!) {
