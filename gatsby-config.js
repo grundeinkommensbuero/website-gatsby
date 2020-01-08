@@ -12,6 +12,9 @@ const config = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-netlify',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
+    'gatsby-image',
     {
       resolve: `gatsby-plugin-less`,
       options: {
