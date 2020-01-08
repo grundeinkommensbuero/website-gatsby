@@ -10,11 +10,15 @@ import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Upda
 
 export default ({ className }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
+
+  // Updating a list should be possible via list id or user id
   const [listId, setListId] = useState({});
+  const [userId, setUserId] = useState({});
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setListId(urlParams.get('listId'));
+    setUserId(urlParams.get('userId'));
   }, []);
 
   if (state === 'saving') {
@@ -26,6 +30,14 @@ export default ({ className }) => {
       <FinallyMessage state="success">
         Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner,
         Postfach 1104, 24585 Nortorf.
+      </FinallyMessage>
+    );
+  }
+
+  if (state === 'noListFound') {
+    return (
+      <FinallyMessage state="error">
+        Es wurde keine Liste gefunden.
       </FinallyMessage>
     );
   }
@@ -46,6 +58,7 @@ export default ({ className }) => {
     <Form
       onSubmit={data => {
         data.listId = listId;
+        data.userId = userId;
         console.log('saving...', data);
         updateSignatureList(data);
       }}
