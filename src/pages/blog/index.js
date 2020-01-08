@@ -41,6 +41,7 @@ export const pageQuery = graphql`
           excerpt
           slug
           path
+          date
           featured_media {
             localFile {
               childImageSharp {

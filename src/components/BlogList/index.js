@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import s from './style.module.less';
 import Img from 'gatsby-image';
+import { formatDate } from '../utils';
 
 export const BlogList = ({ posts }) => {
   return (
@@ -13,12 +14,18 @@ export const BlogList = ({ posts }) => {
   );
 };
 
-export const BlogSnippet = ({ title, excerpt, path, featured_media }) => {
+export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
+  const dateObject = new Date(date);
   return (
     <article className={s.article}>
-      <h1 className={s.title}>
-        <Link to={path}>{title}</Link>
-      </h1>
+      <header>
+        <time dateTime={dateObject.toISOString()} className={s.date}>
+          {formatDate(dateObject)}
+        </time>
+        <h1 className={s.title}>
+          <Link to={path}>{title}</Link>
+        </h1>
+      </header>
       {featured_media && (
         <Link to={path}>
           <Img fluid={featured_media.localFile.childImageSharp.hero} />
