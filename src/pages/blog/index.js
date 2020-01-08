@@ -22,7 +22,7 @@ export default ({
       </Helmet>
       <SectionWrapper>
         <Section title="Blog">
-          <SectionInner wide={true}>
+          <SectionInner>
             <BlogList posts={postsMapped} />
           </SectionInner>
         </Section>
@@ -41,6 +41,15 @@ export const pageQuery = graphql`
           excerpt
           slug
           path
+          featured_media {
+            localFile {
+              childImageSharp {
+                hero: fluid(maxWidth: 650) {
+                  ...GatsbyImageSharpFluid_noBase64
+                }
+              }
+            }
+          }
         }
       }
     }
