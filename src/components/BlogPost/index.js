@@ -8,7 +8,6 @@ class BlogPost extends React.Component {
   render() {
     const page = this.props.data.wordpressPost;
     const { title, content } = this.props.data.wordpressPost;
-    console.log(this.props);
 
     return (
       <Layout location={this.props.location} title={page.title}>
