@@ -14,7 +14,10 @@ if (!process.env.STATIC) {
     'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
 }
 
-const BOUNDS = { 'schleswig-holstein': [8.226, 53.4095, 11.6428, 54.9823] };
+const BOUNDS = {
+  'schleswig-holstein': [8.226, 53.4095, 11.6428, 54.9823],
+  brandenburg: [11, 51.3, 15, 53.6],
+};
 
 export default ({ state }) => {
   const {
