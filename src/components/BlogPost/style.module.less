@@ -2,7 +2,7 @@
 
 .title {
     font-size: @fontSizeXXL;
-    margin: 0 0 1rem;
+    margin: 1rem 0 0;
 }
 
 .body {
@@ -20,4 +20,21 @@
         margin: 2rem 0 1rem;
         font-size: @fontSizeM;
     }
+}
+
+.header {
+    position: relative;
+}
+
+.headerText {
+    position: relative;
+    z-index: 1;
+}
+
+.heroImage {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }

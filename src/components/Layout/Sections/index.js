@@ -136,6 +136,7 @@ export function Section({
   isNewsletter,
   isPledge,
   afterBodyContent,
+  isBlogHeader,
 }) {
   return (
     <section
@@ -144,6 +145,7 @@ export function Section({
         [s.sectionIllustration]: isIllustrationSection,
         [s.sectionNewsletter]: isNewsletter,
         [s.sectionPledge]: isPledge,
+        [s.sectionBlogHeader]: isBlogHeader,
       })}
     >
       {jumpToId && <div id={jumpToId} className={s.jumpToAnchor} />}
