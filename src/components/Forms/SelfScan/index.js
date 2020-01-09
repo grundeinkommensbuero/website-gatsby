@@ -8,7 +8,7 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 
-export default ({ className }) => {
+export default ({ className, successMessage }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
 
   // Updating a list should be possible via list id or user id
@@ -27,12 +27,7 @@ export default ({ className }) => {
   }
 
   if (state === 'saved') {
-    return (
-      <FinallyMessage state="success">
-        Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner,
-        Postfach 1104, 24585 Nortorf.
-      </FinallyMessage>
-    );
+    return <FinallyMessage state="success">{successMessage}</FinallyMessage>;
   }
 
   if (state === 'noListFound') {
