@@ -95,12 +95,6 @@ export default ({ signaturesId }) => {
 
   return (
     <>
-      <p>
-        Die Listen sind da! Ab sofort kannst du sie dir ausdrucken,
-        unterschreiben und Unterschriften sammeln. So starten wir zusammen den
-        Modellversuch in Schleswig-Holstein!
-      </p>
-      <p>An welche E-Mail-Adresse dürfen wir dir die Listen schicken?</p>
       <Form
         onSubmit={e => {
           createPdf({
