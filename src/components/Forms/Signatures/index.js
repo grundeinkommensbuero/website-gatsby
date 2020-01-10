@@ -84,7 +84,7 @@ export default ({ signaturesId }) => {
           {(state.anonymous || !state.existingUser) && (
             <StepListItem icon="download">
               <LinkButton target="_blank" href={state.pdf.url}>
-                Listen Herunterladen
+                Listen herunterladen
               </LinkButton>
             </StepListItem>
           )}
