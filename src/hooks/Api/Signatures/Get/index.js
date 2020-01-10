@@ -23,7 +23,19 @@ export const useSignatureCount = () => {
   return stats;
 };
 
-//gets stats (count of signatures) for each campaign
+// Hook to get signature count of a user
+// Data can have either listId, userId or email
+export const useSignatureCountOfUser = data => {
+  const [stats, setStats] = useState(() => {
+    if (typeof window !== 'undefined') {
+      getSignatureCountOfUser(data).then(data => setStats(data));
+    }
+  });
+
+  return stats;
+};
+
+// gets stats (count of signatures) for each campaign
 const getSignatureCount = async () => {
   try {
     const request = {
@@ -40,7 +52,51 @@ const getSignatureCount = async () => {
     );
 
     if (response.status === 200) {
-      //get stats (object) by parsing json { campaign1: {withMixed, withoutMixed}, campaign2: {...}}
+      // get stats (object) by parsing json { campaign1: {withMixed, withoutMixed}, campaign2: {...}}
+      return await response.json();
+    } else {
+      console.log('Response is not 200', response.status);
+    }
+  } catch (error) {
+    console.log('Error while updating signature list', error);
+  }
+};
+
+// gets stats (count of signatures) for this user
+// Either a list id, user id or email can be passed
+// For list id it will return the count for all lists of the user
+// If no param was passed, return null
+const getSignatureCountOfUser = async ({ listId, userId, email }) => {
+  try {
+    const request = {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    let queryParam = '';
+
+    // Check, which param was passed to function
+    if (typeof listId !== 'undefined') {
+      queryParam = `listId=${listId}`;
+    } else if (typeof userId !== 'undefined') {
+      queryParam = `userId=${userId}`;
+    } else if (typeof email !== 'undefined') {
+      queryParam = `email=${email}`;
+    } else {
+      // None of the needed params passed
+      return null;
+    }
+
+    const response = await fetch(
+      `${CONFIG.API.INVOKE_URL}/analytics/signatures?${queryParam}`,
+      request
+    );
+
+    if (response.status === 200) {
+      // get stats (object) by parsing json { received: number, scannedByUser: number }
       return await response.json();
     } else {
       console.log('Response is not 200', response.status);
