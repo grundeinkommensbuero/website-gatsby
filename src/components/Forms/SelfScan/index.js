@@ -7,6 +7,7 @@ import { TextInputWrapped } from '../TextInput';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
+import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 
 export default ({ className, successMessage }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
@@ -14,6 +15,13 @@ export default ({ className, successMessage }) => {
   // Updating a list should be possible via list id or user id
   const [listId, setListId] = useState({});
   const [userId, setUserId] = useState({});
+
+  // Example of how to get signature count
+  // You can also pass userId or email instead
+  console.log(
+    'signature count',
+    useSignatureCountOfUser({ listId: '1280305' })
+  );
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
