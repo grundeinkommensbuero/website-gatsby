@@ -75,7 +75,7 @@ export default ({ className, successMessage }) => {
 
         updateSignatureList(data);
       }}
-      validate={validate}
+      validate={values => validate(values, needsEMail)}
       render={({ handleSubmit }) => {
         return (
           <>
@@ -121,14 +121,14 @@ export default ({ className, successMessage }) => {
   );
 };
 
-const validate = values => {
+const validate = (values, needsEMail) => {
   const errors = {};
 
   if (!values.count) {
     errors.count = 'Muss ausgefüllt sein';
   }
 
-  if (!validateEmail(values.email)) {
+  if (needsEMail && !validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
