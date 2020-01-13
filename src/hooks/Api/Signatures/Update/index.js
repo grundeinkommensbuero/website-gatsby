@@ -62,7 +62,7 @@ const updateSignatureListByUser = async (
       setState('saved');
     } else {
       if (response.status === 404) {
-        setState('noListFound');
+        setState('notFound');
       } else {
         setState('error');
       }
