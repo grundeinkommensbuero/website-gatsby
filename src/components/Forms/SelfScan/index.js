@@ -24,6 +24,8 @@ export default ({ className, successMessage }) => {
     useSignatureCountOfUser({ listId: '1280305' })
   );
 
+  const needsEMail = !listId && !userId;
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     // Will be null, if param does not exist
@@ -39,15 +41,19 @@ export default ({ className, successMessage }) => {
     return <FinallyMessage state="success">{successMessage}</FinallyMessage>;
   }
 
-  if (state === 'noListFound') {
+  if (state === 'notFound' && needsEMail) {
     return (
       <FinallyMessage state="error">
-        Es wurde keine Liste gefunden.
+        Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
+        geschrieben? Probiere es bitte noch ein Mal. Falls es dann noch immer
+        nicht funktioniert, melde dich bitte an oder schreib uns an{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
       </FinallyMessage>
     );
-  }
-
-  if (state === 'error') {
+  } else if (state === 'error' || state === 'notFound') {
     return (
       <FinallyMessage state="error">
         Da ist was schief gegangen. Melde dich bitte bei{' '}
@@ -67,7 +73,6 @@ export default ({ className, successMessage }) => {
         data.listId = listId;
         data.userId = userId;
 
-        console.log('saving...', data);
         updateSignatureList(data);
       }}
       validate={validate}
@@ -80,7 +85,7 @@ export default ({ className, successMessage }) => {
             </p>
             <FormWrapper className={className}>
               <form onSubmit={handleSubmit}>
-                {!listId && !userId && (
+                {needsEMail && (
                   <FormSection className={s.formSection}>
                     <Field
                       name="email"
