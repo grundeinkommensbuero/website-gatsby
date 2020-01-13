@@ -25,14 +25,15 @@ export const useSignatureCount = () => {
 
 // Hook to get signature count of a user
 // Data can have either listId, userId or email
-export const useSignatureCountOfUser = data => {
-  const [stats, setStats] = useState(() => {
-    if (typeof window !== 'undefined') {
-      getSignatureCountOfUser(data).then(data => setStats(data));
-    }
-  });
+export const useSignatureCountOfUser = () => {
+  const [stats, setStats] = useState(null);
 
-  return stats;
+  return [
+    stats,
+    data => {
+      getSignatureCountOfUser(data).then(data => setStats(data));
+    },
+  ];
 };
 
 // gets stats (count of signatures) for each campaign
