@@ -8,9 +8,9 @@ import { useState } from 'react';
 import CONFIG from '../../../../../aws-config';
 
 /*
-  States: 
+  States:
   - null
-  - error 
+  - error
   - saving
   - saved
   - noListFound
@@ -61,8 +61,6 @@ const updateSignatureListByUser = async (
     if (response.status === 204) {
       setState('saved');
     } else {
-      console.log('Response code not 204', response.status);
-
       if (response.status === 404) {
         setState('noListFound');
       } else {
