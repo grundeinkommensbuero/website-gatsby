@@ -18,10 +18,6 @@ export default () => {
       <SectionWrapper>
         <Section title="Unterschriften zählen">
           <SectionInner hugeText={true}>
-            Du hast Unterschriften gesammelt? Bitte sag uns, Unterschriften
-            hinzu gekommen sind:
-          </SectionInner>
-          <SectionInner hugeText={true}>
             <SelfScan successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin." />
           </SectionInner>
         </Section>
