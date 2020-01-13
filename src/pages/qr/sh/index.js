@@ -18,10 +18,6 @@ export default () => {
       <SectionWrapper>
         <Section title="Unterschriften zählen">
           <SectionInner hugeText={true}>
-            Du hast den Code auf einer Unterschriftsliste gescannt. Bitte sag
-            uns, wie viele Unterschriften drauf sind.
-          </SectionInner>
-          <SectionInner hugeText={true}>
             <SelfScan successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf." />
           </SectionInner>
         </Section>

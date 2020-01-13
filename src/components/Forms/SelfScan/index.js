@@ -72,25 +72,31 @@ export default ({ className, successMessage }) => {
       validate={validate}
       render={({ handleSubmit }) => {
         return (
-          <FormWrapper className={className}>
-            <form onSubmit={handleSubmit}>
-              <FormSection className={s.formSection}>
-                <Field
-                  name="count"
-                  label="Anzahl Unterschriften. Du kannst auch die Unterschriften mehrerer Bögen auf einmal eingeben."
-                  placeholder="1"
-                  component={TextInputWrapped}
-                  type="number"
-                  min={1}
-                  inputClassName={s.countField}
-                ></Field>
-              </FormSection>
+          <>
+            <p>
+              Du hast Unterschriften gesammelt? Bitte sag uns, Unterschriften
+              hinzu gekommen sind:
+            </p>
+            <FormWrapper className={className}>
+              <form onSubmit={handleSubmit}>
+                <FormSection className={s.formSection}>
+                  <Field
+                    name="count"
+                    label="Anzahl Unterschriften. Du kannst auch die Unterschriften mehrerer Bögen auf einmal eingeben."
+                    placeholder="1"
+                    component={TextInputWrapped}
+                    type="number"
+                    min={1}
+                    inputClassName={s.countField}
+                  ></Field>
+                </FormSection>
 
-              <CTAButtonContainer>
-                <CTAButton type="submit">Speichern</CTAButton>
-              </CTAButtonContainer>
-            </form>
-          </FormWrapper>
+                <CTAButtonContainer>
+                  <CTAButton type="submit">Speichern</CTAButton>
+                </CTAButtonContainer>
+              </form>
+            </FormWrapper>
+          </>
         );
       }}
     />
