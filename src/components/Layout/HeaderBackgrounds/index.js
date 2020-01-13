@@ -12,7 +12,7 @@ export default ({}) => {
   return (
     <img
       className={s.background}
-      src={BACKGROUNDS[Math.round(BACKGROUNDS.length * Math.random())]}
+      src={BACKGROUNDS[Math.round((BACKGROUNDS.length - 1) * Math.random())]}
     />
   );
 };

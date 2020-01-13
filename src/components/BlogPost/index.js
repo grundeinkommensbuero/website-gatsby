@@ -2,11 +2,9 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import Helmet from 'react-helmet';
-import { Section, SectionInner } from '../Layout/Sections';
-import Img from 'gatsby-image';
+import { Section, SectionInner, SectionHeader } from '../Layout/Sections';
 import s from './style.module.less';
 import { formatDate } from '../utils';
-import BlogBackground from '../BlogBackground';
 
 export default ({
   data: {
@@ -36,19 +34,9 @@ export default ({
         )}
       </Helmet>
 
-      <Section
-        isBlogHeader={true}
-        afterBodyContent={
-          <>
-            {featured_media ? (
-              <Img
-                className={s.heroImage}
-                fluid={featured_media.localFile.childImageSharp.hero}
-              />
-            ) : (
-              <BlogBackground />
-            )}
-          </>
+      <SectionHeader
+        backgroundImageSet={
+          featured_media && featured_media.localFile.childImageSharp.hero
         }
       >
         <SectionInner>
@@ -61,7 +49,7 @@ export default ({
             </div>
           </header>
         </SectionInner>
-      </Section>
+      </SectionHeader>
       <Section>
         {/* {featured_media && (
           <SectionInner wide={true}>
