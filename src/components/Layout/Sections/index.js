@@ -11,6 +11,8 @@ import Pledge from '../../Forms/Pledge';
 import Signatures from '../../Forms/Signatures';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
+import HeaderBackgrounds from '../HeaderBackgrounds';
+import Img from 'gatsby-image';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -136,7 +138,7 @@ export function Section({
   isNewsletter,
   isPledge,
   afterBodyContent,
-  isBlogHeader,
+  isHeader,
 }) {
   return (
     <section
@@ -145,7 +147,7 @@ export function Section({
         [s.sectionIllustration]: isIllustrationSection,
         [s.sectionNewsletter]: isNewsletter,
         [s.sectionPledge]: isPledge,
-        [s.sectionBlogHeader]: isBlogHeader,
+        [s.sectionHeader]: isHeader,
       })}
     >
       {jumpToId && <div id={jumpToId} className={s.jumpToAnchor} />}
@@ -159,6 +161,22 @@ export function Section({
       </div>
       {afterBodyContent}
     </section>
+  );
+}
+
+export function SectionHeader({ backgroundImageSet, ...other }) {
+  return (
+    <Section
+      isHeader={true}
+      afterBodyContent={
+        backgroundImageSet ? (
+          <Img className={s.heroImage} fluid={backgroundImageSet} />
+        ) : (
+          <HeaderBackgrounds />
+        )
+      }
+      {...other}
+    />
   );
 }
 
