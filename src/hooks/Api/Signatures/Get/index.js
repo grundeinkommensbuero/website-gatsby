@@ -80,11 +80,11 @@ const getSignatureCountOfUser = async ({ listId, userId, email }) => {
     let queryParam = '';
 
     // Check, which param was passed to function
-    if (typeof listId !== 'undefined') {
+    if (listId) {
       queryParam = `listId=${listId}`;
-    } else if (typeof userId !== 'undefined') {
+    } else if (userId) {
       queryParam = `userId=${userId}`;
-    } else if (typeof email !== 'undefined') {
+    } else if (email) {
       queryParam = `email=${email}`;
     } else {
       // None of the needed params passed
