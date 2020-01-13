@@ -9,22 +9,20 @@ import s from './style.module.less';
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import { validateEmail } from '../../utils';
+import { SectionInner, Section, SectionHeader } from '../../Layout/Sections';
 
-export default ({ className, successMessage }) => {
+export default ({ successMessage }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
+  const [
+    signatureCountOfUser,
+    getSignatureCountOfUser,
+  ] = useSignatureCountOfUser();
 
   // Updating a list should be possible via list id or user id
-  const [listId, setListId] = useState({});
-  const [userId, setUserId] = useState({});
-
-  // Example of how to get signature count
-  // You can also pass userId or email instead
-  console.log(
-    'signature count',
-    useSignatureCountOfUser({ listId: '1280305' })
-  );
-
-  const needsEMail = !listId && !userId;
+  const [listId, setListId] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [eMail, setEMail] = useState(null);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -32,6 +30,58 @@ export default ({ className, successMessage }) => {
     setListId(urlParams.get('listId'));
     setUserId(urlParams.get('userId'));
   }, []);
+
+  useEffect(() => {
+    if (listId || userId || eMail) {
+      getSignatureCountOfUser({ listId: listId, userId: userId, email: eMail });
+    }
+  }, [listId, userId, eMail]);
+
+  return (
+    <>
+      <Section title="Unterschriften zählen">
+        <SectionInner hugeText={true}>
+          <CountSignaturesForm
+            state={state}
+            updateSignatureList={updateSignatureList}
+            listId={listId}
+            userId={userId}
+            setEMail={setEMail}
+            successMessage={successMessage}
+            setCount={setCount}
+          />
+        </SectionInner>
+      </Section>
+
+      {signatureCountOfUser && (
+        <Section title="Deine Statistik">
+          <SectionInner>
+            <p>Unterschriften von dir:</p>
+            <ul>
+              <li>
+                {signatureCountOfUser.scannedByUser + count} an uns Mitgeteilt
+              </li>
+              <li>
+                {signatureCountOfUser.received} sind schon bei uns angekommen
+              </li>
+            </ul>
+          </SectionInner>
+        </Section>
+      )}
+    </>
+  );
+};
+
+const CountSignaturesForm = ({
+  state,
+  updateSignatureList,
+  listId,
+  userId,
+  setEMail,
+  successMessage,
+  setCount,
+}) => {
+  const needsEMail = !listId && !userId;
 
   if (state === 'saving') {
     return <FinallyMessage state="progress">Speichere...</FinallyMessage>;
@@ -73,6 +123,10 @@ export default ({ className, successMessage }) => {
         data.listId = listId;
         data.userId = userId;
 
+        if (data.email) {
+          setEMail(data.email);
+        }
+        setCount(parseInt(data.count));
         updateSignatureList(data);
       }}
       validate={values => validate(values, needsEMail)}
@@ -83,7 +137,7 @@ export default ({ className, successMessage }) => {
               Du hast Unterschriften gesammelt? Bitte sag uns, Unterschriften
               hinzu gekommen sind:
             </p>
-            <FormWrapper className={className}>
+            <FormWrapper>
               <form onSubmit={handleSubmit}>
                 {needsEMail && (
                   <FormSection className={s.formSection}>
