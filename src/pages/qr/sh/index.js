@@ -1,10 +1,6 @@
 import React from 'react';
 import Layout from '../../../components/Layout';
-import {
-  SectionWrapper,
-  Section,
-  SectionInner,
-} from '../../../components/Layout/Sections';
+import { SectionWrapper } from '../../../components/Layout/Sections';
 import SelfScan from '../../../components/Forms/SelfScan';
 import Helmet from 'react-helmet';
 
@@ -16,11 +12,7 @@ export default () => {
       </Helmet>
 
       <SectionWrapper>
-        <Section title="Unterschriften zählen">
-          <SectionInner hugeText={true}>
-            <SelfScan successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf." />
-          </SectionInner>
-        </Section>
+        <SelfScan successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf." />
       </SectionWrapper>
     </Layout>
   );
