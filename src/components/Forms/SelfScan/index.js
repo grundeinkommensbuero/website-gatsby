@@ -8,6 +8,7 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
+import { validateEmail } from '../../utils';
 
 export default ({ className, successMessage }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
@@ -79,6 +80,18 @@ export default ({ className, successMessage }) => {
             </p>
             <FormWrapper className={className}>
               <form onSubmit={handleSubmit}>
+                {!listId && !userId && (
+                  <FormSection className={s.formSection}>
+                    <Field
+                      name="email"
+                      label="Bitte gib deiner E-Mail-Adresse ein."
+                      placeholder="E-Mail"
+                      component={TextInputWrapped}
+                      type="text"
+                    ></Field>
+                  </FormSection>
+                )}
+
                 <FormSection className={s.formSection}>
                   <Field
                     name="count"
@@ -108,6 +121,10 @@ const validate = values => {
 
   if (!values.count) {
     errors.count = 'Muss ausgefüllt sein';
+  }
+
+  if (!validateEmail(values.email)) {
+    errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
   return errors;
