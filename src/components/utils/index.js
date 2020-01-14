@@ -51,13 +51,13 @@ export function contentfulJsonToHtml(json) {
 
         switch (mimeGroup) {
           case 'image':
-            return (
-              <img
-                title={title ? title['en-US'] : null}
-                alt={description ? description['en-US'] : null}
-                src={file['en-US'].url}
-              />
-            );
+          // return (
+          //   <img
+          //     title={title ? title['en-US'] : null}
+          //     alt={description ? description['en-US'] : null}
+          //     src={file['en-US'].url}
+          //   />
+          // );
           case 'application':
             return (
               <p>
