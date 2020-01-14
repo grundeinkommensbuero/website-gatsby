@@ -12,7 +12,10 @@ export default () => {
       </Helmet>
 
       <SectionWrapper>
-        <SelfScan successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf." />
+        <SelfScan
+          campaignCode="schleswig-holstein-1"
+          successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf."
+        />
       </SectionWrapper>
     </Layout>
   );
