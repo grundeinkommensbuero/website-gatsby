@@ -8,11 +8,17 @@ import { formatDate } from '../utils';
 
 export default ({
   data: {
-    wordpressPost: { title, content, featured_media, date },
+    wordpressPost: { title, content, featured_media, date, tags },
+    allWordpressTag,
   },
   location,
 }) => {
   const dateObject = new Date(date);
+  const tagList = allWordpressTag.edges.reduce((list, tag) => {
+    list[tag.node.id] = tag.node.name;
+    return list;
+  }, {});
+  console.log(tags);
 
   return (
     <Layout location={location} title={title}>
@@ -42,10 +48,17 @@ export default ({
         <SectionInner>
           <header className={s.header}>
             <div className={s.headerText}>
+              {tags && (
+                <ul className={s.tagList}>
+                  {tags.map(({ id }) => (
+                    <li key={id}>#{tagList[id]}</li>
+                  ))}
+                </ul>
+              )}
+              <h1 className={s.title}>{title}</h1>
               <time dateTime={dateObject.toISOString()} className={s.date}>
                 {formatDate(dateObject)}
               </time>
-              <h1 className={s.title}>{title}</h1>
             </div>
           </header>
         </SectionInner>
@@ -87,6 +100,17 @@ export const pageQuery = graphql`
           }
         }
         path
+      }
+      tags {
+        id
+      }
+    }
+    allWordpressTag {
+      edges {
+        node {
+          id
+          name
+        }
       }
     }
   }

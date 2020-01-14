@@ -50,7 +50,7 @@ const config = {
           '**/posts',
           // "**/pages",
           '**/media',
-          // "**/tags",
+          '**/tags',
           // "**/taxonomies",
           // "**/users",
         ],
