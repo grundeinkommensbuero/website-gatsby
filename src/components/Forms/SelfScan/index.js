@@ -11,7 +11,7 @@ import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import { validateEmail } from '../../utils';
 import { SectionInner, Section, SectionHeader } from '../../Layout/Sections';
 
-export default ({ successMessage }) => {
+export default ({ successMessage, campaignCode }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
   const [
     signatureCountOfUser,
@@ -49,6 +49,7 @@ export default ({ successMessage }) => {
             setEMail={setEMail}
             successMessage={successMessage}
             setCount={setCount}
+            campaignCode={campaignCode}
           />
         </SectionInner>
       </Section>
@@ -80,6 +81,7 @@ const CountSignaturesForm = ({
   setEMail,
   successMessage,
   setCount,
+  campaignCode,
 }) => {
   const needsEMail = !listId && !userId;
 
@@ -118,6 +120,8 @@ const CountSignaturesForm = ({
   return (
     <Form
       onSubmit={data => {
+        data.campaignCode = campaignCode;
+
         // We can set both the list id and user id here,
         // because if the param is not set it will just be null
         data.listId = listId;

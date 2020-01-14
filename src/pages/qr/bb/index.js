@@ -12,7 +12,10 @@ export default () => {
       </Helmet>
 
       <SectionWrapper>
-        <SelfScan successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin." />
+        <SelfScan
+          campaignCode="brandenburg-1"
+          successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin."
+        />
       </SectionWrapper>
     </Layout>
   );
