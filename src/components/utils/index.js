@@ -36,7 +36,10 @@ export function contentfulJsonToHtml(json) {
           <a
             href={node.data.uri}
             target={`${
-              node.data.uri.startsWith(website_url) ? '_blank' : '_self'
+              node.data.uri.startsWith(website_url) ||
+              node.data.uri.endsWith('.pdf')
+                ? '_blank'
+                : '_self'
             }`}
           >
             {node.content[0].value}
@@ -62,6 +65,7 @@ export function contentfulJsonToHtml(json) {
             return (
               <p>
                 <a
+                  target="_blank"
                   alt={description ? description['en-US'] : null}
                   href={file['en-US'].url}
                 >
