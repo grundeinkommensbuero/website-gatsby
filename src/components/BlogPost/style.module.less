@@ -42,3 +42,24 @@
     position: relative;
     z-index: 1;
 }
+
+.tagList {
+    padding: 0;
+    list-style: none;
+    margin: 0 0 1rem;
+    font-size: @fontSizeM;
+
+    li {
+        display: inline;
+
+        &:not(:first-child):before {
+            content: ', ';
+        }
+    }
+}
+
+.date {
+    margin: 1rem 0 0;
+    display: block;
+    font-size: @fontSizeM;
+}
