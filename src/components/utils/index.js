@@ -1,6 +1,6 @@
 import React from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { INLINES } from '@contentful/rich-text-types';
+import { INLINES, BLOCKS } from '@contentful/rich-text-types';
 
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
@@ -42,6 +42,41 @@ export function contentfulJsonToHtml(json) {
             {node.content[0].value}
           </a>
         );
+      },
+      [BLOCKS.EMBEDDED_ASSET]: node => {
+        // https://github.com/contentful/rich-text/issues/61#issuecomment-475999852
+        const { title, description, file } = node.data.target.fields;
+        const mimeType = file['en-US'].contentType;
+        const mimeGroup = mimeType.split('/')[0];
+
+        switch (mimeGroup) {
+          case 'image':
+            return (
+              <img
+                title={title ? title['en-US'] : null}
+                alt={description ? description['en-US'] : null}
+                src={file['en-US'].url}
+              />
+            );
+          case 'application':
+            return (
+              <p>
+                <a
+                  alt={description ? description['en-US'] : null}
+                  href={file['en-US'].url}
+                >
+                  {title ? title['en-US'] : file['en-US'].details.fileName}
+                </a>
+              </p>
+            );
+          default:
+            return (
+              <span style={{ backgroundColor: 'red', color: 'white' }}>
+                {' '}
+                {mimeType} embedded asset{' '}
+              </span>
+            );
+        }
       },
     },
   };
