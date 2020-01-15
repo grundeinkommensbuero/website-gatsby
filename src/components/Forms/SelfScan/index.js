@@ -60,10 +60,10 @@ export default ({ successMessage, campaignCode }) => {
             <p>Unterschriften von dir:</p>
             <ul>
               <li>
-                {signatureCountOfUser.scannedByUser + count} an uns Mitgeteilt
+                {signatureCountOfUser.scannedByUser + count} wurden über diese Seite mitgeteilt
               </li>
               <li>
-                {signatureCountOfUser.received} sind schon bei uns angekommen
+                {signatureCountOfUser.received} sind bei uns schon per Post angekommen
               </li>
             </ul>
           </SectionInner>
@@ -138,7 +138,7 @@ const CountSignaturesForm = ({
         return (
           <>
             <p>
-              Du hast Unterschriften gesammelt? Bitte sag uns, Unterschriften
+              Du hast Unterschriften gesammelt? Bitte sag uns, wie viele Unterschriften
               hinzu gekommen sind:
             </p>
             <FormWrapper>
@@ -147,7 +147,7 @@ const CountSignaturesForm = ({
                   <FormSection className={s.formSection}>
                     <Field
                       name="email"
-                      label="Bitte gib deiner E-Mail-Adresse ein."
+                      label="Bitte gib deine E-Mail-Adresse ein."
                       placeholder="E-Mail"
                       component={TextInputWrapped}
                       type="text"
