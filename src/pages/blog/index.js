@@ -5,6 +5,7 @@ import {
   SectionWrapper,
   Section,
   SectionInner,
+  SectionHeader,
 } from '../../components/Layout/Sections';
 import { graphql } from 'gatsby';
 import { BlogList } from '../../components/BlogList';
@@ -18,10 +19,11 @@ export default ({
   return (
     <Layout>
       <Helmet>
-        <title>Playground</title>
+        <title>Expeditionsblog</title>
       </Helmet>
       <SectionWrapper>
-        <Section title="Blog">
+        <SectionHeader title="Expeditionsblog"></SectionHeader>
+        <Section>
           <SectionInner>
             <BlogList posts={postsMapped} />
           </SectionInner>
