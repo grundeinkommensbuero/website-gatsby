@@ -22,8 +22,34 @@
     }
   }
 
-  :global blockquote {
+  :global .wp-block-quote {
     margin: 2rem;
+    font-weight: bold;
+    position: relative;
+
+    &:before {
+      content: '„';
+      position: absolute;
+      font-size: 15rem;
+      margin-top: -10.6rem;
+      top: 0;
+      right: 100%;
+      margin-right: 1.3rem;
+    }
+
+    @media (max-width: @breakPointS) {
+      margin: 1rem 0 1rem 2.5rem;
+
+      &:before {
+        font-size: 5rem;
+        margin-top: -3.4rem;
+        margin-right: 0.3rem;
+      }
+    }
+
+    cite {
+      font-weight: normal;
+    }
   }
 
   h2 {
