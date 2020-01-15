@@ -41,6 +41,45 @@
     }
   }
 
+  :global .wp-block-pullquote {
+    position: relative;
+    margin: 4rem (100/-8%) 4rem 4rem;
+    font-size: @fontSizeL;
+
+    &:before {
+      content: '';
+      position: absolute;
+      right: 100%;
+      top: 1rem;
+      margin-right: 2rem;
+      height: 15rem;
+      width: 15rem;
+      background: url('./pullquote_hand.svg');
+      background-repeat: no-repeat;
+      background-position: center right;
+
+      @media (max-width: @breakPointS) {
+        margin-right: 1rem;
+        height: 10rem;
+        width: 10rem;
+      }
+    }
+
+    @media (max-width: @breakPointM) {
+      margin: 2rem 0 2rem 2rem;
+    }
+
+    @media (max-width: @breakPointS) {
+      font-size: @fontSizeM;
+      margin: 2rem 0 2rem 4rem;
+    }
+
+    blockquote {
+      margin: 0;
+      min-height: 4rem;
+    }
+  }
+
   p {
     &:first-child {
       margin-top: 0;
