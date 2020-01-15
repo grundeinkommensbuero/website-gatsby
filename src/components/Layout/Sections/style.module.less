@@ -103,7 +103,11 @@
   max-width: @contentWidthL;
   .contentGrid();
   margin: 0 auto;
-  z-index: 1;
+
+  .sectionHeader & {
+    z-index: 1;
+    position: relative;
+  }
 }
 
 .inner {
@@ -150,7 +154,7 @@
   .contentGridSlim();
 
   @media (max-width: @breakPointM) {
-    font-size: @fontSizeL;
+    font-size: @fontSizeXL;
     margin-bottom: 0;
   }
 }
