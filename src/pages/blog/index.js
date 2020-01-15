@@ -44,15 +44,15 @@ export const pageQuery = graphql`
           slug
           path
           date
-          featured_media {
-            localFile {
-              childImageSharp {
-                hero: fluid(maxWidth: 650) {
-                  ...GatsbyImageSharpFluid_noBase64
-                }
-              }
-            }
-          }
+          #          featured_media {
+          #            localFile {
+          #              childImageSharp {
+          #                hero: fluid(maxWidth: 650) {
+          #                  ...GatsbyImageSharpFluid_noBase64
+          #                }
+          #              }
+          #            }
+          #          }
         }
       }
     }
