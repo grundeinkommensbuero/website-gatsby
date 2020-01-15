@@ -118,6 +118,8 @@
     word-wrap: break-word;
     max-width: 100%;
     .contentGridSlim();
+    font-weight: normal;
+    font-size: @fontSizeS;
 
     >:last-child {
         margin-bottom: 0;
@@ -141,6 +143,7 @@
 }
 
 .innerTextHuge {
+    font-weight: bold;
     @media (min-width: @breakPointM) {
         font-size: @fontSizeL;
     }
