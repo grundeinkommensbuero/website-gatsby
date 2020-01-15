@@ -3,6 +3,10 @@
 .title {
   font-size: @fontSizeXXL;
   margin: 1rem 0 0;
+
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeL;
+  }
 }
 
 .body {
@@ -10,6 +14,10 @@
 
   :global .intro {
     font-size: @fontSizeL;
+
+    @media (max-width: @breakPointS) {
+      font-size: @fontSizeM;
+    }
   }
 
   :global blockquote {
@@ -30,6 +38,12 @@
 
     img {
       width: 100%;
+    }
+  }
+
+  p {
+    &:first-child {
+      margin-top: 0;
     }
   }
 }
