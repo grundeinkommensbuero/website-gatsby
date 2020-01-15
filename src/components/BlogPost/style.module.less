@@ -11,8 +11,10 @@
 
 .body {
     font-size: @fontSizeS;
+    font-weight: normal;
 
     :global .intro {
+        font-weight: bold;
         font-size: @fontSizeL;
 
         @media (max-width: @breakPointS) {
@@ -45,6 +47,7 @@
         position: relative;
         margin: 4rem (100/-8%) 4rem 4rem;
         font-size: @fontSizeL;
+        font-weight: bold;
 
         &:before {
             content: '';
