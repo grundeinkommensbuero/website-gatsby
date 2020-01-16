@@ -6,11 +6,13 @@ import { Section, SectionInner, SectionHeader } from '../Layout/Sections';
 import s from './style.module.less';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
+import html2plaintext from 'html2plaintext';
 
 export default ({
   data: {
-    wordpressPost: { title, content, featured_media, date, tags },
+    wordpressPost: { title, content, featured_media, date, tags, excerpt },
     allWordpressTag,
+    contentfulGlobalStuff: { siteTitle },
   },
   location,
 }) => {
@@ -39,6 +41,12 @@ export default ({
           />
         )}
         {!featured_media && <meta property="og:image" content={OGImage} />}
+
+        <meta name="description" content={html2plaintext(excerpt)} />
+        <meta property="og:description" content={html2plaintext(excerpt)} />
+        <meta property="og:title" content={title} />
+        <meta property="og:site_name" content={siteTitle} />
+        <meta property="article:published_time" content={date} />
       </Helmet>
 
       <SectionHeader
@@ -91,6 +99,7 @@ export const pageQuery = graphql`
     wordpressPost(path: { eq: $path }) {
       title
       content
+      excerpt
       date
       #      featured_media {
       #        localFile {
@@ -116,6 +125,10 @@ export const pageQuery = graphql`
           name
         }
       }
+    }
+
+    contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
+      siteTitle
     }
   }
 `;
