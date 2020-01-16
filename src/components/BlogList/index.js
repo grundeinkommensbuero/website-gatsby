@@ -23,7 +23,9 @@ export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
           {formatDate(dateObject)}
         </time>
         <h1 className={s.title}>
-          <Link to={path}>{title}</Link>
+          <Link to={path}>
+            <span dangerouslySetInnerHTML={{ __html: title }} />
+          </Link>
         </h1>
       </header>
       {featured_media && (
