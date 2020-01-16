@@ -27,13 +27,6 @@ export default ({
       <Helmet>
         <title>{title}</title>
 
-        {/* {page.description && (
-            <meta
-              name="description"
-              content={page.description.internal.content}
-            />
-          )} */}
-
         {featured_media && (
           <meta
             property="og:image"
