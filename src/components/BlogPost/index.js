@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import { Section, SectionInner, SectionHeader } from '../Layout/Sections';
 import s from './style.module.less';
 import { formatDate } from '../utils';
+import OGImage from './blog_og.png';
 
 export default ({
   data: {
@@ -18,7 +19,6 @@ export default ({
     list[tag.node.id] = tag.node.name;
     return list;
   }, {});
-  console.log(tags);
 
   return (
     <Layout location={location} title={title}>
@@ -38,6 +38,7 @@ export default ({
             content={featured_media.localFile.childImageSharp.og.src}
           />
         )}
+        {!featured_media && <meta property="og:image" content={OGImage} />}
       </Helmet>
 
       <SectionHeader

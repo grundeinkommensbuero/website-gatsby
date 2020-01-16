@@ -3,10 +3,15 @@ import { Link } from 'gatsby';
 import s from './style.module.less';
 import Img from 'gatsby-image';
 import { formatDate } from '../utils';
+import OGImage from './blog_og.png';
+import Helmet from 'react-helmet';
 
 export const BlogList = ({ posts }) => {
   return (
     <div>
+      <Helmet>
+        <meta property="og:image" content={OGImage} />
+      </Helmet>
       {posts.map((post, index) => (
         <BlogSnippet key={index} {...post} />
       ))}
