@@ -228,4 +228,8 @@ const signatureCountLabels = {
     'Wie viele Unterschriften von anderen Menschen in Schleswig-Holstein kannst du noch mit einsammeln?',
   'hamburg-1':
     'Wie viele Unterschriften von anderen Menschen in Hamburg kannst du noch mit einsammeln?',
+  'bremen-1':
+    'Wie viele Unterschriften von anderen Menschen in Bremen kannst du noch mit einsammeln?',
+  'berlin-1':
+    'Wie viele Unterschriften von anderen Menschen in Berlin kannst du noch mit einsammeln?',
 };
