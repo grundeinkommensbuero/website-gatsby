@@ -55,7 +55,10 @@ export default ({
                   ))}
                 </ul>
               )}
-              <h1 className={s.title}>{title}</h1>
+              <h1
+                className={s.title}
+                dangerouslySetInnerHTML={{ __html: title }}
+              />
               <time dateTime={dateObject.toISOString()} className={s.date}>
                 {formatDate(dateObject)}
               </time>
