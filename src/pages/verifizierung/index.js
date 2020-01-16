@@ -14,24 +14,24 @@ import {
 
 const Verification = () => {
   const [verificationState, confirmSignUp, resendEmail] = useVerification();
-  const [urlParamsComplete, setUrlParamsComplete] = useState(false);
-  const [email, setEmail] = useState(null);
+  const [urlParams, setUrlParams] = useState(null);
+  const urlParamsComplete = !!(urlParams && urlParams.code && urlParams.email);
 
   useEffect(() => {
-    //get the verification code from the url
     const urlParams = new URLSearchParams(window.location.search);
-    const confirmationCode = urlParams.get('code');
-    setEmail(urlParams.get('email'));
-    if (email && confirmationCode) {
-      setUrlParamsComplete(true);
-    }
-    //only call confirm sign up the first time rendering
-    if (verificationState === 'verifying') {
-      confirmSignUp(email, confirmationCode).then(success =>
+    const code = urlParams.get('code');
+    const email = urlParams.get('email');
+
+    setUrlParams({ email, code });
+  }, [setUrlParams]);
+
+  useEffect(() => {
+    if (urlParams) {
+      confirmSignUp(urlParams.email, urlParams.code).then(success =>
         console.log('success confirming ?', success)
       );
     }
-  }, [email]);
+  }, [urlParams]);
 
   /*
     verificationState can now be:
@@ -98,8 +98,8 @@ const Verification = () => {
                   )}
                   {verificationState === 'userNotFound' && (
                     <>
-                      Wir haben "{email}" nicht in unserer Datenbank gefunden.
-                      Ist die Registrierung vielleicht sehr lange her?
+                      Wir haben "{urlParams.email}" nicht in unserer Datenbank
+                      gefunden. Ist die Registrierung vielleicht sehr lange her?
                       <br />
                       <br />
                     </>
