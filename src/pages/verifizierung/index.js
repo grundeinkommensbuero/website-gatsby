@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import { useVerification } from '../../hooks/Authentication';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
@@ -14,20 +14,24 @@ import {
 
 const Verification = () => {
   const [verificationState, confirmSignUp, resendEmail] = useVerification();
-  //call the following in use effect, because window is not available during server side rendering
-  let email;
+  const [urlParamsComplete, setUrlParamsComplete] = useState(false);
+  const [email, setEmail] = useState(null);
+
   useEffect(() => {
     //get the verification code from the url
     const urlParams = new URLSearchParams(window.location.search);
     const confirmationCode = urlParams.get('code');
-    email = urlParams.get('email');
+    setEmail(urlParams.get('email'));
+    if (email && confirmationCode) {
+      setUrlParamsComplete(true);
+    }
     //only call confirm sign up the first time rendering
     if (verificationState === 'verifying') {
       confirmSignUp(email, confirmationCode).then(success =>
         console.log('success confirming ?', success)
       );
     }
-  });
+  }, [email]);
 
   /*
     verificationState can now be:
@@ -75,19 +79,40 @@ const Verification = () => {
         <>
           {!isOk && (
             <FinallyMessage
-              className={s.finallyMessage}
+              className={cN(s.finallyMessage, {
+                [s.finallyMessageError]: hasError,
+              })}
               state={finallyMessageState}
             >
               {verificationState === 'verifying' &&
                 'Warte auf Verifizierung...'}
               {hasError && (
                 <>
-                  Das hat leider nicht geklappt. Bitte probiere es noch einmal,
-                  oder schreib uns eine E-Mail an{' '}
+                  {!urlParamsComplete && (
+                    <>
+                      Der Link ist nicht komplett. Bitte kopiere ihn noch Mal
+                      aus der Mail.
+                      <br />
+                      <br />
+                    </>
+                  )}
+                  {verificationState === 'userNotFound' && (
+                    <>
+                      Wir haben den Benutzer "{email}" nicht in unserer
+                      Datenbank gefunden. Ist die Registrierung vielleicht sehr
+                      lange her?
+                      <br />
+                      <br />
+                    </>
+                  )}
+                  Probiere es bitte ein weiteres Mal oder melde dich bei uns mit
+                  dem Hinweiß zu der genauen Fehlermeldung. Nenne uns bitte
+                  außerdem falls möglich deinen Browser und die Version:
+                  <br />
+                  <br />
                   <a href="mailto:support@expedition-grundeinkommen.de">
                     support@expedition-grundeinkommen.de
                   </a>
-                  .
                 </>
               )}
               {verificationState === 'expiredCode' && (
