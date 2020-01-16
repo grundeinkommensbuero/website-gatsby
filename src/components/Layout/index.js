@@ -36,6 +36,8 @@ function Template({ children, sections }) {
             ... on ContentfulMenuOberpunkt {
               __typename
               title
+              internalLink
+              externalLink
               contentfulchildren {
                 title
                 slug
