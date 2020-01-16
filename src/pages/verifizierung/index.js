@@ -98,9 +98,8 @@ const Verification = () => {
                   )}
                   {verificationState === 'userNotFound' && (
                     <>
-                      Wir haben den Benutzer "{email}" nicht in unserer
-                      Datenbank gefunden. Ist die Registrierung vielleicht sehr
-                      lange her?
+                      Wir haben "{email}" nicht in unserer Datenbank gefunden.
+                      Ist die Registrierung vielleicht sehr lange her?
                       <br />
                       <br />
                     </>
