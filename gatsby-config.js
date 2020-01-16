@@ -2,6 +2,10 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+const html2plaintext = require('html2plaintext');
+
+const url = 'https://expedition-grundeinkommen.de';
+
 const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
@@ -16,6 +20,57 @@ const config = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     'gatsby-image',
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site: contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
+              siteTitle
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { allWordpressPost } }) => {
+              return allWordpressPost.edges.map(edge => {
+                return Object.assign({}, edge.node, {
+                  description: html2plaintext(edge.node.excerpt),
+                  date: edge.node.date,
+                  url: url + edge.node.path,
+                  guid: url + edge.node.path,
+                  custom_elements: [{ 'content:encoded': edge.node.content }],
+                });
+              });
+            },
+            query: `
+              {
+                allWordpressPost {
+                  edges {
+                    node {
+                      id
+                      title
+                      excerpt
+                      slug
+                      path
+                      date
+                      content
+                    }
+                  }
+                }
+              }
+            `,
+            output: '/rss.xml',
+            title: 'Expedition Grundeinkommen – Blog',
+            // optional configuration to insert feed reference in pages:
+            // if `string` is used, it will be used to create RegExp and then test if pathname of
+            // current page satisfied this regular expression;
+            // if not provided or `undefined`, all pages will have feed reference inserted
+            match: '^/blog/',
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-less`,
       options: {
