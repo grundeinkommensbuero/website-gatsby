@@ -127,6 +127,10 @@
 .menuItemParentChildren {
   list-style: none;
 
+  .navItemParent:hover &, .navItemParent:focus-within & {
+    height: auto;
+  }
+
   @media (max-width: @breakPointM) {
     padding: .5rem 0 0 1rem;
   }
@@ -140,10 +144,6 @@
     width: 30rem;
     right: -2rem;
     overflow: hidden;
-
-    .navItemParent:hover &, .navItemParent:focus-within & {
-      height: auto;
-    }
   }
 }
 
