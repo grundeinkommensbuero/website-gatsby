@@ -9,4 +9,3 @@ TrackJS.install({
   token: 'bdfde1e3d32848da99ec8f12f4136b59',
   application: 'expedition-grundeinkommen',
 });
-TrackJS.track('Testing TrackJS!');
