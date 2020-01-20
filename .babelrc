@@ -8,7 +8,11 @@
         "useBuiltIns": "usage",
         "shippedProposals": true,
         "targets": {
-          "browsers": [">0.25%", "not dead"]
+          "chrome": "58",
+          "firefox": "48",
+          "ie": "11",
+          "safari": "12",
+          "edge": "20"
         }
       }
     ],
