@@ -11,6 +11,7 @@ import {
   CTAButtonContainer,
   CTALinkExternal,
 } from '../../components/Layout/CTAButton';
+import querystring from 'query-string';
 
 const Verification = () => {
   const [verificationState, confirmSignUp, resendEmail] = useVerification();
@@ -18,11 +19,9 @@ const Verification = () => {
   const urlParamsComplete = !!(urlParams && urlParams.code && urlParams.email);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const email = urlParams.get('email');
+    const params = querystring.parse(window.location.search);
 
-    setUrlParams({ email, code });
+    setUrlParams(params);
   }, [setUrlParams]);
 
   useEffect(() => {
