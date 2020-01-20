@@ -45,20 +45,24 @@ const Visualisation = ({
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setIsInView(true);
-          }
-        });
-      },
-      {
-        threshold: 1.0,
-      }
-    );
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setIsInView(true);
+            }
+          });
+        },
+        {
+          threshold: 1.0,
+        }
+      );
 
-    observer.observe(barEl.current);
+      observer.observe(barEl.current);
+    } else {
+      setIsInView(true);
+    }
   }, []);
 
   const dateString = formatDateMonthYear(new Date(startDate));
