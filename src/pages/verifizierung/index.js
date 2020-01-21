@@ -104,7 +104,7 @@ const Verification = () => {
                     </>
                   )}
                   Probiere es bitte ein weiteres Mal oder melde dich bei uns mit
-                  dem Hinweiß zu der genauen Fehlermeldung. Nenne uns bitte
+                  dem Hinweis zu der genauen Fehlermeldung. Nenne uns bitte
                   außerdem falls möglich deinen Browser und die Version:
                   <br />
                   <br />
