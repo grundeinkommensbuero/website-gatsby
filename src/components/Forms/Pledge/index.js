@@ -19,11 +19,9 @@ import s from './style.module.less';
 
 export default ({ className, pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
-  const [isSecondPartOpen, openSecondPart] = useState(true);
 
   useEffect(() => {
     function handleJumpTo() {
-      openSecondPartTracked(true);
       trackEvent({
         category: 'Pledge',
         action: addActionTrackingId('click', pledgeId),
@@ -38,15 +36,6 @@ export default ({ className, pledgeId }) => {
     };
   });
 
-  function openSecondPartTracked(open) {
-    openSecondPart(open);
-    trackEvent({
-      category: 'Pledge',
-      action: addActionTrackingId('click', pledgeId),
-      name: 'openPledge',
-    });
-  }
-
   /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
@@ -59,16 +48,6 @@ export default ({ className, pledgeId }) => {
         trackingId={pledgeId}
         trackingCategory="Pledge"
       />
-    );
-  }
-
-  if (!isSecondPartOpen) {
-    return (
-      <CTAButtonContainer className={className} illustration="POINT_LEFT">
-        <CTAButton onClick={() => openSecondPartTracked(true)}>
-          Ich bin dabei!
-        </CTAButton>
-      </CTAButtonContainer>
     );
   }
 
@@ -126,38 +105,6 @@ export default ({ className, pledgeId }) => {
                   max={30}
                 />
               </FormSection>
-
-              {/* <FormSection heading="Wie möchtest du die Expedition in Schleswig-Holstein unterstützen?">
-              <Field
-                name="wouldPrintAndSendSignatureLists"
-                type="checkbox"
-                label="Ich drucke die Unterschriftenliste aus und schicke sie unterschrieben ans Expeditionsbüro."
-                component={Checkbox}
-              ></Field>
-              <Field
-                name="wouldPutAndCollectSignatureLists"
-                type="checkbox"
-                label="Ich lege Listen an Orten aus wie z. B. beim Bäcker, in Cafés, auf dem Uni-Campus oder beim Sportverein und sammle sie später wieder ein."
-                component={Checkbox}
-              ></Field>
-              <Field
-                name="wouldCollectSignaturesInPublicSpaces"
-                type="checkbox"
-                label="Ich spreche aktiv Passantinnen und Passanten an und sammle Unterschriften vor Ort."
-                component={Checkbox}
-              ></Field>
-              <Field
-                name="wouldDonate"
-                type="checkbox"
-                label="Ich kann mir vorstellen, die Expedition finanziell zu unterstützen."
-                component={Checkbox}
-              ></Field>
-              <Field
-                name="wouldEngageCustom"
-                label="Ich habe eine andere Idee: "
-                component={TextInputOneLine}
-              ></Field>
-            </FormSection> */}
 
               <FormSection>
                 <Field
