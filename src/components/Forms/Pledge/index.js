@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Field } from 'react-final-form';
-import {
-  validateEmail,
-  trackEvent,
-  addActionTrackingId,
-  getAbTestId,
-} from '../../utils';
+import { validateEmail, getAbTestId } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
@@ -18,22 +13,6 @@ import s from './style.module.less';
 
 export default ({ className, pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
-
-  useEffect(() => {
-    function handleJumpTo() {
-      trackEvent({
-        category: 'Pledge',
-        action: addActionTrackingId('click', pledgeId),
-        name: 'jumptToLink',
-      });
-    }
-
-    window.addEventListener('#pledge', handleJumpTo);
-
-    return function cleanup() {
-      window.removeEventListener('#pledge', handleJumpTo);
-    };
-  });
 
   /*
     state (string) can be:
