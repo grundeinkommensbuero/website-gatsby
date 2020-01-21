@@ -14,7 +14,6 @@ import { SignatureCountSlider } from '../SignatureCountSlider';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
-import PartnerLogos from '../../PartnerLogos';
 import s from './style.module.less';
 
 export default ({ className, pledgeId }) => {
@@ -66,8 +65,6 @@ export default ({ className, pledgeId }) => {
         return (
           <FormWrapper className={className}>
             <form onSubmit={handleSubmit}>
-              <PartnerLogos style={{ marginBottom: '2rem' }} />
-
               <div className={s.jumpToAnchorWrapper}>
                 <div className={s.jumpToAnchor} id="pledge" />
               </div>
