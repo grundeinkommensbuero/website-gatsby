@@ -36,6 +36,38 @@ export const TextInputWrapped = ({
   );
 };
 
+export function Textarea({ children, className, ...other }) {
+  return <textarea className={cN(s.textarea, className)} {...other} />;
+}
+
+export const TextareaWrapped = ({
+  input,
+  label,
+  meta,
+  placeholder,
+  description,
+  hide,
+  className,
+  inputClassName,
+}) => {
+  if (hide) {
+    return null;
+  }
+  return (
+    <LabelInputErrorWrapper
+      label={description ? `${label} (${description})` : label}
+      meta={meta}
+      className={className}
+    >
+      <Textarea
+        {...input}
+        placeholder={placeholder}
+        className={inputClassName}
+      />
+    </LabelInputErrorWrapper>
+  );
+};
+
 export function TextInputInline({ children, className, ...other }) {
   return <input className={cN(s.textInputInline, className)} {...other} />;
 }
