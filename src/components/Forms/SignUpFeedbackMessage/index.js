@@ -1,8 +1,7 @@
 import React from 'react';
 import { FinallyMessage } from '../FinallyMessage';
-import SocialMediaButtons from '../../SocialMedia/Share';
 import { trackEvent, addActionTrackingId } from '../../utils';
-import s from './style.module.less';
+import { LinkButton } from '../Button';
 
 export default ({ className, state, trackingId, trackingCategory }) => {
   let finallyState;
@@ -26,9 +25,6 @@ export default ({ className, state, trackingId, trackingCategory }) => {
   }
   return (
     <div className={className}>
-      <SocialMediaButtons className={s.socialMediaButtons}>
-        Erzähl' auch anderen davon!
-      </SocialMediaButtons>
       <FinallyMessage state={finallyState}>
         {state === 'saving' && 'Wird abgeschickt...'}
         {state === 'saved' && (
@@ -40,8 +36,15 @@ export default ({ className, state, trackingId, trackingCategory }) => {
         )}
         {state === 'updated' && (
           <>
-            Yay, danke! Wir haben deine E-Mail-Adresse schon im System. Ab jetzt
-            bekommst du Neuigkeiten zu dieser Unterschriftensammlung!
+            Yay, danke! Du bist bereits bei uns im System und bekommst demnächst
+            Post von uns.
+            <br />
+            <br />
+            Wir sind gemeinnützig und auf Spenden angewiesen. Bitte unterstütze
+            uns auch finanziell!
+            <br />
+            <br />
+            <LinkButton href="/#Spenden">Jetzt spenden</LinkButton>
           </>
         )}
         {state === 'userExists' && (
