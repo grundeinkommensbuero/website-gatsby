@@ -39,6 +39,7 @@ export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
         </Link>
       )}
       <div
+        className={s.body}
         dangerouslySetInnerHTML={{
           __html: excerpt,
         }}
