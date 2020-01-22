@@ -17,8 +17,8 @@ export default () => {
         className="twitter-timeline"
         data-dnt="true"
         data-theme="light"
-        data-tweet-limit="3"
-        data-chrome="nofooter noborders noheader transparent"
+        data-tweet-limit="2"
+        data-chrome="nofooter noborders  transparent"
         href="https://twitter.com/expeditionbge?ref_src=twsrc%5Etfw"
       >
         Du hast den Twitter-Embed geblockt. Kein Problem – hier geht‘s zu den
