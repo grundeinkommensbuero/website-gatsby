@@ -29,3 +29,7 @@ export const updateUser = async (userId, referral) => {
     throw new Error(`Api response was ${response.status}`);
   }
 };
+
+export const sleep = milliseconds => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
