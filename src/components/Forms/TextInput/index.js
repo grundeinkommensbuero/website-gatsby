@@ -4,12 +4,19 @@ import cN from 'classnames';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { ValidationError } from '../ValidationError';
 
-export function TextInput({ children, className, ...other }) {
-  return <input className={cN(s.textInput, className)} {...other} />;
+export function TextInput({ children, className, ...input }) {
+  return (
+    <input
+      className={cN(s.textInput, className, {
+        [s.hideNumberArrows]: input.name === 'zipCode',
+      })}
+      {...input}
+    />
+  );
 }
 
-export function Textarea({ children, className, ...other }) {
-  return <textarea className={cN(s.textarea, className)} {...other} />;
+export function Textarea({ children, className, ...input }) {
+  return <textarea className={cN(s.textarea, className)} {...input} />;
 }
 
 export const TextInputWrapped = ({
