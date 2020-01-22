@@ -41,7 +41,7 @@ export default ({ pledgeId }) => {
             <form onSubmit={handleSubmit}>
               <FormSection
                 heading={
-                  'Ich bin dabei! Haltet mich auf dem Laufenden, und sagt mir, wenn es in meinem Bundesland/meiner Kommune losgeht.'
+                  'Ich bin dabei! Sagt mir, wie ich unterstützen kann und wenn es bei mir vor Ort losgeht.'
                 }
               >
                 <Field
@@ -54,8 +54,8 @@ export default ({ pledgeId }) => {
                 />
                 <Field
                   name="name"
-                  label="Mit diesem Namen möchte ich angesprochen werden"
-                  placeholder="Name"
+                  label="Vorname"
+                  placeholder="Vorname"
                   type="text"
                   component={TextInputWrapped}
                 />
@@ -84,9 +84,7 @@ export default ({ pledgeId }) => {
               </FormSection>
 
               <CTAButtonContainer illustration="POINT_LEFT">
-                <CTAButton type="submit">
-                  Ich bin dabei, wenn’s losgeht!
-                </CTAButton>
+                <CTAButton type="submit">Ich bin dabei</CTAButton>
               </CTAButtonContainer>
             </form>
           </FormWrapper>
