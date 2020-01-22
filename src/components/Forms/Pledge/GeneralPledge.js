@@ -49,24 +49,28 @@ export default ({ pledgeId }) => {
                   label="E-Mail"
                   description="Pflichtfeld"
                   placeholder="E-Mail"
+                  type="email"
                   component={TextInputWrapped}
                 />
                 <Field
                   name="name"
                   label="Mit diesem Namen möchte ich angesprochen werden"
                   placeholder="Name"
+                  type="text"
                   component={TextInputWrapped}
                 />
                 <Field
                   name="zipCode"
                   label="Postleitzahl"
                   placeholder="12345"
+                  type="number"
                   component={TextInputWrapped}
                 />
                 <Field
                   name="city"
                   label="Ort"
                   placeholder="Stadt / Dorf"
+                  type="text"
                   component={TextInputWrapped}
                 />
                 <Field
