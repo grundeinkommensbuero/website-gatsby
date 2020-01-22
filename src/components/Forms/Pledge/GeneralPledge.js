@@ -78,7 +78,7 @@ export default ({ pledgeId }) => {
                   label="Willst du uns noch etwas mitteilen?"
                   placeholder="Deine Nachricht"
                   type="textarea"
-                  maxLength="500"
+                  maxLength={500}
                   component={TextInputWrapped}
                 />
               </FormSection>
