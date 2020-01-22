@@ -1,4 +1,5 @@
 @import '../../style/vars.less';
+@inputWidth: 25rem;
 
 .textInput,
 .textInputInline,
@@ -11,7 +12,7 @@
   padding: @buttonPadding;
   line-height: inherit;
   max-width: 100%;
-  width: 25rem;
+  width: @inputWidth;
 
   &::placeholder {
     color: @grey;
@@ -46,4 +47,11 @@
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+}
+
+.charLeftDisplay {
+  font-weight: normal;
+  text-align: right;
+  max-width: 100%;
+  width: @inputWidth;
 }
