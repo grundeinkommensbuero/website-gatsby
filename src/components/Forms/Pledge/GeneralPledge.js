@@ -34,9 +34,6 @@ export default ({ pledgeId }) => {
         e.newsletterConsent = true;
         savePledge(e);
       }}
-      initialValues={{
-        signatureCount: 1,
-      }}
       validate={validate}
       render={({ handleSubmit }) => {
         return (
