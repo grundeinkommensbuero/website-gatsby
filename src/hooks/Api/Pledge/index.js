@@ -46,7 +46,9 @@ const savePledge = async (pledge, setState) => {
         data.referral = referral;
       }
 
-      data.signatureCount = parseInt(data.signatureCount);
+      if (data.signatureCount) {
+        data.signatureCount = parseInt(data.signatureCount);
+      }
 
       const request = {
         method: 'POST',
