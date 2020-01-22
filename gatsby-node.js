@@ -66,7 +66,7 @@ exports.createPages = ({ graphql, actions }) => {
   });
 };
 
-const clientId = process.env.COGNITO_APP_CLIENT_ID;
+const clientId = process.env.COGNITO_APP_CLIENT_ID_TEST;
 
 exports.onCreateWebpackConfig = ({
   stage,
