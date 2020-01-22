@@ -59,14 +59,12 @@ const savePledge = async (pledge, setState) => {
       const response = await fetch(CONFIG.API.INVOKE_URL + '/pledges', request);
       if (response.status === 204) {
         //if the user already existed, we want to set a different state
-        console.log('successful');
         if (userId === 'userExists') {
           setState('updated');
         } else {
           setState('saved');
         }
       } else if (response.status === 401) {
-        console.log('User has already given the same pledge');
         setState('userExists');
       } else {
         setState('error');
