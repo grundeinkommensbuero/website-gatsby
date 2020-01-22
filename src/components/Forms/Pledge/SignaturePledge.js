@@ -48,6 +48,7 @@ export default ({ pledgeId }) => {
                   name="name"
                   label="Mit diesem Namen möchte ich angesprochen werden"
                   placeholder="Name"
+                  type="text"
                   component={TextInputWrapped}
                 ></Field>
                 <Field
@@ -55,6 +56,7 @@ export default ({ pledgeId }) => {
                   label="E-Mail"
                   description="Pflichtfeld"
                   placeholder="E-Mail"
+                  type="email"
                   component={TextInputWrapped}
                 ></Field>
                 <Field
@@ -62,6 +64,7 @@ export default ({ pledgeId }) => {
                   label="Postleitzahl"
                   description="Pflichtfeld"
                   placeholder="12345"
+                  type="number"
                   component={TextInputWrapped}
                 ></Field>
               </FormSection>
