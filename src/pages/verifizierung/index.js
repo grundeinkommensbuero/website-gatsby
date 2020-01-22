@@ -119,7 +119,7 @@ const Verification = () => {
                   Button, um einen neuen zu erhalten: <br /> <br />
                   <Button
                     onClick={() => {
-                      resendEmail(email);
+                      resendEmail(urlParams.email);
                     }}
                   >
                     Sende neue Verifizierungs-E-Mail
