@@ -6,7 +6,7 @@ import s from './style.module.less';
 
 export default ({ className, state, trackingId, trackingCategory }) => {
   let finallyState;
-  if (state === 'saved') {
+  if (state === 'saved' || state === 'updated') {
     finallyState = 'success';
     trackEvent({
       category: trackingCategory,
