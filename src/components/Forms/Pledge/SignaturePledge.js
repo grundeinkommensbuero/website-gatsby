@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { validateEmail, getAbTestId } from '../../utils';
+import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
@@ -32,7 +32,6 @@ export default ({ pledgeId }) => {
     <Form
       onSubmit={e => {
         e.pledgeId = pledgeId;
-        e.abTestId = getAbTestId();
         savePledge(e);
       }}
       initialValues={{
