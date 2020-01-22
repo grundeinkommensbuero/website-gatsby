@@ -9,9 +9,6 @@ export default ({ element }) => {
   // APP_CLIENT_ID was in onCreateWebpackConfig callback in gatsby-node
   const clientId = APP_CLIENT_ID;
 
-  console.log('clientId', clientId);
-  console.log('CONFIG', CONFIG);
-
   if (clientId) {
     Amplify.configure({
       region: CONFIG.COGNITO.REGION,
