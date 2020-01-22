@@ -63,8 +63,13 @@ export default ({ pledgeId }) => {
                 <Field
                   name="zipCode"
                   label="Postleitzahl"
-                  description="Pflichtfeld"
                   placeholder="12345"
+                  component={TextInputWrapped}
+                ></Field>
+                <Field
+                  name="city"
+                  label="Ort"
+                  placeholder="Stadt / Dorf"
                   component={TextInputWrapped}
                 ></Field>
               </FormSection>
