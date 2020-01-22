@@ -1,7 +1,8 @@
 @import '../../style/vars.less';
 
 .textInput,
-.textInputInline {
+.textInputInline,
+.textarea {
   background: @white;
   border: none;
   color: @red;
@@ -27,4 +28,10 @@
 
 .textInputInline {
   font-size: @fontSizeS;
+}
+
+.textarea {
+  font-size: @fontSizeS;
+  resize: vertical;
+  min-height: 6rem;
 }
