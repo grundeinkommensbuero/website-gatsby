@@ -28,6 +28,7 @@ export const TextInputWrapped = ({
   hide,
   className,
   inputClassName,
+  maxLength,
 }) => {
   if (hide) {
     return null;
@@ -43,12 +44,14 @@ export const TextInputWrapped = ({
           {...input}
           placeholder={placeholder}
           className={inputClassName}
+          maxLength={maxLength}
         />
       ) : (
         <TextInput
           {...input}
           placeholder={placeholder}
           className={inputClassName}
+          maxLength={maxLength}
         />
       )}
     </LabelInputErrorWrapper>
