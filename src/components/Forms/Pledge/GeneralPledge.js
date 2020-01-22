@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
-import { TextInputWrapped } from '../TextInput';
+import { TextInputWrapped, TextareaWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
@@ -53,25 +53,31 @@ export default ({ pledgeId }) => {
                   description="Pflichtfeld"
                   placeholder="E-Mail"
                   component={TextInputWrapped}
-                ></Field>
+                />
                 <Field
                   name="name"
                   label="Mit diesem Namen möchte ich angesprochen werden"
                   placeholder="Name"
                   component={TextInputWrapped}
-                ></Field>
+                />
                 <Field
                   name="zipCode"
                   label="Postleitzahl"
                   placeholder="12345"
                   component={TextInputWrapped}
-                ></Field>
+                />
                 <Field
                   name="city"
                   label="Ort"
                   placeholder="Stadt / Dorf"
                   component={TextInputWrapped}
-                ></Field>
+                />
+                <Field
+                  name="message"
+                  label="Willst du uns noch etwas mitteilen?"
+                  placeholder="Deine Nachricht"
+                  component={TextareaWrapped}
+                />
               </FormSection>
 
               <CTAButtonContainer illustration="POINT_LEFT">
