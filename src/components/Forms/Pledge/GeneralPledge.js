@@ -106,5 +106,19 @@ const validate = values => {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
+  const MAX_LENGTH = 500;
+  if (values.message && values.message.length > MAX_LENGTH) {
+    errors.message = (
+      <>
+        {values.message.length - MAX_LENGTH} Zeichen zu viel – bitte halte dich
+        hier kurz. Für längere Anmerkungen bitte an{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>{' '}
+        schreiben
+      </>
+    );
+  }
+
   return errors;
 };
