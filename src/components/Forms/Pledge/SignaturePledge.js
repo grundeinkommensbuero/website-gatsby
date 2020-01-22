@@ -9,6 +9,7 @@ import { SignatureCountSlider } from '../SignatureCountSlider';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
+import s from './style.module.less';
 
 export default ({ pledgeId }) => {
   const [state, savePledge] = usePledgeApi();
@@ -40,7 +41,7 @@ export default ({ pledgeId }) => {
       validate={validate}
       render={({ handleSubmit }) => {
         return (
-          <FormWrapper>
+          <FormWrapper className={s.formWrapperWithSlider}>
             <form onSubmit={handleSubmit}>
               <FormSection heading={'Wer bist du?'}>
                 <Field
