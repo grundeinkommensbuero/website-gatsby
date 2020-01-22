@@ -16,7 +16,21 @@ export function TextInput({ children, className, ...input }) {
 }
 
 export function Textarea({ children, className, ...input }) {
-  return <textarea className={cN(s.textarea, className)} {...input} />;
+  let charLeft;
+  if (input.maxLength && input.value) {
+    charLeft = input.maxLength - input.value.length;
+  }
+  const charCount = input.value ? input.value.length : 0;
+  return (
+    <div>
+      <textarea className={cN(s.textarea, className)} {...input} />
+      {input.maxLength && charLeft < 100 && (
+        <div className={s.charLeftDisplay}>
+          {charCount} / {input.maxLength}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export const TextInputWrapped = ({
