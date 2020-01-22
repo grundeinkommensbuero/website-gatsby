@@ -31,13 +31,11 @@ const signUp = async email => {
       username: email,
       password: getRandomString(30),
     });
-    console.log(user);
     //we want to return the newly generated id
     return user.userSub;
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
-      console.log('user already exists');
       return 'userExists';
     } else {
       //TODO: Error handling in UI?
@@ -52,7 +50,6 @@ const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
   try {
     //use auth class to confirm sing up
     const response = await Auth.confirmSignUp(email, confirmationCode);
-    console.log('response', response);
     setVerificationState('verified');
     return true;
   } catch (error) {

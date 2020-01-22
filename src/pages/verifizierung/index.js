@@ -26,9 +26,7 @@ const Verification = () => {
 
   useEffect(() => {
     if (urlParams) {
-      confirmSignUp(urlParams.email, urlParams.code).then(success =>
-        console.log('success confirming ?', success)
-      );
+      confirmSignUp(urlParams.email, urlParams.code);
     }
   }, [urlParams]);
 

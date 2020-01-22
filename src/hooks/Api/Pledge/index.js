@@ -57,7 +57,6 @@ const savePledge = async (pledge, setState) => {
         body: JSON.stringify(data),
       };
       const response = await fetch(CONFIG.API.INVOKE_URL + '/pledges', request);
-      console.log('response code', response.status);
       if (response.status === 204) {
         //if the user already existed, we want to set a different state
         console.log('successful');
