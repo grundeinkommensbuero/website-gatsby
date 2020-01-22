@@ -7,10 +7,7 @@ import s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
 import cN from 'classnames';
 import { Button } from '../../components/Forms/Button';
-import {
-  CTAButtonContainer,
-  CTALinkExternal,
-} from '../../components/Layout/CTAButton';
+import { CTAButtonContainer, CTALink } from '../../components/Layout/CTAButton';
 import querystring from 'query-string';
 
 const Verification = () => {
@@ -130,11 +127,6 @@ const Verification = () => {
             </FinallyMessage>
           )}
           {isOk && <HurrayCrowd color="RED" />}
-          <SocialMediaButtons
-            className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
-          >
-            Erzähl' auch anderen davon!
-          </SocialMediaButtons>
         </>
       ),
     },
@@ -142,13 +134,24 @@ const Verification = () => {
       bodyTextSizeHuge: true,
       body: (
         <>
-          <h2>Spende jetzt für die Expedition Grundeinkommen:</h2>
+          <h2>
+            Wir sind gemeinnützig und auf Spenden angewiesen. Bitte unterstütze
+            uns auch finanziell!
+          </h2>
           <CTAButtonContainer illustration="POINT_LEFT">
-            <CTALinkExternal href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8W54KDCT69GNU&source=url">
-              Spenden mit Paypal/Kreditkarte
-            </CTALinkExternal>
+            <CTALink to="/#Spende">Jetzt spenden</CTALink>
           </CTAButtonContainer>
         </>
+      ),
+    },
+    {
+      bodyTextSizeHuge: true,
+      body: (
+        <SocialMediaButtons
+          className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
+        >
+          Erzähl’ auch anderen davon!
+        </SocialMediaButtons>
       ),
     },
   ];
