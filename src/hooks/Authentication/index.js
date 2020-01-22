@@ -3,6 +3,7 @@
  */
 import Auth from '@aws-amplify/auth';
 import { getRandomString } from '../../components/utils';
+import { sleep } from '../utils';
 import { useContext, useState } from 'react';
 import AuthContext from '../../context/Authentication';
 
@@ -31,12 +32,20 @@ const signUp = async email => {
       username: email,
       password: getRandomString(30),
     });
+
     //we want to return the newly generated id
     return user.userSub;
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
       return 'userExists';
+    } else if (
+      error.code === 'TooManyRequestsException' ||
+      error.code === 'ThrottlingException'
+    ) {
+      // If the limit of cognito requests was reached we want to wait shortly and try again
+      await sleep(1500);
+      return signUp(email);
     } else {
       //TODO: Error handling in UI?
       console.log('Error while signing up', error);
