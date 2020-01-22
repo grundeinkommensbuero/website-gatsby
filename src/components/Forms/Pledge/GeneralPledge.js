@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
-import { TextInputWrapped, TextareaWrapped } from '../TextInput';
+import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
@@ -73,7 +73,8 @@ export default ({ pledgeId }) => {
                   name="message"
                   label="Willst du uns noch etwas mitteilen?"
                   placeholder="Deine Nachricht"
-                  component={TextareaWrapped}
+                  type="textarea"
+                  component={TextInputWrapped}
                 />
               </FormSection>
 

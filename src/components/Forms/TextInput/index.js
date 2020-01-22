@@ -8,6 +8,10 @@ export function TextInput({ children, className, ...other }) {
   return <input className={cN(s.textInput, className)} {...other} />;
 }
 
+export function Textarea({ children, className, ...other }) {
+  return <textarea className={cN(s.textarea, className)} {...other} />;
+}
+
 export const TextInputWrapped = ({
   input,
   label,
@@ -27,43 +31,19 @@ export const TextInputWrapped = ({
       meta={meta}
       className={className}
     >
-      <TextInput
-        {...input}
-        placeholder={placeholder}
-        className={inputClassName}
-      />
-    </LabelInputErrorWrapper>
-  );
-};
-
-export function Textarea({ children, className, ...other }) {
-  return <textarea className={cN(s.textarea, className)} {...other} />;
-}
-
-export const TextareaWrapped = ({
-  input,
-  label,
-  meta,
-  placeholder,
-  description,
-  hide,
-  className,
-  inputClassName,
-}) => {
-  if (hide) {
-    return null;
-  }
-  return (
-    <LabelInputErrorWrapper
-      label={description ? `${label} (${description})` : label}
-      meta={meta}
-      className={className}
-    >
-      <Textarea
-        {...input}
-        placeholder={placeholder}
-        className={inputClassName}
-      />
+      {input.type === 'textarea' ? (
+        <Textarea
+          {...input}
+          placeholder={placeholder}
+          className={inputClassName}
+        />
+      ) : (
+        <TextInput
+          {...input}
+          placeholder={placeholder}
+          className={inputClassName}
+        />
+      )}
     </LabelInputErrorWrapper>
   );
 };
