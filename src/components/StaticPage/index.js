@@ -80,6 +80,7 @@ export const pageQuery = graphql`
               name
             }
             twitterFeed
+            backgroundIllustration
           }
           ... on ContentfulPageSectionVideo {
             __typename

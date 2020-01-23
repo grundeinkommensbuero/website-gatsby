@@ -61,6 +61,8 @@ export default function Sections({ sections }) {
                 [s.sectionNewsletter]: !!emailSignup,
                 [s.sectionIllustration]: isIllustration,
                 [s.sectionVideo]: isVideoSection,
+                [s.sectionCrowdCollect]:
+                  backgroundIllustration === 'crowd_collect',
               })}
               sectionBodyNoEvents={isIllustration || isVideoSection}
             >
