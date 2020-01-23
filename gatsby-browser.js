@@ -5,7 +5,9 @@ export const wrapRootElement = wrapWithProvider;
 window.commitHash = COMMITHASH;
 window.version = VERSION;
 
-TrackJS.install({
-  token: 'bdfde1e3d32848da99ec8f12f4136b59',
-  application: 'expedition-grundeinkommen',
-});
+if (location.host.indexOf('localhost') !== 0) {
+  TrackJS.install({
+    token: 'bdfde1e3d32848da99ec8f12f4136b59',
+    application: 'expedition-grundeinkommen',
+  });
+}
