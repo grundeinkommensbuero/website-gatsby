@@ -55,20 +55,22 @@ function Illustration({ illustration, className }) {
       }
     }
 
-    // Array.from(svg.children).forEach(element => {
-    //   if (!element.id.includes('background')) {
-    //     Array.from(element.children).forEach(element => {
-    //       if (
-    //         element.tagName === 'path' ||
-    //         element.tagName === 'polygon' ||
-    //         element.tagName === 'g'
-    //       ) {
-    //         makeDraggable(element, postionCorrections);
-    //       }
-    //     });
-    //   }
-    // });
-  });
+    if (svg.children) {
+      Array.from(svg.children).forEach(element => {
+        if (!element.id.includes('background')) {
+          Array.from(element.children).forEach(element => {
+            if (
+              element.tagName === 'path' ||
+              element.tagName === 'polygon' ||
+              element.tagName === 'g'
+            ) {
+              makeDraggable(element, postionCorrections);
+            }
+          });
+        }
+      });
+    }
+  }, [containerRef]);
 
   return (
     <div
