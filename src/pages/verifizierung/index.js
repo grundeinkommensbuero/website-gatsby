@@ -7,7 +7,7 @@ import s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
 import cN from 'classnames';
 import { Button } from '../../components/Forms/Button';
-import { CTAButtonContainer, CTALink } from '../../components/Layout/CTAButton';
+import { CTALink } from '../../components/Layout/CTAButton';
 import querystring from 'query-string';
 
 const Verification = () => {
@@ -145,11 +145,7 @@ const Verification = () => {
     {
       bodyTextSizeHuge: true,
       body: (
-        <SocialMediaButtons
-          className={cN(s.socialMedia, { [s.socialMediaSuccess]: isOk })}
-        >
-          Erzähl’ auch anderen davon!
-        </SocialMediaButtons>
+        <SocialMediaButtons>Erzähl’ auch anderen davon!</SocialMediaButtons>
       ),
     },
   ];
