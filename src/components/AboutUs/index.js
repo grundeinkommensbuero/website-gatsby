@@ -18,21 +18,26 @@ const AboutUs = ({ members, className }) => {
           { link: member.twitter, icon: 'twitter' },
           { link: member.linkedin, icon: 'linkedin' },
           { link: member.website, icon: 'website' },
-        ];
+        ].filter(link => {
+          return !!link.link;
+        });
 
         return (
           <li key={index} className={s.member}>
             {image && (
               <div className={s.imageContainer}>
                 <Img fluid={image.fluid} className={s.image} loading="lazy" />
+
+                {!!links.length && (
+                  <div className={s.someButtons}>
+                    {links.map(link => (
+                      <SocialMediaButton {...link} />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
-            <span>
-              {name}{' '}
-              {links.map(link => (
-                <SocialMediaButton {...link} />
-              ))}
-            </span>
+            <span>{name}</span>
           </li>
         );
       })}
