@@ -126,21 +126,19 @@ const Verification = () => {
                 'Wir haben dir eine neue E-Mail geschickt. Bitte klicke darin den Link, dann bist du dabei!'}
             </FinallyMessage>
           )}
-          {isOk && <HurrayCrowd color="RED" />}
-        </>
-      ),
-    },
-    {
-      bodyTextSizeHuge: true,
-      body: (
-        <>
-          <h2>
-            Wir sind gemeinnützig und auf Spenden angewiesen. Bitte unterstütze
-            uns auch finanziell!
-          </h2>
-          <CTAButtonContainer illustration="POINT_LEFT">
-            <CTALink to="/#Spende">Jetzt spenden</CTALink>
-          </CTAButtonContainer>
+          {isOk && (
+            <>
+              <FinallyMessage>
+                <p>
+                  Wir sind gemeinnützig und auf Spenden angewiesen. Bitte
+                  unterstütze uns auch finanziell.
+                </p>
+                <CTALink to="/#Spende">Jetzt spenden</CTALink>
+              </FinallyMessage>
+
+              <HurrayCrowd color="RED" />
+            </>
+          )}
         </>
       ),
     },
