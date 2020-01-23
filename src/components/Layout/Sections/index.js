@@ -44,7 +44,7 @@ export default function Sections({ sections }) {
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
           const isIllustration =
             __typename === 'ContentfulPageSectionIllustration';
-          console.log(backgroundIllustration);
+
           return (
             <Section
               key={index}
