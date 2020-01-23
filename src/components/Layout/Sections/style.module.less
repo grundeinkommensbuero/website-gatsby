@@ -34,7 +34,7 @@
         --font-color: @red;
         --secondary-color: @pink;
         --text-on-secondary-color: @yellow;
-        background: @yellow;
+        background-color: @yellow;
         color: @red;
 
         &.sectionNewsletter {
@@ -45,14 +45,14 @@
     &:nth-child(3n+2) {
         --bg-color: @red;
         --font-color: @greyBright;
-        background: @red;
+        background-color: @red;
         color: @greyBright;
     }
 
     &:nth-child(3n+3), &:only-child {
         --bg-color: @grey;
         --font-color: @red;
-        background: @grey;
+        background-color: @grey;
         color: @red;
     }
 
@@ -93,6 +93,40 @@
                 position: relative;
                 z-index: 1;
             }
+        }
+    }
+
+    &CrowdCollect {
+        background-image: url('./backgrounds/crowd_collect_yellow_desktop.svg');
+        background-repeat: no-repeat;
+        background-position: bottom -6rem center;
+        background-size: auto 122rem;
+
+        @media (min-width: 1300px) {
+            background-size: auto 130rem;
+        }
+
+        @media (min-width: 1400px) {
+            background-size: auto 140rem;
+        }
+
+        @media (max-width: 900px) {
+            background-image: url('./backgrounds/crowd_collect_yellow_mobile.svg');
+            padding-bottom: 23rem;
+            background-position: bottom -3rem center;
+            background-size: auto 160rem;
+        }
+
+        @media (max-width: 600px) {
+            padding-bottom: 20rem;
+            background-size: auto 130rem;
+            background-position: bottom -2rem center;
+        }
+
+        @media (max-width: 450px) {
+            padding-bottom: 15rem;
+            background-size: auto 90rem;
+            background-position: bottom -1rem center;
         }
     }
 }
