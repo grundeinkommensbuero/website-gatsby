@@ -78,6 +78,9 @@ export const pageQuery = graphql`
                 }
               }
               name
+              twitter
+              linkedin
+              website
             }
             twitterFeed
             backgroundIllustration
