@@ -38,27 +38,33 @@ export default function Sections({ sections }) {
             callToActionReference,
             twitterFeed,
             map,
+            backgroundIllustration,
           } = section;
           const id = stringToId(titleShort);
+          const isVideoSection = __typename === 'ContentfulPageSectionVideo';
+          const isIllustration =
+            __typename === 'ContentfulPageSectionIllustration';
+          console.log(backgroundIllustration);
           return (
             <Section
               key={index}
               title={title}
               jumpToId={id}
-              isVideoSection={__typename === 'ContentfulPageSectionVideo'}
-              isIllustrationSection={
-                __typename === 'ContentfulPageSectionIllustration'
-              }
-              isNewsletter={!!emailSignup}
-              isPledge={!!pledgeId}
+              isVideoSection={isVideoSection}
               afterBodyContent={
-                (__typename === 'ContentfulPageSectionIllustration' ||
-                  __typename === 'ContentfulPageSectionVideo') && (
+                (isIllustration || isVideoSection) && (
                   <MainIllustration className={s.illustration} />
                 )
               }
+              className={cN({
+                [s.sectionPledge]: !!pledgeId,
+                [s.sectionNewsletter]: !!emailSignup,
+                [s.sectionIllustration]: isIllustration,
+                [s.sectionVideo]: isVideoSection,
+              })}
+              sectionBodyNoEvents={isIllustration || isVideoSection}
             >
-              {__typename === 'ContentfulPageSectionIllustration' && (
+              {isIllustration && (
                 <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
               )}
               {campainVisualisations && (
@@ -133,27 +139,20 @@ export function Section({
   className,
   title,
   jumpToId,
-  isVideoSection,
-  isIllustrationSection,
-  isNewsletter,
-  isPledge,
   afterBodyContent,
   isHeader,
+  sectionBodyNoEvents,
 }) {
   return (
     <section
       className={cN(s.section, className, {
-        [s.sectionVideo]: isVideoSection,
-        [s.sectionIllustration]: isIllustrationSection,
-        [s.sectionNewsletter]: isNewsletter,
-        [s.sectionPledge]: isPledge,
         [s.sectionHeader]: isHeader,
       })}
     >
       {jumpToId && <div id={jumpToId} className={s.jumpToAnchor} />}
       <div
         className={cN(s.sectionBody, {
-          [s.sectionBodyNoEvents]: isIllustrationSection || isVideoSection,
+          [s.sectionBodyNoEvents]: sectionBodyNoEvents,
         })}
       >
         {title && <h1 className={s.title}>{title}</h1>}
