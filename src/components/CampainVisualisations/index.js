@@ -115,7 +115,7 @@ const Visualisation = ({
         </div>
         {showCTA && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
-            Mehr Infos
+            Mitmachen
           </LinkButtonLocal>
         )}
       </div>
