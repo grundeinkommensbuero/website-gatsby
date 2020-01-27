@@ -59,7 +59,8 @@ const SocialMediaButton = ({ icon, link }) => {
         aria-label={icon}
         dangerouslySetInnerHTML={{ __html: ICONS[icon] }}
         className={s.socialMediaButton}
-      ></a>{' '}
+        target="_blank"
+      />
     </>
   );
 };
