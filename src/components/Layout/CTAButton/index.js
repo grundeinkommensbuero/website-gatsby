@@ -2,8 +2,10 @@ import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import { LinkButton, Button, LinkButtonLocal } from '../../Forms/Button';
-import POINT_LEFT from './figure_point_left.svg';
-import POINT_LEFT_MOBILE from './figure_point_left_mobile.svg';
+import POINT_LEFT_YELLOW from './figure_point_left_yellow.svg';
+import POINT_LEFT_MOBILE_YELLOW from './figure_point_left_mobile_yellow.svg';
+import POINT_LEFT_RED from './figure_point_left_red.svg';
+import POINT_LEFT_MOBILE_RED from './figure_point_left_mobile_red.svg';
 
 export function CTAButtonContainer({ children, className, illustration }) {
   return (
@@ -17,13 +19,23 @@ export function CTAButtonContainer({ children, className, illustration }) {
         {illustration === 'POINT_LEFT' && (
           <>
             <img
-              src={POINT_LEFT}
-              className={s.illustrationPointLeft}
+              src={POINT_LEFT_YELLOW}
+              className={cN(s.illustrationPointLeft, s.yellow)}
               aria-hidden="true"
             />
             <img
-              src={POINT_LEFT_MOBILE}
-              className={s.illustrationPointLeftMobile}
+              src={POINT_LEFT_MOBILE_YELLOW}
+              className={cN(s.illustrationPointLeftMobile, s.yellow)}
+              aria-hidden="true"
+            />
+            <img
+              src={POINT_LEFT_RED}
+              className={cN(s.illustrationPointLeft, s.red)}
+              aria-hidden="true"
+            />
+            <img
+              src={POINT_LEFT_MOBILE_RED}
+              className={cN(s.illustrationPointLeftMobile, s.red)}
               aria-hidden="true"
             />
           </>

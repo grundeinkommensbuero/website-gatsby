@@ -33,6 +33,23 @@
   }
 }
 
+.illustrationPointLeft,
+.illustrationPointLeftMobile {
+  section:nth-child(3n + 1):not(:only-child) & {
+    &.yellow {
+      display: none;
+    }
+  }
+
+  section:nth-child(3n + 2) &,
+  section:nth-child(3n + 3) &,
+  section:only-child & {
+    &.red {
+      display: none;
+    }
+  }
+}
+
 .illustrationPointLeft {
   position: absolute;
   width: 13rem;
