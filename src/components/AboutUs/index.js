@@ -21,6 +21,7 @@ const AboutUs = ({ members, className }) => {
         ].filter(link => {
           return !!link.link;
         });
+        const nameWithLineBreak = name.replace(' ', '<br />');
 
         return (
           <li key={index} className={s.member}>
@@ -37,7 +38,9 @@ const AboutUs = ({ members, className }) => {
                 )}
               </div>
             )}
-            <span>{name}</span>
+            <div>
+              <span dangerouslySetInnerHTML={{ __html: nameWithLineBreak }} />
+            </div>
           </li>
         );
       })}
