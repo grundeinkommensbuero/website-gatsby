@@ -31,7 +31,11 @@ const AboutUs = ({ members, className }) => {
                 {!!links.length && (
                   <div className={s.socialMediaButtons}>
                     {links.map(link => (
-                      <SocialMediaButton key={link.icon} {...link} />
+                      <SocialMediaButton
+                        key={link.icon}
+                        name={name}
+                        {...link}
+                      />
                     ))}
                   </div>
                 )}
@@ -47,20 +51,31 @@ const AboutUs = ({ members, className }) => {
   );
 };
 
-const SocialMediaButton = ({ icon, link }) => {
+const SocialMediaButton = ({ icon, link, name }) => {
   if (!link) {
     return null;
+  }
+
+  let title;
+
+  if (icon === 'twitter') {
+    title = `${name} bei Twitter`;
+  } else if (icon === 'linkedin') {
+    title = `${name} bei LinkedIn`;
+  } else {
+    title = `${name} im Internet`;
   }
 
   return (
     <>
       <a
         href={link}
-        aria-label={icon}
+        aria-label={title}
         dangerouslySetInnerHTML={{ __html: ICONS[icon] }}
         className={s.socialMediaButton}
         target="_blank"
-      />
+        title={title}
+      />{' '}
     </>
   );
 };
