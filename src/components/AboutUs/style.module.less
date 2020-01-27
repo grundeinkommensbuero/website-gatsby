@@ -24,28 +24,68 @@
         padding: 0 1rem;
     }
 
-    &:nth-child(6n+1) .image {
-        mask-image: url(./shapes/1.svg);
+    &:nth-child(6n+1) {
+        .socialMediaButtons {
+            transform: rotate(-45deg) translateY(-0.5rem);
+        }
+
+        .image {
+            mask-image: url(./shapes/1.svg);
+        }
     }
 
-    &:nth-child(6n+2) .image {
-        mask-image: url(./shapes/2.svg);
+    &:nth-child(6n+2) {
+        .socialMediaButtons {
+            left: 0;
+            right: auto;
+            transform: rotate(10deg) translateY(0.5rem);
+        }
+
+        .image {
+            mask-image: url(./shapes/2.svg);
+        }
     }
 
-    &:nth-child(6n+3) .image {
-        mask-image: url(./shapes/3.svg);
+    &:nth-child(6n+3) {
+        .socialMediaButtons {
+            transform: rotate(-45deg) translateY(-0.9rem);
+        }
+
+        .image {
+            mask-image: url(./shapes/3.svg);
+        }
     }
 
-    &:nth-child(6n+4) .image {
-        mask-image: url(./shapes/4.svg);
+    &:nth-child(6n+4) {
+        .socialMediaButtons {
+            left: 0;
+            right: auto;
+            transform: rotate(45deg) translateY(.1rem);
+        }
+
+        .image {
+            mask-image: url(./shapes/4.svg);
+        }
     }
 
-    &:nth-child(6n+5) .image {
-        mask-image: url(./shapes/5.svg);
+    &:nth-child(6n+5) {
+        .socialMediaButtons {
+            transform: rotate(-10deg) translateY(.5rem);
+        }
+
+        .image {
+            mask-image: url(./shapes/5.svg);
+        }
     }
 
-    &:nth-child(6n+6) .image {
-        mask-image: url(./shapes/6.svg);
+    &:nth-child(6n+6) {
+        .socialMediaButtons {
+            transform: rotate(-35deg) translateY(-0.4rem);
+        }
+
+        .image {
+            mask-image: url(./shapes/6.svg);
+        }
     }
 }
 
@@ -65,10 +105,15 @@
     margin: 0 0 1rem;
 }
 
-.someButtons {
+.socialMediaButtons {
     position: absolute;
     z-index: 1;
-    top: -1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 0;
+    right: 0;
+    transform-origin: center;
+    text-align: center;
+}
+
+.socialMediaButton {
+    font-size: @fontSizeS;
 }

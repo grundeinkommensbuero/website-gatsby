@@ -28,11 +28,10 @@ const AboutUs = ({ members, className }) => {
             {image && (
               <div className={s.imageContainer}>
                 <Img fluid={image.fluid} className={s.image} loading="lazy" />
-
                 {!!links.length && (
-                  <div className={s.someButtons}>
+                  <div className={s.socialMediaButtons}>
                     {links.map(link => (
-                      <SocialMediaButton {...link} />
+                      <SocialMediaButton key={link.icon} {...link} />
                     ))}
                   </div>
                 )}
@@ -59,6 +58,7 @@ const SocialMediaButton = ({ icon, link }) => {
         href={link}
         aria-label={icon}
         dangerouslySetInnerHTML={{ __html: ICONS[icon] }}
+        className={s.socialMediaButton}
       ></a>{' '}
     </>
   );
