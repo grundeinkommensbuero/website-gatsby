@@ -5,6 +5,7 @@
 import CONFIG from '../../../../aws-config';
 import { useAuthentication } from '../../Authentication';
 import { useState } from 'react';
+import querystring from 'query-string';
 
 /*
   email
@@ -22,9 +23,9 @@ export const usePledgeApi = () => {
 const savePledge = async (pledge, setState) => {
   const [signUp] = useAuthentication();
   // check url params, if current user came from referral (e.g newsletter)
-  const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = querystring.parse(window.location.search);
   // the pk_source param was generated in matomo
-  const referral = urlParams.get('pk_source');
+  const referral = urlParams.pk_source;
   try {
     setState('saving');
     //register user

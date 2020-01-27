@@ -10,6 +10,7 @@ import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Upda
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import { validateEmail } from '../../utils';
 import { SectionInner, Section, SectionHeader } from '../../Layout/Sections';
+import querystring from 'query-string';
 
 export default ({ successMessage, campaignCode }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
@@ -25,10 +26,10 @@ export default ({ successMessage, campaignCode }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = querystring.parse(window.location.search);
     // Will be null, if param does not exist
-    setListId(urlParams.get('listId'));
-    setUserId(urlParams.get('userId'));
+    setListId(urlParams.listId);
+    setUserId(urlParams.userId);
   }, []);
 
   useEffect(() => {
@@ -60,10 +61,12 @@ export default ({ successMessage, campaignCode }) => {
             <p>Unterschriften von dir:</p>
             <ul>
               <li>
-                {signatureCountOfUser.scannedByUser + count} wurden über diese Seite mitgeteilt
+                {signatureCountOfUser.scannedByUser + count} wurden über diese
+                Seite mitgeteilt
               </li>
               <li>
-                {signatureCountOfUser.received} sind bei uns schon per Post angekommen
+                {signatureCountOfUser.received} sind bei uns schon per Post
+                angekommen
               </li>
             </ul>
           </SectionInner>
@@ -138,8 +141,8 @@ const CountSignaturesForm = ({
         return (
           <>
             <p>
-              Du hast Unterschriften gesammelt? Bitte sag uns, wie viele Unterschriften
-              hinzu gekommen sind:
+              Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
+              Unterschriften hinzu gekommen sind:
             </p>
             <FormWrapper>
               <form onSubmit={handleSubmit}>
