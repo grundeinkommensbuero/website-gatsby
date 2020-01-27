@@ -8,6 +8,7 @@ import s from './style.module.less';
 import { trackEvent, addActionTrackingId } from '../../components/utils';
 import { CTAButtonContainer } from '../../components/Layout/CTAButton';
 import { StepListItem } from '../../components/StepList';
+import querystring from 'query-string';
 
 const trackingCategory = 'ListDownload';
 
@@ -23,11 +24,11 @@ const Unterschriftenliste = () => {
   const [campaignCode, setCampaignCode] = useState(null);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setCampaignCode(urlParams.get('campaignCode'));
+    const urlParams = querystring.parse(window.location.search);
+    setCampaignCode(urlParams.campaignCode);
     createPdf({
-      userId: urlParams.get('userId'),
-      campaignCode: urlParams.get('campaignCode'),
+      userId: urlParams.userId,
+      campaignCode: urlParams.campaignCode,
     });
   }, []);
 

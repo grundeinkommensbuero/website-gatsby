@@ -1,6 +1,7 @@
 import { useAuthentication } from '../../Authentication';
 import { useState } from 'react';
 import { updateUser } from '../../utils';
+import querystring from 'query-string';
 
 export const useNewsletterApi = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
@@ -19,9 +20,9 @@ const subscribeToNewsletter = async (email, setState) => {
     const [signUp] = useAuthentication();
 
     // check url params, if current user came from referral (e.g newsletter)
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = querystring.parse(window.location.search);
     // the pk_source param was generated in matomo
-    const referral = urlParams.get('pk_source');
+    const referral = urlParams.pk_source;
 
     //register user
     const userId = await signUp(email);
