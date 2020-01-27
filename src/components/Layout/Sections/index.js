@@ -13,6 +13,7 @@ import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import HeaderBackgrounds from '../HeaderBackgrounds';
 import Img from 'gatsby-image';
+import Share from '../../SocialMedia/Share';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -39,6 +40,7 @@ export default function Sections({ sections }) {
             twitterFeed,
             map,
             backgroundIllustration,
+            socialMediaButtons,
           } = section;
           const id = stringToId(titleShort);
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
@@ -121,6 +123,11 @@ export default function Sections({ sections }) {
               {twitterFeed && (
                 <SectionInner>
                   <TwitterEmbed />
+                </SectionInner>
+              )}
+              {socialMediaButtons && (
+                <SectionInner>
+                  <Share />
                 </SectionInner>
               )}
             </Section>

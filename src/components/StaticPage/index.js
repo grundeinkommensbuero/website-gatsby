@@ -81,6 +81,7 @@ export const pageQuery = graphql`
             }
             twitterFeed
             backgroundIllustration
+            socialMediaButtons
           }
           ... on ContentfulPageSectionVideo {
             __typename
