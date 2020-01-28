@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
-import { formatDateMonthYear } from '../utils';
+import { formatDateMonthYear, contentfulJsonToHtml } from '../utils';
 import { LinkButtonLocal } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
+import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
@@ -39,9 +40,11 @@ const Visualisation = ({
   addToSignatureCount,
   showCTA,
   ctaLink,
+  eyeCatcher,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
+  const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
 
   useEffect(() => {
     if ('IntersectionObserver' in window) {
@@ -84,6 +87,7 @@ const Visualisation = ({
   return (
     <SectionInner wide={true}>
       {title && <h2 className={s.title}>{title}</h2>}
+
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
         <div className={s.bar} ref={barEl}>
           <WrapInLink link={showCTA && ctaLink}>
@@ -116,6 +120,16 @@ const Visualisation = ({
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
             Mitmachen
           </LinkButtonLocal>
+        )}
+        {EyeCatcherContent && (
+          <div className={s.eyeCatcher}>
+            <div
+              className={s.eyeCatcherBackground}
+              dangerouslySetInnerHTML={{ __html: eyeCatcherBackground }}
+              aria-hidden="true"
+            />
+            <div className={s.eyeCatcherContent}>{EyeCatcherContent}</div>
+          </div>
         )}
       </div>
     </SectionInner>
