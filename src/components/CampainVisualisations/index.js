@@ -19,7 +19,7 @@ export default ({ visualisations }) => {
           currentCount={
             currentCounts &&
             currentCounts[visualisation.campainCode] &&
-            currentCounts[visualisation.campainCode].withMixed
+            currentCounts[visualisation.campainCode].computed
           }
           //only show CTA if multiple visualisations AND ctaLink not empty
           showCTA={visualisations.length !== 1 && visualisation.ctaLink}
