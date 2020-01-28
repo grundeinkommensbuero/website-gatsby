@@ -58,6 +58,8 @@ export const pageQuery = graphql`
               eyeCatcher {
                 json
               }
+              goalUnbuffered
+              goalInbetween
             }
             body {
               json

@@ -41,10 +41,13 @@ const Visualisation = ({
   showCTA,
   ctaLink,
   eyeCatcher,
+  goalInbetween,
+  goalUnbuffered,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
+  const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
 
   useEffect(() => {
     if ('IntersectionObserver' in window) {
@@ -101,13 +104,21 @@ const Visualisation = ({
               <span>{goal && goal.toLocaleString('de')}</span>
             </span>
             {hasStarted && (
-              <span
-                className={cN(s.barCurrent, { [s.outside]: countOutside })}
-                style={{ width: `${percentage}%` }}
-                aria-label={`${count} von ${goal} Unterschriften`}
-              >
-                <span>{count && count.toLocaleString('de')}</span>
-              </span>
+              <>
+                <span
+                  className={cN(s.barCurrent, { [s.outside]: countOutside })}
+                  style={{ width: `${percentage}%` }}
+                  aria-label={`${count} von ${goal} Unterschriften`}
+                >
+                  <span>{count && count.toLocaleString('de')}</span>
+                </span>
+                {goalInbetweenPercentage && (
+                  <div
+                    className={s.goalInbetween}
+                    style={{ left: `${goalInbetweenPercentage}%` }}
+                  />
+                )}
+              </>
             )}
             {!hasStarted && (
               <span
