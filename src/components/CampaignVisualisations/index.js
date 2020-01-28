@@ -98,7 +98,7 @@ const Visualisation = ({
         <div className={s.bar} ref={barEl}>
           <WrapInLink link={showCTA && ctaLink}>
             <span
-              className={cN(s.barGoal, { [s.hasStarted]: !hasStarted })}
+              className={cN(s.barGoal, { [s.hasNotStarted]: !hasStarted })}
               aria-hidden="true"
             >
               <span>{goal && goal.toLocaleString('de')}</span>
