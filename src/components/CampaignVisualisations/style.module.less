@@ -40,31 +40,33 @@
     display: flex;
     justify-content: flex-end;
 
-    > div, span {
-        position: relative;
-        z-index: 1;
-        padding: 0.5rem;
-    }
-
     &.hasNotStarted {
         color: var(--font-color);
-
-        &::before {
-            background: transparent;
-            border: var(--bg-color);
-            border: 1px solid var(--font-color);
-        }
     }
+}
 
-    &::before {
-        content: '';
-        background: var(--font-color);
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        z-index: 0;
-        transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
-    }
+.barGoalLabel {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    text-align: right;
+    padding: .5rem;
+}
+
+.barGoalBar {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
+    border: 1px solid var(--font-color);
+}
+
+.barGoalUnbuffered {
+    position: absolute;
+    height: 100%;
+    background: var(--font-color);
 }
 
 .goalInbetween {
