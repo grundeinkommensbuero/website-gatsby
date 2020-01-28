@@ -48,6 +48,8 @@ const Visualisation = ({
   const [isInView, setIsInView] = useState(false);
   const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
   const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
+  const goalUnbufferedPercentage =
+    goalUnbuffered && (goalUnbuffered / goal) * 100;
 
   useEffect(() => {
     if ('IntersectionObserver' in window) {
@@ -101,7 +103,23 @@ const Visualisation = ({
               className={cN(s.barGoal, { [s.hasNotStarted]: !hasStarted })}
               aria-hidden="true"
             >
-              <span>{goal && goal.toLocaleString('de')}</span>
+              <div className={s.barGoalBar}>
+                {hasStarted && (
+                  <div
+                    className={s.barGoalUnbuffered}
+                    style={{ width: `${goalUnbufferedPercentage || 100}%` }}
+                  ></div>
+                )}
+              </div>
+
+              <div
+                className={s.barGoalLabel}
+                style={{ width: `${goalUnbufferedPercentage || 100}%` }}
+              >
+                {goalUnbuffered
+                  ? goalUnbuffered.toLocaleString('de')
+                  : goal.toLocaleString('de')}
+              </div>
             </span>
             {hasStarted && (
               <>
