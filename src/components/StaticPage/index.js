@@ -55,6 +55,9 @@ export const pageQuery = graphql`
               minimum
               addToSignatureCount
               ctaLink
+              eyeCatcher {
+                json
+              }
             }
             body {
               json
