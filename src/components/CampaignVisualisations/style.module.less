@@ -119,25 +119,65 @@
 .eyeCatcher {
     position: absolute;
     left: 100%;
-    top: -8rem;
-    margin-left: -3rem;
-
     color: var(--text-on-secondary-color);
     height: 15rem;
     width: 15rem;
     text-align: center;
     display: flex;
     align-items: center;
+    justify-content: center;
     transform: rotate(-5deg);
+    top: -1rem;
+    margin-left: -1rem;
+
+    @media (max-width: 1150px) {
+        font-size: @fontSizeS;
+        height: 10rem;
+        width: 10rem;
+        top: 2rem;
+        margin-left: -5rem;
+    }
+
+    @media (max-width: @breakPointM) {
+        top: 3rem;
+        margin-left: -8.5rem;
+    }
+
+    @media (max-width: @breakPointS) {
+        top: auto;
+        bottom: 100%;
+        margin-bottom: -1rem;
+    }
 
     p {
         margin: 0;
     }
 }
 
+.eyeCatcherWithCta {
+    top: -8rem;
+    margin-left: -3rem;
+
+    @media (max-width: 1150px) {
+        top: -6rem;
+        margin-left: -4rem;
+    }
+
+    @media (max-width: @breakPointM) {
+        top: auto;
+        bottom: 100%;
+        margin-left: -8.5rem;
+        margin-bottom: -1rem;
+    }
+}
+
 .eyeCatcherContent {
     position: relative;
     z-index: 1;
+}
+
+.eyeCatcherLink {
+    text-decoration: none;
 }
 
 .eyeCatcherBackground {
@@ -147,4 +187,10 @@
     width: 100%;
     height: 100%;
     fill: var(--secondary-color);
+}
+
+.sectionInnerHasCta {
+    @media (max-width: @breakPointM) {
+        margin-top: 4rem;
+    }
 }

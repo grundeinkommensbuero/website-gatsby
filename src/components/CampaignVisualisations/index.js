@@ -85,7 +85,10 @@ const Visualisation = ({
   const countOutside = percentage < 40;
 
   return (
-    <SectionInner wide={true}>
+    <SectionInner
+      wide={true}
+      className={cN({ [s.sectionInnerHasCta]: !!EyeCatcherContent })}
+    >
       {title && <h2 className={s.title}>{title}</h2>}
 
       <div className={cN(s.body, { [s.showCTA]: showCTA })}>
@@ -122,13 +125,19 @@ const Visualisation = ({
           </LinkButtonLocal>
         )}
         {EyeCatcherContent && (
-          <div className={s.eyeCatcher}>
-            <div
-              className={s.eyeCatcherBackground}
-              dangerouslySetInnerHTML={{ __html: eyeCatcherBackground }}
-              aria-hidden="true"
-            />
-            <div className={s.eyeCatcherContent}>{EyeCatcherContent}</div>
+          <div
+            className={cN(s.eyeCatcher, {
+              [s.eyeCatcherWithCta]: showCTA && ctaLink,
+            })}
+          >
+            <WrapInLink link={showCTA && ctaLink} className={s.eyeCatcherLink}>
+              <div
+                className={s.eyeCatcherBackground}
+                dangerouslySetInnerHTML={{ __html: eyeCatcherBackground }}
+                aria-hidden="true"
+              />
+              <div className={s.eyeCatcherContent}>{EyeCatcherContent}</div>
+            </WrapInLink>
           </div>
         )}
       </div>
@@ -136,9 +145,13 @@ const Visualisation = ({
   );
 };
 
-const WrapInLink = ({ link, children }) => {
+const WrapInLink = ({ link, children, className }) => {
   if (link) {
-    return <Link to={link}>{children}</Link>;
+    return (
+      <Link to={link} className={className}>
+        {children}
+      </Link>
+    );
   }
   return <>{children}</>;
 };
