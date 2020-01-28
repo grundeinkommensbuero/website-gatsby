@@ -21,7 +21,6 @@ export default ({ visualisations }) => {
             currentCounts[visualisation.campainCode] &&
             currentCounts[visualisation.campainCode].computed
           }
-          //only show CTA if multiple visualisations AND ctaLink not empty
           showCTA={visualisations.length !== 1 && visualisation.ctaLink}
         />
       ))}

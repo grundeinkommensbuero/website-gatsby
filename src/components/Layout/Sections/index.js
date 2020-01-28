@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
-import CampainVisualisations from '../../CampainVisualisations';
+import CampaignVisualisations from '../../CampaignVisualisations';
 import Map from '../../Map';
 import EmailListForm from '../../EmailListForm';
 import { stringToId, contentfulJsonToHtml } from '../../utils';
@@ -72,7 +72,9 @@ export default function Sections({ sections }) {
                 <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
               )}
               {campainVisualisations && (
-                <CampainVisualisations visualisations={campainVisualisations} />
+                <CampaignVisualisations
+                  visualisations={campainVisualisations}
+                />
               )}
               <SectionInner hugeText={bodyTextSizeHuge}>
                 {body && body.json ? contentfulJsonToHtml(body.json) : body}
