@@ -13,7 +13,7 @@ export const Tooltip = ({ children, style, className, content }) => {
           </div>
         )}
       </Reference>
-      <Popper placement="top" modifiers={{ offset: { offset: '0, 10' } }}>
+      <Popper placement="top" modifiers={{ offset: { offset: '0, 25' } }}>
         {({ ref, style, placement, arrowProps }) => (
           <div
             ref={ref}
@@ -21,10 +21,11 @@ export const Tooltip = ({ children, style, className, content }) => {
             data-placement={placement}
             className={s.popup}
           >
-            {content}
+            <div className={s.tooltipContent}>{content}</div>
             <div
               ref={arrowProps.ref}
               style={arrowProps.style}
+              data-placement={placement}
               className={s.arrow}
             />
           </div>
