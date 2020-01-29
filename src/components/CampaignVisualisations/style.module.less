@@ -45,13 +45,32 @@
     }
 }
 
-.barGoalLabel {
+.barGoalBarInbetween {
     position: absolute;
     z-index: 2;
     top: 0;
     left: 0;
     text-align: right;
     padding: .5rem;
+}
+
+.goal {
+    position: absolute;
+    color: var(--font-color);
+    top: .5rem;
+    right: .5rem;
+}
+
+.barGoalBarInbetweenLabel {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+
+    &Outside {
+        right: auto;
+        left: calc(100% + .5rem);
+        color: var(--font-color);
+    }
 }
 
 .barGoalBar {
@@ -69,19 +88,19 @@
     background: var(--font-color);
 }
 
-.goalInbetween {
-    height: 6.5rem;
-    width: 0;
-    border-left: .5rem dashed var(--secondary-color);
-    background: var(--bg-color);
-    position: absolute;
-    top: -.25rem;
-    transform: rotate(-3deg);
-    padding: 0;
-    margin: -.5rem;
-    z-index: 2;
-    cursor: pointer;
-}
+// .goalInbetween {
+//     height: 6.5rem;
+//     width: 0;
+//     border-left: .5rem dashed var(--secondary-color);
+//     background: var(--bg-color);
+//     position: absolute;
+//     top: -.25rem;
+//     transform: rotate(-3deg);
+//     padding: 0;
+//     margin: -.5rem;
+//     z-index: 2;
+//     cursor: pointer;
+// }
 
 .starts {
     font-size: @fontSizeXXXL;

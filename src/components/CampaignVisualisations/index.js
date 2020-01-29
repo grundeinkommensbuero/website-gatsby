@@ -17,12 +17,12 @@ export default ({ visualisations }) => {
       {visualisations.map((visualisation, index) => (
         <Visualisation
           key={index}
-          {...visualisation}
           currentCount={
             currentCounts &&
             currentCounts[visualisation.campainCode] &&
             currentCounts[visualisation.campainCode].computed
           }
+          {...visualisation}
           showCTA={visualisations.length !== 1 && visualisation.ctaLink}
         />
       ))}
@@ -108,24 +108,40 @@ const Visualisation = ({
                 {hasStarted && (
                   <div
                     className={s.barGoalUnbuffered}
-                    style={{ width: `${goalUnbufferedPercentage || 100}%` }}
+                    style={{ width: `${goalInbetweenPercentage || 100}%` }}
                   ></div>
                 )}
               </div>
-
-              <div
-                className={s.barGoalLabel}
-                style={{ width: `${goalUnbufferedPercentage || 100}%` }}
-              >
-                <Tooltip
-                  content="Ziel ohne Puffer"
-                  style={{ display: 'inline' }}
-                >
-                  {goalUnbuffered
-                    ? goalUnbuffered.toLocaleString('de')
-                    : goal.toLocaleString('de')}
+              {goal && (
+                <Tooltip className={s.goal} content="Endziel an Unterschriften">
+                  {goal.toLocaleString('de')}
                 </Tooltip>
-              </div>
+              )}
+
+              {goalInbetween && (
+                <div
+                  className={s.barGoalBarInbetween}
+                  style={{ width: `${goalInbetweenPercentage || 100}%` }}
+                >
+                  <Tooltip
+                    content={
+                      <>
+                        Nächstes Ziel: <br />
+                        {goalInbetween.toLocaleString('de')} Unterschriften
+                      </>
+                    }
+                    className={cN(s.barGoalBarInbetweenLabel, {
+                      [s.barGoalBarInbetweenLabelOutside]:
+                        goalInbetweenPercentage < 10,
+                    })}
+                    style={{ display: 'inline' }}
+                  >
+                    {goalInbetween
+                      ? goalInbetween.toLocaleString('de')
+                      : goal.toLocaleString('de')}
+                  </Tooltip>
+                </div>
+              )}
             </span>
             {hasStarted && (
               <>
@@ -136,7 +152,7 @@ const Visualisation = ({
                 >
                   <span>{count && count.toLocaleString('de')}</span>
                 </span>
-                {goalInbetweenPercentage && (
+                {/* {goalInbetweenPercentage && (
                   <Tooltip
                     className={s.goalInbetween}
                     style={{ left: `${goalInbetweenPercentage}%` }}
@@ -147,7 +163,7 @@ const Visualisation = ({
                       </>
                     }
                   ></Tooltip>
-                )}
+                )} */}
               </>
             )}
             {!hasStarted && (
