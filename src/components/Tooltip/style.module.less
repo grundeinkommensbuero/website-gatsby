@@ -1,18 +1,48 @@
 .arrow {
-    // position: absolute;
-    // background: green;
-    // height: 2rem;
-    // width: 2rem;
+    @distance: -.5rem;
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    transform: rotate(45deg);
+    z-index: 0;
+    background: var(--font-color);
+
+    &[data-placement*='top'] {
+        bottom: @distance;
+    }
+
+    &[data-placement*='bottom'] {
+        top: @distance;
+
+    }
 }
 
 .popup {
-    background: var(--font-color);
     color: var(--bg-color);
     padding: .5rem;
     visibility: hidden;
+    text-align: left;
+
+    &:before {
+        content: '';
+        background: var(--font-color);
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transform: skew(3deg);
+    }
 
     .content:hover ~ & {
         visibility: visible;
     }
+
+}
+
+.tooltipContent {
+    z-index: 1;
+    position: relative;
 }
 
