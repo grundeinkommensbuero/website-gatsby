@@ -1,0 +1,17 @@
+.arrow {
+  // position: absolute;
+  // background: green;
+  // height: 2rem;
+  // width: 2rem;
+}
+
+.popup {
+  background: var(--font-color);
+  color: var(--bg-color);
+  padding: 0.5rem;
+  visibility: hidden;
+
+  .content:hover ~ & {
+    visibility: visible;
+  }
+}
