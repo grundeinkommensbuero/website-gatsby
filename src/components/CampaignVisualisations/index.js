@@ -7,6 +7,7 @@ import { LinkButtonLocal } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
+import { Popup, Tooltip } from '../Tooltip';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
@@ -116,9 +117,14 @@ const Visualisation = ({
                 className={s.barGoalLabel}
                 style={{ width: `${goalUnbufferedPercentage || 100}%` }}
               >
-                {goalUnbuffered
-                  ? goalUnbuffered.toLocaleString('de')
-                  : goal.toLocaleString('de')}
+                <Tooltip
+                  content="Ziel ohne Puffer"
+                  style={{ display: 'inline' }}
+                >
+                  {goalUnbuffered
+                    ? goalUnbuffered.toLocaleString('de')
+                    : goal.toLocaleString('de')}
+                </Tooltip>
               </div>
             </span>
             {hasStarted && (
@@ -131,10 +137,16 @@ const Visualisation = ({
                   <span>{count && count.toLocaleString('de')}</span>
                 </span>
                 {goalInbetweenPercentage && (
-                  <div
+                  <Tooltip
                     className={s.goalInbetween}
                     style={{ left: `${goalInbetweenPercentage}%` }}
-                  />
+                    content={
+                      <>
+                        Zwischenziel: <br />
+                        {goalInbetween.toLocaleString('de')} Unterschriften
+                      </>
+                    }
+                  ></Tooltip>
                 )}
               </>
             )}
