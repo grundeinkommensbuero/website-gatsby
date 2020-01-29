@@ -150,7 +150,9 @@ const Visualisation = ({
                   style={{ width: `${percentage}%` }}
                   aria-label={`${count} von ${goal} Unterschriften`}
                 >
-                  <span>{count && count.toLocaleString('de')}</span>
+                  <Tooltip content="Schon eingesammelt">
+                    {count && count.toLocaleString('de')}
+                  </Tooltip>
                 </span>
                 {/* {goalInbetweenPercentage && (
                   <Tooltip
