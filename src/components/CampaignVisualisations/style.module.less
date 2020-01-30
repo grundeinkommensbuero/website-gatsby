@@ -134,7 +134,7 @@
         transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
     }
 
-    > div, span {
+    .barCurrentLabel {
         position: absolute;
         z-index: 1;
         bottom: -.3rem;
@@ -142,7 +142,7 @@
     }
 
     &.outside {
-        > div, span {
+        .barCurrentLabel {
             left: calc(100% + 1rem);
             right: auto;
             color: var(--font-color);
