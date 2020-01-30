@@ -150,7 +150,10 @@ const Visualisation = ({
                   style={{ width: `${percentage}%` }}
                   aria-label={`${count} von ${goal} Unterschriften`}
                 >
-                  <Tooltip content="Schon eingesammelt">
+                  <Tooltip
+                    content="Schon eingesammelt"
+                    className={s.barCurrentLabel}
+                  >
                     {count && count.toLocaleString('de')}
                   </Tooltip>
                 </span>
