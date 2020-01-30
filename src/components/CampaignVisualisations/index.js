@@ -116,9 +116,31 @@ const Visualisation = ({
                     style={{ width: `${goalInbetweenPercentage || 100}%` }}
                   ></div>
                 )}
+
+                {goalUnbufferedPercentage && (
+                  <Tooltip
+                    className={s.goalUnBuffered}
+                    style={{ left: `${goalUnbufferedPercentage}%` }}
+                    content={
+                      <>
+                        Benötigt: <br />
+                        {goalUnbuffered.toLocaleString('de')} Unterschriften
+                      </>
+                    }
+                  ></Tooltip>
+                )}
               </div>
               {goal && (
-                <Tooltip className={s.goal} content="Endziel an Unterschriften">
+                <Tooltip
+                  className={s.goal}
+                  content={
+                    <>
+                      Benötigte Unterschriften
+                      <br />
+                      inkl Puffer
+                    </>
+                  }
+                >
                   {goal.toLocaleString('de')}
                 </Tooltip>
               )}
@@ -162,18 +184,6 @@ const Visualisation = ({
                     {count && count.toLocaleString('de')}
                   </Tooltip>
                 </span>
-                {/* {goalInbetweenPercentage && (
-                  <Tooltip
-                    className={s.goalInbetween}
-                    style={{ left: `${goalInbetweenPercentage}%` }}
-                    content={
-                      <>
-                        Zwischenziel: <br />
-                        {goalInbetween.toLocaleString('de')} Unterschriften
-                      </>
-                    }
-                  ></Tooltip>
-                )} */}
               </>
             )}
             {!hasStarted && (
