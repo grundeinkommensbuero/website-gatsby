@@ -17,6 +17,7 @@ export default ({ visualisations }) => {
       {visualisations.map((visualisation, index) => (
         <Visualisation
           key={index}
+          index={index}
           currentCount={
             currentCounts &&
             currentCounts[visualisation.campainCode] &&
@@ -44,6 +45,7 @@ const Visualisation = ({
   eyeCatcher,
   goalInbetween,
   goalUnbuffered,
+  index,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -97,7 +99,10 @@ const Visualisation = ({
     >
       {title && <h2 className={s.title}>{title}</h2>}
 
-      <div className={cN(s.body, { [s.showCTA]: showCTA })}>
+      <div
+        className={cN(s.body, { [s.showCTA]: showCTA })}
+        style={{ zIndex: index }}
+      >
         <div className={s.bar} ref={barEl}>
           <WrapInLink link={showCTA && ctaLink}>
             <span
