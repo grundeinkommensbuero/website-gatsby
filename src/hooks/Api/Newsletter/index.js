@@ -1,4 +1,4 @@
-import { useAuthentication } from '../../Authentication';
+import { useSignUp } from '../../Authentication';
 import { useState } from 'react';
 import { updateUser } from '../../utils';
 import querystring from 'query-string';
@@ -17,7 +17,7 @@ const subscribeToNewsletter = async (email, setState) => {
   try {
     setState('saving');
 
-    const [signUp] = useAuthentication();
+    const [signUpState, signUp] = useSignUp();
 
     // check url params, if current user came from referral (e.g newsletter)
     const urlParams = querystring.parse(window.location.search);
@@ -25,11 +25,11 @@ const subscribeToNewsletter = async (email, setState) => {
     const referral = urlParams.pk_source;
 
     //register user
-    const userId = await signUp(email);
-    if (userId !== 'userExists' && userId !== 'error') {
+    await signUp(email);
+    if (signUpState.state !== 'userExists' && signUpState.state !== 'error') {
       try {
         //new user: save referral and newsletterConsent
-        await updateUser(userId, referral);
+        await updateUser(signUpState.userId, referral);
 
         //if successful set state and return true
         setState('saved');
@@ -38,10 +38,8 @@ const subscribeToNewsletter = async (email, setState) => {
 
         setState('error');
       }
-    } else if (userId === 'userExists') {
-      setState('userExists');
     } else {
-      setState('error');
+      setState(signUpState.state);
     }
   } catch (error) {
     console.log('Error while signing up user (newsletter)', error);

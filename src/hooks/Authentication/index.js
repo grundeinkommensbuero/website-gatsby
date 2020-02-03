@@ -7,8 +7,28 @@ import { sleep } from '../utils';
 import { useContext, useState } from 'react';
 import AuthContext from '../../context/Authentication';
 
-export const useAuthentication = () => {
-  return [signUp];
+export const useSignUp = () => {
+  const [state, setState] = useState({});
+
+  return [state, email => signUp(email, setState)];
+};
+
+export const useSignIn = () => {
+  const [state, setState] = useState({});
+
+  //get global context
+  const context = useContext(AuthContext);
+
+  return [state, email => signIn(email, setState, context)];
+};
+
+export const useAnswerChallenge = () => {
+  const [state, setState] = useState({});
+
+  //get global context
+  const context = useContext(AuthContext);
+
+  return [state, answer => answerCustomChallenge(answer, setState, context)];
 };
 
 export const useVerification = () => {
@@ -20,12 +40,8 @@ export const useVerification = () => {
   ];
 };
 
-export const useGlobalState = () => {
-  return useContext(AuthContext);
-};
-
 // Amplifys Auth class is used to sign up user
-const signUp = async email => {
+const signUp = async (email, setState) => {
   try {
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
     const user = await Auth.signUp({
@@ -34,11 +50,11 @@ const signUp = async email => {
     });
 
     //we want to return the newly generated id
-    return user.userSub;
+    setState({ state: 'success', userId: user.userSub });
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
-      return 'userExists';
+      setState({ state: 'userExists' });
     } else if (
       error.code === 'TooManyRequestsException' ||
       error.code === 'ThrottlingException'
@@ -47,9 +63,7 @@ const signUp = async email => {
       await sleep(1500);
       return signUp(email);
     } else {
-      //TODO: Error handling in UI?
-      console.log('Error while signing up', error);
-      return 'error';
+      setState({ state: 'error' });
     }
   }
 };
@@ -97,26 +111,19 @@ const resendEmail = async (email, setVerificationState) => {
 /*
   Not needed anymore until we really need a login
 
-
-// This functions calls signUp (which creates the user in aws user pool)
-// and signIn (which starts the custom flow of sending the magic code to the mail address)
-const startSignInProcess = async (mail, context) => {
-  //const defaultMail = 'valentin@grundeinkommensbuero.de';
-  const { state, setUser } = context;
-  console.log('state', state);
+// Sign in user through AWS Cognito (passwordless)
+const signIn = async (email, context) => {
   try {
-    await signUp(mail);
-    await signIn(mail, context);
+    // This will initiate the custom flow, which will lead to the user receiving a mail.
+    // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
+    const user = await Auth.signIn(email);
+    console.log('called Auth.signIn()', user);
+    //we already set the user here, because we need the object in answerCustomChallenge()
+    context.setUser(user);
+    console.log('context', context);
   } catch (error) {
-    //We have to check, if the error happened due to the user already existing
-    //If that's the case we call signIn() anyway
-    if (error.code === 'UsernameExistsException') {
-      console.log('user already exists, signing in...');
-      await signIn(mail, context);
-    } else {
-      //TODO: Error handling in UI?
-      console.log('Error while signing up', error);
-    }
+    //TODO: Error handling in UI?
+    console.log('Error while signing in', error);
   }
 };
 
@@ -167,35 +174,6 @@ export const signOut = async () => {
   }
 };
 
-// helper function Function to sign up user through AWS Cognito
-// Tutorial: https://aws.amazon.com/de/blogs/mobile/implementing-passwordless-email-authentication-with-amazon-cognito/
-const signUp = async email => {
-  // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-  console.log(
-    await Auth.signUp({
-      username: email,
-      password: getRandomString(30),
-      attributes: {
-        name: 'testperson2',
-      },
-    })
-  );
-};
 
-// Sign in user through AWS Cognito (passwordless)
-const signIn = async (email, context) => {
-  try {
-    // This will initiate the custom flow, which will lead to the user receiving a mail.
-    // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
-    const user = await Auth.signIn(email);
-    console.log('called Auth.signIn()', user);
-    //we already set the user here, because we need the object in answerCustomChallenge()
-    context.setUser(user);
-    console.log('context', context);
-  } catch (error) {
-    //TODO: Error handling in UI?
-    console.log('Error while signing in', error);
-  }
-};
 
 */

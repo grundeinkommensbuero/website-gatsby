@@ -12,45 +12,20 @@ import Auth from '@aws-amplify/auth';
 
 const AuthContext = React.createContext();
 
-const AuthProvider = props => {
+const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-
-  const setIban = async iban => {
-    if (user !== null) {
-      try {
-        await Auth.updateUserAttributes(state.user, { iban });
-        //save the changed user in the global state
-        const updatedUser = await Auth.currentAuthenticatedUser();
-        setState({ user: updatedUser });
-      } catch (error) {
-        console.log('Error while updating iban');
-      }
-    }
-  };
-
-  const setIsDonationActive = async isDonationActive => {
-    if (user !== null) {
-      try {
-        await Auth.updateUserAttributes(state.user, { isDonationActive });
-        //save the changed user in the global state
-        const updatedUser = await Auth.currentAuthenticatedUser();
-        setState({ user: updatedUser });
-      } catch (error) {
-        console.log('Error while updating if donation is active');
-      }
-    }
-  };
 
   return (
     <AuthContext.Provider
       value={{
-        state: { isAuthenticated, user },
-        setIsAuthenticated: setIsAuthenticated,
-        setUser: setUser,
+        user,
+        setUser,
+        isAuthenticated,
+        setIsAuthenticated,
       }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 };

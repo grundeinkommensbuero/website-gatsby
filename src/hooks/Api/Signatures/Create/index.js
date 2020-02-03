@@ -3,7 +3,7 @@
  *  in the backend
  */
 
-import { useAuthentication } from '../../../Authentication';
+import { useSignUp } from '../../../Authentication';
 import { useState } from 'react';
 import CONFIG from '../../../../../aws-config';
 import { updateUser } from '../../../utils';
@@ -58,7 +58,8 @@ const createSignatureListNewUser = async (
   try {
     setState({ state: 'creating' });
 
-    const [signUp] = useAuthentication();
+    const [signUpState, signUp] = useSignUp();
+
     // check url params, if current user came from referral (e.g newsletter)
     const urlParams = querystring.parse(window.location.search);
     // the pk_source param was generated in matomo
@@ -67,13 +68,13 @@ const createSignatureListNewUser = async (
 
     const data = {};
     //register user
-    const userId = await signUp(email);
-    if (userId !== 'userExists' && userId !== 'error') {
+    await signUp(email);
+    if (signUpState.state !== 'userExists' && signUpState.state !== 'error') {
       data.userId = userId;
       //new user: save referral and newsletterConsent
-      await updateUser({ userId }, referral);
+      await updateUser(signUpState.userId, referral);
       data.isNewUser = true;
-    } else if (userId === 'userExists') {
+    } else if (signUpState.state === 'userExists') {
       //instead of the user id we pass the email to the api
       await updateUser({ email, userId: '000' }, referral);
       data.email = email;
@@ -85,6 +86,7 @@ const createSignatureListNewUser = async (
 
     //handle campaign code
     data.campaignCode = campaignCode;
+
     //call function to make api request, returns signature list if successful (throws error otherwise)
     const signatureList = await makeApiCall(data);
     setState({
