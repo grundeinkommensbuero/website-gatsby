@@ -102,6 +102,8 @@ const Visualisation = ({
       : 0;
   const countOutside = percentage < 40;
 
+  const barGoalWidth = Math.min(100, ((goalInbetween || goal) / count) * 100);
+
   return (
     <SectionInner
       wide={true}
@@ -119,6 +121,7 @@ const Visualisation = ({
             <span
               className={cN(s.barGoal, { [s.hasNotStarted]: !hasStarted })}
               aria-hidden="true"
+              style={{ width: `${barGoalWidth || 100}%` }}
             >
               <div className={s.barGoalBar}>
                 {hasStarted && (
