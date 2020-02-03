@@ -7,7 +7,7 @@ import { LinkButtonLocal } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
-import { Popup, Tooltip } from '../Tooltip';
+import { Tooltip } from '../Tooltip';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
@@ -97,7 +97,9 @@ const Visualisation = ({
   });
 
   const percentage =
-    count && isInView ? Math.max(Math.min((count / goal) * 100, 100), 3) : 0;
+    count && isInView
+      ? Math.max(Math.min((count / goalInbetween) * 100, 100), 3)
+      : 0;
   const countOutside = percentage < 40;
 
   return (
@@ -126,7 +128,7 @@ const Visualisation = ({
                   ></div>
                 )}
 
-                {goalUnbufferedPercentage && (
+                {/* {goalUnbufferedPercentage && (
                   <Tooltip
                     className={s.goalUnBuffered}
                     style={{ left: `${goalUnbufferedPercentage}%` }}
@@ -137,24 +139,33 @@ const Visualisation = ({
                       </>
                     }
                   ></Tooltip>
-                )}
+                )} */}
               </div>
-              {goal && (
+              {goal && !goalInbetween && (
                 <Tooltip
                   className={s.goal}
-                  content={
-                    <>
-                      Benötigte Unterschriften
-                      <br />
-                      inkl Puffer
-                    </>
-                  }
+                  content={<>Benötigte Unterschriften</>}
                 >
                   {goal.toLocaleString('de')}
                 </Tooltip>
               )}
 
               {goalInbetween && (
+                <Tooltip
+                  className={s.goal}
+                  content={
+                    <>
+                      Aktuelles Zwischenziel.
+                      <br />
+                      Insgesamt benötigt: {goal.toLocaleString('de')}
+                    </>
+                  }
+                >
+                  {goalInbetween.toLocaleString('de')}
+                </Tooltip>
+              )}
+
+              {/* {goalInbetween && (
                 <div
                   className={s.barGoalBarInbetween}
                   style={{ width: `${goalInbetweenPercentage || 100}%` }}
@@ -177,7 +188,7 @@ const Visualisation = ({
                       : goal.toLocaleString('de')}
                   </Tooltip>
                 </div>
-              )}
+              )} */}
             </span>
             {hasStarted && (
               <>
@@ -187,7 +198,7 @@ const Visualisation = ({
                   aria-label={`${count} von ${goal} Unterschriften`}
                 >
                   <Tooltip
-                    content="Schon eingesammelt"
+                    content="Gesammelte Unterschriften"
                     className={s.barCurrentLabel}
                   >
                     {count && count.toLocaleString('de')}
