@@ -65,7 +65,7 @@ export default () => {
                   showCTA: false,
                   ctaLink: '#',
                   eyeCatcher: false,
-                  goalInbetween: 25000,
+                  // goalInbetween: 25000,
                   goalUnbuffered: 22000,
                 },
                 {
