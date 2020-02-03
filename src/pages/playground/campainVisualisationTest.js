@@ -44,14 +44,14 @@ export default () => {
                     'Wed Jan 29 2020 16:08:17 GMT+0100 (Central European Standard Time)',
 
                   title: 'Schlewsig-Holstein',
-                  currentCount: 3425,
+                  currentCount: 7425,
                   minimum: 0,
                   addToSignatureCount: 10,
                   showCTA: false,
                   ctaLink: '#',
                   eyeCatcher: false,
-                  goalInbetween: 5000,
-                  goalUnbuffered: 20000,
+                  goalInbetween: 10000,
+                  goalUnbuffered: 10000,
                 },
                 {
                   goal: 25000,
@@ -59,7 +59,7 @@ export default () => {
                     'Wed Jan 29 2020 16:08:17 GMT+0100 (Central European Standard Time)',
 
                   title: 'Schlewsig-Holstein',
-                  currentCount: 19302,
+                  currentCount: 29302,
                   minimum: 0,
                   addToSignatureCount: 10,
                   showCTA: false,
