@@ -200,6 +200,7 @@ const Visualisation = ({
                   <Tooltip
                     content="Gesammelte Unterschriften"
                     className={s.barCurrentLabel}
+                    placement="bottom"
                   >
                     {count && count.toLocaleString('de')}
                   </Tooltip>
