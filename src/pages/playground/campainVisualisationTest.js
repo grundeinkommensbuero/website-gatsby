@@ -33,6 +33,10 @@ export default () => {
                   eyeCatcher: false,
                   goalInbetween: 2000,
                   goalUnbuffered: 20000,
+                  hint: {
+                    hint:
+                      'Schon $COLLECTED Unterschriften von $GOAL! Nächstes Ziel: $GOAL_INBETWEEN Unterschriften.',
+                  },
                 },
                 {
                   goal: 25000,

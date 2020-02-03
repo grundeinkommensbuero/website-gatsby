@@ -46,6 +46,7 @@ const Visualisation = ({
   goalInbetween,
   goalUnbuffered,
   index,
+  hint,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -88,6 +89,13 @@ const Visualisation = ({
     count = Math.max(count, minimum);
   }
 
+  const hintWithVariables = replaceVariablesHintText({
+    hint: hint && hint.hint,
+    goal,
+    goalInbetween,
+    count,
+  });
+
   const percentage =
     count && isInView ? Math.max(Math.min((count / goal) * 100, 100), 3) : 0;
   const countOutside = percentage < 40;
@@ -98,6 +106,7 @@ const Visualisation = ({
       className={cN({ [s.sectionInnerHasCta]: !!EyeCatcherContent })}
     >
       {title && <h2 className={s.title}>{title}</h2>}
+      {hintWithVariables && <div className={s.hint}>{hintWithVariables}</div>}
 
       <div
         className={cN(s.body, { [s.showCTA]: showCTA })}
@@ -221,6 +230,18 @@ const Visualisation = ({
     </SectionInner>
   );
 };
+
+function replaceVariablesHintText({ hint, goal, count, goalInbetween }) {
+  if (!hint) return undefined;
+
+  return hint
+    .replace(
+      /\$GOAL_INBETWEEN/gi,
+      goalInbetween && goalInbetween.toLocaleString('de')
+    )
+    .replace(/\$GOAL/gi, goal && goal.toLocaleString('de'))
+    .replace(/\$COLLECTED/gi, count && count.toLocaleString('de'));
+}
 
 const WrapInLink = ({ link, children, className }) => {
   if (link) {
