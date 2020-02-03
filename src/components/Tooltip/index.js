@@ -3,7 +3,13 @@ import s from './style.module.less';
 import { Manager, Reference, Popper } from 'react-popper';
 import cN from 'classnames';
 
-export const Tooltip = ({ children, style, className, content }) => {
+export const Tooltip = ({
+  children,
+  style,
+  className,
+  content,
+  placement = 'top',
+}) => {
   return (
     <Manager>
       <Reference>
@@ -13,7 +19,7 @@ export const Tooltip = ({ children, style, className, content }) => {
           </div>
         )}
       </Reference>
-      <Popper placement="top" modifiers={{ offset: { offset: '0, 25' } }}>
+      <Popper placement={placement} modifiers={{ offset: { offset: '0, 25' } }}>
         {({ ref, style, placement, arrowProps }) => (
           <div
             ref={ref}
