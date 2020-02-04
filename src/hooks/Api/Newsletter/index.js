@@ -12,7 +12,7 @@ export const useNewsletterApi = () => {
 
 //function which takes an email and subscribes to our newsletter
 //by creating a new user in cognito and our dynamo db
-//returns a promise (because async), which resolves to true on success, false otherwise
+//returns a promise (because async), sets state depending on result
 const subscribeToNewsletter = async (email, setState) => {
   try {
     setState('saving');
