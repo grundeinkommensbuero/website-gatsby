@@ -81,6 +81,7 @@ export const pageQuery = graphql`
               twitter
               linkedin
               website
+              role
             }
             twitterFeed
             backgroundIllustration
