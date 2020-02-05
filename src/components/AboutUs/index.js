@@ -12,41 +12,42 @@ const ICONS = {
 const AboutUs = ({ members, className }) => {
   return (
     <ul className={cN(s.aboutUs, className)}>
-      {members.map((member, index) => {
-        const { name, image } = member;
-        const links = [
-          { link: member.twitter, icon: 'twitter' },
-          { link: member.linkedin, icon: 'linkedin' },
-          { link: member.website, icon: 'website' },
-        ].filter(link => {
-          return !!link.link;
-        });
-        const nameWithLineBreak = name.replace(' ', '<br />');
+      {members.map(
+        ({ name, image, role, twitter, linkedin, website }, index) => {
+          const links = [
+            { link: twitter, icon: 'twitter' },
+            { link: linkedin, icon: 'linkedin' },
+            { link: website, icon: 'website' },
+          ].filter(link => {
+            return !!link.link;
+          });
 
-        return (
-          <li key={index} className={s.member}>
-            {image && (
-              <div className={s.imageContainer}>
-                <Img fluid={image.fluid} className={s.image} loading="lazy" />
-                {!!links.length && (
-                  <div className={s.socialMediaButtons}>
-                    {links.map(link => (
-                      <SocialMediaButton
-                        key={link.icon}
-                        name={name}
-                        {...link}
-                      />
-                    ))}
-                  </div>
-                )}
+          return (
+            <li key={index} className={s.member}>
+              {image && (
+                <div className={s.imageContainer}>
+                  <Img fluid={image.fluid} className={s.image} loading="lazy" />
+                  {!!links.length && (
+                    <div className={s.socialMediaButtons}>
+                      {links.map(link => (
+                        <SocialMediaButton
+                          key={link.icon}
+                          name={name}
+                          {...link}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              <div className={s.label}>
+                <div dangerouslySetInnerHTML={{ __html: name }} />
+                {role && <div className={s.role}>{role}</div>}
               </div>
-            )}
-            <div>
-              <span dangerouslySetInnerHTML={{ __html: nameWithLineBreak }} />
-            </div>
-          </li>
-        );
-      })}
+            </li>
+          );
+        }
+      )}
     </ul>
   );
 };
