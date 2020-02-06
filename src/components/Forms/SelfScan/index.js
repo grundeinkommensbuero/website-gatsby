@@ -9,8 +9,10 @@ import s from './style.module.less';
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import { validateEmail } from '../../utils';
-import { SectionInner, Section, SectionHeader } from '../../Layout/Sections';
+import { SectionInner, Section } from '../../Layout/Sections';
 import querystring from 'query-string';
+import { useStaticQuery, graphql } from 'gatsby';
+import CampainVisualisations from '../../CampainVisualisations';
 
 export default ({ successMessage, campaignCode }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
@@ -38,8 +40,71 @@ export default ({ successMessage, campaignCode }) => {
     }
   }, [listId, userId, eMail]);
 
+  const {
+    allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
+  } = useStaticQuery(graphql`
+    query campaignVisualisations {
+      allContentfulKampagnenvisualisierung {
+        edges {
+          node {
+            hint {
+              hint
+            }
+            goal
+            goalInbetween
+            goalUnbuffered
+            minimum
+            startDate
+            title
+            addToSignatureCount
+            campainCode
+          }
+        }
+      }
+    }
+  `);
+
+  const campaignVisualisationsMapped = campaignVisualisations
+    .map(({ node }) => node)
+    .filter(({ campainCode: campaignCodeVisualisation }) => {
+      return campaignCodeVisualisation === campaignCode;
+    });
+
   return (
     <>
+      {signatureCountOfUser && (
+        <Section>
+          <div className={s.statisticsOverall}>
+            <div className={s.statisticsOverall}>
+              <div className={s.statisticsOverallCountItem}>
+                <div className={s.statisticsOverallCount}>
+                  {signatureCountOfUser.scannedByUser + count}
+                </div>
+                <div className={s.statisticsOverallLabel}>
+                  Unterschriften
+                  <br />
+                  von dir gemeldet
+                </div>
+              </div>{' '}
+              <div className={s.statisticsOverallCountItem}>
+                <div className={s.statisticsOverallCount}>
+                  {signatureCountOfUser.received}
+                </div>
+                <div className={s.statisticsOverallLabel}>
+                  Unterschriften
+                  <br />
+                  bei uns angekommen
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={s.visualisation}>
+            <CampainVisualisations
+              visualisations={campaignVisualisationsMapped}
+            />
+          </div>
+        </Section>
+      )}
       <Section title="Unterschriften zählen">
         <SectionInner hugeText={true}>
           <CountSignaturesForm
@@ -54,24 +119,6 @@ export default ({ successMessage, campaignCode }) => {
           />
         </SectionInner>
       </Section>
-
-      {signatureCountOfUser && (
-        <Section title="Deine Statistik">
-          <SectionInner>
-            <p>Unterschriften von dir:</p>
-            <ul>
-              <li>
-                {signatureCountOfUser.scannedByUser + count} wurden über diese
-                Seite mitgeteilt
-              </li>
-              <li>
-                {signatureCountOfUser.received} sind bei uns schon per Post
-                angekommen
-              </li>
-            </ul>
-          </SectionInner>
-        </Section>
-      )}
     </>
   );
 };

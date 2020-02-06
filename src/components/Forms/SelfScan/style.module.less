@@ -1,7 +1,33 @@
+@import '../../style/vars.less';
+
 .countField {
     width: 5rem;
 }
 
 .formSection {
     margin-bottom: 2rem;
+}
+
+.statisticsOverall {
+    grid-column: wide-start / 5;
+    line-height: 1;
+}
+
+.statisticsOverallCount {
+    font-size: @fontSizeXXXL;
+}
+
+.statisticsOverallCountItem {
+    & + & {
+        margin-top: 2rem;
+    }
+}
+
+.statisticsOverallLabel {
+    font-size: @fontSizeM;
+    line-height: 1.3;
+}
+
+.visualisation {
+    grid-column: 5 / wide-end;
 }
