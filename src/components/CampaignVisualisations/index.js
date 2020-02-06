@@ -158,13 +158,13 @@ const Visualisation = ({
                   className={s.goal}
                   content={
                     <>
-                      Aktuelles Zwischenziel.
+                      Insgesamt benötigt:
                       <br />
-                      Insgesamt benötigt: {goal.toLocaleString('de')}
+                      {goal.toLocaleString('de')} Unterschriften
                     </>
                   }
                 >
-                  {goalInbetween.toLocaleString('de')}
+                  Nächstes Ziel: {goalInbetween.toLocaleString('de')}
                 </Tooltip>
               )}
 
