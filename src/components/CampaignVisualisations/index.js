@@ -92,6 +92,7 @@ const Visualisation = ({
     goal,
     goalInbetween,
     count,
+    goalUnbuffered,
   });
 
   const percentage =
@@ -207,15 +208,27 @@ const Visualisation = ({
   );
 };
 
-function replaceVariablesHintText({ hint, goal, count, goalInbetween }) {
+function replaceVariablesHintText({
+  hint,
+  goal,
+  count,
+  goalInbetween,
+  goalUnbuffered,
+}) {
   if (!hint) return undefined;
+  const buffer = goal - goalUnbuffered;
 
   return hint
     .replace(
       /\$GOAL_INBETWEEN/gi,
       goalInbetween && goalInbetween.toLocaleString('de')
     )
+    .replace(
+      /\$GOAL_UNBUFFERED/gi,
+      goalUnbuffered && goalUnbuffered.toLocaleString('de')
+    )
     .replace(/\$GOAL/gi, goal && goal.toLocaleString('de'))
+    .replace(/\$BUFFER/gi, buffer && buffer.toLocaleString('de'))
     .replace(/\$COLLECTED/gi, count && count.toLocaleString('de'));
 }
 
