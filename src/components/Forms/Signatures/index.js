@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
@@ -15,6 +15,16 @@ const trackingCategory = 'ListDownload';
 
 export default ({ signaturesId }) => {
   const [state, createPdf] = useCreateSignatureList({});
+  const [signUpState, signUp] = useSignUp({});
+
+  useEffect(() => {
+    if (signUpState.state === 'success') {
+      createPdf({
+        userId: signUpState.userId,
+        campaignCode: signaturesId,
+      });
+    }
+  }, [signUpState, createPdf]);
 
   if (state.state === 'creating') {
     return (
@@ -97,10 +107,7 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
-          createPdf({
-            email: e.email,
-            campaignCode: signaturesId,
-          });
+          signUp(e.email);
         }}
         validate={validate}
         render={({ handleSubmit }) => {
