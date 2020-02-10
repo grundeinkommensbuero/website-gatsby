@@ -12,6 +12,10 @@
     max-width: 100%;
     width: @inputWidth;
 
+    @media (max-width: @breakPointS) {
+        width: 100%;
+    }
+
     &::placeholder {
         color: @grey;
     }
