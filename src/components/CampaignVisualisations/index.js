@@ -107,7 +107,7 @@ const Visualisation = ({
   return (
     <SectionInner
       wide={true}
-      className={cN({ [s.sectionInnerHasCta]: !!EyeCatcherContent })}
+      className={cN({ [s.sectionInnerHasEyeCatcher]: !!EyeCatcherContent })}
     >
       {title && <h2 className={s.title}>{title}</h2>}
       {hintWithVariables && <div className={s.hint}>{hintWithVariables}</div>}
