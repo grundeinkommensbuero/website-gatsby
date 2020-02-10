@@ -94,19 +94,19 @@ export const pageQuery = graphql`
       content
       excerpt
       date
-      #      featured_media {
-      #        localFile {
-      #          childImageSharp {
-      #            hero: fluid(maxWidth: 2000) {
-      #              ...GatsbyImageSharpFluid_noBase64
-      #            }
-      #            og: fixed(width: 1200, quality: 90) {
-      #              src
-      #            }
-      #          }
-      #        }
-      #        path
-      #      }
+      featured_media {
+        localFile {
+          childImageSharp {
+            hero: fluid(maxWidth: 2000) {
+              ...GatsbyImageSharpFluid_noBase64
+            }
+            og: fixed(width: 1200, quality: 90) {
+              src
+            }
+          }
+        }
+        path
+      }
       tags {
         id
       }
