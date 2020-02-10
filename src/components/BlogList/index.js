@@ -35,7 +35,10 @@ export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
       </header>
       {featured_media && (
         <Link to={path}>
-          <Img fluid={featured_media.localFile.childImageSharp.hero} />
+          <Img
+            className={s.image}
+            fluid={featured_media.localFile.childImageSharp.hero}
+          />
         </Link>
       )}
       <div
