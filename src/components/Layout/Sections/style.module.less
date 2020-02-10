@@ -303,9 +303,24 @@
 }
 
 .heroImage {
-    position: absolute !important;
+    position: fixed !important;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
+    filter: grayscale(1) contrast(0.3) brightness(1.6);
+}
+
+.heroImageOverlay {
+    background: @yellow;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    mix-blend-mode: multiply;
+}
+
+.sectionWithHeroImage {
+    text-shadow: 0 0 .8rem fade(@yellow, 90);
 }

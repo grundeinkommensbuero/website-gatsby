@@ -174,17 +174,23 @@ export function Section({
   );
 }
 
-export function SectionHeader({ backgroundImageSet, ...other }) {
+export function SectionHeader({ backgroundImageSet, className, ...other }) {
   return (
     <Section
       isHeader={true}
       afterBodyContent={
         backgroundImageSet ? (
-          <Img className={s.heroImage} fluid={backgroundImageSet} />
+          <>
+            <Img className={s.heroImage} fluid={backgroundImageSet} />
+            <div className={s.heroImageOverlay} />
+          </>
         ) : (
           <HeaderBackgrounds />
         )
       }
+      className={cN(className, {
+        [s.sectionWithHeroImage]: backgroundImageSet,
+      })}
       {...other}
     />
   );
