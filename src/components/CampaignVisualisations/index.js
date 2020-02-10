@@ -164,7 +164,8 @@ const Visualisation = ({
                     </>
                   }
                 >
-                  Nächstes Ziel: {goalInbetween.toLocaleString('de')}
+                  Nächstes Ziel: {goalInbetween.toLocaleString('de')}{' '}
+                  Unterschriften
                 </Tooltip>
               )}
 
