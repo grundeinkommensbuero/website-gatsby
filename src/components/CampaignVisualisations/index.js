@@ -52,8 +52,6 @@ const Visualisation = ({
   const [isInView, setIsInView] = useState(false);
   const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
   const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
-  const goalUnbufferedPercentage =
-    goalUnbuffered && (goalUnbuffered / goal) * 100;
 
   useEffect(() => {
     if ('IntersectionObserver' in window) {
@@ -126,23 +124,10 @@ const Visualisation = ({
               <div className={s.barGoalBar}>
                 {hasStarted && (
                   <div
-                    className={s.barGoalUnbuffered}
+                    className={s.barGoalInbetween}
                     style={{ width: `${goalInbetweenPercentage || 100}%` }}
                   ></div>
                 )}
-
-                {/* {goalUnbufferedPercentage && (
-                  <Tooltip
-                    className={s.goalUnBuffered}
-                    style={{ left: `${goalUnbufferedPercentage}%` }}
-                    content={
-                      <>
-                        Benötigt: <br />
-                        {goalUnbuffered.toLocaleString('de')} Unterschriften
-                      </>
-                    }
-                  ></Tooltip>
-                )} */}
               </div>
               {goal && !goalInbetween && (
                 <Tooltip
@@ -168,31 +153,6 @@ const Visualisation = ({
                   Unterschriften
                 </Tooltip>
               )}
-
-              {/* {goalInbetween && (
-                <div
-                  className={s.barGoalBarInbetween}
-                  style={{ width: `${goalInbetweenPercentage || 100}%` }}
-                >
-                  <Tooltip
-                    content={
-                      <>
-                        Nächstes Ziel: <br />
-                        {goalInbetween.toLocaleString('de')} Unterschriften
-                      </>
-                    }
-                    className={cN(s.barGoalBarInbetweenLabel, {
-                      [s.barGoalBarInbetweenLabelOutside]:
-                        goalInbetweenPercentage < 10,
-                    })}
-                    style={{ display: 'inline' }}
-                  >
-                    {goalInbetween
-                      ? goalInbetween.toLocaleString('de')
-                      : goal.toLocaleString('de')}
-                  </Tooltip>
-                </div>
-              )} */}
             </span>
             {hasStarted && (
               <>
