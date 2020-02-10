@@ -22,7 +22,7 @@ export default ({ pledgeId }) => {
     if (signUpState.state === 'success') {
       savePledge(signUpState.userId, pledge);
     }
-  }, signUpState);
+  }, [signUpState, savePledge]);
 
   if (state) {
     return (
