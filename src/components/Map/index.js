@@ -40,6 +40,7 @@ export default ({ state }) => {
               json
             }
             date
+            state
           }
         }
       }
@@ -49,17 +50,19 @@ export default ({ state }) => {
   const container = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
   let map;
-
-  const collectSignaturesLocationsOnlyFuture = collectSignaturesLocations.filter(
-    ({ node: location }) => {
+  const collectSignaturesLocationsFiltered = collectSignaturesLocations
+    .filter(({ node: location }) => {
       if (!location.date) {
         return true;
       }
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
+
       return +new Date(location.date) > +yesterday;
-    }
-  );
+    })
+    .filter(({ node: location }) => {
+      return location.state === state;
+    });
 
   useEffect(() => {
     map = new mapboxgl.Map({
@@ -68,7 +71,7 @@ export default ({ state }) => {
       maxBounds: BOUNDS[state],
     }).addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-    collectSignaturesLocationsOnlyFuture.forEach(({ node: location }) => {
+    collectSignaturesLocationsFiltered.forEach(({ node: location }) => {
       if (location.location) {
         new mapboxgl.Marker()
           .setLngLat([location.location.lon, location.location.lat])
