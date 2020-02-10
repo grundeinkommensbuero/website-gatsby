@@ -14,8 +14,10 @@ if (!process.env.STATIC) {
     'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
 }
 
+// [w, s, e, n]
 const BOUNDS = {
   'schleswig-holstein': [8.226, 53.4095, 11.6428, 54.9823],
+  hamburg: [9.5, 53.35, 10.5, 53.8],
   brandenburg: [11, 51.3, 15, 53.6],
 };
 
