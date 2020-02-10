@@ -177,10 +177,10 @@
     @media (max-width: @breakPointS) {
         top: auto;
         bottom: 100%;
-        margin-bottom: -1rem;
+        margin-bottom: -.7rem;
         width: 8rem;
         height: 8rem;
-        margin-left: -6.5rem;
+        margin-left: -6.5rem !important;
     }
 
     p {
@@ -233,8 +233,8 @@
 }
 
 .sectionInnerHasEyeCatcher {
-    @media (max-width: @breakPointM) {
-        margin-top: 1rem;
+    @media (max-width: @breakPointM) and (min-width: @breakPointS) {
+        margin-top: 3rem !important;
     }
 }
 
@@ -242,6 +242,12 @@
     margin-bottom: 1rem;
     font-weight: normal;
     font-size: @fontSizeS;
+
+    @media(max-width: @breakPointM) {
+        .sectionInnerHasEyeCatcher & {
+            padding-right: 8rem;
+        }
+    }
 
     @media(max-width: @breakPointS) {
         .sectionInnerHasEyeCatcher & {
