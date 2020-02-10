@@ -52,14 +52,16 @@ export const useSignOut = () => {
 // Amplifys Auth class is used to sign up user
 const signUp = async (email, setState) => {
   try {
+    setState({ state: 'signingUp' });
+
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-    const user = await Auth.signUp({
+    const { userSub } = await Auth.signUp({
       username: email,
       password: getRandomString(30),
     });
 
     //we want to return the newly generated id
-    setState({ state: 'success', userId: user.userSub });
+    setState({ state: 'success', userId: userSub });
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
@@ -162,6 +164,8 @@ const answerCustomChallenge = async (
       //use context to set user in global state
       setIsAuthenticated(true);
       setUser(tempUser);
+
+      console.log(tempUser);
     } catch (error) {
       setState('wrongCode');
       console.log('Apparently the user did not enter the right code', error);
