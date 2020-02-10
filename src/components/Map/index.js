@@ -50,21 +50,22 @@ export default ({ state }) => {
   const container = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
   let map;
-  const collectSignaturesLocationsFiltered = collectSignaturesLocations
-    .filter(({ node: location }) => {
-      if (!location.date) {
-        return true;
-      }
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-
-      return +new Date(location.date) > +yesterday;
-    })
-    .filter(({ node: location }) => {
-      return location.state === state;
-    });
 
   useEffect(() => {
+    const collectSignaturesLocationsFiltered = collectSignaturesLocations
+      .filter(({ node: location }) => {
+        if (!location.date) {
+          return true;
+        }
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        return +new Date(location.date) > +yesterday;
+      })
+      .filter(({ node: location }) => {
+        return location.state === state;
+      });
+
     map = new mapboxgl.Map({
       container: container.current,
       style: 'mapbox://styles/mapbox/streets-v9',
