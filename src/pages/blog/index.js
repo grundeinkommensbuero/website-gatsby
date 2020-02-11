@@ -35,7 +35,9 @@ export default ({
 
 export const pageQuery = graphql`
   query {
-    allWordpressPost {
+    allWordpressPost(
+      filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
+    ) {
       edges {
         node {
           id
