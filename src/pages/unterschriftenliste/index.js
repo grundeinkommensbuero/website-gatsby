@@ -9,6 +9,7 @@ import { trackEvent, addActionTrackingId } from '../../components/utils';
 import { CTAButtonContainer } from '../../components/Layout/CTAButton';
 import { StepListItem } from '../../components/StepList';
 import querystring from 'query-string';
+import { Link } from 'gatsby';
 
 const trackingCategory = 'ListDownload';
 
@@ -16,6 +17,22 @@ const CTAs = {
   'schleswig-holstein-1': {
     text: 'Mehr Infos',
     link: 'schleswig-holstein',
+  },
+  'brandenburg-1': {
+    text: 'Mehr Infos',
+    link: 'brandenburg',
+  },
+  'hamburg-1': {
+    text: 'Mehr Infos',
+    link: 'hamburg',
+  },
+  'bremen-1': {
+    text: 'Mehr Infos',
+    link: 'bremen',
+  },
+  'berlin-1': {
+    text: 'Mehr Infos',
+    link: 'berlin',
   },
 };
 
@@ -69,6 +86,13 @@ const Unterschriftenliste = () => {
                   <LinkButton target="_blank" href={state.pdf.url}>
                     Listen herunterladen
                   </LinkButton>
+                  {campaignCode === 'hamburg-1' && (
+                    <p>
+                      Den Gesetzestext findest du im{' '}
+                      <Link to="downloads/#Gesetzestexte">Downloadbereich</Link>
+                      .
+                    </p>
+                  )}
                 </StepListItem>
               </DownloadListsNextSteps>
               {CTAs[campaignCode] && (
