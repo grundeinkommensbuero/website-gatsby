@@ -14,6 +14,7 @@ import TwitterEmbed from '../../TwitterEmbed';
 import HeaderBackgrounds from '../HeaderBackgrounds';
 import Img from 'gatsby-image';
 import Share from '../../SocialMedia/Share';
+import BlogTeaser from '../../BlogTeaser';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -41,11 +42,13 @@ export default function Sections({ sections }) {
             map,
             backgroundIllustration,
             socialMediaButtons,
+            blogTeaser,
           } = section;
           const id = stringToId(titleShort);
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
           const isIllustration =
             __typename === 'ContentfulPageSectionIllustration';
+          console.log(blogTeaser);
 
           return (
             <Section
@@ -130,6 +133,11 @@ export default function Sections({ sections }) {
               {socialMediaButtons && (
                 <SectionInner>
                   <Share />
+                </SectionInner>
+              )}
+              {blogTeaser && (
+                <SectionInner wide={true}>
+                  <BlogTeaser />
                 </SectionInner>
               )}
             </Section>
