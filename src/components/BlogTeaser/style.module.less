@@ -1,6 +1,7 @@
 @import '../style/vars.less';
 
 .article {
+  margin-top: 2rem;
   grid-column: span 4;
 
   @media (max-width: @breakPointM) {
@@ -17,5 +18,27 @@
     &:nth-of-type(2) {
       display: none;
     }
+  }
+}
+
+.link {
+  text-decoration: none;
+}
+
+.date {
+  margin: 0 0 0.5rem;
+  display: block;
+}
+
+.image {
+  height: 9rem;
+}
+
+.title {
+  font-size: @fontSizeM;
+  margin: 0.5rem 0 0;
+
+  .link:hover & {
+    text-decoration: underline;
   }
 }
