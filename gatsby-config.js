@@ -45,7 +45,10 @@ const config = {
             },
             query: `
               {
-                allWordpressPost {
+                allWordpressPost(
+                  sort: { fields: date, order: DESC }
+                  filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
+                ) {
                   edges {
                     node {
                       id
