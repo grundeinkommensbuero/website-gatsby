@@ -25,15 +25,17 @@
 @headerHeightS: 4rem;
 
 @contentWidth: 45rem;
-@contentWidthL: 60rem;
+@contentWidthL: 80rem;
 
+@breakPointXL: 1200px;
+@breakPointL: 1000px;
 @breakPointM: 800px;
 @breakPointS: 500px;
 
 .headerFooterGrid() {
   @half: calc(@contentWidthL / 2 - 1rem);
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: var(--grid-gap);
   grid-template-columns: 1fr minmax(0, @half) minmax(0, @half) 1fr;
 }
 
@@ -42,7 +44,7 @@
   grid-template-columns:
     [wide-start] 1fr [medium-start] 1fr [slim-start] repeat(8, 1fr)
     [slim-end] 1fr [medium-end] 1fr [wide-end];
-  grid-gap: 1rem;
+  grid-gap: var(--grid-gap);
 
   @media (max-width: @breakPointM) {
     grid-template-columns:

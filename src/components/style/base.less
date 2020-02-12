@@ -15,6 +15,11 @@ body {
     --font-color: @red;
     --secondary-color: @yellow;
     --text-on-secondary-color: @red;
+    --grid-gap: 1rem;
+
+    @media (min-width: @breakPointL) {
+        --grid-gap: 2rem;
+    }
 }
 
 h1, h2, h3 {
