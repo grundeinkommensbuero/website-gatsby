@@ -106,9 +106,9 @@ export default ({ state }) => {
       <SectionInner wide={true}>
         {!hasWebGl && (
           <FinallyMessage>
-            Entschuldige bitte, dein Browser Unterstützt leider unsere Karte
-            nicht, sie benötigt webGL. Bitte aktiviere webGL oder probier einen
-            Browser.
+            Entschuldige bitte, dein Browser unterstützt leider unsere Karte
+            nicht, sie benötigt webGL. Bitte aktiviere webGL oder probier es
+            einen Browser.
           </FinallyMessage>
         )}
         {hasWebGl && <div ref={container} className={s.container} />}
