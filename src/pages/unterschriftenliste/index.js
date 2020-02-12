@@ -1,40 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
-import { LinkButtonLocal, LinkButton } from '../../components/Forms/Button';
+import { LinkButton } from '../../components/Forms/Button';
 import { useCreateSignatureList } from '../../hooks/Api/Signatures/Create';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
-import s from './style.module.less';
 import { trackEvent, addActionTrackingId } from '../../components/utils';
-import { CTAButtonContainer } from '../../components/Layout/CTAButton';
 import { StepListItem } from '../../components/StepList';
 import querystring from 'query-string';
 import { Link } from 'gatsby';
 
 const trackingCategory = 'ListDownload';
-
-const CTAs = {
-  'schleswig-holstein-1': {
-    text: 'Mehr Infos',
-    link: 'schleswig-holstein',
-  },
-  'brandenburg-1': {
-    text: 'Mehr Infos',
-    link: 'brandenburg',
-  },
-  'hamburg-1': {
-    text: 'Mehr Infos',
-    link: 'hamburg',
-  },
-  'bremen-1': {
-    text: 'Mehr Infos',
-    link: 'bremen',
-  },
-  'berlin-1': {
-    text: 'Mehr Infos',
-    link: 'berlin',
-  },
-};
 
 const Unterschriftenliste = () => {
   const [state, createPdf] = useCreateSignatureList({});
@@ -95,13 +70,6 @@ const Unterschriftenliste = () => {
                   )}
                 </StepListItem>
               </DownloadListsNextSteps>
-              {CTAs[campaignCode] && (
-                <CTAButtonContainer>
-                  <LinkButtonLocal to={CTAs[campaignCode].link}>
-                    {CTAs[campaignCode].text}
-                  </LinkButtonLocal>
-                </CTAButtonContainer>
-              )}
             </>
           )}
         </>
