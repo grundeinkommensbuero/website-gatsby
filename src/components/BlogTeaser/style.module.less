@@ -31,7 +31,29 @@
 }
 
 .image {
-    height: 9rem;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    filter: grayscale(1) contrast(0.5) brightness(1.4);
+
+    .link:hover & {
+        filter: grayscale(1) contrast(0.5) brightness(1.6);
+    }
+}
+
+.imageContainer {
+    height: 12rem;
+    position: relative;
+
+    &::after {
+        content: '';
+        background: var(--font-color);
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        mix-blend-mode: color;
+    }
 }
 
 .title {

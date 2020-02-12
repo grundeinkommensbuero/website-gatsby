@@ -44,18 +44,20 @@ export default () => {
 
         return (
           <article key={id} className={s.article}>
-            {featured_media && (
-              <Link to={path} className={s.link}>
-                <time dateTime={dateObject.toISOString()} className={s.date}>
-                  {formatDate(dateObject)}
-                </time>
-                <Img
-                  className={s.image}
-                  fluid={featured_media.localFile.childImageSharp.hero}
-                />
-                <h1 className={s.title}>{title}</h1>
-              </Link>
-            )}
+            <Link to={path} className={s.link}>
+              <time dateTime={dateObject.toISOString()} className={s.date}>
+                {formatDate(dateObject)}
+              </time>
+              <div className={s.imageContainer}>
+                {featured_media && (
+                  <Img
+                    className={s.image}
+                    fluid={featured_media.localFile.childImageSharp.hero}
+                  />
+                )}
+              </div>
+              <h1 className={s.title}>{title}</h1>
+            </Link>
           </article>
         );
       })}
