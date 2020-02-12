@@ -48,7 +48,6 @@ export default function Sections({ sections }) {
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
           const isIllustration =
             __typename === 'ContentfulPageSectionIllustration';
-          console.log(blogTeaser);
 
           return (
             <Section
@@ -135,11 +134,7 @@ export default function Sections({ sections }) {
                   <Share />
                 </SectionInner>
               )}
-              {blogTeaser && (
-                <SectionInner wide={true}>
-                  <BlogTeaser />
-                </SectionInner>
-              )}
+              {blogTeaser && <BlogTeaser />}
             </Section>
           );
         })}
