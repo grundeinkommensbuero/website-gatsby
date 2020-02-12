@@ -62,8 +62,8 @@ export default ({ signaturesId }) => {
         {state.existingUser ? (
           <>
             <p>
-              Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
-              deinem Postfach. Du kannst sie dir auch{' '}
+              Juhu! Die Unterschriftenlisten sind in deinem Postfach. Du kannst
+              sie dir auch{' '}
               <a target="_blank" href={state.pdf.url}>
                 direkt im Browser herunterladen
               </a>
