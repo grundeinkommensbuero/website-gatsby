@@ -324,3 +324,12 @@
 .sectionWithHeroImage {
     text-shadow: 0 0 .8rem fade(@yellow, 90);
 }
+
+.spaceBetweenBlogAndCTA {
+    height: 2rem;
+    grid-column: 3;
+
+    @media (max-width: @breakPointS) {
+        height: 1rem;
+    }
+}
