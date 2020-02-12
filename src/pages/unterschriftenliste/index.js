@@ -18,10 +18,13 @@ const Unterschriftenliste = () => {
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     setCampaignCode(urlParams.campaignCode);
-    createPdf({
-      userId: urlParams.userId,
-      campaignCode: urlParams.campaignCode,
-    });
+
+    if (urlParams.campaignCode !== 'berlin-1') {
+      createPdf({
+        userId: urlParams.userId,
+        campaignCode: urlParams.campaignCode,
+      });
+    }
   }, []);
 
   if (state.state === 'error') {
@@ -71,6 +74,13 @@ const Unterschriftenliste = () => {
                 </StepListItem>
               </DownloadListsNextSteps>
             </>
+          )}
+
+          {campaignCode === 'berlin-1' && (
+            <FinallyMessage state="error">
+              Für Berlin gibt es noch keine Unterschriftenlisten. Wir melden uns
+              bei dir, sobald sie zur Verfügung stehen.
+            </FinallyMessage>
           )}
         </>
       ),
