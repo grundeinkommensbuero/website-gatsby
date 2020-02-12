@@ -107,7 +107,7 @@ export default ({ state }) => {
         {!hasWebGl && (
           <FinallyMessage>
             Entschuldige bitte, dein Browser unterstützt leider unsere Karte
-            nicht, sie benötigt webGL. Bitte aktiviere webGL oder probier es
+            nicht, sie benötigt webGL. Bitte aktiviere webGL oder probier es in
             einen Browser.
           </FinallyMessage>
         )}
