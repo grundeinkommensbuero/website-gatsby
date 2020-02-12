@@ -52,49 +52,51 @@ export default ({ state }) => {
   let map;
 
   useEffect(() => {
-    const collectSignaturesLocationsFiltered = collectSignaturesLocations
-      .filter(({ node: location }) => {
-        if (!location.date) {
-          return true;
-        }
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
+    if (detectWebGLContext()) {
+      const collectSignaturesLocationsFiltered = collectSignaturesLocations
+        .filter(({ node: location }) => {
+          if (!location.date) {
+            return true;
+          }
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
 
-        return +new Date(location.date) > +yesterday;
-      })
-      .filter(({ node: location }) => {
-        return location.state === state;
+          return +new Date(location.date) > +yesterday;
+        })
+        .filter(({ node: location }) => {
+          return location.state === state;
+        });
+
+      map = new mapboxgl.Map({
+        container: container.current,
+        style: 'mapbox://styles/mapbox/streets-v9',
+        maxBounds: BOUNDS[state],
+      }).addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+      collectSignaturesLocationsFiltered.forEach(({ node: location }) => {
+        if (location.location) {
+          new mapboxgl.Marker()
+            .setLngLat([location.location.lon, location.location.lat])
+            .addTo(map)
+            .setPopup(
+              new mapboxgl.Popup()
+                .setHTML(renderToStaticMarkup(<PopupContent {...location} />))
+                .on('open', () => {
+                  highlightedPoint.push(location);
+                  setHighlightedPoint([...highlightedPoint]);
+                })
+                .on('close', () => {
+                  highlightedPoint.shift();
+                  setHighlightedPoint([...highlightedPoint]);
+                })
+            );
+        }
       });
 
-    map = new mapboxgl.Map({
-      container: container.current,
-      style: 'mapbox://styles/mapbox/streets-v9',
-      maxBounds: BOUNDS[state],
-    }).addControl(new mapboxgl.NavigationControl(), 'top-left');
-
-    collectSignaturesLocationsFiltered.forEach(({ node: location }) => {
-      if (location.location) {
-        new mapboxgl.Marker()
-          .setLngLat([location.location.lon, location.location.lat])
-          .addTo(map)
-          .setPopup(
-            new mapboxgl.Popup()
-              .setHTML(renderToStaticMarkup(<PopupContent {...location} />))
-              .on('open', () => {
-                highlightedPoint.push(location);
-                setHighlightedPoint([...highlightedPoint]);
-              })
-              .on('close', () => {
-                highlightedPoint.shift();
-                setHighlightedPoint([...highlightedPoint]);
-              })
-          );
-      }
-    });
-
-    return () => {
-      map.remove();
-    };
+      return () => {
+        map.remove();
+      };
+    }
   }, []);
 
   return (
@@ -138,3 +140,19 @@ const PopupContent = ({ title, description, date, phone, mail }) => (
     )}
   </div>
 );
+
+function detectWebGLContext() {
+  // Create canvas element. The canvas is not added to the
+  // document itself, so it is never displayed in the
+  // browser window.
+  var canvas = document.createElement('canvas');
+  // Get WebGLRenderingContext from canvas element.
+  var gl =
+    canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  // Report the result.
+  if (gl && gl instanceof WebGLRenderingContext) {
+    return true;
+  } else {
+    return false;
+  }
+}
