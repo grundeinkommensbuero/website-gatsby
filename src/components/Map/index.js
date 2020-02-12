@@ -5,6 +5,7 @@ import { contentfulJsonToHtml, formatDateTime } from '../utils';
 import s from './style.module.less';
 import { useStaticQuery, graphql } from 'gatsby';
 import { SectionInner } from '../Layout/Sections';
+import { FinallyMessage } from '../Forms/FinallyMessage';
 
 let mapboxgl;
 
@@ -49,10 +50,11 @@ export default ({ state }) => {
 
   const container = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
+  const hasWebGl = detectWebGLContext();
   let map;
 
   useEffect(() => {
-    if (detectWebGLContext()) {
+    if (hasWebGl) {
       const collectSignaturesLocationsFiltered = collectSignaturesLocations
         .filter(({ node: location }) => {
           if (!location.date) {
@@ -102,7 +104,14 @@ export default ({ state }) => {
   return (
     <>
       <SectionInner wide={true}>
-        <div ref={container} className={s.container} />
+        {!hasWebGl && (
+          <FinallyMessage>
+            Entschuldige bitte, dein Browser Unterstützt leider unsere Karte
+            nicht, sie benötigt webGL. Bitte aktiviere webGL oder probier einen
+            Browser.
+          </FinallyMessage>
+        )}
+        {hasWebGl && <div ref={container} className={s.container} />}
       </SectionInner>
       {highlightedPoint.length !== 0 && (
         <SectionInner className={s.popUpOutside}>
