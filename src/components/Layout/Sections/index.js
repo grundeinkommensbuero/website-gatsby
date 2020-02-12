@@ -115,6 +115,10 @@ export default function Sections({ sections }) {
                   </CTAButtonContainer>
                 </SectionInner>
               )}
+              {blogTeaser && <BlogTeaser />}
+              {blogTeaser && callToActionText && callToActionLink && (
+                <div className={s.spaceBetweenBlogAndCTA} />
+              )}
               {callToActionText && callToActionLink && (
                 <SectionInner>
                   <CTAButtonContainer>
@@ -134,7 +138,6 @@ export default function Sections({ sections }) {
                   <Share />
                 </SectionInner>
               )}
-              {blogTeaser && <BlogTeaser />}
             </Section>
           );
         })}
