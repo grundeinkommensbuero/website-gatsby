@@ -42,9 +42,15 @@
 .contentGrid() {
   display: grid;
   grid-template-columns:
-    [wide-start] 1fr [medium-start] 1fr [slim-start] repeat(8, 1fr)
-    [slim-end] 1fr [medium-end] 1fr [wide-end];
+    [wide-start] 1fr [medium-start] 1fr 1fr [slim-start] repeat(6, 1fr)
+    [slim-end] 1fr 1fr [medium-end] 1fr [wide-end];
   grid-gap: var(--grid-gap);
+
+  @media (max-width: @breakPointXL) {
+    grid-template-columns:
+      [wide-start] 1fr [medium-start] 1fr [slim-start] 1fr repeat(6, 1fr)
+      1fr [slim-end] 1fr [medium-end] 1fr [wide-end];
+  }
 
   @media (max-width: @breakPointM) {
     grid-template-columns:
