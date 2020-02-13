@@ -47,11 +47,15 @@ export default ({ state }) => {
       }
     }
   `);
+  const [hasWebGl, setHasWebGL] = useState(null);
 
   const container = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
-  const hasWebGl = detectWebGLContext();
   let map;
+
+  useEffect(() => {
+    setHasWebGL(detectWebGLContext());
+  }, []);
 
   useEffect(() => {
     if (hasWebGl) {
@@ -99,12 +103,12 @@ export default ({ state }) => {
         map.remove();
       };
     }
-  }, []);
+  }, [hasWebGl]);
 
   return (
     <>
       <SectionInner wide={true}>
-        {!hasWebGl && (
+        {hasWebGl === false && (
           <FinallyMessage>
             Entschuldige bitte, dein Browser unterstützt leider unsere Karte
             nicht, sie benötigt webGL. Bitte mache ein Update deines Browsers
@@ -112,7 +116,9 @@ export default ({ state }) => {
             Browser.
           </FinallyMessage>
         )}
-        {hasWebGl && <div ref={container} className={s.container} />}
+        {(hasWebGl === true || hasWebGl === null) && (
+          <div ref={container} className={s.container} />
+        )}
       </SectionInner>
       {highlightedPoint.length !== 0 && (
         <SectionInner className={s.popUpOutside}>
