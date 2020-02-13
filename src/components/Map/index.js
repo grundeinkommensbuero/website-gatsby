@@ -107,8 +107,9 @@ export default ({ state }) => {
         {!hasWebGl && (
           <FinallyMessage>
             Entschuldige bitte, dein Browser unterstützt leider unsere Karte
-            nicht, sie benötigt webGL. Bitte aktiviere webGL oder probier es in
-            einem anderen Browser.
+            nicht, sie benötigt webGL. Bitte mache ein Update deines Browsers
+            und/oder deines Betriebssystems oder probiere es in einem anderen
+            Browser.
           </FinallyMessage>
         )}
         {hasWebGl && <div ref={container} className={s.container} />}
