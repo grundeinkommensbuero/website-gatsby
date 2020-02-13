@@ -14,7 +14,7 @@ export default () => {
       <SectionWrapper>
         <SelfScan
           campaignCode="hamburg-1"
-          successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Am Langenzug 12, 12085 Hamburg"
+          successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Am Langenzug 12, 22085 Hamburg"
         />
       </SectionWrapper>
     </Layout>
