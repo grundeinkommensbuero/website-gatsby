@@ -160,7 +160,7 @@ export function formatDate(date) {
     month: 'long',
     day: 'numeric',
   };
-  return new Intl.DateTimeFormat('de-DE', options).format(date);
+  return new Intl.DateTimeFormat('de', options).format(date);
 }
 
 export function formatDateShort(date) {
@@ -169,7 +169,7 @@ export function formatDateShort(date) {
     month: 'numeric',
     day: 'numeric',
   };
-  return new Intl.DateTimeFormat('de-DE', options).format(date);
+  return new Intl.DateTimeFormat('de', options).format(date);
 }
 
 export function formatDateMonthYear(date) {
@@ -177,7 +177,7 @@ export function formatDateMonthYear(date) {
     year: 'numeric',
     month: 'long',
   };
-  return new Intl.DateTimeFormat('de-DE', options).format(date);
+  return new Intl.DateTimeFormat('de', options).format(date);
 }
 
 export function formatTime(date) {
@@ -186,5 +186,5 @@ export function formatTime(date) {
     minute: 'numeric',
     hour12: false,
   };
-  return new Intl.DateTimeFormat('de-DE', options).format(date);
+  return new Intl.DateTimeFormat('de', options).format(date);
 }
