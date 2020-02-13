@@ -65,7 +65,7 @@ const signUp = async (email, setState) => {
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
-      setState({ state: 'userExists' });
+      setState({ state: 'userExists', email });
     } else if (
       error.code === 'TooManyRequestsException' ||
       error.code === 'ThrottlingException'

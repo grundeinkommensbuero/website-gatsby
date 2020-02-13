@@ -1,16 +1,7 @@
 import CONFIG from '../../../../aws-config';
-import { useState } from 'react';
 
-export const useCreateSignatureList = () => {
-  const [state, setState] = useState({});
-
-  return [state, userId => getUser(userId, setState)];
-};
-
-const getUser = async (userId, setState) => {
+export const useGetUserByEmail = async email => {
   try {
-    setState({ state: 'loading' });
-
     const request = {
       method: 'GET',
       mode: 'cors',
@@ -20,20 +11,20 @@ const getUser = async (userId, setState) => {
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/users/${userId}`,
+      `${CONFIG.API.INVOKE_URL}/users?email=${email}`,
       request
     );
 
     if (response.status === 200) {
       const json = await response.json();
 
-      setState({ state: 'success', user: json.user });
+      return { state: 'success', user: json.users[0] };
     } else if (response.status === 404) {
-      setState({ state: 'notFound' });
+      return { state: 'notFound' };
     } else {
-      setState({ state: 'error' });
+      return { state: 'error' };
     }
   } catch (error) {
-    setState({ state: 'error' });
+    return { state: 'error' };
   }
 };

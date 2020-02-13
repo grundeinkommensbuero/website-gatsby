@@ -4,24 +4,41 @@ import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
-import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
 import { StepListItem } from '../../StepList';
+import { useCreateSignatureList } from '../../../hooks/api/Signatures/Create';
+import { useGetUserByEmail } from '../../../hooks/api/users/get';
+import { useSignUp } from '../../../hooks/authentication';
 
 const trackingCategory = 'ListDownload';
 
 export default ({ signaturesId }) => {
-  const [state, createPdf] = useCreateSignatureList({});
-  const [signUpState, signUp] = useSignUp({});
+  const [state, createPdf] = useCreateSignatureList();
+  const [signUpState, signUp] = useSignUp();
+  const getUserByEmail = useGetUserByEmail();
 
   useEffect(() => {
+    // If user was registered proceed by creating list
     if (signUpState.state === 'success') {
-      createPdf({
-        userId: signUpState.userId,
-        campaignCode: signaturesId,
+      createPdf({ userId: signUpState.userId, campaignCode: signaturesId });
+    } else if (signUpState.state === 'userExists') {
+      // If the user already exists, we want to check, if user
+      // has newsletter consent or not
+      getUserByEmail(signUpState.email).then(data => {
+        if (data.state === 'success') {
+          // If user has newsletter consent true, we do not need to sign in
+          if (!data.user.newsletterConsent.value) {
+            // TODO: start sign in process
+          } else {
+            createPdf({
+              userId: data.user.userId,
+              campaignCode: signaturesId,
+            });
+          }
+        }
       });
     }
   }, [signUpState, createPdf]);
