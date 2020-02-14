@@ -25,7 +25,7 @@
 @headerHeightS: 4rem;
 
 @contentWidth: 45rem;
-@contentWidthL: 80rem;
+@contentWidthL: 70rem;
 
 @breakPointXL: 1200px;
 @breakPointL: 1000px;
@@ -42,8 +42,8 @@
 .contentGrid() {
   display: grid;
   grid-template-columns:
-    [wide-start] 1fr [medium-start] 1fr 1fr [slim-start] repeat(6, 1fr)
-    [slim-end] 1fr 1fr [medium-end] 1fr [wide-end];
+    [wide-start] 1fr [medium-start] 1fr [slim-start] repeat(8, 1fr)
+    [slim-end] 1fr [medium-end] 1fr [wide-end];
   grid-gap: var(--grid-gap);
 
   @media (max-width: @breakPointXL) {
