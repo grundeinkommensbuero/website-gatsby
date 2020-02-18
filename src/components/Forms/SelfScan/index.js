@@ -102,7 +102,9 @@ export default ({ successMessage, campaignCode }) => {
                 <div className={s.statisticsOverallLabel}>
                   Unterschriften
                   <br />
-                  bei uns angekommen
+                  von dir bei uns
+                  <br />
+                  angekommen
                 </div>
               </div>
             </div>
@@ -111,23 +113,43 @@ export default ({ successMessage, campaignCode }) => {
             <CampaignVisualisations
               visualisations={campaignVisualisationsMapped}
             />
+            <h2 className={s.headingSelfScan}>
+              Unterschriften selber eintragen
+            </h2>
+            <CountSignaturesForm
+              state={state}
+              updateSignatureList={updateSignatureList}
+              listId={listId}
+              userId={userId}
+              setEMail={setEMail}
+              successMessage={successMessage}
+              setCount={setCount}
+              campaignCode={campaignCode}
+            />
           </div>
         </Section>
       )}
-      <Section title="Unterschriften zählen">
-        <SectionInner hugeText={true}>
-          <CountSignaturesForm
-            state={state}
-            updateSignatureList={updateSignatureList}
-            listId={listId}
-            userId={userId}
-            setEMail={setEMail}
-            successMessage={successMessage}
-            setCount={setCount}
-            campaignCode={campaignCode}
-          />
-        </SectionInner>
-      </Section>
+      {!signatureCountOfUser && (
+        <Section title="Unterschriften zählen">
+          <SectionInner hugeText={true}>
+            <p>
+              Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
+              Unterschriften hinzu gekommen sind:
+            </p>
+
+            <CountSignaturesForm
+              state={state}
+              updateSignatureList={updateSignatureList}
+              listId={listId}
+              userId={userId}
+              setEMail={setEMail}
+              successMessage={successMessage}
+              setCount={setCount}
+              campaignCode={campaignCode}
+            />
+          </SectionInner>
+        </Section>
+      )}
     </>
   );
 };
@@ -149,7 +171,7 @@ const CountSignaturesForm = ({
   }
 
   if (state === 'saved') {
-    return <FinallyMessage state="success">{successMessage}</FinallyMessage>;
+    return <FinallyMessage>{successMessage}</FinallyMessage>;
   }
 
   if (state === 'notFound' && needsEMail) {
@@ -196,10 +218,6 @@ const CountSignaturesForm = ({
       render={({ handleSubmit }) => {
         return (
           <>
-            <p>
-              Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
-              Unterschriften hinzu gekommen sind:
-            </p>
             <FormWrapper>
               <form onSubmit={handleSubmit}>
                 {needsEMail && (
@@ -227,7 +245,7 @@ const CountSignaturesForm = ({
                 </FormSection>
 
                 <CTAButtonContainer>
-                  <CTAButton type="submit">Speichern</CTAButton>
+                  <CTAButton type="submit">Eintragen</CTAButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
