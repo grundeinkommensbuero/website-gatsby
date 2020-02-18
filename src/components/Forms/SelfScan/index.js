@@ -12,7 +12,7 @@ import { validateEmail } from '../../utils';
 import { SectionInner, Section } from '../../Layout/Sections';
 import querystring from 'query-string';
 import { useStaticQuery, graphql } from 'gatsby';
-import CampainVisualisations from '../../CampainVisualisations';
+import CampaignVisualisations from '../../CampaignVisualisations';
 
 export default ({ successMessage, campaignCode }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
@@ -99,7 +99,7 @@ export default ({ successMessage, campaignCode }) => {
             </div>
           </div>
           <div className={s.visualisation}>
-            <CampainVisualisations
+            <CampaignVisualisations
               visualisations={campaignVisualisationsMapped}
             />
           </div>
