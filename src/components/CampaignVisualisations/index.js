@@ -8,6 +8,7 @@ import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
+import VisualCounter from '../VisualCounter';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
@@ -200,7 +201,7 @@ const Visualisation = ({
                     className={s.barCurrentLabel}
                     placement="bottom"
                   >
-                    {count ? count.toLocaleString('de') : ''}
+                    {count && <VisualCounter end={count} />}
                   </Tooltip>
                 </span>
               </>
