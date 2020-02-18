@@ -24,5 +24,5 @@ export default ({ end = 0, start = 0, time = 1000 }) => {
     }
   }, [end]);
 
-  return <>{displayCount}</>;
+  return <>{displayCount.toLocaleString('de')}</>;
 };
