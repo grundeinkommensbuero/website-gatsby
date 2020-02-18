@@ -189,6 +189,10 @@ const validate = (values, needsEMail) => {
     errors.count = 'Muss ausgefüllt sein';
   }
 
+  if (values.count && values.count < 0) {
+    errors.count = 'Nix, es gibt keine negative Anzahl an Unterschriften!';
+  }
+
   if (needsEMail && !validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
