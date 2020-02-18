@@ -65,11 +65,17 @@ export default ({ successMessage, campaignCode }) => {
     }
   `);
 
+  const addedSelfScanned = state === 'saved' ? count : 0;
+
   const campaignVisualisationsMapped = campaignVisualisations
     .map(({ node }) => node)
     .filter(({ campainCode: campaignCodeVisualisation }) => {
       return campaignCodeVisualisation === campaignCode;
     });
+
+  if (signatureCountOfUser && signatureCountOfUser.scannedByUser) {
+    campaignVisualisationsMapped[0].addSelfScanned = addedSelfScanned;
+  }
 
   return (
     <>
@@ -80,7 +86,7 @@ export default ({ successMessage, campaignCode }) => {
               <div className={s.statisticsOverallCountItem}>
                 <div className={s.statisticsOverallCount}>
                   <VisualCounter
-                    end={signatureCountOfUser.scannedByUser + count}
+                    end={signatureCountOfUser.scannedByUser + addedSelfScanned}
                   />
                 </div>
                 <div className={s.statisticsOverallLabel}>
