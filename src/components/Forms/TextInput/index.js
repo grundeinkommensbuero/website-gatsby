@@ -43,6 +43,8 @@ export const TextInputWrapped = ({
   className,
   inputClassName,
   maxLength,
+  min,
+  max,
 }) => {
   if (hide) {
     return null;
@@ -66,6 +68,8 @@ export const TextInputWrapped = ({
           placeholder={placeholder}
           className={inputClassName}
           maxLength={maxLength}
+          min={min}
+          max={max}
         />
       )}
     </LabelInputErrorWrapper>
