@@ -13,6 +13,7 @@ import { SectionInner, Section } from '../../Layout/Sections';
 import querystring from 'query-string';
 import { useStaticQuery, graphql } from 'gatsby';
 import CampaignVisualisations from '../../CampaignVisualisations';
+import VisualCounter from '../../VisualCounter';
 
 export default ({ successMessage, campaignCode }) => {
   const [state, updateSignatureList] = useUpdateSignatureListByUser();
@@ -78,7 +79,9 @@ export default ({ successMessage, campaignCode }) => {
             <div className={s.statisticsOverall}>
               <div className={s.statisticsOverallCountItem}>
                 <div className={s.statisticsOverallCount}>
-                  {signatureCountOfUser.scannedByUser + count}
+                  <VisualCounter
+                    end={signatureCountOfUser.scannedByUser + count}
+                  />
                 </div>
                 <div className={s.statisticsOverallLabel}>
                   Unterschriften
@@ -88,7 +91,7 @@ export default ({ successMessage, campaignCode }) => {
               </div>{' '}
               <div className={s.statisticsOverallCountItem}>
                 <div className={s.statisticsOverallCount}>
-                  {signatureCountOfUser.received}
+                  <VisualCounter count={signatureCountOfUser.received} />
                 </div>
                 <div className={s.statisticsOverallLabel}>
                   Unterschriften
