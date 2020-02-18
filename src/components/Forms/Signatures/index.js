@@ -106,6 +106,20 @@ export default ({ signaturesId }) => {
         render={({ handleSubmit }) => {
           return (
             <form onSubmit={handleSubmit} className={s.form}>
+              <p className={s.hint}>
+                Schickt mir die Unterschriftenliste, erinnert mich an das
+                Zurücksenden und haltet mich auf dem Laufenden. Ich kann die
+                Liste{' '}
+                <InlineButton
+                  onClick={() => {
+                    createPdf({ campaignCode: signaturesId });
+                  }}
+                  type="button"
+                >
+                  hier
+                </InlineButton>{' '}
+                auch anonym herunterladen.
+              </p>
               <div className={s.textInputContainer}>
                 <Field
                   name="email"
@@ -114,19 +128,6 @@ export default ({ signaturesId }) => {
                   component={TextInputWrapped}
                 ></Field>
               </div>
-              <p className={s.hint}>
-                Bitte erinnert mich an das Zurücksenden der Listen und haltet
-                mich auf dem Laufenden. Ich kann die Listen auch{' '}
-                <InlineButton
-                  onClick={() => {
-                    createPdf({ campaignCode: signaturesId });
-                  }}
-                  type="button"
-                >
-                  anonym herunterladen
-                </InlineButton>
-                .
-              </p>
               <CTAButtonContainer illustration="POINT_LEFT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
