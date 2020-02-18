@@ -55,6 +55,7 @@ const Visualisation = ({
   index,
   hint,
   goalInbetweenMultiple,
+  addSelfScanned,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -118,6 +119,10 @@ const Visualisation = ({
     if (maximum) {
       count = Math.min(count, maximum);
     }
+  }
+
+  if (addSelfScanned) {
+    count += addSelfScanned;
   }
 
   const hintWithVariables = replaceVariablesHintText({
