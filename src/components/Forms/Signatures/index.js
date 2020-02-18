@@ -59,7 +59,7 @@ export default ({ signaturesId }) => {
 
     return (
       <>
-        {state.existingUser ? (
+        {!state.anonymous ? (
           <>
             <p>
               Juhu! Die Unterschriftenlisten sind in deinem Postfach. Du kannst
@@ -81,7 +81,7 @@ export default ({ signaturesId }) => {
               Check deine Mails und klick den Link, damit du dabei bist.
             </StepListItem>
           )}
-          {(state.anonymous || !state.existingUser) && (
+          {state.anonymous && (
             <StepListItem icon="download">
               <LinkButton target="_blank" href={state.pdf.url}>
                 Listen herunterladen
