@@ -84,7 +84,8 @@ const Visualisation = ({
   }
 
   if (minimum) {
-    count = Math.max(count, minimum);
+    // count = Math.max(count, minimum);
+    count = minimum;
   }
 
   const hintWithVariables = replaceVariablesHintText({
