@@ -1,14 +1,5 @@
 @import '../style/vars.less';
 
-.title {
-  font-size: @fontSizeXXL;
-  margin: 1rem 0 0;
-
-  @media (max-width: @breakPointS) {
-    font-size: @fontSizeL;
-  }
-}
-
 .body {
   font-size: @fontSizeS;
   font-weight: normal;
@@ -116,20 +107,10 @@
   }
 }
 
-.header {
-  position: relative;
-}
-
-.headerText {
-  position: relative;
-  z-index: 1;
-}
-
 .tagList {
   padding: 0;
   list-style: none;
-  margin: 0 0 1rem;
-  font-size: @fontSizeM;
+  margin: 0;
 
   li {
     display: inline;
@@ -141,7 +122,5 @@
 }
 
 .date {
-  margin: 1rem 0 0;
   display: block;
-  font-size: @fontSizeM;
 }
