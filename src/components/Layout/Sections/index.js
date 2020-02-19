@@ -43,11 +43,26 @@ export default function Sections({ sections }) {
             backgroundIllustration,
             socialMediaButtons,
             blogTeaser,
+            preTitle,
+            subTitle,
+            backgroundImage,
           } = section;
           const id = stringToId(titleShort);
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
           const isIllustration =
             __typename === 'ContentfulPageSectionIllustration';
+
+          if (__typename === 'ContentfulPageSectionIntro') {
+            return (
+              <SectionHeader
+                key={index}
+                backgroundImageSet={backgroundImage && backgroundImage.fluid}
+                title={title}
+                preTitle={preTitle}
+                subTitle={subTitle}
+              ></SectionHeader>
+            );
+          }
 
           return (
             <Section

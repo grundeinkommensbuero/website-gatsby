@@ -105,6 +105,17 @@ export const pageQuery = graphql`
             sloganLine1
             sloganLine2
           }
+          ... on ContentfulPageSectionIntro {
+            __typename
+            preTitle
+            title
+            subTitle
+            backgroundImage {
+              fluid(maxWidth: 1500, quality: 80) {
+                ...GatsbyContentfulFluid
+              }
+            }
+          }
         }
       }
     }
