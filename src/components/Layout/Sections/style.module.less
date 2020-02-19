@@ -335,3 +335,31 @@
         height: 1rem;
     }
 }
+
+.header {
+    position: relative;
+}
+
+.headerText {
+    position: relative;
+    z-index: 1;
+}
+
+.headerTitle {
+    font-size: @fontSizeXXL;
+    margin: 1rem 0 0;
+
+    @media (max-width: @breakPointS) {
+        font-size: @fontSizeL;
+    }
+}
+
+.headerPreTitle {
+    margin: 0 0 1rem;
+    font-size: @fontSizeM;
+}
+
+.headerSubTitle {
+    margin: 1rem 0 0;
+    font-size: @fontSizeM;
+}

@@ -180,7 +180,14 @@ export function Section({
   );
 }
 
-export function SectionHeader({ backgroundImageSet, className, ...other }) {
+export function SectionHeader({
+  backgroundImageSet,
+  className,
+  title,
+  preTitle,
+  subTitle,
+  ...other
+}) {
   return (
     <Section
       isHeader={true}
@@ -198,7 +205,17 @@ export function SectionHeader({ backgroundImageSet, className, ...other }) {
         [s.sectionWithHeroImage]: backgroundImageSet,
       })}
       {...other}
-    />
+    >
+      <SectionInner>
+        <header className={s.header}>
+          <div className={s.headerText}>
+            {preTitle && <div className={s.headerPreTitle}>{preTitle}</div>}
+            <h1 className={s.headerTitle}>{title}</h1>
+            {subTitle && <div className={s.headerSubTitle}>{subTitle}</div>}
+          </div>
+        </header>
+      </SectionInner>
+    </Section>
   );
 }
 

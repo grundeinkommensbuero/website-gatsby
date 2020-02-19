@@ -46,28 +46,22 @@ export default ({
         backgroundImageSet={
           featured_media && featured_media.localFile.childImageSharp.hero
         }
-      >
-        <SectionInner>
-          <header className={s.header}>
-            <div className={s.headerText}>
-              {tags && (
-                <ul className={s.tagList}>
-                  {tags.map(({ id }) => (
-                    <li key={id}>#{tagList[id]}</li>
-                  ))}
-                </ul>
-              )}
-              <h1
-                className={s.title}
-                dangerouslySetInnerHTML={{ __html: title }}
-              />
-              <time dateTime={dateObject.toISOString()} className={s.date}>
-                {formatDate(dateObject)}
-              </time>
-            </div>
-          </header>
-        </SectionInner>
-      </SectionHeader>
+        preTitle={
+          tags && (
+            <ul className={s.tagList}>
+              {tags.map(({ id }) => (
+                <li key={id}>#{tagList[id]}</li>
+              ))}
+            </ul>
+          )
+        }
+        title={<span dangerouslySetInnerHTML={{ __html: title }} />}
+        subTitle={
+          <time dateTime={dateObject.toISOString()} className={s.date}>
+            {formatDate(dateObject)}
+          </time>
+        }
+      />
       <Section>
         {/* {featured_media && (
           <SectionInner wide={true}>
