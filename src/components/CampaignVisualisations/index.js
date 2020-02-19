@@ -206,7 +206,7 @@ const Visualisation = ({
                     className={s.barCurrentLabel}
                     placement="bottom"
                   >
-                    {count && <VisualCounter end={count} />}
+                    {count && <VisualCounter end={isInView ? count : 0} />}
                   </Tooltip>
                 </span>
               </>
