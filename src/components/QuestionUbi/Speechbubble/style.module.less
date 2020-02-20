@@ -1,0 +1,40 @@
+@import '../../style/vars.less';
+
+.container {
+    position: relative;
+    color: @yellow;
+}
+
+.body {
+    padding: 2rem 2rem 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.svg {
+    position: absolute;
+
+    svg {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        path {
+            vector-effect: non-scaling-stroke;
+        }
+    }
+}
+
+.svgTop {
+    top: 0;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+}
+
+.svgBottom {
+    bottom: 0;
+    height: 2.1rem;
+    left: 0;
+    right: 0;
+}
