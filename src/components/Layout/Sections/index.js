@@ -15,6 +15,7 @@ import HeaderBackgrounds from '../HeaderBackgrounds';
 import Img from 'gatsby-image';
 import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
+import QuestionUbi from '../../QuestionUbi';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -46,6 +47,7 @@ export default function Sections({ sections }) {
             preTitle,
             subTitle,
             backgroundImage,
+            questionUbi,
           } = section;
           const id = stringToId(titleShort);
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
@@ -134,6 +136,7 @@ export default function Sections({ sections }) {
               {blogTeaser && callToActionText && callToActionLink && (
                 <div className={s.spaceBetweenBlogAndCTA} />
               )}
+              {questionUbi && <QuestionUbi mode={questionUbi} />}
               {callToActionText && callToActionLink && (
                 <SectionInner>
                   <CTAButtonContainer>
