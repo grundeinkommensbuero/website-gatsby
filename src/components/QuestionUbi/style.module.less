@@ -3,19 +3,18 @@
     width: 5rem;
     border-radius: 50%;
     display: block;
-    margin: 0 1rem 0 0;
+    margin-top: 1rem;
 }
 
 .belowBubble {
-    display: flex;
-    align-items: flex-end;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 5rem 1fr auto;
+    grid-gap: 2rem;
 }
 
 .sendButton {
-    flex: 1 0 auto;
-    display: flex;
-    justify-content: flex-end;
+    align-self: start;
+    margin-top: 1.7rem;
 }
 
 .questionInput {
@@ -24,5 +23,9 @@
     padding: none;
     font-size: inherit;
     font-weight: inherit;
+    width: 100%;
+}
+
+.nameInput {
     width: 100%;
 }
