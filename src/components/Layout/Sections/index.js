@@ -95,18 +95,20 @@ export default function Sections({ sections }) {
                   visualisations={campainVisualisations}
                 />
               )}
-              <SectionInner hugeText={bodyTextSizeHuge}>
-                {body && body.json ? contentfulJsonToHtml(body.json) : body}
-                {pledgeId && (
-                  <Pledge pledgeId={pledgeId} className={s.pledge} />
-                )}
-                {signaturesId && (
-                  <Signatures
-                    signaturesId={signaturesId}
-                    className={s.pledge}
-                  />
-                )}
-              </SectionInner>
+              {(body || pledgeId || signaturesId) && (
+                <SectionInner hugeText={bodyTextSizeHuge}>
+                  {body && body.json ? contentfulJsonToHtml(body.json) : body}
+                  {pledgeId && (
+                    <Pledge pledgeId={pledgeId} className={s.pledge} />
+                  )}
+                  {signaturesId && (
+                    <Signatures
+                      signaturesId={signaturesId}
+                      className={s.pledge}
+                    />
+                  )}
+                </SectionInner>
+              )}
               {map && <Map state={map} />}
               {emailSignup && (
                 <SectionInner>
