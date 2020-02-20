@@ -119,6 +119,14 @@
   transition: width 1s ease;
   z-index: 3;
 
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeXXL;
+  }
+
+  @media (max-width: 360px) {
+    font-size: @fontSizeXL;
+  }
+
   &::before {
     content: '';
     background: var(--secondary-color);
