@@ -18,7 +18,18 @@ export default ({ mode }) => {
       render={({ handleSubmit }) => (
         <SectionInner>
           <form onSubmit={handleSubmit}>
-            <Speechbubble>hellooo</Speechbubble>
+            <Speechbubble>
+              <Field
+                name="message"
+                label="Deine Frage an das Grundeinkommen"
+                placeholder="Deine Nachricht"
+                type="textarea"
+                maxLength={400}
+                component={TextInputWrapped}
+                inputClassName={s.questionInput}
+                hideLabel={true}
+              />
+            </Speechbubble>
             <div className={s.belowBubble}>
               <div>
                 <img src={Avatar1} className={s.avatarImage} />
