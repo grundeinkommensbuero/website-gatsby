@@ -39,6 +39,7 @@ export default ({ mode }) => {
                 name="name"
                 label="Name"
                 placeholder="Dein Name"
+                inputClassName={s.nameInput}
               />
               <div className={s.sendButton}>
                 <CTAButton type="submit">Abschicken</CTAButton>
