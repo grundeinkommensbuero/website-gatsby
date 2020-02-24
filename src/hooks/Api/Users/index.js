@@ -1,7 +1,6 @@
 /**
  *  This file holds hooks (or just one) to make api calls regarding
- *  getting data concerning signatures (e.g. count of signatures for
- *  each campaign)
+ *  getting data about a specific user
  */
 
 import { useState } from 'react';
