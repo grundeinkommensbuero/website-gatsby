@@ -77,7 +77,7 @@ const ImageInput = ({ input: { value, onChange, ...input } }) => {
         type="file"
         onChange={handleChange}
         className={s.avatarUploadButton}
-        accept="image/jpeg"
+        accept="image/png, image/jpeg"
         {...input}
       />
     </label>
