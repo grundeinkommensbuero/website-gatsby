@@ -6,26 +6,26 @@ export const useUploadImage = () => {
   return [state, (userId, image) => uploadImage(userId, image, setState)];
 };
 
+// Requests a presigned url and uploads image to S3
 const uploadImage = async (userId, image, setState) => {
   try {
-    setState({ state: 'loading' });
+    setState('loading');
     const contentType = image.type;
-    console.log('content type & size', contentType, image.size);
 
-    const uploadUrl = await requestPreSignedUrl(userId, contentType);
+    const uploadUrl = await requestPresignedUrl(userId, contentType);
 
-    console.log('upload url', uploadUrl);
+    await uploadToS3(uploadUrl, image, contentType);
 
-    const result = await uploadToS3(uploadUrl, image, contentType);
-
-    console.log('upload result', result);
+    setState('success');
   } catch (error) {
     console.log('Error', error);
-    setState({ state: 'error' });
+    setState('error');
   }
 };
 
-const requestPreSignedUrl = async (userId, contentType) => {
+// Makes call to endpoint to get a so called presigned url to
+// upload an image to S3
+const requestPresignedUrl = async (userId, contentType) => {
   const request = {
     method: 'POST',
     mode: 'cors',
@@ -47,10 +47,13 @@ const requestPreSignedUrl = async (userId, contentType) => {
     const { uploadUrl } = await response.json();
     return uploadUrl;
   } else {
-    throw new Error(`Api response was ${response.status}`);
+    throw new Error(
+      `Api response while requesting pre signed url was ${response.status}`
+    );
   }
 };
 
+// Uses the presigned url to upload an image to S3
 const uploadToS3 = async (uploadUrl, image, contentType) => {
   const params = {
     method: 'PUT',
