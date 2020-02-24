@@ -1,3 +1,5 @@
+@import '../style/vars.less';
+
 .avatarImage {
   height: 5rem;
   width: 5rem;
@@ -7,6 +9,7 @@
   object-fit: cover;
   object-position: center;
   transition: transform 0.3s;
+  pointer-events: all;
 }
 
 .avatarUploadButton {
@@ -16,11 +19,36 @@
 .avatarImageContainer {
   position: relative;
   cursor: pointer;
+  pointer-events: none;
 
   &:hover {
     .avatarImage {
       transform: rotate(-15deg);
     }
+  }
+}
+
+.avatarImageLabel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: calc(100% - 0.5rem);
+  width: 15rem;
+  font-size: @fontSizeS;
+  pointer-events: all;
+
+  &:hover {
+    color: @blueBright;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    background-image: url('./arrow.svg');
+    background-size: 100% 100%;
+    bottom: 0.8rem;
+    width: 3rem;
+    height: 2rem;
   }
 }
 
