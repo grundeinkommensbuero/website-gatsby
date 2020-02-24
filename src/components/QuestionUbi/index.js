@@ -15,7 +15,7 @@ export default ({ mode }) => {
         console.log('submitting', data);
       }}
       validate={validate}
-      render={({ handleSubmit }) => (
+      render={({ handleSubmit, dirtyFields, ...props }) => (
         <SectionInner>
           <form onSubmit={handleSubmit}>
             <Speechbubble>
@@ -39,8 +39,15 @@ export default ({ mode }) => {
                 placeholder="Dein Name"
                 inputClassName={s.nameInput}
               />
-              <div className={s.sendButton}>
-                <CTAButton type="submit">Abschicken</CTAButton>
+              <div className={s.submitButtonContainer}>
+                <CTAButton
+                  type="submit"
+                  className={cN(s.submitButton, {
+                    [s.submitButtonDirty]: dirtyFields.message,
+                  })}
+                >
+                  Abschicken
+                </CTAButton>
               </div>
             </div>
           </form>
