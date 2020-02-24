@@ -6,13 +6,11 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import Map from '../../components/Map';
 import { useUploadImage } from '../../hooks/images';
 
 export default () => {
   const [state, uploadImage] = useUploadImage();
 
-  console.log('state', state);
   return (
     <Layout>
       <Helmet>
