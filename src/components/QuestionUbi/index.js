@@ -9,9 +9,12 @@ import Avatar1 from './avatar1.svg';
 import { TextInputWrapped } from '../Forms/TextInput';
 import querystring from 'query-string';
 import { FinallyMessage } from '../Forms/FinallyMessage';
+import { useUploadImage } from '../../hooks/images';
 
 export default ({ mode }) => {
   const [userId, setUserId] = useState(null);
+  const [uploadImageState, uploadImage] = useUploadImage();
+
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     // Will be null, if param does not exist
@@ -30,8 +33,10 @@ export default ({ mode }) => {
 
   return (
     <Form
-      onSubmit={data => {
-        console.log('submitting', data);
+      onSubmit={({ image, ...data }) => {
+        if (image && image[0]) {
+          uploadImage(userId, image[0]);
+        }
       }}
       validate={validate}
       render={({ handleSubmit, dirtyFields, ...props }) => (
