@@ -10,16 +10,21 @@ import { TextInputWrapped } from '../Forms/TextInput';
 import querystring from 'query-string';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 import { useUploadImage } from '../../hooks/images';
+import { useUserData } from '../../hooks/Api/Users';
 
 export default ({ mode }) => {
   const [userId, setUserId] = useState(null);
   const [uploadImageState, uploadImage] = useUploadImage();
+  const [userData, requestUserData] = useUserData();
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     // Will be null, if param does not exist
     setUserId(urlParams.userId);
+    requestUserData(urlParams.userId);
   }, []);
+
+  console.log(userData, uploadImageState);
 
   if (userId === undefined) {
     return (
@@ -39,7 +44,7 @@ export default ({ mode }) => {
         }
       }}
       validate={validate}
-      render={({ handleSubmit, dirtyFields, ...props }) => (
+      render={({ handleSubmit, dirtyFields }) => (
         <SectionInner>
           <form onSubmit={handleSubmit}>
             <Speechbubble>
