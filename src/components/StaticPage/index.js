@@ -59,7 +59,7 @@ export const pageQuery = graphql`
                 json
               }
               goalUnbuffered
-              goalInbetween
+              goalInbetweenMultiple
               hint {
                 hint
               }

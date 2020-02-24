@@ -25,14 +25,14 @@ export default () => {
                     'Wed Jan 29 2020 16:08:17 GMT+0100 (Central European Standard Time)',
 
                   title: 'Schlewsig-Holstein',
-                  currentCount: 231,
+                  currentCount: 6000,
                   minimum: 0,
                   addToSignatureCount: 10,
                   showCTA: false,
                   ctaLink: '#',
                   eyeCatcher: false,
-                  goalInbetween: 2000,
                   goalUnbuffered: 20000,
+                  goalInbetweenMultiple: ['5000', '7000', '10000', '12000'],
                   hint: {
                     hint:
                       'Schon $COLLECTED Unterschriften von $GOAL! Nächstes Ziel: $GOAL_INBETWEEN Unterschriften.',
@@ -50,7 +50,6 @@ export default () => {
                   showCTA: false,
                   ctaLink: '#',
                   eyeCatcher: false,
-                  goalInbetween: 10000,
                   goalUnbuffered: 10000,
                 },
                 {
@@ -65,7 +64,6 @@ export default () => {
                   showCTA: false,
                   ctaLink: '#',
                   eyeCatcher: false,
-                  // goalInbetween: 25000,
                   goalUnbuffered: 22000,
                 },
                 {
@@ -102,7 +100,6 @@ export default () => {
                   showCTA: false,
                   ctaLink: '#',
                   eyeCatcher: false,
-                  goalInbetween: 5000,
                   goalUnbuffered: 20000,
                 },
               ]}
