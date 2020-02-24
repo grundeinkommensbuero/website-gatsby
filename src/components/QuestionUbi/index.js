@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionInner } from '../Layout/Sections';
 import s from './style.module.less';
 import cN from 'classnames';
@@ -7,8 +7,27 @@ import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../Layout/CTAButton';
 import Avatar1 from './avatar1.svg';
 import { TextInputWrapped } from '../Forms/TextInput';
+import querystring from 'query-string';
+import { FinallyMessage } from '../Forms/FinallyMessage';
 
 export default ({ mode }) => {
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const urlParams = querystring.parse(window.location.search);
+    // Will be null, if param does not exist
+    setUserId(urlParams.userId);
+  }, []);
+
+  if (userId === undefined) {
+    return (
+      <SectionInner>
+        <FinallyMessage>
+          Da ist was mit dem Link nicht richtig. (userId fehlt)
+        </FinallyMessage>
+      </SectionInner>
+    );
+  }
+
   return (
     <Form
       onSubmit={data => {
