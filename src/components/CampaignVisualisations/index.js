@@ -116,7 +116,7 @@ const Visualisation = ({
 
   const percentage =
     count && isInView
-      ? Math.max(Math.min((count / goalInbetween || goal) * 100, 100), 3)
+      ? Math.max(Math.min((count / (goalInbetween || goal)) * 100, 100), 3)
       : 0;
   const countOutside = percentage < 40;
 
