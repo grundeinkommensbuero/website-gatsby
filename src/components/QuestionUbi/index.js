@@ -72,6 +72,7 @@ const ImageInput = ({ input: { value, onChange, ...input } }) => {
   return (
     <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
       <img src={avatarImage || Avatar1} className={s.avatarImage} />
+      <div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>
       <input
         type="file"
         onChange={handleChange}
