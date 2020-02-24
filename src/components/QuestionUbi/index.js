@@ -41,7 +41,7 @@ export default ({ mode }) => {
               <Field
                 name="message"
                 label="Deine Frage an das Grundeinkommen"
-                placeholder="Deine Nachricht"
+                placeholder="Deine Frage"
                 type="textarea"
                 maxLength={400}
                 component={TextInputWrapped}
