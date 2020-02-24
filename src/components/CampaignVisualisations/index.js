@@ -43,14 +43,33 @@ const Visualisation = ({
   showCTA,
   ctaLink,
   eyeCatcher,
-  goalInbetween,
   goalUnbuffered,
   index,
   hint,
+  goalInbetweenMultiple,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
+  let goalInbetween;
+
+  if (goalInbetweenMultiple) {
+    const goalInbetweenMultipleSorted = goalInbetweenMultiple
+      .map(goal => parseInt(goal))
+      .sort((next, prev) => next < prev)
+      .reverse();
+
+    goalInbetween = goalInbetweenMultipleSorted.find((goal, index) => {
+      if (!goalInbetweenMultipleSorted[index + 1]) {
+        return goalInbetweenMultipleSorted[0] > currentCount;
+      }
+      return (
+        currentCount < goal &&
+        currentCount > goalInbetweenMultipleSorted[index + 1]
+      );
+    });
+  }
   const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
+
   const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
 
   useEffect(() => {
