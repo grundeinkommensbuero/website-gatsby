@@ -18,8 +18,11 @@ const uploadImage = async (userId, image, setState) => {
 
     setState('success');
   } catch (error) {
-    console.log('Error', error);
-    setState('error');
+    if (error.status === 400) {
+      setState('invalidRequest');
+    } else {
+      setState('error');
+    }
   }
 };
 
@@ -47,9 +50,10 @@ const requestPresignedUrl = async (userId, contentType) => {
     const { uploadUrl } = await response.json();
     return uploadUrl;
   } else {
-    throw new Error(
-      `Api response while requesting pre signed url was ${response.status}`
-    );
+    throw {
+      status: response.status,
+      error: `Api response while requesting pre signed url was ${response.status}`,
+    };
   }
 };
 
