@@ -55,7 +55,7 @@ const Visualisation = ({
   if (goalInbetweenMultiple) {
     const goalInbetweenMultipleSorted = goalInbetweenMultiple
       .map(goal => parseInt(goal))
-      .sort((next, prev) => next < prev)
+      .sort((next, prev) => next - prev)
       .reverse();
 
     goalInbetween = goalInbetweenMultipleSorted.find((goal, index) => {
