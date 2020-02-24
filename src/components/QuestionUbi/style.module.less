@@ -6,6 +6,7 @@
     margin-top: 1rem;
     object-fit: cover;
     object-position: center;
+    transition: transform .3s;
 }
 
 .avatarUploadButton {
@@ -15,6 +16,12 @@
 .avatarImageContainer {
     position: relative;
     cursor: pointer;
+
+    &:hover {
+        .avatarImage {
+            transform: rotate(-15deg);
+        }
+    }
 }
 
 .belowBubble {
