@@ -13,14 +13,15 @@ import CONFIG from '../../../../aws-config';
   - { state: 'error' }
 */
 
-export const useUserData = userId => {
-  const [data, setData] = useState(() => {
-    if (typeof window !== 'undefined') {
-      getUser(userId).then(data => setData(data));
-    }
-  });
+export const useUserData = () => {
+  const [data, setData] = useState();
 
-  return data;
+  return [
+    data,
+    userId => {
+      getUser(userId).then(data => setData(data));
+    },
+  ];
 };
 
 // Gets data of user (username, profile pictures etc) in the form of { state, user }
