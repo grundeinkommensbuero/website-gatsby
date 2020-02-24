@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SectionInner } from '../Layout/Sections';
 import s from './style.module.less';
 import cN from 'classnames';
@@ -6,7 +6,7 @@ import { Speechbubble } from './Speechbubble';
 import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../Layout/CTAButton';
 import Avatar1 from './avatar1.svg';
-import { TextInputInline, TextInputWrapped } from '../Forms/TextInput';
+import { TextInputWrapped } from '../Forms/TextInput';
 
 export default ({ mode }) => {
   return (
@@ -31,9 +31,7 @@ export default ({ mode }) => {
               />
             </Speechbubble>
             <div className={s.belowBubble}>
-              <div>
-                <img src={Avatar1} className={s.avatarImage} />
-              </div>
+              <Field name="image" component={ImageInput} />
               <Field
                 render={TextInputWrapped}
                 name="name"
@@ -49,6 +47,31 @@ export default ({ mode }) => {
         </SectionInner>
       )}
     ></Form>
+  );
+};
+
+const ImageInput = ({ input: { value, onChange, ...input } }) => {
+  const [avatarImage, setAvatarImage] = useState(null);
+  const handleChange = ({ target }) => {
+    onChange(target.files);
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(target.files[0]);
+      reader.onload = e => {
+        setAvatarImage(e.target.result);
+      };
+    }
+  };
+  return (
+    <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
+      <img src={avatarImage || Avatar1} className={s.avatarImage} />
+      <input
+        type="file"
+        onChange={handleChange}
+        className={s.avatarUploadButton}
+        {...input}
+      />
+    </label>
   );
 };
 
