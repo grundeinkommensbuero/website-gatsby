@@ -126,7 +126,7 @@ export default ({ mode }) => {
                 <CTAButton
                   type="submit"
                   className={cN(s.submitButton, {
-                    [s.submitButtonDirty]: dirtyFields.message,
+                    [s.submitButtonDirty]: dirtyFields.question,
                   })}
                 >
                   Abschicken
