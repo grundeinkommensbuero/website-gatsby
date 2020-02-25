@@ -54,6 +54,14 @@ export default ({ mode }) => {
     );
   }
 
+  if (questionState === 'saved') {
+    return (
+      <SectionInner>
+        <FinallyMessage>Deine Frage ist gespeichert.</FinallyMessage>
+      </SectionInner>
+    );
+  }
+
   if (questionState === 'saving' || uploadImageState == 'saving') {
     return (
       <SectionInner>
