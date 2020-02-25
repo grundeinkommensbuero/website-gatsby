@@ -51,6 +51,7 @@ export const TextInputWrapped = ({
   min,
   max,
   hideLabel,
+  explanation,
 }) => {
   if (hide) {
     return null;
@@ -61,6 +62,7 @@ export const TextInputWrapped = ({
       label={!hideLabel && outputLabel}
       meta={meta}
       className={className}
+      explanation={explanation}
     >
       {input.type === 'textarea' ? (
         <Textarea
