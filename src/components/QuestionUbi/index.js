@@ -11,11 +11,13 @@ import querystring from 'query-string';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 import { useUploadImage } from '../../hooks/images';
 import { useUserData } from '../../hooks/Api/Users';
+import { useSaveQuestion } from '../../hooks/Api/Questions';
 
 export default ({ mode }) => {
   const [userId, setUserId] = useState(null);
   const [uploadImageState, uploadImage] = useUploadImage();
   const [userData, requestUserData] = useUserData();
+  const [questionState, saveQuestion] = useSaveQuestion();
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -42,6 +44,8 @@ export default ({ mode }) => {
         if (image && image[0]) {
           uploadImage(userId, image[0]);
         }
+        console.log('saving question', data);
+        saveQuestion(data);
       }}
       validate={validate}
       render={({ handleSubmit, dirtyFields }) => (
