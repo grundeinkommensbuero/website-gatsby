@@ -24,7 +24,7 @@ const Question = ({ user, question }) => {
   }
   return (
     <article className={s.question}>
-      <Speechbubble>
+      <Speechbubble isSmall={true}>
         <div className={s.questionContent}>{question}</div>
       </Speechbubble>
       <div className={s.belowSpeechBubble}>
