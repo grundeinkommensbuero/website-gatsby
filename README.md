@@ -9,12 +9,9 @@ Here our web presence is managed. Our stack is:
 
 ## Crucial Commands
 
-Wir benutzen `npm`
+`npm i`
+`npm start`
 
-### `npm run dev`
+## Code of Conduct
 
-Run in the project locally.
-
-### `npm run build`
-
-Run a production build into `./public`. The result is ready to be put on any static hosting.
+[Here](codeofconduct.md)
