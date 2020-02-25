@@ -9,6 +9,7 @@ export const Tooltip = ({
   className,
   content,
   placement = 'top',
+  popupClassName,
 }) => {
   return (
     <Manager>
@@ -27,7 +28,9 @@ export const Tooltip = ({
             data-placement={placement}
             className={s.popup}
           >
-            <div className={s.tooltipContent}>{content}</div>
+            <div className={cN(popupClassName, s.tooltipContent)}>
+              {content}
+            </div>
             <div
               ref={arrowProps.ref}
               style={arrowProps.style}
