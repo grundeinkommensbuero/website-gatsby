@@ -8,17 +8,19 @@ import CONFIG from '../../../../aws-config';
 
 /*
   States:
+  - { state: 'loading' }
   - { state: 'success', user }
   - { state: 'notFound' }
   - { state: 'error' }
 */
 
 export const useUserData = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
 
   return [
     data,
     userId => {
+      setData({ state: 'loading' });
       getUser(userId).then(data => setData(data));
     },
   ];
