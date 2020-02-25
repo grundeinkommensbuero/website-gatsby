@@ -85,7 +85,7 @@ export default ({ mode }) => {
           uploadImage(userId, image[0]);
         }
         console.log('saving question', data);
-        saveQuestion(data);
+        saveQuestion(userId, data);
       }}
       validate={validate}
       render={({ handleSubmit, dirtyFields }) => (
@@ -93,7 +93,7 @@ export default ({ mode }) => {
           <form onSubmit={handleSubmit}>
             <Speechbubble>
               <Field
-                name="message"
+                name="question"
                 label="Deine Frage an das Grundeinkommen"
                 placeholder="Deine Frage"
                 type="textarea"
