@@ -54,6 +54,14 @@ export default ({ mode }) => {
     );
   }
 
+  if (questionState === 'saving' || uploadImageState == 'saving') {
+    return (
+      <SectionInner>
+        <FinallyMessage state="progress">Speichere...</FinallyMessage>
+      </SectionInner>
+    );
+  }
+
   if (userId === undefined) {
     return (
       <SectionInner>
