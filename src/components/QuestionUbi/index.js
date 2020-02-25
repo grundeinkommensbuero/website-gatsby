@@ -19,6 +19,8 @@ export default ({ mode }) => {
   const [userData, requestUserData] = useUserData();
   const [questionState, saveQuestion] = useSaveQuestion();
 
+  const hasZipCode = false;
+
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     // Will be null, if param does not exist
@@ -96,6 +98,16 @@ export default ({ mode }) => {
                 placeholder="Dein Name"
                 inputClassName={s.nameInput}
               />
+              {!hasZipCode && (
+                <Field
+                  render={TextInputWrapped}
+                  name="zipCode"
+                  label="Postleitzahl"
+                  placeholder="Deine Postleitzahl"
+                  inputClassName={s.nameInput}
+                  explanation="Wenn du deine Postleitzahl angibst, bekommst du in Zukunft passendere Infos. Die Angabe ist optional."
+                />
+              )}
               <div className={s.submitButtonContainer}>
                 <CTAButton
                   type="submit"

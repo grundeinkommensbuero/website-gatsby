@@ -54,13 +54,15 @@
 
 .belowBubble {
     display: grid;
-    grid-template-columns: 5rem 1fr auto;
-    grid-gap: 2rem;
+    grid-template-columns: 5rem 1fr 1fr;
+    grid-gap: 0 2rem;
 }
 
 .submitButtonContainer {
-    align-self: start;
-    margin-top: 1.7rem;
+    align-self: center;
+    grid-column: 3;
+    justify-self: end;
+    margin-bottom: 0.4rem;
 }
 
 .submitButton {
