@@ -9,7 +9,7 @@ export const useUploadImage = () => {
 // Requests a presigned url and uploads image to S3
 const uploadImage = async (userId, image, setState) => {
   try {
-    setState('loading');
+    setState('saving');
     const contentType = image.type;
 
     const uploadUrl = await requestPresignedUrl(userId, contentType);
