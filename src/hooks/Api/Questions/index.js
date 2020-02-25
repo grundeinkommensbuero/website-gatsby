@@ -16,11 +16,7 @@ export const useSaveQuestion = () => {
 };
 
 // Function which calls the aws api to create a new question
-const saveQuestion = async (
-  userId,
-  { question, zipCode, username },
-  setState
-) => {
+const saveQuestion = async (userId, { question, zipCode, name }, setState) => {
   try {
     setState('saving');
 
@@ -31,8 +27,8 @@ const saveQuestion = async (
       data.zipCode = zipCode;
     }
 
-    if (username && username !== '') {
-      data.username = username;
+    if (name && name !== '') {
+      data.username = name;
     }
 
     // Make request to api to save question
