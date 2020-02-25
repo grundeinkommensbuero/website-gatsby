@@ -1,6 +1,8 @@
-# Grundeinkommensbüro Website
+# Expedition Grundeinkommen
 
-Here our web presence is managed. Our stack is:
+Platform for _Volksinitiativen_ for Expedition Grundeinkommen.
+
+Stack used in this repository: 
 
 - react
 - gatsby
