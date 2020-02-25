@@ -4,9 +4,9 @@ import cN from 'classnames';
 import SpeechbubbleTop from '!svg-inline-loader!./speechbubble_top.svg';
 import SpeechbubbleBottom from '!svg-inline-loader!./speechbubble_bottom.svg';
 
-export const Speechbubble = ({ children, className }) => (
-  <div className={cN(s.container, className)}>
-    <div className={s.body}>{children}</div>
+export const Speechbubble = ({ children, className, isSmall = false }) => (
+  <div className={cN(s.container, className, { [s.small]: isSmall })}>
+    <div className={cN(s.body)}>{children}</div>
     <div
       className={cN(s.svg, s.svgTop)}
       dangerouslySetInnerHTML={{
