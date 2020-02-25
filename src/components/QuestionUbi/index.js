@@ -28,6 +28,30 @@ export default ({ mode }) => {
 
   console.log(userData, uploadImageState);
 
+  if (
+    questionState === 'error' ||
+    uploadImageState === 'error' ||
+    userId === undefined ||
+    userData.state === 'error'
+  ) {
+    return (
+      <SectionInner>
+        <FinallyMessage>
+          {userId === undefined && <>Da ist was mit dem Link verkehrt.</>}
+          {questionState === 'error' && (
+            <>Das Absenden der Frage hat nicht geklappt.</>
+          )}
+          {uploadImageState === 'error' && (
+            <>Das Hochladen des Bildes hat nicht geklappt.</>
+          )}
+          {userData.state === 'error' && (
+            <>Benutzer Abrufen hat nicht geklappt.</>
+          )}
+        </FinallyMessage>
+      </SectionInner>
+    );
+  }
+
   if (userId === undefined) {
     return (
       <SectionInner>
