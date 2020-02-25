@@ -19,8 +19,6 @@ export default ({ mode }) => {
   const [userData, requestUserData] = useUserData();
   const [questionState, saveQuestion] = useSaveQuestion();
 
-  const hasZipCode = false;
-
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     // Will be null, if param does not exist
@@ -114,7 +112,7 @@ export default ({ mode }) => {
                 placeholder="Dein Name"
                 inputClassName={s.nameInput}
               />
-              {!hasZipCode && (
+              {userData.user && !userData.user.hasZipCode && (
                 <Field
                   render={TextInputWrapped}
                   name="zipCode"
