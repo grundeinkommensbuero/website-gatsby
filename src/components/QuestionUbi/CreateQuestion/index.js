@@ -90,7 +90,11 @@ export default ({ setQuestionJustSent }) => {
   return (
     <Form
       onSubmit={({ image, ...data }) => {
-        saveQuestion({ ...data, srcOverwrite: image && image[0] });
+        saveQuestion({
+          ...data,
+          srcOverwrite: image && image[0],
+          profilePictures: userData.user && userData.user.profilePictures,
+        });
         if (image && image[0]) {
           uploadImage(userId, image[0]);
         }
