@@ -105,7 +105,7 @@ export default () => {
               />
             </Speechbubble>
             <div className={s.belowBubble}>
-              <Field name="image" component={ImageInput} />
+              <Field name="image" component={ImageInput} user={userData.user} />
               {userData.user && userData.user.username ? (
                 <div className={s.usernameDisplay}>
                   {userData.user.username}
@@ -147,7 +147,7 @@ export default () => {
   );
 };
 
-const ImageInput = ({ input: { value, onChange, ...input } }) => {
+const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
   const [avatarImage, setAvatarImage] = useState(null);
   const handleChange = ({ target }) => {
     onChange(target.files);
@@ -161,7 +161,11 @@ const ImageInput = ({ input: { value, onChange, ...input } }) => {
   };
   return (
     <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
-      <AvatarImage src={avatarImage} className={s.avatarImage} />
+      <AvatarImage
+        srcOverwrite={avatarImage}
+        className={s.avatarImage}
+        user={user}
+      />
       <div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>
       <input
         type="file"
