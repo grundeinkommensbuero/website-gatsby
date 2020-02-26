@@ -91,9 +91,12 @@ export default ({ setQuestionJustSent }) => {
     <Form
       onSubmit={({ image, ...data }) => {
         saveQuestion({
-          ...data,
-          srcOverwrite: image && image[0],
-          profilePictures: userData.user && userData.user.profilePictures,
+          user: {
+            username: data.username,
+            profilePictures: userData.user && userData.user.profilePictures,
+            srcOverwrite: image && image[0],
+          },
+          body: data.question,
         });
         if (image && image[0]) {
           uploadImage(userId, image[0]);
@@ -107,7 +110,7 @@ export default ({ setQuestionJustSent }) => {
           userData.user &&
           userData.user.questions &&
           userData.user.questions[0] &&
-          userData.user.questions[0].text,
+          userData.user.questions[0].body,
       }}
       render={({ handleSubmit, dirtyFields }) => (
         <SectionInner>
