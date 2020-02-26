@@ -13,11 +13,12 @@ import { useUserData } from '../../../hooks/Api/Users';
 import { useSaveQuestion } from '../../../hooks/Api/Questions';
 import AvatarImage from '../../AvatarImage';
 
-export default () => {
+export default ({ setQuestionJustSent }) => {
   const [userId, setUserId] = useState(null);
   const [uploadImageState, uploadImage] = useUploadImage();
   const [userData, requestUserData] = useUserData();
-  const [questionState, saveQuestion] = useSaveQuestion();
+  const [questionState, uploadQuestion] = useSaveQuestion();
+  const [question, saveQuestion] = useState(null);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -25,6 +26,12 @@ export default () => {
     setUserId(urlParams.userId);
     requestUserData(urlParams.userId);
   }, []);
+
+  useEffect(() => {
+    if (questionState === 'saved') {
+      setQuestionJustSent(question);
+    }
+  }, [questionState]);
 
   if (
     questionState === 'error' ||
@@ -83,14 +90,15 @@ export default () => {
   return (
     <Form
       onSubmit={({ image, ...data }) => {
+        saveQuestion({ ...data, srcOverwrite: image && image[0] });
         if (image && image[0]) {
           uploadImage(userId, image[0]);
         }
-        saveQuestion(userId, data);
+        uploadQuestion(userId, data);
       }}
       validate={validate}
       initialValues={{
-        name: userData.user && userData.user.username,
+        username: userData.user && userData.user.username,
         question:
           userData.user &&
           userData.user.questions &&
