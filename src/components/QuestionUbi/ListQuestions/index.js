@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import s from './style.module.less';
 import { Speechbubble } from '../Speechbubble';
 import AvatarImage from '../../AvatarImage';
 import { useGetMostRecentQuestions } from '../../../hooks/Api/Questions';
+import cN from 'classnames';
 
 export default ({ questionJustSent }) => {
   const [, questions, getQuestions] = useGetMostRecentQuestions();
@@ -11,6 +12,10 @@ export default ({ questionJustSent }) => {
   useEffect(() => {
     getQuestions(6);
   }, []);
+
+  if (questionJustSent) {
+    questionJustSent.justSent = true;
+  }
 
   const questionsWithJustSent = questionJustSent
     ? [questionJustSent, ...questions]
@@ -27,13 +32,13 @@ export default ({ questionJustSent }) => {
   );
 };
 
-const Question = ({ user, body }) => {
+const Question = ({ user, body, justSent }) => {
   let usernameAndCity = user.username;
   if (user.city) {
     usernameAndCity += ` aus ${user.city}`;
   }
   return (
-    <article className={s.question}>
+    <article className={cN(s.question, { [s.justSent]: justSent })}>
       <Speechbubble isSmall={true}>
         <div className={s.questionContent}>{body}</div>
       </Speechbubble>
