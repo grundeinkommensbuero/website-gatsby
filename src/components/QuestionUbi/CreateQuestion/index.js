@@ -88,6 +88,7 @@ export default () => {
         saveQuestion(userId, data);
       }}
       validate={validate}
+      initialValues={{ name: userData.user && userData.user.username }}
       render={({ handleSubmit, dirtyFields }) => (
         <SectionInner>
           <form onSubmit={handleSubmit}>
@@ -97,7 +98,7 @@ export default () => {
                 label="Deine Frage an das Grundeinkommen"
                 placeholder="Deine Frage"
                 type="textarea"
-                maxLength={400}
+                maxLength={300}
                 component={TextInputWrapped}
                 inputClassName={s.questionInput}
                 hideLabel={true}
@@ -105,13 +106,19 @@ export default () => {
             </Speechbubble>
             <div className={s.belowBubble}>
               <Field name="image" component={ImageInput} />
-              <Field
-                render={TextInputWrapped}
-                name="name"
-                label="Name"
-                placeholder="Dein Name"
-                inputClassName={s.nameInput}
-              />
+              {userData.user && userData.user.username ? (
+                <div className={s.usernameDisplay}>
+                  {userData.user.username}
+                </div>
+              ) : (
+                <Field
+                  render={TextInputWrapped}
+                  name="name"
+                  label="Name"
+                  placeholder="Dein Name"
+                  inputClassName={s.nameInput}
+                />
+              )}
               {userData.user && !userData.user.hasZipCode && (
                 <Field
                   render={TextInputWrapped}
