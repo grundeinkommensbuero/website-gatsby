@@ -26,8 +26,6 @@ export default () => {
     requestUserData(urlParams.userId);
   }, []);
 
-  console.log(userData, uploadImageState);
-
   if (
     questionState === 'error' ||
     uploadImageState === 'error' ||
@@ -84,11 +82,17 @@ export default () => {
         if (image && image[0]) {
           uploadImage(userId, image[0]);
         }
-        console.log('saving question', data);
         saveQuestion(userId, data);
       }}
       validate={validate}
-      initialValues={{ name: userData.user && userData.user.username }}
+      initialValues={{
+        name: userData.user && userData.user.username,
+        question:
+          userData.user &&
+          userData.user.questions &&
+          userData.user.questions[0] &&
+          userData.user.questions[0].text,
+      }}
       render={({ handleSubmit, dirtyFields }) => (
         <SectionInner>
           <form onSubmit={handleSubmit}>
