@@ -105,7 +105,15 @@ export default () => {
               />
             </Speechbubble>
             <div className={s.belowBubble}>
-              <Field name="image" component={ImageInput} user={userData.user} />
+              {userData.user && userData.user.profilePictures ? (
+                <AvatarImage user={userData.user} className={s.avatarImage} />
+              ) : (
+                <Field
+                  name="image"
+                  component={ImageInput}
+                  user={userData.user}
+                />
+              )}
               {userData.user && userData.user.username ? (
                 <div className={s.usernameDisplay}>
                   {userData.user.username}
