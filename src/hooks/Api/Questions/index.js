@@ -56,3 +56,38 @@ const saveQuestion = async (userId, { question, zipCode, name }, setState) => {
     setState('error');
   }
 };
+
+export const useGetMostRecentQuestions = () => {
+  const [state, setState] = useState({});
+
+  return [state, number => getMostRecentQuestions(number, setState)];
+};
+
+const getMostRecentQuestions = async (number, setState) => {
+  try {
+    setState({ state: 'loading' });
+
+    // Make request to api to save question
+    const request = {
+      method: 'GET',
+      mode: 'cors',
+    };
+
+    const response = await fetch(
+      `${CONFIG.API.INVOKE_URL}/questions?number=${number}`,
+      request
+    );
+
+    if (response.status === 200) {
+      const { users } = await response.json();
+      // structure: users: [{profilePictures, questions: [], username, city }]
+      setState({ state: 'success', users });
+    } else {
+      console.log('Api response not 200');
+      setState({ state: 'error' });
+    }
+  } catch (error) {
+    console.log('Error', error);
+    setState({ state: 'error' });
+  }
+};
