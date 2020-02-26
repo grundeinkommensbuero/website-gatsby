@@ -4,20 +4,24 @@ import mockQuestions from './mockQuestions';
 import s from './style.module.less';
 import { Speechbubble } from '../Speechbubble';
 import AvatarImage from '../../AvatarImage';
+import { useGetUsersWithMostRecentQuestions } from '../../../hooks/Api/Questions';
 
 export default ({ questionJustSent }) => {
-  const [questions, setQuestions] = useState(mockQuestions);
+  const [, users, getQuestions] = useGetUsersWithMostRecentQuestions();
 
   useEffect(() => {
-    if (questionJustSent) {
-      setQuestions([questionJustSent, ...mockQuestions]);
-    }
-  }, [questionJustSent]);
+    getQuestions(6);
+  }, []);
+
+  const usersWithJustSent = [
+    questionJustSent ? questionJustSent : [],
+    ...users,
+  ];
 
   return (
     <SectionInner wide={true}>
       <div className={s.container}>
-        {questions.map((user, index) => {
+        {usersWithJustSent.map((user, index) => {
           return <Question key={index} user={user} />;
         })}
       </div>
