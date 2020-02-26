@@ -30,7 +30,8 @@ export default () => {
     questionState === 'error' ||
     uploadImageState === 'error' ||
     userId === undefined ||
-    userData.state === 'error'
+    userData.state === 'error' ||
+    userData.state === 'notFound'
   ) {
     return (
       <SectionInner>
@@ -44,6 +45,9 @@ export default () => {
           )}
           {userData.state === 'error' && (
             <>Benutzer Abrufen hat nicht geklappt.</>
+          )}
+          {userData.state === 'notFound' && (
+            <>Dein Link ist nicht in Ordnung. (Benutzer nicht gefunden)</>
           )}
         </FinallyMessage>
       </SectionInner>
