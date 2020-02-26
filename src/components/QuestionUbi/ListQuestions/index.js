@@ -18,9 +18,9 @@ export default () => {
 };
 
 const Question = ({ user, question }) => {
-  let nameAndCity = user.name;
+  let usernameAndCity = user.username;
   if (user.city) {
-    nameAndCity += ` aus ${user.city}`;
+    usernameAndCity += ` aus ${user.city}`;
   }
   return (
     <article className={s.question}>
@@ -29,8 +29,8 @@ const Question = ({ user, question }) => {
       </Speechbubble>
       <div className={s.belowSpeechBubble}>
         <AvatarImage className={s.avatar} user={user} sizes="40px" />
-        <div className={s.name} title={nameAndCity}>
-          {nameAndCity}{' '}
+        <div className={s.name} title={usernameAndCity}>
+          {usernameAndCity}{' '}
         </div>
       </div>
     </article>

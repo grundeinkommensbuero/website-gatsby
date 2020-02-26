@@ -133,7 +133,7 @@ export default () => {
               ) : (
                 <Field
                   render={TextInputWrapped}
-                  name="name"
+                  name="username"
                   label="Name"
                   placeholder="Dein Name"
                   inputClassName={s.nameInput}
@@ -202,8 +202,8 @@ const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
 const validate = values => {
   const errors = {};
 
-  if (!values.name) {
-    errors.name = 'Bitte gib einen Namen an';
+  if (!values.username) {
+    errors.username = 'Bitte gib einen Namen an';
   }
 
   return errors;

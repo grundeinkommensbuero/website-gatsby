@@ -1,21 +1,21 @@
 export default [
   {
     user: {
-      name: 'Laura',
+      username: 'Laura',
       city: 'Münster',
     },
     question: 'Werden alle Faul auf ihrer Haut liegen?',
   },
   {
     user: {
-      name: 'Joy',
+      username: 'Joy',
       city: 'Großstadt Freising fast München',
     },
     question: 'Sind das nicht die Farben der FDP?',
   },
   {
     user: {
-      name:
+      username:
         'Lucia mit einem außergewöhnlich langen Namen, der nirgendwo hin passt',
       city: 'irgendwo in Brandenburg',
     },
@@ -23,7 +23,7 @@ export default [
   },
   {
     user: {
-      name: 'Timur',
+      username: 'Timur',
       city: 'Bremen',
     },
     question:
@@ -31,14 +31,14 @@ export default [
   },
   {
     user: {
-      name: 'Vali',
+      username: 'Vali',
       city: 'Tübingen',
     },
     question: 'Gibt’s da n anständiges Sofa? Ich arbeite gern auf Sofas',
   },
   {
     user: {
-      name: 'Nina',
+      username: 'Nina',
       city: 'Kiel',
     },
     question: 'Wer hat meine Banane gegessen?',
