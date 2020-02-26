@@ -4,7 +4,7 @@ import cN from 'classnames';
 
 const avatarPlaceholders = [require('./avatar1.svg'), require('./avatar2.svg')];
 
-export default ({ user, className, srcOverwrite }) => {
+export default ({ user, className, srcOverwrite, sizes }) => {
   const [placeHolderImage] = useState(() => {
     return avatarPlaceholders[
       Math.round(Math.random() * (avatarPlaceholders.length - 1))
@@ -22,6 +22,7 @@ export default ({ user, className, srcOverwrite }) => {
       src={srcOverwrite || src || placeHolderImage}
       srcset={srcOverwrite ? null : srcset}
       alt={user && user.name && `Avatarbild von ${user.name}`}
+      sizes={sizes}
     />
   );
 };
