@@ -28,7 +28,7 @@ const Question = ({ user, question }) => {
         <div className={s.questionContent}>{question}</div>
       </Speechbubble>
       <div className={s.belowSpeechBubble}>
-        <AvatarImage className={s.avatar} user={user} />
+        <AvatarImage className={s.avatar} user={user} sizes="40px" />
         <div className={s.name} title={nameAndCity}>
           {nameAndCity}{' '}
         </div>
