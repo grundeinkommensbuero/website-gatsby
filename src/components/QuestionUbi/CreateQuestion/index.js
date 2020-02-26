@@ -5,13 +5,13 @@ import cN from 'classnames';
 import { Speechbubble } from '../Speechbubble';
 import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../../Layout/CTAButton';
-import Avatar1 from '../avatar1.svg';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import querystring from 'query-string';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useUploadImage } from '../../../hooks/images';
 import { useUserData } from '../../../hooks/Api/Users';
 import { useSaveQuestion } from '../../../hooks/Api/Questions';
+import AvatarImage from '../../AvatarImage';
 
 export default () => {
   const [userId, setUserId] = useState(null);
@@ -161,7 +161,7 @@ const ImageInput = ({ input: { value, onChange, ...input } }) => {
   };
   return (
     <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
-      <img src={avatarImage || Avatar1} className={s.avatarImage} />
+      <AvatarImage src={avatarImage} className={s.avatarImage} />
       <div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>
       <input
         type="file"
