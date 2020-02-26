@@ -61,15 +61,20 @@ const saveQuestion = async (
   }
 };
 
-export const useGetMostRecentQuestions = () => {
-  const [state, setState] = useState({});
+export const useGetUsersWithMostRecentQuestions = () => {
+  const [state, setState] = useState();
+  const [users, setUsers] = useState([]);
 
-  return [state, number => getMostRecentQuestions(number, setState)];
+  return [
+    state,
+    users,
+    number => getUsersWithMostRecentQuestions(number, setState, setUsers),
+  ];
 };
 
-const getMostRecentQuestions = async (number, setState) => {
+const getUsersWithMostRecentQuestions = async (number, setState, setUsers) => {
   try {
-    setState({ state: 'loading' });
+    setState('loading');
 
     // Make request to api to save question
     const request = {
@@ -85,13 +90,14 @@ const getMostRecentQuestions = async (number, setState) => {
     if (response.status === 200) {
       const { users } = await response.json();
       // structure: users: [{profilePictures, questions: [], username, city }]
-      setState({ state: 'success', users });
+      setState('success');
+      setUsers(users);
     } else {
       console.log('Api response not 200');
-      setState({ state: 'error' });
+      setState('error');
     }
   } catch (error) {
     console.log('Error', error);
-    setState({ state: 'error' });
+    setState('error');
   }
 };
