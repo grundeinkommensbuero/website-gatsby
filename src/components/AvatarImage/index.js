@@ -29,6 +29,9 @@ export default ({ user, className, srcOverwrite, sizes }) => {
 
 const generateSrcset = images => {
   return Object.entries(images)
+    .filter(([width]) => {
+      return !isNaN(parseInt(width));
+    })
     .map(([width, file]) => {
       return `${file} ${width}w`;
     })
