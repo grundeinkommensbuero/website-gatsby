@@ -1,34 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
-import mockQuestions from './mockQuestions';
 import s from './style.module.less';
 import { Speechbubble } from '../Speechbubble';
 import AvatarImage from '../../AvatarImage';
-import { useGetUsersWithMostRecentQuestions } from '../../../hooks/Api/Questions';
+import { useGetMostRecentQuestions } from '../../../hooks/Api/Questions';
 
 export default ({ questionJustSent }) => {
-  const [, users, getQuestions] = useGetUsersWithMostRecentQuestions();
+  const [, questions, getQuestions] = useGetMostRecentQuestions();
 
   useEffect(() => {
     getQuestions(6);
   }, []);
 
-  const usersWithJustSent = questionJustSent
-    ? [questionJustSent, ...users]
-    : users;
+  const questionsWithJustSent = questionJustSent
+    ? [questionJustSent, ...questions]
+    : questions;
 
   return (
     <SectionInner wide={true}>
       <div className={s.container}>
-        {usersWithJustSent.map((user, index) => {
-          return <Question key={index} user={user} />;
+        {questionsWithJustSent.map((question, index) => {
+          return <Question key={index} {...question} />;
         })}
       </div>
     </SectionInner>
   );
 };
 
-const Question = ({ user }) => {
+const Question = ({ user, body }) => {
   let usernameAndCity = user.username;
   if (user.city) {
     usernameAndCity += ` aus ${user.city}`;
@@ -36,7 +35,7 @@ const Question = ({ user }) => {
   return (
     <article className={s.question}>
       <Speechbubble isSmall={true}>
-        <div className={s.questionContent}>{user.question}</div>
+        <div className={s.questionContent}>{body}</div>
       </Speechbubble>
       <div className={s.belowSpeechBubble}>
         <AvatarImage className={s.avatar} user={user} sizes="40px" />
