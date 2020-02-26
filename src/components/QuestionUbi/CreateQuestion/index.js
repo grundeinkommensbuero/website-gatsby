@@ -139,7 +139,7 @@ export default ({ setQuestionJustSent }) => {
                 />
               )}
               {userData.user && userData.user.username ? (
-                <div className={s.usernameDisplay}>
+                <div className={cN(s.usernameDisplay, s.textInput)}>
                   {userData.user.username}
                 </div>
               ) : (
@@ -149,6 +149,7 @@ export default ({ setQuestionJustSent }) => {
                   label="Name"
                   placeholder="Dein Name"
                   inputClassName={s.nameInput}
+                  className={s.textInput}
                 />
               )}
               {userData.user && !userData.user.hasZipCode && (
@@ -159,6 +160,7 @@ export default ({ setQuestionJustSent }) => {
                   placeholder="Deine Postleitzahl"
                   inputClassName={s.nameInput}
                   explanation="Wenn du deine Postleitzahl angibst, bekommst du in Zukunft passendere Infos. Die Angabe ist optional."
+                  className={s.textInput}
                 />
               )}
               <div className={s.submitButtonContainer}>
