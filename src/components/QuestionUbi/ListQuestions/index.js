@@ -13,10 +13,9 @@ export default ({ questionJustSent }) => {
     getQuestions(6);
   }, []);
 
-  const usersWithJustSent = [
-    questionJustSent ? questionJustSent : [],
-    ...users,
-  ];
+  const usersWithJustSent = questionJustSent
+    ? [questionJustSent, ...users]
+    : users;
 
   return (
     <SectionInner wide={true}>
