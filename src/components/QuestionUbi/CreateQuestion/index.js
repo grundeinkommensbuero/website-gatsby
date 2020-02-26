@@ -106,7 +106,11 @@ export default () => {
             </Speechbubble>
             <div className={s.belowBubble}>
               {userData.user && userData.user.profilePictures ? (
-                <AvatarImage user={userData.user} className={s.avatarImage} />
+                <AvatarImage
+                  user={userData.user}
+                  className={s.avatarImage}
+                  sizes="80px"
+                />
               ) : (
                 <Field
                   name="image"
@@ -173,6 +177,7 @@ const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
         srcOverwrite={avatarImage}
         className={s.avatarImage}
         user={user}
+        sizes="80px"
       />
       <div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>
       <input
