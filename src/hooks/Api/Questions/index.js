@@ -7,7 +7,6 @@ import CONFIG from '../../../../aws-config';
   - saved
   - error
 */
-
 export const useSaveQuestion = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our saveQuestion function, so we can set the state from there
@@ -61,18 +60,18 @@ const saveQuestion = async (
   }
 };
 
-export const useGetUsersWithMostRecentQuestions = () => {
+export const useGetMostRecentQuestions = () => {
   const [state, setState] = useState();
-  const [users, setUsers] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   return [
     state,
-    users,
-    number => getUsersWithMostRecentQuestions(number, setState, setUsers),
+    questions,
+    limit => getMostRecentQuestions(limit, setState, setQuestions),
   ];
 };
 
-const getUsersWithMostRecentQuestions = async (number, setState, setUsers) => {
+const getMostRecentQuestions = async (limit, setState, setQuestions) => {
   try {
     setState('loading');
 
@@ -83,15 +82,15 @@ const getUsersWithMostRecentQuestions = async (number, setState, setUsers) => {
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/questions?number=${number}`,
+      `${CONFIG.API.INVOKE_URL}/questions?limit=${limit}`,
       request
     );
 
     if (response.status === 200) {
-      const { users } = await response.json();
-      // structure: users: [{profilePictures, questions: [], username, city }]
+      const { questions } = await response.json();
+      // structure: questions: [body, timestamp, user: {profilePictures, username, city }]
       setState('success');
-      setUsers(users);
+      setQuestions(questions);
     } else {
       console.log('Api response not 200');
       setState('error');
