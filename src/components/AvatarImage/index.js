@@ -4,13 +4,17 @@ import cN from 'classnames';
 
 const avatarPlaceholders = [require('./avatar1.svg'), require('./avatar2.svg')];
 
-export default ({ user: { name }, className }) => {
+export default ({ user, className, src }) => {
   const [placeHolderImage] = useState(() => {
     return avatarPlaceholders[
       Math.round(Math.random() * (avatarPlaceholders.length - 1))
     ];
   });
   return (
-    <img className={cN(s.image, className)} src={placeHolderImage} alt={name} />
+    <img
+      className={cN(s.image, className)}
+      src={src || placeHolderImage}
+      alt={user && user.name && `Avatarbild von ${user.name}`}
+    />
   );
 };
