@@ -23,6 +23,11 @@ export default ({ visualisations }) => {
             currentCounts[visualisation.campainCode] &&
             currentCounts[visualisation.campainCode].computed
           }
+          receivedCount={
+            currentCounts &&
+            currentCounts[visualisation.campainCode] &&
+            currentCounts[visualisation.campainCode].received
+          }
           {...visualisation}
           showCTA={visualisations.length !== 1 && visualisation.ctaLink}
         />
@@ -38,6 +43,7 @@ const Visualisation = ({
   startDate,
   title,
   currentCount,
+  receivedCount,
   minimum,
   addToSignatureCount,
   showCTA,
@@ -110,7 +116,7 @@ const Visualisation = ({
     hint: hint && hint.hint,
     goal,
     goalInbetween,
-    count,
+    receivedCount,
     goalUnbuffered,
   });
 
@@ -230,7 +236,7 @@ const Visualisation = ({
 function replaceVariablesHintText({
   hint,
   goal,
-  count,
+  receivedCount,
   goalInbetween,
   goalUnbuffered,
 }) {
@@ -248,7 +254,10 @@ function replaceVariablesHintText({
     )
     .replace(/\$GOAL/gi, goal && goal.toLocaleString('de'))
     .replace(/\$BUFFER/gi, buffer && buffer.toLocaleString('de'))
-    .replace(/\$COLLECTED/gi, count && count.toLocaleString('de'));
+    .replace(
+      /\$COLLECTED/gi,
+      receivedCount && receivedCount.toLocaleString('de')
+    );
 }
 
 const WrapInLink = ({ link, children, className }) => {
