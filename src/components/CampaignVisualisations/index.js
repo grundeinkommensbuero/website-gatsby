@@ -116,6 +116,7 @@ const Visualisation = ({
     hint: hint && hint.hint,
     goal,
     goalInbetween,
+    count,
     receivedCount,
     goalUnbuffered,
   });
@@ -236,6 +237,7 @@ const Visualisation = ({
 function replaceVariablesHintText({
   hint,
   goal,
+  count,
   receivedCount,
   goalInbetween,
   goalUnbuffered,
@@ -254,8 +256,9 @@ function replaceVariablesHintText({
     )
     .replace(/\$GOAL/gi, goal && goal.toLocaleString('de'))
     .replace(/\$BUFFER/gi, buffer && buffer.toLocaleString('de'))
+    .replace(/\$COLLECTED/gi, count && count.toLocaleString('de'))
     .replace(
-      /\$COLLECTED/gi,
+      /\$RECEIVED/gi,
       receivedCount && receivedCount.toLocaleString('de')
     );
 }
