@@ -26,7 +26,7 @@ export default ({ visualisations }) => {
           receivedCount={
             currentCounts &&
             currentCounts[visualisation.campainCode] &&
-            currentCounts[visualisation.campainCode].received
+            currentCounts[visualisation.campainCode].withMixed
           }
           {...visualisation}
           showCTA={visualisations.length !== 1 && visualisation.ctaLink}
