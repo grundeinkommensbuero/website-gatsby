@@ -6,12 +6,14 @@ import AvatarImage from '../../AvatarImage';
 import { useGetMostRecentQuestions } from '../../../hooks/Api/Questions';
 import cN from 'classnames';
 
-export default ({ questionJustSent }) => {
+export default ({ questionJustSent, userId }) => {
   const [, questions, getQuestions] = useGetMostRecentQuestions();
 
   useEffect(() => {
-    getQuestions(6);
-  }, []);
+    if (userId !== null) {
+      getQuestions(userId, 6);
+    }
+  }, [userId]);
 
   if (questionJustSent) {
     questionJustSent.justSent = true;
