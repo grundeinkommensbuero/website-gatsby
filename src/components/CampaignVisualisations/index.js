@@ -259,7 +259,7 @@ function replaceVariablesHintText({
     .replace(/\$COLLECTED/gi, count && count.toLocaleString('de'))
     .replace(
       /\$RECEIVED/gi,
-      receivedCount && receivedCount.toLocaleString('de')
+      receivedCount ? receivedCount.toLocaleString('de') : ''
     );
 }
 
