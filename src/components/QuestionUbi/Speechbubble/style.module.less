@@ -2,7 +2,7 @@
 
 .container {
     position: relative;
-    color: @yellow;
+    color: var(--text-on-secondary-color);
 }
 
 .body {
@@ -26,6 +26,10 @@
         position: absolute;
         height: 100%;
         width: 100%;
+
+        polygon, polyline {
+            fill: var(--secondary-color) !important;
+        }
 
         path {
             vector-effect: non-scaling-stroke;
