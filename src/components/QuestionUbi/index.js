@@ -18,11 +18,13 @@ export default ({ mode }) => {
 
   return (
     <>
-      <CreateQuestion
-        setQuestionJustSent={setQuestionJustSent}
-        userId={userId}
-        userData={userData}
-      />
+      {mode === 'questions-and-create' && (
+        <CreateQuestion
+          setQuestionJustSent={setQuestionJustSent}
+          userId={userId}
+          userData={userData}
+        />
+      )}
       <ListQuestions questionJustSent={questionJustSent} userId={userId} />
     </>
   );
