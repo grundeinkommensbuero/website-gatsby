@@ -5,6 +5,24 @@
   grid-gap: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   font-size: @fontSizeS;
+
+  @media (max-width: @breakPointS) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: scroll;
+    scroll-snap-type: x mandatory;
+    margin: 0 -1rem;
+  }
+}
+
+.question {
+  @media (max-width: @breakPointS) {
+    width: 70%;
+    scroll-snap-align: center;
+    flex: none;
+    padding: 1rem;
+  }
 }
 
 .questionContent {
