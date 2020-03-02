@@ -38,24 +38,35 @@ export default ({ setQuestionJustSent }) => {
     uploadImageState === 'error' ||
     userId === undefined ||
     userData.state === 'error' ||
-    userData.state === 'notFound'
+    userData.state === 'notFound' ||
+    userId === undefined
   ) {
     return (
       <SectionInner>
         <FinallyMessage>
-          {userId === undefined && <>Da ist was mit dem Link verkehrt.</>}
+          {userId === undefined && <>Da ist was mit dem Link verkehrt. </>}
           {questionState === 'error' && (
-            <>Das Absenden der Frage hat nicht geklappt.</>
+            <>Das Absenden der Frage hat nicht geklappt. </>
           )}
           {uploadImageState === 'error' && (
-            <>Das Hochladen des Bildes hat nicht geklappt.</>
+            <>Das Hochladen des Bildes hat nicht geklappt. </>
           )}
           {userData.state === 'error' && (
-            <>Benutzer Abrufen hat nicht geklappt.</>
+            <>Abrufen des Benutzers hat nicht geklappt. </>
           )}
           {userData.state === 'notFound' && (
-            <>Dein Link ist nicht in Ordnung. (Benutzer nicht gefunden)</>
+            <>Den Benutzer konnten wir nicht finden. </>
           )}
+          <br />
+          <br />
+          Probiere es bitte ein weiteres Mal oder melde dich bei uns mit dem
+          Hinweis zu der genauen Fehlermeldung. Nenne uns bitte außerdem falls
+          möglich deinen Browser und die Version:
+          <br />
+          <br />
+          <a href="mailto:support@expedition-grundeinkommen.de">
+            support@expedition-grundeinkommen.de
+          </a>
         </FinallyMessage>
       </SectionInner>
     );
@@ -73,16 +84,6 @@ export default ({ setQuestionJustSent }) => {
     return (
       <SectionInner>
         <FinallyMessage state="progress">Speichere...</FinallyMessage>
-      </SectionInner>
-    );
-  }
-
-  if (userId === undefined) {
-    return (
-      <SectionInner>
-        <FinallyMessage>
-          Da ist was mit dem Link nicht richtig. (userId fehlt)
-        </FinallyMessage>
       </SectionInner>
     );
   }
