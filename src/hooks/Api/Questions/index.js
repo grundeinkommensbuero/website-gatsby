@@ -67,11 +67,17 @@ export const useGetMostRecentQuestions = () => {
   return [
     state,
     questions,
-    limit => getMostRecentQuestions(limit, setState, setQuestions),
+    (userId, limit) =>
+      getMostRecentQuestions(userId, limit, setState, setQuestions),
   ];
 };
 
-const getMostRecentQuestions = async (limit, setState, setQuestions) => {
+const getMostRecentQuestions = async (
+  userId,
+  limit,
+  setState,
+  setQuestions
+) => {
   try {
     setState('loading');
 
@@ -82,7 +88,7 @@ const getMostRecentQuestions = async (limit, setState, setQuestions) => {
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/questions?limit=${limit}`,
+      `${CONFIG.API.INVOKE_URL}/questions?limit=${limit}&userId=${userId}`,
       request
     );
 
