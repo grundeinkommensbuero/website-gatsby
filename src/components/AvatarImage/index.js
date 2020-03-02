@@ -19,8 +19,10 @@ export default ({ user, className, srcOverwrite, sizes }) => {
   return (
     <img
       className={cN(s.image, className)}
-      src={srcOverwrite || src || placeHolderImage}
-      srcSet={srcOverwrite ? null : srcset}
+      src={
+        srcOverwrite || (user && user.srcOverwrite) || src || placeHolderImage
+      }
+      srcSet={srcOverwrite || (user && user.srcOverwrite) ? null : srcset}
       alt={user && user.name && `Avatarbild von ${user.name}`}
       sizes={sizes}
     />

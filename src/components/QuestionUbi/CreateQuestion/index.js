@@ -95,12 +95,12 @@ export default ({ setQuestionJustSent }) => {
           user: {
             username: data.username,
             profilePictures: userData.user && userData.user.profilePictures,
-            srcOverwrite: image && image[0],
+            srcOverwrite: image && image.srcOverwrite,
           },
           body: data.question,
         });
-        if (image && image[0]) {
-          uploadImage(userId, image[0]);
+        if (image && image.files && image.files[0]) {
+          uploadImage(userId, image.files[0]);
         }
         uploadQuestion(userId, data);
       }}
@@ -188,13 +188,15 @@ export default ({ setQuestionJustSent }) => {
 const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
   const [avatarImage, setAvatarImage] = useState(null);
   const handleChange = ({ target }) => {
-    onChange(target.files);
     if (target.files && target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(target.files[0]);
       reader.onload = e => {
         setAvatarImage(e.target.result);
+        onChange({ files: target.files, srcOverwrite: e.target.result });
       };
+    } else {
+      onChange({ files: target.files });
     }
   };
   return (
