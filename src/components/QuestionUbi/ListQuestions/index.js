@@ -19,8 +19,10 @@ export default ({ questionJustSent, userId }) => {
     questionJustSent.justSent = true;
   }
 
-  const questionsWithJustSent = questionJustSent
-    ? [questionJustSent, ...questions]
+  let questionsWithJustSent = questionJustSent
+    ? [questionJustSent, ...questions].filter(
+        ({ belongsToCurrentUser }) => !belongsToCurrentUser
+      )
     : questions;
 
   return (
