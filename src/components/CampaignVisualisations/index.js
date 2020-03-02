@@ -246,6 +246,7 @@ function replaceVariablesHintText({
 }) {
   if (!hint) return undefined;
   const buffer = goal - goalUnbuffered;
+  const expectedToArrive = count - receivedCount;
 
   return hint
     .replace(
@@ -262,6 +263,10 @@ function replaceVariablesHintText({
     .replace(
       /\$RECEIVED/gi,
       receivedCount ? receivedCount.toLocaleString('de') : ''
+    )
+    .replace(
+      /\$EXPECTED/gi,
+      expectedToArrive ? expectedToArrive.toLocaleString('de') : ''
     );
 }
 
