@@ -104,12 +104,14 @@ const Visualisation = ({
 
   let count = currentCount || 0;
 
-  if (addToSignatureCount) {
-    count += addToSignatureCount;
-  }
+  if (currentCount) {
+    if (addToSignatureCount) {
+      count += addToSignatureCount;
+    }
 
-  if (minimum) {
-    count = Math.max(count, minimum);
+    if (minimum) {
+      count = Math.max(count, minimum);
+    }
   }
 
   const hintWithVariables = replaceVariablesHintText({
@@ -193,7 +195,7 @@ const Visualisation = ({
                     className={s.barCurrentLabel}
                     placement="bottom"
                   >
-                    {count && count.toLocaleString('de')}
+                    {count ? count.toLocaleString('de') : ''}
                   </Tooltip>
                 </span>
               </>
