@@ -6,26 +6,15 @@ import { Speechbubble } from '../Speechbubble';
 import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../../Forms/TextInput';
-import querystring from 'query-string';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useUploadImage } from '../../../hooks/images';
-import { useUserData } from '../../../hooks/Api/Users';
 import { useSaveQuestion } from '../../../hooks/Api/Questions';
 import AvatarImage from '../../AvatarImage';
 
-export default ({ setQuestionJustSent }) => {
-  const [userId, setUserId] = useState(null);
+export default ({ setQuestionJustSent, userId, userData }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
-  const [userData, requestUserData] = useUserData();
   const [questionState, uploadQuestion] = useSaveQuestion();
   const [question, saveQuestion] = useState(null);
-
-  useEffect(() => {
-    const urlParams = querystring.parse(window.location.search);
-    // Will be null, if param does not exist
-    setUserId(urlParams.userId);
-    requestUserData(urlParams.userId);
-  }, []);
 
   useEffect(() => {
     if (questionState === 'saved') {
