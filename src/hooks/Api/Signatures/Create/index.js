@@ -71,11 +71,11 @@ const createSignatureListNewUser = async (
     if (userId !== 'userExists' && userId !== 'error') {
       data.userId = userId;
       //new user: save referral and newsletterConsent
-      await updateUser({ userId }, referral);
+      await updateUser({ userId, campaignCode }, referral);
       data.isNewUser = true;
     } else if (userId === 'userExists') {
       //instead of the user id we pass the email to the api
-      await updateUser({ email, userId: '000' }, referral);
+      await updateUser({ email, userId: '000', campaignCode }, referral);
       data.email = email;
       data.isNewUser = false;
     } else {
