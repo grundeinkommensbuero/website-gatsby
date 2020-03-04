@@ -167,22 +167,23 @@
     justify-content: center;
     transform: rotate(-5deg);
     top: -1rem;
-    margin-left: -1rem;
+    margin-left: 1rem;
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1350px) {
         font-size: @fontSizeS;
         height: 10rem;
         width: 10rem;
-        top: 2rem;
+    }
+
+    @media (max-width: 1270px) {
+        font-size: @fontSizeS;
+        height: 10rem;
+        width: 10rem;
+        top: 6rem;
         margin-left: -5rem;
     }
 
     @media (max-width: @breakPointM) {
-        top: 3rem;
-        margin-left: -8.5rem;
-    }
-
-    @media (max-width: @breakPointS) {
         top: auto;
         bottom: 100%;
         margin-bottom: -.7rem;
