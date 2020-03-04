@@ -19,16 +19,17 @@ const colors = [
 
 export default ({ className }) => {
   const canvas = useRef(null);
+  let animating = true;
 
   useEffect(() => {
     if (canvas) {
       const confetti = canvasConfetti.create(canvas.current, {
         resize: true,
-        useWorker: true,
+        useWorker: false,
       });
 
-      if (window.innerWidth > 600) {
-        (function frame() {
+      (function frame() {
+        if (window.innerWidth > 600) {
           confetti({
             particleCount: 1,
             angle: 60,
@@ -37,7 +38,7 @@ export default ({ className }) => {
             colors: [
               ...colors[Math.round(Math.random() * (colors.length - 1))],
             ],
-            ticks: 400,
+            ticks: 300,
           });
           confetti({
             particleCount: 1,
@@ -47,13 +48,9 @@ export default ({ className }) => {
             colors: [
               ...colors[Math.round(Math.random() * (colors.length - 1))],
             ],
-            ticks: 400,
+            ticks: 300,
           });
-
-          requestAnimationFrame(frame);
-        })();
-      } else {
-        (function frame() {
+        } else {
           confetti({
             particleCount: 1,
             angle: 270,
@@ -64,11 +61,16 @@ export default ({ className }) => {
               ...colors[Math.round(Math.random() * (colors.length - 1))],
             ],
           });
-
+        }
+        if (animating) {
           requestAnimationFrame(frame);
-        })();
-      }
+        }
+      })();
     }
-  }, [canvas]);
+
+    return () => {
+      animating = false;
+    };
+  }, []);
   return <canvas ref={canvas} className={cN(className, s.canvas)} />;
 };
