@@ -1,7 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
-import canvasConfetti from 'canvas-confetti';
+let canvasConfetti;
+
+if (!process.env.STATIC) {
+  canvasConfetti = require('canvas-confetti');
+}
 
 const colors = [
   '#fc484c',
@@ -15,8 +19,11 @@ const colors = [
 
 export default ({ className }) => {
   const canvas = useRef(null);
+  console.log('THERE IS FUNCTION');
+
   useEffect(() => {
     if (canvas) {
+      console.log('THERE IS CAVAS');
       const confetti = canvasConfetti.create(canvas.current, {
         resize: true,
         useWorker: true,
