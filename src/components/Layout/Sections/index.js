@@ -16,6 +16,7 @@ import Img from 'gatsby-image';
 import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
+import Confetti from '../../Confetti';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
@@ -73,9 +74,12 @@ export default function Sections({ sections }) {
               jumpToId={id}
               isVideoSection={isVideoSection}
               afterBodyContent={
-                (isIllustration || isVideoSection) && (
-                  <MainIllustration className={s.illustration} />
-                )
+                <>
+                  {(isIllustration || isVideoSection) && (
+                    <MainIllustration className={s.illustration} />
+                  )}
+                  {backgroundIllustration === 'confetti' && <Confetti />}
+                </>
               }
               className={cN({
                 [s.sectionPledge]: !!pledgeId,
@@ -84,6 +88,7 @@ export default function Sections({ sections }) {
                 [s.sectionVideo]: isVideoSection,
                 [s.sectionCrowdCollect]:
                   backgroundIllustration === 'crowd_collect',
+                [s.sectionConfetti]: backgroundIllustration === 'confetti',
               })}
               sectionBodyNoEvents={isIllustration || isVideoSection}
             >
