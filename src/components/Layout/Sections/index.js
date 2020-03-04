@@ -2,7 +2,7 @@ import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
-import Map from '../../Map';
+import Map from '../../Map/Map';
 import EmailListForm from '../../EmailListForm';
 import { stringToId, contentfulJsonToHtml } from '../../utils';
 import MainIllustration from '../../MainIllustration';
