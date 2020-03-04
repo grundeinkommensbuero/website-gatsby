@@ -19,42 +19,55 @@ const colors = [
 
 export default ({ className }) => {
   const canvas = useRef(null);
-  console.log('THERE IS FUNCTION');
 
   useEffect(() => {
     if (canvas) {
-      console.log('THERE IS CAVAS');
       const confetti = canvasConfetti.create(canvas.current, {
         resize: true,
         useWorker: true,
       });
-      //   confetti({
-      //     particleCount: 200,
-      //     spread: 160,
-      //     colors:colors ,
-      //   });
 
-      (function frame() {
-        confetti({
-          particleCount: 1,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0, y: 0.25 },
-          colors: [...colors[Math.round(Math.random() * (colors.length - 1))]],
-          ticks: 400,
-        });
-        confetti({
-          particleCount: 1,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1, y: 0.25 },
-          colors: [...colors[Math.round(Math.random() * (colors.length - 1))]],
-          ticks: 400,
-        });
+      if (window.innerWidth > 600) {
+        (function frame() {
+          confetti({
+            particleCount: 1,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0, y: 0.25 },
+            colors: [
+              ...colors[Math.round(Math.random() * (colors.length - 1))],
+            ],
+            ticks: 400,
+          });
+          confetti({
+            particleCount: 1,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1, y: 0.25 },
+            colors: [
+              ...colors[Math.round(Math.random() * (colors.length - 1))],
+            ],
+            ticks: 400,
+          });
 
-        requestAnimationFrame(frame);
-      })();
-      console.log([...colors[Math.random() * (colors.length - 1)]]);
+          requestAnimationFrame(frame);
+        })();
+      } else {
+        (function frame() {
+          confetti({
+            particleCount: 1,
+            angle: 270,
+            spread: 180,
+            origin: { x: 0.5, y: 0 },
+            startVelocity: 20,
+            colors: [
+              ...colors[Math.round(Math.random() * (colors.length - 1))],
+            ],
+          });
+
+          requestAnimationFrame(frame);
+        })();
+      }
     }
   }, [canvas]);
   return <canvas ref={canvas} className={cN(className, s.canvas)} />;
