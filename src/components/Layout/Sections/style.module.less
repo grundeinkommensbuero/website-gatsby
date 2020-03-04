@@ -59,7 +59,8 @@
   &:nth-child(3n + 1):not(:only-child),
   &:nth-child(3n + 3),
   &:only-child {
-    &.sectionCrowdCollect {
+    &.sectionCrowdCollect,
+    &.sectionConfetti {
       background-image: url('./backgrounds/crowd_collect_blue_desktop.svg');
 
       @media (max-width: 900px) {
@@ -109,7 +110,8 @@
     }
   }
 
-  &CrowdCollect {
+  &CrowdCollect,
+  &Confetti {
     background-image: url('./backgrounds/crowd_collect_yellow_desktop.svg');
     background-repeat: no-repeat;
     background-position: bottom -6rem center;
