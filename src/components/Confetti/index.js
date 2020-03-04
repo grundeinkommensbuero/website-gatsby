@@ -19,7 +19,6 @@ const colors = [
 
 export default ({ className }) => {
   const canvas = useRef(null);
-  const container = useRef(null);
   const [isInView, setIsInView] = useState(false);
 
   let animating = true;
@@ -32,7 +31,7 @@ export default ({ className }) => {
       });
 
       const frame = () => {
-        if (isInView && Math.random() < 0.5) {
+        if (isInView && Math.random() < 0.2) {
           if (window.innerWidth > 600) {
             confetti({
               particleCount: 1,
