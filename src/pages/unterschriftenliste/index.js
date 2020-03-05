@@ -12,7 +12,7 @@ import { Link } from 'gatsby';
 const trackingCategory = 'ListDownload';
 
 const Unterschriftenliste = () => {
-  const [state, createPdf] = useCreateSignatureList({});
+  const [state, pdf, , createPdf] = useCreateSignatureList({});
   const [campaignCode, setCampaignCode] = useState(null);
 
   useEffect(() => {
@@ -27,14 +27,14 @@ const Unterschriftenliste = () => {
     }
   }, []);
 
-  if (state.state === 'error') {
+  if (state === 'error') {
     trackEvent({
       category: trackingCategory,
       action: addActionTrackingId('downloadCreationDirectError', campaignCode),
     });
   }
 
-  if (state.state === 'created') {
+  if (state === 'created') {
     trackEvent({
       category: trackingCategory,
       action: addActionTrackingId('downloadCreatedFromMail', campaignCode),
@@ -47,17 +47,17 @@ const Unterschriftenliste = () => {
       body: (
         <>
           <p>Schön, dass du mit uns sammelst. So geht’s weiter:</p>
-          {state.state === 'creating' && (
+          {state === 'creating' && (
             <FinallyMessage state="progress">
               Liste wird generiert, bitte einen Moment Geduld...
             </FinallyMessage>
           )}
-          {state.state === 'error' && (
+          {state === 'error' && (
             <FinallyMessage state="error">
               Da ist was schief gegangen
             </FinallyMessage>
           )}
-          {state.pdf && (
+          {pdf && (
             <>
               <DownloadListsNextSteps>
                 <StepListItem icon="download">
