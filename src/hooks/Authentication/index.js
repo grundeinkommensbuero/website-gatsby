@@ -51,7 +51,7 @@ export const useSignOut = () => {
 };
 
 // Amplifys Auth class is used to sign up user
-const signUp = async (email, setState) => {
+const signUp = async (email, setState, setUserId) => {
   try {
     setState('loading');
 
@@ -76,6 +76,7 @@ const signUp = async (email, setState) => {
       await sleep(1500);
       return signUp(email);
     } else {
+      console.log('Error while signing up', error);
       setState('error');
     }
   }
