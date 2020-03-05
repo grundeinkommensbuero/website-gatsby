@@ -3,10 +3,10 @@
  *  in the backend
  */
 
-import { useAuthentication } from '../../../Authentication';
 import { useState } from 'react';
 import CONFIG from '../../../../../aws-config';
-import { updateUser } from '../../../utils';
+import { createUser } from '../../Users/Create';
+import { updateUser } from '../../Users/Update';
 import querystring from 'query-string';
 
 /*
@@ -17,105 +17,91 @@ import querystring from 'query-string';
 */
 
 export const useCreateSignatureList = () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState();
+  const [pdf, setPdf] = useState({});
+  const [anonymous, setAnonymous] = useState(false);
+
+  //get auth token from global context
+  const { token } = useContext(AuthContext);
+
   return [
     state,
+    pdf,
+    anonymous,
     data => {
-      if (data.email) {
-        return createSignatureListNewUser(data, setState);
+      if (data.userId || data.email) {
+        data.token = token;
+        return createSignatureList(data, setState, setPdf);
       }
-      if (data.userId) {
-        return createSignatureListOldUser(data, setState);
-      }
-      return createSignatureListAnonymous(data, setState);
+
+      setAnonymous(true);
+      return createSignatureListAnonymous(data, setState, setPdf);
     },
   ];
 };
 
 //Function to create (or get) a signature list for anonymous user
 //formData does not have to hold email or userId
-const createSignatureListAnonymous = async ({ campaignCode }, setState) => {
+const createSignatureListAnonymous = async (
+  { campaignCode },
+  setState,
+  setPdf
+) => {
   try {
-    setState({ state: 'creating' });
-    const data = {};
+    setState('creating');
     //handle campaign code
-    data.campaignCode = campaignCode;
+    const data = { campaignCode };
+
     //call function to make api request, returns signature list if successful (null otherwise)
     const signatureList = await makeApiCall(data);
-    setState({ state: 'created', pdf: signatureList, anonymous: true });
+
+    setState('created');
+    setPdf(signatureList);
   } catch (error) {
     console.log('Error while creating anonymous signature list', error);
-    setState({ state: 'error' });
+    setState('error');
   }
 };
 
-//Function to create (or get) a signature list for (possibly) new user
-//formData needs to contain email, user is first registered through cognito
-const createSignatureListNewUser = async (
-  { email, campaignCode },
-  setState
+// Function to create (or get) a signature list
+// userId or email is passed
+const createSignatureList = async (
+  { userId, email, campaignCode, userExists, token },
+  setState,
+  setPdf
 ) => {
   try {
-    setState({ state: 'creating' });
+    setState('creating');
 
-    const [signUp] = useAuthentication();
-    // check url params, if current user came from referral (e.g newsletter)
-    const urlParams = querystring.parse(window.location.search);
-    // the pk_source param was generated in matomo
-    const referral = urlParams.pk_source;
-    //TODO: handle referral and newsletter consent
+    const data = { userId, email, campaignCode };
 
-    const data = {};
-    //register user
-    const userId = await signUp(email);
-    if (userId !== 'userExists' && userId !== 'error') {
-      data.userId = userId;
-      //new user: save referral and newsletterConsent
-      await updateUser({ userId }, referral);
-      data.isNewUser = true;
-    } else if (userId === 'userExists') {
-      //instead of the user id we pass the email to the api
-      await updateUser({ email, userId: '000' }, referral);
-      data.email = email;
-      data.isNewUser = false;
-    } else {
-      setState({ state: 'error' });
-      return;
+    // if it is a new user, we want to create the user
+    // in the dynamo database
+    if (!userExists) {
+      // check url params, if current user came from referral (e.g newsletter)
+      const urlParams = querystring.parse(window.location.search);
+      // the pk_source param was generated in matomo
+      const referral = urlParams.pk_source;
+
+      await createUser(userId, true, referral);
+    } else if (userId) {
+      // Otherwise update the user using the token
+      // but only if the user id was passed (user has logged in to set newsletter consent)
+      await updateUser(userId, true, token);
     }
 
-    //handle campaign code
-    data.campaignCode = campaignCode;
     //call function to make api request, returns signature list if successful (throws error otherwise)
     const signatureList = await makeApiCall(data);
-    setState({
-      state: 'created',
-      pdf: signatureList,
-      existingUser: userId === 'userExists',
-    });
-  } catch (error) {
-    console.log('Error while creating signature list', error);
-    setState({ state: 'error' });
-  }
-};
 
-//Function to create (or get) a signature list an already registered user
-//userId is passed, user is not registeres through cognito
-const createSignatureListOldUser = async (
-  { userId, campaignCode },
-  setState
-) => {
-  try {
-    setState({ state: 'creating' });
-    const data = { userId: userId };
-    //handle campaign code
-    data.campaignCode = campaignCode;
-    data.isNewUser = false;
-    //call function to make api request, returns signature list if successful (null otherwise)
-    const signatureList = await makeApiCall(data);
-    setState({ state: 'created', pdf: signatureList });
+    setState('created');
+    setPdf(signatureList);
   } catch (error) {
-    console.log('Error while creating signature list', error);
-    setState({ state: 'error' });
+    if (error.status === 401) {
+      setState('unauthorized');
+    } else {
+      console.log('Error while creating signature list', error);
+      setState('error');
+    }
   }
 };
 
@@ -131,14 +117,17 @@ const makeApiCall = async data => {
     },
     body: JSON.stringify(data),
   };
+
   const response = await fetch(CONFIG.API.INVOKE_URL + '/signatures', request);
   const json = await response.json();
+
   //status might also be 200 in case there already was an existing pdf
   if (response.status === 201 || response.status === 200) {
     return json.signatureList;
   }
-  //throw error, if not successful
-  throw new Error(
-    `Api did not respond with list, status is ${response.status}`
-  );
+
+  throw {
+    status: response.status,
+    error: `Api did not respond with list, status is ${response.status}`,
+  };
 };

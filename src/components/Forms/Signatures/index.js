@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
-import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
 import { StepListItem } from '../../StepList';
+import { useCreateSignatureList } from '../../../hooks/api/Signatures/Create';
+import { useSignUp } from '../../../hooks/authentication';
 
 const trackingCategory = 'ListDownload';
 
 export default ({ signaturesId }) => {
-  const [state, createPdf] = useCreateSignatureList({});
+  const [state, createPdf] = useCreateSignatureList();
+  const [signUpState, signUp] = useSignUp();
+
+  useEffect(() => {
+    // If user was registered proceed by creating list
+    if (signUpState.state === 'success' || signUpState.state === 'userExists') {
+      createPdf({ userId: signUpState.userId, campaignCode: signaturesId });
+    }
+  }, [signUpState, createPdf]);
+
+  useEffect(() => {
+    if (state.state === 'unauthorized') {
+      // TODO: start sign in process
+      // and call createPdf again afterwards (with userId)
+    }
+  }, [state]);
 
   if (state.state === 'creating') {
     return (
@@ -97,10 +113,7 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
-          createPdf({
-            email: e.email,
-            campaignCode: signaturesId,
-          });
+          signUp(e.email);
         }}
         validate={validate}
         render={({ handleSubmit }) => {

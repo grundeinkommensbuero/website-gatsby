@@ -1,51 +1,42 @@
-import { useAuthentication } from '../../Authentication';
 import { useState } from 'react';
-import { updateUser } from '../../utils';
 import querystring from 'query-string';
+import { createUser } from '../Users/Create';
+import { updateUser } from '../Users/Update';
 
 export const useNewsletterApi = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our subscribe function, so we can set the state from there
   const [state, setState] = useState(null);
-  return [state, email => subscribeToNewsletter(email, setState)];
+  return [
+    state,
+    (userId, token = null) => subscribeToNewsletter(userId, token, setState),
+  ];
 };
 
 //function which takes an email and subscribes to our newsletter
 //by creating a new user in cognito and our dynamo db
-//returns a promise (because async), which resolves to true on success, false otherwise
-const subscribeToNewsletter = async (email, setState) => {
+//returns a promise (because async), sets state depending on result
+const subscribeToNewsletter = async (userId, token, setState) => {
   try {
     setState('saving');
-
-    const [signUp] = useAuthentication();
 
     // check url params, if current user came from referral (e.g newsletter)
     const urlParams = querystring.parse(window.location.search);
     // the pk_source param was generated in matomo
     const referral = urlParams.pk_source;
 
-    //register user
-    const userId = await signUp(email);
-    if (userId !== 'userExists' && userId !== 'error') {
-      try {
-        //new user: save referral and newsletterConsent
-        await updateUser(userId, referral);
-
-        //if successful set state and return true
-        setState('saved');
-      } catch (error) {
-        console.log('Error while updating user in dynamo', error);
-
-        setState('error');
-      }
-    } else if (userId === 'userExists') {
-      setState('userExists');
+    // save referral and newsletterConsent
+    // If there is no token set we want to create a new user
+    if (token) {
+      await updateUser(userId, true, referral, token);
     } else {
-      setState('error');
+      await createUser(userId, true, referral);
     }
-  } catch (error) {
-    console.log('Error while signing up user (newsletter)', error);
 
+    //if successful set state
+    setState('saved');
+  } catch (error) {
+    console.log('Error while updating user', error);
     setState('error');
   }
 };
