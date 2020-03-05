@@ -57,22 +57,6 @@ export default ({ signaturesId }) => {
     );
   }
 
-  if (state.state === 'created') {
-    if (state.anonymous) {
-      trackEvent({
-        category: trackingCategory,
-        action: addActionTrackingId('downloadCreatedAnonymous', signaturesId),
-      });
-    } else {
-      trackEvent({
-        category: trackingCategory,
-        action: addActionTrackingId(
-          'downloadCreated' + (state.existingUser ? 'ExistingUser' : 'NewUser'),
-          signaturesId
-        ),
-      });
-    }
-
     return (
       <>
         {!state.anonymous ? (
