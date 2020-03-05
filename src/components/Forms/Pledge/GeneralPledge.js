@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
@@ -7,6 +7,7 @@ import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
+import { useSignUp } from '../../../hooks/Authentication';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
