@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
-import { usePledgeApi } from '../../../hooks/Api/Pledge';
+import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
@@ -14,7 +14,7 @@ import { useSignUp } from '../../../hooks/Authentication';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp({});
-  const [state, savePledge] = usePledgeApi();
+  const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
   /*

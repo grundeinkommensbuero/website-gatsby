@@ -1,4 +1,4 @@
-import CONFIG from '../../../aws-config';
+import CONFIG from '../../../../../aws-config';
 import { useState } from 'react';
 import { saveUser } from '../shared';
 
