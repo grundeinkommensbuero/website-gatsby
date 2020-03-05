@@ -1,17 +1,19 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import s from './style.module.less';
 import cN from 'classnames';
 
-export default props => {
-  return (
-    <a
-      target="_blank"
-      href={props.link}
-      aria-label={props.label}
-      className={cN(s.button, props.className)}
-    >
-      <FontAwesomeIcon icon={props.icon} size={props.iconSize} />
-    </a>
-  );
+const icons = {
+  Facebook: require('!svg-inline-loader!./icons/facebook-brands.svg'),
+  Instagram: require('!svg-inline-loader!./icons/instagram-brands.svg'),
+  Twitter: require('!svg-inline-loader!./icons/twitter-brands.svg'),
 };
+
+export default ({ link, label, className, icon, iconSize }) => (
+  <a
+    target="_blank"
+    href={link}
+    aria-label={label}
+    className={cN(s.button, className, s['button' + iconSize])}
+    dangerouslySetInnerHTML={{ __html: icons[icon] }}
+  />
+);
