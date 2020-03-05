@@ -57,7 +57,7 @@ export default ({ signaturesId }) => {
     );
   }
 
-  if (state.state === 'created') {
+  if (state === 'created') {
     return (
       <>
         {!anonymous ? (
