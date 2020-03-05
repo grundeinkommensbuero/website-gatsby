@@ -61,7 +61,7 @@ const Unterschriftenliste = () => {
             <>
               <DownloadListsNextSteps>
                 <StepListItem icon="download">
-                  <LinkButton target="_blank" href={state.pdf.url}>
+                  <LinkButton target="_blank" href={pdf.url}>
                     Listen herunterladen
                   </LinkButton>
                   {campaignCode === 'hamburg-1' && (
