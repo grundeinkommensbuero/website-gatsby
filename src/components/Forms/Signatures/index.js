@@ -9,8 +9,8 @@ import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
 import { StepListItem } from '../../StepList';
-import { useCreateSignatureList } from '../../../hooks/api/Signatures/Create';
-import { useSignUp } from '../../../hooks/authentication';
+import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
+import { useSignUp } from '../../../hooks/Authentication';
 
 const trackingCategory = 'ListDownload';
 
