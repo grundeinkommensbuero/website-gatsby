@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import CONFIG from '../../../../aws-config';
+import CONFIG from '../../../../../aws-config';
 
 /*
   States:
