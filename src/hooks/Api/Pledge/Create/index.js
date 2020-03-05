@@ -21,7 +21,7 @@ const createPledge = async (userId, pledge, setState) => {
     // the pk_source param was generated in matomo
     const referral = urlParams.pk_source;
 
-    setState('loading');
+    setState('saving');
 
     const data = pledge;
     //add userId to data, because we need it in the backend
@@ -51,7 +51,7 @@ const createPledge = async (userId, pledge, setState) => {
     const response = await fetch(CONFIG.API.INVOKE_URL + '/pledges', request);
 
     if (response.status === 201) {
-      setState('success');
+      setState('saved');
     } else if (response.status === 401) {
       setState('unauthorized');
     } else {
