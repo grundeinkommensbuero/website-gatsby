@@ -13,14 +13,16 @@ import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
 
 export default ({ pledgeId }) => {
-  const [signUpState, signUp] = useSignUp({});
+  const [signUpState, userId, signUp] = useSignUp({});
   const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
+  console.log('signup state', signUpState);
+
   // After signup process is done we can save the pledge
   useEffect(() => {
-    if (signUpState.state === 'success') {
-      savePledge(signUpState.userId, pledge);
+    if (signUpState === 'success') {
+      savePledge(userId, pledge);
     }
   }, [signUpState, savePledge]);
 
