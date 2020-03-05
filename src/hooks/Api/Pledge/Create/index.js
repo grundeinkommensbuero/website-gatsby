@@ -2,7 +2,7 @@
  *  This file holds a hook to create a pledge
  */
 
-import CONFIG from '../../../../aws-config';
+import CONFIG from '../../../../../aws-config';
 import { useState } from 'react';
 import querystring from 'query-string';
 

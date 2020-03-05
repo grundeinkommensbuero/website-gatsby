@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
-import { usePledgeApi } from '../../../hooks/Api/Pledge';
+import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
@@ -10,7 +10,7 @@ import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
-  const [state, savePledge] = usePledgeApi();
+  const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
   /*
