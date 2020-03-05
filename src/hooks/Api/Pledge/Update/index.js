@@ -23,12 +23,11 @@ export const useUpdatePledge = () => {
 // Function which calls the aws api to create a new pledge
 const updatePledge = async (userId, pledge, token, setState) => {
   try {
+    setState('saving');
     // check url params, if current user came from referral (e.g newsletter)
     const urlParams = querystring.parse(window.location.search);
     // the pk_source param was generated in matomo
     const referral = urlParams.pk_source;
-
-    setState('loading');
 
     const data = pledge;
     //add userId to data, because we need it in the backend
@@ -62,7 +61,7 @@ const updatePledge = async (userId, pledge, token, setState) => {
     );
 
     if (response.status === 201) {
-      setState('success');
+      setState('updated');
     } else if (response.status === 401) {
       setState('unauthorized');
     } else {
