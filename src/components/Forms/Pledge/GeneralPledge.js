@@ -9,12 +9,20 @@ import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 
 export default ({ pledgeId }) => {
+  const [signUpState, signUp] = useSignUp();
   const [state, savePledge] = usePledgeApi();
+  const [pledge, setPledge] = useState({});
 
   /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
+
+  useEffect(() => {
+    if (signUpState.state === 'success') {
+      savePledge(signUpState.userId, pledge);
+    }
+  }, [signUpState, savePledge]);
 
   if (state) {
     return (
@@ -32,7 +40,8 @@ export default ({ pledgeId }) => {
         e.pledgeId = pledgeId;
         e.privacyConsent = true;
         e.newsletterConsent = true;
-        savePledge(e);
+        setPledge(e);
+        signUp(e.email);
       }}
       validate={validate}
       render={({ handleSubmit }) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { usePledgeApi } from '../../../hooks/Api/Pledge';
@@ -10,14 +10,24 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
+import { useSignUp } from '../../../hooks/Authentication';
 
 export default ({ pledgeId }) => {
+  const [signUpState, signUp] = useSignUp({});
   const [state, savePledge] = usePledgeApi();
+  const [pledge, setPledge] = useState({});
 
   /*
     state (string) can be:
     null (before form is submitted), "saving", "saved", "userExists", "error"
   */
+
+  // After signup process is done we can save the pledge
+  useEffect(() => {
+    if (signUpState.state === 'success') {
+      savePledge(signUpState.userId, pledge);
+    }
+  }, [signUpState, savePledge]);
 
   if (state) {
     return (
@@ -33,7 +43,8 @@ export default ({ pledgeId }) => {
     <Form
       onSubmit={e => {
         e.pledgeId = pledgeId;
-        savePledge(e);
+        setPledge(e);
+        signUp(e.email);
       }}
       initialValues={{
         signatureCount: 1,
