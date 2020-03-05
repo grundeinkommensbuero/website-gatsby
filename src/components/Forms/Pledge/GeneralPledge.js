@@ -10,22 +10,23 @@ import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import { useSignUp } from '../../../hooks/Authentication';
 
 export default ({ pledgeId }) => {
-  const [signUpState, signUp] = useSignUp();
+  const [signUpState, userId, signUp] = useSignUp();
   const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
-  /*
-    state (string) can be:
-    null (before form is submitted), "saving", "saved", "userExists", "error"
-  */
-
+  // After signup process is done we can save the pledge
   useEffect(() => {
-    if (signUpState.state === 'success') {
-      savePledge(signUpState.userId, pledge);
+    console.log('signup state', signUpState);
+
+    if (signUpState === 'success') {
+      savePledge(userId, pledge);
+    } else if (signUpState === 'userExists') {
+      // TODO: start sign in process
     }
-  }, [signUpState, savePledge]);
+  }, [signUpState]);
 
   if (state) {
+    console.log('state', state);
     return (
       <SignUpFeedbackMessage
         state={state}
