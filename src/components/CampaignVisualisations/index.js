@@ -45,6 +45,7 @@ const Visualisation = ({
   currentCount,
   receivedCount,
   minimum,
+  maximum,
   addToSignatureCount,
   showCTA,
   ctaLink,
@@ -111,6 +112,10 @@ const Visualisation = ({
 
     if (minimum) {
       count = Math.max(count, minimum);
+    }
+
+    if (maximum) {
+      count = Math.min(count, maximum);
     }
   }
 

@@ -27,6 +27,7 @@ export default () => {
                   title: 'Schlewsig-Holstein',
                   currentCount: 26000,
                   minimum: 0,
+                  maximum: 23001,
                   addToSignatureCount: 10,
                   showCTA: false,
                   ctaLink: '#',
