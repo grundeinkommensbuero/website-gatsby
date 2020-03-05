@@ -1,12 +1,9 @@
 import React from 'react';
-import Loadable from '@loadable/component';
 
-// const LoadableMap = Loadable(() => import('./Map'));
-const LoadableMap = React.lazy(() => import('./Map'));
+const LoadableMap = React.lazy(() => import('./LazyMap'));
 
 export default () => {
   const isSSR = typeof window === 'undefined';
-  console.log('hu', isSSR);
   return (
     <>
       {!isSSR && (
