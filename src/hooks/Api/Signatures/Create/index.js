@@ -3,11 +3,12 @@
  *  in the backend
  */
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import CONFIG from '../../../../../aws-config';
 import { createUser } from '../../Users/Create';
 import { updateUser } from '../../Users/Update';
 import querystring from 'query-string';
+import AuthContext from '../../../../context/Authentication';
 
 /*
   States:

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Auth from '@aws-amplify/auth';
+import React, { useState, useEffect } from 'react';
 
 /**
  * This class serves as a provider (reacts context API) which is used
