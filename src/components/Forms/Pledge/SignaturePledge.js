@@ -17,11 +17,6 @@ export default ({ pledgeId }) => {
   const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
-  /*
-    state (string) can be:
-    null (before form is submitted), "saving", "saved", "userExists", "error"
-  */
-
   // After signup process is done we can save the pledge
   useEffect(() => {
     if (signUpState.state === 'success') {
