@@ -15,7 +15,7 @@ import { useSignUp } from '../../../hooks/authentication';
 const trackingCategory = 'ListDownload';
 
 export default ({ signaturesId }) => {
-  const [state, createPdf] = useCreateSignatureList();
+  const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, signUp] = useSignUp();
 
   useEffect(() => {
@@ -26,13 +26,13 @@ export default ({ signaturesId }) => {
   }, [signUpState, createPdf]);
 
   useEffect(() => {
-    if (state.state === 'unauthorized') {
+    if (state === 'unauthorized') {
       // TODO: start sign in process
       // and call createPdf again afterwards (with userId)
     }
   }, [state]);
 
-  if (state.state === 'creating') {
+  if (state === 'creating') {
     return (
       <FinallyMessage state="progress">
         Liste wird generiert, bitte einen Moment Geduld...
@@ -40,7 +40,7 @@ export default ({ signaturesId }) => {
     );
   }
 
-  if (state.state === 'error') {
+  if (state === 'error') {
     trackEvent({
       category: trackingCategory,
       action: addActionTrackingId('downloadCreationError', signaturesId),
@@ -59,12 +59,12 @@ export default ({ signaturesId }) => {
 
     return (
       <>
-        {!state.anonymous ? (
+        {!anonymous ? (
           <>
             <p>
               Juhu! Die Unterschriftenlisten sind in deinem Postfach. Du kannst
               sie dir auch{' '}
-              <a target="_blank" href={state.pdf.url}>
+              <a target="_blank" href={pdf.url}>
                 direkt im Browser herunterladen
               </a>
               .
@@ -76,14 +76,14 @@ export default ({ signaturesId }) => {
         )}
 
         <DownloadListsNextSteps>
-          {!state.anonymous && !state.existingUser && (
+          {!anonymous && signUpState.state !== 'userExists' && (
             <StepListItem icon="mail">
               Check deine Mails und klick den Link, damit du dabei bist.
             </StepListItem>
           )}
-          {state.anonymous && (
+          {anonymous && (
             <StepListItem icon="download">
-              <LinkButton target="_blank" href={state.pdf.url}>
+              <LinkButton target="_blank" href={pdf.url}>
                 Listen herunterladen
               </LinkButton>
             </StepListItem>
