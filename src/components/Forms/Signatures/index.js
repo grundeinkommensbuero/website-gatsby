@@ -10,7 +10,6 @@ import { FinallyMessage } from '../FinallyMessage';
 import { Link } from 'gatsby';
 import { StepListItem } from '../../StepList';
 import { useCreateSignatureList } from '../../../hooks/api/Signatures/Create';
-import { useGetUserByEmail } from '../../../hooks/api/users/get';
 import { useSignUp } from '../../../hooks/authentication';
 
 const trackingCategory = 'ListDownload';
@@ -18,30 +17,20 @@ const trackingCategory = 'ListDownload';
 export default ({ signaturesId }) => {
   const [state, createPdf] = useCreateSignatureList();
   const [signUpState, signUp] = useSignUp();
-  const getUserByEmail = useGetUserByEmail();
 
   useEffect(() => {
     // If user was registered proceed by creating list
-    if (signUpState.state === 'success') {
+    if (signUpState.state === 'success' || signUpState.state === 'userExists') {
       createPdf({ userId: signUpState.userId, campaignCode: signaturesId });
-    } else if (signUpState.state === 'userExists') {
-      // If the user already exists, we want to check, if user
-      // has newsletter consent or not
-      getUserByEmail(signUpState.email).then(data => {
-        if (data.state === 'success') {
-          // If user has newsletter consent true, we do not need to sign in
-          if (!data.user.newsletterConsent.value) {
-            // TODO: start sign in process
-          } else {
-            createPdf({
-              userId: data.user.userId,
-              campaignCode: signaturesId,
-            });
-          }
-        }
-      });
     }
   }, [signUpState, createPdf]);
+
+  useEffect(() => {
+    if (state.state === 'unauthorized') {
+      // TODO: start sign in process
+      // and call createPdf again afterwards (with userId)
+    }
+  }, [state]);
 
   if (state.state === 'creating') {
     return (

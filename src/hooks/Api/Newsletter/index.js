@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { updateUser, createUser } from '../../utils';
 import querystring from 'query-string';
+import { createUser } from '../Users/Create';
+import { updateUser } from '../Users/Update';
 
 export const useNewsletterApi = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function

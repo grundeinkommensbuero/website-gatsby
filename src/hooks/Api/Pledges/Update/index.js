@@ -1,39 +1,43 @@
 /**
- *  This file holds hooks which serve as api calls regarding pledges
+ *  This file holds a hook to create a pledge
  */
 
 import CONFIG from '../../../../aws-config';
 import { useState } from 'react';
 import querystring from 'query-string';
 
-/*
-  email
-  TODO: update schema after a/b testing
-*/
-
-export const usePledgeApi = () => {
+export const useUpdatePledge = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our savePledge function, so we can set the state from there
   const [state, setState] = useState(null);
-  return [state, (userId, pledge) => savePledge(userId, pledge, setState)];
+
+  //get auth token from global context
+  const { token } = useContext(AuthContext);
+
+  return [
+    state,
+    (userId, pledge) => updatePledge(userId, pledge, token, setState),
+  ];
 };
 
 // Function which calls the aws api to create a new pledge
-const savePledge = async (userId, pledge, setState) => {
-  // check url params, if current user came from referral (e.g newsletter)
-  const urlParams = querystring.parse(window.location.search);
-  // the pk_source param was generated in matomo
-  const referral = urlParams.pk_source;
+const updatePledge = async (userId, pledge, token, setState) => {
   try {
-    setState('saving');
+    // check url params, if current user came from referral (e.g newsletter)
+    const urlParams = querystring.parse(window.location.search);
+    // the pk_source param was generated in matomo
+    const referral = urlParams.pk_source;
+
+    setState('loading');
 
     const data = pledge;
     //add userId to data, because we need it in the backend
     data.userId = userId;
 
-    if ('newsletterConsent' in data === false) {
+    if (!('newsletterConsent' in data)) {
       data.newsletterConsent = false;
     }
+
     if (referral) {
       data.referral = referral;
     }
@@ -43,25 +47,24 @@ const savePledge = async (userId, pledge, setState) => {
     }
 
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token,
       },
       body: JSON.stringify(data),
     };
 
-    const response = await fetch(CONFIG.API.INVOKE_URL + '/pledges', request);
+    const response = await fetch(
+      `${CONFIG.API.INVOKE_URL}/pledges/${userId}`,
+      request
+    );
 
     if (response.status === 201) {
-      //if the user already existed, we want to set a different state
-      if (signUpState.state === 'userExists') {
-        setState('updated');
-      } else {
-        setState('saved');
-      }
+      setState('success');
     } else if (response.status === 401) {
-      setState('userExists');
+      setState('unauthorized');
     } else {
       setState('error');
     }

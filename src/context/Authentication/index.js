@@ -15,6 +15,15 @@ const AuthContext = React.createContext();
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+
+  //define function to update token upon change of state
+  useEffect(() => {
+    //only if user is authenticated
+    if (user !== null && isAuthenticated) {
+      setToken(user.signInUserSession.idToken.jwtToken);
+    }
+  }, [user, isAuthenticated]);
 
   return (
     <AuthContext.Provider
@@ -23,6 +32,7 @@ const AuthProvider = ({ children }) => {
         setUser,
         isAuthenticated,
         setIsAuthenticated,
+        token,
       }}
     >
       {children}
