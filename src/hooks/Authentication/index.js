@@ -8,9 +8,10 @@ import { useContext, useState } from 'react';
 import AuthContext from '../../context/Authentication';
 
 export const useSignUp = () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState();
+  const [userId, setUserId] = useState();
 
-  return [state, email => signUp(email, setState)];
+  return [state, userId, email => signUp(email, setState, setUserId)];
 };
 
 export const useSignIn = () => {
@@ -52,7 +53,7 @@ export const useSignOut = () => {
 // Amplifys Auth class is used to sign up user
 const signUp = async (email, setState) => {
   try {
-    setState({ state: 'signingUp' });
+    setState('loading');
 
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
     const { userSub } = await Auth.signUp({
@@ -60,12 +61,13 @@ const signUp = async (email, setState) => {
       password: getRandomString(30),
     });
 
-    //we want to return the newly generated id
-    setState({ state: 'success', userId: userSub });
+    //we want to set the newly generated id
+    setState('success');
+    setUserId(userSub);
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
-      setState({ state: 'userExists', email });
+      setState('userExists');
     } else if (
       error.code === 'TooManyRequestsException' ||
       error.code === 'ThrottlingException'
@@ -74,7 +76,7 @@ const signUp = async (email, setState) => {
       await sleep(1500);
       return signUp(email);
     } else {
-      setState({ state: 'error' });
+      setState('error');
     }
   }
 };
