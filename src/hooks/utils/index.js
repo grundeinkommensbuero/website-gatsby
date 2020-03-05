@@ -6,10 +6,10 @@ import CONFIG from '../../../aws-config';
  */
 
 //Makes api call to update user in db, returns true if successful, false otherwise
-export const updateUser = async ({ userId, email, campaignCode }, referral) => {
+export const updateUser = async ({ userId, email }, referral) => {
   //make api call to save newsletter consent and referral
   //we don't send newsletter consent, because we set it as true anyway
-  const data = { campaignCode };
+  const data = {};
   if (referral) {
     data.referral = referral;
   }
