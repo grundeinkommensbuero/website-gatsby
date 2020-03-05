@@ -62,8 +62,8 @@ const signUp = async (email, setState, setUserId) => {
     });
 
     //we want to set the newly generated id
-    setState('success');
     setUserId(userSub);
+    setState('success');
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {

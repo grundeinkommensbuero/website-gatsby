@@ -13,7 +13,7 @@ import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
 
 export default ({ pledgeId }) => {
-  const [signUpState, userId, signUp] = useSignUp({});
+  const [signUpState, userId, signUp] = useSignUp();
   const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
