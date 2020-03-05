@@ -17,16 +17,19 @@ export default ({ pledgeId }) => {
   const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
 
-  console.log('signup state', signUpState);
-
   // After signup process is done we can save the pledge
   useEffect(() => {
+    console.log('signup state', signUpState);
+
     if (signUpState === 'success') {
       savePledge(userId, pledge);
+    } else if (signUpState === 'userExists') {
+      // TODO: start sign in process
     }
-  }, [signUpState, savePledge]);
+  }, [signUpState]);
 
   if (state) {
+    console.log('state', state);
     return (
       <SignUpFeedbackMessage
         state={state}
