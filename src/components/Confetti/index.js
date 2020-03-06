@@ -20,20 +20,23 @@ const colors = [
 export default ({ className }) => {
   const canvas = useRef(null);
   const [isInView, setIsInView] = useState(false);
-
+  const [confetti, setConfetti] = useState({});
   let animating = true;
 
   useEffect(() => {
-    if (canvas) {
-      const confetti = canvasConfetti.create(canvas.current, {
-        resize: true,
-        useWorker: true,
-      });
+    const confetti = canvasConfetti.create(canvas.current, {
+      resize: true,
+      useWorker: true,
+    });
+    setConfetti({ confetti: confetti });
+  }, []);
 
+  useEffect(() => {
+    if (canvas && confetti.confetti) {
       const frame = () => {
         if (isInView && Math.random() < 0.2) {
           if (window.innerWidth > 600) {
-            confetti({
+            confetti.confetti({
               particleCount: 1,
               angle: 60,
               spread: 55,
@@ -43,7 +46,7 @@ export default ({ className }) => {
               ],
               ticks: 400,
             });
-            confetti({
+            confetti.confetti({
               particleCount: 1,
               angle: 120,
               spread: 55,
@@ -54,7 +57,7 @@ export default ({ className }) => {
               ticks: 400,
             });
           } else {
-            confetti({
+            confetti.confetti({
               particleCount: 1,
               angle: 270,
               spread: 180,
@@ -76,7 +79,7 @@ export default ({ className }) => {
     return () => {
       animating = false;
     };
-  }, [isInView]);
+  }, [isInView, confetti]);
 
   useEffect(() => {
     if ('IntersectionObserver' in window) {
@@ -98,7 +101,7 @@ export default ({ className }) => {
     } else {
       setIsInView(true);
     }
-  }, []);
+  }, [setIsInView]);
 
   return <canvas ref={canvas} className={cN(className, s.canvas)} />;
 };
