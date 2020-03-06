@@ -27,7 +27,7 @@ export default ({ className }) => {
     if (canvas) {
       const confetti = canvasConfetti.create(canvas.current, {
         resize: true,
-        useWorker: false,
+        useWorker: true,
       });
 
       const frame = () => {
