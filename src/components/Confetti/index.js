@@ -29,7 +29,15 @@ export default ({ className }) => {
       useWorker: true,
     });
     setConfetti({ confetti: confetti });
-  }, []);
+  }, [setConfetti]);
+
+  useEffect(() => {
+    return () => {
+      if (confetti.confetti) {
+        confetti.confetti.reset();
+      }
+    };
+  }, [confetti]);
 
   useEffect(() => {
     if (canvas && confetti.confetti) {
