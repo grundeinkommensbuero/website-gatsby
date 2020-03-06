@@ -97,6 +97,9 @@ export const pageQuery = graphql`
             socialMediaButtons
             blogTeaser
             questionUbi
+            bodyAtTheEnd {
+              json
+            }
           }
           ... on ContentfulPageSectionVideo {
             __typename

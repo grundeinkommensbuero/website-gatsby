@@ -49,6 +49,7 @@ export default function Sections({ sections }) {
             subTitle,
             backgroundImage,
             questionUbi,
+            bodyAtTheEnd,
           } = section;
           const id = stringToId(titleShort);
           const isVideoSection = __typename === 'ContentfulPageSectionVideo';
@@ -95,11 +96,6 @@ export default function Sections({ sections }) {
               {isIllustration && (
                 <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
               )}
-              {campainVisualisations && (
-                <CampaignVisualisations
-                  visualisations={campainVisualisations}
-                />
-              )}
               {(body || pledgeId || signaturesId) && (
                 <SectionInner hugeText={bodyTextSizeHuge}>
                   {body && body.json ? contentfulJsonToHtml(body.json) : body}
@@ -113,6 +109,11 @@ export default function Sections({ sections }) {
                     />
                   )}
                 </SectionInner>
+              )}
+              {campainVisualisations && (
+                <CampaignVisualisations
+                  visualisations={campainVisualisations}
+                />
               )}
               {map && <Map state={map} />}
               {emailSignup && (
@@ -161,6 +162,11 @@ export default function Sections({ sections }) {
               {socialMediaButtons && (
                 <SectionInner>
                   <Share />
+                </SectionInner>
+              )}
+              {bodyAtTheEnd && bodyAtTheEnd.json && (
+                <SectionInner hugeText={bodyTextSizeHuge}>
+                  {contentfulJsonToHtml(bodyAtTheEnd.json)}
                 </SectionInner>
               )}
             </Section>
