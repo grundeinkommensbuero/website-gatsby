@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
@@ -18,15 +18,15 @@ const trackingCategory = 'ListDownload';
 export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, userId, signUp] = useSignUp();
+  const [email, setEmail] = useState();
 
   useEffect(() => {
     // If user was registered proceed by creating list
     if (signUpState === 'success') {
       createPdf({ userId, campaignCode: signaturesId });
     } else if (signUpState === 'userExists') {
-      // TODO: hold email in component state
       createPdf({
-        email: 'vali_schagerl@web.de',
+        email,
         campaignCode: signaturesId,
         userExists: true,
       });
@@ -125,6 +125,7 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
+          setEmail(e.email);
           signUp(e.email);
         }}
         validate={validate}
