@@ -59,7 +59,7 @@ const updatePledge = async (userId, pledge, token, setState) => {
       request
     );
 
-    if (response.status === 201) {
+    if (response.status === 204) {
       setState('updated');
     } else if (response.status === 401) {
       setState('unauthorized');
