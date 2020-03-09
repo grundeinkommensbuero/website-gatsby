@@ -36,8 +36,7 @@ export default ({ className, state, trackingId, trackingCategory }) => {
         )}
         {state === 'updated' && (
           <>
-            Yay, danke! Du bist bereits bei uns im System und bekommst demnächst
-            Post von uns.
+            Yay, danke! Deine Informationen wurden ergänzt.
             <br />
             <br />
             Wir sind gemeinnützig und auf Spenden angewiesen. Bitte unterstütze
