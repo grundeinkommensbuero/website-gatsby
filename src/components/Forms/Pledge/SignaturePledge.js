@@ -37,10 +37,9 @@ export default ({ pledgeId }) => {
   }, [isAuthenticated]);
 
   if (createPledgeState || updatePledgeState) {
-    console.log('createPledgeState', createPledgeState);
     return (
       <SignUpFeedbackMessage
-        createPledgeState={createPledgeState || updatePledgeState}
+        state={createPledgeState || updatePledgeState}
         trackingId={pledgeId}
         trackingCategory="Pledge"
       />
