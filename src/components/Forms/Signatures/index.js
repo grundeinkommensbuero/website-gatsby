@@ -85,7 +85,7 @@ export default ({ signaturesId }) => {
         )}
 
         <DownloadListsNextSteps>
-          {!anonymous && signUpState.state !== 'userExists' && (
+          {!anonymous && signUpState !== 'userExists' && (
             <StepListItem icon="mail">
               Check deine Mails und klick den Link, damit du dabei bist.
             </StepListItem>
