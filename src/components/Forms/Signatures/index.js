@@ -11,6 +11,7 @@ import { Link } from 'gatsby';
 import { StepListItem } from '../../StepList';
 import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import { useSignUp } from '../../../hooks/Authentication';
+import EnterLoginCode from '../../EnterLoginCode';
 
 const trackingCategory = 'ListDownload';
 
@@ -39,6 +40,24 @@ export default ({ signaturesId }) => {
       // and call createPdf again afterwards (with userId)
     }
   }, [state]);
+
+  if (state === 'unauthorized') {
+    return (
+      <EnterLoginCode>
+        Hey, wir kennen dich schon! Bitte gib den Code ein, den wir dir gerade
+        in einer E-Mail geschickt haben. Alternativ kannst du auch eine Liste{' '}
+        <InlineButton
+          onClick={() => {
+            createPdf({ campaignCode: signaturesId });
+          }}
+          type="button"
+        >
+          hier
+        </InlineButton>{' '}
+        anonym herunterladen.
+      </EnterLoginCode>
+    );
+  }
 
   if (state === 'creating') {
     return (
