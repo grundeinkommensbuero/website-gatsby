@@ -44,6 +44,7 @@ export default () => {
                     label="Geheimer Code"
                     placeholder="Geheimer Code"
                     type="text"
+                    autoComplete="off"
                     component={TextInputWrapped}
                   ></Field>
                 </FormSection>

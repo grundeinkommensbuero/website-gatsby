@@ -74,6 +74,7 @@ export const TextInputWrapped = ({
           className={inputClassName}
           maxLength={maxLength}
           label={outputLabel}
+          autoComplete={autoComplete}
         />
       ) : (
         <TextInput
