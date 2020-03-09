@@ -2,9 +2,10 @@
  *  This file holds a hook to create a pledge
  */
 
-import CONFIG from '../../../../aws-config';
-import { useState } from 'react';
+import CONFIG from '../../../../../aws-config';
+import { useState, useContext } from 'react';
 import querystring from 'query-string';
+import AuthContext from '../../../../context/Authentication';
 
 export const useUpdatePledge = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
@@ -12,12 +13,9 @@ export const useUpdatePledge = () => {
   const [state, setState] = useState(null);
 
   //get auth token from global context
-  const { token } = useContext(AuthContext);
+  const { token, userId } = useContext(AuthContext);
 
-  return [
-    state,
-    (userId, pledge) => updatePledge(userId, pledge, token, setState),
-  ];
+  return [state, pledge => updatePledge(userId, pledge, token, setState)];
 };
 
 // Function which calls the aws api to create a new pledge
