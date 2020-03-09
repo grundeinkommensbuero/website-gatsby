@@ -11,7 +11,10 @@ export const useSignUp = () => {
   const [state, setState] = useState();
   const [userId, setUserId] = useState();
 
-  return [state, userId, email => signUp(email, setState, setUserId)];
+  //get global context
+  const context = useContext(AuthContext);
+
+  return [state, userId, email => signUp(email, setState, setUserId, context)];
 };
 
 export const useSignIn = () => {
@@ -20,7 +23,7 @@ export const useSignIn = () => {
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, email => signIn(email, setState, context)];
+  return [state, () => signIn(setState, context)];
 };
 
 export const useAnswerChallenge = () => {
@@ -51,7 +54,7 @@ export const useSignOut = () => {
 };
 
 // Amplifys Auth class is used to sign up user
-const signUp = async (email, setState, setUserId) => {
+const signUp = async (email, setState, setUserId, { setTempEmail }) => {
   try {
     setState('loading');
 
@@ -67,6 +70,8 @@ const signUp = async (email, setState, setUserId) => {
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
+      // Save email, so we can use it for sign in later
+      setTempEmail(email);
       setState('userExists');
     } else if (
       error.code === 'TooManyRequestsException' ||
@@ -123,11 +128,11 @@ const resendEmail = async (email, setVerificationState) => {
 };
 
 // Sign in user through AWS Cognito (passwordless)
-const signIn = async (email, setState, { setUser }) => {
+const signIn = async (setState, { setUser, tempEmail }) => {
   try {
     // This will initiate the custom flow, which will lead to the user receiving a mail.
     // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
-    const user = await Auth.signIn(email);
+    const user = await Auth.signIn(tempEmail);
 
     // We already set the user here in the global context,
     // because we need the object in answerCustomChallenge()

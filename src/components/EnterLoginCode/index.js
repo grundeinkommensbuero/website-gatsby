@@ -12,8 +12,7 @@ export default ({ children }) => {
   const [signInState, startSignIn] = useSignIn();
 
   useState(() => {
-    // TODO: DON'T USE HARDCODED MAIL
-    // startSignIn('me@timurcelikel.com');
+    startSignIn();
   }, [startSignIn]);
 
   if (answerChallengeState === 'loading') {
