@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
@@ -12,11 +12,13 @@ import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
+import AuthContext from '../../../context/Authentication';
 
 export default ({ pledgeId }) => {
   const [signUpState, userId, signUp] = useSignUp();
   const [state, savePledge] = useCreatePledge();
   const [pledge, setPledge] = useState({});
+  const { isAuthenticated } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
   useEffect(() => {
