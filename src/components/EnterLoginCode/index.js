@@ -7,7 +7,7 @@ import { CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
 import { TextInputWrapped } from '../Forms/TextInput';
 import FormWrapper from '../Forms/FormWrapper';
 
-export default () => {
+export default ({ children }) => {
   const [answerChallengeState, setCode] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
@@ -25,13 +25,18 @@ export default () => {
   if (answerChallengeState === 'success') {
     return <FinallyMessage>Erfolgreich identifiziert.</FinallyMessage>;
   }
+  console.log(children);
 
   return (
     <FinallyMessage state="error">
-      <p>
-        Du bist schon bei uns im System. Um dich zu identifizieren, haben wir
-        dir einen Code per E-Mail geschickt. Bitte gib diesen ein:
-      </p>
+      {children ? (
+        children
+      ) : (
+        <p>
+          Du bist schon bei uns im System. Um dich zu identifizieren, haben wir
+          dir einen Code per E-Mail geschickt. Bitte gib diesen ein:
+        </p>
+      )}
       <Form
         onSubmit={e => {
           setCode(e.code);
