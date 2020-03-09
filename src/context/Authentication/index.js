@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [tempEmail, setTempEmail] = useState(null);
 
   //define function to update token upon change of state
@@ -22,6 +23,7 @@ const AuthProvider = ({ children }) => {
     //only if user is authenticated
     if (user !== null && isAuthenticated) {
       setToken(user.signInUserSession.idToken.jwtToken);
+      setUserId(user.attributes.sub);
     }
   }, [user, isAuthenticated]);
 
@@ -33,6 +35,7 @@ const AuthProvider = ({ children }) => {
         isAuthenticated,
         setIsAuthenticated,
         token,
+        userId,
         tempEmail,
         setTempEmail,
       }}
