@@ -22,6 +22,7 @@ export const useUpdatePledge = () => {
 const updatePledge = async (userId, pledge, token, setState) => {
   try {
     setState('saving');
+
     // check url params, if current user came from referral (e.g newsletter)
     const urlParams = querystring.parse(window.location.search);
     // the pk_source param was generated in matomo

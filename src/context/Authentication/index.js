@@ -21,14 +21,15 @@ const AuthProvider = ({ children }) => {
   //define function to update token upon change of state
   useEffect(() => {
     //only if user is authenticated
-    if (user && isAuthenticated) {
+    if (user && user.attributes) {
       setToken(user.signInUserSession.idToken.jwtToken);
+      setUserId(user.attributes.sub);
 
-      if (user.attributes) {
-        setUserId(user.attributes.sub);
-      }
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
-  }, [user, isAuthenticated]);
+  }, [user]);
 
   return (
     <AuthContext.Provider
@@ -36,7 +37,6 @@ const AuthProvider = ({ children }) => {
         user,
         setUser,
         isAuthenticated,
-        setIsAuthenticated,
         token,
         userId,
         tempEmail,

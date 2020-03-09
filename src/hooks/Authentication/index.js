@@ -149,11 +149,7 @@ const signIn = async (setState, { setUser, tempEmail }) => {
 };
 
 // Function to send login code to aws
-const answerCustomChallenge = async (
-  answer,
-  setState,
-  { user, setUser, setIsAuthenticated }
-) => {
+const answerCustomChallenge = async (answer, setState, { user, setUser }) => {
   // Send the answer to the User Pool
   try {
     setState('loading');
@@ -170,7 +166,6 @@ const answerCustomChallenge = async (
       setState('success');
 
       //use context to set user in global state
-      setIsAuthenticated(true);
       setUser(tempUser);
 
       console.log(tempUser);
@@ -188,12 +183,11 @@ const answerCustomChallenge = async (
 };
 
 //Function, which uses the amplify api to sign out user
-const signOut = async ({ setUser, setIsAuthenticated }) => {
+const signOut = async ({ setUser }) => {
   try {
     await Auth.signOut();
 
     //use context to set user in global state
-    setIsAuthenticated(false);
     setUser(null);
   } catch (error) {
     console.log('Error while signing out', error);
