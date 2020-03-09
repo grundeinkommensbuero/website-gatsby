@@ -21,9 +21,12 @@ const AuthProvider = ({ children }) => {
   //define function to update token upon change of state
   useEffect(() => {
     //only if user is authenticated
-    if (user !== null && isAuthenticated) {
+    if (user && isAuthenticated) {
       setToken(user.signInUserSession.idToken.jwtToken);
-      setUserId(user.attributes.sub);
+
+      if (user.attributes) {
+        setUserId(user.attributes.sub);
+      }
     }
   }, [user, isAuthenticated]);
 
