@@ -13,7 +13,7 @@ export default () => {
 
   useState(() => {
     // TODO: DON'T USE HARDCODED MAIL
-    startSignIn('me@timurcelikel.com');
+    // startSignIn('me@timurcelikel.com');
   }, [startSignIn]);
 
   if (answerChallengeState === 'loading') {
