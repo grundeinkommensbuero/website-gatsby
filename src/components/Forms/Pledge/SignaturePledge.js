@@ -13,29 +13,34 @@ import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
+import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
 
 export default ({ pledgeId }) => {
   const [signUpState, userId, signUp] = useSignUp();
-  const [state, savePledge] = useCreatePledge();
-  const [pledge, setPledge] = useState({});
+  const [createPledgeState, createPledge] = useCreatePledge();
+  const [updatePledgeState, updatePledge] = useUpdatePledge();
+  const [pledge, setPledgeLocally] = useState({});
   const { isAuthenticated } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
   useEffect(() => {
-    console.log('signup state', signUpState);
-
     if (signUpState === 'success') {
-      savePledge(userId, pledge);
-    } else if (signUpState === 'userExists') {
-      // TODO: start sign in process
+      createPledge(userId, pledge);
     }
   }, [signUpState]);
 
-  if (state) {
-    console.log('state', state);
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log('updating', userId);
+      updatePledge(pledge);
+    }
+  }, [isAuthenticated]);
+
+  if (createPledgeState || updatePledgeState) {
+    console.log('createPledgeState', createPledgeState);
     return (
       <SignUpFeedbackMessage
-        state={state}
+        createPledgeState={createPledgeState || updatePledgeState}
         trackingId={pledgeId}
         trackingCategory="Pledge"
       />
@@ -50,7 +55,7 @@ export default ({ pledgeId }) => {
     <Form
       onSubmit={e => {
         e.pledgeId = pledgeId;
-        setPledge(e);
+        setPledgeLocally(e);
         signUp(e.email);
       }}
       initialValues={{
