@@ -11,6 +11,7 @@ import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
+import EnterLoginCode from '../../EnterLoginCode';
 
 export default ({ pledgeId }) => {
   const [signUpState, userId, signUp] = useSignUp();
@@ -37,6 +38,10 @@ export default ({ pledgeId }) => {
         trackingCategory="Pledge"
       />
     );
+  }
+
+  if (signUpState === 'userExists') {
+    return <EnterLoginCode />;
   }
 
   return (
