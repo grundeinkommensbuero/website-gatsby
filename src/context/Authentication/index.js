@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [tempEmail, setTempEmail] = useState(null);
 
   //define function to update token upon change of state
   useEffect(() => {
@@ -32,6 +33,8 @@ const AuthProvider = ({ children }) => {
         isAuthenticated,
         setIsAuthenticated,
         token,
+        tempEmail,
+        setTempEmail,
       }}
     >
       {children}
