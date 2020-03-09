@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 import { useAnswerChallenge, useSignIn } from '../../hooks/Authentication';
 import { Form, Field } from 'react-final-form';
@@ -11,9 +11,9 @@ export default ({ children }) => {
   const [answerChallengeState, setCode] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
-  useState(() => {
+  useEffect(() => {
     startSignIn();
-  }, [startSignIn]);
+  }, []);
 
   if (answerChallengeState === 'loading') {
     return (
