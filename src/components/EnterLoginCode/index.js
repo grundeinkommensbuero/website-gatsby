@@ -28,8 +28,10 @@ export default () => {
 
   return (
     <FinallyMessage state="error">
-      Du bist schon bei uns im System. Um dich zu identifizieren, haben wir dir
-      einen Code per E-Mail geschickt. Bitte gib diesen ein:
+      <p>
+        Du bist schon bei uns im System. Um dich zu identifizieren, haben wir
+        dir einen Code per E-Mail geschickt. Bitte gib diesen ein:
+      </p>
       <Form
         onSubmit={e => {
           setCode(e.code);
