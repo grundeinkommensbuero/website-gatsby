@@ -4,7 +4,7 @@ import Footer from './Footer';
 import s from './style.module.less';
 import '../style/base.less';
 import Sections from './Sections';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 
 function Template({ children, sections }) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import Sections from '../../components/Layout/Sections';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 
