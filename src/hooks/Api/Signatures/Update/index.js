@@ -37,7 +37,9 @@ const updateSignatureListByUser = async (
 
   if (listId) {
     body.listId = listId;
-  } else if (userId) {
+  }
+
+  if (userId) {
     body.userId = userId;
   } else if (email) {
     body.email = email;
