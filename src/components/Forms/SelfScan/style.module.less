@@ -15,25 +15,41 @@
 .statisticsOverall {
   grid-column: wide-start / 5;
   line-height: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+
+  @media (max-width: @breakPointM) {
+    grid-column: wide-start / wide-end;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2rem;
+  }
 }
 
 .statisticsOverallCount {
   font-size: @fontSizeXXXL;
-}
 
-.statisticsOverallCountItem {
-  & + & {
-    margin-top: 2rem;
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXXL;
   }
 }
 
 .statisticsOverallLabel {
   font-size: @fontSizeM;
   line-height: 1.3;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeS;
+  }
 }
 
 .visualisation {
   grid-column: 5 / wide-end;
+
+  @media (max-width: @breakPointM) {
+    grid-column: wide-start / wide-end;
+  }
 }
 
 .headingSelfScan {
@@ -43,4 +59,8 @@
 
 .campaignVisualisations {
   margin-top: 4rem;
+
+  @media (max-width: @breakPointM) {
+    margin-top: 2rem;
+  }
 }
