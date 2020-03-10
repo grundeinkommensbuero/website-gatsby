@@ -110,9 +110,6 @@ export default ({ successMessage, campaignCode }) => {
             </div>
           </div>
           <div className={s.visualisation}>
-            <CampaignVisualisations
-              visualisations={campaignVisualisationsMapped}
-            />
             <h2 className={s.headingSelfScan}>
               Unterschriften selber eintragen
             </h2>
@@ -126,6 +123,13 @@ export default ({ successMessage, campaignCode }) => {
               setCount={setCount}
               campaignCode={campaignCode}
             />
+            {campaignVisualisationsMapped.length && (
+              <div className={s.campaignVisualisations}>
+                <CampaignVisualisations
+                  visualisations={campaignVisualisationsMapped}
+                />
+              </div>
+            )}
           </div>
         </Section>
       )}
