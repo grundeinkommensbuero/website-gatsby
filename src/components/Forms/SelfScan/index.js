@@ -122,6 +122,7 @@ export default ({ successMessage, campaignCode }) => {
               successMessage={successMessage}
               setCount={setCount}
               campaignCode={campaignCode}
+              setListId={setListId}
             />
             {campaignVisualisationsMapped.length && (
               <div className={s.campaignVisualisations}>
@@ -150,6 +151,7 @@ export default ({ successMessage, campaignCode }) => {
               successMessage={successMessage}
               setCount={setCount}
               campaignCode={campaignCode}
+              setListId={setListId}
             />
           </SectionInner>
         </Section>
@@ -167,6 +169,7 @@ const CountSignaturesForm = ({
   successMessage,
   setCount,
   campaignCode,
+  setListId,
 }) => {
   const needsEMail = !listId && !userId;
 
@@ -190,7 +193,7 @@ const CountSignaturesForm = ({
         .
       </FinallyMessage>
     );
-  } else if (state === 'error' || state === 'notFound') {
+  } else if (state === 'error') {
     return (
       <FinallyMessage state="error">
         Da ist was schief gegangen. Melde dich bitte bei{' '}
@@ -198,6 +201,13 @@ const CountSignaturesForm = ({
           support@expedition-grundeinkommen.de
         </a>{' '}
         und sende uns folgenden Text: listId={listId}.
+      </FinallyMessage>
+    );
+  } else if (state === 'notFound') {
+    return (
+      <FinallyMessage state="error">
+        Die Liste mit dem Barcode {listId} konnten wir leider nicht finden.
+        Bitte probiere es noch ein Mal.
       </FinallyMessage>
     );
   }
@@ -209,8 +219,13 @@ const CountSignaturesForm = ({
 
         // We can set both the list id and user id here,
         // because if the param is not set it will just be null
-        data.listId = listId;
         data.userId = userId;
+
+        if (data.listId) {
+          setListId(data.listId);
+        } else {
+          data.listId = listId;
+        }
 
         if (data.email) {
           setEMail(data.email);
@@ -239,12 +254,21 @@ const CountSignaturesForm = ({
                 <FormSection className={s.formSection}>
                   <Field
                     name="count"
-                    label="Anzahl Unterschriften. Du kannst auch die Unterschriften mehrerer Bögen auf einmal eingeben."
+                    label="Anzahl Unterschriften."
                     placeholder="1"
                     component={TextInputWrapped}
                     type="number"
                     min={1}
                     inputClassName={s.countField}
+                  ></Field>
+                  <Field
+                    name="listId"
+                    label="Barcode auf der Unterschriftenliste unten rechts."
+                    placeholder=""
+                    component={TextInputWrapped}
+                    type="number"
+                    min={1}
+                    inputClassName={s.listIdField}
                   ></Field>
                 </FormSection>
 
@@ -265,6 +289,10 @@ const validate = (values, needsEMail) => {
 
   if (!values.count) {
     errors.count = 'Muss ausgefüllt sein';
+  }
+
+  if (!values.listId) {
+    errors.listId = 'Muss ausgefüllt sein';
   }
 
   if (values.count && values.count < 0) {
