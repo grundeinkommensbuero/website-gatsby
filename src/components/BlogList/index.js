@@ -4,7 +4,7 @@ import s from './style.module.less';
 import Img from 'gatsby-image';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export const BlogList = ({ posts }) => {
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../../../components/Layout';
 import { SectionWrapper } from '../../../components/Layout/Sections';
 import SelfScan from '../../../components/Forms/SelfScan';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export default () => {
   return (
