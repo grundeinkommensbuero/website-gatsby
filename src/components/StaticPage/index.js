@@ -4,6 +4,8 @@ import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
 
+const URL = 'https://expedition-grundeinkommen.de';
+
 class StaticPage extends React.Component {
   render() {
     const page = this.props.data.contentfulStaticContent;
@@ -23,6 +25,11 @@ class StaticPage extends React.Component {
               content={page.description.internal.content}
             />
           )}
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content={URL + this.props.location.pathname}
+          />
           <script type="text/javascript">{MatomoTrackingStuff}</script>
         </Helmet>
       </Layout>

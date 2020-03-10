@@ -40,6 +40,7 @@ export default ({
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={siteTitle} />
         <meta property="article:published_time" content={date} />
+        <meta property="og:type" content="article" />
       </Helmet>
 
       <SectionHeader
