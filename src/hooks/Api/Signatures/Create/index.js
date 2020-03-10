@@ -23,15 +23,17 @@ export const useCreateSignatureList = () => {
   const [anonymous, setAnonymous] = useState(false);
 
   //get auth token from global context
-  const { token } = useContext(AuthContext);
+  const { token, userId } = useContext(AuthContext);
 
   return [
     state,
     pdf,
     anonymous,
     data => {
-      if (data.userId || data.email) {
+      if (userId || data.email) {
         data.token = token;
+        data.userId = userId;
+
         return createSignatureList(data, setState, setPdf);
       }
 
