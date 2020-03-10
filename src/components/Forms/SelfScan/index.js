@@ -108,9 +108,6 @@ export default ({ successMessage, campaignCode }) => {
             </div>
           </div>
           <div className={s.visualisation}>
-            <h2 className={s.headingSelfScan}>
-              Unterschriften selber eintragen
-            </h2>
             <CountSignaturesForm
               state={state}
               updateSignatureList={updateSignatureList}
@@ -235,6 +232,9 @@ const CountSignaturesForm = ({
       render={({ handleSubmit }) => {
         return (
           <>
+            <h2 className={s.headingSelfScan}>
+              Unterschriften selber eintragen
+            </h2>
             <FormWrapper>
               <form onSubmit={handleSubmit}>
                 {needsEMail && (
