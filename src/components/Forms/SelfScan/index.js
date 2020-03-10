@@ -82,30 +82,28 @@ export default ({ successMessage, campaignCode }) => {
       {signatureCountOfUser && (
         <Section>
           <div className={s.statisticsOverall}>
-            <div className={s.statisticsOverall}>
-              <div className={s.statisticsOverallCountItem}>
-                <div className={s.statisticsOverallCount}>
-                  <VisualCounter
-                    end={signatureCountOfUser.scannedByUser + addedSelfScanned}
-                  />
-                </div>
-                <div className={s.statisticsOverallLabel}>
-                  Unterschriften
-                  <br />
-                  von dir gemeldet
-                </div>
-              </div>{' '}
-              <div className={s.statisticsOverallCountItem}>
-                <div className={s.statisticsOverallCount}>
-                  <VisualCounter count={signatureCountOfUser.received} />
-                </div>
-                <div className={s.statisticsOverallLabel}>
-                  Unterschriften
-                  <br />
-                  von dir bei uns
-                  <br />
-                  angekommen
-                </div>
+            <div className={s.statisticsOverallCountItem}>
+              <div className={s.statisticsOverallCount}>
+                <VisualCounter
+                  end={signatureCountOfUser.scannedByUser + addedSelfScanned}
+                />
+              </div>
+              <div className={s.statisticsOverallLabel}>
+                Unterschriften
+                <br />
+                von dir gemeldet
+              </div>
+            </div>{' '}
+            <div className={s.statisticsOverallCountItem}>
+              <div className={s.statisticsOverallCount}>
+                <VisualCounter count={signatureCountOfUser.received} />
+              </div>
+              <div className={s.statisticsOverallLabel}>
+                Unterschriften
+                <br />
+                von dir bei uns
+                <br />
+                angekommen
               </div>
             </div>
           </div>
