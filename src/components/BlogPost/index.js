@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Section, SectionInner, SectionHeader } from '../Layout/Sections';
 import s from './style.module.less';
 import { formatDate } from '../utils';
