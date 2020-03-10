@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import {
   SectionWrapper,
   Section,
