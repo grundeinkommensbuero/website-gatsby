@@ -9,7 +9,8 @@ export function TextInput({ children, className, label, ...input }) {
     <input
       aria-label={label}
       className={cN(s.textInput, className, {
-        [s.hideNumberArrows]: input.name === 'zipCode',
+        [s.hideNumberArrows]:
+          input.name === 'zipCode' || input.name === 'listId',
       })}
       {...input}
     />
