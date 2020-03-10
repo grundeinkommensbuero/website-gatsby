@@ -13,10 +13,10 @@ const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [tempEmail, setTempEmail] = useState(null);
+  const [user, setUser] = useState();
+  const [token, setToken] = useState();
+  const [userId, setUserId] = useState();
+  const [tempEmail, setTempEmail] = useState();
 
   //define function to update token upon change of state
   useEffect(() => {
