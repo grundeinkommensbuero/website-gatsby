@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
@@ -7,11 +7,11 @@ import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
-import { Link } from 'gatsby';
 import { StepListItem } from '../../StepList';
 import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
+import AuthContext from '../../../context/Authentication';
 
 const trackingCategory = 'ListDownload';
 
@@ -19,6 +19,7 @@ export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, userId, signUp] = useSignUp();
   const [email, setEmail] = useState();
+  const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     // If user was registered proceed by creating list
@@ -34,27 +35,29 @@ export default ({ signaturesId }) => {
   }, [signUpState]);
 
   useEffect(() => {
-    if (state === 'unauthorized') {
-      console.log('unauthorized');
-      // TODO: start sign in process
-      // and call createPdf again afterwards (with userId)
+    if (isAuthenticated) {
+      createPdf({
+        campaignCode: signaturesId,
+      });
     }
-  }, [state]);
+  }, [isAuthenticated]);
 
   if (state === 'unauthorized') {
     return (
       <EnterLoginCode>
-        Hey, wir kennen dich schon! Bitte gib den Code ein, den wir dir gerade
-        in einer E-Mail geschickt haben. Alternativ kannst du auch eine Liste{' '}
-        <InlineButton
-          onClick={() => {
-            createPdf({ campaignCode: signaturesId });
-          }}
-          type="button"
-        >
-          hier
-        </InlineButton>{' '}
-        anonym herunterladen.
+        <p>
+          Hey, wir kennen dich schon! Bitte gib den Code ein, den wir dir gerade
+          in einer E-Mail geschickt haben. Alternativ kannst du auch eine Liste{' '}
+          <InlineButton
+            onClick={() => {
+              createPdf({ campaignCode: signaturesId });
+            }}
+            type="button"
+          >
+            hier
+          </InlineButton>{' '}
+          anonym herunterladen.
+        </p>
       </EnterLoginCode>
     );
   }
