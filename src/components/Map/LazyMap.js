@@ -146,7 +146,7 @@ const PopupContent = ({ title, description, date, phone, mail }) => (
     {(phone || mail) && <hr />}
     {phone && (
       <div>
-        📞 <a href={`tel:${mail}`}>{phone}</a>
+        📞 <a href={`tel:${phone}`}>{phone}</a>
       </div>
     )}
     {mail && (
