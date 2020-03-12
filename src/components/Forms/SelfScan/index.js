@@ -231,7 +231,7 @@ const CountSignaturesForm = ({
       validate={values => validate(values, needsEMail)}
       render={({ handleSubmit }) => {
         return (
-          <>
+          <FinallyMessage>
             <h2 className={s.headingSelfScan}>
               Unterschriften selber eintragen
             </h2>
@@ -275,14 +275,14 @@ const CountSignaturesForm = ({
                   ></Field>
                 </FormSection>
 
-                <CTAButtonContainer>
+                <CTAButtonContainer className={s.buttonContainer}>
                   <CTAButton type="submit" size="MEDIUM">
                     Eintragen
                   </CTAButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
-          </>
+          </FinallyMessage>
         );
       }}
     />
