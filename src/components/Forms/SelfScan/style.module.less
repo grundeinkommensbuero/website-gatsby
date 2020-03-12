@@ -12,6 +12,22 @@
   margin-bottom: 2rem;
 }
 
+.formSectionCombined {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1rem;
+
+  @media (max-width: @breakPointS) {
+    grid-template-columns: 1fr 3fr;
+  }
+}
+
+.label {
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeXS;
+  }
+}
+
 .statisticsOverall {
   grid-column: wide-start / 5;
   line-height: 1;
