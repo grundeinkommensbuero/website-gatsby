@@ -245,33 +245,40 @@ const CountSignaturesForm = ({
                       placeholder="E-Mail"
                       component={TextInputWrapped}
                       type="text"
+                      className={s.label}
                     ></Field>
                   </FormSection>
                 )}
-
-                <FormSection className={s.formSection}>
+                <FormSection
+                  className={s.formSection}
+                  fieldContainerClassName={s.formSectionCombined}
+                >
                   <Field
                     name="count"
-                    label="Anzahl Unterschriften."
+                    label="Anzahl Unterschriften"
                     placeholder="1"
                     component={TextInputWrapped}
                     type="number"
                     min={1}
+                    className={s.label}
                     inputClassName={s.countField}
                   ></Field>
                   <Field
                     name="listId"
-                    label="Barcode auf der Unterschriftenliste unten rechts."
+                    label="Barcode auf der Unterschriftenliste"
                     placeholder=""
                     component={TextInputWrapped}
                     type="number"
                     min={1}
+                    className={s.label}
                     inputClassName={s.listIdField}
                   ></Field>
                 </FormSection>
 
                 <CTAButtonContainer>
-                  <CTAButton type="submit">Eintragen</CTAButton>
+                  <CTAButton type="submit" size="MEDIUM">
+                    Eintragen
+                  </CTAButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
