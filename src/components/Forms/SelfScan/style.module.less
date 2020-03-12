@@ -8,6 +8,14 @@
   width: 12rem;
 }
 
+.countField,
+.listIdField {
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeS;
+    width: 100%;
+  }
+}
+
 .formSection {
   margin-bottom: 2rem;
 }
@@ -22,9 +30,15 @@
   }
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .label {
   @media (max-width: @breakPointS) {
     font-size: @fontSizeXS;
+    hyphens: auto;
   }
 }
 

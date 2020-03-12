@@ -20,7 +20,7 @@ export const FinallyMessage = ({ state, children, className }) => {
           })}
         >
           {state === 'progress' && <div className={s.savingIndicator} />}
-          <div>{children}</div>
+          <div className={s.children}>{children}</div>
         </div>
       </div>
     </div>
