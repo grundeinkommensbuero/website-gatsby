@@ -32,12 +32,8 @@ const updateSignatureListByUser = async (
 
   const body = { count, campaignCode };
 
-  // Depending on whether a list id or a user id was provided
-  // we send a either list id or user id
-
-  if (listId) {
-    body.listId = listId;
-  }
+  // Depending on whether a user id or email was provided
+  // we either send only list id or with user id or email
 
   if (userId) {
     body.userId = userId;
@@ -56,18 +52,16 @@ const updateSignatureListByUser = async (
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/signatures`,
+      `${CONFIG.API.INVOKE_URL}/signatures/${listId}`,
       request
     );
 
     if (response.status === 204) {
       setState('saved');
+    } else if (response.status === 404) {
+      setState('notFound');
     } else {
-      if (response.status === 404) {
-        setState('notFound');
-      } else {
-        setState('error');
-      }
+      setState('error');
     }
   } catch (error) {
     console.log('Error while updating signature list', error);
