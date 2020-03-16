@@ -77,6 +77,10 @@ export default ({ successMessage, campaignCode }) => {
     campaignVisualisationsMapped[0].addSelfScanned = addedSelfScanned;
   }
 
+  console.log(
+    'received',
+    signatureCountOfUser && signatureCountOfUser.received
+  );
   return (
     <>
       {signatureCountOfUser && (
@@ -96,7 +100,7 @@ export default ({ successMessage, campaignCode }) => {
             </div>{' '}
             <div className={s.statisticsOverallCountItem}>
               <div className={s.statisticsOverallCount}>
-                <VisualCounter count={signatureCountOfUser.received} />
+                <VisualCounter end={signatureCountOfUser.received} />
               </div>
               <div className={s.statisticsOverallLabel}>
                 Unterschriften
