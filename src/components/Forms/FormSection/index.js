@@ -11,7 +11,7 @@ export default function FormSection({
   return (
     <div className={cN(className, s.container)}>
       {heading && <h4 className={s.heading}>{heading}</h4>}
-      <div className={cN(s.fieldContainerm, fieldContainerClassName)}>
+      <div className={cN(s.fieldContainer, fieldContainerClassName)}>
         {children}
       </div>
     </div>
