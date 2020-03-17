@@ -267,16 +267,18 @@ const CountSignaturesForm = ({
                     className={s.label}
                     inputClassName={s.countField}
                   ></Field>
-                  <Field
-                    name="listId"
-                    label="Barcode auf der Unterschriftenliste"
-                    placeholder=""
-                    component={TextInputWrapped}
-                    type="number"
-                    min={1}
-                    className={s.label}
-                    inputClassName={s.listIdField}
-                  ></Field>
+                  {!listId && (
+                    <Field
+                      name="listId"
+                      label="Barcode auf der Unterschriftenliste"
+                      placeholder=""
+                      component={TextInputWrapped}
+                      type="number"
+                      min={1}
+                      className={s.label}
+                      inputClassName={s.listIdField}
+                    ></Field>
+                  )}
                 </FormSection>
 
                 <CTAButtonContainer className={s.buttonContainer}>
