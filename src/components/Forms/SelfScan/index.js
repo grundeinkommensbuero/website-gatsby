@@ -77,10 +77,6 @@ export default ({ successMessage, campaignCode }) => {
     campaignVisualisationsMapped[0].addSelfScanned = addedSelfScanned;
   }
 
-  console.log(
-    'received',
-    signatureCountOfUser && signatureCountOfUser.received
-  );
   return (
     <>
       {signatureCountOfUser && (
