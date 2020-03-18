@@ -228,7 +228,7 @@ const CountSignaturesForm = ({
         setCount(parseInt(data.count));
         updateSignatureList(data);
       }}
-      validate={values => validate(values, needsEMail)}
+      validate={values => validate(values, needsEMail, !listId)}
       render={({ handleSubmit }) => {
         return (
           <FinallyMessage>
@@ -291,14 +291,14 @@ const CountSignaturesForm = ({
   );
 };
 
-const validate = (values, needsEMail) => {
+const validate = (values, needsEMail, needsListId) => {
   const errors = {};
 
   if (!values.count) {
     errors.count = 'Muss ausgefüllt sein';
   }
 
-  if (!values.listId) {
+  if (needsListId && !values.listId) {
     errors.listId = 'Muss ausgefüllt sein';
   }
 
