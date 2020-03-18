@@ -59,7 +59,10 @@ const updateSignatureListByUser = async (
     if (response.status === 204) {
       setState('saved');
     } else if (response.status === 404) {
-      setState('notFound');
+      const json = await response.json();
+
+      // errorCode is either 'listNotFound' or 'userNotFound'
+      setState(json.errorCode);
     } else {
       setState('error');
     }
