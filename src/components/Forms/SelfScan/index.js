@@ -166,7 +166,7 @@ const CountSignaturesForm = ({
   campaignCode,
   setListId,
 }) => {
-  const needsEMail = !listId && !userId;
+  const needsEMail = !userId;
 
   if (state === 'saving') {
     return <FinallyMessage state="progress">Speichere...</FinallyMessage>;
