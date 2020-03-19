@@ -79,7 +79,7 @@ export default ({ successMessage, campaignCode }) => {
 
   return (
     <>
-      {signatureCountOfUser && (
+      {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
         <Section>
           <div className={s.statisticsOverall}>
             <div className={s.statisticsOverallCountItem}>
@@ -128,15 +128,19 @@ export default ({ successMessage, campaignCode }) => {
             )}
           </div>
         </Section>
-      )}
-      {!signatureCountOfUser && (
+      ) : (
         <Section title="Unterschriften zählen">
           <SectionInner hugeText={true}>
-            <p>
-              Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
-              Unterschriften hinzu gekommen sind:
-            </p>
-
+            {!(
+              state === 'error' ||
+              state === 'userNotFound' ||
+              state === 'listNotFound'
+            ) && (
+              <p>
+                Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
+                Unterschriften hinzu gekommen sind:
+              </p>
+            )}
             <CountSignaturesForm
               state={state}
               updateSignatureList={updateSignatureList}
@@ -176,33 +180,39 @@ const CountSignaturesForm = ({
     return <FinallyMessage>{successMessage}</FinallyMessage>;
   }
 
-  if (state === 'notFound' && needsEMail) {
+  if (
+    state === 'error' ||
+    state === 'userNotFound' ||
+    state === 'listNotFound'
+  ) {
     return (
       <FinallyMessage state="error">
-        Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
-        geschrieben? Probiere es bitte noch ein Mal. Falls es dann noch immer
-        nicht funktioniert, melde dich bitte an oder schreib uns an{' '}
-        <a href="mailto:support@expedition-grundeinkommen.de">
-          support@expedition-grundeinkommen.de
-        </a>
-        .
-      </FinallyMessage>
-    );
-  } else if (state === 'error') {
-    return (
-      <FinallyMessage state="error">
-        Da ist was schief gegangen. Melde dich bitte bei{' '}
-        <a href="mailto:support@expedition-grundeinkommen.de">
-          support@expedition-grundeinkommen.de
-        </a>{' '}
-        und sende uns folgenden Text: listId={listId}.
-      </FinallyMessage>
-    );
-  } else if (state === 'notFound') {
-    return (
-      <FinallyMessage state="error">
-        Die Liste mit dem Barcode {listId} konnten wir leider nicht finden.
-        Bitte probiere es noch ein Mal.
+        {state === 'userNotFound' && (
+          <>
+            Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
+            geschrieben? Probiere es bitte noch ein Mal. Falls es dann noch
+            immer nicht funktioniert, melde dich bitte an oder schreib uns an{' '}
+            <a href="mailto:support@expedition-grundeinkommen.de">
+              support@expedition-grundeinkommen.de
+            </a>
+            .
+          </>
+        )}
+        {state === 'error' && (
+          <>
+            Da ist was schief gegangen. Melde dich bitte bei{' '}
+            <a href="mailto:support@expedition-grundeinkommen.de">
+              support@expedition-grundeinkommen.de
+            </a>{' '}
+            und sende uns folgenden Text: listId={listId}.
+          </>
+        )}
+        {state === 'listNotFound' && (
+          <>
+            Die Liste mit dem Barcode {listId} konnten wir leider nicht finden.
+            Bitte probiere es noch ein Mal.
+          </>
+        )}
       </FinallyMessage>
     );
   }
