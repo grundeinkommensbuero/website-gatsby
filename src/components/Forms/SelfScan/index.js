@@ -36,10 +36,10 @@ export default ({ successMessage, campaignCode }) => {
   }, []);
 
   useEffect(() => {
-    if (listId || userId || eMail) {
-      getSignatureCountOfUser({ listId: listId, userId: userId, email: eMail });
+    if (userId || eMail) {
+      getSignatureCountOfUser({ userId: userId, email: eMail });
     }
-  }, [listId, userId, eMail]);
+  }, [userId, eMail]);
 
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
