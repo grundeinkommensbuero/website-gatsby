@@ -41,7 +41,7 @@ export default ({ pledgeId }) => {
             <form onSubmit={handleSubmit}>
               <FormSection
                 heading={
-                  'Ich bin dabei! Sagt mir, wie ich unterstützen kann und wenn es bei mir vor Ort losgeht.'
+                  'Unterstütze das Vorhaben des staatlichen Modellversuchs zum bedingungslosen Grundeinkommen - melde dich jetzt zur Expedition an!'
                 }
               >
                 <Field
