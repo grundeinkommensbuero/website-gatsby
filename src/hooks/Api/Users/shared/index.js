@@ -1,18 +1,15 @@
 // Helper function to saveUser, either updates via patch or creates via post
-export const saveUser = async (
+export const saveUser = async ({
   userId,
+  email,
   newsletterConsent,
   referral,
   method,
   url,
-  token = null
-) => {
-  //make api call to save newsletter consent and referral
-  const data = { newsletterConsent, userId };
-
-  if (referral) {
-    data.referral = referral;
-  }
+  token,
+}) => {
+  //make api call to save newsletter consent and referral (and email if new user)
+  const data = { newsletterConsent, userId, referral, email };
 
   const request = {
     method: method,

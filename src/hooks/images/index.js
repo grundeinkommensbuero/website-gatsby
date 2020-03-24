@@ -18,7 +18,7 @@ const uploadImage = async (userId, image, setState) => {
 
     setState('success');
   } catch (error) {
-    if (error.status === 400) {
+    if (error.status === 400 || error.status === 404) {
       setState('invalidRequest');
     } else {
       setState('error');

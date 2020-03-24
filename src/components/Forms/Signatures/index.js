@@ -17,14 +17,14 @@ const trackingCategory = 'ListDownload';
 
 export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
-  const [signUpState, userId, signUp] = useSignUp();
+  const [signUpState, signUp] = useSignUp();
   const [email, setEmail] = useState();
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     // If user was registered proceed by creating list
     if (signUpState === 'success') {
-      createPdf({ userId, campaignCode: signaturesId });
+      createPdf({ email, campaignCode: signaturesId });
     } else if (signUpState === 'userExists') {
       createPdf({
         email,
@@ -38,6 +38,7 @@ export default ({ signaturesId }) => {
     if (isAuthenticated) {
       createPdf({
         campaignCode: signaturesId,
+        userExists: true,
       });
     }
   }, [isAuthenticated]);
