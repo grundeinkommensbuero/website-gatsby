@@ -63,6 +63,14 @@
                 background-image: url('./backgrounds/crowd_collect_blue_mobile.svg');
             }
         }
+
+        &.sectionCrowdTravel {
+            background-image: url('./backgrounds/crowd_travel_blue_desktop.svg');
+
+            @media (max-width: 900px) {
+                background-image: url('./backgrounds/crowd_travel_blue_mobile.svg');
+            }
+        }
     }
 
 
@@ -104,9 +112,23 @@
             }
         }
     }
-
     &CrowdCollect, &Confetti {
         background-image: url('./backgrounds/crowd_collect_yellow_desktop.svg');
+
+        @media (max-width: 900px) {
+            background-image: url('./backgrounds/crowd_collect_yellow_mobile.svg');
+        }
+    }
+
+    &CrowdTravel {
+        background-image: url('./backgrounds/crowd_travel_yellow_desktop.svg');
+
+        @media (max-width: 900px) {
+            background-image: url('./backgrounds/crowd_travel_yellow_mobile.svg');
+        }
+    }
+
+    &CrowdCollect, &Confetti, &CrowdTravel {
         background-repeat: no-repeat;
         background-position: bottom -6rem center;
         background-size: auto 130rem;
@@ -116,7 +138,6 @@
         }
 
         @media (max-width: 900px) {
-            background-image: url('./backgrounds/crowd_collect_yellow_mobile.svg');
             padding-bottom: 23rem;
             background-position: bottom -3rem center;
             background-size: auto 160rem;

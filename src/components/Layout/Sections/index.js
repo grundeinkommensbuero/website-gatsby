@@ -89,6 +89,8 @@ export default function Sections({ sections }) {
                 [s.sectionVideo]: isVideoSection,
                 [s.sectionCrowdCollect]:
                   backgroundIllustration === 'crowd_collect',
+                [s.sectionCrowdTravel]:
+                  backgroundIllustration === 'crowd_travel',
                 [s.sectionConfetti]: backgroundIllustration === 'confetti',
               })}
               sectionBodyNoEvents={isIllustration || isVideoSection}
