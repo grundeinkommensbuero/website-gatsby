@@ -25,14 +25,13 @@ export const useUpdateUser = () => {
 export const updateUser = async (userId, newsletterConsent, token) => {
   const url = `${CONFIG.API.INVOKE_URL}/users/${userId}`;
 
-  const response = await saveUser(
+  const response = await saveUser({
     userId,
     newsletterConsent,
-    null,
-    'PATCH',
+    method: 'PATCH',
     url,
-    token
-  );
+    token,
+  });
 
   if (response.status !== 204) {
     throw new Error(`Api response was ${response.status}`);

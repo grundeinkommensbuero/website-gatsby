@@ -86,7 +86,7 @@ const createSignatureList = async (
       // the pk_source param was generated in matomo
       const referral = urlParams.pk_source;
 
-      await createUser(userId, true, referral);
+      await createUser(userId, email, true, referral);
     } else if (userId) {
       // Otherwise update the user using the token
       // but only if the user id was passed (user has logged in to set newsletter consent)
