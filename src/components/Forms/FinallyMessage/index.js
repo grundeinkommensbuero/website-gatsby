@@ -7,7 +7,7 @@ import { HurrayCrowd } from '../../HurrayCrowd';
 export const FinallyMessage = ({ state, children, className }) => {
   useEffect(() => {
     scrollIntoView(messageRef.current);
-  });
+  }, []);
   const messageRef = useRef(null);
 
   return (
