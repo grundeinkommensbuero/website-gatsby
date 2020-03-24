@@ -9,12 +9,11 @@ import AuthContext from '../../context/Authentication';
 
 export const useSignUp = () => {
   const [state, setState] = useState();
-  const [userId, setUserId] = useState();
 
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, userId, email => signUp(email, setState, setUserId, context)];
+  return [state, email => signUp(email, setState, context)];
 };
 
 export const useSignIn = () => {
@@ -54,7 +53,7 @@ export const useSignOut = () => {
 };
 
 // Amplifys Auth class is used to sign up user
-const signUp = async (email, setState, setUserId, { setTempEmail }) => {
+const signUp = async (email, setState, { setUserId, setTempEmail }) => {
   try {
     setState('loading');
 
