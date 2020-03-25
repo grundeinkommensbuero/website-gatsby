@@ -294,7 +294,7 @@ const CountSignaturesForm = ({
                       label="Bitte gib deine E-Mail-Adresse ein."
                       placeholder="E-Mail"
                       component={TextInputWrapped}
-                      type="text"
+                      type="email"
                       className={s.label}
                     ></Field>
                   </FormSection>
