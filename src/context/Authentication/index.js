@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Auth from '@aws-amplify/auth';
 
 /**
  * This class serves as a provider (reacts context API) which is used
@@ -18,8 +19,19 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState();
   const [tempEmail, setTempEmail] = useState();
 
+  // Check if the user is already signed in in the beginning
+  useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then(user => {
+        console.log('user upon start', user);
+        setUser(user);
+      }) // set user in context (global state)
+      .error(() => setUser(null)); //error is thrown if user is not authenticated
+  }, []);
+
   //define function to update token upon change of state
   useEffect(() => {
+    console.log('user has changed in context', user);
     //only if user is authenticated
     if (user && user.attributes) {
       setToken(user.signInUserSession.idToken.jwtToken);
@@ -48,6 +60,8 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+const checkForExistingSession = async () => {};
 
 export default AuthContext;
 export { AuthProvider };
