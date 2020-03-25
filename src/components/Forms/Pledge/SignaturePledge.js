@@ -20,6 +20,7 @@ export default ({ pledgeId }) => {
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
@@ -30,7 +31,7 @@ export default ({ pledgeId }) => {
   }, [signUpState]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
     }
   }, [isAuthenticated]);
@@ -53,6 +54,7 @@ export default ({ pledgeId }) => {
     <Form
       onSubmit={e => {
         e.pledgeId = pledgeId;
+        setHasSubmitted(true);
         setPledgeLocally(e);
         signUp(e.email);
       }}
