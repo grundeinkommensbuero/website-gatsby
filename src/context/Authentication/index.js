@@ -22,11 +22,8 @@ const AuthProvider = ({ children }) => {
   // Check if the user is already signed in in the beginning
   useEffect(() => {
     Auth.currentAuthenticatedUser()
-      .then(user => {
-        console.log('user upon start', user);
-        setUser(user);
-      }) // set user in context (global state)
-      .error(() => setUser(null)); //error is thrown if user is not authenticated
+      .then(user => setUser(user)) // set user in context (global state)
+      .catch(() => setUser(null)); //error is thrown if user is not authenticated
   }, []);
 
   //define function to update token upon change of state

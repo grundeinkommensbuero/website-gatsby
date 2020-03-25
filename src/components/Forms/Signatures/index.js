@@ -19,7 +19,10 @@ export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, signUp] = useSignUp();
   const [email, setEmail] = useState();
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+
+  console.log('is authenticated', isAuthenticated);
 
   useEffect(() => {
     // If user was registered proceed by creating list
@@ -35,7 +38,7 @@ export default ({ signaturesId }) => {
   }, [signUpState]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && hasSubmitted) {
       createPdf({
         campaignCode: signaturesId,
         userExists: true,
@@ -129,6 +132,7 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
+          setHasSubmitted(true);
           setEmail(e.email);
           signUp(e.email);
         }}
