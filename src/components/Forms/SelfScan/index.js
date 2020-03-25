@@ -312,7 +312,7 @@ const CountSignaturesForm = ({
                     min={1}
                     className={s.label}
                     inputClassName={s.countField}
-                    inputmode="numeric"
+                    inputMode="numeric"
                     pattern="[0-9]*"
                   ></Field>
                   {!listId && (
@@ -322,7 +322,7 @@ const CountSignaturesForm = ({
                       placeholder=""
                       component={TextInputWrapped}
                       type="text"
-                      inputmode="numeric"
+                      inputMode="numeric"
                       pattern="[0-9]*"
                       min={1}
                       className={s.label}
