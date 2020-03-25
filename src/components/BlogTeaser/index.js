@@ -56,7 +56,10 @@ export default () => {
                   />
                 )}
               </div>
-              <h1 className={s.title}>{title}</h1>
+              <h1
+                className={s.title}
+                dangerouslySetInnerHTML={{ __html: title }}
+              />
             </Link>
           </article>
         );
