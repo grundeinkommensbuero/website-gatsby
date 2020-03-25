@@ -312,6 +312,8 @@ const CountSignaturesForm = ({
                     min={1}
                     className={s.label}
                     inputClassName={s.countField}
+                    inputmode="numeric"
+                    pattern="[0-9]*"
                   ></Field>
                   {!listId && (
                     <Field
@@ -319,7 +321,9 @@ const CountSignaturesForm = ({
                       label="Barcode auf der Unterschriftenliste"
                       placeholder=""
                       component={TextInputWrapped}
-                      type="number"
+                      type="text"
+                      inputmode="numeric"
+                      pattern="[0-9]*"
                       min={1}
                       className={s.label}
                       inputClassName={s.listIdField}
