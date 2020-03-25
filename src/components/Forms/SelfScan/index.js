@@ -82,6 +82,20 @@ export default ({ successMessage, campaignCode }) => {
     campaignVisualisationsMapped[0].addSelfScanned = addedSelfScanned;
   }
 
+  const countSignaturesFormProps = {
+    state,
+    updateSignatureList,
+    listId,
+    userId,
+    eMail,
+    setEMail,
+    successMessage,
+    setCount,
+    campaignCode,
+    setListId,
+    resetSignatureListState,
+  };
+
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
@@ -113,19 +127,7 @@ export default ({ successMessage, campaignCode }) => {
             </div>
           </div>
           <div className={s.visualisation}>
-            <CountSignaturesForm
-              state={state}
-              updateSignatureList={updateSignatureList}
-              listId={listId}
-              userId={userId}
-              eMail={eMail}
-              setEMail={setEMail}
-              successMessage={successMessage}
-              setCount={setCount}
-              campaignCode={campaignCode}
-              setListId={setListId}
-              resetSignatureListState={resetSignatureListState}
-            />
+            <CountSignaturesForm {...countSignaturesFormProps} />
             {campaignVisualisationsMapped.length && (
               <div className={s.campaignVisualisations}>
                 <CampaignVisualisations
@@ -148,19 +150,7 @@ export default ({ successMessage, campaignCode }) => {
                 Unterschriften hinzu gekommen sind:
               </p>
             )}
-            <CountSignaturesForm
-              state={state}
-              updateSignatureList={updateSignatureList}
-              listId={listId}
-              userId={userId}
-              eMail={eMail}
-              setEMail={setEMail}
-              successMessage={successMessage}
-              setCount={setCount}
-              campaignCode={campaignCode}
-              setListId={setListId}
-              resetSignatureListState={resetSignatureListState}
-            />
+            <CountSignaturesForm {...countSignaturesFormProps} />
           </SectionInner>
         </Section>
       )}
