@@ -16,7 +16,7 @@ import AuthContext from '../../../context/Authentication';
 import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
 
 export default ({ pledgeId }) => {
-  const [signUpState, userId, signUp] = useSignUp();
+  const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
@@ -25,13 +25,12 @@ export default ({ pledgeId }) => {
   // After signup process is done we can save the pledge
   useEffect(() => {
     if (signUpState === 'success') {
-      createPledge(userId, pledge);
+      createPledge(pledge);
     }
   }, [signUpState]);
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log('updating', userId);
       updatePledge(pledge);
     }
   }, [isAuthenticated]);

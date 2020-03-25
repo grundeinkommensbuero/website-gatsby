@@ -1,39 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
+import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import { useSignUp } from '../../../hooks/Authentication';
+import AuthContext from '../../../context/Authentication';
+import EnterLoginCode from '../../EnterLoginCode';
 
 export default ({ pledgeId }) => {
-  const [signUpState, userId, signUp] = useSignUp();
-  const [state, savePledge] = useCreatePledge();
-  const [pledge, setPledge] = useState({});
+  const [signUpState, signUp] = useSignUp();
+  const [createPledgeState, createPledge] = useCreatePledge();
+  const [updatePledgeState, updatePledge] = useUpdatePledge();
+  const [pledge, setPledgeLocally] = useState({});
+  const { isAuthenticated } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
   useEffect(() => {
-    console.log('signup state', signUpState);
-
     if (signUpState === 'success') {
-      savePledge(userId, pledge);
-    } else if (signUpState === 'userExists') {
-      // TODO: start sign in process
+      createPledge(pledge);
     }
   }, [signUpState]);
 
-  if (state) {
-    console.log('state', state);
+  useEffect(() => {
+    if (isAuthenticated) {
+      updatePledge(pledge);
+    }
+  }, [isAuthenticated]);
+
+  if (createPledgeState || updatePledgeState) {
     return (
       <SignUpFeedbackMessage
-        state={state}
+        state={createPledgeState || updatePledgeState}
         trackingId={pledgeId}
         trackingCategory="Pledge"
       />
     );
+  }
+
+  if (signUpState === 'userExists') {
+    return <EnterLoginCode />;
   }
 
   return (
@@ -42,7 +52,7 @@ export default ({ pledgeId }) => {
         e.pledgeId = pledgeId;
         e.privacyConsent = true;
         e.newsletterConsent = true;
-        setPledge(e);
+        setPledgeLocally(e);
         signUp(e.email);
       }}
       validate={validate}
