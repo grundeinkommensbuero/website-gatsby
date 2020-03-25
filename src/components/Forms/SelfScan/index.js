@@ -188,7 +188,22 @@ const CountSignaturesForm = ({
   }
 
   if (state === 'saved') {
-    return <FinallyMessage>{successMessage}</FinallyMessage>;
+    return (
+      <FinallyMessage>
+        {successMessage}
+        <CTAButtonContainer className={s.buttonContainer}>
+          <CTAButton
+            size="MEDIUM"
+            onClick={() => {
+              setListId(null);
+              resetSignatureListState();
+            }}
+          >
+            Mehr eintragen
+          </CTAButton>
+        </CTAButtonContainer>
+      </FinallyMessage>
+    );
   }
 
   if (
