@@ -143,7 +143,8 @@ export default ({ successMessage, campaignCode }) => {
             {!(
               state === 'error' ||
               state === 'userNotFound' ||
-              state === 'listNotFound'
+              state === 'listNotFound' ||
+              state === 'listAndUserNotFound'
             ) && (
               <p>
                 Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
@@ -199,7 +200,8 @@ const CountSignaturesForm = ({
   if (
     state === 'error' ||
     state === 'userNotFound' ||
-    state === 'listNotFound'
+    state === 'listNotFound' ||
+    state === 'listAndUserNotFound'
   ) {
     return (
       <FinallyMessage state="error">
@@ -245,6 +247,24 @@ const CountSignaturesForm = ({
                 size="MEDIUM"
                 onClick={() => {
                   setListId(null);
+                  resetSignatureListState();
+                }}
+              >
+                Neuer Versuch
+              </CTAButton>
+            </CTAButtonContainer>
+          </>
+        )}
+        {state === 'listAndUserNotFound' && (
+          <>
+            Die Liste mit dem Barcode {listId} und dem Benutzer {eMail} konnten
+            wir leider nicht finden. Bitte probiere es noch ein Mal.
+            <CTAButtonContainer className={s.buttonContainer}>
+              <CTAButton
+                size="MEDIUM"
+                onClick={() => {
+                  setListId(null);
+                  setEMail(null);
                   resetSignatureListState();
                 }}
               >
