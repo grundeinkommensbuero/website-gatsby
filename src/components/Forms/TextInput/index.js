@@ -53,6 +53,8 @@ export const TextInputWrapped = ({
   max,
   hideLabel,
   explanation,
+  inputmode,
+  pattern,
 }) => {
   if (hide) {
     return null;
@@ -82,6 +84,8 @@ export const TextInputWrapped = ({
           min={min}
           max={max}
           label={outputLabel}
+          pattern={pattern}
+          inputmode={inputmode}
         />
       )}
     </LabelInputErrorWrapper>
