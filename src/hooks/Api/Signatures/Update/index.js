@@ -18,7 +18,13 @@ import CONFIG from '../../../../../aws-config';
 
 export const useUpdateSignatureListByUser = () => {
   const [state, setState] = useState(null);
-  return [state, data => updateSignatureListByUser(data, setState)];
+  return [
+    state,
+    data => updateSignatureListByUser(data, setState),
+    () => {
+      setState(null);
+    },
+  ];
 };
 
 // function, which makes an api call to set the signature count

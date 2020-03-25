@@ -14,9 +14,14 @@ import querystring from 'query-string';
 import { useStaticQuery, graphql } from 'gatsby';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import VisualCounter from '../../VisualCounter';
+import cN from 'classnames';
 
 export default ({ successMessage, campaignCode }) => {
-  const [state, updateSignatureList] = useUpdateSignatureListByUser();
+  const [
+    state,
+    updateSignatureList,
+    resetSignatureListState,
+  ] = useUpdateSignatureListByUser();
   const [
     signatureCountOfUser,
     getSignatureCountOfUser,
@@ -113,11 +118,13 @@ export default ({ successMessage, campaignCode }) => {
               updateSignatureList={updateSignatureList}
               listId={listId}
               userId={userId}
+              eMail={eMail}
               setEMail={setEMail}
               successMessage={successMessage}
               setCount={setCount}
               campaignCode={campaignCode}
               setListId={setListId}
+              resetSignatureListState={resetSignatureListState}
             />
             {campaignVisualisationsMapped.length && (
               <div className={s.campaignVisualisations}>
@@ -146,11 +153,13 @@ export default ({ successMessage, campaignCode }) => {
               updateSignatureList={updateSignatureList}
               listId={listId}
               userId={userId}
+              eMail={eMail}
               setEMail={setEMail}
               successMessage={successMessage}
               setCount={setCount}
               campaignCode={campaignCode}
               setListId={setListId}
+              resetSignatureListState={resetSignatureListState}
             />
           </SectionInner>
         </Section>
@@ -165,12 +174,14 @@ const CountSignaturesForm = ({
   listId,
   userId,
   setEMail,
+  eMail,
   successMessage,
   setCount,
   campaignCode,
   setListId,
+  resetSignatureListState,
 }) => {
-  const needsEMail = !userId;
+  const needsEMail = !userId && !eMail;
 
   if (state === 'saving') {
     return <FinallyMessage state="progress">Speichere...</FinallyMessage>;
@@ -196,6 +207,19 @@ const CountSignaturesForm = ({
               support@expedition-grundeinkommen.de
             </a>
             .
+            <CTAButtonContainer
+              className={cN(s.buttonContainer, s.buttonContainerMessage)}
+            >
+              <CTAButton
+                size="MEDIUM"
+                onClick={() => {
+                  setEMail(null);
+                  resetSignatureListState();
+                }}
+              >
+                Neuer Versuch
+              </CTAButton>
+            </CTAButtonContainer>
           </>
         )}
         {state === 'error' && (
@@ -211,6 +235,17 @@ const CountSignaturesForm = ({
           <>
             Die Liste mit dem Barcode {listId} konnten wir leider nicht finden.
             Bitte probiere es noch ein Mal.
+            <CTAButtonContainer className={s.buttonContainer}>
+              <CTAButton
+                size="MEDIUM"
+                onClick={() => {
+                  setListId(null);
+                  resetSignatureListState();
+                }}
+              >
+                Neuer Versuch
+              </CTAButton>
+            </CTAButtonContainer>
           </>
         )}
       </FinallyMessage>
