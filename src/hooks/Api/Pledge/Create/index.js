@@ -3,14 +3,19 @@
  */
 
 import CONFIG from '../../../../../aws-config';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import querystring from 'query-string';
+import AuthContext from '../../../../context/Authentication';
 
 export const useCreatePledge = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our savePledge function, so we can set the state from there
   const [state, setState] = useState(null);
-  return [state, (userId, pledge) => createPledge(userId, pledge, setState)];
+
+  //get user id  from global context
+  const { userId } = useContext(AuthContext);
+
+  return [state, pledge => createPledge(userId, pledge, setState)];
 };
 
 // Function which calls the aws api to create a new pledge
