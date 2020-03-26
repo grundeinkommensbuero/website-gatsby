@@ -4,21 +4,30 @@ import s from './style.module.less';
 
 const COOKIE_NAME = 'overlayHasBeenDismissed';
 
-export default () => {
+export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
   const [hasBeenDismissed, setHasBeenDismissed] = useHasBeenDismissed();
-  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Overlay
+      isOpenInitially={!hasBeenDismissed}
+      onClose={() => {
+        setHasBeenDismissed();
+      }}
+      {...overlay}
+    />
+  );
+};
+
+export const Overlay = ({ onClose = () => {}, isOpenInitially = true }) => {
+  const [isOpen, setIsOpen] = useState(isOpenInitially);
 
   useEffect(() => {
     document.body.classList.toggle(s.bodyOverlayOpen, isOpen);
   }, [isOpen]);
 
-  useEffect(() => {
-    setIsOpen(!hasBeenDismissed);
-  }, [hasBeenDismissed]);
-
   const close = () => {
     setIsOpen(false);
-    setHasBeenDismissed(true);
+    onClose();
   };
 
   if (isOpen) {
