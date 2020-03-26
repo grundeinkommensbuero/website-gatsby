@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
-import Overlay from '../Overlay';
+import { ShowOnlyOnceOverlay } from '../Overlay';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
@@ -12,7 +12,7 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={page.title} sections={page.sections}>
-      <Overlay />
+      <ShowOnlyOnceOverlay />
       <Helmet>
         <title>{page.title}</title>
 
