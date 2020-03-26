@@ -18,7 +18,12 @@ export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
   );
 };
 
-export const Overlay = ({ onClose = () => {}, isOpenInitially = true }) => {
+export const Overlay = ({
+  onClose = () => {},
+  isOpenInitially = true,
+  title,
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState(isOpenInitially);
 
   useEffect(() => {
@@ -32,12 +37,20 @@ export const Overlay = ({ onClose = () => {}, isOpenInitially = true }) => {
 
   if (isOpen) {
     return (
-      <div className={s.container} role="dialog">
+      <div className={s.container} role="dialog" aria-describedby="dialogTitle">
         <button
           className={s.closeButton}
           onClick={close}
           aria-label="Overlay Schließen"
         ></button>
+        <div className={s.body}>
+          {title && (
+            <h1 className={s.title} id="dialogTitle">
+              {title}
+            </h1>
+          )}
+          {children}
+        </div>
       </div>
     );
   } else {
