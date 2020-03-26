@@ -1,0 +1,29 @@
+@import '../style/vars.less';
+
+.bodyOverlayOpen {
+    overflow: hidden;
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: @red;
+    z-index: 100;
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    height: 4rem;
+    width: 4rem;
+    cursor: pointer;
+    font-size: 0;
+    background-image: url('./close-icon.svg');
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+}
