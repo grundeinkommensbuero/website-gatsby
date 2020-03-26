@@ -12,6 +12,7 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={page.title} sections={page.sections}>
+      <Overlay />
       <Helmet>
         <title>{page.title}</title>
 

@@ -1,22 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import s from './style.module.less';
 
 const COOKIE_NAME = 'overlayHasBeenDismissed';
 
 export default () => {
   const [hasBeenDismissed, setHasBeenDismissed] = useHasBeenDismissed();
+  const [isOpen, setIsOpen] = useState(false);
 
-  console.log(hasBeenDismissed);
   useEffect(() => {
-    console.log('dismissing');
+    document.body.classList.toggle(s.bodyOverlayOpen, isOpen);
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(!hasBeenDismissed);
+  }, [hasBeenDismissed]);
+
+  const close = () => {
+    setIsOpen(false);
     setHasBeenDismissed(true);
-  }, []);
-  return <></>;
+  };
+
+  if (isOpen) {
+    return (
+      <div className={s.container} role="dialog">
+        <button
+          className={s.closeButton}
+          onClick={close}
+          aria-label="Overlay Schließen"
+        ></button>
+      </div>
+    );
+  } else {
+    return null;
+  }
 };
 
 const useHasBeenDismissed = () => {
   const [hasBeenDismissed, setHasBeenDismissed] = useState(() => {
-    console.log('cookie', Cookies.get(COOKIE_NAME));
     return Cookies.get(COOKIE_NAME) === 'true';
   });
 
