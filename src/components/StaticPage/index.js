@@ -6,38 +6,27 @@ import MatomoTrackingStuff from './MatomoTrackingStuff';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-class StaticPage extends React.Component {
-  render() {
-    const page = this.props.data.contentfulStaticContent;
+export default ({ data, location }) => {
+  const page = data.contentfulStaticContent;
 
-    return (
-      <Layout
-        location={this.props.location}
-        title={page.title}
-        sections={page.sections}
-      >
-        <Helmet>
-          <title>{page.title}</title>
+  return (
+    <Layout location={location} title={page.title} sections={page.sections}>
+      <Helmet>
+        <title>{page.title}</title>
 
-          {page.description && (
-            <meta
-              name="description"
-              content={page.description.internal.content}
-            />
-          )}
-          <meta property="og:type" content="website" />
+        {page.description && (
           <meta
-            property="og:url"
-            content={URL + this.props.location.pathname}
+            name="description"
+            content={page.description.internal.content}
           />
-          <script type="text/javascript">{MatomoTrackingStuff}</script>
-        </Helmet>
-      </Layout>
-    );
-  }
-}
-
-export default StaticPage;
+        )}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={URL + location.pathname} />
+        <script type="text/javascript">{MatomoTrackingStuff}</script>
+      </Helmet>
+    </Layout>
+  );
+};
 
 export const pageQuery = graphql`
   query StaticPageBySlug($slug: String!) {
