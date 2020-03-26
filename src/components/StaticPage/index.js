@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
+import Overlay from '../Overlay';
 
 const URL = 'https://expedition-grundeinkommen.de';
 

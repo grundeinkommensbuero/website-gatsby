@@ -54,6 +54,7 @@
     "git-revision-webpack-plugin": "^3.0.4",
     "html2plaintext": "^2.1.2",
     "interactjs": "^1.8.5",
+    "js-cookie": "^2.2.1",
     "less": "^3.11.1",
     "lodash": "^4.17.14",
     "mapbox-gl": "^1.8.1",
