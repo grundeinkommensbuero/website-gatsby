@@ -51,8 +51,6 @@ const getCrowdfundingData = async projectId => {
 export const useGetCrowdfundingDirectly = projectId => {
   const [crowdFunding, setCrowdFunding] = useState(() => {
     loadScript('//api.startnext.com/js/cfapiclient-0.1.js').then(() => {
-      console.log('loaded', cfAPIClient);
-      const domain = 'www.startnext.com';
       const apiUrl = 'https://api.startnext.com';
       const clientOptions = {
         url: apiUrl,
@@ -65,7 +63,6 @@ export const useGetCrowdfundingDirectly = projectId => {
         '/projects/' + projectId,
         { lang: 'de' },
         (data, textStatus, jqXHR) => {
-          console.log(data, textStatus, jqXHR);
           setCrowdFunding(data);
         }
       );
