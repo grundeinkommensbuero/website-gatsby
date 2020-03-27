@@ -6,11 +6,16 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useCrowdfundingData } from '../../hooks/Api/Crowdfunding';
+import {
+  useCrowdfundingData,
+  useGetCrowdfundingDirectly,
+} from '../../hooks/Api/Crowdfunding';
 
 export default () => {
-  const data = useCrowdfundingData('96752');
-  console.log('data', data);
+  // const data = useCrowdfundingData('96752');
+
+  const [crowdFundingData] = useGetCrowdfundingDirectly('96752');
+  console.log('data', crowdFundingData);
 
   return (
     <Layout>
