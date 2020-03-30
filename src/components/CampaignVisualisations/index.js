@@ -9,6 +9,7 @@ import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
 import VisualCounter from '../VisualCounter';
+import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
@@ -16,7 +17,7 @@ export default ({ visualisations }) => {
   return (
     <>
       {visualisations.map((visualisation, index) => (
-        <Visualisation
+        <CampainVisualisation
           key={index}
           index={index}
           currentCount={
@@ -37,9 +38,24 @@ export default ({ visualisations }) => {
   );
 };
 
-const Visualisation = ({
-  //typo: also in contentful 'campainCode', so no big day
-  campainCode,
+export const CrowdFundingVisualistation = ({ startnextId, title }) => {
+  const [crowdFunding] = useGetCrowdfundingDirectly(startnextId);
+  if (!crowdFunding) {
+    return 'lade...';
+  }
+
+  const project = crowdFunding.project;
+
+  return (
+    <CampainVisualisation
+      goal={project.funding_target}
+      currentCount={project.funding_status}
+      startDate={project.start_date}
+    />
+  );
+};
+
+export const CampainVisualisation = ({
   goal,
   startDate,
   title,
