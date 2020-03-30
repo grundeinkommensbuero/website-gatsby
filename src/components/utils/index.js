@@ -1,6 +1,10 @@
 import React from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { INLINES, BLOCKS } from '@contentful/rich-text-types';
+import {
+  CampainVisualisation,
+  CrowdFundingVisualistation,
+} from '../CampaignVisualisations';
 
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
@@ -22,6 +26,7 @@ function intToHex(nr) {
 
 export function contentfulJsonToHtml(json) {
   const website_url = 'https://www.change.org';
+  console.log(json, BLOCKS);
 
   const documentToREactComponentsOptions = {
     // needed so that line breaks are properly added.
@@ -45,6 +50,23 @@ export function contentfulJsonToHtml(json) {
             {node.content[0].value}
           </a>
         );
+      },
+      [BLOCKS.EMBEDDED_ENTRY]: ({
+        data: {
+          target: {
+            sys: {
+              contentType: {
+                sys: { id: contentTypeId },
+              },
+            },
+            fields,
+          },
+        },
+      }) => {
+        if (contentTypeId === 'campainVisualisation') {
+          const fieldsMapped = objectMap(fields, field => field['en-US']);
+          return <CrowdFundingVisualistation {...fieldsMapped} />;
+        }
       },
       [BLOCKS.EMBEDDED_ASSET]: node => {
         // https://github.com/contentful/rich-text/issues/61#issuecomment-475999852
@@ -87,6 +109,10 @@ export function contentfulJsonToHtml(json) {
 
   return documentToReactComponents(json, documentToREactComponentsOptions);
 }
+
+// https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
+export const objectMap = (obj, fn) =>
+  Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
 
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 export function validateEmail(email) {
