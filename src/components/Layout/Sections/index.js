@@ -22,158 +22,9 @@ export default function Sections({ sections }) {
   if (sections && sections.length) {
     return (
       <SectionWrapper>
-        {sections.map((section, index) => {
-          const {
-            title,
-            titleShort,
-            campainVisualisations,
-            body,
-            emailSignup,
-            videoLink,
-            callToActionLink,
-            callToActionText,
-            sloganLine1,
-            sloganLine2,
-            __typename,
-            teamMembers,
-            bodyTextSizeHuge,
-            pledgeId,
-            signaturesId,
-            callToActionReference,
-            twitterFeed,
-            map,
-            backgroundIllustration,
-            socialMediaButtons,
-            blogTeaser,
-            preTitle,
-            subTitle,
-            backgroundImage,
-            questionUbi,
-            bodyAtTheEnd,
-          } = section;
-          const id = stringToId(titleShort);
-          const isVideoSection = __typename === 'ContentfulPageSectionVideo';
-          const isIllustration =
-            __typename === 'ContentfulPageSectionIllustration';
-
-          if (__typename === 'ContentfulPageSectionIntro') {
-            return (
-              <SectionHeader
-                key={index}
-                backgroundImageSet={backgroundImage && backgroundImage.fluid}
-                title={title}
-                preTitle={preTitle}
-                subTitle={subTitle}
-              ></SectionHeader>
-            );
-          }
-
-          return (
-            <Section
-              key={index}
-              title={title}
-              jumpToId={id}
-              isVideoSection={isVideoSection}
-              afterBodyContent={
-                <>
-                  {(isIllustration || isVideoSection) && (
-                    <MainIllustration className={s.illustration} />
-                  )}
-                  {backgroundIllustration === 'confetti' && <Confetti />}
-                </>
-              }
-              className={cN({
-                [s.sectionPledge]: !!pledgeId,
-                [s.sectionNewsletter]: !!emailSignup,
-                [s.sectionIllustration]: isIllustration,
-                [s.sectionVideo]: isVideoSection,
-                [s.sectionCrowdCollect]:
-                  backgroundIllustration === 'crowd_collect',
-                [s.sectionCrowdTravel]:
-                  backgroundIllustration === 'crowd_travel',
-                [s.sectionConfetti]: backgroundIllustration === 'confetti',
-              })}
-              sectionBodyNoEvents={isIllustration || isVideoSection}
-            >
-              {isIllustration && (
-                <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
-              )}
-              {(body || pledgeId || signaturesId) && (
-                <SectionInner hugeText={bodyTextSizeHuge}>
-                  {body && body.json ? contentfulJsonToHtml(body.json) : body}
-                  {pledgeId && (
-                    <Pledge pledgeId={pledgeId} className={s.pledge} />
-                  )}
-                  {signaturesId && (
-                    <Signatures
-                      signaturesId={signaturesId}
-                      className={s.pledge}
-                    />
-                  )}
-                </SectionInner>
-              )}
-              {campainVisualisations && (
-                <CampaignVisualisations
-                  visualisations={campainVisualisations}
-                />
-              )}
-              {map && <Map state={map} />}
-              {emailSignup && (
-                <SectionInner>
-                  <EmailListForm className={s.emailSignup} />
-                </SectionInner>
-              )}
-              {videoLink && <YoutubeEmbed url={videoLink} />}
-              {teamMembers && (
-                <SectionInner wide={true}>
-                  <AboutUs members={teamMembers} />
-                </SectionInner>
-              )}
-              {callToActionReference && (
-                <SectionInner>
-                  <CTAButtonContainer>
-                    {callToActionReference.map(
-                      ({ title, shortTitle, slug }, index) => (
-                        <CTALink key={index} to={`/${slug}/`}>
-                          {shortTitle || title}
-                        </CTALink>
-                      )
-                    )}
-                  </CTAButtonContainer>
-                </SectionInner>
-              )}
-              {blogTeaser && <BlogTeaser />}
-              {blogTeaser && callToActionText && callToActionLink && (
-                <div className={s.spaceBetweenBlogAndCTA} />
-              )}
-              {questionUbi && <QuestionUbi mode={questionUbi} />}
-              {callToActionText && callToActionLink && (
-                <SectionInner>
-                  <CTAButtonContainer>
-                    <CTALinkExternal href={callToActionLink}>
-                      {callToActionText}
-                    </CTALinkExternal>
-                  </CTAButtonContainer>
-                </SectionInner>
-              )}
-              {twitterFeed && (
-                <SectionInner>
-                  <TwitterEmbed />
-                </SectionInner>
-              )}
-              {socialMediaButtons && (
-                <SectionInner>
-                  <Share />
-                </SectionInner>
-              )}
-              {bodyAtTheEnd && bodyAtTheEnd.json && (
-                <SectionInner hugeText={bodyTextSizeHuge}>
-                  {contentfulJsonToHtml(bodyAtTheEnd.json)}
-                </SectionInner>
-              )}
-            </Section>
-          );
-        })}
+        {sections.map((section, index) => (
+          <ContentfulSection section={section} key={index} />
+        ))}
       </SectionWrapper>
     );
   }
@@ -182,6 +33,145 @@ export default function Sections({ sections }) {
 
 export function SectionWrapper({ children, className }) {
   return <div className={cN(s.sections, className)}>{children}</div>;
+}
+
+export function ContentfulSection({ section }) {
+  const {
+    title,
+    titleShort,
+    campainVisualisations,
+    body,
+    emailSignup,
+    videoLink,
+    callToActionLink,
+    callToActionText,
+    sloganLine1,
+    sloganLine2,
+    __typename,
+    teamMembers,
+    bodyTextSizeHuge,
+    pledgeId,
+    signaturesId,
+    callToActionReference,
+    twitterFeed,
+    map,
+    backgroundIllustration,
+    socialMediaButtons,
+    blogTeaser,
+    preTitle,
+    subTitle,
+    backgroundImage,
+    questionUbi,
+    bodyAtTheEnd,
+  } = section;
+  const id = stringToId(titleShort);
+  const isVideoSection = __typename === 'ContentfulPageSectionVideo';
+  const isIllustration = __typename === 'ContentfulPageSectionIllustration';
+
+  if (__typename === 'ContentfulPageSectionIntro') {
+    return (
+      <SectionHeader
+        backgroundImageSet={backgroundImage && backgroundImage.fluid}
+        title={title}
+        preTitle={preTitle}
+        subTitle={subTitle}
+      ></SectionHeader>
+    );
+  }
+
+  return (
+    <Section
+      title={title}
+      jumpToId={id}
+      isVideoSection={isVideoSection}
+      afterBodyContent={
+        <>
+          {(isIllustration || isVideoSection) && (
+            <MainIllustration className={s.illustration} />
+          )}
+          {backgroundIllustration === 'confetti' && <Confetti />}
+        </>
+      }
+      className={cN({
+        [s.sectionPledge]: !!pledgeId,
+        [s.sectionNewsletter]: !!emailSignup,
+        [s.sectionIllustration]: isIllustration,
+        [s.sectionVideo]: isVideoSection,
+        [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
+        [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
+        [s.sectionConfetti]: backgroundIllustration === 'confetti',
+      })}
+      sectionBodyNoEvents={isIllustration || isVideoSection}
+    >
+      {isIllustration && (
+        <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
+      )}
+      {(body || pledgeId || signaturesId) && (
+        <SectionInner hugeText={bodyTextSizeHuge}>
+          {body && body.json ? contentfulJsonToHtml(body.json) : body}
+          {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
+          {signaturesId && (
+            <Signatures signaturesId={signaturesId} className={s.pledge} />
+          )}
+        </SectionInner>
+      )}
+      {campainVisualisations && (
+        <CampaignVisualisations visualisations={campainVisualisations} />
+      )}
+      {map && <Map state={map} />}
+      {emailSignup && (
+        <SectionInner>
+          <EmailListForm className={s.emailSignup} />
+        </SectionInner>
+      )}
+      {videoLink && <YoutubeEmbed url={videoLink} />}
+      {teamMembers && (
+        <SectionInner wide={true}>
+          <AboutUs members={teamMembers} />
+        </SectionInner>
+      )}
+      {callToActionReference && (
+        <SectionInner>
+          <CTAButtonContainer>
+            {callToActionReference.map(({ title, shortTitle, slug }, index) => (
+              <CTALink key={index} to={`/${slug}/`}>
+                {shortTitle || title}
+              </CTALink>
+            ))}
+          </CTAButtonContainer>
+        </SectionInner>
+      )}
+      {blogTeaser && <BlogTeaser />}
+      {blogTeaser && callToActionText && callToActionLink && (
+        <div className={s.spaceBetweenBlogAndCTA} />
+      )}
+      {questionUbi && <QuestionUbi mode={questionUbi} />}
+      {callToActionText && callToActionLink && (
+        <SectionInner>
+          <CTAButtonContainer>
+            <CTALinkExternal href={callToActionLink}>
+              {callToActionText}
+            </CTALinkExternal>
+          </CTAButtonContainer>
+        </SectionInner>
+      )}
+      {twitterFeed && (
+        <SectionInner>
+          <TwitterEmbed />
+        </SectionInner>
+      )}
+      {socialMediaButtons && (
+        <SectionInner>
+          <Share />
+        </SectionInner>
+      )}
+      {bodyAtTheEnd && bodyAtTheEnd.json && (
+        <SectionInner hugeText={bodyTextSizeHuge}>
+          {contentfulJsonToHtml(bodyAtTheEnd.json)}
+        </SectionInner>
+      )}
+    </Section>
+  );
 }
 
 export function Section({
