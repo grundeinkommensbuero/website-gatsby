@@ -10,7 +10,6 @@ import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 
 export default () => {
   const [crowdFundingData] = useGetCrowdfundingDirectly('96752');
-  console.log('data', crowdFundingData);
 
   return (
     <Layout>
