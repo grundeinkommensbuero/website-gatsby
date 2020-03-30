@@ -47,23 +47,50 @@ export const CrowdFundingVisualistation = ({ startnextId, title }) => {
   const project = crowdFunding.project;
 
   return (
-    <CampainVisualisation
+    <Visualisation
       goal={project.funding_target}
-      currentCount={project.funding_status}
+      count={project.funding_status}
       startDate={project.start_date}
     />
   );
 };
 
 export const CampainVisualisation = ({
-  goal,
-  startDate,
-  title,
-  currentCount,
-  receivedCount,
   minimum,
   maximum,
   addToSignatureCount,
+  addSelfScanned,
+  currentCount,
+  ...props
+}) => {
+  let count = currentCount || 0;
+
+  if (currentCount) {
+    if (addToSignatureCount) {
+      count += addToSignatureCount;
+    }
+
+    if (minimum) {
+      count = Math.max(count, minimum);
+    }
+
+    if (maximum) {
+      count = Math.min(count, maximum);
+    }
+  }
+
+  if (addSelfScanned) {
+    count += addSelfScanned;
+  }
+
+  return <Visualisation count={count} {...props} />;
+};
+
+export const Visualisation = ({
+  goal,
+  startDate,
+  title,
+  receivedCount,
   showCTA,
   ctaLink,
   eyeCatcher,
@@ -71,7 +98,7 @@ export const CampainVisualisation = ({
   index,
   hint,
   goalInbetweenMultiple,
-  addSelfScanned,
+  count,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -85,12 +112,9 @@ export const CampainVisualisation = ({
 
     goalInbetween = goalInbetweenMultipleSorted.find((goal, index) => {
       if (!goalInbetweenMultipleSorted[index + 1]) {
-        return goalInbetweenMultipleSorted[0] > currentCount;
+        return goalInbetweenMultipleSorted[0] > count;
       }
-      return (
-        currentCount < goal &&
-        currentCount > goalInbetweenMultipleSorted[index + 1]
-      );
+      return count < goal && count > goalInbetweenMultipleSorted[index + 1];
     });
   }
   const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
@@ -120,26 +144,6 @@ export const CampainVisualisation = ({
 
   const dateString = formatDateMonthYear(new Date(startDate));
   const hasStarted = new Date().getTime() > new Date(startDate);
-
-  let count = currentCount || 0;
-
-  if (currentCount) {
-    if (addToSignatureCount) {
-      count += addToSignatureCount;
-    }
-
-    if (minimum) {
-      count = Math.max(count, minimum);
-    }
-
-    if (maximum) {
-      count = Math.min(count, maximum);
-    }
-  }
-
-  if (addSelfScanned) {
-    count += addSelfScanned;
-  }
 
   const hintWithVariables = replaceVariablesHintText({
     hint: hint && hint.hint,
