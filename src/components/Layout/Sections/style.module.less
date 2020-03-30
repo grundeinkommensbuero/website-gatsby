@@ -1,32 +1,7 @@
 @import '../../style/vars.less';
 
-.section {
+.sections .section {
   padding: 5rem var(--grid-gap) 10rem;
-  position: relative;
-  overflow: hidden;
-
-  @media (max-width: @breakPointM) {
-    padding: 3rem 1rem 5rem;
-  }
-
-  &Video {
-    padding-bottom: 5rem;
-
-    .sectionBody {
-      position: relative;
-    }
-
-    @media (max-width: @breakPointM) {
-      padding-top: 10rem;
-      padding-bottom: 12rem;
-    }
-  }
-
-  &Illustration {
-    @media (min-width: @breakPointM) {
-      padding: 8rem 1rem 8rem;
-    }
-  }
 
   &:nth-child(3n + 1):not(:only-child) {
     --bg-color: @yellow;
@@ -84,6 +59,34 @@
       background-image: url('./backgrounds/newsletter_yellow.svg');
     }
   }
+}
+
+.section {
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: @breakPointM) {
+    padding: 3rem 1rem 5rem;
+  }
+
+  &Video {
+    padding-bottom: 5rem;
+
+    .sectionBody {
+      position: relative;
+    }
+
+    @media (max-width: @breakPointM) {
+      padding-top: 10rem;
+      padding-bottom: 12rem;
+    }
+  }
+
+  &Illustration {
+    @media (min-width: @breakPointM) {
+      padding: 8rem 1rem 8rem;
+    }
+  }
 
   &.sectionNewsletter.sectionNewsletter {
     background-size: 25em;
@@ -117,6 +120,7 @@
       }
     }
   }
+
   &CrowdCollect,
   &Confetti {
     background-image: url('./backgrounds/crowd_collect_yellow_desktop.svg');
