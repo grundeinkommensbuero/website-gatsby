@@ -1,7 +1,13 @@
 @import '../../style/vars.less';
 
 .sections .section {
+  position: relative;
+  overflow: hidden;
   padding: 5rem var(--grid-gap) 10rem;
+
+  @media (max-width: @breakPointM) {
+    padding: 3rem 1rem 5rem;
+  }
 
   &:nth-child(3n + 1):not(:only-child) {
     --bg-color: @yellow;
@@ -58,15 +64,6 @@
     &.sectionNewsletter {
       background-image: url('./backgrounds/newsletter_yellow.svg');
     }
-  }
-}
-
-.section {
-  position: relative;
-  overflow: hidden;
-
-  @media (max-width: @breakPointM) {
-    padding: 3rem 1rem 5rem;
   }
 
   &Video {
