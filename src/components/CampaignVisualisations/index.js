@@ -17,31 +17,54 @@ export default ({ visualisations }) => {
   return (
     <>
       {visualisations.map((visualisation, index) => (
-        <CampainVisualisation
-          key={index}
-          index={index}
-          currentCount={
-            currentCounts &&
-            currentCounts[visualisation.campainCode] &&
-            currentCounts[visualisation.campainCode].computed
-          }
-          receivedCount={
-            currentCounts &&
-            currentCounts[visualisation.campainCode] &&
-            currentCounts[visualisation.campainCode].withMixed
-          }
-          {...visualisation}
-          showCTA={visualisations.length !== 1 && visualisation.ctaLink}
-        />
+        <>
+          {visualisation.campainCode ? (
+            <CampainVisualisation
+              key={index}
+              index={index}
+              currentCount={
+                currentCounts &&
+                currentCounts[visualisation.campainCode] &&
+                currentCounts[visualisation.campainCode].computed
+              }
+              receivedCount={
+                currentCounts &&
+                currentCounts[visualisation.campainCode] &&
+                currentCounts[visualisation.campainCode].withMixed
+              }
+              showCTA={visualisations.length !== 1 && visualisation.ctaLink}
+              labels={{
+                NEEDED: () => <>Benötigte Unterschriften</>,
+                GOAL_INBETWEEN_TOOLTIP: count => (
+                  <>
+                    Insgesamt benötigt:
+                    <br />
+                    {count} Unterschriften
+                  </>
+                ),
+                GOAL_INBETWEEN: count => (
+                  <>Nächstes Ziel: {count} Unterschriften</>
+                ),
+                CURRENT_COUNT: () => <>Gesammelte Unterschriften</>,
+                CTA: () => <>Mitmachen</>,
+              }}
+              currency="Unterschriften"
+              {...visualisation}
+            />
+          ) : (
+            <CrowdFundingVisualistation key={index} {...visualisation} />
+          )}
+        </>
       ))}
     </>
   );
 };
 
-export const CrowdFundingVisualistation = ({ startnextId, title }) => {
+export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
   const [crowdFunding] = useGetCrowdfundingDirectly(startnextId);
+
   if (!crowdFunding) {
-    return 'lade...';
+    return <SectionInner>lade...</SectionInner>;
   }
 
   const project = crowdFunding.project;
@@ -49,8 +72,24 @@ export const CrowdFundingVisualistation = ({ startnextId, title }) => {
   return (
     <Visualisation
       goal={project.funding_target}
-      count={project.funding_status}
+      count={Math.round(project.funding_status)}
       startDate={project.start_date}
+      currency="€"
+      currencyShort="€"
+      labels={{
+        NEEDED: () => <>Benötigte Summe</>,
+        GOAL_INBETWEEN_TOOLTIP: count => (
+          <>
+            Insgesamt benötigt:
+            <br />
+            {count} €
+          </>
+        ),
+        GOAL_INBETWEEN: count => <>Nächstes Ziel: {count} €</>,
+        CURRENT_COUNT: () => <>Bereits gespendet</>,
+        CTA: () => <>Spenden!</>,
+      }}
+      {...props}
     />
   );
 };
@@ -99,6 +138,9 @@ export const Visualisation = ({
   hint,
   goalInbetweenMultiple,
   count,
+  currency,
+  currencyShort,
+  labels,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -190,27 +232,20 @@ export const Visualisation = ({
                 )}
               </div>
               {goal && !goalInbetween && (
-                <Tooltip
-                  className={s.goal}
-                  content={<>Benötigte Unterschriften</>}
-                >
+                <Tooltip className={s.goal} content={labels.NEEDED()}>
                   {goal.toLocaleString('de')}
+                  {currencyShort}
                 </Tooltip>
               )}
 
               {goalInbetween && (
                 <Tooltip
                   className={s.goal}
-                  content={
-                    <>
-                      Insgesamt benötigt:
-                      <br />
-                      {goal.toLocaleString('de')} Unterschriften
-                    </>
-                  }
+                  content={labels.GOAL_INBETWEEN_TOOLTIP(
+                    goal.toLocaleString('de')
+                  )}
                 >
-                  Nächstes Ziel: {goalInbetween.toLocaleString('de')}{' '}
-                  Unterschriften
+                  {labels.GOAL_INBETWEEN(goalInbetween.toLocaleString('de'))}
                 </Tooltip>
               )}
             </span>
@@ -219,21 +254,22 @@ export const Visualisation = ({
                 <span
                   className={cN(s.barCurrent, { [s.outside]: countOutside })}
                   style={{ width: `${percentage}%` }}
-                  aria-label={`${count} von ${goal} Unterschriften`}
+                  aria-label={`${count} von ${goal} ${currency}`}
                 >
                   <Tooltip
-                    content="Gesammelte Unterschriften"
+                    content={labels.CURRENT_COUNT()}
                     className={s.barCurrentLabel}
                     placement="bottom"
                   >
                     {count && <VisualCounter end={isInView ? count : 0} />}
+                    {currencyShort}
                   </Tooltip>
                 </span>
               </>
             )}
             {!hasStarted && (
               <span
-                aria-label={`Noch nicht gestartet. Ziel: ${goal}. Startet ${dateString}.`}
+                aria-label={`Noch nicht gestartet. Ziel: ${goal}${currency}. Startet ${dateString}.`}
                 className={s.starts}
               >
                 {dateString}
@@ -243,7 +279,7 @@ export const Visualisation = ({
         </div>
         {showCTA && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
-            Mitmachen
+            {labels.CTA()}
           </LinkButtonLocal>
         )}
         {EyeCatcherContent && (
