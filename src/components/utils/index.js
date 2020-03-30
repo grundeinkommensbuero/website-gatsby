@@ -26,7 +26,6 @@ function intToHex(nr) {
 
 export function contentfulJsonToHtml(json) {
   const website_url = 'https://www.change.org';
-  console.log(json, BLOCKS);
 
   const documentToREactComponentsOptions = {
     // needed so that line breaks are properly added.
