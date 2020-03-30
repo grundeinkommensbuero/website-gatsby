@@ -3,7 +3,6 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
-import { ShowOnlyOnceOverlay } from '../Overlay';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
@@ -12,24 +11,6 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={page.title} sections={page.sections}>
-      <ShowOnlyOnceOverlay title="Titel, der etwas länger ist.">
-        <p>Hier ist Inhalt.</p>
-        <p>
-          Der Begriff umfasst sowohl physische Inhalte (beispielsweise der Wein
-          in einer Weinflasche), messbare Eigenschaften (beispielsweise die
-          Kubatur eines Bauwerks) als auch nicht physische (abstrakte) Inhalte
-          (beispielsweise der Inhalt eines Buches, eines Schriftstücks oder
-          eines Datenspeichers). Physische Inhalte sind materielle Güter, die
-          sich in einem Behälter befinden, etwa zur Lagerung oder für den
-          Transport. Bei nicht-physischen Inhalten handelt es sich meist um
-          Daten, Informationen oder um Wissen, Erfahrungen und Meinungen. Sie
-          können beispielsweise in einer Datei, Nachricht oder einem Bild
-          enthalten sein oder auch durch Literatur oder ein Kunstwerk vermittelt
-          werden. Medieninhalte, insbesondere die der Neuen Medien, erfassen den
-          Informationsgehalt, für den auch der Anglizismus „Content“ (englisch
-          für „Inhalt, Gehalt“) benutzt wird.
-        </p>
-      </ShowOnlyOnceOverlay>
       <Helmet>
         <title>{page.title}</title>
 
