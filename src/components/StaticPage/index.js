@@ -76,6 +76,7 @@ export const pageQuery = graphql`
               }
               goalUnbuffered
               goalInbetweenMultiple
+              startnextId
               hint {
                 hint
               }
