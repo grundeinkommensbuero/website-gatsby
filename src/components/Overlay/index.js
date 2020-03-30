@@ -11,7 +11,7 @@ export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
     <Overlay
       isOpenInitially={!hasBeenDismissed}
       onClose={() => {
-        setHasBeenDismissed();
+        setHasBeenDismissed(true);
       }}
       {...overlay}
     />
