@@ -16,9 +16,9 @@ export default ({ visualisations }) => {
 
   return (
     <>
-      {visualisations.map((visualisation, index) => (
-        <>
-          {visualisation.campainCode ? (
+      {visualisations.map((visualisation, index) => {
+        if (visualisation.campainCode) {
+          return (
             <CampainVisualisation
               key={index}
               index={index}
@@ -51,11 +51,12 @@ export default ({ visualisations }) => {
               currency="Unterschriften"
               {...visualisation}
             />
-          ) : (
-            <CrowdFundingVisualistation key={index} {...visualisation} />
-          )}
-        </>
-      ))}
+          );
+        }
+        if (visualisation.startnextId) {
+          return <CrowdFundingVisualistation key={index} {...visualisation} />;
+        }
+      })}
     </>
   );
 };
