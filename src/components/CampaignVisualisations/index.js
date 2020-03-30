@@ -237,7 +237,6 @@ export const Visualisation = ({
                   {currencyShort}
                 </Tooltip>
               )}
-
               {goalInbetween && (
                 <Tooltip
                   className={s.goal}

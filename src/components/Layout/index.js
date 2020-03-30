@@ -3,9 +3,10 @@ import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
 import '../style/base.less';
-import Sections from './Sections';
+import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
+import { ShowOnlyOnceOverlay } from '../Overlay';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -46,12 +47,80 @@ function Template({ children, sections }) {
             }
           }
         }
+        overlay {
+          ... on Node {
+            ... on ContentfulPageSection {
+              __typename
+              title
+              titleShort
+              campainVisualisations {
+                campainCode
+                goal
+                startDate
+                title
+                minimum
+                maximum
+                addToSignatureCount
+                ctaLink
+                eyeCatcher {
+                  json
+                }
+                goalUnbuffered
+                goalInbetweenMultiple
+                startnextId
+                hint {
+                  hint
+                }
+              }
+              body {
+                json
+              }
+              map
+              callToActionLink
+              callToActionText
+              bodyTextSizeHuge
+              emailSignup
+              pledgeId
+              signaturesId
+              callToActionReference {
+                slug
+                title
+                shortTitle
+              }
+              teamMembers {
+                image {
+                  fluid(maxWidth: 200, quality: 80) {
+                    ...GatsbyContentfulFluid
+                  }
+                }
+                name
+                twitter
+                linkedin
+                website
+                role
+              }
+              twitterFeed
+              backgroundIllustration
+              socialMediaButtons
+              blogTeaser
+              questionUbi
+              bodyAtTheEnd {
+                json
+              }
+            }
+          }
+        }
       }
     }
   `);
 
   return (
     <>
+      {globalStuff.overlay && (
+        <ShowOnlyOnceOverlay>
+          <ContentfulSection section={globalStuff.overlay} />
+        </ShowOnlyOnceOverlay>
+      )}
       <Header menu={globalStuff.mainMenu} />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
