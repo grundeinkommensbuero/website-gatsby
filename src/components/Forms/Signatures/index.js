@@ -12,6 +12,7 @@ import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
+import AuthInfo from '../../AuthInfo';
 
 const trackingCategory = 'ListDownload';
 
@@ -23,6 +24,7 @@ export default ({ signaturesId }) => {
   const { isAuthenticated } = useContext(AuthContext);
 
   console.log('is authenticated', isAuthenticated);
+  console.log('hasSubmitted', hasSubmitted);
 
   useEffect(() => {
     // If user was registered proceed by creating list
@@ -44,7 +46,7 @@ export default ({ signaturesId }) => {
         userExists: true,
       });
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, hasSubmitted]);
 
   if (state === 'unauthorized') {
     return (
@@ -132,36 +134,46 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
+          console.log('called onSubmit');
           setHasSubmitted(true);
-          setEmail(e.email);
-          signUp(e.email);
+
+          if (!isAuthenticated) {
+            setEmail(e.email);
+            signUp(e.email);
+          }
         }}
         validate={validate}
         render={({ handleSubmit }) => {
           return (
             <form onSubmit={handleSubmit} className={s.form}>
-              <p className={s.hint}>
-                Schickt mir die Unterschriftenliste, erinnert mich an das
-                Zurücksenden und haltet mich auf dem Laufenden. Ich kann die
-                Liste{' '}
-                <InlineButton
-                  onClick={() => {
-                    createPdf({ campaignCode: signaturesId });
-                  }}
-                  type="button"
-                >
-                  hier
-                </InlineButton>{' '}
-                auch anonym herunterladen.
-              </p>
-              <div className={s.textInputContainer}>
-                <Field
-                  name="email"
-                  label="E-Mail"
-                  placeholder="E-Mail"
-                  component={TextInputWrapped}
-                ></Field>
-              </div>
+              {!isAuthenticated ? (
+                <>
+                  <p className={s.hint}>
+                    Schickt mir die Unterschriftenliste, erinnert mich an das
+                    Zurücksenden und haltet mich auf dem Laufenden. Ich kann die
+                    Liste{' '}
+                    <InlineButton
+                      onClick={() => {
+                        createPdf({ campaignCode: signaturesId });
+                      }}
+                      type="button"
+                    >
+                      hier
+                    </InlineButton>{' '}
+                    auch anonym herunterladen.
+                  </p>
+                  <div className={s.textInputContainer}>
+                    <Field
+                      name="email"
+                      label="E-Mail"
+                      placeholder="E-Mail"
+                      component={TextInputWrapped}
+                    ></Field>
+                  </div>
+                </>
+              ) : (
+                <AuthInfo />
+              )}
               <CTAButtonContainer illustration="POINT_LEFT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
@@ -180,7 +192,7 @@ const validate = values => {
     errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
   }
 
-  if (!validateEmail(values.email)) {
+  if (values.email && !validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
