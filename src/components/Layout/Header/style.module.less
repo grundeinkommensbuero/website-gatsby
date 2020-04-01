@@ -180,6 +180,11 @@
   }
 }
 
+.ctaButtonWrapper {
+  display: flex !important;
+  align-items: center;
+}
+
 .ctaButton {
   align-self: center;
   --font-color: @blueBright;
@@ -190,7 +195,6 @@
 
   @media (max-width: @breakPointS) {
     animation-name: wiggleRotated;
-
     font-size: @fontSizeS !important;
     padding: .5rem .5rem .2rem !important;
     margin: 0 -2rem 0 -4rem;
