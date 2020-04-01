@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import s from './style.module.less';
+import { OverlayContext } from '../../context/Overlay';
 
 const COOKIE_NAME = 'overlayHasBeenDismissed';
 
@@ -18,29 +19,27 @@ export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
   );
 };
 
-export const Overlay = ({
-  onClose = () => {},
-  isOpenInitially = true,
-  title,
-  children,
-}) => {
-  const [isOpen, setIsOpen] = useState(isOpenInitially);
+export const Overlay = ({ isOpenInitially = true, delay = 0, ...props }) => {
+  return (
+    <OverlayContext.Consumer>
+      {({ overlayOpen, toggleOverlay }) => (
+        <OverlayWithContext
+          isOpen={overlayOpen}
+          toggleOverlay={toggleOverlay}
+          {...props}
+        />
+      )}
+    </OverlayContext.Consumer>
+  );
+};
 
-  useEffect(() => {
-    document.body.classList.toggle(s.bodyOverlayOpen, isOpen);
-  }, [isOpen]);
-
-  const close = () => {
-    setIsOpen(false);
-    onClose();
-  };
-
+const OverlayWithContext = ({ isOpen, children, title, toggleOverlay }) => {
   if (isOpen) {
     return (
       <div className={s.container} role="dialog" aria-describedby="dialogTitle">
         <button
           className={s.closeButton}
-          onClick={close}
+          onClick={() => toggleOverlay()}
           aria-label="Overlay Schließen"
         ></button>
         <div className={s.body}>
