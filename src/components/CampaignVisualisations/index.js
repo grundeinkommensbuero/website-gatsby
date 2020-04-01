@@ -73,7 +73,7 @@ export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
   return (
     <Visualisation
       goal={project.funding_target}
-      count={Math.round(project.funding_status)}
+      count={Math.round(project.funding_status || 0)}
       startDate={project.start_date}
       currency="€"
       currencyShort="€"
