@@ -2,18 +2,6 @@ import React, { useState, useEffect } from 'react';
 import s from './style.module.less';
 import { OverlayContext } from '../../context/Overlay';
 
-export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
-  return (
-    <Overlay
-      isOpenInitially={!hasBeenDismissed}
-      onClose={() => {
-        setHasBeenDismissed(true);
-      }}
-      {...overlay}
-    />
-  );
-};
-
 export const Overlay = ({ isOpenInitially = true, ...props }) => {
   return (
     <OverlayContext.Consumer>
@@ -38,7 +26,6 @@ const OverlayWithContext = ({
   setAutomaticOpenDelay,
 }) => {
   useEffect(() => {
-    console.log(delay);
     if (delay) {
       setAutomaticOpenDelay(delay);
     }
