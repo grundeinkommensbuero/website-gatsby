@@ -3,6 +3,8 @@ import s from './style.module.less';
 import Link from 'gatsby-link';
 import Logo from './logo.svg';
 import cN from 'classnames';
+import { OverlayContext } from '../../../context/Overlay';
+import { Button } from '../../Forms/Button';
 
 const Header = ({ menu }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,6 +25,17 @@ const Header = ({ menu }) => {
             />
           </Link>
         </h1>
+        <OverlayContext.Consumer>
+          {({ toggleOverlay }) => (
+            <Button
+              className={s.ctaButton}
+              size="MEDIUM"
+              onClick={() => toggleOverlay()}
+            >
+              Spenden!
+            </Button>
+          )}
+        </OverlayContext.Consumer>
         {menu && (
           <nav className={s.nav}>
             <button
