@@ -204,12 +204,16 @@
     animation-name: wiggleRotated;
     font-size: @fontSizeS !important;
     padding: 0.5rem 0.5rem 0.2rem !important;
-    margin: 0 -2rem 0 -4rem;
+    margin: 0 -2rem 0 -2rem;
     transform: rotate(20deg);
 
     &:not(:hover) {
       background: @grey !important;
     }
+  }
+
+  @media (max-width: 330px) {
+    margin: 0 -2rem 0 -4rem;
   }
 }
 
