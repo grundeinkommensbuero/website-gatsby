@@ -3,7 +3,7 @@ import s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateMonthYear, contentfulJsonToHtml } from '../utils';
-import { LinkButtonLocal } from '../Forms/Button';
+import { LinkButtonLocal, LinkButton } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
@@ -205,7 +205,7 @@ export const Visualisation = ({
   const countOutside = percentage < 40;
 
   const barGoalWidth = Math.min(100, ((goalInbetween || goal) / count) * 100);
-
+  console.log(ctaLink);
   return (
     <SectionInner
       wide={true}
@@ -278,10 +278,20 @@ export const Visualisation = ({
             )}
           </WrapInLink>
         </div>
-        {showCTA && (
+        {showCTA && ctaLink && !ctaLink.startsWith('http') && (
           <LinkButtonLocal size="MEDIUM" className={s.cta} to={ctaLink}>
             {labels.CTA()}
           </LinkButtonLocal>
+        )}
+        {showCTA && ctaLink && ctaLink.startsWith('http') && (
+          <LinkButton
+            size="MEDIUM"
+            className={s.cta}
+            href={ctaLink}
+            target="_blank"
+          >
+            {labels.CTA()}
+          </LinkButton>
         )}
         {EyeCatcherContent && (
           <div
@@ -340,11 +350,19 @@ function replaceVariablesHintText({
 
 const WrapInLink = ({ link, children, className }) => {
   if (link) {
-    return (
-      <Link to={link} className={className}>
-        {children}
-      </Link>
-    );
+    if (link.startsWith('http')) {
+      return (
+        <a href={link} target="_blank" className={className}>
+          {children}
+        </a>
+      );
+    } else {
+      return (
+        <Link to={link} className={className}>
+          {children}
+        </Link>
+      );
+    }
   }
   return <>{children}</>;
 };
