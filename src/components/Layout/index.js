@@ -6,7 +6,7 @@ import '../style/base.less';
 import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
-import { ShowOnlyOnceOverlay, Overlay } from '../Overlay';
+import { Overlay } from '../Overlay';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
