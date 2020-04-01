@@ -5,6 +5,7 @@ import Logo from './logo.svg';
 import cN from 'classnames';
 import { OverlayContext } from '../../../context/Overlay';
 import { Button } from '../../Forms/Button';
+import { Tooltip } from '../../Tooltip';
 
 const Header = ({ menu }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,17 +26,27 @@ const Header = ({ menu }) => {
             />
           </Link>
         </h1>
-        <OverlayContext.Consumer>
-          {({ toggleOverlay }) => (
-            <Button
-              className={s.ctaButton}
-              size="MEDIUM"
-              onClick={() => toggleOverlay()}
-            >
-              Spenden!
-            </Button>
-          )}
-        </OverlayContext.Consumer>
+        <Tooltip
+          content={
+            <>
+              Wir stellen unsere Kampagne wegen Corona auf Briefversand um.
+              Beteilige dich jetzt am Crowdfunding, um die Kosten zu decken!
+            </>
+          }
+          className={s.ctaButtonWrapper}
+        >
+          <OverlayContext.Consumer>
+            {({ toggleOverlay }) => (
+              <Button
+                className={s.ctaButton}
+                size="MEDIUM"
+                onClick={() => toggleOverlay()}
+              >
+                Spenden!
+              </Button>
+            )}
+          </OverlayContext.Consumer>
+        </Tooltip>
         {menu && (
           <nav className={s.nav}>
             <button
