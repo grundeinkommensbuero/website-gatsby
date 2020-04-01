@@ -6,7 +6,7 @@ import '../style/base.less';
 import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
-import { ShowOnlyOnceOverlay } from '../Overlay';
+import { ShowOnlyOnceOverlay, Overlay } from '../Overlay';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -47,6 +47,8 @@ function Template({ children, sections }) {
             }
           }
         }
+        overlayActive
+        overlayDelay
         overlay {
           ... on Node {
             ... on ContentfulPageSection {
@@ -116,10 +118,10 @@ function Template({ children, sections }) {
 
   return (
     <>
-      {globalStuff.overlay && (
-        <ShowOnlyOnceOverlay>
+      {globalStuff.overlayActive && globalStuff.overlay && (
+        <Overlay delay={globalStuff.overlayDelay}>
           <ContentfulSection section={globalStuff.overlay} />
-        </ShowOnlyOnceOverlay>
+        </Overlay>
       )}
       <Header menu={globalStuff.mainMenu} />
       <Helmet

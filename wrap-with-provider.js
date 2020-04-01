@@ -2,6 +2,7 @@ import React from 'react';
 import Amplify from '@aws-amplify/auth';
 import CONFIG from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
+import { OverlayProvider } from './src/context/Overlay';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
@@ -18,5 +19,9 @@ export default ({ element }) => {
     console.log('no userPoolWebClientId provided');
   }
 
-  return <AuthProvider>{element}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <OverlayProvider>{element}</OverlayProvider>
+    </AuthProvider>
+  );
 };
