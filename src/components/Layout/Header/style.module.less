@@ -96,7 +96,7 @@
 }
 
 .menuButton {
-  width: 5rem;
+  width: 3rem;
   height: 100%;
   display: flex;
   justify-content: flex-end;
@@ -183,4 +183,15 @@
 .ctaButton {
   align-self: center;
   --font-color: @blueBright;
+
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeS !important;
+    padding: .5rem .5rem .2rem !important;
+    margin: 0 -2rem 0 -4rem;
+    transform: rotate(20deg);
+
+    &:not(:hover) {
+      background: @grey !important;
+    }
+  }
 }
