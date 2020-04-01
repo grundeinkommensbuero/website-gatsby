@@ -183,8 +183,14 @@
 .ctaButton {
   align-self: center;
   --font-color: @blueBright;
+  animation-name: wiggle;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  transform-origin: center;
 
   @media (max-width: @breakPointS) {
+    animation-name: wiggleRotated;
+
     font-size: @fontSizeS !important;
     padding: .5rem .5rem .2rem !important;
     margin: 0 -2rem 0 -4rem;
@@ -193,5 +199,53 @@
     &:not(:hover) {
       background: @grey !important;
     }
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(3deg);
+  }
+  2% {
+    transform: rotate(-3deg);
+  }
+  4% {
+    transform: rotate(3deg);
+  }
+  6% {
+    transform: rotate(-3deg);
+  }
+  8% {
+    transform: rotate(3deg);
+  }
+  10% {
+    transform: none;
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes wiggleRotated {
+  0% {
+    transform: rotate(23deg);
+  }
+  2% {
+    transform: rotate(17deg);
+  }
+  4% {
+    transform: rotate(23deg);
+  }
+  6% {
+    transform: rotate(17deg);
+  }
+  8% {
+    transform: rotate(23deg);
+  }
+  10% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(20deg);
   }
 }
