@@ -34,7 +34,7 @@ export default ({ pledgeId }) => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, hasSubmitted]);
 
   if (createPledgeState || updatePledgeState) {
     return (
@@ -56,7 +56,9 @@ export default ({ pledgeId }) => {
         e.pledgeId = pledgeId;
         setHasSubmitted(true);
         setPledgeLocally(e);
-        signUp(e.email);
+        if (!isAuthenticated) {
+          signUp(e.email);
+        }
       }}
       initialValues={{
         signatureCount: 1,
