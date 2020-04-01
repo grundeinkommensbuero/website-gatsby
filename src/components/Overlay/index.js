@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import Cookies from 'js-cookie';
+import React, { useState, useEffect } from 'react';
 import s from './style.module.less';
 import { OverlayContext } from '../../context/Overlay';
 
-const COOKIE_NAME = 'overlayHasBeenDismissed';
-
 export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
-  const [hasBeenDismissed, setHasBeenDismissed] = useHasBeenDismissed();
-
   return (
     <Overlay
       isOpenInitially={!hasBeenDismissed}
@@ -19,13 +14,14 @@ export const ShowOnlyOnceOverlay = ({ ...overlay }) => {
   );
 };
 
-export const Overlay = ({ isOpenInitially = true, delay = 0, ...props }) => {
+export const Overlay = ({ isOpenInitially = true, ...props }) => {
   return (
     <OverlayContext.Consumer>
-      {({ overlayOpen, toggleOverlay }) => (
+      {({ overlayOpen, toggleOverlay, setAutomaticOpenDelay }) => (
         <OverlayWithContext
           isOpen={overlayOpen}
           toggleOverlay={toggleOverlay}
+          setAutomaticOpenDelay={setAutomaticOpenDelay}
           {...props}
         />
       )}
@@ -33,7 +29,21 @@ export const Overlay = ({ isOpenInitially = true, delay = 0, ...props }) => {
   );
 };
 
-const OverlayWithContext = ({ isOpen, children, title, toggleOverlay }) => {
+const OverlayWithContext = ({
+  isOpen,
+  children,
+  title,
+  toggleOverlay,
+  delay,
+  setAutomaticOpenDelay,
+}) => {
+  useEffect(() => {
+    console.log(delay);
+    if (delay) {
+      setAutomaticOpenDelay(delay);
+    }
+  }, [delay]);
+
   if (isOpen) {
     return (
       <div className={s.container} role="dialog" aria-describedby="dialogTitle">
@@ -55,18 +65,4 @@ const OverlayWithContext = ({ isOpen, children, title, toggleOverlay }) => {
   } else {
     return null;
   }
-};
-
-const useHasBeenDismissed = () => {
-  const [hasBeenDismissed, setHasBeenDismissed] = useState(() => {
-    return Cookies.get(COOKIE_NAME) === 'true';
-  });
-
-  return [
-    hasBeenDismissed,
-    value => {
-      setHasBeenDismissed(value);
-      Cookies.set(COOKIE_NAME, value, { expires: 7 });
-    },
-  ];
 };
