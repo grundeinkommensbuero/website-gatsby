@@ -51,7 +51,7 @@ const useHasBeenDismissed = () => {
     hasBeenDismissed,
     value => {
       setHasBeenDismissed(value);
-      Cookies.set(COOKIE_NAME, value, { expires: 7 });
+      Cookies.set(COOKIE_NAME, value, { expires: 1 });
     },
   ];
 };
