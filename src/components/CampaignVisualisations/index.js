@@ -77,7 +77,7 @@ export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
       startDate={project.start_date}
       currency="€"
       currencyShort="€"
-      showCTA={true}
+      showCTA={props.ctaLink}
       labels={{
         NEEDED: () => <>Benötigte Summe</>,
         GOAL_INBETWEEN_TOOLTIP: count => (
