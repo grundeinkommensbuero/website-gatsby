@@ -48,27 +48,27 @@ export default ({
         <meta property="og:type" content="article" />
       </Helmet>
 
-      <SectionHeader
-        backgroundImageSet={
-          featured_media && featured_media.localFile.childImageSharp.hero
-        }
-        preTitle={
-          tags && (
-            <ul className={s.tagList}>
-              {tags.map(({ id }) => (
-                <li key={id}>#{tagList[id]}</li>
-              ))}
-            </ul>
-          )
-        }
-        title={<span dangerouslySetInnerHTML={{ __html: title }} />}
-        subTitle={
-          <time dateTime={dateObject.toISOString()} className={s.date}>
-            {formatDate(dateObject)}
-          </time>
-        }
-      />
       <SectionWrapper>
+        <SectionHeader
+          backgroundImageSet={
+            featured_media && featured_media.localFile.childImageSharp.hero
+          }
+          preTitle={
+            tags && (
+              <ul className={s.tagList}>
+                {tags.map(({ id }) => (
+                  <li key={id}>#{tagList[id]}</li>
+                ))}
+              </ul>
+            )
+          }
+          title={<span dangerouslySetInnerHTML={{ __html: title }} />}
+          subTitle={
+            <time dateTime={dateObject.toISOString()} className={s.date}>
+              {formatDate(dateObject)}
+            </time>
+          }
+        />
         <Section>
           {/* {featured_media && (
           <SectionInner wide={true}>
