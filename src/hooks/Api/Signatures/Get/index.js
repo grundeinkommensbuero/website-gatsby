@@ -33,6 +33,9 @@ export const useSignatureCountOfUser = () => {
     data => {
       getSignatureCountOfUser(data).then(data => setStats(data));
     },
+    () => {
+      setStats(null);
+    },
   ];
 };
 
