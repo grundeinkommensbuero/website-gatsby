@@ -2,7 +2,12 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
-import { Section, SectionInner, SectionHeader } from '../Layout/Sections';
+import {
+  Section,
+  SectionInner,
+  SectionHeader,
+  SectionWrapper,
+} from '../Layout/Sections';
 import s from './style.module.less';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
@@ -63,21 +68,23 @@ export default ({
           </time>
         }
       />
-      <Section>
-        {/* {featured_media && (
+      <SectionWrapper>
+        <Section>
+          {/* {featured_media && (
           <SectionInner wide={true}>
             <Img fluid={featured_media.localFile.childImageSharp.hero} />
           </SectionInner>
         )} */}
-        <SectionInner>
-          <div
-            className={s.body}
-            dangerouslySetInnerHTML={{
-              __html: content,
-            }}
-          />
-        </SectionInner>
-      </Section>
+          <SectionInner>
+            <div
+              className={s.body}
+              dangerouslySetInnerHTML={{
+                __html: content,
+              }}
+            />
+          </SectionInner>
+        </Section>
+      </SectionWrapper>
     </Layout>
   );
 };
