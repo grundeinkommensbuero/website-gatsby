@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
@@ -15,6 +15,8 @@ import { useStaticQuery, graphql } from 'gatsby';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import VisualCounter from '../../VisualCounter';
 import cN from 'classnames';
+import AuthContext from '../../../context/Authentication';
+import AuthInfo from '../../AuthInfo';
 
 export default ({ successMessage, campaignCode }) => {
   const [
@@ -25,6 +27,7 @@ export default ({ successMessage, campaignCode }) => {
   const [
     signatureCountOfUser,
     getSignatureCountOfUser,
+    resetSignatureCount,
   ] = useSignatureCountOfUser();
 
   // Updating a list should be possible via list id or user id
@@ -32,6 +35,7 @@ export default ({ successMessage, campaignCode }) => {
   const [userId, setUserId] = useState(null);
   const [eMail, setEMail] = useState(null);
   const [count, setCount] = useState(0);
+  const { isAuthenticated, userId: sessionUserId } = useContext(AuthContext);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -45,6 +49,20 @@ export default ({ successMessage, campaignCode }) => {
       getSignatureCountOfUser({ userId: userId, email: eMail });
     }
   }, [userId, eMail]);
+
+  useEffect(() => {
+    if (isAuthenticated && sessionUserId) {
+      console.log('setting user id from session');
+      setUserId(sessionUserId);
+    } else if (!isAuthenticated) {
+      // This will be called, when user signs out
+      setUserId(null);
+      resetSignatureCount();
+    }
+  }, [isAuthenticated, sessionUserId]);
+
+  console.log('email in selfscan', eMail);
+  console.log('isAuthenticated in selfscan', isAuthenticated);
 
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
@@ -94,6 +112,7 @@ export default ({ successMessage, campaignCode }) => {
     campaignCode,
     setListId,
     resetSignatureListState,
+    isAuthenticated,
   };
 
   return (
@@ -171,6 +190,7 @@ const CountSignaturesForm = ({
   campaignCode,
   setListId,
   resetSignatureListState,
+  isAuthenticated,
 }) => {
   const needsEMail = !userId && !eMail;
 
@@ -278,90 +298,97 @@ const CountSignaturesForm = ({
   }
 
   return (
-    <Form
-      onSubmit={data => {
-        data.campaignCode = campaignCode;
+    <>
+      {isAuthenticated && (
+        <p>
+          <AuthInfo />
+        </p>
+      )}
+      <Form
+        onSubmit={data => {
+          data.campaignCode = campaignCode;
 
-        // We can set both the list id and user id here,
-        // because if the param is not set it will just be null
-        data.userId = userId;
+          // We can set both the list id and user id here,
+          // because if the param is not set it will just be null
+          data.userId = userId;
 
-        if (data.listId) {
-          setListId(data.listId);
-        } else {
-          data.listId = listId;
-        }
+          if (data.listId) {
+            setListId(data.listId);
+          } else {
+            data.listId = listId;
+          }
 
-        if (data.email) {
-          setEMail(data.email);
-        }
-        setCount(parseInt(data.count));
-        updateSignatureList(data);
-      }}
-      validate={values => validate(values, needsEMail, !listId)}
-      render={({ handleSubmit }) => {
-        return (
-          <FinallyMessage>
-            <h2 className={s.headingSelfScan}>
-              Unterschriften selber eintragen
-            </h2>
-            <FormWrapper>
-              <form onSubmit={handleSubmit}>
-                {needsEMail && (
-                  <FormSection className={s.formSection}>
+          if (data.email) {
+            setEMail(data.email);
+          }
+          setCount(parseInt(data.count));
+          updateSignatureList(data);
+        }}
+        validate={values => validate(values, needsEMail, !listId)}
+        render={({ handleSubmit }) => {
+          return (
+            <FinallyMessage>
+              <h2 className={s.headingSelfScan}>
+                Unterschriften selber eintragen
+              </h2>
+              <FormWrapper>
+                <form onSubmit={handleSubmit}>
+                  {needsEMail && (
+                    <FormSection className={s.formSection}>
+                      <Field
+                        name="email"
+                        label="Bitte gib deine E-Mail-Adresse ein."
+                        placeholder="E-Mail"
+                        component={TextInputWrapped}
+                        type="email"
+                        className={s.label}
+                      ></Field>
+                    </FormSection>
+                  )}
+                  <FormSection
+                    className={s.formSection}
+                    fieldContainerClassName={s.formSectionCombined}
+                  >
                     <Field
-                      name="email"
-                      label="Bitte gib deine E-Mail-Adresse ein."
-                      placeholder="E-Mail"
+                      name="count"
+                      label="Anzahl Unterschriften"
+                      placeholder="1"
                       component={TextInputWrapped}
-                      type="email"
-                      className={s.label}
-                    ></Field>
-                  </FormSection>
-                )}
-                <FormSection
-                  className={s.formSection}
-                  fieldContainerClassName={s.formSectionCombined}
-                >
-                  <Field
-                    name="count"
-                    label="Anzahl Unterschriften"
-                    placeholder="1"
-                    component={TextInputWrapped}
-                    type="number"
-                    min={1}
-                    className={s.label}
-                    inputClassName={s.countField}
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                  ></Field>
-                  {!listId && (
-                    <Field
-                      name="listId"
-                      label="Barcode auf der Unterschriftenliste"
-                      placeholder=""
-                      component={TextInputWrapped}
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
+                      type="number"
                       min={1}
                       className={s.label}
-                      inputClassName={s.listIdField}
+                      inputClassName={s.countField}
+                      inputMode="numeric"
+                      pattern="[0-9]*"
                     ></Field>
-                  )}
-                </FormSection>
+                    {!listId && (
+                      <Field
+                        name="listId"
+                        label="Barcode auf der Unterschriftenliste"
+                        placeholder=""
+                        component={TextInputWrapped}
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        min={1}
+                        className={s.label}
+                        inputClassName={s.listIdField}
+                      ></Field>
+                    )}
+                  </FormSection>
 
-                <CTAButtonContainer className={s.buttonContainer}>
-                  <CTAButton type="submit" size="MEDIUM">
-                    Eintragen
-                  </CTAButton>
-                </CTAButtonContainer>
-              </form>
-            </FormWrapper>
-          </FinallyMessage>
-        );
-      }}
-    />
+                  <CTAButtonContainer className={s.buttonContainer}>
+                    <CTAButton type="submit" size="MEDIUM">
+                      Eintragen
+                    </CTAButton>
+                  </CTAButtonContainer>
+                </form>
+              </FormWrapper>
+            </FinallyMessage>
+          );
+        }}
+      />
+    </>
   );
 };
 
