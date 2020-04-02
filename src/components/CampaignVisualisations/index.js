@@ -205,7 +205,6 @@ export const Visualisation = ({
   const countOutside = percentage < 40;
 
   const barGoalWidth = Math.min(100, ((goalInbetween || goal) / count) * 100);
-  console.log(ctaLink);
   return (
     <SectionInner
       wide={true}
