@@ -42,7 +42,7 @@ const Header = ({ menu }) => {
                 size="MEDIUM"
                 onClick={() => toggleOverlay()}
               >
-                Spenden!
+                Crowdfunding!
               </Button>
             )}
           </OverlayContext.Consumer>
