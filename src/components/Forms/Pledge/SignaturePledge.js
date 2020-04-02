@@ -12,8 +12,11 @@ import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
+import AuthInfo from '../../AuthInfo';
 import AuthContext from '../../../context/Authentication';
 import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
+import { useCurrentUserData } from '../../../hooks/Api/Users/Get';
+import { FinallyMessage } from '../FinallyMessage';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
@@ -21,8 +24,10 @@ export default ({ pledgeId }) => {
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [userData, requestUserData] = useCurrentUserData();
   const { isAuthenticated } = useContext(AuthContext);
 
+  console.log('user data', userData);
   // After signup process is done we can save the pledge
   useEffect(() => {
     if (signUpState === 'success') {
@@ -33,6 +38,9 @@ export default ({ pledgeId }) => {
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
+    } else if (isAuthenticated && !hasSubmitted) {
+      // This should be called in the beginning, if user already has a session
+      requestUserData();
     }
   }, [isAuthenticated, hasSubmitted]);
 
@@ -50,6 +58,23 @@ export default ({ pledgeId }) => {
     return <EnterLoginCode />;
   }
 
+  if (
+    isAuthenticated &&
+    userData.user &&
+    pledgeWasAlreadyMade(userData.user, pledgeId)
+  ) {
+    return (
+      <FinallyMessage>
+        <AuthInfo username={userData.user.username}>
+          Klasse, du hast dich bereits für {pledgeIdMap[pledgeId].state}{' '}
+          angemeldet. Wir informieren dich, sobald es losgeht.
+          <br />
+          <br />
+        </AuthInfo>
+      </FinallyMessage>
+    );
+  }
+
   return (
     <Form
       onSubmit={e => {
@@ -62,42 +87,49 @@ export default ({ pledgeId }) => {
       }}
       initialValues={{
         signatureCount: 1,
+        name: isAuthenticated && userData.user ? userData.user.username : '',
+        zipCode: isAuthenticated && userData.user ? userData.user.zipCode : '',
       }}
-      validate={validate}
+      validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
         return (
           <FormWrapper className={s.formWrapperWithSlider}>
             <form onSubmit={handleSubmit}>
-              <FormSection heading={'Wer bist du?'}>
-                <Field
-                  name="name"
-                  label="Mit diesem Namen möchte ich angesprochen werden"
-                  placeholder="Name"
-                  type="text"
-                  component={TextInputWrapped}
-                ></Field>
-                <Field
-                  name="email"
-                  label="E-Mail"
-                  description="Pflichtfeld"
-                  placeholder="E-Mail"
-                  type="email"
-                  component={TextInputWrapped}
-                ></Field>
-                <Field
-                  name="zipCode"
-                  label="Postleitzahl"
-                  description="Pflichtfeld"
-                  placeholder="12345"
-                  type="number"
-                  component={TextInputWrapped}
-                ></Field>
-              </FormSection>
+              {!isAuthenticated ? (
+                <FormSection heading={'Wer bist du?'}>
+                  <Field
+                    name="email"
+                    label="E-Mail"
+                    description="Pflichtfeld"
+                    placeholder="E-Mail"
+                    type="email"
+                    component={TextInputWrapped}
+                  ></Field>
 
-              <FormSection heading={signatureCountLabels[pledgeId]}>
+                  <Field
+                    name="name"
+                    label="Mit diesem Namen möchte ich angesprochen werden"
+                    placeholder="Name"
+                    type="text"
+                    component={TextInputWrapped}
+                  ></Field>
+                  <Field
+                    name="zipCode"
+                    label="Postleitzahl"
+                    description="Pflichtfeld"
+                    placeholder="12345"
+                    type="number"
+                    component={TextInputWrapped}
+                  ></Field>
+                </FormSection>
+              ) : (
+                <AuthInfo username={userData.user && userData.user.username} />
+              )}
+
+              <FormSection heading={pledgeIdMap[pledgeId].signatureCountLabel}>
                 <Field
                   name="signatureCount"
-                  labelHidden={signatureCountLabels[pledgeId]}
+                  labelHidden={pledgeIdMap[pledgeId].signatureCountLabel}
                   component={SignatureCountSlider}
                   type="range"
                   min={1}
@@ -106,29 +138,36 @@ export default ({ pledgeId }) => {
               </FormSection>
 
               <FormSection>
-                <Field
-                  name="newsletterConsent"
-                  label={
-                    <>
-                      Schreibt mir, wenn die Unterschriftslisten da sind und
-                      haltet mich über alle weiteren Kampagnenschritte auf dem
-                      Laufenden.
-                    </>
-                  }
-                  type="checkbox"
-                  component={Checkbox}
-                ></Field>
-                <Field
-                  name="privacyConsent"
-                  label={
-                    <>
-                      Ich stimme zu, dass meine eingegebenen Daten gespeichert
-                      werden.
-                    </>
-                  }
-                  type="checkbox"
-                  component={Checkbox}
-                ></Field>
+                {(!isAuthenticated ||
+                  (isAuthenticated &&
+                    userData.user &&
+                    !userData.user.newsletterConsent.value)) && (
+                  <Field
+                    name="newsletterConsent"
+                    label={
+                      <>
+                        Schreibt mir, wenn die Unterschriftslisten da sind und
+                        haltet mich über alle weiteren Kampagnenschritte auf dem
+                        Laufenden.
+                      </>
+                    }
+                    type="checkbox"
+                    component={Checkbox}
+                  ></Field>
+                )}
+                {!isAuthenticated && (
+                  <Field
+                    name="privacyConsent"
+                    label={
+                      <>
+                        Ich stimme zu, dass meine eingegebenen Daten gespeichert
+                        werden.
+                      </>
+                    }
+                    type="checkbox"
+                    component={Checkbox}
+                  ></Field>
+                )}
               </FormSection>
 
               <CTAButtonContainer illustration="POINT_LEFT">
@@ -144,10 +183,12 @@ export default ({ pledgeId }) => {
   );
 };
 
-const validate = values => {
+const validate = (values, isAuthenticated) => {
   const errors = {};
 
-  if (!values.privacyConsent) {
+  // Needs to be dependent on, if user is authenticated
+  // If user is authenticated, the checkbox was not shown
+  if (!values.privacyConsent && !isAuthenticated) {
     errors.privacyConsent = 'Wir benötigen dein Einverständnis';
   }
 
@@ -160,22 +201,44 @@ const validate = values => {
     errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
   }
 
-  if (!validateEmail(values.email)) {
+  if (values.email && !validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
   return errors;
 };
 
-const signatureCountLabels = {
-  'brandenburg-1':
-    'Wie viele Unterschriften von anderen Menschen in Brandenburg kannst du noch mit einsammeln?',
-  'schleswig-holstein-1':
-    'Wie viele Unterschriften von anderen Menschen in Schleswig-Holstein kannst du noch mit einsammeln?',
-  'hamburg-1':
-    'Wie viele Unterschriften von anderen Menschen in Hamburg kannst du noch mit einsammeln?',
-  'bremen-1':
-    'Wie viele Unterschriften von anderen Menschen in Bremen kannst du noch mit einsammeln?',
-  'berlin-1':
-    'Wie viele Unterschriften von anderen Menschen in Berlin kannst du noch mit einsammeln?',
+const pledgeWasAlreadyMade = (user, pledgeId) => {
+  return (
+    user.pledges &&
+    user.pledges.find(pledge => pledge.campaign.code === pledgeId)
+  );
+};
+
+const pledgeIdMap = {
+  'brandenburg-1': {
+    signatureCountLabel:
+      'Wie viele Unterschriften von anderen Menschen in Brandenburg kannst du noch mit einsammeln?',
+    state: 'Brandenburg',
+  },
+  'schleswig-holstein-1': {
+    signatureCountLabel:
+      'Wie viele Unterschriften von anderen Menschen in Schleswig-Holstein kannst du noch mit einsammeln?',
+    state: 'Schleswig-Holstein',
+  },
+  'hamburg-1': {
+    signatureCountLabel:
+      'Wie viele Unterschriften von anderen Menschen in Hamburg kannst du noch mit einsammeln?',
+    state: 'Hamburg',
+  },
+  'bremen-1': {
+    signatureCountLabel:
+      'Wie viele Unterschriften von anderen Menschen in Bremen kannst du noch mit einsammeln?',
+    state: 'Bremen',
+  },
+  'berlin-1': {
+    signatureCountLabel:
+      'Wie viele Unterschriften von anderen Menschen in Berlin kannst du noch mit einsammeln?',
+    state: 'Berlin',
+  },
 };

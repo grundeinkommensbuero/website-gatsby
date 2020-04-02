@@ -11,6 +11,9 @@ import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import { useSignUp } from '../../../hooks/Authentication';
 import AuthContext from '../../../context/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
+import AuthInfo from '../../AuthInfo';
+import { FinallyMessage } from '../FinallyMessage';
+import { useCurrentUserData } from '../../../hooks/Api/Users/Get';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
@@ -18,6 +21,7 @@ export default ({ pledgeId }) => {
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [userData, requestUserData] = useCurrentUserData();
   const { isAuthenticated } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
@@ -30,6 +34,9 @@ export default ({ pledgeId }) => {
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
+    } else if (isAuthenticated && !hasSubmitted) {
+      // This should be called in the beginning, if user already has a session
+      requestUserData();
     }
   }, [isAuthenticated]);
 
@@ -47,6 +54,19 @@ export default ({ pledgeId }) => {
     return <EnterLoginCode />;
   }
 
+  if (isAuthenticated && userData.user) {
+    return (
+      <FinallyMessage>
+        <AuthInfo username={userData.user.username}>
+          Klasse, du hast dich bereits angemeldet. Wir informieren dich über
+          alles Weitere.
+          <br />
+          <br />
+        </AuthInfo>
+      </FinallyMessage>
+    );
+  }
+
   return (
     <Form
       onSubmit={e => {
@@ -55,9 +75,11 @@ export default ({ pledgeId }) => {
         e.newsletterConsent = true;
         setHasSubmitted(true);
         setPledgeLocally(e);
-        signUp(e.email);
+        if (!isAuthenticated) {
+          signUp(e.email);
+        }
       }}
-      validate={validate}
+      validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
         return (
           <FormWrapper>
@@ -124,7 +146,7 @@ const validate = values => {
     errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
   }
 
-  if (!validateEmail(values.email)) {
+  if (values.email && !validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
