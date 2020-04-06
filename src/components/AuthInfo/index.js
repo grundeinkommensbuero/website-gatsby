@@ -11,11 +11,14 @@ export default ({ children, username }) => {
 
   return (
     <>
-      {children} Nicht {username || (user && user.attributes.email)}?{' '}
-      <InlineButton onClick={signOut} type="button">
-        {' '}
-        Hier klicken zum Abmelden.
-      </InlineButton>
+      {children && <p>{children}</p>}
+      <p>
+        Nicht {username || (user && user.attributes.email)}?{' '}
+        <InlineButton onClick={signOut} type="button">
+          {' '}
+          Hier klicken zum Abmelden.
+        </InlineButton>
+      </p>
     </>
   );
 };
