@@ -11,10 +11,10 @@ export default () => {
 
   return (
     <>
-      Nicht{' '}
-      {customUserData && (customUserData.username || customUserData.email)}?{' '}
+      Du bist angemeldet als{' '}
+      {customUserData && (customUserData.username || customUserData.email)}. Du
+      bist jemand anderes?{' '}
       <InlineButton onClick={signOut} type="button">
-        {' '}
         Hier klicken zum Abmelden.
       </InlineButton>
     </>
