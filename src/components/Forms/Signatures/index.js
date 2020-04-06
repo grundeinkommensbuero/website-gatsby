@@ -169,7 +169,9 @@ export default ({ signaturesId }) => {
                 </>
               ) : (
                 <FinallyMessage className={s.hint}>
-                  <AuthInfo />
+                  <p>
+                    <AuthInfo />
+                  </p>
                 </FinallyMessage>
               )}
               <CTAButtonContainer illustration="POINT_LEFT">

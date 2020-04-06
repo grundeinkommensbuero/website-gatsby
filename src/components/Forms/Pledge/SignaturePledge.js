@@ -59,7 +59,9 @@ export default ({ pledgeId }) => {
           Klasse, du hast dich bereits für {pledgeIdMap[pledgeId].state}{' '}
           angemeldet. Wir informieren dich, sobald es losgeht.
         </p>
-        <AuthInfo />
+        <p>
+          <AuthInfo />
+        </p>
       </FinallyMessage>
     );
   }
