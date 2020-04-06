@@ -23,9 +23,6 @@ export default ({ signaturesId }) => {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
 
-  console.log('is authenticated', isAuthenticated);
-  console.log('hasSubmitted', hasSubmitted);
-
   useEffect(() => {
     // If user was registered proceed by creating list
     if (signUpState === 'success') {
@@ -134,7 +131,6 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
-          console.log('called onSubmit');
           setHasSubmitted(true);
 
           if (!isAuthenticated) {

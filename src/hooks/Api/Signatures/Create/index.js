@@ -23,7 +23,7 @@ export const useCreateSignatureList = () => {
   const [anonymous, setAnonymous] = useState(false);
 
   //get auth token from global context
-  const { token, userId } = useContext(AuthContext);
+  const { token, userId, updateCustomUserData } = useContext(AuthContext);
 
   return [
     state,
@@ -34,7 +34,12 @@ export const useCreateSignatureList = () => {
         data.token = token;
         data.userId = userId;
 
-        return createSignatureList(data, setState, setPdf);
+        return createSignatureList(
+          data,
+          setState,
+          setPdf,
+          updateCustomUserData
+        );
       }
 
       setAnonymous(true);
@@ -71,7 +76,8 @@ const createSignatureListAnonymous = async (
 const createSignatureList = async (
   { userId, email, campaignCode, userExists, token },
   setState,
-  setPdf
+  setPdf,
+  updateCustomUserData
 ) => {
   try {
     setState('creating');
@@ -98,6 +104,8 @@ const createSignatureList = async (
 
     setState('created');
     setPdf(signatureList);
+
+    updateCustomUserData();
   } catch (error) {
     if (error.status === 401) {
       setState('unauthorized');
