@@ -69,7 +69,7 @@ export const useCurrentUserData = () => {
 
 // Gets data of authenticated user (in comparison to getUser including all sensitive data)
 // in the form of { state, user }
-const getCurrentUser = async token => {
+export const getCurrentUser = async token => {
   try {
     const request = {
       method: 'GET',

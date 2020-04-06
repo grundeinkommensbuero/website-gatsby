@@ -13,13 +13,23 @@ export const useUpdatePledge = () => {
   const [state, setState] = useState(null);
 
   //get auth token from global context
-  const { token, userId } = useContext(AuthContext);
+  const { token, userId, updateCustomUserData } = useContext(AuthContext);
 
-  return [state, pledge => updatePledge(userId, pledge, token, setState)];
+  return [
+    state,
+    pledge =>
+      updatePledge(userId, pledge, token, setState, updateCustomUserData),
+  ];
 };
 
 // Function which calls the aws api to create a new pledge
-const updatePledge = async (userId, pledge, token, setState) => {
+const updatePledge = async (
+  userId,
+  pledge,
+  token,
+  setState,
+  updateCustomUserData
+) => {
   try {
     setState('saving');
 
@@ -66,6 +76,8 @@ const updatePledge = async (userId, pledge, token, setState) => {
     } else {
       setState('error');
     }
+
+    updateCustomUserData();
   } catch (error) {
     console.log('Error while saving pledge', error);
     setState('error');

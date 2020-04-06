@@ -15,7 +15,6 @@ import EnterLoginCode from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import AuthContext from '../../../context/Authentication';
 import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
-import { useCurrentUserData } from '../../../hooks/Api/Users/Get';
 import { FinallyMessage } from '../FinallyMessage';
 
 export default ({ pledgeId }) => {
@@ -24,10 +23,8 @@ export default ({ pledgeId }) => {
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [userData, requestUserData] = useCurrentUserData();
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, customUserData: userData } = useContext(AuthContext);
 
-  console.log('user data', userData);
   // After signup process is done we can save the pledge
   useEffect(() => {
     if (signUpState === 'success') {
@@ -38,9 +35,6 @@ export default ({ pledgeId }) => {
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
-    } else if (isAuthenticated && !hasSubmitted) {
-      // This should be called in the beginning, if user already has a session
-      requestUserData();
     }
   }, [isAuthenticated, hasSubmitted]);
 
@@ -58,18 +52,14 @@ export default ({ pledgeId }) => {
     return <EnterLoginCode />;
   }
 
-  if (
-    isAuthenticated &&
-    userData.user &&
-    pledgeWasAlreadyMade(userData.user, pledgeId)
-  ) {
+  if (isAuthenticated && userData && pledgeWasAlreadyMade(userData, pledgeId)) {
     return (
       <FinallyMessage>
         <p>
           Klasse, du hast dich bereits für {pledgeIdMap[pledgeId].state}{' '}
           angemeldet. Wir informieren dich, sobald es losgeht.
         </p>
-        <AuthInfo username={userData.user.username} />
+        <AuthInfo />
       </FinallyMessage>
     );
   }
@@ -86,8 +76,8 @@ export default ({ pledgeId }) => {
       }}
       initialValues={{
         signatureCount: 1,
-        name: isAuthenticated && userData.user ? userData.user.username : '',
-        zipCode: isAuthenticated && userData.user ? userData.user.zipCode : '',
+        name: isAuthenticated && userData ? userData.username : '',
+        zipCode: isAuthenticated && userData ? userData.zipCode : '',
       }}
       validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
@@ -122,7 +112,7 @@ export default ({ pledgeId }) => {
                   ></Field>
                 </FormSection>
               ) : (
-                <AuthInfo username={userData.user && userData.user.username} />
+                <AuthInfo username={userData && userData.username} />
               )}
 
               <FormSection heading={pledgeIdMap[pledgeId].signatureCountLabel}>
@@ -139,8 +129,8 @@ export default ({ pledgeId }) => {
               <FormSection>
                 {(!isAuthenticated ||
                   (isAuthenticated &&
-                    userData.user &&
-                    !userData.user.newsletterConsent.value)) && (
+                    userData &&
+                    !userData.newsletterConsent.value)) && (
                   <Field
                     name="newsletterConsent"
                     label={

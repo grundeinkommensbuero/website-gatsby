@@ -127,7 +127,7 @@ const resendEmail = async (email, setVerificationState) => {
 };
 
 // Sign in user through AWS Cognito (passwordless)
-const signIn = async (setState, { setUser, tempEmail }) => {
+const signIn = async (setState, { setCognitoUser, tempEmail }) => {
   try {
     // This will initiate the custom flow, which will lead to the user receiving a mail.
     // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
@@ -135,7 +135,7 @@ const signIn = async (setState, { setUser, tempEmail }) => {
 
     // We already set the user here in the global context,
     // because we need the object in answerCustomChallenge()
-    setUser(user);
+    setCognitoUser(user);
     setState('success');
   } catch (error) {
     if (error.code === 'UserNotFoundException') {
@@ -148,12 +148,16 @@ const signIn = async (setState, { setUser, tempEmail }) => {
 };
 
 // Function to send login code to aws
-const answerCustomChallenge = async (answer, setState, { user, setUser }) => {
+const answerCustomChallenge = async (
+  answer,
+  setState,
+  { cognitoUser, setCognitoUser }
+) => {
   // Send the answer to the User Pool
   try {
     setState('loading');
     // sendCustomChallengeAnswer() will throw an error if it’s the 3rd wrong answer
-    const tempUser = await Auth.sendCustomChallengeAnswer(user, answer);
+    const tempUser = await Auth.sendCustomChallengeAnswer(cognitoUser, answer);
 
     // It we get here, the answer was sent successfully,
     // but it might have been wrong (1st or 2nd time)
@@ -165,9 +169,7 @@ const answerCustomChallenge = async (answer, setState, { user, setUser }) => {
       setState('success');
 
       //use context to set user in global state
-      setUser(tempUser);
-
-      console.log(tempUser);
+      setCognitoUser(tempUser);
     } catch (error) {
       setState('wrongCode');
       console.log('Apparently the user did not enter the right code', error);
@@ -182,12 +184,12 @@ const answerCustomChallenge = async (answer, setState, { user, setUser }) => {
 };
 
 //Function, which uses the amplify api to sign out user
-const signOut = async ({ setUser }) => {
+const signOut = async ({ setCognitoUser }) => {
   try {
     await Auth.signOut();
 
     //use context to set user in global state
-    setUser(null);
+    setCognitoUser(null);
   } catch (error) {
     console.log('Error while signing out', error);
   }
