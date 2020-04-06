@@ -57,10 +57,11 @@ export default ({ pledgeId }) => {
   if (isAuthenticated && userData.user) {
     return (
       <FinallyMessage>
-        <AuthInfo username={userData.user.username}>
+        <p>
           Klasse, du hast dich bereits angemeldet. Wir informieren dich über
           alles Weitere.
-        </AuthInfo>
+        </p>
+        <AuthInfo username={userData.user.username} />
       </FinallyMessage>
     );
   }
