@@ -56,7 +56,9 @@ export default ({ pledgeId }) => {
           Klasse, du hast dich bereits angemeldet. Wir informieren dich über
           alles Weitere.
         </p>
-        <AuthInfo />
+        <p>
+          <AuthInfo />
+        </p>
       </FinallyMessage>
     );
   }
