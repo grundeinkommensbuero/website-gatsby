@@ -172,9 +172,9 @@ export default ({ signaturesId }) => {
                   </div>
                 </>
               ) : (
-                <p className={s.hint}>
+                <FinallyMessage className={s.hint}>
                   <AuthInfo />
-                </p>
+                </FinallyMessage>
               )}
               <CTAButtonContainer illustration="POINT_LEFT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
