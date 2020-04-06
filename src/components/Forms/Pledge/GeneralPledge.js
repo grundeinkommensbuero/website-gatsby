@@ -13,7 +13,6 @@ import AuthContext from '../../../context/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
-import { useCurrentUserData } from '../../../hooks/Api/Users/Get';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
@@ -21,7 +20,6 @@ export default ({ pledgeId }) => {
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [userData, requestUserData] = useCurrentUserData();
   const { isAuthenticated } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
@@ -34,9 +32,6 @@ export default ({ pledgeId }) => {
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
-    } else if (isAuthenticated && !hasSubmitted) {
-      // This should be called in the beginning, if user already has a session
-      requestUserData();
     }
   }, [isAuthenticated]);
 
@@ -54,14 +49,14 @@ export default ({ pledgeId }) => {
     return <EnterLoginCode />;
   }
 
-  if (isAuthenticated && userData.user) {
+  if (isAuthenticated) {
     return (
       <FinallyMessage>
         <p>
           Klasse, du hast dich bereits angemeldet. Wir informieren dich über
           alles Weitere.
         </p>
-        <AuthInfo username={userData.user.username} />
+        <AuthInfo />
       </FinallyMessage>
     );
   }

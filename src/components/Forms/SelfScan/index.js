@@ -52,7 +52,6 @@ export default ({ successMessage, campaignCode }) => {
 
   useEffect(() => {
     if (isAuthenticated && sessionUserId) {
-      console.log('setting user id from session');
       setUserId(sessionUserId);
     } else if (!isAuthenticated) {
       // This will be called, when user signs out
@@ -60,9 +59,6 @@ export default ({ successMessage, campaignCode }) => {
       resetSignatureCount();
     }
   }, [isAuthenticated, sessionUserId]);
-
-  console.log('email in selfscan', eMail);
-  console.log('isAuthenticated in selfscan', isAuthenticated);
 
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
