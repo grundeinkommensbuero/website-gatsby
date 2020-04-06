@@ -65,10 +65,11 @@ export default ({ pledgeId }) => {
   ) {
     return (
       <FinallyMessage>
-        <AuthInfo username={userData.user.username}>
+        <p>
           Klasse, du hast dich bereits für {pledgeIdMap[pledgeId].state}{' '}
           angemeldet. Wir informieren dich, sobald es losgeht.
-        </AuthInfo>
+        </p>
+        <AuthInfo username={userData.user.username} />
       </FinallyMessage>
     );
   }
