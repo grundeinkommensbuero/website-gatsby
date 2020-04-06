@@ -60,8 +60,6 @@ export default ({ pledgeId }) => {
         <AuthInfo username={userData.user.username}>
           Klasse, du hast dich bereits angemeldet. Wir informieren dich über
           alles Weitere.
-          <br />
-          <br />
         </AuthInfo>
       </FinallyMessage>
     );
