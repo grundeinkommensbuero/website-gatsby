@@ -55,6 +55,7 @@ export const TextInputWrapped = ({
   explanation,
   inputMode,
   pattern,
+  autoComplete,
 }) => {
   if (hide) {
     return null;
@@ -87,6 +88,7 @@ export const TextInputWrapped = ({
           label={outputLabel}
           pattern={pattern}
           inputMode={inputMode}
+          autoComplete={autoComplete}
         />
       )}
     </LabelInputErrorWrapper>
