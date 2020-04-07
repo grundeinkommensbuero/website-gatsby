@@ -67,110 +67,118 @@ export default ({ pledgeId }) => {
   }
 
   return (
-    <Form
-      onSubmit={e => {
-        e.pledgeId = pledgeId;
-        setHasSubmitted(true);
-        setPledgeLocally(e);
-        if (!isAuthenticated) {
-          signUp(e.email);
-        }
-      }}
-      initialValues={{
-        signatureCount: 1,
-        name: isAuthenticated && userData ? userData.username : '',
-        zipCode: isAuthenticated && userData ? userData.zipCode : '',
-      }}
-      validate={values => validate(values, isAuthenticated)}
-      render={({ handleSubmit }) => {
-        return (
-          <FormWrapper className={s.formWrapperWithSlider}>
-            <form onSubmit={handleSubmit}>
-              {!isAuthenticated ? (
-                <FormSection heading={'Wer bist du?'}>
-                  <Field
-                    name="email"
-                    label="E-Mail"
-                    description="Pflichtfeld"
-                    placeholder="E-Mail"
-                    type="email"
-                    component={TextInputWrapped}
-                  ></Field>
+      <Form
+        onSubmit={e => {
+          e.pledgeId = pledgeId;
+          setHasSubmitted(true);
+          setPledgeLocally(e);
+          if (!isAuthenticated) {
+            signUp(e.email);
+          }
+        }}
+        initialValues={{
+          signatureCount: 1,
+          name: isAuthenticated && userData ? userData.username : '',
+          zipCode: isAuthenticated && userData ? userData.zipCode : '',
+        }}
+        validate={values => validate(values, isAuthenticated)}
+        render={({ handleSubmit }) => {
+          return (
+            <FormWrapper className={s.formWrapperWithSlider}>
+              <form onSubmit={handleSubmit}>
+                {!isAuthenticated ? (
+                  <FormSection heading={'Wer bist du?'}>
+                    <Field
+                      name="email"
+                      label="E-Mail"
+                      description="Pflichtfeld"
+                      placeholder="E-Mail"
+                      type="email"
+                      component={TextInputWrapped}
+                    ></Field>
 
+                    <Field
+                      name="name"
+                      label="Mit diesem Namen möchte ich angesprochen werden"
+                      placeholder="Name"
+                      type="text"
+                      component={TextInputWrapped}
+                    ></Field>
+                    <Field
+                      name="zipCode"
+                      label="Postleitzahl"
+                      description="Pflichtfeld"
+                      placeholder="12345"
+                      type="number"
+                      component={TextInputWrapped}
+                    ></Field>
+                  </FormSection>
+                ) :
+                (
+                  <FinallyMessage>
+                    <p>
+                      <AuthInfo />
+                    </p>
+                  </FinallyMessage>
+                )}
+
+                <FormSection
+                  heading={pledgeIdMap[pledgeId].signatureCountLabel}
+                >
                   <Field
-                    name="name"
-                    label="Mit diesem Namen möchte ich angesprochen werden"
-                    placeholder="Name"
-                    type="text"
-                    component={TextInputWrapped}
-                  ></Field>
-                  <Field
-                    name="zipCode"
-                    label="Postleitzahl"
-                    description="Pflichtfeld"
-                    placeholder="12345"
-                    type="number"
-                    component={TextInputWrapped}
-                  ></Field>
+                    name="signatureCount"
+                    labelHidden={pledgeIdMap[pledgeId].signatureCountLabel}
+                    component={SignatureCountSlider}
+                    type="range"
+                    min={1}
+                    max={30}
+                  />
                 </FormSection>
-              ) : (
-                <AuthInfo username={userData && userData.username} />
-              )}
 
-              <FormSection heading={pledgeIdMap[pledgeId].signatureCountLabel}>
-                <Field
-                  name="signatureCount"
-                  labelHidden={pledgeIdMap[pledgeId].signatureCountLabel}
-                  component={SignatureCountSlider}
-                  type="range"
-                  min={1}
-                  max={30}
-                />
-              </FormSection>
+                <FormSection>
+                  {(!isAuthenticated ||
+                    (isAuthenticated &&
+                      userData &&
+                      !userData.newsletterConsent.value)) && (
+                    <Field
+                      name="newsletterConsent"
+                      label={
+                        <>
+                          Schreibt mir, wenn die Unterschriftslisten da sind und
+                          haltet mich über alle weiteren Kampagnenschritte auf
+                          dem Laufenden.
+                        </>
+                      }
+                      type="checkbox"
+                      component={Checkbox}
+                    ></Field>
+                  )}
+                  {!isAuthenticated && (
+                    <Field
+                      name="privacyConsent"
+                      label={
+                        <>
+                          Ich stimme zu, dass meine eingegebenen Daten
+                          gespeichert werden.
+                        </>
+                      }
+                      type="checkbox"
+                      component={Checkbox}
+                    ></Field>
+                  )}
+                </FormSection>
 
-              <FormSection>
-                {(!isAuthenticated ||
-                  (isAuthenticated &&
-                    userData &&
-                    !userData.newsletterConsent.value)) && (
-                  <Field
-                    name="newsletterConsent"
-                    label={
-                      <>
-                        Schreibt mir, wenn die Unterschriftslisten da sind und
-                        haltet mich über alle weiteren Kampagnenschritte auf dem
-                        Laufenden.
-                      </>
-                    }
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
-                )}
-                {!isAuthenticated && (
-                  <Field
-                    name="privacyConsent"
-                    label={
-                      <>
-                        Ich stimme zu, dass meine eingegebenen Daten gespeichert
-                        werden.
-                      </>
-                    }
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
-                )}
-              </FormSection>
-
-              <CTAButtonContainer illustration="POINT_LEFT">
-                <CTAButton type="submit">
-                  Ich bin dabei, wenn’s losgeht!
-                </CTAButton>
-              </CTAButtonContainer>
-            </form>
-          </FormWrapper>
-        );
-      }}
-    ></Form>
+                <CTAButtonContainer illustration="POINT_LEFT">
+                  <CTAButton type="submit">
+                    Ich bin dabei, wenn’s losgeht!
+                  </CTAButton>
+                </CTAButtonContainer>
+              </form>
+            </FormWrapper>
+          );
+        }}
+      ></Form>
+    </>
   );
 };
 
