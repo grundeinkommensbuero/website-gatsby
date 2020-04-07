@@ -21,6 +21,8 @@ export default ({ signaturesId }) => {
   const [signUpState, signUp] = useSignUp();
   const [email, setEmail] = useState();
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  // We need the following flag to check if we want to update newsletter consent
+  const [wasAlreadyAuthenticated, setWasAlreadyAuthenticated] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
@@ -41,9 +43,10 @@ export default ({ signaturesId }) => {
       createPdf({
         campaignCode: signaturesId,
         userExists: true,
+        wasAlreadyAuthenticated,
       });
     }
-  }, [isAuthenticated, hasSubmitted]);
+  }, [isAuthenticated, hasSubmitted, wasAlreadyAuthenticated]);
 
   if (state === 'unauthorized') {
     return (
@@ -131,12 +134,14 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
-          setHasSubmitted(true);
-
           if (!isAuthenticated) {
             setEmail(e.email);
             signUp(e.email);
+          } else {
+            setWasAlreadyAuthenticated(true);
           }
+
+          setHasSubmitted(true);
         }}
         validate={validate}
         render={({ handleSubmit }) => {
