@@ -5,6 +5,7 @@ import {
   CampainVisualisation,
   CrowdFundingVisualistation,
 } from '../CampaignVisualisations';
+import { LinkButton, LinkButtonLocal } from '../Forms/Button';
 
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
@@ -62,9 +63,43 @@ export function contentfulJsonToHtml(json) {
           },
         },
       }) => {
+        const fieldsMapped = objectMap(fields, field => field['en-US']);
         if (contentTypeId === 'campainVisualisation') {
-          const fieldsMapped = objectMap(fields, field => field['en-US']);
           return <CrowdFundingVisualistation {...fieldsMapped} />;
+        }
+        if (contentTypeId === 'callToActionButton') {
+          if (fieldsMapped.link) {
+            return (
+              <p>
+                <LinkButton
+                  href={fieldsMapped.link}
+                  target={fieldsMapped.openInNewTab ? '_blank' : null}
+                >
+                  {fieldsMapped.text}
+                </LinkButton>
+              </p>
+            );
+          } else if (fieldsMapped.internalReference) {
+            const referenseFieldsMapped = objectMap(
+              fieldsMapped.internalReference.fields,
+              field => field['en-US']
+            );
+
+            const jumpToAppendix = fieldsMapped.jumpTo
+              ? `#${fieldsMapped.jumpTo}`
+              : '';
+
+            return (
+              <p>
+                <LinkButtonLocal
+                  to={referenseFieldsMapped.slug + jumpToAppendix}
+                  target={fieldsMapped.openInNewTab ? '_blank' : null}
+                >
+                  {fieldsMapped.text}
+                </LinkButtonLocal>
+              </p>
+            );
+          }
         }
       },
       [BLOCKS.EMBEDDED_ASSET]: node => {
