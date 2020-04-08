@@ -96,7 +96,6 @@ export default ({ pledgeId }) => {
                     type="email"
                     component={TextInputWrapped}
                   ></Field>
-
                   <Field
                     name="name"
                     label="Mit diesem Namen möchte ich angesprochen werden"
@@ -114,7 +113,7 @@ export default ({ pledgeId }) => {
                   ></Field>
                 </FormSection>
               ) : (
-                <FinallyMessage>
+                <FinallyMessage className={s.alreadyAuthorizedMessage}>
                   <p>
                     <AuthInfo />
                   </p>
