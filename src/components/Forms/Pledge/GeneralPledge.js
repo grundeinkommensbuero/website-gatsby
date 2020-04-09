@@ -51,7 +51,7 @@ export default ({ pledgeId }) => {
 
   if (isAuthenticated) {
     return (
-      <FinallyMessage>
+      <FinallyMessage preventScrolling={true}>
         <p>
           Klasse, du hast dich bereits angemeldet. Wir informieren dich über
           alles Weitere.
