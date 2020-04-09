@@ -24,7 +24,24 @@ export default ({ children }) => {
   if (answerChallengeState === 'success') {
     return <FinallyMessage>Erfolgreich identifiziert.</FinallyMessage>;
   }
-  console.log(children);
+
+  if (signInState === 'userNotConfirmed') {
+    return (
+      <FinallyMessage state="error">
+        Diese E-Mail-Adresse kennen wir schon, sie wurde aber nie bestätigt -
+        Hast du unsere Antwort-Mail bekommen? Dann fehlt nur noch der letzte
+        Klick zum Bestätigen. Wiederhole den Vorgang danach nochmal, indem du
+        diese Seite neu lädst. <br />
+        <br />
+        Nichts gefunden? Dann schau doch bitte noch einmal in deinen
+        Spam-Ordner, oder schreibe uns an{' '}
+        <a href="mailto:support@expedition-grundeinkommen.de">
+          support@expedition-grundeinkommen.de
+        </a>
+        .
+      </FinallyMessage>
+    );
+  }
 
   return (
     <FinallyMessage state="error">
