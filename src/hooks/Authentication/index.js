@@ -140,6 +140,8 @@ const signIn = async (setState, { setCognitoUser, tempEmail }) => {
   } catch (error) {
     if (error.code === 'UserNotFoundException') {
       setState('userNotFound');
+    } else if (error.code === 'UserNotConfirmedException') {
+      setState('userNotConfirmed');
     } else {
       setState('error');
     }
