@@ -4,9 +4,16 @@ import { scrollIntoView } from '../../utils';
 import cN from 'classnames';
 import { HurrayCrowd } from '../../HurrayCrowd';
 
-export const FinallyMessage = ({ state, children, className }) => {
+export const FinallyMessage = ({
+  state,
+  children,
+  className,
+  preventScrolling,
+}) => {
   useEffect(() => {
-    scrollIntoView(messageRef.current);
+    if (!preventScrolling) {
+      scrollIntoView(messageRef.current);
+    }
   }, []);
   const messageRef = useRef(null);
 

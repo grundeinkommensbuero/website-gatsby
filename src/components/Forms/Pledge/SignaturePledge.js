@@ -54,7 +54,7 @@ export default ({ pledgeId }) => {
 
   if (isAuthenticated && userData && pledgeWasAlreadyMade(userData, pledgeId)) {
     return (
-      <FinallyMessage>
+      <FinallyMessage preventScrolling={true}>
         <p>
           Klasse, du hast dich bereits für {pledgeIdMap[pledgeId].state}{' '}
           angemeldet. Wir informieren dich, sobald es losgeht.
@@ -113,7 +113,10 @@ export default ({ pledgeId }) => {
                   ></Field>
                 </FormSection>
               ) : (
-                <FinallyMessage className={s.alreadyAuthorizedMessage}>
+                <FinallyMessage
+                  className={s.alreadyAuthorizedMessage}
+                  preventScrolling={true}
+                >
                   <p>
                     <AuthInfo />
                   </p>

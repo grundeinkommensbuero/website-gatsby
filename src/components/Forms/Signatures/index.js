@@ -173,7 +173,7 @@ export default ({ signaturesId }) => {
                   </div>
                 </>
               ) : (
-                <FinallyMessage className={s.hint}>
+                <FinallyMessage className={s.hint} preventScrolling={true}>
                   <p>
                     <AuthInfo />
                   </p>
