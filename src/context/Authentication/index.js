@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
 
       // Update user data with data from backend
-      updateCustomUserData(tempToken, setCustomUserData);
+      updateCustomUserData(true, tempToken, setCustomUserData);
     } else {
       setIsAuthenticated(false);
     }
@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
         setTempEmail,
         customUserData,
         updateCustomUserData: () =>
-          updateCustomUserData(token, setCustomUserData),
+          updateCustomUserData(isAuthenticated, token, setCustomUserData),
       }}
     >
       {children}
@@ -70,13 +70,19 @@ const AuthProvider = ({ children }) => {
 };
 
 // Updates user data with data from backend
-const updateCustomUserData = async (token, setCustomUserData) => {
+const updateCustomUserData = async (
+  isAuthenticated,
+  token,
+  setCustomUserData
+) => {
   try {
-    const result = await getCurrentUser(token);
+    if (isAuthenticated) {
+      const result = await getCurrentUser(token);
 
-    setCustomUserData(result.user);
+      setCustomUserData(result.user);
 
-    console.log('has set user data in context');
+      console.log('has set user data in context');
+    }
   } catch (error) {
     console.log(error);
   }
