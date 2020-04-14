@@ -19,7 +19,7 @@ import AuthContext from '../../../../context/Authentication';
 
 export const useCreateSignatureList = () => {
   const [state, setState] = useState();
-  const [pdf, setPdf] = useState({});
+  const [pdf, setPdf] = useState();
   const [anonymous, setAnonymous] = useState(false);
 
   //get auth token from global context
@@ -74,7 +74,7 @@ const createSignatureListAnonymous = async (
 // Function to create (or get) a signature list
 // userId or email is passed
 const createSignatureList = async (
-  { userId, email, campaignCode, userExists, token, wasAlreadyAuthenticated },
+  { userId, email, campaignCode, userExists, token, shouldNotUpdateUser },
   setState,
   setPdf,
   updateCustomUserData
@@ -93,9 +93,9 @@ const createSignatureList = async (
       const referral = urlParams.pk_source;
 
       await createUser(userId, email, true, referral);
-    } else if (userId && !wasAlreadyAuthenticated) {
+    } else if (token && !shouldNotUpdateUser) {
       // Otherwise update the user using the token
-      // but only if the user id was passed (user has logged in to set newsletter consent)
+      // but only if there is a token (user has logged in to set newsletter consent)
       // and if the user did not already had a session going in
       await updateUser(userId, true, token);
     }
@@ -103,7 +103,7 @@ const createSignatureList = async (
     //call function to make api request, returns signature list if successful (throws error otherwise)
     const signatureList = await makeApiCall(
       data,
-      wasAlreadyAuthenticated,
+      shouldNotUpdateUser,
       userId,
       token
     );
@@ -128,7 +128,7 @@ const createSignatureList = async (
 // if user does not have newsletter consent
 
 // Returns the list {id, url} or null
-const makeApiCall = async (data, wasAlreadyAuthenticated, userId, token) => {
+const makeApiCall = async (data, shouldNotUpdateUser, userId, token) => {
   // Make api call to create new singature list and get pdf
   const request = {
     method: 'POST',
@@ -140,7 +140,7 @@ const makeApiCall = async (data, wasAlreadyAuthenticated, userId, token) => {
     body: JSON.stringify(data),
   };
 
-  const endpoint = wasAlreadyAuthenticated
+  const endpoint = shouldNotUpdateUser
     ? `/users/${userId}/signatures`
     : '/signatures';
 

@@ -127,11 +127,11 @@ const resendEmail = async (email, setVerificationState) => {
 };
 
 // Sign in user through AWS Cognito (passwordless)
-const signIn = async (setState, { setCognitoUser, tempEmail }) => {
+const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
   try {
     // This will initiate the custom flow, which will lead to the user receiving a mail.
     // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
-    const user = await Auth.signIn(tempEmail);
+    const user = await Auth.signIn(userId || tempEmail);
 
     // We already set the user here in the global context,
     // because we need the object in answerCustomChallenge()
