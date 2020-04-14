@@ -43,7 +43,7 @@ export default ({ signaturesId }) => {
       createPdf({
         campaignCode: signaturesId,
         userExists: true,
-        wasAlreadyAuthenticated,
+        shouldNotUpdateUser: wasAlreadyAuthenticated,
       });
     }
   }, [isAuthenticated, hasSubmitted, wasAlreadyAuthenticated]);

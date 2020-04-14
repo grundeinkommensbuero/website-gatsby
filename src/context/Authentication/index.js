@@ -80,8 +80,6 @@ const updateCustomUserData = async (
       const result = await getCurrentUser(token);
 
       setCustomUserData(result.user);
-
-      console.log('has set user data in context');
     }
   } catch (error) {
     console.log(error);

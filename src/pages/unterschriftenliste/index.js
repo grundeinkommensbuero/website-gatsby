@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Layout from '../../components/Layout';
-import { LinkButton } from '../../components/Forms/Button';
+import { LinkButton, InlineButton } from '../../components/Forms/Button';
 import { useCreateSignatureList } from '../../hooks/Api/Signatures/Create';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
@@ -8,24 +8,43 @@ import { trackEvent, addActionTrackingId } from '../../components/utils';
 import { StepListItem } from '../../components/StepList';
 import querystring from 'query-string';
 import { Link } from 'gatsby';
+import EnterLoginCode from '../../components/EnterLoginCode';
+import AuthContext from '../../context/Authentication';
 
 const trackingCategory = 'ListDownload';
 
 const Unterschriftenliste = () => {
   const [state, pdf, , createPdf] = useCreateSignatureList({});
   const [campaignCode, setCampaignCode] = useState(null);
+  const { userId, setUserId, isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     setCampaignCode(urlParams.campaignCode);
+    setUserId(urlParams.userId);
+  }, []);
 
-    if (urlParams.campaignCode !== 'berlin-1') {
+  useEffect(() => {
+    if (campaignCode && userId && !isAuthenticated) {
       createPdf({
-        userId: urlParams.userId,
-        campaignCode: urlParams.campaignCode,
+        campaignCode,
+        userExists: true,
       });
     }
-  }, []);
+  }, [userId]);
+
+  useEffect(() => {
+    // We also need to check if the state is 'unauthorized',
+    // otherwise we might make a successful call twice if user already had a sesssion
+    // (because it takes some time for that be checked)
+    if (campaignCode && isAuthenticated && state === 'unauthorized') {
+      createPdf({
+        campaignCode,
+        userExists: true,
+        shouldNotUpdateUser: true,
+      });
+    }
+  }, [isAuthenticated, state]);
 
   if (state === 'error') {
     trackEvent({
@@ -57,6 +76,24 @@ const Unterschriftenliste = () => {
               Da ist was schief gegangen
             </FinallyMessage>
           )}
+          {state === 'unauthorized' && (
+            <EnterLoginCode>
+              <p>
+                Hey, wir kennen dich schon! Bitte gib den Code ein, den wir dir
+                gerade in einer E-Mail geschickt haben. Alternativ kannst du
+                auch eine Liste{' '}
+                <InlineButton
+                  onClick={() => {
+                    createPdf({ campaignCode });
+                  }}
+                  type="button"
+                >
+                  hier
+                </InlineButton>{' '}
+                anonym herunterladen.
+              </p>
+            </EnterLoginCode>
+          )}
           {pdf && (
             <>
               <DownloadListsNextSteps>
@@ -74,13 +111,6 @@ const Unterschriftenliste = () => {
                 </StepListItem>
               </DownloadListsNextSteps>
             </>
-          )}
-
-          {campaignCode === 'berlin-1' && (
-            <FinallyMessage state="error">
-              Für Berlin gibt es noch keine Unterschriftenlisten. Wir melden uns
-              bei dir, sobald sie zur Verfügung stehen.
-            </FinallyMessage>
           )}
         </>
       ),
