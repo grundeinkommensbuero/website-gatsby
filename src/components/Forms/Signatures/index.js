@@ -143,7 +143,7 @@ export default ({ signaturesId }) => {
 
           setHasSubmitted(true);
         }}
-        validate={validate}
+        validate={values => validate(values, isAuthenticated)}
         render={({ handleSubmit }) => {
           return (
             <form onSubmit={handleSubmit} className={s.form}>
@@ -190,15 +190,17 @@ export default ({ signaturesId }) => {
   );
 };
 
-const validate = values => {
+const validate = (values, isAuthenticated) => {
   const errors = {};
 
-  if (values.email && values.email.includes('+')) {
-    errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
-  }
+  if (!isAuthenticated) {
+    if (values.email && values.email.includes('+')) {
+      errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
+    }
 
-  if (values.email && !validateEmail(values.email)) {
-    errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+    if (!validateEmail(values.email)) {
+      errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+    }
   }
 
   return errors;
