@@ -94,7 +94,7 @@ const Unterschriftenliste = () => {
               </p>
             </EnterLoginCode>
           )}
-          {pdf && (
+          {state === 'created' && (
             <>
               <DownloadListsNextSteps>
                 <StepListItem icon="download">

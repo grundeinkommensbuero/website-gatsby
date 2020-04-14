@@ -19,7 +19,7 @@ import AuthContext from '../../../../context/Authentication';
 
 export const useCreateSignatureList = () => {
   const [state, setState] = useState();
-  const [pdf, setPdf] = useState();
+  const [pdf, setPdf] = useState({});
   const [anonymous, setAnonymous] = useState(false);
 
   //get auth token from global context
