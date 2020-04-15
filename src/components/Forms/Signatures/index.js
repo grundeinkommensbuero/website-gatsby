@@ -159,9 +159,9 @@ export default ({ signaturesId }) => {
                       }}
                       type="button"
                     >
-                      hier
-                    </InlineButton>{' '}
-                    auch anonym herunterladen.
+                      hier auch anonym herunterladen
+                    </InlineButton>
+                    .
                   </p>
                   <div className={s.textInputContainer}>
                     <Field
