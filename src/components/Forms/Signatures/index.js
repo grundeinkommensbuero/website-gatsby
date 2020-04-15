@@ -114,20 +114,18 @@ export default ({ signaturesId }) => {
           </p>
         )}
 
-        <DownloadListsNextSteps>
-          {!anonymous && signUpState !== 'userExists' && (
-            <StepListItem icon="mail">
-              Check deine Mails und klick den Link, damit du dabei bist.
-            </StepListItem>
-          )}
-          {anonymous && (
-            <StepListItem icon="download">
-              <LinkButton target="_blank" href={pdf.url}>
-                Listen herunterladen
-              </LinkButton>
-            </StepListItem>
-          )}
-        </DownloadListsNextSteps>
+        {!anonymous && signUpState !== 'userExists' && (
+          <StepListItem icon="mail">
+            Check deine Mails und klick den Link, damit du dabei bist.
+          </StepListItem>
+        )}
+        {anonymous && (
+          <StepListItem icon="download">
+            <LinkButton target="_blank" href={pdf.url}>
+              Listen herunterladen
+            </LinkButton>
+          </StepListItem>
+        )}
       </>
     );
   }
