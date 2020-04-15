@@ -20,6 +20,7 @@ const BOUNDS = {
   'schleswig-holstein': [8.226, 53.4095, 11.6428, 54.9823],
   hamburg: [9.5, 53.35, 10.5, 53.8],
   brandenburg: [11, 51.3, 15, 53.6],
+  berlin: [13.05, 52.2, 13.8, 52.8],
 };
 
 export default ({ state }) => {
