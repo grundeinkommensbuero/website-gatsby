@@ -13,6 +13,8 @@ import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
 import AuthInfo from '../../AuthInfo';
+import { graphql, useStaticQuery } from 'gatsby';
+import { CrowdFundingVisualistation } from '../../CampaignVisualisations';
 
 const trackingCategory = 'ListDownload';
 
@@ -24,6 +26,32 @@ export default ({ signaturesId }) => {
   // We need the following flag to check if we want to update newsletter consent
   const [wasAlreadyAuthenticated, setWasAlreadyAuthenticated] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+  const { contentfulKampagnenvisualisierung } = useStaticQuery(graphql`
+    query CrowdFunding {
+      contentfulKampagnenvisualisierung(
+        id: {}
+        contentful_id: { eq: "CtJiVXntFoWu7oWhehzvf" }
+      ) {
+        campainCode
+        goal
+        startDate
+        title
+        minimum
+        maximum
+        addToSignatureCount
+        ctaLink
+        eyeCatcher {
+          json
+        }
+        goalUnbuffered
+        goalInbetweenMultiple
+        startnextId
+        hint {
+          hint
+        }
+      }
+    }
+  `);
 
   useEffect(() => {
     // If user was registered proceed by creating list
@@ -126,6 +154,17 @@ export default ({ signaturesId }) => {
             </LinkButton>
           </StepListItem>
         )}
+        <div className={s.crowdFunding}>
+          <p>
+            Noch eine Bitte: Gerade im Homeoffice haben viele Menschen keinen
+            Zugang zu einem Drucker. Bitte hilf uns, damit wir diesen Menschen
+            Listen per Post zusenden können. Ab 15.000 Euro beginnen wir mit dem
+            Versand der Listen per Post - damit wir die Frist zur Bundestagswahl
+            2021 in Berlin schaffen können, zählt jetzt jeder Tag und jede
+            Unterschrift!{' '}
+          </p>
+          <CrowdFundingVisualistation {...contentfulKampagnenvisualisierung} />
+        </div>
       </>
     );
   }
