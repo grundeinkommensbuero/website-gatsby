@@ -43,6 +43,7 @@ export function ContentfulSection({ section }) {
     body,
     emailSignup,
     videoLink,
+    isStream,
     callToActionLink,
     callToActionText,
     sloganLine1,
@@ -124,7 +125,7 @@ export function ContentfulSection({ section }) {
           <EmailListForm className={s.emailSignup} />
         </SectionInner>
       )}
-      {videoLink && <YoutubeEmbed url={videoLink} />}
+      {videoLink && <YoutubeEmbed url={videoLink} isStream={isStream} />}
       {teamMembers && (
         <SectionInner wide={true}>
           <AboutUs members={teamMembers} />
@@ -265,13 +266,17 @@ function Slogan({ sloganLine1, sloganLine2 }) {
   );
 }
 
-function YoutubeEmbed({ url }) {
+function YoutubeEmbed({ url, isStream }) {
+  const URL = isStream
+    ? `https://www.youtube-nocookie.com/embed/live_stream?channel=${url}`
+    : `https://www.youtube-nocookie.com/embed/${url}?rel=0`;
+
   return (
     <div className={s.youtubeContainer}>
       <iframe
         width="560"
         height="315"
-        src={`https://www.youtube-nocookie.com/embed/${url}?rel=0`}
+        src={URL}
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

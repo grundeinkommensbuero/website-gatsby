@@ -101,6 +101,7 @@ export const pageQuery = graphql`
           ... on ContentfulPageSectionVideo {
             __typename
             videoLink
+            isStream
           }
           ... on ContentfulPageSectionIllustration {
             __typename
