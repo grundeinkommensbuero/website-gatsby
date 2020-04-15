@@ -164,6 +164,15 @@ export default ({ signaturesId }) => {
                       hier auch anonym herunterladen
                     </InlineButton>
                     .
+                    <br />
+                    Kein Drucker?{' '}
+                    <a
+                      target="_blanl"
+                      href="https://expeditionbge.typeform.com/to/Dq3SOi"
+                    >
+                      Bitte schickt mir Unterschriftenlisten per Post
+                    </a>
+                    !
                   </p>
                   <div className={s.textInputContainer}>
                     <Field
