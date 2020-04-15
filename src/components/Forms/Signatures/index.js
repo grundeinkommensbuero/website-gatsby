@@ -99,17 +99,19 @@ export default ({ signaturesId }) => {
         {!anonymous ? (
           <>
             <p>
-              Juhu! Die Unterschriftenlisten sind in deinem Postfach. Du kannst
-              sie dir auch{' '}
+              Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
+              deinem Postfach. Du kannst sie dir auch{' '}
               <a target="_blank" href={pdf.url}>
                 direkt im Browser herunterladen
-              </a>
-              .
+              </a>{' '}
+              - alle weiteren Infos findest du dort!
             </p>
-            <p>So geht’s weiter:</p>
           </>
         ) : (
-          <p>Schön, dass du mit uns sammelst. So geht’s weiter:</p>
+          <p>
+            Schön, dass du mit uns sammelst. Mit der Liste findest du einen
+            Leitfaden für die weiteren Schritte.
+          </p>
         )}
 
         <DownloadListsNextSteps>
