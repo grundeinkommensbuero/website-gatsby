@@ -3,3 +3,4 @@ http://www.expedition-grundeinkommen.com/*      https://expedition-grundeinkomme
 www.expedition-grundeinkommen.com/*      https://expedition-grundeinkommen.de/:splat 301!
 
 /downloads                                      /material
+/eintragen                                      /qr/b
