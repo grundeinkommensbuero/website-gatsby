@@ -125,20 +125,17 @@ export default ({ signaturesId }) => {
     return (
       <>
         {!anonymous ? (
-          <>
-            <p>
-              Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
-              deinem Postfach. Du kannst sie dir auch{' '}
-              <a target="_blank" href={pdf.url}>
-                direkt im Browser herunterladen
-              </a>{' '}
-              - alle weiteren Infos findest du dort!
-            </p>
-          </>
+          <p>
+            Juhu! Die Unterschriftslisten samt Leitfaden sind in deinem
+            Postfach!
+          </p>
         ) : (
           <p>
-            Schön, dass du mit uns sammelst. Mit der Liste findest du einen
-            Leitfaden für die weiteren Schritte.
+            Juhu!{' '}
+            <a target="_blank" href={pdf.url}>
+              Hier
+            </a>{' '}
+            kannst du die Unterschriftslisten samt Leitfaden herunterladen!
           </p>
         )}
 
@@ -156,12 +153,10 @@ export default ({ signaturesId }) => {
         )}
         <div className={s.crowdFunding}>
           <p>
-            Noch eine Bitte: Gerade im Homeoffice haben viele Menschen keinen
-            Zugang zu einem Drucker. Bitte hilf uns, damit wir diesen Menschen
-            Listen per Post zusenden können. Ab 15.000 Euro beginnen wir mit dem
-            Versand der Listen per Post - damit wir die Frist zur Bundestagswahl
-            2021 in Berlin schaffen können, zählt jetzt jeder Tag und jede
-            Unterschrift!{' '}
+            Für die Kampagnenführung, rechtliche Begleitung,
+            Öffentlichkeitsarbeit und den Postversand der Unterschriften sind
+            wir auf Spenden angewiesen. Bitte unterstütze auch unser
+            Crowdfunding!
           </p>
           <CrowdFundingVisualistation {...contentfulKampagnenvisualisierung} />
         </div>
