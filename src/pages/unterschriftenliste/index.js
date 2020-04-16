@@ -7,9 +7,10 @@ import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import { trackEvent, addActionTrackingId } from '../../components/utils';
 import { StepListItem } from '../../components/StepList';
 import querystring from 'query-string';
-import { Link } from 'gatsby';
+import { Link, useStaticQuery, graphql } from 'gatsby';
 import EnterLoginCode from '../../components/EnterLoginCode';
 import AuthContext from '../../context/Authentication';
+import { CrowdFundingVisualistation } from '../../components/CampaignVisualisations';
 
 const trackingCategory = 'ListDownload';
 
@@ -17,6 +18,33 @@ const Unterschriftenliste = () => {
   const [state, pdf, , createPdf] = useCreateSignatureList({});
   const [campaignCode, setCampaignCode] = useState(null);
   const { userId, setUserId, isAuthenticated } = useContext(AuthContext);
+
+  const { contentfulKampagnenvisualisierung } = useStaticQuery(graphql`
+    query CrowdFunding2 {
+      contentfulKampagnenvisualisierung(
+        id: {}
+        contentful_id: { eq: "CtJiVXntFoWu7oWhehzvf" }
+      ) {
+        campainCode
+        goal
+        startDate
+        title
+        minimum
+        maximum
+        addToSignatureCount
+        ctaLink
+        eyeCatcher {
+          json
+        }
+        goalUnbuffered
+        goalInbetweenMultiple
+        startnextId
+        hint {
+          hint
+        }
+      }
+    }
+  `);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -65,7 +93,6 @@ const Unterschriftenliste = () => {
       bodyTextSizeHuge: true,
       body: (
         <>
-          <p>Schön, dass du mit uns sammelst. So geht’s weiter:</p>
           {state === 'creating' && (
             <FinallyMessage state="progress">
               Liste wird generiert, bitte einen Moment Geduld...
@@ -94,7 +121,7 @@ const Unterschriftenliste = () => {
               </p>
             </EnterLoginCode>
           )}
-          {state === 'created' && (
+          {/* {state === 'created' && (
             <>
               <DownloadListsNextSteps>
                 <StepListItem icon="download">
@@ -110,6 +137,24 @@ const Unterschriftenliste = () => {
                   )}
                 </StepListItem>
               </DownloadListsNextSteps>
+            </>
+          )} */}
+
+          {state === 'created' && (
+            <>
+              <FinallyMessage>
+                Juhu! Die Unterschriftslisten samt Leitfaden sind in deinem
+                Postfach!
+              </FinallyMessage>
+              <p>
+                Für die Kampagnenführung, rechtliche Begleitung,
+                Öffentlichkeitsarbeit und den Postversand der Unterschriften
+                sind wir auf Spenden angewiesen. Bitte unterstütze auch unser
+                Crowdfunding!
+              </p>
+              <CrowdFundingVisualistation
+                {...contentfulKampagnenvisualisierung}
+              />
             </>
           )}
         </>
