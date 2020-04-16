@@ -156,7 +156,8 @@ export default ({ signaturesId }) => {
             Für die Kampagnenführung, rechtliche Begleitung,
             Öffentlichkeitsarbeit und den Postversand der Unterschriften sind
             wir auf Spenden angewiesen. Bitte unterstütze auch unser
-            Crowdfunding!
+            Crowdfunding! Wenn die ersten 15.000 Euro erreicht sind, können wir
+            die erste Runde Listen postalisch versenden.
           </p>
           <CrowdFundingVisualistation {...contentfulKampagnenvisualisierung} />
         </div>
