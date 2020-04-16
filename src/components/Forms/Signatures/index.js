@@ -197,6 +197,7 @@ export default ({ signaturesId }) => {
                     </InlineButton>
                     .
                     <br />
+                    <br />
                     Kein Drucker?{' '}
                     <a
                       target="_blanl"
