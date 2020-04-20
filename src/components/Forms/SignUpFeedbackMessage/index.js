@@ -43,7 +43,7 @@ export default ({ className, state, trackingId, trackingCategory }) => {
             uns auch finanziell!
             <br />
             <br />
-            <LinkButton href="/#Spenden">Jetzt spenden</LinkButton>
+            <LinkButton href="/spenden">Jetzt spenden</LinkButton>
           </>
         )}
         {state === 'userExists' && (

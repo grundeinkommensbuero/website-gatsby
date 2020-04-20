@@ -133,7 +133,7 @@ const Verification = () => {
                   Wir sind gemeinnützig und auf Spenden angewiesen. Bitte
                   unterstütze uns auch finanziell.
                 </p>
-                <CTALink to="/#Spenden">Jetzt spenden</CTALink>
+                <CTALink to="/spenden">Jetzt spenden</CTALink>
               </FinallyMessage>
 
               <HurrayCrowd color="RED" />
