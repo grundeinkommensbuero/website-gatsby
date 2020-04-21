@@ -145,8 +145,12 @@ export function contentfulJsonToHtml(json) {
 }
 
 // https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
-export const objectMap = (obj, fn) =>
-  Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
+export const objectMap = (object, mapFn) => {
+  return Object.keys(object).reduce(function(result, key) {
+    result[key] = mapFn(object[key]);
+    return result;
+  }, {});
+};
 
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 export function validateEmail(email) {
