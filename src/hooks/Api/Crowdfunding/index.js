@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import CONFIG from '../../../../aws-config';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 /*
   States:
@@ -51,21 +51,23 @@ const getCrowdfundingData = async projectId => {
 export const useGetCrowdfundingDirectly = projectId => {
   const [crowdFunding, setCrowdFunding] = useState(() => {
     loadScript('//api.startnext.com/js/cfapiclient-0.1.js').then(() => {
-      const apiUrl = 'https://api.startnext.com';
-      const clientOptions = {
-        url: apiUrl,
-        client_id: 1000000001,
-        jquery: $,
-        version: '1.2',
-      };
-      const apiClient = new cfAPIClient(clientOptions);
-      apiClient.get(
-        '/projects/' + projectId,
-        { lang: 'de' },
-        (data, textStatus, jqXHR) => {
-          setCrowdFunding(data);
-        }
-      );
+      import(/* webpackChunkName: "jquery" */ 'jquery').then(module => {
+        const apiUrl = 'https://api.startnext.com';
+        const clientOptions = {
+          url: apiUrl,
+          client_id: 1000000001,
+          jquery: module.default,
+          version: '1.2',
+        };
+        const apiClient = new cfAPIClient(clientOptions);
+        apiClient.get(
+          '/projects/' + projectId,
+          { lang: 'de' },
+          (data, textStatus, jqXHR) => {
+            setCrowdFunding(data);
+          }
+        );
+      });
     });
   });
   return [crowdFunding];
