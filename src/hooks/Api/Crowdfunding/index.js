@@ -50,8 +50,11 @@ const getCrowdfundingData = async projectId => {
 
 export const useGetCrowdfundingDirectly = projectId => {
   const [crowdFunding, setCrowdFunding] = useState(() => {
-    loadScript('//api.startnext.com/js/cfapiclient-0.1.js').then(() => {
-      import(/* webpackChunkName: "jquery" */ 'jquery').then(module => {
+    if (typeof window !== `undefined`) {
+      Promise.all([
+        loadScript('//api.startnext.com/js/cfapiclient-0.1.js'),
+        import(/* webpackChunkName: "jquery" */ 'jquery'),
+      ]).then(([, module]) => {
         const apiUrl = 'https://api.startnext.com';
         const clientOptions = {
           url: apiUrl,
@@ -68,7 +71,7 @@ export const useGetCrowdfundingDirectly = projectId => {
           }
         );
       });
-    });
+    }
   });
   return [crowdFunding];
 };
