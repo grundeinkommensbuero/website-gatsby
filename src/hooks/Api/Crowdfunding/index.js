@@ -82,7 +82,6 @@ const loadScript = (source, beforeEl, async = true, defer = true) => {
     if (typeof window !== `undefined`) {
       let script = document.createElement('script');
       const prior = beforeEl || document.getElementsByTagName('script')[0];
-
       script.async = async;
       script.defer = defer;
 
