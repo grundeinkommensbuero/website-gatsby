@@ -1,7 +1,6 @@
 /**
  * This file holds several hook functions regarding everything concerning authentication
  */
-import Auth from '@aws-amplify/auth';
 import { getRandomString } from '../../components/utils';
 import { sleep } from '../utils';
 import { useContext, useState } from 'react';
@@ -57,6 +56,10 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
   try {
     setState('loading');
 
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
     const { userSub } = await Auth.signUp({
       username: email,
@@ -89,6 +92,10 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
 // Amplifys Auth Class is used to send a confirmation code to verify the mail address
 const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
   try {
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
     //use auth class to confirm sing up
     const response = await Auth.confirmSignUp(email, confirmationCode);
     setVerificationState('verified');
@@ -115,6 +122,11 @@ const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
 const resendEmail = async (email, setVerificationState) => {
   try {
     setVerificationState('resendingEmail');
+
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
     await Auth.resendSignUp(email);
     setVerificationState('resentEmail');
     return true;
@@ -129,6 +141,10 @@ const resendEmail = async (email, setVerificationState) => {
 // Sign in user through AWS Cognito (passwordless)
 const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
   try {
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
     // This will initiate the custom flow, which will lead to the user receiving a mail.
     // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
     const user = await Auth.signIn(userId || tempEmail);
@@ -158,6 +174,10 @@ const answerCustomChallenge = async (
   // Send the answer to the User Pool
   try {
     setState('loading');
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
     // sendCustomChallengeAnswer() will throw an error if it’s the 3rd wrong answer
     const tempUser = await Auth.sendCustomChallengeAnswer(cognitoUser, answer);
 
@@ -188,6 +208,10 @@ const answerCustomChallenge = async (
 //Function, which uses the amplify api to sign out user
 const signOut = async ({ setCognitoUser }) => {
   try {
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
     await Auth.signOut();
 
     //use context to set user in global state
