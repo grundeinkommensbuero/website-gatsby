@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Auth from '@aws-amplify/auth';
 import { getCurrentUser } from '../../hooks/Api/Users/Get';
 
 /**
@@ -24,9 +23,15 @@ const AuthProvider = ({ children }) => {
 
   // Check if the user is already signed in in the beginning
   useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then(user => setCognitoUser(user)) // set user in context (global state)
-      .catch(() => setCognitoUser(null)); //error is thrown if user is not authenticated
+    if (typeof window !== `undefined`) {
+      import(/* webpackChunkName: "Amplify" */ '@aws-amplify/auth').then(
+        ({ default: Amplify }) => {
+          Amplify.currentAuthenticatedUser()
+            .then(user => setCognitoUser(user)) // set user in context (global state)
+            .catch(() => setCognitoUser(null)); //error is thrown if user is not authenticated
+        }
+      );
+    }
   }, []);
 
   //define function to update token upon change of state

@@ -1,5 +1,4 @@
 import React from 'react';
-import Amplify from '@aws-amplify/auth';
 import CONFIG from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
 import { OverlayProvider } from './src/context/Overlay';
@@ -10,11 +9,17 @@ export default ({ element }) => {
   // APP_CLIENT_ID was in onCreateWebpackConfig callback in gatsby-node
   const clientId = APP_CLIENT_ID;
   if (clientId) {
-    Amplify.configure({
-      region: CONFIG.COGNITO.REGION,
-      userPoolId: CONFIG.COGNITO.USER_POOL_ID,
-      userPoolWebClientId: clientId,
-    });
+    if (typeof window !== `undefined`) {
+      import(/* webpackChunkName: "Amplify" */ '@aws-amplify/auth').then(
+        ({ default: Amplify }) => {
+          Amplify.configure({
+            region: CONFIG.COGNITO.REGION,
+            userPoolId: CONFIG.COGNITO.USER_POOL_ID,
+            userPoolWebClientId: clientId,
+          });
+        }
+      );
+    }
   } else {
     console.log('no userPoolWebClientId provided');
   }
