@@ -147,9 +147,8 @@ const Unterschriftenliste = () => {
                 Postfach!
               </FinallyMessage> */}
               <p>
-                Bitte unterstütze auch unser Crowdfunding! Wenn die ersten
-                15.000 Euro erreicht sind, können wir die erste Runde Listen
-                postalisch versenden.
+                Bitte unterstütze auch unser Crowdfunding! Mit 24.000 Euro
+                können wir die Unterschriftensammlung in Berlin zu Ende bringen.
               </p>
               <CrowdFundingVisualistation
                 {...contentfulKampagnenvisualisierung}
