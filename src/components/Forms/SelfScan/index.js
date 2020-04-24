@@ -55,7 +55,6 @@ export default ({ successMessage, campaignCode }) => {
       setUserId(sessionUserId);
     } else if (!isAuthenticated) {
       // This will be called, when user signs out
-      console.log('being called');
       // setUserId(null);
       // resetSignatureCount();
     }
