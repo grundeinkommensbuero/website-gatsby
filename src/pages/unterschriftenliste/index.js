@@ -121,7 +121,7 @@ const Unterschriftenliste = () => {
               </p>
             </EnterLoginCode>
           )}
-          {/* {state === 'created' && (
+          {state === 'created' && (
             <>
               <DownloadListsNextSteps>
                 <StepListItem icon="download">
@@ -138,14 +138,14 @@ const Unterschriftenliste = () => {
                 </StepListItem>
               </DownloadListsNextSteps>
             </>
-          )} */}
+          )}
 
           {state === 'created' && (
             <>
-              <FinallyMessage>
+              {/* <FinallyMessage>
                 Juhu! Die Unterschriftslisten samt Leitfaden sind in deinem
                 Postfach!
-              </FinallyMessage>
+              </FinallyMessage> */}
               <p>
                 Bitte unterstütze auch unser Crowdfunding! Wenn die ersten
                 15.000 Euro erreicht sind, können wir die erste Runde Listen
