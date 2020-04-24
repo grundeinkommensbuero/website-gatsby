@@ -162,8 +162,8 @@ export default ({ successMessage, campaignCode }) => {
               state === 'listAndUserNotFound'
             ) && (
               <p>
-                Du hast Unterschriften gesammelt? Bitte sag uns, wie viele
-                Unterschriften hinzu gekommen sind:
+                Toll, dass du Unterschriften sammelst! Bitte sag uns, wie viele
+                Unterschriften du neu gesammelt hast:
               </p>
             )}
             <CountSignaturesForm {...countSignaturesFormProps} />
