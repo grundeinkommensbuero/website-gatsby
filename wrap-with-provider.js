@@ -21,11 +21,13 @@ export default ({ element }) => {
     console.log('no userPoolWebClientId provided');
   }
 
-  // Check if there are url params from a survey
-  const urlParams = querystring.parse(window.location.search);
+  if (typeof window !== `undefined`) {
+    // Check if there are url params from a survey
+    const urlParams = querystring.parse(window.location.search);
 
-  if (urlParams.surveyCode) {
-    saveSurveyAnswer(urlParams);
+    if (urlParams.surveyCode) {
+      saveSurveyAnswer(urlParams);
+    }
   }
 
   return (
