@@ -1,7 +1,8 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { contentfulJsonToHtml, formatDateTime } from '../utils';
+import { formatDateTime } from '../utils';
+import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 import s from './style.module.less';
 import { useStaticQuery, graphql } from 'gatsby';
 import { SectionInner } from '../Layout/Sections';

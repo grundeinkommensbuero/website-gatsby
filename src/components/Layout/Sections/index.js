@@ -4,7 +4,7 @@ import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Map from '../../Map';
 import EmailListForm from '../../EmailListForm';
-import { stringToId, contentfulJsonToHtml } from '../../utils';
+import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
@@ -17,6 +17,7 @@ import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
+import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 
 export default function Sections({ sections }) {
   if (sections && sections.length) {
