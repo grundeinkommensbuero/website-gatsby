@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { INLINES, BLOCKS } from '@contentful/rich-text-types';
 import {
   CampainVisualisation,
   CrowdFundingVisualistation,
 } from '../CampaignVisualisations';
-import { LinkButton, LinkButtonLocal } from '../Forms/Button';
+import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
 import { getMailtoUrl, objectMap } from '.';
-
-console.log('hu', getMailtoUrl);
 
 export function contentfulJsonToHtml(json) {
   const website_url = 'https://www.change.org';
@@ -96,6 +94,14 @@ export function contentfulJsonToHtml(json) {
                 <LinkButton href={href}>{fieldsMapped.text}</LinkButton>
               </p>
             );
+          } else if (fieldsMapped.copyToClipboard) {
+            return (
+              <p>
+                <CopyToClipboardButton toCopy={fieldsMapped.copyToClipboard}>
+                  {fieldsMapped.text}
+                </CopyToClipboardButton>
+              </p>
+            );
           }
         }
       },
@@ -139,4 +145,23 @@ export function contentfulJsonToHtml(json) {
   };
 
   return documentToReactComponents(json, documentToREactComponentsOptions);
+}
+
+function CopyToClipboardButton({ children, toCopy }) {
+  const [hasCopied, setHasCopied] = useState(false);
+
+  const copy = () => {
+    setHasCopied(true);
+    navigator.clipboard.writeText(toCopy);
+
+    setTimeout(() => {
+      setHasCopied(false);
+    }, 2000);
+  };
+
+  return (
+    <Button onClick={copy}>
+      {hasCopied ? 'Ist in der Zwischenablage!' : children}
+    </Button>
+  );
 }
