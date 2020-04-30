@@ -51,11 +51,11 @@ export function contentfulJsonToHtml(json) {
           return <CrowdFundingVisualistation {...fieldsMapped} />;
         }
         if (contentTypeId === 'callToActionButton') {
-          if (fieldsMapped.link) {
+          if (fieldsMapped.linkLong) {
             return (
               <p>
                 <LinkButton
-                  href={fieldsMapped.link}
+                  href={fieldsMapped.linkLong}
                   target={fieldsMapped.openInNewTab ? '_blank' : null}
                 >
                   {fieldsMapped.text}
