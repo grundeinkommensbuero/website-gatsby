@@ -99,6 +99,18 @@ export function contentfulJsonToHtml(json) {
                 </LinkButtonLocal>
               </p>
             );
+          } else if (fieldsMapped.mailto) {
+            const href = getMailtoUrl(
+              fieldsMapped.mailto === 'BLANK' ? '' : fieldsMapped.mailto,
+              fieldsMapped.mailtoSubject,
+              fieldsMapped.mailtoBody
+            );
+
+            return (
+              <p>
+                <LinkButton href={href}>{fieldsMapped.text}</LinkButton>
+              </p>
+            );
           }
         }
       },
@@ -266,4 +278,20 @@ export function mapCampaignCodeToState(campaignCode) {
 
 function capitalize(string) {
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+}
+
+function getMailtoUrl(to, subject, body) {
+  var args = [];
+  if (typeof subject !== 'undefined') {
+    args.push('subject=' + encodeURIComponent(subject));
+  }
+  if (typeof body !== 'undefined') {
+    args.push('body=' + encodeURIComponent(body));
+  }
+
+  var url = 'mailto:' + encodeURIComponent(to);
+  if (args.length > 0) {
+    url += '?' + args.join('&');
+  }
+  return url;
 }
