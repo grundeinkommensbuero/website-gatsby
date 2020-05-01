@@ -23,16 +23,10 @@ export const useSaveSurveyAnswer = () => {
 };
 
 // Function which calls the aws api to save the survey answer
-export const saveSurveyAnswer = async ({
-  userId,
-  surveyCode,
-  answer,
-  answerId,
-}) => {
+export const saveSurveyAnswer = async ({ userId, surveyCode, answer }) => {
   try {
-    // We check if answerId is null, cause it might be 0
-    if (userId && surveyCode && answer && answerId !== null) {
-      const data = { surveyCode, answer, answerId };
+    if (userId && surveyCode && answer) {
+      const data = { surveyCode, answer };
 
       // Make request to api to save survey answer
       const request = {
