@@ -80,11 +80,7 @@ export default ({ pledgeId }) => {
         return (
           <FormWrapper>
             <form onSubmit={handleSubmit}>
-              <FormSection
-                heading={
-                  'Unterstütze das Vorhaben des staatlichen Modellversuchs zum bedingungslosen Grundeinkommen - melde dich jetzt zur Expedition an!'
-                }
-              >
+              <FormSection>
                 <Field
                   name="email"
                   label="E-Mail"
