@@ -7,6 +7,7 @@ import {
 } from '../CampaignVisualisations';
 import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
 import { getMailtoUrl, objectMap } from '.';
+import s from './contentfulJsonToHtml.module.less';
 
 export function contentfulJsonToHtml(json) {
   const website_url = 'https://www.change.org';
@@ -104,6 +105,9 @@ export function contentfulJsonToHtml(json) {
             );
           }
         }
+        if (contentTypeId === 'question') {
+          return <QuestionAnswer {...fieldsMapped} />;
+        }
       },
       [BLOCKS.EMBEDDED_ASSET]: node => {
         // https://github.com/contentful/rich-text/issues/61#issuecomment-475999852
@@ -145,6 +149,17 @@ export function contentfulJsonToHtml(json) {
   };
 
   return documentToReactComponents(json, documentToREactComponentsOptions);
+}
+
+function QuestionAnswer({ question, answer }) {
+  if (question && answer.content) {
+    return (
+      <div className={s.questionAndAnswer}>
+        <p className={s.question}>{question}</p>
+        <div className={s.answer}>{contentfulJsonToHtml(answer)}</div>
+      </div>
+    );
+  }
 }
 
 function CopyToClipboardButton({ children, toCopy }) {
