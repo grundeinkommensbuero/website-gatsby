@@ -100,6 +100,7 @@ export function ContentfulSection({ section }) {
         [s.sectionVideo]: isVideoSection,
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
+        [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
       })}
       sectionBodyNoEvents={isIllustration || isVideoSection}
