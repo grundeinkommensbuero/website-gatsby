@@ -56,6 +56,14 @@
         background-image: url('./backgrounds/crowd_travel_blue_mobile.svg');
       }
     }
+
+    &.sectionCrowdQuestion {
+      background-image: url('./backgrounds/crowd_question_blue_desktop.svg');
+
+      @media (max-width: 900px) {
+        background-image: url('./backgrounds/crowd_question_blue_mobile.svg');
+      }
+    }
   }
 
   &:nth-child(3n + 2),
@@ -135,9 +143,18 @@
     }
   }
 
+  &CrowdQuestion {
+    background-image: url('./backgrounds/crowd_question_yellow_desktop.svg');
+
+    @media (max-width: 900px) {
+      background-image: url('./backgrounds/crowd_question_yellow_mobile.svg');
+    }
+  }
+
   &CrowdCollect,
   &Confetti,
-  &CrowdTravel {
+  &CrowdTravel,
+  &CrowdQuestion {
     background-repeat: no-repeat;
     background-position: bottom -6rem center;
     background-size: auto 130rem;
