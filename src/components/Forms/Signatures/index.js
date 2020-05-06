@@ -199,7 +199,7 @@ export default ({ signaturesId }) => {
                     <br />
                     Kein Drucker?{' '}
                     <a
-                      target="_blanl"
+                      target="_blank"
                       href="https://expeditionbge.typeform.com/to/Dq3SOi"
                     >
                       Bitte schickt mir Unterschriftenlisten per Post
