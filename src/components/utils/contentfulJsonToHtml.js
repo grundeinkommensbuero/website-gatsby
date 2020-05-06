@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { INLINES, BLOCKS } from '@contentful/rich-text-types';
 import {
@@ -8,6 +8,7 @@ import {
 import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
 import { getMailtoUrl, objectMap } from '.';
 import s from './contentfulJsonToHtml.module.less';
+import cN from 'classnames';
 
 export function contentfulJsonToHtml(json) {
   const website_url = 'https://www.change.org';
@@ -151,15 +152,72 @@ export function contentfulJsonToHtml(json) {
   return documentToReactComponents(json, documentToREactComponentsOptions);
 }
 
-function QuestionAnswer({ question, answer }) {
+function QuestionAnswer({ question, answer, openInitially = false }) {
+  const [isOpen, setIsOpen] = useState(openInitially);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [containerHeight, setContainerHeight] = useState();
+  const answerEl = useRef(null);
+  const prevIsOpen = usePrevious(isOpen);
+
+  useEffect(() => {
+    if (isOpen && prevIsOpen !== undefined) {
+      setIsAnimating(true);
+      setContainerHeight(0);
+      setTimeout(() => {
+        setContainerHeight(answerEl.current.offsetHeight + 'px');
+
+        setTimeout(() => {
+          setContainerHeight(undefined);
+          setIsAnimating(false);
+        }, 500);
+      });
+    }
+    if (!isOpen && prevIsOpen !== undefined) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setContainerHeight(answerEl.current.offsetHeight + 'px');
+        setTimeout(() => {
+          setContainerHeight(0);
+          setTimeout(() => {
+            setContainerHeight(undefined);
+            setIsAnimating(false);
+          }, 300);
+        }, 10);
+      }, 10);
+    }
+  }, [isOpen]);
+
   if (question && answer.content) {
     return (
       <div className={s.questionAndAnswer}>
-        <p className={s.question}>{question}</p>
-        <div className={s.answer}>{contentfulJsonToHtml(answer)}</div>
+        <button className={s.question} onClick={() => setIsOpen(!isOpen)}>
+          {question}
+        </button>
+        <div
+          className={cN(s.answerContainer, {
+            [s.open]: isOpen && !isAnimating,
+            [s.closed]: !isOpen && !isAnimating,
+            [s.animating]: isAnimating,
+          })}
+          style={{ height: containerHeight }}
+        >
+          <div className={s.answer} ref={answerEl}>
+            {contentfulJsonToHtml(answer)}
+          </div>
+        </div>
       </div>
     );
   }
+}
+
+function usePrevious(value) {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
 }
 
 function CopyToClipboardButton({ children, toCopy }) {
