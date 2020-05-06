@@ -1,3 +1,5 @@
+@import '../style/vars.less';
+
 .answer {
     font-weight: normal;
 }
@@ -14,6 +16,10 @@
     color: inherit;
     text-align: left;
     position: relative;
+
+    @media (max-width: @breakPointM) {
+        margin-left: 2rem;
+    }
 
     &:focus {
         outline: none;
