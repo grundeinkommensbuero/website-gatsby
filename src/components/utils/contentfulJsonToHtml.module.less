@@ -13,6 +13,46 @@
     font-size: inherit;
     color: inherit;
     text-align: left;
+    position: relative;
+
+    &:focus {
+        outline: none;
+        text-decoration: underline;
+    }
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        height: 1.5em;
+        width: 1.5em;
+        left: -2.2em;
+        top: -.2em;
+    }
+
+    &:before {
+        background-image: url('./arrow.svg'), linear-gradient(currentColor, currentColor);
+        background-size: cover, 88% 95%;
+        background-repeat: no-repeat;
+        transform: rotate(-45deg);
+        transition: .3s cubic-bezier(0.47, 0.45, 0.57, 1.26);
+    }
+
+    &.open {
+        &:before {
+            transform: rotate(45deg);
+        }
+    }
+
+    &:after {
+        content: '?';
+        color: var(--bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: .1em;
+        margin-left: -.1em;
+        text-decoration: none;
+    }
 }
 
 .answerContainer {
