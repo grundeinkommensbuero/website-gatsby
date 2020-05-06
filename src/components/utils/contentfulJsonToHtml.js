@@ -190,7 +190,10 @@ function QuestionAnswer({ question, answer, openInitially = false }) {
   if (question && answer.content) {
     return (
       <div className={s.questionAndAnswer}>
-        <button className={s.question} onClick={() => setIsOpen(!isOpen)}>
+        <button
+          className={cN(s.question, { [s.open]: isOpen })}
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {question}
         </button>
         <div
