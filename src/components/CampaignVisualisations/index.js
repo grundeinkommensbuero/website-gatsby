@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
-import { formatDateMonthYear, contentfulJsonToHtml } from '../utils';
+import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal, LinkButton } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
@@ -10,6 +10,7 @@ import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
 import VisualCounter from '../VisualCounter';
 import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
+import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
