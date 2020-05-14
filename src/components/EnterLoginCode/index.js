@@ -57,6 +57,7 @@ export default ({ children }) => {
         onSubmit={e => {
           setCode(e.code);
         }}
+        validate={validate}
         render={({ handleSubmit }) => {
           return (
             <FormWrapper>
@@ -82,4 +83,14 @@ export default ({ children }) => {
       />
     </FinallyMessage>
   );
+};
+
+const validate = values => {
+  const errors = {};
+
+  if (!values.code) {
+    errors.code = 'Bitte gib den Code aus aus der E-Mail an';
+  }
+
+  return errors;
 };
