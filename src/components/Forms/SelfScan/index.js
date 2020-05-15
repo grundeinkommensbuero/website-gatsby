@@ -35,6 +35,7 @@ export default ({ successMessage, campaignCode }) => {
   const [userId, setUserId] = useState(null);
   const [eMail, setEMail] = useState(null);
   const [count, setCount] = useState(0);
+  const [wasSignedInAtOnePoint, setWasSignedInAtOnePoint] = useState(false);
   const { isAuthenticated, userId: sessionUserId } = useContext(AuthContext);
 
   useEffect(() => {
@@ -53,10 +54,16 @@ export default ({ successMessage, campaignCode }) => {
   useEffect(() => {
     if (isAuthenticated && sessionUserId) {
       setUserId(sessionUserId);
+      setWasSignedInAtOnePoint(true);
     } else if (!isAuthenticated) {
-      // This will be called, when user signs out
-      // setUserId(null);
-      // resetSignatureCount();
+      // This will be called, when user signs out or at the beginning
+      // after the context knows if user is signed in.
+      // We only want to reset everything, if the user actually signed out.
+      // Otherwise the user id from url params would be overwritten.
+      if (wasSignedInAtOnePoint) {
+        setUserId(null);
+        resetSignatureCount();
+      }
     }
   }, [isAuthenticated, sessionUserId]);
 
