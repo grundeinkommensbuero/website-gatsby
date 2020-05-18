@@ -224,8 +224,13 @@ const CountSignaturesForm = ({
         {state === 'userNotFound' && (
           <>
             Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
-            geschrieben? Probiere es bitte noch ein Mal. Falls es dann noch
-            immer nicht funktioniert, melde dich bitte an oder schreib uns an{' '}
+            geschrieben? Falls du noch nicht bei uns registriert bist, kannst du
+            dich{' '}
+            <a href="https://expedition-grundeinkommen.de/expedition">
+              hier anmelden
+            </a>
+            . Daraufhin kannst du die Unterschriften eintragen. Falls es dann
+            noch immer nicht funktioniert, schreib uns an{' '}
             <a href="mailto:support@expedition-grundeinkommen.de">
               support@expedition-grundeinkommen.de
             </a>
