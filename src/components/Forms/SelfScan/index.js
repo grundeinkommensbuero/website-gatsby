@@ -278,7 +278,7 @@ const CountSignaturesForm = ({
         )}
         {state === 'listAndUserNotFound' && (
           <>
-            Die Liste mit dem Barcode {listId} und dem Benutzer {eMail} konnten
+            Die Liste mit dem Barcode {listId} und den Benutzer {eMail} konnten
             wir leider nicht finden. Bitte probiere es noch ein Mal.
             <CTAButtonContainer className={s.buttonContainer}>
               <CTAButton
