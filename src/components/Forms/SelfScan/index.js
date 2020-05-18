@@ -226,7 +226,7 @@ const CountSignaturesForm = ({
             Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
             geschrieben? Falls du noch nicht bei uns registriert bist, kannst du
             dich{' '}
-            <a href="https://expedition-grundeinkommen.de/expedition">
+            <a href="https://expedition-grundeinkommen.de/expedition#generalpledge">
               hier anmelden
             </a>
             . Daraufhin kannst du die Unterschriften eintragen. Falls es dann
