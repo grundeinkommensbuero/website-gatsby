@@ -82,6 +82,7 @@ export const buildVisualisationsWithCrowdfunding = visualisations => {
   );
   const startnextVisualisations = visualisations.filter(vis => vis.startnextId);
 
+  // For all visualisations with startnext key, add project property with the crowdfunding data
   const visualisationsWithCrowdfunding = startnextVisualisations.map(vis => {
     const [crowdfunding] = useGetCrowdfundingDirectly(vis.startnextId);
     const { project } = crowdfunding ? crowdfunding : {};
