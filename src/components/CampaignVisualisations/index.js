@@ -69,7 +69,7 @@ export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
   // If props does not include project key, query startnext
   const [crowdFunding] = !hasProjectProp
     ? useGetCrowdfundingDirectly(startnextId)
-    : null;
+    : [];
 
   // If data is loading
   if (
