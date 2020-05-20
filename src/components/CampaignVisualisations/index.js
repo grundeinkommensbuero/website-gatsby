@@ -62,14 +62,10 @@ export default ({ visualisations }) => {
   );
 };
 
-export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
-  const [crowdFunding] = useGetCrowdfundingDirectly(startnextId);
-
-  if (!crowdFunding) {
+export const CrowdFundingVisualistation = ({ project, goal, ...props }) => {
+  if (!project) {
     return <SectionInner>lade...</SectionInner>;
   }
-
-  const project = crowdFunding.project;
 
   return (
     <Visualisation

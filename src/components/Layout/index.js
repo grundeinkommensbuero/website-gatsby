@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
@@ -7,6 +7,7 @@ import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
+import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -116,11 +117,39 @@ function Template({ children, sections }) {
     }
   `);
 
+  const visualisationsWithoutCrowdfunding = globalStuff.overlay.campainVisualisations.filter(
+    vis => !vis.startnextId
+  );
+
+  // Get visualisations that have startnext ID
+  const startnextVisualisations = globalStuff.overlay.campainVisualisations.filter(
+    vis => vis.startnextId
+  );
+
+  // Return list of visualisation definitions with project property
+  const visualisationsWithCrowdfunding = startnextVisualisations.map(vis => {
+    const [crowdfunding] = useGetCrowdfundingDirectly(vis.startnextId);
+    const { project } = crowdfunding ? crowdfunding : {};
+
+    return {
+      ...vis,
+      project,
+    };
+  });
+
+  const overlayDefninitionWithCrowdfunding = {
+    ...globalStuff.overlay,
+    campainVisualisations: [
+      ...visualisationsWithCrowdfunding,
+      visualisationsWithoutCrowdfunding,
+    ],
+  };
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
         <Overlay delay={globalStuff.overlayDelay}>
-          <ContentfulSection section={globalStuff.overlay} />
+          <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
       <Header menu={globalStuff.mainMenu} />
