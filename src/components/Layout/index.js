@@ -7,6 +7,7 @@ import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
+import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -116,11 +117,22 @@ function Template({ children, sections }) {
     }
   `);
 
+  // Return list of visualisation definitions with project field for the startnext project data
+  const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
+    globalStuff.overlay.campainVisualisations
+  );
+
+  // Create new overlay definition
+  const overlayDefninitionWithCrowdfunding = {
+    ...globalStuff.overlay,
+    campainVisualisations: visualisationsWithCrowdfunding,
+  };
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
         <Overlay delay={globalStuff.overlayDelay}>
-          <ContentfulSection section={globalStuff.overlay} />
+          <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
       <Header menu={globalStuff.mainMenu} />
