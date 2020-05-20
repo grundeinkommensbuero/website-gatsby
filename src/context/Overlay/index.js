@@ -1,5 +1,5 @@
 import s from './style.module.less';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 const COOKIE_NAME = 'overlayHasBeenDismissed';
 
@@ -9,18 +9,22 @@ export const OverlayProvider = ({ children }) => {
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [automaticOpenDelay, setAutomaticOpenDelay] = useState(false);
   const [hasBeenDismissed, setHasBeenDismissed] = useHasBeenDismissed();
+  const hasBeenDismissedRef = useRef(hasBeenDismissed);
+  hasBeenDismissedRef.current = hasBeenDismissed;
 
   useEffect(() => {
     document.body.classList.toggle(s.bodyOverlayOpen, overlayOpen);
   }, [overlayOpen]);
 
   useEffect(() => {
-    if (automaticOpenDelay && !hasBeenDismissed) {
+    if (automaticOpenDelay) {
       setTimeout(() => {
-        setOverlayOpen(true);
+        if (!hasBeenDismissedRef.current) {
+          setOverlayOpen(true);
+        }
       }, automaticOpenDelay * 1000);
     }
-  }, [automaticOpenDelay]);
+  }, [automaticOpenDelay, hasBeenDismissed]);
 
   return (
     <OverlayContext.Provider
