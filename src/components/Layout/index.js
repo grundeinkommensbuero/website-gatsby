@@ -7,7 +7,7 @@ import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
-import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
+import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -117,32 +117,15 @@ function Template({ children, sections }) {
     }
   `);
 
-  const visualisationsWithoutCrowdfunding = globalStuff.overlay.campainVisualisations.filter(
-    vis => !vis.startnextId
+  // Return list of visualisation definitions with project field for the startnext project data
+  const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
+    globalStuff.overlay.campainVisualisations
   );
 
-  // Get visualisations that have startnext ID
-  const startnextVisualisations = globalStuff.overlay.campainVisualisations.filter(
-    vis => vis.startnextId
-  );
-
-  // Return list of visualisation definitions with project property
-  const visualisationsWithCrowdfunding = startnextVisualisations.map(vis => {
-    const [crowdfunding] = useGetCrowdfundingDirectly(vis.startnextId);
-    const { project } = crowdfunding ? crowdfunding : {};
-
-    return {
-      ...vis,
-      project,
-    };
-  });
-
+  // Create new overlay definition
   const overlayDefninitionWithCrowdfunding = {
     ...globalStuff.overlay,
-    campainVisualisations: [
-      ...visualisationsWithCrowdfunding,
-      visualisationsWithoutCrowdfunding,
-    ],
+    campainVisualisations: visualisationsWithCrowdfunding,
   };
 
   return (
