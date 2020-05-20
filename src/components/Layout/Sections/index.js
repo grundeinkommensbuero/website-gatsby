@@ -191,7 +191,11 @@ export function Section({
         [s.sectionHeader]: isHeader,
       })}
     >
-      {jumpToId && <div id={jumpToId} className={s.jumpToAnchor} />}
+      {jumpToId && (
+        <div id={jumpToId} className={s.jumpToAnchor}>
+          <div id={jumpToId.toLowerCase()} />
+        </div>
+      )}
       <div
         className={cN(s.sectionBody, {
           [s.sectionBodyNoEvents]: sectionBodyNoEvents,
