@@ -213,7 +213,7 @@ export const Visualisation = ({
     count && isInView
       ? Math.max(Math.min((count / (goalInbetween || goal)) * 100, 100), 3)
       : 0;
-  const countOutside = percentage < 40;
+  const countOutside = percentage < 50;
 
   const barGoalWidth = Math.min(100, ((goalInbetween || goal) / count) * 100);
   return (
