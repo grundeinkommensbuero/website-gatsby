@@ -63,19 +63,34 @@ export default ({ visualisations }) => {
 };
 
 export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
-  const [crowdFunding] = useGetCrowdfundingDirectly(startnextId);
+  // Check props includes a project key
+  const hasProjectProp = props.hasOwnProperty('project');
 
-  if (!crowdFunding) {
+  // If props does not include project key, query startnext
+  const [crowdFunding] = !hasProjectProp
+    ? useGetCrowdfundingDirectly(startnextId)
+    : [];
+
+  // If data is loading
+  if (
+    // Has project property but no value
+    (hasProjectProp && props.project == null) ||
+    // Startnext query in progress in this component
+    (!hasProjectProp && !crowdFunding)
+  ) {
     return <SectionInner>lade...</SectionInner>;
   }
 
-  const project = crowdFunding.project;
+  // Use the correct project object
+  const crowdfundingProject = hasProjectProp
+    ? props.project
+    : crowdFunding.project;
 
   return (
     <Visualisation
-      goal={project.funding_target}
-      count={Math.round(project.funding_status || 0)}
-      startDate={project.start_date}
+      goal={crowdfundingProject.funding_target}
+      count={Math.round(crowdfundingProject.funding_status || 0)}
+      startDate={crowdfundingProject.start_date}
       currency="€"
       currencyShort="€"
       showCTA={props.ctaLink}
