@@ -64,7 +64,7 @@ export default ({ visualisations }) => {
 
 export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
   // Check props includes a project key
-  const hasProjectProp = 'project' in props;
+  const hasProjectProp = props.hasOwnProperty('project');
 
   // If props does not include project key, query startnext
   const [crowdFunding] = !hasProjectProp
