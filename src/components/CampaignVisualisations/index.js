@@ -116,7 +116,6 @@ export const CampainVisualisation = ({
   minimum,
   maximum,
   addToSignatureCount,
-  addSelfScanned,
   currentCount,
   ...props
 }) => {
@@ -134,10 +133,6 @@ export const CampainVisualisation = ({
     if (maximum) {
       count = Math.min(count, maximum);
     }
-  }
-
-  if (addSelfScanned) {
-    count += addSelfScanned;
   }
 
   return <Visualisation count={count} {...props} />;

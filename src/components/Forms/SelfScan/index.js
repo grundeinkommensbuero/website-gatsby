@@ -49,7 +49,7 @@ export default ({ successMessage, campaignCode }) => {
     if (userId || eMail) {
       getSignatureCountOfUser({ userId: userId, email: eMail });
     }
-  }, [userId, eMail]);
+  }, [userId, eMail, state]);
 
   useEffect(() => {
     if (isAuthenticated && sessionUserId) {
@@ -91,17 +91,11 @@ export default ({ successMessage, campaignCode }) => {
     }
   `);
 
-  const addedSelfScanned = state === 'saved' ? count : 0;
-
   const campaignVisualisationsMapped = campaignVisualisations
     .map(({ node }) => node)
     .filter(({ campainCode: campaignCodeVisualisation }) => {
       return campaignCodeVisualisation === campaignCode;
     });
-
-  if (signatureCountOfUser && signatureCountOfUser.scannedByUser) {
-    campaignVisualisationsMapped[0].addSelfScanned = addedSelfScanned;
-  }
 
   const countSignaturesFormProps = {
     state,
@@ -126,7 +120,7 @@ export default ({ successMessage, campaignCode }) => {
             <div className={s.statisticsOverallCountItem}>
               <div className={s.statisticsOverallCount}>
                 <VisualCounter
-                  end={signatureCountOfUser.scannedByUser + addedSelfScanned}
+                  end={signatureCountOfUser.scannedByUser}
                 />
               </div>
               <div className={s.statisticsOverallLabel}>
@@ -315,7 +309,7 @@ const CountSignaturesForm = ({
       <Form
         onSubmit={data => {
           data.campaignCode = campaignCode;
-
+          
           // We can set both the list id and user id here,
           // because if the param is not set it will just be null
           data.userId = userId;
@@ -326,9 +320,14 @@ const CountSignaturesForm = ({
             data.listId = listId;
           }
 
+          // If user clicks on 'Mehr eintragen', the email cannot be read from the form.
+          // Therefore, we have to add it to the data object manually. 
           if (data.email) {
             setEMail(data.email);
+          } else if (eMail) {
+            data.email = eMail;
           }
+
           setCount(parseInt(data.count));
           updateSignatureList(data);
         }}
