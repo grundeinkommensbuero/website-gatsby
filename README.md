@@ -36,7 +36,7 @@ It's preferable to use rebase when merging.
 
 #### Linting and formatting
 
-A `.prettierrc` file is included. You can install a Prettier plugin in your text editor, it will automatically detect the `.prettierrc` and can be set to format according to these settings on save.
+A `.prettierrc` file is included. You can install a Prettier plugin in your text editor, it will automatically detect the `.prettierrc`. It can be set to format according to these settings on save (in VS Code this is enabled by default).
 
 ## Integrations
 
