@@ -59,8 +59,8 @@ The general pipeline of static data loading and querying in Gatsby is as follows
 - Used for static content (pages):
   - A static page has multiple sections
   - All the sections of the different pages are defined in static sites.
-  - `rich-text-react-renderer` can check they type of the content inside of embeds and then conditionally return components for that embedded content
-  - use `useStaticQuery` when you need to query something that comes from contentful
+  - `rich-text-react-renderer` can check they type of the content inside of embeds and then conditionally return components for that embedded content.
+  - use `useStaticQuery` when you need to query something that comes from contentful.
   - The Contentful definition contains sections, which get passed to the `Section` component, which render all the possible configurations of a section.
 
 #### Wordpress
