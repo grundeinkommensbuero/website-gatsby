@@ -34,8 +34,7 @@ export default ({ successMessage, campaignCode }) => {
   const [listId, setListId] = useState(null);
   const [eMail, setEMail] = useState(null);
   const [count, setCount] = useState(0);
-  const [wasSignedInAtOnePoint, setWasSignedInAtOnePoint] = useState(false);
-  const { isAuthenticated, userId } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -97,7 +96,6 @@ export default ({ successMessage, campaignCode }) => {
     campaignCode,
     setListId,
     resetSignatureListState,
-    isAuthenticated,
   };
 
   return (
@@ -173,7 +171,6 @@ const CountSignaturesForm = ({
   campaignCode,
   setListId,
   resetSignatureListState,
-  isAuthenticated,
 }) => {
   const needsEMail = !userId && !eMail;
 
