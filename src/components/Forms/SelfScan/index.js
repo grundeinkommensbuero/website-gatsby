@@ -32,17 +32,15 @@ export default ({ successMessage, campaignCode }) => {
 
   // Updating a list should be possible via list id or user id
   const [listId, setListId] = useState(null);
-  const [userId, setUserId] = useState(null);
   const [eMail, setEMail] = useState(null);
   const [, setCount] = useState(0);
   const [wasSignedInAtOnePoint, setWasSignedInAtOnePoint] = useState(false);
-  const { isAuthenticated, userId: sessionUserId } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     // Will be null, if param does not exist
     setListId(urlParams.listId);
-    setUserId(urlParams.userId);
   }, []);
 
   useEffect(() => {
@@ -51,22 +49,11 @@ export default ({ successMessage, campaignCode }) => {
     }
   }, [userId, eMail, state]);
 
-  // TODO: Figure it out
   useEffect(() => {
-    if (isAuthenticated && sessionUserId) {
-      setUserId(sessionUserId);
-      setWasSignedInAtOnePoint(true);
-    } else if (!isAuthenticated) {
-      // This will be called, when user signs out or at the beginning
-      // after the context knows if user is signed in.
-      // We only want to reset everything, if the user actually signed out.
-      // Otherwise the user id from url params would be overwritten.
-      if (wasSignedInAtOnePoint) {
-        setUserId(null);
-        resetSignatureCount();
-      }
+    if (!userId) {
+      resetSignatureCount();
     }
-  }, [isAuthenticated, sessionUserId]);
+  }, [userId]);
 
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
@@ -300,7 +287,7 @@ const CountSignaturesForm = ({
 
   return (
     <>
-      {isAuthenticated && (
+      {userId && (
         <p>
           <AuthInfo />
         </p>
