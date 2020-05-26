@@ -49,6 +49,7 @@ export default ({ successMessage, campaignCode }) => {
     }
   }, [userId, eMail, state]);
 
+  // TODO: Figure it out
   useEffect(() => {
     if (!userId) {
       resetSignatureCount();
