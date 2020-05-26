@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import querystring from 'query-string';
 
-import { getCurrentUser } from '../../hooks/Api/Users/Get';
+import { getCurrentUser, getUser } from '../../hooks/Api/Users/Get';
 import { useLocalStorageUser } from '../../hooks/Authentication/';
-import { getUser } from '../../hooks/Api/Users/Get';
 
 /**
  * This class serves as a provider (reacts context API) which is used
@@ -42,9 +41,9 @@ const AuthProvider = ({ children }) => {
       // Check for URL param for user ID
       const params = querystring.parse(window.location.search);
       // If params, set that user as the userId and via localStorage
-      if (params.useId) {
+      if (!userId && params.userId) {
         console.log('Update user id from query params');
-        setUserId(paramsUserId);
+        setUserId(params.userId);
       }
     }
   }, []);
@@ -85,8 +84,6 @@ const AuthProvider = ({ children }) => {
       updateCustomUserData({ userId, setCustomUserData });
     }
   }, [userId, isAuthenticated]);
-
-  console.log({ userId });
 
   return (
     <AuthContext.Provider
