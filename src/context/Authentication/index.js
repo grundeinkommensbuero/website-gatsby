@@ -3,6 +3,7 @@ import querystring from 'query-string';
 
 import { getCurrentUser } from '../../hooks/Api/Users/Get';
 import { useLocalStorageUser } from '../../hooks/Authentication/';
+import { getUser } from '../../hooks/Api/Users/Get';
 
 /**
  * This class serves as a provider (reacts context API) which is used
@@ -39,9 +40,9 @@ const AuthProvider = ({ children }) => {
       );
 
       // Check for URL param for user ID
-      const { paramsUserId } = querystring.parse(window.location.search);
+      const params = querystring.parse(window.location.search);
       // If params, set that user as the userId and via localStorage
-      if (paramsUserId) {
+      if (params.useId) {
         console.log('Update user id from query params');
         setUserId(paramsUserId);
       }
@@ -66,11 +67,26 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
 
       // Update user data with data from backend
-      updateCustomUserData(true, tempToken, setCustomUserData);
+      updateCustomUserData({
+        isAuthenticated: true,
+        token: tempToken,
+        setCustomUserData,
+      });
     } else {
       setIsAuthenticated(false);
     }
   }, [cognitoUser]);
+
+  useEffect(() => {
+    // Only run when authentication returns false and userId is true
+    if (!isAuthenticated && userId) {
+      console.log('Unauthenticated but has user id, get user data');
+      // Get user data for unauthenticated user
+      updateCustomUserData({ userId, setCustomUserData });
+    }
+  }, [userId, isAuthenticated]);
+
+  console.log({ userId });
 
   return (
     <AuthContext.Provider
@@ -85,7 +101,7 @@ const AuthProvider = ({ children }) => {
         setTempEmail,
         customUserData,
         updateCustomUserData: () =>
-          updateCustomUserData(isAuthenticated, token, setCustomUserData),
+          updateCustomUserData({ isAuthenticated, token, setCustomUserData }),
       }}
     >
       {children}
@@ -95,14 +111,18 @@ const AuthProvider = ({ children }) => {
 
 // Updates user data with data from backend
 const updateCustomUserData = async (
-  isAuthenticated,
-  token,
-  setCustomUserData
+  { isAuthenticated, token, setCustomUserData, userId } = {
+    isAuthenticated: false,
+  }
 ) => {
   try {
     if (isAuthenticated) {
+      // Get current user data if authenticated
       const result = await getCurrentUser(token);
-
+      setCustomUserData(result.user);
+    } else {
+      // Get minimal user data if not authenticated but has userId
+      const result = await getUser(userId);
       setCustomUserData(result.user);
     }
   } catch (error) {
