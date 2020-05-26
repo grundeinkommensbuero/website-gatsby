@@ -24,24 +24,6 @@ export const useSignIn = () => {
   return [state, () => signIn(setState, context)];
 };
 
-export const useAnswerChallenge = () => {
-  const [state, setState] = useState({});
-
-  //get global context
-  const context = useContext(AuthContext);
-
-  return [state, answer => answerCustomChallenge(answer, setState, context)];
-};
-
-export const useVerification = () => {
-  const [verificationState, setVerificationState] = useState('verifying');
-  return [
-    verificationState,
-    (email, code) => confirmSignUp(email, code, setVerificationState),
-    email => resendEmail(email, setVerificationState),
-  ];
-};
-
 // hook for signing out
 // in comparison to other hooks we only return the function, no state
 export const useSignOut = () => {
@@ -50,6 +32,11 @@ export const useSignOut = () => {
 
   return () => signOut(context);
 };
+
+// Other hooks
+export { useAnswerChallenge } from './AnswerChallenge';
+export { useVerification } from './Verification';
+export { useLocalStorageUser } from './LocalStorageUser';
 
 // Amplifys Auth class is used to sign up user
 const signUp = async (email, setState, { setUserId, setTempEmail }) => {
@@ -89,55 +76,6 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
   }
 };
 
-// Amplifys Auth Class is used to send a confirmation code to verify the mail address
-const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
-  try {
-    const { default: Auth } = await import(
-      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
-    );
-
-    //use auth class to confirm sing up
-    await Auth.confirmSignUp(email.toLowerCase(), confirmationCode);
-    setVerificationState('verified');
-    return true;
-  } catch (error) {
-    console.log('error confirming email', error);
-    const errorCode = error.code;
-    if (errorCode === 'UserNotFoundException') {
-      setVerificationState('userNotFound');
-    } else if (errorCode === 'CodeMismatchException') {
-      setVerificationState('wrongCode');
-    } else if (errorCode === 'NotAuthorizedException') {
-      setVerificationState('alreadyVerified');
-    } else if (errorCode === 'ExpiredCodeException') {
-      setVerificationState('expiredCode');
-    } else {
-      setVerificationState('error');
-    }
-    return false;
-  }
-};
-
-// Amplifys Auth Class is used to resend the confirmation mail
-const resendEmail = async (email, setVerificationState) => {
-  try {
-    setVerificationState('resendingEmail');
-
-    const { default: Auth } = await import(
-      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
-    );
-
-    await Auth.resendSignUp(email);
-    setVerificationState('resentEmail');
-    return true;
-  } catch (error) {
-    console.log('error resending confirmation mail');
-    setVerificationState('error');
-    //TODO: more specific error states
-    return false;
-  }
-};
-
 // Sign in user through AWS Cognito (passwordless)
 const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
   try {
@@ -165,48 +103,8 @@ const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
   }
 };
 
-// Function to send login code to aws
-const answerCustomChallenge = async (
-  answer,
-  setState,
-  { cognitoUser, setCognitoUser }
-) => {
-  // Send the answer to the User Pool
-  try {
-    setState('loading');
-    const { default: Auth } = await import(
-      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
-    );
-
-    // sendCustomChallengeAnswer() will throw an error if it’s the 3rd wrong answer
-    const tempUser = await Auth.sendCustomChallengeAnswer(cognitoUser, answer);
-
-    // It we get here, the answer was sent successfully,
-    // but it might have been wrong (1st or 2nd time)
-    // So we should test if the user is authenticated now
-    try {
-      // This will throw an error if the user is not yet authenticated:
-      await Auth.currentSession();
-      //User is now signed in
-      setState('success');
-
-      //use context to set user in global state
-      setCognitoUser(tempUser);
-    } catch (error) {
-      setState('wrongCode');
-      console.log('Apparently the user did not enter the right code', error);
-    }
-  } catch (error) {
-    setState('wrongCode');
-    console.log(
-      'User entered wrong code three times or user was never set',
-      error
-    );
-  }
-};
-
 //Function, which uses the amplify api to sign out user
-const signOut = async ({ setCognitoUser }) => {
+const signOut = async ({ setCognitoUser, setUserId }) => {
   try {
     const { default: Auth } = await import(
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
@@ -216,6 +114,7 @@ const signOut = async ({ setCognitoUser }) => {
 
     //use context to set user in global state
     setCognitoUser(null);
+    setUserId(undefined);
   } catch (error) {
     console.log('Error while signing out', error);
   }
