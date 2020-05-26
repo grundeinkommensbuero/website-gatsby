@@ -99,6 +99,17 @@ const AuthProvider = ({ children }) => {
     }
   }, [userId, isAuthenticated]);
 
+  useEffect(() => {
+    // Only run when authentication returns false and userId is true
+    if (!isAuthenticated && userId) {
+      console.log('Unauthenticated but has user id, get user data');
+      // Get user data for unauthenticated user
+      updateCustomUserData({ userId, setCustomUserData });
+    }
+  }, [userId, isAuthenticated]);
+
+  console.log({ userId });
+
   return (
     <AuthContext.Provider
       value={{

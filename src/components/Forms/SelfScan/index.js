@@ -33,7 +33,6 @@ export default ({ successMessage, campaignCode }) => {
   // Updating a list should be possible via list id or user id
   const [listId, setListId] = useState(null);
   const [eMail, setEMail] = useState(null);
-
   const { userId } = useContext(AuthContext);
   const [, setCount] = useState(0);
 
@@ -49,7 +48,6 @@ export default ({ successMessage, campaignCode }) => {
     }
   }, [userId, eMail, state]);
 
-  // TODO: Figure it out
   useEffect(() => {
     if (!userId) {
       resetSignatureCount();
