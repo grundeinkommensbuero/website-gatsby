@@ -28,7 +28,7 @@ export const useUserData = () => {
 
 // Gets data of user (username, profile pictures etc) in the form of { state, user }
 // We want to return state, because user might not have been found
-const getUser = async userId => {
+export const getUser = async userId => {
   try {
     const request = {
       method: 'GET',
