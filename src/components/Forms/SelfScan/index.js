@@ -51,6 +51,7 @@ export default ({ successMessage, campaignCode }) => {
     }
   }, [userId, eMail, state]);
 
+  // TODO: Figure it out
   useEffect(() => {
     if (isAuthenticated && sessionUserId) {
       setUserId(sessionUserId);
@@ -119,9 +120,7 @@ export default ({ successMessage, campaignCode }) => {
           <div className={s.statisticsOverall}>
             <div className={s.statisticsOverallCountItem}>
               <div className={s.statisticsOverallCount}>
-                <VisualCounter
-                  end={signatureCountOfUser.scannedByUser}
-                />
+                <VisualCounter end={signatureCountOfUser.scannedByUser} />
               </div>
               <div className={s.statisticsOverallLabel}>
                 Unterschriften
@@ -309,7 +308,7 @@ const CountSignaturesForm = ({
       <Form
         onSubmit={data => {
           data.campaignCode = campaignCode;
-          
+
           // We can set both the list id and user id here,
           // because if the param is not set it will just be null
           data.userId = userId;
@@ -321,7 +320,7 @@ const CountSignaturesForm = ({
           }
 
           // If user clicks on 'Mehr eintragen', the email cannot be read from the form.
-          // Therefore, we have to add it to the data object manually. 
+          // Therefore, we have to add it to the data object manually.
           if (data.email) {
             setEMail(data.email);
           } else if (eMail) {
