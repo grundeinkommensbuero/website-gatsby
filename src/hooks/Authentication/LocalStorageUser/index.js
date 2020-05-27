@@ -1,5 +1,4 @@
-import { useState, useContext } from 'react';
-import AuthContext from '../../../context/Authentication';
+import { useState } from 'react';
 
 const USER_ID_KEY = 'user-id';
 
@@ -8,9 +7,9 @@ export const useLocalStorageUser = () => {
   const [userId, setUserIdState] = useState(() => {
     // Initial value comes from localStorage
     try {
-      console.log('Checking local storage');
+      // console.log('Checking local storage');
       const userId = window.localStorage.getItem(USER_ID_KEY);
-      console.log('localStorage user id', userId);
+      // console.log('localStorage user id', userId);
       return userId ? JSON.parse(userId) : undefined;
     } catch (err) {
       console.warn('Error querying localStorage for user-id');

@@ -16,10 +16,10 @@ import { useLocalStorageUser } from '../../hooks/Authentication/';
 const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState();
   const [cognitoUser, setCognitoUser] = useState();
   // customUserData refers to the attributes we have saved in dynamo
-  const [customUserData, setCustomUserData] = useState();
+  const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
   // Replaces the basic useState for the userId
@@ -33,8 +33,16 @@ const AuthProvider = ({ children }) => {
       import(/* webpackChunkName: "Amplify" */ '@aws-amplify/auth').then(
         ({ default: Amplify }) => {
           Amplify.currentAuthenticatedUser()
-            .then(user => setCognitoUser(user)) // set user in context (global state)
-            .catch(() => setCognitoUser(null)); //error is thrown if user is not authenticated
+            .then(user => {
+              if (user) {
+                setCognitoUser(user);
+                setIsAuthenticated(true);
+              }
+            }) // set user in context (global state)
+            .catch(() => {
+              //error is thrown if user is not authenticated
+              setIsAuthenticated(false);
+            });
         }
       );
 
@@ -63,22 +71,18 @@ const AuthProvider = ({ children }) => {
         setUserId(cognitoUser.attributes.sub);
       }
 
-      setIsAuthenticated(true);
-
       // Update user data with data from backend
       updateCustomUserData({
         isAuthenticated: true,
         token: tempToken,
         setCustomUserData,
       });
-    } else {
-      setIsAuthenticated(false);
     }
   }, [cognitoUser]);
 
   useEffect(() => {
     // Only run when authentication returns false and userId is true
-    if (!isAuthenticated && userId) {
+    if (isAuthenticated === false && userId) {
       console.log('Unauthenticated but has user id, get user data');
       // Get user data for unauthenticated user
       updateCustomUserData({ userId, setCustomUserData });
@@ -91,6 +95,7 @@ const AuthProvider = ({ children }) => {
         cognitoUser,
         setCognitoUser,
         isAuthenticated,
+        setIsAuthenticated,
         token,
         userId,
         setUserId,
@@ -117,7 +122,8 @@ const updateCustomUserData = async (
       // Get current user data if authenticated
       const result = await getCurrentUser(token);
       setCustomUserData(result.user);
-    } else {
+    } else if (isAuthenticated === false) {
+      console.log('GET UNAUTH USER DATA');
       // Get minimal user data if not authenticated but has userId
       const result = await getUser(userId);
       setCustomUserData(result.user);
