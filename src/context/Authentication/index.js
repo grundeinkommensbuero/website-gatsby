@@ -50,7 +50,6 @@ const AuthProvider = ({ children }) => {
       const params = querystring.parse(window.location.search);
       // If params, set that user as the userId and via localStorage
       if (!userId && params.userId) {
-        console.log('Update user id from query params');
         setUserId(params.userId);
       }
     }
@@ -61,7 +60,6 @@ const AuthProvider = ({ children }) => {
     // Set user in localhost
     //only if user is authenticated
     if (cognitoUser && cognitoUser.attributes) {
-      console.log('Authenticated');
       // token from state would be available only in the next lifecycle
       // therefore the whole tempToken thing
       const tempToken = cognitoUser.signInUserSession.idToken.jwtToken;
@@ -81,11 +79,9 @@ const AuthProvider = ({ children }) => {
   }, [cognitoUser]);
 
   useEffect(() => {
-    // Only run when authentication returns false and userId is true
     if (isAuthenticated === false && userId) {
-      console.log('Unauthenticated but has user id, get user data');
-      // Get user data for unauthenticated user
-      updateCustomUserData({ userId, setCustomUserData });
+      // Get user data for unauthenticated user with known userId
+      updateCustomUserData({ isAuthenticated, userId, setCustomUserData });
     }
   }, [userId, isAuthenticated]);
 
@@ -112,18 +108,18 @@ const AuthProvider = ({ children }) => {
 };
 
 // Updates user data with data from backend
-const updateCustomUserData = async (
-  { isAuthenticated, token, setCustomUserData, userId } = {
-    isAuthenticated: false,
-  }
-) => {
+const updateCustomUserData = async ({
+  isAuthenticated,
+  token,
+  setCustomUserData,
+  userId,
+}) => {
   try {
-    if (isAuthenticated) {
+    if (isAuthenticated === true) {
       // Get current user data if authenticated
       const result = await getCurrentUser(token);
       setCustomUserData(result.user);
     } else if (isAuthenticated === false) {
-      console.log('GET UNAUTH USER DATA');
       // Get minimal user data if not authenticated but has userId
       const result = await getUser(userId);
       setCustomUserData(result.user);
