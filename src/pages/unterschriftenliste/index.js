@@ -17,7 +17,7 @@ const trackingCategory = 'ListDownload';
 const Unterschriftenliste = () => {
   const [state, pdf, , createPdf] = useCreateSignatureList({});
   const [campaignCode, setCampaignCode] = useState(null);
-  const { userId, setUserId, isAuthenticated } = useContext(AuthContext);
+  const { userId, isAuthenticated } = useContext(AuthContext);
 
   const { contentfulKampagnenvisualisierung } = useStaticQuery(graphql`
     query CrowdFunding2 {
@@ -49,30 +49,17 @@ const Unterschriftenliste = () => {
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
     setCampaignCode(urlParams.campaignCode);
-    setUserId(urlParams.userId);
   }, []);
 
   useEffect(() => {
-    if (campaignCode && userId && !isAuthenticated) {
+    if (campaignCode && userId) {
+      // This will fail if userId has newsletter consent value of false
       createPdf({
         campaignCode,
         userExists: true,
       });
     }
-  }, [userId]);
-
-  useEffect(() => {
-    // We also need to check if the state is 'unauthorized',
-    // otherwise we might make a successful call twice if user already had a sesssion
-    // (because it takes some time for that be checked)
-    if (campaignCode && isAuthenticated && state === 'unauthorized') {
-      createPdf({
-        campaignCode,
-        userExists: true,
-        shouldNotUpdateUser: true,
-      });
-    }
-  }, [isAuthenticated, state]);
+  }, [isAuthenticated, userId, campaignCode]);
 
   if (state === 'error') {
     trackEvent({
