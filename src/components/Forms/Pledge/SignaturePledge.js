@@ -136,9 +136,7 @@ export default ({ pledgeId }) => {
 
               <FormSection>
                 {(!isAuthenticated ||
-                  (isAuthenticated &&
-                    userData &&
-                    !userData.newsletterConsent.value)) && (
+                  (isAuthenticated && !userData?.newsletterConsent?.value)) && (
                   <Field
                     name="newsletterConsent"
                     label={
