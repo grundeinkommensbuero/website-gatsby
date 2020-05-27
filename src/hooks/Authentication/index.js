@@ -104,7 +104,7 @@ const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
 };
 
 //Function, which uses the amplify api to sign out user
-const signOut = async ({ setCognitoUser, setUserId }) => {
+const signOut = async ({ setCognitoUser, setUserId, setIsAuthenticated }) => {
   try {
     const { default: Auth } = await import(
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
@@ -115,6 +115,7 @@ const signOut = async ({ setCognitoUser, setUserId }) => {
     //use context to set user in global state
     setCognitoUser(null);
     setUserId(undefined);
+    setIsAuthenticated(false);
   } catch (error) {
     console.log('Error while signing out', error);
   }

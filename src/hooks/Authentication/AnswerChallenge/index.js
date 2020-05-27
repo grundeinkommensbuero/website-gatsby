@@ -14,7 +14,7 @@ export const useAnswerChallenge = () => {
 const answerCustomChallenge = async (
   answer,
   setState,
-  { cognitoUser, setCognitoUser }
+  { cognitoUser, setCognitoUser, setIsAuthenticated }
 ) => {
   // Send the answer to the User Pool
   try {
@@ -37,6 +37,7 @@ const answerCustomChallenge = async (
 
       //use context to set user in global state
       setCognitoUser(tempUser);
+      setIsAuthenticated(true);
     } catch (error) {
       setState('wrongCode');
       console.log('Apparently the user did not enter the right code', error);
