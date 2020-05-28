@@ -119,7 +119,7 @@ function Template({ children, sections }) {
 
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
-    globalStuff.overlay.campainVisualisations
+    globalStuff?.overlay?.campainVisualisations
   );
 
   // Create new overlay definition
