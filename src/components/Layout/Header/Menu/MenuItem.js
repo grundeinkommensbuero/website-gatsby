@@ -4,14 +4,14 @@ import cN from 'classnames';
 
 import s from '../style.module.less';
 
-const MenuItem = ({ slug, shortTitle, title, child }) => (
-  <li className={cN(s.navItem, { [s.navItemChild]: child })}>
+const MenuItemLink = ({ slug, isChild, children }) => (
+  <li className={cN(s.navItem, { [s.navItemChild]: isChild })}>
     <Link
       className={s.link}
       activeClassName={s.linkActive}
       to={slug === '/' ? '/' : `/${slug}/`}
     >
-      {shortTitle || title}
+      {children}
     </Link>
   </li>
 );
@@ -24,5 +24,4 @@ const MenuItemButton = ({ onClick, children }) => (
   </li>
 );
 
-export default MenuItem;
-export { MenuItemButton };
+export { MenuItemLink, MenuItemButton };
