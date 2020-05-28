@@ -35,7 +35,7 @@ const Header = ({ menu }) => {
           }
           className={s.ctaButtonWrapper}
         >
-          <OverlayContext.Consumer>
+          {/* <OverlayContext.Consumer>
             {({ toggleOverlay }) => (
               <Button
                 className={s.ctaButton}
@@ -45,7 +45,7 @@ const Header = ({ menu }) => {
                 Crowdfunding
               </Button>
             )}
-          </OverlayContext.Consumer>
+          </OverlayContext.Consumer> */}
         </Tooltip>
         {menu && (
           <nav className={s.nav}>
