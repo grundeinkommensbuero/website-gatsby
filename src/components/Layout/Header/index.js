@@ -7,7 +7,7 @@ import { OverlayContext } from '../../../context/Overlay';
 import { Button } from '../../Forms/Button';
 import { Tooltip } from '../../Tooltip';
 
-const Header = ({ menu }) => {
+const Header = ({ menu, hasOverlay }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -35,17 +35,19 @@ const Header = ({ menu }) => {
           }
           className={s.ctaButtonWrapper}
         >
-          {/* <OverlayContext.Consumer>
-            {({ toggleOverlay }) => (
-              <Button
-                className={s.ctaButton}
-                size="MEDIUM"
-                onClick={() => toggleOverlay()}
-              >
-                Crowdfunding
-              </Button>
-            )}
-          </OverlayContext.Consumer> */}
+          {hasOverlay && (
+            <OverlayContext.Consumer>
+              {({ toggleOverlay }) => (
+                <Button
+                  className={s.ctaButton}
+                  size="MEDIUM"
+                  onClick={() => toggleOverlay()}
+                >
+                  Crowdfunding
+                </Button>
+              )}
+            </OverlayContext.Consumer>
+          )}
         </Tooltip>
         {menu && (
           <nav className={s.nav}>
