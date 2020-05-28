@@ -6,6 +6,7 @@ import AuthContext from '../../../../context/Authentication';
 import s from '../style.module.less';
 import MenuItem from './MenuItem';
 import MenuItemParent from './MenuItemParent';
+import LoginMenuItem from './LoginMenuItem';
 
 const Menu = ({ menu, menuOpen }) => {
   const { userId, isAuthenticated } = useContext(AuthContext);
@@ -20,7 +21,7 @@ const Menu = ({ menu, menuOpen }) => {
           return <MenuItemParent key={index} {...item} />;
         }
       })}
-      {/* {showLogin && <LoginMenuItem />} */}
+      {showLogin && <LoginMenuItem />}
     </ul>
   );
 };

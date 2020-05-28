@@ -1,12 +1,25 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../../../context/Authentication';
+import { useSignOut } from '../../../../hooks/Authentication';
 
 import MenuItemParent from './MenuItemParent';
-import MenuItem from './MenuItem';
 
 const LoginMenuItem = () => {
   const { customUserData } = useContext(AuthContext);
   const signOut = useSignOut();
 
-  return <MenuItemParent />;
+  const itemDefinition = {
+    title: customUserData.username,
+    contentfulchildren: [
+      {
+        title: 'Log out',
+        shortTitle: 'Log Out',
+        action: signOut,
+      },
+    ],
+  };
+
+  return <MenuItemParent {...itemDefinition} />;
 };
+
+export default LoginMenuItem;
