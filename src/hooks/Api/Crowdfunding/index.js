@@ -76,7 +76,7 @@ const loadScript = (source, beforeEl, async = true, defer = true) => {
   });
 };
 
-export const buildVisualisationsWithCrowdfunding = visualisations => {
+export const buildVisualisationsWithCrowdfunding = (visualisations = []) => {
   const visualisationsWithoutCrowdfunding = visualisations.filter(
     vis => !vis.startnextId
   );
