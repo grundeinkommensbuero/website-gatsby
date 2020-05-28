@@ -78,7 +78,6 @@ export default ({ pledgeId }) => {
         }
       }}
       initialValues={{
-        signatureCount: 1,
         name: userId !== undefined && userData ? userData.username : '',
         zipCode: userId !== undefined && userData ? userData.zipCode : '',
       }}
