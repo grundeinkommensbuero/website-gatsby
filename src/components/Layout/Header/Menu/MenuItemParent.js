@@ -7,11 +7,16 @@ import MenuItem from './MenuItem';
 
 const MenuItemParent = ({
   title,
+  children,
   contentfulchildren,
   internalLink,
   externalLink,
 }) => {
-  const children = contentfulchildren;
+  const listItems = contentfulchildren
+    ? contentfulchildren.map((item, index) => (
+        <MenuItem key={index} child={true} {...item} />
+      ))
+    : children;
   return (
     <li className={cN(s.navItem, s.navItemParent)}>
       {!internalLink && !externalLink && (
@@ -31,13 +36,9 @@ const MenuItemParent = ({
           {title}
         </a>
       )}
-      {children && (
+      {listItems && (
         <div className={s.menuItemParentChildren}>
-          <ul className={s.menuItemParentChildrenInner}>
-            {children.map((item, index) => (
-              <MenuItem key={index} child={true} {...item} />
-            ))}
-          </ul>
+          <ul className={s.menuItemParentChildrenInner}>{listItems}</ul>
         </div>
       )}
     </li>
