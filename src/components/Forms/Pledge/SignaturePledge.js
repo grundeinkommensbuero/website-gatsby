@@ -23,7 +23,9 @@ export default ({ pledgeId }) => {
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, customUserData: userData } = useContext(AuthContext);
+  const { isAuthenticated, userId, customUserData: userData } = useContext(
+    AuthContext
+  );
 
   // After signup process is done we can save the pledge
   useEffect(() => {
@@ -78,8 +80,8 @@ export default ({ pledgeId }) => {
       }}
       initialValues={{
         signatureCount: 1,
-        name: isAuthenticated && userData ? userData.username : '',
-        zipCode: isAuthenticated && userData ? userData.zipCode : '',
+        name: userId !== undefined && userData ? userData.username : '',
+        zipCode: userId !== undefined && userData ? userData.zipCode : '',
       }}
       validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
