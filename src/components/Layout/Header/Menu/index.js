@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import cN from 'classnames';
-
-import AuthContext from '../../../../context/Authentication';
 
 import s from '../style.module.less';
 import { MenuItemLink } from './MenuItem';
@@ -9,9 +7,6 @@ import MenuItemParent from './MenuItemParent';
 import LoginMenuItem from './LoginMenuItem';
 
 const Menu = ({ menu, menuOpen }) => {
-  const { userId, isAuthenticated } = useContext(AuthContext);
-  const showLogin = userId != null || isAuthenticated;
-
   return (
     <ul className={cN(s.navList, { [s.isOpen]: menuOpen })} id="menuHeader">
       {/* TODO map contentful children in to MenuItem and pass values as children */}
@@ -28,7 +23,7 @@ const Menu = ({ menu, menuOpen }) => {
               {/* Map thru children of the menu item and pass to the submenu */}
               {item.contentfulchildren &&
                 item.contentfulchildren.map((item, index) => (
-                  <MenuItemLink key={index} isChild={true}>
+                  <MenuItemLink key={index} isChild={true} slug={item.slug}>
                     {item.shortTitle || item.title}
                   </MenuItemLink>
                 ))}
@@ -36,7 +31,7 @@ const Menu = ({ menu, menuOpen }) => {
           );
         }
       })}
-      {showLogin && <LoginMenuItem />}
+      <LoginMenuItem />
     </ul>
   );
 };
