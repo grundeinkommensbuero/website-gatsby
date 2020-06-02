@@ -69,15 +69,15 @@ export default ({ pledgeId, initialValues, onSignUp }) => {
 
   return (
     <Form
-      onSubmit={e => {
+      onSubmit={async e => {
         e.pledgeId = pledgeId;
         e.privacyConsent = true;
         e.newsletterConsent = true;
         setHasSubmitted(true);
         setPledgeLocally(e);
         if (!isAuthenticated) {
-          signUp(e.email);
-          onSignUp();
+          await signUp(e.email);
+          await onSignUp();
         }
       }}
       initialValues={{

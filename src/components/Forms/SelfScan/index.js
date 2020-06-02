@@ -68,12 +68,9 @@ export default ({ successMessage, campaignCode }) => {
         count,
         campaignCode,
       };
-      // Wait for database
-      setTimeout(() => {
-        console.log('updating list');
-        updateSignatureList(data);
-        console.log('list updated');
-      }, 2000);
+      console.log('updating list');
+      updateSignatureList(data);
+      console.log('list updated');
     }
   }, [eMail, userId, count, campaignCode, listId, didSignUp]);
 
@@ -264,7 +261,7 @@ const CountSignaturesForm = ({
               initialValues={{
                 email: eMail,
               }}
-              onSignUp={() => setDidSignUp(true)}
+              onSignUp={async () => setDidSignUp(true)}
             />
 
             <p>
