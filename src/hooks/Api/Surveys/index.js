@@ -43,11 +43,11 @@ export const saveSurveyAnswer = async ({ userId, surveyCode, answer }) => {
         request
       );
 
-      if (response.status === 201) {
-        if (surveyCode === 'olympia') {
-          window.location.replace('https://petitionen.12062020.de/polls/2');
-        }
+      if (surveyCode === 'olympia') {
+        window.location.replace('https://petitionen.12062020.de/polls/2');
+      }
 
+      if (response.status === 201) {
         return { state: 'saved' };
       } else {
         return { state: 'error' };
