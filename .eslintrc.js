@@ -16,4 +16,7 @@ module.exports = {
       jsx: true,
     },
   },
+  rules: {
+    'react/display-name': 'off',
+  },
 };

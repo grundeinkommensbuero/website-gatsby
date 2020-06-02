@@ -25,6 +25,7 @@ export default ({ successMessage, campaignCode }) => {
     updateSignatureList,
     resetSignatureListState,
   ] = useUpdateSignatureListByUser();
+
   const [
     signatureCountOfUser,
     getSignatureCountOfUser,
@@ -99,6 +100,8 @@ export default ({ successMessage, campaignCode }) => {
     resetSignatureListState,
   };
 
+  console.log({ count });
+
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
@@ -168,19 +171,13 @@ const CountSignaturesForm = ({
   setEMail,
   eMail,
   successMessage,
+  count,
   setCount,
   campaignCode,
   setListId,
   resetSignatureListState,
 }) => {
   const needsEMail = !userId && !eMail;
-
-  // Used to send form data to the general pledge component
-  let formData = {
-    'email': eMail,
-    'listId': listId
-    // 'count': count
-  };
 
   if (state === 'saving') {
     return <FinallyMessage state="progress">Speichere...</FinallyMessage>;
@@ -218,8 +215,8 @@ const CountSignaturesForm = ({
             <h2>Hoppla!</h2>
 
             <p>
-              Wir haben deine E-Mail-Adresse leider nicht gefunden.
-              Hast du dich vertippt? Dann versuche es erneut:
+              Wir haben deine E-Mail-Adresse leider nicht gefunden. Hast du dich
+              vertippt? Dann versuche es erneut:
             </p>
             <CTAButtonContainer
               className={cN(s.buttonContainer, s.buttonContainerMessage)}
@@ -235,9 +232,31 @@ const CountSignaturesForm = ({
               </CTAButton>
             </CTAButtonContainer>
 
-            <p>Oder registriere dich neu bei uns, um die Unterschriften einzutragen:</p>
+            <p>
+              Oder registriere dich neu bei uns, um die Unterschriften
+              einzutragen:
+            </p>
 
-            <GeneralPledge pledgeId='general-1' formData={formData} />
+            <GeneralPledge
+              pledgeId="general-1"
+              // Initial Values
+              formData={{
+                email: eMail,
+              }}
+              onSubmit={() => {
+                console.log('UPDATING SIGNATURE LIST');
+                const updateSignatureListData = {
+                  listId,
+                  userId,
+                  eMail,
+                  count,
+                  campaignCode,
+                };
+                console.log(updateSignatureListData);
+                updateSignatureList(updateSignatureListData);
+                console.log('SUCCESS UPDATING LIST');
+              }}
+            />
 
             <p>
               Funktioniert auch das nicht= Dann schreib uns an{' '}
