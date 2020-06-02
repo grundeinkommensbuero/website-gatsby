@@ -14,7 +14,7 @@ import EnterLoginCode from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ pledgeId, initialValues, onSignUp }) => {
+export default ({ pledgeId, initialValues }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
@@ -28,10 +28,10 @@ export default ({ pledgeId, initialValues, onSignUp }) => {
 
   // After signup process is done we can save the pledge
   useEffect(() => {
-    if (signUpState === 'success') {
+    if (signUpState === 'success' && userId) {
       createPledge(pledge);
     }
-  }, [signUpState]);
+  }, [signUpState, userId]);
 
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
@@ -77,7 +77,6 @@ export default ({ pledgeId, initialValues, onSignUp }) => {
         setPledgeLocally(e);
         if (!isAuthenticated) {
           await signUp(e.email);
-          await onSignUp();
         }
       }}
       initialValues={{

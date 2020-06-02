@@ -33,7 +33,6 @@ export default ({ successMessage, campaignCode }) => {
   ] = useSignatureCountOfUser();
 
   // Updating a list should be possible via list id or user id
-  const [didSignUp, setDidSignUp] = useState(false);
   const [listId, setListId] = useState(null);
   const [eMail, setEMail] = useState(null);
   const [count, setCount] = useState(0);
@@ -59,11 +58,10 @@ export default ({ successMessage, campaignCode }) => {
 
   useEffect(() => {
     // Only run updateSignatureList when user signs up
-    if (didSignUp && eMail && userId && count && campaignCode && listId) {
+    if (userId && count && campaignCode && listId) {
       console.log('User signed up in general pledge');
       const data = {
         userId,
-        email: eMail,
         listId,
         count,
         campaignCode,
@@ -72,7 +70,7 @@ export default ({ successMessage, campaignCode }) => {
       updateSignatureList(data);
       console.log('list updated');
     }
-  }, [eMail, userId, count, campaignCode, listId, didSignUp]);
+  }, [userId, count, campaignCode, listId]);
 
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
@@ -108,7 +106,6 @@ export default ({ successMessage, campaignCode }) => {
 
   const countSignaturesFormProps = {
     state,
-    setDidSignUp,
     updateSignatureList,
     listId,
     userId,
@@ -184,7 +181,6 @@ export default ({ successMessage, campaignCode }) => {
 
 const CountSignaturesForm = ({
   state,
-  setDidSignUp,
   updateSignatureList,
   listId,
   userId,
@@ -261,7 +257,6 @@ const CountSignaturesForm = ({
               initialValues={{
                 email: eMail,
               }}
-              onSignUp={async () => setDidSignUp(true)}
             />
 
             <p>
