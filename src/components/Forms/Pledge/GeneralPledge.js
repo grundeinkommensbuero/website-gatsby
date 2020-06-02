@@ -14,7 +14,7 @@ import EnterLoginCode from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ pledgeId, formData, onSubmit }) => {
+export default ({ pledgeId, initialValues, onSignUp }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
@@ -77,10 +77,7 @@ export default ({ pledgeId, formData, onSubmit }) => {
         setPledgeLocally(e);
         if (!isAuthenticated) {
           signUp(e.email);
-        }
-
-        if (onSubmit) {
-          onSubmit();
+          onSignUp();
         }
       }}
       initialValues={{
@@ -89,7 +86,7 @@ export default ({ pledgeId, formData, onSubmit }) => {
       }}
       validate={values => validate(values, isAuthenticated)}
       initialValues={{
-        email: formData ? formData.email : '',
+        email: initialValues?.email,
       }}
       render={({ handleSubmit }) => {
         return (

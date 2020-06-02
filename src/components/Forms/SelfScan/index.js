@@ -33,6 +33,7 @@ export default ({ successMessage, campaignCode }) => {
   ] = useSignatureCountOfUser();
 
   // Updating a list should be possible via list id or user id
+  const [didSignUp, setDidSignUp] = useState(false);
   const [listId, setListId] = useState(null);
   const [eMail, setEMail] = useState(null);
   const [count, setCount] = useState(0);
@@ -55,6 +56,26 @@ export default ({ successMessage, campaignCode }) => {
       resetSignatureCount();
     }
   }, [userId]);
+
+  useEffect(() => {
+    // Only run updateSignatureList when user signs up
+    if (didSignUp && eMail && userId && count && campaignCode && listId) {
+      console.log('User signed up in general pledge');
+      const data = {
+        userId,
+        email: eMail,
+        listId,
+        count,
+        campaignCode,
+      };
+      // Wait for database
+      setTimeout(() => {
+        console.log('updating list');
+        updateSignatureList(data);
+        console.log('list updated');
+      }, 2000);
+    }
+  }, [eMail, userId, count, campaignCode, listId, didSignUp]);
 
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
@@ -86,8 +107,11 @@ export default ({ successMessage, campaignCode }) => {
       return campaignCodeVisualisation === campaignCode;
     });
 
+  console.log(state);
+
   const countSignaturesFormProps = {
     state,
+    setDidSignUp,
     updateSignatureList,
     listId,
     userId,
@@ -99,8 +123,6 @@ export default ({ successMessage, campaignCode }) => {
     setListId,
     resetSignatureListState,
   };
-
-  console.log({ count });
 
   return (
     <>
@@ -165,13 +187,13 @@ export default ({ successMessage, campaignCode }) => {
 
 const CountSignaturesForm = ({
   state,
+  setDidSignUp,
   updateSignatureList,
   listId,
   userId,
   setEMail,
   eMail,
   successMessage,
-  count,
   setCount,
   campaignCode,
   setListId,
@@ -239,23 +261,10 @@ const CountSignaturesForm = ({
 
             <GeneralPledge
               pledgeId="general-1"
-              // Initial Values
-              formData={{
+              initialValues={{
                 email: eMail,
               }}
-              onSubmit={() => {
-                console.log('UPDATING SIGNATURE LIST');
-                const updateSignatureListData = {
-                  listId,
-                  userId,
-                  eMail,
-                  count,
-                  campaignCode,
-                };
-                console.log(updateSignatureListData);
-                updateSignatureList(updateSignatureListData);
-                console.log('SUCCESS UPDATING LIST');
-              }}
+              onSignUp={() => setDidSignUp(true)}
             />
 
             <p>
