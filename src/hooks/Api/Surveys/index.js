@@ -44,7 +44,10 @@ export const saveSurveyAnswer = async ({ userId, surveyCode, answer }) => {
       );
 
       if (response.status === 201) {
-        window.location.replace('https://petitionen.12062020.de/polls/2');
+        if (surveyCode === 'olympia') {
+          window.location.replace('https://petitionen.12062020.de/polls/2');
+        }
+
         return { state: 'saved' };
       } else {
         return { state: 'error' };
