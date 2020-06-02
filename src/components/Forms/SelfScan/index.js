@@ -17,6 +17,7 @@ import VisualCounter from '../../VisualCounter';
 import cN from 'classnames';
 import AuthContext from '../../../context/Authentication';
 import AuthInfo from '../../AuthInfo';
+import GeneralPledge from '../Pledge/GeneralPledge';
 
 export default ({ successMessage, campaignCode }) => {
   const [
@@ -174,6 +175,13 @@ const CountSignaturesForm = ({
 }) => {
   const needsEMail = !userId && !eMail;
 
+  // Used to send form data to the general pledge component
+  let formData = {
+    'email': eMail,
+    'listId': listId
+    // 'count': count
+  };
+
   if (state === 'saving') {
     return <FinallyMessage state="progress">Speichere...</FinallyMessage>;
   }
@@ -207,18 +215,12 @@ const CountSignaturesForm = ({
       <FinallyMessage state="error">
         {state === 'userNotFound' && (
           <>
-            Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
-            geschrieben? Falls du noch nicht bei uns registriert bist, kannst du
-            dich{' '}
-            <a href="https://expedition-grundeinkommen.de/expedition#generalpledge">
-              hier anmelden
-            </a>
-            . Daraufhin kannst du die Unterschriften eintragen. Falls es dann
-            noch immer nicht funktioniert, schreib uns an{' '}
-            <a href="mailto:support@expedition-grundeinkommen.de">
-              support@expedition-grundeinkommen.de
-            </a>
-            .
+            <h2>Hoppla!</h2>
+
+            <p>
+              Wir haben deine E-Mail-Adresse leider nicht gefunden.
+              Hast du dich vertippt? Dann versuche es erneut:
+            </p>
             <CTAButtonContainer
               className={cN(s.buttonContainer, s.buttonContainerMessage)}
             >
@@ -232,6 +234,18 @@ const CountSignaturesForm = ({
                 Neuer Versuch
               </CTAButton>
             </CTAButtonContainer>
+
+            <p>Oder registriere dich neu bei uns, um die Unterschriften einzutragen:</p>
+
+            <GeneralPledge pledgeId='general-1' formData={formData} />
+
+            <p>
+              Funktioniert auch das nicht= Dann schreib uns an{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </p>
           </>
         )}
         {state === 'error' && (

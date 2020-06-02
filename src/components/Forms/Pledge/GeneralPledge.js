@@ -13,8 +13,9 @@ import AuthContext from '../../../context/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
+import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 
-export default ({ pledgeId }) => {
+export default ({ pledgeId, formData }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
@@ -23,6 +24,8 @@ export default ({ pledgeId }) => {
   const { isAuthenticated, userId, customUserData: userData } = useContext(
     AuthContext
   );
+
+  console.log(formData);
 
   // After signup process is done we can save the pledge
   useEffect(() => {
@@ -76,12 +79,19 @@ export default ({ pledgeId }) => {
         if (!isAuthenticated) {
           signUp(e.email);
         }
+
+        if (formData) {
+          updateSignatureList(formData);
+        }
       }}
       initialValues={{
         name: userId !== undefined && userData ? userData.username : '',
         zipCode: userId !== undefined && userData ? userData.zipCode : '',
       }}
       validate={values => validate(values, isAuthenticated)}
+      initialValues={{
+        email: formData ? formData.email : '',
+      }}
       render={({ handleSubmit }) => {
         return (
           <FormWrapper>
