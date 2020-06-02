@@ -26,7 +26,7 @@ const Header = ({ menu, hasOverlay }) => {
             />
           </Link>
         </h1>
-        <Tooltip
+        {/* <Tooltip
           content={
             <>
               Wir stellen unsere Kampagne wegen Corona auf Briefversand um.
@@ -34,21 +34,21 @@ const Header = ({ menu, hasOverlay }) => {
             </>
           }
           className={s.ctaButtonWrapper}
-        >
-          {hasOverlay && (
-            <OverlayContext.Consumer>
-              {({ toggleOverlay }) => (
-                <Button
-                  className={s.ctaButton}
-                  size="MEDIUM"
-                  onClick={() => toggleOverlay()}
-                >
-                  Crowdfunding
-                </Button>
-              )}
-            </OverlayContext.Consumer>
-          )}
-        </Tooltip>
+        > */}
+        {hasOverlay && (
+          <OverlayContext.Consumer>
+            {({ toggleOverlay }) => (
+              <Button
+                className={s.ctaButton}
+                size="MEDIUM"
+                onClick={() => toggleOverlay()}
+              >
+                Crowdfunding
+              </Button>
+            )}
+          </OverlayContext.Consumer>
+        )}
+        {/* </Tooltip> */}
         {menu && (
           <nav className={s.nav}>
             <button
