@@ -5,7 +5,7 @@ import Logo from './logo.svg';
 import cN from 'classnames';
 import { OverlayContext } from '../../../context/Overlay';
 import { Button } from '../../Forms/Button';
-import { Tooltip } from '../../Tooltip';
+// import { Tooltip } from '../../Tooltip';
 
 const Header = ({ menu, hasOverlay }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,7 +43,7 @@ const Header = ({ menu, hasOverlay }) => {
                 size="MEDIUM"
                 onClick={() => toggleOverlay()}
               >
-                Crowdfunding
+                Jetzt abstimmen
               </Button>
             )}
           </OverlayContext.Consumer>
