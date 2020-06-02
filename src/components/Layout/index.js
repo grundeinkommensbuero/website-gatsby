@@ -135,10 +135,7 @@ function Template({ children, sections }) {
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
-      <Header
-        menu={globalStuff.mainMenu}
-        hasOverlay={!!globalStuff?.overlay?.campainVisualisations}
-      />
+      <Header menu={globalStuff.mainMenu} hasOverlay={!!globalStuff?.overlay} />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
