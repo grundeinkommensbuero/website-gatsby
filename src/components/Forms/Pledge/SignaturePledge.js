@@ -11,7 +11,7 @@ import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
-import EnterLoginCode from '../../EnterLoginCode';
+import EnterLoginCode, { RequestLoginCode } from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import AuthContext from '../../../context/Authentication';
 import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
@@ -52,6 +52,10 @@ export default ({ pledgeId }) => {
 
   if (signUpState === 'userExists') {
     return <EnterLoginCode />;
+  }
+
+  if (userId && !isAuthenticated) {
+    return <RequestLoginCode />;
   }
 
   if (isAuthenticated && userData && pledgeWasAlreadyMade(userData, pledgeId)) {
