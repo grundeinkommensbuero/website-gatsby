@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+/* eslint-disable react/display-name */
+import React, { useEffect, useContext } from 'react';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 import { useAnswerChallenge, useSignIn } from '../../hooks/Authentication';
+import AuthContext from '../../context/Authentication';
 import { Form, Field } from 'react-final-form';
 import FormSection from '../Forms/FormSection';
 import { CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
 import { TextInputWrapped } from '../Forms/TextInput';
 import FormWrapper from '../Forms/FormWrapper';
 
-export default ({ children }) => {
+const EnterLoginCode = ({ children }) => {
   const [answerChallengeState, setCode] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
@@ -94,3 +96,52 @@ const validate = values => {
 
   return errors;
 };
+
+const RequestLoginCode = () => {
+  const { tempEmail, setTempEmail } = useContext(AuthContext);
+  console.log(tempEmail);
+
+  if (!tempEmail) {
+    return (
+      <FinallyMessage state="error">
+        <p>Please enter your email to confirm your identity</p>
+        <Form
+          onSubmit={e => {
+            console.log('submit email form');
+            setTempEmail(e.email);
+          }}
+          validate={validate}
+          render={({ handleSubmit }) => {
+            return (
+              <FormWrapper>
+                <form onSubmit={handleSubmit}>
+                  <FormSection>
+                    <Field
+                      name="email"
+                      label="Email"
+                      placeholder="Email"
+                      type="text"
+                      autoComplete="off"
+                      component={TextInputWrapped}
+                    ></Field>
+                  </FormSection>
+
+                  <CTAButtonContainer>
+                    <CTAButton type="submit">Send Code to Email</CTAButton>
+                  </CTAButtonContainer>
+                </form>
+              </FormWrapper>
+            );
+          }}
+        />
+      </FinallyMessage>
+    );
+  }
+
+  if (tempEmail) {
+    return <EnterLoginCode />;
+  }
+};
+
+export default EnterLoginCode;
+export { RequestLoginCode };
