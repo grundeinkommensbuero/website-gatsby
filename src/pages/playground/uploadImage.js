@@ -9,7 +9,7 @@ import {
 import { useUploadImage } from '../../hooks/images';
 
 export default () => {
-  const [state, uploadImage] = useUploadImage();
+  const [, uploadImage] = useUploadImage();
 
   return (
     <Layout>

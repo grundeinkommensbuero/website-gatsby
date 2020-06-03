@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { saveUser } from '../shared';
 
 export const useUpdateUser = () => {
-  [state, setState] = useState();
+  const [state, setState] = useState();
 
   return [
     state,

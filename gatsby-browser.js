@@ -2,8 +2,8 @@ import wrapWithProvider from './wrap-with-provider';
 import { TrackJS } from 'trackjs';
 export const wrapRootElement = wrapWithProvider;
 
-window.commitHash = COMMITHASH;
-window.version = VERSION;
+window.commitHash = COMMITHASH; // eslint-disable-line no-undef
+window.version = VERSION; // eslint-disable-line no-undef
 
 if (location.host.indexOf('localhost') !== 0) {
   TrackJS.install({
