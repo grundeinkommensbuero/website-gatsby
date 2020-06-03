@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import querystring from 'query-string';
 
 import { getCurrentUser, getUser } from '../../hooks/Api/Users/Get';
-import { useLocalStorageUser } from '../../hooks/Authentication/';
+import { useLocalStorageUser, useSignOut } from '../../hooks/Authentication/';
 
 /**
  * This class serves as a provider (reacts context API) which is used
@@ -22,6 +22,7 @@ const AuthProvider = ({ children }) => {
   const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
+  const [signOut] = useSignOut();
   // Replaces the basic useState for the userId
   // This way, all the updates to this value will also be saved to localhost
   const [userId, setUserId] = useLocalStorageUser();
@@ -81,7 +82,12 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated === false && userId) {
       // Get user data for unauthenticated user with known userId
-      updateCustomUserData({ isAuthenticated, userId, setCustomUserData });
+      updateCustomUserData({
+        isAuthenticated,
+        userId,
+        setCustomUserData,
+        signOut,
+      });
     }
   }, [userId, isAuthenticated]);
 
@@ -99,7 +105,12 @@ const AuthProvider = ({ children }) => {
         setTempEmail,
         customUserData,
         updateCustomUserData: () =>
-          updateCustomUserData({ isAuthenticated, token, setCustomUserData }),
+          updateCustomUserData({
+            isAuthenticated,
+            token,
+            setCustomUserData,
+            signOut,
+          }),
       }}
     >
       {children}
@@ -113,6 +124,7 @@ const updateCustomUserData = async ({
   token,
   setCustomUserData,
   userId,
+  signOut,
 }) => {
   try {
     if (isAuthenticated === true) {
@@ -122,6 +134,11 @@ const updateCustomUserData = async ({
     } else if (isAuthenticated === false) {
       // Get minimal user data if not authenticated but has userId
       const result = await getUser(userId);
+      // If user is not found
+      if (result.state !== 'success') {
+        signOut();
+        return;
+      }
       setCustomUserData(result.user);
     }
   } catch (error) {
