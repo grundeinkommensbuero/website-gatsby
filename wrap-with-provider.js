@@ -9,7 +9,7 @@ import { saveSurveyAnswer } from './src/hooks/Api/Surveys';
 // so it only gets configured once, not every time a page changes
 export default ({ element }) => {
   // APP_CLIENT_ID was in onCreateWebpackConfig callback in gatsby-node
-  const clientId = APP_CLIENT_ID;
+  const clientId = APP_CLIENT_ID; // eslint-disable-line no-undef
   if (clientId) {
     if (typeof window !== `undefined`) {
       import(/* webpackChunkName: "Amplify" */ '@aws-amplify/auth').then(

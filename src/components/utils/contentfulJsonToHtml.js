@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { INLINES, BLOCKS } from '@contentful/rich-text-types';
-import {
-  CampainVisualisation,
-  CrowdFundingVisualistation,
-} from '../CampaignVisualisations';
+import { CrowdFundingVisualistation } from '../CampaignVisualisations';
 import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
 import { getMailtoUrl, objectMap } from '.';
 import s from './contentfulJsonToHtml.module.less';

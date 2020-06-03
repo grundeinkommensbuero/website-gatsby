@@ -3,7 +3,6 @@
  */
 
 import { useState } from 'react';
-import CONFIG from '../../../../aws-config';
 // import $ from 'jquery';
 
 /*
@@ -26,7 +25,7 @@ export const useGetCrowdfundingDirectly = projectId => {
           jquery: module.default,
           version: '1.2',
         };
-        const apiClient = new cfAPIClient(clientOptions);
+        const apiClient = new cfAPIClient(clientOptions); // eslint-disable-line no-undef
         apiClient.get(
           '/projects/' + projectId,
           { lang: 'de' },

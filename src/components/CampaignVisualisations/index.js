@@ -62,7 +62,7 @@ export default ({ visualisations }) => {
   );
 };
 
-export const CrowdFundingVisualistation = ({ startnextId, goal, ...props }) => {
+export const CrowdFundingVisualistation = ({ startnextId, ...props }) => {
   // Check props includes a project key
   const hasProjectProp = props.hasOwnProperty('project');
 
