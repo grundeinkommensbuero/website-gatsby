@@ -75,6 +75,7 @@ const SocialMediaButton = ({ icon, link, name }) => {
         dangerouslySetInnerHTML={{ __html: ICONS[icon] }}
         className={s.socialMediaButton}
         target="_blank"
+        rel="noopener noreferrer"
         title={title}
       />{' '}
     </>

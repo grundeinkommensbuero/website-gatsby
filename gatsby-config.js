@@ -133,9 +133,11 @@ if (contentfulConfig.spaceId || contentfulConfig.accessToken) {
     options: contentfulConfig,
   });
 } else {
+  /* eslint-disable no-console */
   console.log(
     `Contentful spaceId and the access token need to be provided in .env.${process.env.NODE_ENV}`
   );
+  /* eslint-enable */
 }
 
 module.exports = config;
