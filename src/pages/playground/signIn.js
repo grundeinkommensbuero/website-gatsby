@@ -37,6 +37,7 @@ export default () => {
                     type="text"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    aria-label="just a test hey"
                   />
                 </form>
               </>
@@ -54,6 +55,7 @@ export default () => {
                     type="text"
                     value={code}
                     onChange={e => setCode(e.target.value)}
+                    aria-label="just a test hey"
                   />
                 </form>
               </>

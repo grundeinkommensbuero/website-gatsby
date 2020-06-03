@@ -275,6 +275,7 @@ function YoutubeEmbed({ url }) {
   return (
     <div className={s.youtubeContainer}>
       <iframe
+        title="Youtube Embed"
         width="560"
         height="315"
         src={`https://www.youtube-nocookie.com/embed/${url}?rel=0`}

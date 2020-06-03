@@ -129,6 +129,7 @@ const Hand = ({ index, hand, count }) => {
         className={s.hand}
         src={HAND_ILLUSTRATIONS[hand.hand]}
         style={{ transform: `translateY(${hand.size * -2}rem)` }}
+        alt=""
       />
     </div>
   );

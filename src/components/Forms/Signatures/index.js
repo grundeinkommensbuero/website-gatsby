@@ -96,20 +96,18 @@ export default ({ signaturesId }) => {
     return (
       <>
         {!anonymous ? (
-          <>
-            <p>
-              Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
-              deinem Postfach. Du kannst sie dir auch{' '}
-              <a target="_blank" href={pdf.url}>
-                direkt im Browser herunterladen
-              </a>{' '}
-              - alle weiteren Infos findest du dort!
-            </p>
-          </>
+          <p>
+            Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
+            deinem Postfach. Du kannst sie dir auch{' '}
+            <a target="_blank" rel="noreferrer" href={pdf.url}>
+              direkt im Browser herunterladen
+            </a>{' '}
+            - alle weiteren Infos findest du dort!
+          </p>
         ) : (
           <p>
             Juhu!{' '}
-            <a target="_blank" href={pdf.url}>
+            <a target="_blank" rel="noreferrer" href={pdf.url}>
               Hier
             </a>{' '}
             kannst du die Unterschriftslisten samt Leitfaden herunterladen!
@@ -170,6 +168,7 @@ export default ({ signaturesId }) => {
                     Kein Drucker?{' '}
                     <a
                       target="_blank"
+                      rel="noreferrer"
                       href="https://expeditionbge.typeform.com/to/Dq3SOi"
                     >
                       Bitte schickt mir Unterschriftenlisten per Post

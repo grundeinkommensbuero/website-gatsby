@@ -111,5 +111,6 @@ export default ({ className }) => {
     }
   }, [setIsInView]);
 
+  // eslint-disable-next-line jsx-a11y/control-has-associated-label
   return <canvas ref={canvas} className={cN(className, s.canvas)} />;
 };
