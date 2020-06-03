@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '../../components/Layout';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -6,11 +6,8 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 
 export default () => {
-  const [crowdFundingData] = useGetCrowdfundingDirectly('96752');
-
   return (
     <Layout>
       <Helmet>

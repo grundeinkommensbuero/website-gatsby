@@ -12,7 +12,7 @@ export default () => {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [signInState, signIn] = useSignIn();
-  const [challengeState, answerChallenge] = useAnswerChallenge();
+  const [, answerChallenge] = useAnswerChallenge();
 
   console.log('sign in state', signInState);
 
