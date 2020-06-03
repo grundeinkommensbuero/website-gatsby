@@ -6,6 +6,10 @@ import { sleep } from '../utils';
 import { useContext, useState } from 'react';
 import AuthContext from '../../context/Authentication';
 
+export { useAnswerChallenge } from './AnswerChallenge';
+export { useVerification } from './Verification';
+export { useLocalStorageUser } from './LocalStorageUser';
+
 export const useSignUp = () => {
   const [state, setState] = useState();
 
@@ -32,11 +36,6 @@ export const useSignOut = () => {
 
   return () => signOut(context);
 };
-
-// Other hooks
-export { useAnswerChallenge } from './AnswerChallenge';
-export { useVerification } from './Verification';
-export { useLocalStorageUser } from './LocalStorageUser';
 
 // Amplifys Auth class is used to sign up user
 const signUp = async (email, setState, { setUserId, setTempEmail }) => {
