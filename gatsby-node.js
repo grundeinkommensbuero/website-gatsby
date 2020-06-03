@@ -34,7 +34,7 @@ exports.createPages = ({ graphql, actions }) => {
         `
       ).then(result => {
         if (result.errors) {
-          console.log(result.errors);
+          console.log(result.errors); // eslint-disable-line no-console
           reject(result.errors);
         }
 
@@ -68,13 +68,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 const clientId = process.env.COGNITO_APP_CLIENT_ID;
 
-exports.onCreateWebpackConfig = ({
-  stage,
-  rules,
-  loaders,
-  plugins,
-  actions,
-}) => {
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     plugins: [
       new webpack.DefinePlugin({
