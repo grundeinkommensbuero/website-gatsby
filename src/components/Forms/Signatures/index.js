@@ -97,14 +97,16 @@ export default ({ signaturesId }) => {
     return (
       <>
         {!anonymous ? (
-          <p>
-            Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
-            deinem Postfach. Du kannst sie dir auch{' '}
-            <a target="_blank" href={pdf.url}>
-              direkt im Browser herunterladen
-            </a>{' '}
-            - alle weiteren Infos findest du dort!
-          </p>
+          <>
+            <p>
+              Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
+              deinem Postfach. Du kannst sie dir auch{' '}
+              <a target="_blank" href={pdf.url}>
+                direkt im Browser herunterladen
+              </a>{' '}
+              - alle weiteren Infos findest du dort!
+            </p>
+          </>
         ) : (
           <p>
             Juhu!{' '}
@@ -114,19 +116,20 @@ export default ({ signaturesId }) => {
             kannst du die Unterschriftslisten samt Leitfaden herunterladen!
           </p>
         )}
-
-        {!anonymous && signUpState !== 'userExists' && (
-          <StepListItem icon="mail">
-            Check deine Mails und klick den Link, damit du dabei bist.
-          </StepListItem>
-        )}
-        {anonymous && (
-          <StepListItem icon="download">
-            <LinkButton target="_blank" href={pdf.url}>
-              Listen herunterladen
-            </LinkButton>
-          </StepListItem>
-        )}
+        <DownloadListsNextSteps>
+          {!anonymous && signUpState !== 'userExists' && (
+            <StepListItem icon="mail">
+              Check deine Mails und klick den Link, damit du dabei bist.
+            </StepListItem>
+          )}
+          {anonymous && (
+            <StepListItem icon="download">
+              <LinkButton target="_blank" href={pdf.url}>
+                Listen herunterladen
+              </LinkButton>
+            </StepListItem>
+          )}
+        </DownloadListsNextSteps>
       </>
     );
   }
