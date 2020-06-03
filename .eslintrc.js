@@ -23,7 +23,6 @@ module.exports = {
     'react/prop-types': 'off',
     'react/display-name': 'off',
     'no-inner-declarations': 'off',
-    'no-restricted-globals': 'off',
     'import/no-webpack-loader-syntax': [0],
     'react-hooks/rules-of-hooks': 'off',
     'react-hooks/exhaustive-deps': 'off',
