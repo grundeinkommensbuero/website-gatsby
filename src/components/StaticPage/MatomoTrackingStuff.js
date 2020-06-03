@@ -3,7 +3,7 @@ const MatomoTrackingStuff = `
 // _paq.push(['AbTesting::create', {
 //     name: '3', // you can also use '3' (ID of the experiment) to hide the name
 //     percentage: 100,
-//     includedTargets: [{"attribute":"url","inverted":"0","type":"equals_simple","value":"https:\/\/expedition-grundeinkommen.de\/brandenburg\/"}],
+//     includedTargets: [{"attribute":"url","inverted":"0","type":"equals_simple","value":"https://expedition-grundeinkommen.de/brandenburg/"}],
 //     excludedTargets: [],
 //     variations: [
 //         {
