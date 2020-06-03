@@ -20,7 +20,9 @@ export function StepListItem({ icon, children, className }) {
   return (
     <li className={cN(className, s.item)}>
       <div className={s.iconContainer}>
-        {iconSrc && <img aria-hidden="true" className={s.icon} src={iconSrc} />}
+        {iconSrc && (
+          <img aria-hidden="true" alt="" className={s.icon} src={iconSrc} />
+        )}
       </div>
       <div>{children}</div>
     </li>

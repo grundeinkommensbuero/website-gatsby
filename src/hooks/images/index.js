@@ -50,10 +50,10 @@ const requestPresignedUrl = async (userId, contentType) => {
     const { uploadUrl } = await response.json();
     return uploadUrl;
   } else {
-    throw {
+    throw new Error({
       status: response.status,
       error: `Api response while requesting pre signed url was ${response.status}`,
-    };
+    });
   }
 };
 

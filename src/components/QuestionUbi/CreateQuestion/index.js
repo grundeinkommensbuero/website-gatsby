@@ -69,7 +69,7 @@ export default ({ setQuestionJustSent, userId, userData }) => {
     );
   }
 
-  if (questionState === 'saving' || uploadImageState == 'saving') {
+  if (questionState === 'saving' || uploadImageState === 'saving') {
     return (
       <SectionInner>
         <FinallyMessage state="progress">Speichere...</FinallyMessage>

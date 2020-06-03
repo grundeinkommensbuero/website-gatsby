@@ -19,21 +19,25 @@ export function CTAButtonContainer({ children, className, illustration }) {
         {illustration === 'POINT_LEFT' && (
           <>
             <img
+              alt=""
               src={POINT_LEFT_YELLOW}
               className={cN(s.illustrationPointLeft, s.yellow)}
               aria-hidden="true"
             />
             <img
+              alt=""
               src={POINT_LEFT_MOBILE_YELLOW}
               className={cN(s.illustrationPointLeftMobile, s.yellow)}
               aria-hidden="true"
             />
             <img
+              alt=""
               src={POINT_LEFT_RED}
               className={cN(s.illustrationPointLeft, s.red)}
               aria-hidden="true"
             />
             <img
+              alt=""
               src={POINT_LEFT_MOBILE_RED}
               className={cN(s.illustrationPointLeftMobile, s.red)}
               aria-hidden="true"
