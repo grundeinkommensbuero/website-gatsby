@@ -18,13 +18,10 @@ const AuthContext = React.createContext();
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [cognitoUser, setCognitoUser] = useState();
-  // customUserData refers to the attributes we have saved in dynamo
   const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
   const [signOut] = useSignOut();
-  // Replaces the basic useState for the userId
-  // This way, all the updates to this value will also be saved to localhost
   const [userId, setUserId] = useLocalStorageUser();
 
   // On page load
@@ -46,13 +43,6 @@ const AuthProvider = ({ children }) => {
             });
         }
       );
-
-      // Check for URL param for user ID
-      const params = querystring.parse(window.location.search);
-      // If params, set that user as the userId and via localStorage
-      if (!userId && params.userId) {
-        setUserId(params.userId);
-      }
     }
   }, []);
 
@@ -80,14 +70,26 @@ const AuthProvider = ({ children }) => {
   }, [cognitoUser]);
 
   useEffect(() => {
+    // If user is not authenticated but userId is known
     if (isAuthenticated === false && userId) {
-      // Get user data for unauthenticated user with known userId
+      // Get user data
       updateCustomUserData({
         isAuthenticated,
         userId,
         setCustomUserData,
         signOut,
       });
+    }
+
+    // Check for URL param for userId
+    const params = querystring.parse(window.location.search);
+    // If there is a userId in the params
+    if (params.userId) {
+      if (userId !== undefined) setUserId(params.userId);
+      // If userId in params is same as setUserId do nothing
+      if (userId === params.userId) return;
+      // if userId in params is different than in state
+      setUserId(params.userId);
     }
   }, [userId, isAuthenticated]);
 
