@@ -12,6 +12,7 @@ import { useSignUp } from '../../../hooks/Authentication';
 import EnterLoginCode from '../../EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
 import AuthInfo from '../../AuthInfo';
+import DownloadListsNextSteps from '../DownloadListsNextSteps';
 
 const trackingCategory = 'ListDownload';
 
