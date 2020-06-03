@@ -51,7 +51,7 @@ export default ({ pledgeId }) => {
     return <EnterLoginCode />;
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated || userId) {
     return (
       <FinallyMessage preventScrolling={true}>
         <p>
@@ -76,10 +76,6 @@ export default ({ pledgeId }) => {
         if (!isAuthenticated) {
           signUp(e.email);
         }
-      }}
-      initialValues={{
-        name: userId !== undefined && userData ? userData.username : '',
-        zipCode: userId !== undefined && userData ? userData.zipCode : '',
       }}
       validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
