@@ -11,6 +11,7 @@ const icons = {
 export default ({ link, label, className, icon, iconSize }) => (
   <a
     target="_blank"
+    rel="noreferrer"
     href={link}
     aria-label={label}
     className={cN(s.button, className, s['button' + iconSize])}

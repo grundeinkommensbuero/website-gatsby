@@ -68,7 +68,7 @@ export default () => {
         {Object.keys(gemeindenByName)
           .sort()
           .map(gemeinde => (
-            <option key={gemeinde} value={gemeinde} />
+            <option key={gemeinde} value={gemeinde} aria-label="Gemeinde" />
           ))}
       </datalist>
       {selectedAmt && (

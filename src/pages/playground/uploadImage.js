@@ -20,6 +20,7 @@ export default () => {
         <Section title="karte">
           <SectionInner wide={true}>
             <input
+              aria-label="just a test hey"
               type="file"
               onChange={e =>
                 uploadImage(

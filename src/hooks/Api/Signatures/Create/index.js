@@ -152,8 +152,8 @@ const makeApiCall = async (data, shouldNotUpdateUser, userId, token) => {
     return json.signatureList;
   }
 
-  throw {
+  throw new Error({
     status: response.status,
     error: `Api did not respond with list, status is ${response.status}`,
-  };
+  });
 };

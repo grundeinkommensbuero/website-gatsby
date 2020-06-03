@@ -57,6 +57,7 @@ export default ({ visualisations }) => {
         if (visualisation.startnextId) {
           return <CrowdFundingVisualistation key={index} {...visualisation} />;
         }
+        return null;
       })}
     </>
   );
@@ -362,7 +363,13 @@ const WrapInLink = ({ link, children, className }) => {
   if (link) {
     if (link.startsWith('http')) {
       return (
-        <a href={link} target="_blank" className={className}>
+        <a
+          href={link}
+          target="_blank"
+          without
+          rel="noreferrer"
+          className={className}
+        >
           {children}
         </a>
       );

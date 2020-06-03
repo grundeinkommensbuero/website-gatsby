@@ -8,9 +8,10 @@ const BACKGROUNDS = [
   require('./backgrounds/04.svg'),
 ];
 
-export default ({}) => {
+export default () => {
   return (
     <img
+      alt=""
       className={s.background}
       src={BACKGROUNDS[Math.round((BACKGROUNDS.length - 1) * Math.random())]}
     />
