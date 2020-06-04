@@ -23,7 +23,7 @@ export default ({ children, className }) => {
         />
         <SocialMediaButton
           icon="Twitter"
-          link={`https://www.twitter.com/intent/tweet?status=${twitterText}`}
+          link={`https://www.twitter.com/intent/tweet?text=${twitterText}`}
           iconSize={iconSize}
           label="Teile auf Twitter"
           className={s.shareButton}
