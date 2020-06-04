@@ -56,6 +56,7 @@
     "gatsby-transformer-sharp": "^2.5.1",
     "git-revision-webpack-plugin": "^3.0.6",
     "html2plaintext": "^2.1.2",
+    "ink": "^2.7.1",
     "interactjs": "^1.9.13",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
