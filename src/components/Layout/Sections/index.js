@@ -192,7 +192,7 @@ export function Section({
       })}
     >
       {jumpToId && (
-        <div id={jumpToId} className={s.jumpToAnchor}>
+        <div id={jumpToId[0].toUpperCase() + jumpToId.slice(1)} className={s.jumpToAnchor}>
           <div id={jumpToId.toLowerCase()} />
         </div>
       )}
