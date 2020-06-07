@@ -90,17 +90,13 @@ const EnterLoginCode = ({ children }) => {
 
 const RequestLoginCode = () => {
   const { tempEmail, setTempEmail } = useContext(AuthContext);
-  console.log(tempEmail);
 
   if (!tempEmail) {
     return (
       <FinallyMessage state="error">
         <p>Please enter your email to confirm your identity</p>
         <Form
-          onSubmit={e => {
-            console.log('submit email form');
-            setTempEmail(e.email);
-          }}
+          onSubmit={e => setTempEmail(e.email)}
           validate={validateRequestLoginCode}
           render={({ handleSubmit }) => {
             return (
