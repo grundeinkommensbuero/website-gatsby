@@ -4,6 +4,7 @@ import { FinallyMessage } from '../Forms/FinallyMessage';
 import { useAnswerChallenge, useSignIn } from '../../hooks/Authentication';
 import AuthContext from '../../context/Authentication';
 import { Form, Field } from 'react-final-form';
+import { validateEmail } from '../utils';
 import FormSection from '../Forms/FormSection';
 import { CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
 import { TextInputWrapped } from '../Forms/TextInput';
@@ -59,7 +60,7 @@ const EnterLoginCode = ({ children }) => {
         onSubmit={e => {
           setCode(e.code);
         }}
-        validate={validate}
+        validate={validateEnterLoginCode}
         render={({ handleSubmit }) => {
           return (
             <FormWrapper>
@@ -87,16 +88,6 @@ const EnterLoginCode = ({ children }) => {
   );
 };
 
-const validate = values => {
-  const errors = {};
-
-  if (!values.code) {
-    errors.code = 'Bitte gib den Code aus aus der E-Mail an';
-  }
-
-  return errors;
-};
-
 const RequestLoginCode = () => {
   const { tempEmail, setTempEmail } = useContext(AuthContext);
   console.log(tempEmail);
@@ -110,7 +101,7 @@ const RequestLoginCode = () => {
             console.log('submit email form');
             setTempEmail(e.email);
           }}
-          validate={validate}
+          validate={validateRequestLoginCode}
           render={({ handleSubmit }) => {
             return (
               <FormWrapper>
@@ -138,9 +129,28 @@ const RequestLoginCode = () => {
     );
   }
 
-  if (tempEmail) {
-    return <EnterLoginCode />;
+  // If there is a temporary email, show EnterLoginCode
+  return <EnterLoginCode />;
+};
+
+const validateEnterLoginCode = values => {
+  const errors = {};
+
+  if (!values.code) {
+    errors.code = 'Bitte gib den Code aus aus der E-Mail an';
   }
+
+  return errors;
+};
+
+const validateRequestLoginCode = values => {
+  const errors = {};
+
+  if (!validateEmail(values.email)) {
+    errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+  }
+
+  return errors;
 };
 
 export default EnterLoginCode;
