@@ -153,29 +153,9 @@ export default ({ signaturesId }) => {
                 <>
                   <p className={s.hint}>
                     Schickt mir die Unterschriftenliste, erinnert mich an das
-                    Zurücksenden und haltet mich auf dem Laufenden. Ich kann die
-                    Liste{' '}
-                    <InlineButton
-                      onClick={() => {
-                        createPdf({ campaignCode: signaturesId });
-                      }}
-                      type="button"
-                    >
-                      hier auch anonym herunterladen
-                    </InlineButton>
-                    .
-                    <br />
-                    <br />
-                    Kein Drucker?{' '}
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href="https://expeditionbge.typeform.com/to/Dq3SOi"
-                    >
-                      Bitte schickt mir Unterschriftenlisten per Post
-                    </a>
-                    !
+                    Zurücksenden und haltet mich auf dem Laufenden.
                   </p>
+
                   <div className={s.textInputContainer}>
                     <Field
                       name="email"
@@ -184,6 +164,7 @@ export default ({ signaturesId }) => {
                       component={TextInputWrapped}
                     ></Field>
                   </div>
+                
                 </>
               ) : (
                 <FinallyMessage className={s.hint} preventScrolling={true}>
@@ -192,9 +173,43 @@ export default ({ signaturesId }) => {
                   </p>
                 </FinallyMessage>
               )}
+  
               <CTAButtonContainer illustration="POINT_LEFT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
+
+              {!isAuthenticated && (
+                <>
+                  <p>
+                    Du wills deine E-Mail-Adresse nicht angeben?<br></br>
+                    Du kannst die Liste{' '}
+                    <InlineButton
+                      onClick={() => {
+                        createPdf({ campaignCode: signaturesId });
+                      }}
+                      type="button"
+                    >
+                      hier auch anonym herunterladen
+                    </InlineButton>
+                    . Allerdings können wir dich dann nicht informieren,
+                    wenn deine Unterschriften bei uns eingegangen sind!
+                    <br />
+                    <br />
+                  </p>
+                </>
+              )}
+
+              <p className={s.hint}>
+                Kein Drucker?{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://expeditionbge.typeform.com/to/Dq3SOi"
+                >
+                  Bitte schickt mir Unterschriftenlisten per Post
+                </a>
+                !
+              </p>
             </form>
           );
         }}
