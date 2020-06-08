@@ -65,7 +65,11 @@ const EnterLoginCode = ({ children }) => {
         onSubmit={e => {
           setCode(e.code);
         }}
-        validate={validateEnterLoginCode}
+        validate={values => {
+          if (!values.code)
+            return { code: 'Bitte gib den Code aus aus der E-Mail an' };
+          return {};
+        }}
         render={({ handleSubmit }) => {
           return (
             <FormWrapper>
@@ -95,7 +99,7 @@ const EnterLoginCode = ({ children }) => {
 
 const RequestLoginCode = () => {
   const { customUserData: userData } = useContext(AuthContext);
-  const [signOut] = useSignOut();
+  const signOut = useSignOut();
 
   const [confirmSendCode, setConfirmSendCode] = useState(false);
 
@@ -110,7 +114,7 @@ const RequestLoginCode = () => {
         <p>
           To view your pledge,
           <InlineButton onClick={() => setConfirmSendCode(true)} type="button">
-            click here to confirm your identity
+            click here to confirm your identity.
           </InlineButton>
         </p>
         <p>
@@ -123,17 +127,15 @@ const RequestLoginCode = () => {
   }
 
   // If there is a temporary email, show EnterLoginCode
-  return <EnterLoginCode />;
-};
-
-const validateEnterLoginCode = values => {
-  const errors = {};
-
-  if (!values.code) {
-    errors.code = 'Bitte gib den Code aus aus der E-Mail an';
-  }
-
-  return errors;
+  return (
+    <EnterLoginCode>
+      <p>
+        {' '}
+        Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+        geschickt. Bitte gib diesen ein:
+      </p>
+    </EnterLoginCode>
+  );
 };
 
 export default EnterLoginCode;
