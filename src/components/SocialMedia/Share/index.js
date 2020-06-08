@@ -10,7 +10,7 @@ export default ({ children, className }) => {
   const twitterText =
     'Hey+Leute%21+Ich+unterst%C3%BCtze+die+neue+Initiative+%40expeditionbge+%21+Die+Idee%3A+%23grundeinkommen+ausprobieren%2C+besser+verstehen+%26+gemeinsam+eine+faire+Debatte+f%C3%BChren.%0D%0AAlle+Infos+%26+Updates%3A%0D%0Ahttps%3A%2F%2Fexpedition-grundeinkommen.de%2F%0D%0Ahttps%3A%2F%2Fwww.facebook.com%2Fexpeditionbge%2F%0D%0Ahttps%3A%2F%2Fwww.instagram.com%2Fexpedition.bge%2F%0D%0A%28sharing+is+caring+%F0%9F%98%8A%29';
 
-  return (
+  return ( 
     <div className={className}>
       {children && <p>{children}</p>}
       <div className={s.iconContainer}>
