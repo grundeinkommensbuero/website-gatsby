@@ -1,14 +1,19 @@
 /* eslint-disable react/display-name */
-import React, { useEffect, useContext } from 'react';
-import { FinallyMessage } from '../Forms/FinallyMessage';
-import { useAnswerChallenge, useSignIn } from '../../hooks/Authentication';
-import AuthContext from '../../context/Authentication';
+import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
-import { validateEmail } from '../utils';
+
+import {
+  useAnswerChallenge,
+  useSignIn,
+  useSignOut,
+} from '../../hooks/Authentication';
+import AuthContext from '../../context/Authentication';
 import FormSection from '../Forms/FormSection';
-import { CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
-import { TextInputWrapped } from '../Forms/TextInput';
 import FormWrapper from '../Forms/FormWrapper';
+import { FinallyMessage } from '../Forms/FinallyMessage';
+import { InlineButton } from '../Forms/Button';
+import { TextInputWrapped } from '../Forms/TextInput';
+import { CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
 
 const EnterLoginCode = ({ children }) => {
   const [answerChallengeState, setCode] = useAnswerChallenge();
@@ -89,38 +94,30 @@ const EnterLoginCode = ({ children }) => {
 };
 
 const RequestLoginCode = () => {
-  const { tempEmail, setTempEmail } = useContext(AuthContext);
+  const { customUserData: userData } = useContext(AuthContext);
+  const [signOut] = useSignOut();
 
-  if (!tempEmail) {
+  const [confirmSendCode, setConfirmSendCode] = useState(false);
+
+  if (!confirmSendCode) {
     return (
-      <FinallyMessage state="error">
-        <p>Please enter your email to confirm your identity</p>
-        <Form
-          onSubmit={e => setTempEmail(e.email)}
-          validate={validateRequestLoginCode}
-          render={({ handleSubmit }) => {
-            return (
-              <FormWrapper>
-                <form onSubmit={handleSubmit}>
-                  <FormSection>
-                    <Field
-                      name="email"
-                      label="Email"
-                      placeholder="Email"
-                      type="text"
-                      autoComplete="off"
-                      component={TextInputWrapped}
-                    ></Field>
-                  </FormSection>
-
-                  <CTAButtonContainer>
-                    <CTAButton type="submit">Send Code to Email</CTAButton>
-                  </CTAButtonContainer>
-                </form>
-              </FormWrapper>
-            );
-          }}
-        />
+      <FinallyMessage type="success">
+        <p>
+          Du bist schon angemeldet{' '}
+          {userData.username && `als ${userData.username}`} mit dem email{' '}
+          {userData.email && userData.email}.
+        </p>
+        <p>
+          To view your pledge,
+          <InlineButton onClick={() => setConfirmSendCode(true)} type="button">
+            click here to confirm your identity
+          </InlineButton>
+        </p>
+        <p>
+          <InlineButton onClick={signOut} type="button">
+            Hier klicken zum Abmelden.
+          </InlineButton>
+        </p>
       </FinallyMessage>
     );
   }
@@ -134,16 +131,6 @@ const validateEnterLoginCode = values => {
 
   if (!values.code) {
     errors.code = 'Bitte gib den Code aus aus der E-Mail an';
-  }
-
-  return errors;
-};
-
-const validateRequestLoginCode = values => {
-  const errors = {};
-
-  if (!validateEmail(values.email)) {
-    errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
   return errors;
