@@ -36,7 +36,7 @@ export default ({ successMessage, campaignCode }) => {
   const [eMail, setEMail] = useState(null);
 
   const { userId } = useContext(AuthContext);
-  const [, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -259,7 +259,7 @@ const CountSignaturesForm = ({
               />
 
               <p>
-                Funktioniert auch das nicht= Dann schreib uns an{' '}
+                Funktioniert auch das nicht? Dann schreib uns an{' '}
                 <a href="mailto:support@expedition-grundeinkommen.de">
                   support@expedition-grundeinkommen.de
                 </a>
