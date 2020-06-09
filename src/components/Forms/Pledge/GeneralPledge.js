@@ -14,7 +14,7 @@ import EnterLoginCode from '../../EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ pledgeId }) => {
+export default ({ pledgeId, initialValues }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
@@ -26,10 +26,10 @@ export default ({ pledgeId }) => {
 
   // After signup process is done we can save the pledge
   useEffect(() => {
-    if (signUpState === 'success') {
+    if (signUpState === 'success' && userId) {
       createPledge(pledge);
     }
-  }, [signUpState]);
+  }, [signUpState, userId]);
 
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
@@ -67,16 +67,21 @@ export default ({ pledgeId }) => {
 
   return (
     <Form
-      onSubmit={e => {
+      onSubmit={async e => {
         e.pledgeId = pledgeId;
         e.privacyConsent = true;
         e.newsletterConsent = true;
         setHasSubmitted(true);
         setPledgeLocally(e);
         if (!isAuthenticated) {
-          signUp(e.email);
+          await signUp(e.email);
         }
       }}
+      /* initialValues{{
+        name: userId !== undefined && userData ? userData.username : '',
+        zipCode: userId !== undefined && userData ? userData.zipCode : '',
+        email: initialValues?.email,
+      }} */
       validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
         return (
