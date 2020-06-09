@@ -17,6 +17,7 @@ import VisualCounter from '../../VisualCounter';
 import cN from 'classnames';
 import AuthContext from '../../../context/Authentication';
 import AuthInfo from '../../AuthInfo';
+import GeneralPledge from '../Pledge/GeneralPledge';
 
 export default ({ successMessage, campaignCode }) => {
   const [
@@ -55,6 +56,22 @@ export default ({ successMessage, campaignCode }) => {
     }
   }, [userId]);
 
+  useEffect(() => {
+    // Only run updateSignatureList when user signs up
+    if (userId && count && campaignCode && listId) {
+      console.log('User signed up in General Pledge');
+      const data = {
+        userId,
+        listId,
+        count,
+        campaignCode
+      };
+      console.log('Updating List');
+      updateSignatureList(data);
+      console.log('List updated');
+    }
+  }, [userId, count, campaignCode, listId]);
+
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
   } = useStaticQuery(graphql`
@@ -84,6 +101,8 @@ export default ({ successMessage, campaignCode }) => {
     .filter(({ campainCode: campaignCodeVisualisation }) => {
       return campaignCodeVisualisation === campaignCode;
     });
+
+    console.log(state);
 
   const countSignaturesFormProps = {
     state,
@@ -208,31 +227,44 @@ const CountSignaturesForm = ({
       <FinallyMessage state="error">
         {state === 'userNotFound' && (
           <>
-            Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
-            geschrieben? Falls du noch nicht bei uns registriert bist, kannst du
-            dich{' '}
-            <a href="https://expedition-grundeinkommen.de/expedition#generalpledge">
-              hier anmelden
-            </a>
-            . Daraufhin kannst du die Unterschriften eintragen. Falls es dann
-            noch immer nicht funktioniert, schreib uns an{' '}
-            <a href="mailto:support@expedition-grundeinkommen.de">
-              support@expedition-grundeinkommen.de
-            </a>
-            .
-            <CTAButtonContainer
-              className={cN(s.buttonContainer, s.buttonContainerMessage)}
-            >
-              <CTAButton
-                size="MEDIUM"
-                onClick={() => {
-                  setEMail(null);
-                  resetSignatureListState();
-                }}
+            <h2>Hoppla!</h2>
+              <p>
+                Wir haben deine E-Mail-Adresse leider nicht gefunden. Hast du dich
+                vertippt? Dann versuche es erneut:
+              </p>
+              <CTAButtonContainer
+                className={cN(s.buttonContainer, s.buttonContainerMessage)}
               >
-                Neuer Versuch
-              </CTAButton>
-            </CTAButtonContainer>
+                <CTAButton
+                  size="MEDIUM"
+                  onClick={() => {
+                    setEMail(null);
+                    resetSignatureListState();
+                  }}
+                >
+                  Neuer Versuch
+                </CTAButton>
+              </CTAButtonContainer>
+
+              <p>
+                Oder registriere dich neu bei uns, um die Unterschriften
+                einzutragen:
+              </p>
+
+              <GeneralPledge
+                pledgeId="general-1"
+                initialValues={{
+                  email: eMail,
+                }}
+              />
+
+              <p>
+                Funktioniert auch das nicht= Dann schreib uns an{' '}
+                <a href="mailto:support@expedition-grundeinkommen.de">
+                  support@expedition-grundeinkommen.de
+                </a>
+                .
+              </p>
           </>
         )}
         {state === 'error' && (
