@@ -13,16 +13,13 @@ export const useCreatePledge = () => {
   const [state, setState] = useState(null);
 
   //get user id  from global context
-  const { userId, updateCustomUserData } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
-  return [
-    state,
-    pledge => createPledge(userId, pledge, setState, updateCustomUserData),
-  ];
+  return [state, pledge => createPledge(userId, pledge, setState)];
 };
 
 // Function which calls the aws api to create a new pledge
-const createPledge = async (userId, pledge, setState, updateCustomUserData) => {
+const createPledge = async (userId, pledge, setState) => {
   try {
     // check url params, if current user came from referral (e.g newsletter)
     const urlParams = querystring.parse(window.location.search);
@@ -65,8 +62,6 @@ const createPledge = async (userId, pledge, setState, updateCustomUserData) => {
     } else {
       setState('error');
     }
-
-    updateCustomUserData();
   } catch (error) {
     console.log('Error while saving pledge', error);
     setState('error');

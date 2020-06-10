@@ -105,7 +105,12 @@ const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
 };
 
 //Function, which uses the amplify api to sign out user
-const signOut = async ({ setCognitoUser, setUserId, setIsAuthenticated }) => {
+export const signOut = async ({
+  setCognitoUser,
+  setUserId,
+  setIsAuthenticated,
+}) => {
+  console.log('sign out');
   try {
     const { default: Auth } = await import(
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
@@ -113,9 +118,9 @@ const signOut = async ({ setCognitoUser, setUserId, setIsAuthenticated }) => {
 
     await Auth.signOut();
 
-    // Get scroll location
-    const scrollLocation = window.scrollY;
-    console.log(scrollLocation);
+    // // Get scroll location
+    // const scrollLocation = window.scrollY;
+    // console.log(scrollLocation);
 
     // Remove URL params if existing
     const params = querystring.parse(window.location.search);
@@ -124,16 +129,17 @@ const signOut = async ({ setCognitoUser, setUserId, setIsAuthenticated }) => {
     }
     const newUrl = `${window.location.origin}${
       window.location.pathname
-    }${querystring.stringify(params)}`;
+    }?${querystring.stringify(params)}`;
     navigate(newUrl, { replace: true });
 
     // Set scroll location
-    window.scroll(0, scrollLocation);
+    // window.scroll(0, scrollLocation);
 
     // Update user state
     setCognitoUser(null);
     setUserId(undefined);
     setIsAuthenticated(false);
+    return;
   } catch (error) {
     console.log('Error while signing out', error);
   }
