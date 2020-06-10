@@ -8,17 +8,22 @@ export const useLocalStorageUser = () => {
     // Initial value comes from localStorage
     try {
       const userId = window.localStorage.getItem(USER_ID_KEY);
-      return userId ? JSON.parse(userId) : undefined;
+      return userId ? userId : undefined;
     } catch (err) {
-      console.warn('Error querying localStorage for user-id');
+      console.warn('Error querying localStorage for user-id', err);
       return undefined;
     }
   });
 
   // Setter function updates state and localStorage
   const setUserId = userId => {
+    if (userId) {
+      window.localStorage.setItem(USER_ID_KEY, userId);
+    } else {
+      window.localStorage.removeItem(USER_ID_KEY);
+    }
+
     setUserIdState(userId);
-    window.localStorage.setItem(USER_ID_KEY, JSON.stringify(userId));
   };
 
   return [userId, setUserId];
