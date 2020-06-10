@@ -35,7 +35,7 @@ export default ({ successMessage, campaignCode }) => {
   const [eMail, setEMail] = useState(null);
 
   const { userId } = useContext(AuthContext);
-  const [setCount] = useState(0);
+  const [, setCount] = useState(0);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
