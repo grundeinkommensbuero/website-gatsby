@@ -11,7 +11,8 @@ import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
-import EnterLoginCode, { RequestLoginCode } from '../../EnterLoginCode';
+import { RequestLoginCode } from '../../Login/RequestLoginCode';
+import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import AuthContext from '../../../context/Authentication';
 import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
@@ -55,7 +56,7 @@ export default ({ pledgeId }) => {
   }
 
   if (userId && !isAuthenticated) {
-    return <RequestLoginCode />;
+    return <RequestLoginCode buttonText="Pledge anschauen" />;
   }
 
   if (isAuthenticated && userData && pledgeWasAlreadyMade(userData, pledgeId)) {
