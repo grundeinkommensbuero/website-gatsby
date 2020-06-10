@@ -10,7 +10,7 @@ import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import { useSignUp } from '../../../hooks/Authentication';
 import AuthContext from '../../../context/Authentication';
-import EnterLoginCode from '../../EnterLoginCode';
+import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
@@ -20,9 +20,7 @@ export default ({ pledgeId }) => {
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId, customUserData: userData } = useContext(
-    AuthContext
-  );
+  const { isAuthenticated, userId } = useContext(AuthContext);
 
   // After signup process is done we can save the pledge
   useEffect(() => {

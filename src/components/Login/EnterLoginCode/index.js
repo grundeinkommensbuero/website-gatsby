@@ -1,20 +1,14 @@
-/* eslint-disable react/display-name */
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 
-import {
-  useAnswerChallenge,
-  useSignIn,
-  useSignOut,
-} from '../../hooks/Authentication';
-import AuthContext from '../../context/Authentication';
-import FormSection from '../Forms/FormSection';
-import FormWrapper from '../Forms/FormWrapper';
-import { FinallyMessage } from '../Forms/FinallyMessage';
-import { TextInputWrapped } from '../Forms/TextInput';
-import { CTAButtons, CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
+import { useAnswerChallenge, useSignIn } from '../../../hooks/Authentication';
+import FormSection from '../../Forms/FormSection';
+import FormWrapper from '../../Forms/FormWrapper';
+import { FinallyMessage } from '../../Forms/FinallyMessage';
+import { TextInputWrapped } from '../../Forms/TextInput';
+import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 
-const EnterLoginCode = ({ children }) => {
+export const EnterLoginCode = ({ children }) => {
   const [answerChallengeState, setCode] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
@@ -95,53 +89,3 @@ const EnterLoginCode = ({ children }) => {
     </FinallyMessage>
   );
 };
-
-const RequestLoginCode = ({ children, verifyIdentityText }) => {
-  const { customUserData: userData } = useContext(AuthContext);
-  const signOut = useSignOut();
-
-  const [confirmSendCode, setConfirmSendCode] = useState(false);
-
-  if (!confirmSendCode) {
-    // TODO only show email as fallback
-    return (
-      <FinallyMessage type="success">
-        {children ? (
-          children
-        ) : (
-          <p>
-            Du bist schon angemeldet
-            {userData.username && `als ${userData.username}`} mit dem email{' '}
-            {userData.email && userData.email}.
-          </p>
-        )}
-        <CTAButtons>
-          <CTAButtonContainer>
-            <CTAButton onClick={() => setConfirmSendCode(true)} type="button">
-              Show Pledge
-            </CTAButton>
-          </CTAButtonContainer>
-          <CTAButtonContainer>
-            <CTAButton onClick={signOut} type="button">
-              Abmelden
-            </CTAButton>
-          </CTAButtonContainer>
-        </CTAButtons>
-      </FinallyMessage>
-    );
-  }
-
-  // If there is a temporary email, show EnterLoginCode
-  return (
-    <EnterLoginCode>
-      <p>
-        {' '}
-        Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-        geschickt. Bitte gib diesen ein:
-      </p>
-    </EnterLoginCode>
-  );
-};
-
-export default EnterLoginCode;
-export { RequestLoginCode };
