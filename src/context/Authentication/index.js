@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import querystring from 'query-string';
 
 import { getCurrentUser, getUser } from '../../hooks/Api/Users/Get';
-import { useLocalStorageUser, useSignOut } from '../../hooks/Authentication/';
+import { useLocalStorageUser, signOut } from '../../hooks/Authentication/';
 
 /**
  * This class serves as a provider (reacts context API) which is used
@@ -21,8 +21,10 @@ const AuthProvider = ({ children }) => {
   const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
-  const signOut = useSignOut();
   const [userId, setUserId] = useLocalStorageUser();
+
+  const signUserOut = () =>
+    signOut({ setCognitoUser, setUserId, setIsAuthenticated });
 
   // On page load
   useEffect(() => {
@@ -51,25 +53,25 @@ const AuthProvider = ({ children }) => {
     // Set user in localhost
     //only if user is authenticated
     if (cognitoUser && cognitoUser.attributes) {
-      // token from state would be available only in the next lifecycle
-      // therefore the whole tempToken thing
-      const tempToken = cognitoUser.signInUserSession.idToken.jwtToken;
-      setToken(tempToken);
+      setToken(cognitoUser.signInUserSession.idToken.jwtToken);
       // Update userId in localStorage if different than login user
       if (cognitoUser.attributes.sub !== userId) {
         setUserId(cognitoUser.attributes.sub);
       }
-
-      // Update user data with data from backend
-      updateCustomUserData({
-        isAuthenticated: true,
-        token: tempToken,
-        setCustomUserData,
-      });
     }
   }, [cognitoUser]);
 
   useEffect(() => {
+    if (isAuthenticated && userId) {
+      // Update user data with data from backend
+      updateCustomUserData({
+        isAuthenticated,
+        token,
+        userId,
+        setCustomUserData,
+        signUserOut,
+      });
+    }
     // If user is not authenticated but userId is known
     if (isAuthenticated === false && userId) {
       // Get user data
@@ -77,7 +79,7 @@ const AuthProvider = ({ children }) => {
         isAuthenticated,
         userId,
         setCustomUserData,
-        signOut,
+        signUserOut,
       });
     }
 
@@ -89,6 +91,7 @@ const AuthProvider = ({ children }) => {
       // If userId in params is same as setUserId do nothing
       if (userId === params.userId) return;
       // if userId in params is different than in state
+      console.log('userId different in state and local storage');
       setUserId(params.userId);
     }
   }, [userId, isAuthenticated]);
@@ -106,13 +109,6 @@ const AuthProvider = ({ children }) => {
         tempEmail,
         setTempEmail,
         customUserData,
-        updateCustomUserData: () =>
-          updateCustomUserData({
-            isAuthenticated,
-            token,
-            setCustomUserData,
-            signOut,
-          }),
       }}
     >
       {children}
@@ -126,23 +122,26 @@ const updateCustomUserData = async ({
   token,
   setCustomUserData,
   userId,
-  signOut,
+  signUserOut,
 }) => {
   try {
-    if (isAuthenticated === true) {
-      // Get current user data if authenticated
-      const result = await getCurrentUser(token);
-      setCustomUserData(result.user);
-    } else if (isAuthenticated === false) {
-      // Get minimal user data if not authenticated but has userId
-      const result = await getUser(userId);
-      // If user is not found
-      if (result.state !== 'success') {
-        signOut();
-        return;
-      }
-      setCustomUserData(result.user);
+    // Get user data from protected or public endpoint
+    const result = isAuthenticated
+      ? await getCurrentUser(token)
+      : await getUser(userId);
+
+    if (
+      // If error finding user data, log out user
+      result.state !== 'success' ||
+      // If user logged in different userId passed in params
+      (isAuthenticated && userId !== result.user.cognitoId)
+    ) {
+      signUserOut();
+      return;
     }
+
+    // If no error, update custom user data
+    setCustomUserData(result.user);
   } catch (error) {
     console.log(error);
   }
