@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
   const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
-  const [signOut] = useSignOut();
+  const signOut = useSignOut();
   const [userId, setUserId] = useLocalStorageUser();
 
   // On page load
