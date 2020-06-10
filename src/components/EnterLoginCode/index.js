@@ -11,9 +11,8 @@ import AuthContext from '../../context/Authentication';
 import FormSection from '../Forms/FormSection';
 import FormWrapper from '../Forms/FormWrapper';
 import { FinallyMessage } from '../Forms/FinallyMessage';
-import { InlineButton } from '../Forms/Button';
 import { TextInputWrapped } from '../Forms/TextInput';
-import { CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
+import { CTAButtons, CTAButtonContainer, CTAButton } from '../Layout/CTAButton';
 
 const EnterLoginCode = ({ children }) => {
   const [answerChallengeState, setCode] = useAnswerChallenge();
@@ -97,31 +96,37 @@ const EnterLoginCode = ({ children }) => {
   );
 };
 
-const RequestLoginCode = () => {
+const RequestLoginCode = ({ children, verifyIdentityText }) => {
   const { customUserData: userData } = useContext(AuthContext);
   const signOut = useSignOut();
 
   const [confirmSendCode, setConfirmSendCode] = useState(false);
 
   if (!confirmSendCode) {
+    // TODO only show email as fallback
     return (
       <FinallyMessage type="success">
-        <p>
-          Du bist schon angemeldet{' '}
-          {userData.username && `als ${userData.username}`} mit dem email{' '}
-          {userData.email && userData.email}.
-        </p>
-        <p>
-          To view your pledge,
-          <InlineButton onClick={() => setConfirmSendCode(true)} type="button">
-            click here to confirm your identity.
-          </InlineButton>
-        </p>
-        <p>
-          <InlineButton onClick={signOut} type="button">
-            Hier klicken zum Abmelden.
-          </InlineButton>
-        </p>
+        {children ? (
+          children
+        ) : (
+          <p>
+            Du bist schon angemeldet
+            {userData.username && `als ${userData.username}`} mit dem email{' '}
+            {userData.email && userData.email}.
+          </p>
+        )}
+        <CTAButtons>
+          <CTAButtonContainer>
+            <CTAButton onClick={() => setConfirmSendCode(true)} type="button">
+              Show Pledge
+            </CTAButton>
+          </CTAButtonContainer>
+          <CTAButtonContainer>
+            <CTAButton onClick={signOut} type="button">
+              Abmelden
+            </CTAButton>
+          </CTAButtonContainer>
+        </CTAButtons>
       </FinallyMessage>
     );
   }
