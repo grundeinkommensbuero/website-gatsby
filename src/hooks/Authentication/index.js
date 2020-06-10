@@ -4,6 +4,8 @@
 import { getRandomString } from '../../components/utils';
 import { sleep } from '../utils';
 import { useContext, useState } from 'react';
+import querystring from 'query-string';
+import { navigate } from '@reach/router';
 import AuthContext from '../../context/Authentication';
 
 export { useAnswerChallenge } from './AnswerChallenge';
@@ -111,7 +113,17 @@ const signOut = async ({ setCognitoUser, setUserId, setIsAuthenticated }) => {
 
     await Auth.signOut();
 
-    //use context to set user in global state
+    // Remove URL params if existing
+    const params = querystring.parse(window.location.search);
+    if (params.userId) {
+      params.userId = undefined;
+    }
+    const newUrl = `${window.location.origin}${
+      window.location.pathname
+    }${querystring.stringify(params)}`;
+    navigate(newUrl, { replace: true });
+
+    // Update user state
     setCognitoUser(null);
     setUserId(undefined);
     setIsAuthenticated(false);
