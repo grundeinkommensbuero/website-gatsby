@@ -16,20 +16,14 @@ export const RequestLoginCode = ({ children, buttonText }) => {
   const signOut = useSignOut();
 
   if (!confirmSendCode) {
-    // TODO only show email as fallback
     return (
       <FinallyMessage type="success">
         {children ? (
           children
         ) : (
           <p>
-            Du bist schon angemeldet
-            {userData.username
-              ? ` als ${userData.username}`
-              : userData.email
-              ? `mit dem email ${userData.email}`
-              : ''}
-            .
+            Du bist angemeldet als{' '}
+            {userData && (userData.username || userData.email)}.
           </p>
         )}
         <CTAButtons>
