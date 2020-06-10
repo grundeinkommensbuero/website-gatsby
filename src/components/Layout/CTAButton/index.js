@@ -7,6 +7,10 @@ import POINT_LEFT_MOBILE_YELLOW from './figure_point_left_mobile_yellow.svg';
 import POINT_LEFT_RED from './figure_point_left_red.svg';
 import POINT_LEFT_MOBILE_RED from './figure_point_left_mobile_red.svg';
 
+export const CTAButtons = ({ children }) => (
+  <div className={s.buttons}>{children}</div>
+);
+
 export function CTAButtonContainer({ children, className, illustration }) {
   return (
     <div
