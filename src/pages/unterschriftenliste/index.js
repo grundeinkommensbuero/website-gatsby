@@ -8,7 +8,7 @@ import { trackEvent, addActionTrackingId } from '../../components/utils';
 import { StepListItem } from '../../components/StepList';
 import querystring from 'query-string';
 import { Link } from 'gatsby';
-import EnterLoginCode from '../../components/EnterLoginCode';
+import { EnterLoginCode } from '../../components/Login/EnterLoginCode';
 import AuthContext from '../../context/Authentication';
 
 const trackingCategory = 'ListDownload';
