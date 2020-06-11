@@ -23,6 +23,8 @@ const AuthProvider = ({ children }) => {
   const [tempEmail, setTempEmail] = useState();
   const [userId, setUserId] = useLocalStorageUser();
 
+  // const [userIdParams, setUserIdParams] = useState();
+
   const signUserOut = () =>
     signOut({ setCognitoUser, setUserId, setIsAuthenticated });
 
@@ -45,6 +47,27 @@ const AuthProvider = ({ children }) => {
             });
         }
       );
+    }
+
+    // Check for URL param for userId
+    const params = querystring.parse(window.location.search);
+    // If there is a userId in the params
+    let userIdParams;
+    if (params.userId) {
+      if (userId !== undefined) userIdParams = params.userId;
+      // if userId in params is different than in state
+      if (userIdParams !== params.userId) userIdParams = params.userId;
+    }
+
+    // If no user Id in local storage and one in params, set it
+    if (userIdParams && !userId) {
+      setUserId(userIdParams);
+    }
+
+    // If userId in params and userId in local storage and they don't match
+    if (userIdParams && userId && userIdParams !== userId) {
+      signUserOut();
+      setUserId(userIdParams);
     }
   }, []);
 
@@ -81,17 +104,6 @@ const AuthProvider = ({ children }) => {
         setCustomUserData,
         signUserOut,
       });
-    }
-
-    // Check for URL param for userId
-    const params = querystring.parse(window.location.search);
-    // If there is a userId in the params
-    if (params.userId) {
-      if (userId !== undefined) setUserId(params.userId);
-      // If userId in params is same as setUserId do nothing
-      if (userId === params.userId) return;
-      // if userId in params is different than in state
-      setUserId(params.userId);
     }
   }, [userId, isAuthenticated]);
 
