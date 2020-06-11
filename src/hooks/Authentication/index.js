@@ -117,22 +117,13 @@ export const signOut = async ({
 
     await Auth.signOut();
 
-    // // Get scroll location
-    // const scrollLocation = window.scrollY;
-    // console.log(scrollLocation);
-
     // Remove URL params if existing
     const params = querystring.parse(window.location.search);
     if (params.userId) {
       params.userId = undefined;
+      const newUrl = `?${querystring.stringify(params)}`;
+      navigate(newUrl, { replace: true });
     }
-    const newUrl = `${window.location.origin}${
-      window.location.pathname
-    }?${querystring.stringify(params)}`;
-    navigate(newUrl, { replace: true });
-
-    // Set scroll location
-    // window.scroll(0, scrollLocation);
 
     // Update user state
     setCognitoUser(null);
