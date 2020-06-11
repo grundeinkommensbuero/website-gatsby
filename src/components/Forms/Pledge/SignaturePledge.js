@@ -56,7 +56,7 @@ export default ({ pledgeId }) => {
   }
 
   if (userId && !isAuthenticated) {
-    return <RequestLoginCode buttonText="Pledge anschauen" />;
+    return <RequestLoginCode buttonText="Ich bin dabei!" />;
   }
 
   if (isAuthenticated && userData && pledgeWasAlreadyMade(userData, pledgeId)) {
