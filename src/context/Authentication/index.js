@@ -87,21 +87,11 @@ const AuthProvider = ({ children }) => {
   }, [cognitoUser]);
 
   useEffect(() => {
-    if (isAuthenticated && userId) {
+    if (userId && isAuthenticated !== undefined) {
       // Update user data with data from backend
       updateCustomUserData({
         isAuthenticated,
         token,
-        userId,
-        setCustomUserData,
-        signUserOut,
-      });
-    }
-    // If user is not authenticated but userId is known
-    if (isAuthenticated === false && userId) {
-      // Get user data
-      updateCustomUserData({
-        isAuthenticated,
         userId,
         setCustomUserData,
         signUserOut,
