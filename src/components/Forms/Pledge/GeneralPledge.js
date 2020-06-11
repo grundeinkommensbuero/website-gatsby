@@ -110,14 +110,6 @@ export default ({ pledgeId }) => {
                   type="text"
                   component={TextInputWrapped}
                 />
-                <Field
-                  name="message"
-                  label="Willst du uns noch etwas mitteilen?"
-                  placeholder="Deine Nachricht"
-                  type="textarea"
-                  maxLength={500}
-                  component={TextInputWrapped}
-                />
               </FormSection>
 
               <CTAButtonContainer illustration="POINT_LEFT">
