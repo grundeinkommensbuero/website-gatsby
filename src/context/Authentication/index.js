@@ -91,7 +91,6 @@ const AuthProvider = ({ children }) => {
       // If userId in params is same as setUserId do nothing
       if (userId === params.userId) return;
       // if userId in params is different than in state
-      console.log('userId different in state and local storage');
       setUserId(params.userId);
     }
   }, [userId, isAuthenticated]);
