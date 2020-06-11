@@ -23,32 +23,11 @@ const AuthProvider = ({ children }) => {
   const [tempEmail, setTempEmail] = useState();
   const [userId, setUserId] = useLocalStorageUser();
 
-  // const [userIdParams, setUserIdParams] = useState();
-
-  const signUserOut = () =>
-    signOut({ setCognitoUser, setUserId, setIsAuthenticated });
+  const signUserOut = async () =>
+    await signOut({ setCognitoUser, setUserId, setIsAuthenticated });
 
   // On page load
   useEffect(() => {
-    if (typeof window !== `undefined`) {
-      // Check if the user is already signed in
-      import(/* webpackChunkName: "Amplify" */ '@aws-amplify/auth').then(
-        ({ default: Amplify }) => {
-          Amplify.currentAuthenticatedUser()
-            .then(user => {
-              if (user) {
-                setCognitoUser(user);
-                setIsAuthenticated(true);
-              }
-            }) // set user in context (global state)
-            .catch(() => {
-              //error is thrown if user is not authenticated
-              setIsAuthenticated(false);
-            });
-        }
-      );
-    }
-
     // Check for URL param for userId
     const params = querystring.parse(window.location.search);
     // If there is a userId in the params
@@ -59,15 +38,38 @@ const AuthProvider = ({ children }) => {
       if (userIdParams !== params.userId) userIdParams = params.userId;
     }
 
-    // If no user Id in local storage and one in params, set it
+    // If no userId in local storage and one in params, set userId
     if (userIdParams && !userId) {
       setUserId(userIdParams);
+      setIsAuthenticated(false);
     }
-
     // If userId in params and userId in local storage and they don't match
-    if (userIdParams && userId && userIdParams !== userId) {
-      signUserOut();
-      setUserId(userIdParams);
+    else if (userIdParams && userId && userIdParams !== userId) {
+      // Setting new userId from params, can cause a signOut if the userId is invalid
+      signUserOut().then(() => {
+        setUserId(userIdParams);
+      });
+    }
+    // Check Amplify
+    else {
+      if (typeof window !== `undefined`) {
+        // Check if the user is already signed in
+        import(/* webpackChunkName: "Amplify" */ '@aws-amplify/auth').then(
+          ({ default: Amplify }) => {
+            Amplify.currentAuthenticatedUser()
+              .then(user => {
+                if (user) {
+                  setCognitoUser(user);
+                  setIsAuthenticated(true);
+                }
+              }) // set user in context (global state)
+              .catch(() => {
+                //error is thrown if user is not authenticated
+                setIsAuthenticated(false);
+              });
+          }
+        );
+      }
     }
   }, []);
 
@@ -85,7 +87,10 @@ const AuthProvider = ({ children }) => {
   }, [cognitoUser]);
 
   useEffect(() => {
+    console.log('userId/isAuthenticated update');
+    console.log({ userId, isAuthenticated });
     if (isAuthenticated && userId) {
+      console.log('userUpdated');
       // Update user data with data from backend
       updateCustomUserData({
         isAuthenticated,
@@ -97,6 +102,7 @@ const AuthProvider = ({ children }) => {
     }
     // If user is not authenticated but userId is known
     if (isAuthenticated === false && userId) {
+      console.log('get data');
       // Get user data
       updateCustomUserData({
         isAuthenticated,
