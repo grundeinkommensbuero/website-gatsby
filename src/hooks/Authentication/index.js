@@ -110,7 +110,6 @@ export const signOut = async ({
   setUserId,
   setIsAuthenticated,
 }) => {
-  console.log('sign out');
   try {
     const { default: Auth } = await import(
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
