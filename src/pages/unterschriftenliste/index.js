@@ -24,7 +24,8 @@ const Unterschriftenliste = () => {
   }, []);
 
   useEffect(() => {
-    if (campaignCode && userId) {
+    if (campaignCode && userId && isAuthenticated !== undefined) {
+      // console.log('Create pdf', { userId, isAuthenticated });
       // This will fail if userId has newsletter consent value of false
       createPdf({
         campaignCode,
