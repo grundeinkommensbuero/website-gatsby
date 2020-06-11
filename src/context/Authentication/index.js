@@ -37,20 +37,21 @@ const AuthProvider = ({ children }) => {
       // if userId in params is different than in state
       if (userIdParams !== params.userId) userIdParams = params.userId;
     }
-
-    // If no userId in local storage and one in params, set userId
+    // If userId in params but no userId in local storage
     if (userIdParams && !userId) {
+      // Set user as pseudo logged in
       setUserId(userIdParams);
       setIsAuthenticated(false);
     }
     // If userId in params and userId in local storage and they don't match
     else if (userIdParams && userId && userIdParams !== userId) {
-      // Setting new userId from params, can cause a signOut if the userId is invalid
+      // Sign current user out
       signUserOut().then(() => {
+        // Set new userId so user is pseudo logged in. Can force a second sign out if invalid id.
         setUserId(userIdParams);
       });
     }
-    // Check Amplify
+    // In any other case, check for authenticated user
     else {
       if (typeof window !== `undefined`) {
         // Check if the user is already signed in
@@ -60,7 +61,6 @@ const AuthProvider = ({ children }) => {
               .then(user => {
                 if (user) {
                   setCognitoUser(user);
-                  setIsAuthenticated(true);
                 }
               }) // set user in context (global state)
               .catch(() => {
@@ -73,13 +73,13 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  //define function to update token upon change of state
   useEffect(() => {
-    // Set user in localhost
-    //only if user is authenticated
+    // If identified cognito user
     if (cognitoUser && cognitoUser.attributes) {
+      // Set user data
+      setIsAuthenticated(true);
       setToken(cognitoUser.signInUserSession.idToken.jwtToken);
-      // Update userId in localStorage if different than login user
+      // If userId needs to be overridden
       if (cognitoUser.attributes.sub !== userId) {
         setUserId(cognitoUser.attributes.sub);
       }
