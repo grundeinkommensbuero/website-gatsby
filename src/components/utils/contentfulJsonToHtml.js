@@ -8,7 +8,7 @@ import s from './contentfulJsonToHtml.module.less';
 import cN from 'classnames';
 
 export function contentfulJsonToHtml(json) {
-  const website_url = 'https://www.change.org';
+  const website_url = 'https://expedition-grundeinkommen.de/';
 
   const documentToREactComponentsOptions = {
     // needed so that line breaks are properly added.
@@ -24,10 +24,11 @@ export function contentfulJsonToHtml(json) {
             href={node.data.uri}
             target={`${
               node.data.uri.startsWith(website_url) ||
-              node.data.uri.endsWith('.pdf')
-                ? '_blank'
-                : '_self'
+              !node.data.uri.endsWith('.pdf')
+                ? '_self'
+                : '_blank'
             }`}
+            rel={`${node.data.uri.startsWith(website_url) ? '' : 'noopener noreferrer'}`}
           >
             {node.content[0].value}
           </a>
