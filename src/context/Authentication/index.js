@@ -79,7 +79,7 @@ const AuthProvider = ({ children }) => {
       // Set user data
       setIsAuthenticated(true);
       setToken(cognitoUser.signInUserSession.idToken.jwtToken);
-      // If userId needs to be overridden
+      // If userId needs to be overriddenz
       if (cognitoUser.attributes.sub !== userId) {
         setUserId(cognitoUser.attributes.sub);
       }
@@ -134,10 +134,12 @@ const updateCustomUserData = async ({
       : await getUser(userId);
 
     if (
-      // If error finding user data, log out user
+      // If error finding user data
       result.state !== 'success' ||
       // If user logged in different userId passed in params
-      (isAuthenticated && userId !== result.user.cognitoId)
+      (isAuthenticated && userId !== result.user.cognitoId) ||
+      // User doesn't have email or password
+      (!result.user?.email && !result.user?.username)
     ) {
       signUserOut();
       return;
