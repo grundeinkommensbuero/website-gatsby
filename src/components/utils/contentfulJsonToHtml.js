@@ -23,7 +23,7 @@ export function contentfulJsonToHtml(json) {
           <a
             href={node.data.uri}
             target={`${
-              node.data.uri.startsWith(website_url) ||
+              node.data.uri.startsWith(website_url) &&
               !node.data.uri.endsWith('.pdf')
                 ? '_self'
                 : '_blank'
