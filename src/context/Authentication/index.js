@@ -107,6 +107,7 @@ const AuthProvider = ({ children }) => {
         isAuthenticated,
         setIsAuthenticated,
         token,
+        setToken,
         userId,
         setUserId,
         tempEmail,

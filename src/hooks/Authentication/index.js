@@ -109,6 +109,7 @@ export const signOut = async ({
   setCognitoUser,
   setUserId,
   setIsAuthenticated,
+  setToken,
 }) => {
   try {
     const { default: Auth } = await import(
@@ -128,6 +129,7 @@ export const signOut = async ({
     // Update user state
     setCognitoUser(null);
     setUserId(undefined);
+    setToken(undefined);
     setIsAuthenticated(false);
     return;
   } catch (error) {
