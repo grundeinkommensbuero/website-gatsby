@@ -48,7 +48,10 @@ export default ({ signaturesId }) => {
   }, [isAuthenticated, loginCodeRequested]);
 
   // If user is not authorised after entering email, or if they are identified and request the list
-  if (state === 'unauthorized' || (loginCodeRequested && !isAuthenticated)) {
+  if (
+    state === 'unauthorized' ||
+    (loginCodeRequested && !isAuthenticated && !anonymous)
+  ) {
     return (
       <EnterLoginCode>
         <p>
@@ -56,7 +59,7 @@ export default ({ signaturesId }) => {
           in einer E-Mail geschickt haben. Alternativ kannst du auch eine Liste{' '}
           <InlineButton
             onClick={() => {
-              createPdf({ campaignCode: signaturesId });
+              createPdf({ campaignCode: signaturesId, anonymous: true });
             }}
             type="button"
           >
