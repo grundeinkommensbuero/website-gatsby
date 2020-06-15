@@ -20,10 +20,8 @@ export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, signUp] = useSignUp();
   const [email, setEmail] = useState();
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-  // We need the following flag to check if we want to update newsletter consent
-  const [wasAlreadyAuthenticated, setWasAlreadyAuthenticated] = useState(false);
-  const { isAuthenticated } = useContext(AuthContext);
+  const [loginCodeRequested, setLoginCodeRequested] = useState();
+  const { isAuthenticated, userId } = useContext(AuthContext);
 
   useEffect(() => {
     // If user was registered proceed by creating list
@@ -39,16 +37,18 @@ export default ({ signaturesId }) => {
   }, [signUpState]);
 
   useEffect(() => {
-    if (isAuthenticated && hasSubmitted) {
+    // Create pdf if user has authenticated after requesting their login code.
+    if (isAuthenticated && loginCodeRequested) {
       createPdf({
         campaignCode: signaturesId,
         userExists: true,
-        shouldNotUpdateUser: wasAlreadyAuthenticated,
+        shouldNotUpdateUser: true,
       });
     }
-  }, [isAuthenticated, hasSubmitted, wasAlreadyAuthenticated]);
+  }, [isAuthenticated, loginCodeRequested]);
 
-  if (state === 'unauthorized') {
+  // If user is not authorised after entering email, or if they are identified and request the list
+  if (state === 'unauthorized' || (loginCodeRequested && !isAuthenticated)) {
     return (
       <EnterLoginCode>
         <p>
@@ -136,20 +136,32 @@ export default ({ signaturesId }) => {
     <>
       <Form
         onSubmit={e => {
-          if (!isAuthenticated) {
-            setEmail(e.email);
-            signUp(e.email);
-          } else {
-            setWasAlreadyAuthenticated(true);
+          // If user is authenticated
+          if (isAuthenticated) {
+            createPdf({
+              campaignCode: signaturesId,
+              userExists: true,
+              shouldNotUpdateUser: true,
+            });
+            return;
           }
 
-          setHasSubmitted(true);
+          // If user is identified
+          if (userId) {
+            // Show EnterLoginCode
+            setLoginCodeRequested(true);
+            return;
+          }
+
+          // If user is not identified
+          setEmail(e.email);
+          signUp(e.email);
         }}
-        validate={values => validate(values, isAuthenticated)}
+        validate={values => validate(values, userId)}
         render={({ handleSubmit }) => {
           return (
             <form onSubmit={handleSubmit} className={s.form}>
-              {!isAuthenticated ? (
+              {!userId ? (
                 <>
                   <p className={s.hint}>
                     Schickt mir die Unterschriftenliste, erinnert mich an das
@@ -203,10 +215,10 @@ export default ({ signaturesId }) => {
   );
 };
 
-const validate = (values, isAuthenticated) => {
+const validate = (values, userId) => {
   const errors = {};
 
-  if (!isAuthenticated) {
+  if (!userId) {
     if (values.email && values.email.includes('+')) {
       errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
     }
