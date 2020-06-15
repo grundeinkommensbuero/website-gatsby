@@ -7,9 +7,9 @@ import { getMailtoUrl, objectMap } from '.';
 import s from './contentfulJsonToHtml.module.less';
 import cN from 'classnames';
 
-export function contentfulJsonToHtml(json) {
-  const website_url = 'https://expedition-grundeinkommen.de/';
+const website_url = 'https://expedition-grundeinkommen.de/';
 
+export function contentfulJsonToHtml(json) {
   const documentToREactComponentsOptions = {
     // needed so that line breaks are properly added.
     renderText: text => {
@@ -19,16 +19,22 @@ export function contentfulJsonToHtml(json) {
     },
     renderNode: {
       [INLINES.HYPERLINK]: node => {
+        const {uri} = node.data;
+        const target =
+          (uri.startsWith(website_url) || uri.startsWith('/')) &&
+          !uri.endsWith('.pdf')
+            ? '_self'
+            : '_blank';
+
         return (
           <a
             href={node.data.uri}
-            target={`${
-              node.data.uri.startsWith(website_url) &&
-              !node.data.uri.endsWith('.pdf')
-                ? '_self'
-                : '_blank'
+            target={target}
+            rel={`${
+              !node.data.uri.startsWith(website_url)
+                ? ''
+                : 'noopener noreferrer'
             }`}
-            rel={`${node.data.uri.startsWith(website_url) ? '' : 'noopener noreferrer'}`}
           >
             {node.content[0].value}
           </a>
