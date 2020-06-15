@@ -193,14 +193,14 @@ export default ({ signaturesId }) => {
                 </FinallyMessage>
               )}
   
-              <CTAButtonContainer illustration="POINT_LEFT">
+              <CTAButtonContainer className={s.illustrationRotated} illustration="POINT_LEFT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
 
               {!isAuthenticated && (
                 <>
-                  <p>
-                    Du wills deine E-Mail-Adresse nicht angeben?<br></br>
+                  <p className={s.anonymousListDownloadInfo}>
+                    Du willst deine E-Mail-Adresse nicht angeben?<br></br>
                     Du kannst die Liste{' '}
                     <InlineButton
                       onClick={() => {
