@@ -30,13 +30,14 @@ export const useCreateSignatureList = () => {
     pdf,
     anonymous,
     data => {
-      if (userId || data.email) {
+      // If non-anonymous download
+      if (!data.anonymous && (userId || data.email)) {
         data.token = token;
         data.userId = userId;
 
         return createSignatureList(data, setState, setPdf);
       }
-
+      // If anonymous download
       setAnonymous(true);
       return createSignatureListAnonymous(data, setState, setPdf);
     },
