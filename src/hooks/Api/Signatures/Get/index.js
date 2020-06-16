@@ -19,6 +19,7 @@ export const useSignatureCount = () => {
       getSignatureCount().then(data => setStats(data));
     }
   });
+  
   return stats;
 };
 

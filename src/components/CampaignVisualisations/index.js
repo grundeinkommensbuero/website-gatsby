@@ -6,6 +6,10 @@ import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal, LinkButton } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
+//eye catcher shape doesn't change depending on theme yet
+//can we have some dynamic path, to import a different eye catcher shape per theme?
+//do we need a style/themes/index.js to import logo, eye_catcher and other ressources from the choosen theme?
+//or do we have to put the eye catcher shape into the css?
 import eyeCatcherBackground from '!svg-inline-loader!../style/themes/dibb/eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
 import VisualCounter from '../VisualCounter';
@@ -14,7 +18,6 @@ import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
-  //console.log("stats: " + currentCounts.stringify());
 
   return (
     <>
