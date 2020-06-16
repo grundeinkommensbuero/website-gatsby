@@ -14,7 +14,7 @@ import AuthContext from '../../context/Authentication';
 const trackingCategory = 'ListDownload';
 
 const Unterschriftenliste = () => {
-  const [state, , createPdf] = useCreateSignatureList({});
+  const [state, pdf, , createPdf] = useCreateSignatureList({});
   const [campaignCode, setCampaignCode] = useState(null);
   const { userId, setUserId, isAuthenticated } = useContext(AuthContext);
 
@@ -71,7 +71,7 @@ const Unterschriftenliste = () => {
               Liste wird generiert, bitte einen Moment Geduld...
             </FinallyMessage>
           )}
-          {state === 'xerror' && (
+          {state === 'error' && (
             <FinallyMessage state="error">
               Da ist was schief gegangen
             </FinallyMessage>
@@ -94,7 +94,7 @@ const Unterschriftenliste = () => {
               </p>
             </EnterLoginCode>
           )}
-          {state === 'error' && (
+          {state === 'created' && (
             <>
               <DownloadListsNextSteps>
                 <StepListItem icon="download">
