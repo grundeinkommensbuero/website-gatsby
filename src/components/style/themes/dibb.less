@@ -1,0 +1,74 @@
+//variable style definitions
+@borderWidth: 2px;
+@borderWidthThick: 4px;
+@borderRadius: 0.6rem;
+@buttonPadding: 0.7rem 0.8rem 0.6rem;
+
+@header-background: @aliceBlue;
+
+@section-padding: 5rem var(--grid-gap) 5rem;
+
+@section1-bg-color: @grey;
+@section1-font-color: @darkCyan;
+@section-secondary-color: @glitter;
+@section-text-on-secondary-color: @darkCyan;
+@section1-background-color: @grey;
+@section1-color: @darkCyan;
+
+@section2-bg-color: @aliceBlue;
+@section2-font-color: @darkCyan;
+@section2-background-color: @aliceBlue;
+@section2-color: @darkCyan;
+
+@section3-bg-color: @glitter;
+@section3-font-color: @darkCyan;
+@section3-background-color: @glitter;
+@section3-color: @darkCyan;
+
+@input-placeholder-color: @darkGrey;
+@input-focus-box-shadow-color: @darkCyan;
+@input-background: @white;
+@input-color: @darkCyan;
+
+//@eyeCatcher-image: url('data:image/svg+xml;base64,PHN2ZyBkYXRhLW5hbWU9TGF5ZXIgMSB4bWxucz1odHRwOi8vd3d3LnczLm9yZy8y MDAwL3N2ZyB2aWV3Qm94PTAgMCA5OTUuMzcgOTUyLjA5Pjx0aXRsZT5leWVfY2F0 Y2hlcjwvdGl0bGU+PHBhdGggZD1NOTk1LjM3LDQ3NkM5OTUuMzcsMjAyLDgwMC42 MiwwLDQ5MC40NywwLDE5MS4xNCwwLDAsMjAyLDAsNDc2UzE5MS4xNCw5NTIuMDks NDkwLjQ3LDk1Mi4wOWMzMTAuMTUsMCw1MDQuOS0yMDIsNTA0LjktNDc2IC8+PC9z dmc+Cg==');
+
+
+//we can change a whole set of styles with a mixin
+.body() {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 500;
+  background: @white;
+  color: @darkCyan;
+  --bg-color: @white;
+  --font-color: @darkCyan;
+  --font-color-secondary: @darkCyan;
+  --secondary-color: @white;
+  --text-on-secondary-color: @darkCyan; 
+}
+
+//we can remove an illustration
+.illustrationPointLeft() {
+  display: none;
+}
+
+.header() {}
+
+.footer() {}
+
+//we can remove all figures etc.
+.container() {
+  display: none;
+}
+
+//we can create one more complex mixin for a whole .less file
+.campaignVisualisations() {
+  .barCurrent {
+    left: -1%;
+    .barCurrentLabel {
+      bottom: 0;
+      }  
+  }
+  .eyeCatcherBackground() {
+  background-image: url('../style/themes/@{theme}/eye_catcher.svg');
+}
+  

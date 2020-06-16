@@ -1,0 +1,90 @@
+@borderWidth: 1px;
+@borderWidthThick: 3px;
+@borderRadius: 1.3rem;
+@buttonPadding: 0.8rem 0.8rem 0.5rem;
+
+@header-background: @grey;
+
+@section-padding: 5rem var(--grid-gap) 10rem;
+
+@section1-bg-color: @yellow;
+@section1-font-color: @red;
+@section-secondary-color: @blueBright;
+@section-text-on-secondary-color: @yellow;
+@section1-background-color: @yellow;
+@section1-color: @red;
+
+@section2-bg-color: @red;
+@section2-font-color: @greyBright;
+@section2-background-color: @red;
+@section2-color: @greyBright;
+
+@section3-bg-color: @grey;
+@section3-font-color: @red;
+@section3-background-color: @grey;
+@section3-color: @red;
+
+@input-placeholder-color: @grey;
+@input-focus-box-shadow-color: @red;
+@input-background: @white;
+@input-color: @red;
+
+@barCurrent-left: 0%;
+
+//@eyeCatcher-image: url('data:image/svg+xml;base64,PHN2ZyBkYXRhLW5hbWU9TGF5ZXIgMSB4bWxucz1odHRwOi8vd3d3LnczLm9yZy8y MDAwL3N2ZyB2aWV3Qm94PTAgMCA5OTUuMzcgOTUyLjA5Pjx0aXRsZT5leWVfY2F0 Y2hlcjwvdGl0bGU+PHBhdGggZD1NOTk1LjM3LDQ3NkM5OTUuMzcsMjAyLDgwMC42 MiwwLDQ5MC40NywwLDE5MS4xNCwwLDAsMjAyLDAsNDc2UzE5MS4xNCw5NTIuMDks NDkwLjQ3LDk1Mi4wOWMzMTAuMTUsMCw1MDQuOS0yMDIsNTA0LjktNDc2IC8+PC9z dmc+Cg==');
+
+.body() {
+  font-family: 'Ideal', Tahoma, Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background: @grey;
+  color: @red;
+  --bg-color: @grey;
+  --font-color: @red;
+  --font-color-secondary: @blueBright;
+  --secondary-color: @yellow;
+  --text-on-seccondary-color: @red;
+}
+
+.header() {}
+
+.globeBackground() {
+  background: repeating-linear-gradient(
+      -5deg,
+      transparent,
+      @red 1px,
+      transparent 2px,
+      transparent 10rem
+    ),
+    repeating-linear-gradient(
+      -95deg,
+      transparent,
+      @red 1px,
+      transparent 2px,
+      transparent 10rem
+    ),
+    @yellow;
+}
+
+.footer() {
+  .globeBackground();
+}
+
+.container() {}
+
+.campaignVisualisations() {
+  .barGoalBar {
+    transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
+  }
+  .barCurrent {
+    .barCurrentLabel {
+      bottom: -.3rem;
+    }
+    &::before {
+      transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
+    }
+  }
+}
+
+.eyeCatcherBackground() {
+  background-image: url('../../CampaignVisualisations/eye_catcher.svg');
+}
