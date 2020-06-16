@@ -25,16 +25,16 @@ export function contentfulJsonToHtml(json) {
           !uri.endsWith('.pdf')
             ? '_self'
             : '_blank';
+        const rel =
+          (uri.startsWith(website_url) || uri.startsWith('/'))
+            ? ''
+            : 'noopener noreferrer';
 
         return (
           <a
-            href={node.data.uri}
+            href={uri}
             target={target}
-            rel={`${
-              !node.data.uri.startsWith(website_url)
-                ? ''
-                : 'noopener noreferrer'
-            }`}
+            rel={rel}
           >
             {node.content[0].value}
           </a>
