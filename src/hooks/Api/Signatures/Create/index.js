@@ -67,10 +67,7 @@ const createSignatureListAnonymous = async (
     setPdf(signatureList);
   } catch (error) {
     console.log('Error while creating anonymous signature list', error);
-    setState('created');
-    setPdf(new URL ("http://localhost:8000/0337185.pdf"));
-    var currentTime = new Date().getTime();
-    while (currentTime + 800 >= new Date().getTime());
+    setState('error');
   }
 };
 
