@@ -3,19 +3,19 @@
 .sections .section {
     position: relative;
     overflow: hidden;
-    padding: 5rem var(--grid-gap) 10rem;
+    padding: @section-padding;
 
     @media (max-width: @breakPointM) {
         padding: 3rem 1rem 5rem;
     }
 
     &:nth-child(3n+1):not(:only-child) {
-        --bg-color: @yellow;
-        --font-color: @red;
-        --secondary-color: @blueBright;
-        --text-on-secondary-color: @yellow;
-        background-color: @yellow;
-        color: @red;
+        --bg-color: @section1-bg-color;
+        --font-color: @section1-font-color;
+        --secondary-color: @section-secondary-color;
+        --text-on-secondary-color: @section-text-on-secondary-color;
+        background-color: @section1-background-color;
+        color: @section1-color;
 
         &.sectionNewsletter {
             background-image: url('./backgrounds/newsletter_red.svg');
@@ -23,17 +23,17 @@
     }
 
     &:nth-child(3n+2) {
-        --bg-color: @red;
-        --font-color: @greyBright;
-        background-color: @red;
-        color: @greyBright;
+        --bg-color: @section2-bg-color;
+        --font-color: @section2-font-color;
+        background-color: @section2-background-color;
+        color: @section2-color;
     }
 
     &:nth-child(3n+3), &:only-child {
-        --bg-color: @grey;
-        --font-color: @red;
-        background-color: @grey;
-        color: @red;
+        --bg-color: @section3-bg-color;
+        --font-color: @section3-font-color;
+        background-color: @section3-background-color;
+        color: @section3-color;
     }
 
     &:nth-child(3n+1):not(:only-child), &:nth-child(3n+3), &:only-child {
@@ -172,7 +172,7 @@
         }
     }
 }
-
+    
 .jumpToAnchor {
     position: absolute;
     top: -@headerHeight;

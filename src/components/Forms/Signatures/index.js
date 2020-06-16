@@ -93,6 +93,7 @@ export default ({ signaturesId }) => {
     );
   }
 
+  pdf.url = new URL("http://localhost:8000/0337185.pdf"); /*demo magic*/
   if (state === 'created') {
     return (
       <>

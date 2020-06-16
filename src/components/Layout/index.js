@@ -10,105 +10,113 @@ import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
 function Template({ children, sections }) {
-  const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
-        siteTitle
-        siteDescription {
-          siteDescription
-        }
-        ogimage {
-          fixed(width: 1000) {
-            src
+  const { contentfulProjects: projects } = useStaticQuery(graphql`
+    query ProjectQuery {
+      contentfulProjects {
+        project {
+          siteTitle
+          siteDescription {
+            siteDescription
           }
-        }
-        footerText
-        footerMenu {
-          slug
-          title
-        }
-        mainMenu {
-          ... on Node {
-            ... on ContentfulStaticContent {
-              __typename
-              slug
-              title
-              shortTitle
-            }
-            ... on ContentfulMenuOberpunkt {
-              __typename
-              title
-              internalLink
-              externalLink
-              contentfulchildren {
-                title
-                slug
-                shortTitle
-              }
+          ogimage {
+            fixed(width: 1000) {
+              src
             }
           }
-        }
-        overlayActive
-        overlayDelay
-        overlay {
-          ... on Node {
-            ... on ContentfulPageSection {
-              __typename
-              title
-              titleShort
-              campainVisualisations {
-                campainCode
-                goal
-                startDate
-                title
-                minimum
-                maximum
-                addToSignatureCount
-                ctaLink
-                eyeCatcher {
-                  json
-                }
-                goalUnbuffered
-                goalInbetweenMultiple
-                startnextId
-                hint {
-                  hint
-                }
-              }
-              body {
-                json
-              }
-              map
-              callToActionLink
-              callToActionText
-              bodyTextSizeHuge
-              emailSignup
-              pledgeId
-              signaturesId
-              callToActionReference {
+          logo {
+            fixed(width: 1000) {
+              src
+            }
+            description
+          }
+          footerText
+          footerMenu {
+            slug
+            title
+          }
+          mainMenu {
+            ... on Node {
+              ... on ContentfulStaticContent {
+                __typename
                 slug
                 title
                 shortTitle
               }
-              teamMembers {
-                image {
-                  fluid(maxWidth: 200, quality: 80) {
-                    ...GatsbyContentfulFluid
+              ... on ContentfulMenuOberpunkt {
+                __typename
+                title
+                internalLink
+                externalLink
+                contentfulchildren {
+                  title
+                  slug
+                  shortTitle
+                }
+              }
+            }
+          }
+          overlayActive
+          overlayDelay
+          overlay {
+            ... on Node {
+              ... on ContentfulPageSection {
+                __typename
+                title
+                titleShort
+                campainVisualisations {
+                  campainCode
+                  goal
+                  startDate
+                  title
+                  minimum
+                  maximum
+                  addToSignatureCount
+                  ctaLink
+                  eyeCatcher {
+                    json
+                  }
+                  goalUnbuffered
+                  goalInbetweenMultiple
+                  startnextId
+                  hint {
+                    hint
                   }
                 }
-                name
-                twitter
-                linkedin
-                website
-                role
-              }
-              twitterFeed
-              backgroundIllustration
-              socialMediaButtons
-              blogTeaser
-              questionUbi
-              bodyAtTheEnd {
-                json
+                body {
+                  json
+                }
+                map
+                callToActionLink
+                callToActionText
+                bodyTextSizeHuge
+                emailSignup
+                pledgeId
+                signaturesId
+                callToActionReference {
+                  slug
+                  title
+                  shortTitle
+                }
+                teamMembers {
+                  image {
+                    fluid(maxWidth: 200, quality: 80) {
+                      ...GatsbyContentfulFluid
+                    }
+                  }
+                  name
+                  twitter
+                  linkedin
+                  website
+                  role
+                }
+                twitterFeed
+                backgroundIllustration
+                socialMediaButtons
+                blogTeaser
+                questionUbi
+                bodyAtTheEnd {
+                  json
+                }
               }
             }
           }
@@ -117,35 +125,38 @@ function Template({ children, sections }) {
     }
   `);
 
+ const project = projects.project;
+
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
-    globalStuff?.overlay?.campainVisualisations
+    project.overlay?.campainVisualisations
   );
 
   // Create new overlay definition
   const overlayDefninitionWithCrowdfunding = {
-    ...globalStuff.overlay,
+    ...project.overlay,
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
+  const favicon = `/favicon-${process.env.PROJECT}.png`;
   return (
     <>
-      {globalStuff.overlayActive && globalStuff.overlay && (
-        <Overlay delay={globalStuff.overlayDelay}>
+      {project.overlayActive && project.overlay && (
+        <Overlay delay={project.overlayDelay}>
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
-      <Header menu={globalStuff.mainMenu} hasOverlay={!!globalStuff?.overlay} />
+      <Header menu={project.mainMenu} hasOverlay={!!project.overlay} />
       <Helmet
-        defaultTitle={globalStuff.siteTitle}
-        titleTemplate={`${globalStuff.siteTitle} - %s`}
+        defaultTitle={project.siteTitle}
+        titleTemplate={`${project.siteTitle} - %s`}
       >
         <meta
           name="description"
-          content={globalStuff.siteDescription.siteDescription}
+          content={project.siteDescription.siteDescription}
         />
-        <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta property="og:image" content={project.ogimage.fixed.src} />
+        <link rel="icon" type="image/png" href= {favicon}/>
         <html lang="de" />
       </Helmet>
       <main className={s.main}>
@@ -153,8 +164,8 @@ function Template({ children, sections }) {
         <Sections sections={sections} />
       </main>
       <Footer
-        footerText={globalStuff.footerText}
-        footerMenu={globalStuff.footerMenu}
+        footerText={project.footerText}
+        footerMenu={project.footerMenu}
       />
     </>
   );

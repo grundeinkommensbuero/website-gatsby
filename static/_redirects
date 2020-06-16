@@ -1,6 +1,6 @@
 https://www.expedition-grundeinkommen.com/*     https://expedition-grundeinkommen.de/:splat 301!
 http://www.expedition-grundeinkommen.com/*      https://expedition-grundeinkommen.de/:splat 301!
-www.expedition-grundeinkommen.com/*      https://expedition-grundeinkommen.de/:splat 301!
+www.expedition-grundeinkommen.com/*             https://expedition-grundeinkommen.de/:splat 301!
 
 /downloads                                      /material
 /eintragen                                      /qr/b

@@ -10,6 +10,7 @@ const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   host: process.env.CONTENTFUL_HOST,
+  environment: process.env.CONTENTFUL_ENVIRONMENT,
   forceFullSync: true,
 };
 
@@ -80,6 +81,7 @@ const config = {
       resolve: `gatsby-plugin-less`,
       options: {
         strictMath: true,
+        globalVars: {"theme": process.env.PROJECT},
       },
     },
     {

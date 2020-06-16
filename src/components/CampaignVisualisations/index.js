@@ -6,7 +6,7 @@ import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal, LinkButton } from '../Forms/Button';
 import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
 import { Link } from 'gatsby';
-import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
+import eyeCatcherBackground from '!svg-inline-loader!../style/themes/dibb/eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
 import VisualCounter from '../VisualCounter';
 import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
@@ -14,6 +14,7 @@ import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 
 export default ({ visualisations }) => {
   const currentCounts = useSignatureCount();
+  //console.log("stats: " + currentCounts.stringify());
 
   return (
     <>
@@ -47,7 +48,7 @@ export default ({ visualisations }) => {
                   <>Nächstes Ziel: {count} Unterschriften</>
                 ),
                 CURRENT_COUNT: () => <>Gesammelte Unterschriften</>,
-                CTA: () => <>Mitmachen</>,
+                CTA: () => <>Mehr erfahren</>,
               }}
               currency="Unterschriften"
               {...visualisation}

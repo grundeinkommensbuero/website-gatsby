@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import s from './style.module.less';
 import Link from 'gatsby-link';
-import Logo from './logo.svg';
+import LogoXbge from '../../style/themes/xbge/logo.svg';
+import LogoDibb from '../../style/themes/dibb/logo-dibb.png';
 import cN from 'classnames';
 import { OverlayContext } from '../../../context/Overlay';
 import { Button } from '../../Forms/Button';
@@ -14,6 +15,18 @@ const Header = ({ menu, hasOverlay }) => {
     setMenuOpen(!menuOpen);
   };
 
+  //I propose we put the logo and alt text (description) into contentful
+  switch (process.env.PROJECT) {
+    case "xbge":
+    default:
+      var Logo = LogoXbge;
+      var logoAlt = "Expedition Grundeinkommen Home";
+    break;
+    case "dibb":
+      Logo = LogoDibb;
+      logoAlt = "Demokratie in Brandenburg";
+  }
+
   return (
     <header className={s.header}>
       <div className={s.inner}>
@@ -22,7 +35,7 @@ const Header = ({ menu, hasOverlay }) => {
             <img
               src={Logo}
               className={s.logo}
-              alt="Expedition Grundeinkommen Home"
+              alt={logoAlt}
             />
           </Link>
         </h1>

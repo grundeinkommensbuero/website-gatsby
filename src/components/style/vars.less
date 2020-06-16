@@ -1,3 +1,8 @@
+@import './themes/@{theme}/@{theme}.less';
+
+//this is set in gatsby-browser-config.js as global variable, you can override it here
+//@theme: dibb;
+
 @red: #fc484c;
 @blueBright: #22c8ee;
 @blueDark: #3423f6;
@@ -7,6 +12,11 @@
 @grey: #f0f0f0;
 @greyBright: #f5f5f5;
 @white: white;
+@black: black;
+@darkCyan: darkcyan;
+@glitter: #e0e9ff;
+@aliceBlue: #e8f0ff;
+@darkGrey: #a9a9a9;
 
 @fontSizeXXXL: 4rem;
 @fontSizeXXL: 3rem;
@@ -15,11 +25,6 @@
 @fontSizeM: 1.5rem;
 @fontSizeS: 1.15rem;
 @fontSizeXS: 1rem;
-
-@borderWidth: 1px;
-@borderWidthThick: 3px;
-@borderRadius: 1.3rem;
-@buttonPadding: 0.8rem 0.8rem 0.5rem;
 
 @headerHeight: 5rem;
 @headerHeightS: 4rem;
@@ -73,24 +78,6 @@
 
 .contentGridSlim() {
   grid-column: slim-start / slim-end;
-}
-
-.globeBackground() {
-  background: repeating-linear-gradient(
-      -5deg,
-      transparent,
-      @red 1px,
-      transparent 2px,
-      transparent 10rem
-    ),
-    repeating-linear-gradient(
-      -95deg,
-      transparent,
-      @red 1px,
-      transparent 2px,
-      transparent 10rem
-    ),
-    @yellow;
 }
 
 .menuLink() {
