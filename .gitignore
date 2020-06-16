@@ -67,3 +67,6 @@ public
 .contentful.json
 .env*
 !.env.example
+
+#Mac filesystem Desktop Services Store
+.DS_Store
