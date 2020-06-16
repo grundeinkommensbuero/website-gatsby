@@ -38,11 +38,13 @@ export default ({ signaturesId }) => {
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
-    if (isAuthenticated && loginCodeRequested) {
+    if (isAuthenticated && typeof loginCodeRequested !== 'undefined') {
       createPdf({
         campaignCode: signaturesId,
         userExists: true,
-        shouldNotUpdateUser: true,
+        // We only want to update the user's newsletter consent,
+        // if they did not come from identified stage (loginCodeRequested = false)
+        shouldNotUpdateUser: loginCodeRequested,
       });
     }
   }, [isAuthenticated, loginCodeRequested]);
@@ -154,6 +156,8 @@ export default ({ signaturesId }) => {
             // Show EnterLoginCode
             setLoginCodeRequested(true);
             return;
+          } else {
+            setLoginCodeRequested(false);
           }
 
           // If user is not identified
