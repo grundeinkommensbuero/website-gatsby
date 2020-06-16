@@ -1,138 +1,138 @@
 @import '../../style/vars.less';
 
 .avatarImage {
-    height: 5rem;
-    width: 5rem;
-    display: block;
-    margin-top: 1rem;
-    transition: transform .3s;
-    pointer-events: all;
+  height: 5rem;
+  width: 5rem;
+  display: block;
+  margin-top: 1rem;
+  transition: transform 0.3s;
+  pointer-events: all;
 
-    @media (max-width: @breakPointM) {
-        height: 4rem;
-        width: 4rem;
-    }
+  @media (max-width: @breakPointM) {
+    height: 4rem;
+    width: 4rem;
+  }
 }
 
 .avatarUploadButton {
-    visibility: hidden;
-    position: absolute;
+  visibility: hidden;
+  position: absolute;
 }
 
 .avatarImageContainer {
-    position: relative;
-    cursor: pointer;
-    pointer-events: none;
+  position: relative;
+  cursor: pointer;
+  pointer-events: none;
 
-    &:hover {
-        .avatarImage {
-            transform: rotate(-15deg);
-        }
+  &:hover {
+    .avatarImage {
+      transform: rotate(-15deg);
     }
+  }
 }
 
 .avatarImageLabel {
+  position: absolute;
+  top: calc(100% + 2.5rem);
+  left: calc(100% - 0.5rem);
+  width: 15rem;
+  font-size: @fontSizeS;
+  pointer-events: all;
+
+  @media (max-width: @breakPointM) {
+    transform: rotate(70deg);
+    transform-origin: 0 0;
+    top: 100%;
+    left: 2rem;
+    font-size: @fontSizeXS;
+  }
+
+  &:hover {
+    color: @blueBright;
+  }
+
+  &:before {
+    content: '';
     position: absolute;
-    top: calc(100% + 2.5rem);
-    left: calc(100% - .5rem);
-    width: 15rem;
-    font-size: @fontSizeS;
-    pointer-events: all;
+    right: 100%;
+    background-image: url('./arrow.svg');
+    background-size: 100% 100%;
+    bottom: 0.8rem;
+    width: 3rem;
+    height: 2rem;
 
     @media (max-width: @breakPointM) {
-        transform: rotate(70deg);
-        transform-origin: 0 0;
-        top: 100%;
-        left: 2rem;
-        font-size: @fontSizeXS;
+      left: -2.1rem;
+      bottom: -0.8rem;
+      right: auto;
+      transform: rotate(-20deg);
     }
-
-    &:hover {
-        color: @blueBright;
-    }
-
-    &:before {
-        content: '';
-        position: absolute;
-        right: 100%;
-        background-image: url('./arrow.svg');
-        background-size: 100% 100%;
-        bottom: 0.8rem;
-        width: 3rem;
-        height: 2rem;
-
-        @media (max-width: @breakPointM) {
-            left: -2.1rem;
-            bottom: -0.8rem;
-            right: auto;
-            transform: rotate(-20deg);
-        }
-    }
+  }
 }
 
 .belowBubble {
-    display: grid;
-    grid-template-columns: 5rem 1fr 1fr;
-    grid-gap: 0 2rem;
-    margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 5rem 1fr 1fr;
+  grid-gap: 0 2rem;
+  margin-bottom: 2rem;
 
-    @media (max-width: @breakPointM) {
-        grid-template-columns: 4rem 1fr;
-        grid-gap: 0 1rem;
-    }
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 4rem 1fr;
+    grid-gap: 0 1rem;
+  }
 }
 
 .submitButtonContainer {
-    align-self: center;
-    grid-column: 3;
-    justify-self: end;
-    margin-bottom: 0.4rem;
+  align-self: center;
+  grid-column: 3;
+  justify-self: end;
+  margin-bottom: 0.4rem;
 
-    @media (max-width: @breakPointM) {
-        grid-column: 2;
-        margin-top: 2rem;
-    }
+  @media (max-width: @breakPointM) {
+    grid-column: 2;
+    margin-top: 2rem;
+  }
 }
 
 .textInput {
-    @media (max-width: @breakPointM) {
-        grid-column: 2;
-    }
+  @media (max-width: @breakPointM) {
+    grid-column: 2;
+  }
 }
 
 .submitButton {
-    visibility: hidden;
-    margin-top: 1rem;
+  visibility: hidden;
+  margin-top: 1rem;
 }
 
 .submitButtonDirty {
-    visibility: visible;
+  visibility: visible;
 }
 
 .questionInput {
-    color: inherit;
-    background: transparent;
-    padding: 2rem;
-    font-size: inherit;
-    font-weight: inherit;
-    width: 100%;
+  color: inherit;
+  background: transparent;
+  padding: 2rem;
+  font-size: inherit;
+  font-weight: inherit;
+  width: 100%;
 
-    &:focus {
-        box-shadow: none;
-    }
+  &:focus {
+    box-shadow: none;
+  }
 
-    @media (max-width: @breakPointM) {
-        padding: 1rem;
-    }
+  @media (max-width: @breakPointM) {
+    padding: 1rem;
+  }
 }
 
 .nameInput {
-    width: 100%;
+  width: 100%;
 }
 
 .usernameDisplay {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-top: 1rem;
 }

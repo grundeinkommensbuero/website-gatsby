@@ -1,77 +1,77 @@
 @import '../../style/vars.less';
 
 .message {
-    background: var(--secondary-color);
-    color: var(--text-on-secondary-color);
-    --font-color: var(--text-on-secondary-color);
-    --bg-color: var(--secondary-color);
-    padding: 1em;
-    position: relative;
-    z-index: 1;
+  background: var(--secondary-color);
+  color: var(--text-on-secondary-color);
+  --font-color: var(--text-on-secondary-color);
+  --bg-color: var(--secondary-color);
+  padding: 1em;
+  position: relative;
+  z-index: 1;
 
-    @media (min-width: @breakPointM) {
-        font-size: @fontSizeM;
-    }
+  @media (min-width: @breakPointM) {
+    font-size: @fontSizeM;
+  }
 }
 
 .messageInner {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    p {
-        &:first-child {
-            margin-top: 0;
-        }
-
-        &:last-child {
-            margin-bottom: 0;
-        }
+  p {
+    &:first-child {
+      margin-top: 0;
     }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .children {
-    width: 100%;
+  width: 100%;
 }
 
 .savingIndicator {
-    height: 3rem;
-    width: 3rem;
-    margin-right: 1.5rem;
-    background: var(--text-on-secondary-color);
-    flex: 0 0 auto;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-name: rotate;
-    align-self: flex-start;
+  height: 3rem;
+  width: 3rem;
+  margin-right: 1.5rem;
+  background: var(--text-on-secondary-color);
+  flex: 0 0 auto;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: rotate;
+  align-self: flex-start;
 }
 
 @keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .blinkShort {
-    animation-duration: .3s;
-    animation-iteration-count: 4;
-    animation-name: blink;
+  animation-duration: 0.3s;
+  animation-iteration-count: 4;
+  animation-name: blink;
 }
 
 @keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    49% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
