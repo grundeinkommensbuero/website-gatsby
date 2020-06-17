@@ -19,7 +19,10 @@ export const OverlayProvider = ({ children }) => {
   useEffect(() => {
     if (automaticOpenDelay) {
       setTimeout(() => {
-        if (!hasBeenDismissedRef.current) {
+        if (
+          !hasBeenDismissedRef.current &&
+          document.activeElement.tagName !== 'INPUT'
+        ) {
           setOverlayOpen(true);
         }
       }, automaticOpenDelay * 1000);
