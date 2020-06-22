@@ -50,7 +50,7 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
 
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
     const { userSub } = await Auth.signUp({
-      username: email,
+      username: email.toLowerCase(),
       password: getRandomString(30),
     });
 
@@ -86,7 +86,7 @@ const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
 
     // This will initiate the custom flow, which will lead to the user receiving a mail.
     // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
-    const user = await Auth.signIn(userId || tempEmail);
+    const user = await Auth.signIn(userId || tempEmail.toLowerCase());
 
     // We already set the user here in the global context,
     // because we need the object in answerCustomChallenge()

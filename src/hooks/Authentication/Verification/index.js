@@ -17,7 +17,8 @@ const confirmSignUp = async (email, confirmationCode, setVerificationState) => {
     );
 
     //use auth class to confirm sing up
-    await Auth.confirmSignUp(email, confirmationCode);
+    await Auth.confirmSignUp(email.toLowerCase(), confirmationCode);
+
     setVerificationState('verified');
     return true;
   } catch (error) {
