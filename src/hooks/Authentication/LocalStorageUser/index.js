@@ -7,8 +7,12 @@ export const useLocalStorageUser = () => {
   const [userId, setUserIdState] = useState(() => {
     // Initial value comes from localStorage
     try {
-      const userId = window.localStorage.getItem(USER_ID_KEY);
-      return userId ? userId : undefined;
+      if (typeof window !== 'undefined') {
+        const userId = window.localStorage.getItem(USER_ID_KEY);
+        return userId ? userId : undefined;
+      }
+
+      return undefined;
     } catch (err) {
       console.warn('Error querying localStorage for user-id', err);
       return undefined;
