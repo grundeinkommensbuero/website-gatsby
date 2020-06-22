@@ -1,99 +1,100 @@
 @import '../../style/vars.less';
 
 .countField {
-    width: 5rem;
+  width: 5rem;
 }
 
 .listIdField {
-    width: 12rem;
+  width: 12rem;
 }
 
-.countField, .listIdField {
-    @media (max-width: @breakPointS) {
-        font-size: @fontSizeS;
-        width: 100%;
-    }
+.countField,
+.listIdField {
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeS;
+    width: 100%;
+  }
 }
 
 .formSection {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .formSectionCombined {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1rem;
 
-    @media (max-width: @breakPointS) {
-        grid-template-columns: 1fr 3fr;
-    }
+  @media (max-width: @breakPointS) {
+    grid-template-columns: 1fr 3fr;
+  }
 }
 
 .buttonContainer {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .buttonContainerMessage {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .label {
-    @media (max-width: @breakPointS) {
-        font-size: @fontSizeXS;
-        hyphens: auto;
-    }
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeXS;
+    hyphens: auto;
+  }
 }
 
 .statisticsOverall {
-    grid-column: wide-start / 5;
-    line-height: 1;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
+  grid-column: wide-start / 5;
+  line-height: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
 
-    @media (max-width: @breakPointM) {
-        grid-column: wide-start / wide-end;
-        grid-row: 2;
-        grid-template-columns: 1fr 1fr;
-        margin-top: 2rem;
-    }
+  @media (max-width: @breakPointM) {
+    grid-column: wide-start / wide-end;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2rem;
+  }
 }
 
 .statisticsOverallCount {
-    font-size: @fontSizeXXXL;
+  font-size: @fontSizeXXXL;
 
-    @media (max-width: @breakPointM) {
-        font-size: @fontSizeXXL;
-    }
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXXL;
+  }
 }
 
 .statisticsOverallLabel {
-    font-size: @fontSizeM;
-    line-height: 1.3;
+  font-size: @fontSizeM;
+  line-height: 1.3;
 
-    @media (max-width: @breakPointM) {
-        font-size: @fontSizeS;
-    }
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeS;
+  }
 }
 
 .visualisation {
-    grid-column: 5 / wide-end;
+  grid-column: 5 / wide-end;
 
-    @media (max-width: @breakPointM) {
-        grid-column: wide-start / wide-end;
-    }
+  @media (max-width: @breakPointM) {
+    grid-column: wide-start / wide-end;
+  }
 }
 
 .headingSelfScan {
-    margin: 0 0 1rem;
-    font-size: @fontSizeM;
+  margin: 0 0 1rem;
+  font-size: @fontSizeM;
 }
 
 .campaignVisualisations {
-    margin-top: 4rem;
+  margin-top: 4rem;
 
-    @media (max-width: @breakPointM) {
-        margin-top: 2rem;
-    }
+  @media (max-width: @breakPointM) {
+    margin-top: 2rem;
+  }
 }

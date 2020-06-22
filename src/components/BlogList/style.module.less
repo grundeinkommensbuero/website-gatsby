@@ -1,34 +1,34 @@
 @import '../style/vars.less';
 
 .article {
-    margin-top: 2rem;
+  margin-top: 2rem;
 
-    & + & {
-        margin-top: 8rem;
-    }
+  & + & {
+    margin-top: 8rem;
+  }
 
-    @media (max-width: @breakPointS) {
-        margin-top: 4rem;
-    }
+  @media (max-width: @breakPointS) {
+    margin-top: 4rem;
+  }
 }
 
 .title {
-    margin: 1rem 0;
+  margin: 1rem 0;
 
-    a {
-        text-decoration: none;
+  a {
+    text-decoration: none;
 
-        &:hover {
-            .linkUnderlined();
-        }
+    &:hover {
+      .linkUnderlined();
     }
+  }
 }
 
 .body {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .image {
-    max-height: 17rem;
-    filter: grayscale(1);
+  max-height: 17rem;
+  filter: grayscale(1);
 }
