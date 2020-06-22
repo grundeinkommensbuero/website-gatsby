@@ -1,96 +1,98 @@
 @import '../style/vars.less';
 
 .answer {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .question {
-    font-weight: bold;
-    font-family: inherit;
-    background: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    font-size: inherit;
-    color: inherit;
-    text-align: left;
-    position: relative;
+  font-weight: bold;
+  font-family: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-size: inherit;
+  color: inherit;
+  text-align: left;
+  position: relative;
 
-    @media (max-width: @breakPointM) {
-        margin-left: 2rem;
-    }
+  @media (max-width: @breakPointM) {
+    margin-left: 2rem;
+  }
 
-    &:focus {
-        outline: none;
-        text-decoration: underline;
-    }
+  &:focus {
+    outline: none;
+    text-decoration: underline;
+  }
 
-    &:before, &:after {
-        content: '';
-        position: absolute;
-        height: 1.5em;
-        width: 1.5em;
-        left: -2.2em;
-        top: -.2em;
-    }
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    height: 1.5em;
+    width: 1.5em;
+    left: -2.2em;
+    top: -0.2em;
+  }
 
+  &:before {
+    background-image: url('./arrow.svg'),
+      linear-gradient(currentColor, currentColor);
+    background-size: cover, 88% 95%;
+    background-repeat: no-repeat;
+    transform: rotate(-45deg);
+    transition: 0.3s cubic-bezier(0.47, 0.45, 0.57, 1.26);
+  }
+
+  &.open {
     &:before {
-        background-image: url('./arrow.svg'), linear-gradient(currentColor, currentColor);
-        background-size: cover, 88% 95%;
-        background-repeat: no-repeat;
-        transform: rotate(-45deg);
-        transition: .3s cubic-bezier(0.47, 0.45, 0.57, 1.26);
+      transform: rotate(45deg);
     }
+  }
 
-    &.open {
-        &:before {
-            transform: rotate(45deg);
-        }
-    }
-
-    &:after {
-        content: '?';
-        color: var(--bg-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: .1em;
-        margin-left: -.1em;
-        text-decoration: none;
-    }
+  &:after {
+    content: '?';
+    color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1em;
+    margin-left: -0.1em;
+    text-decoration: none;
+  }
 }
 
 .answerContainer {
-    overflow: hidden;
-    padding-bottom: 0rem;
-    transition: .3s ease height;
+  overflow: hidden;
+  padding-bottom: 0rem;
+  transition: 0.3s ease height;
 
-    &.open {
-        height: auto;
-    }
+  &.open {
+    height: auto;
+  }
 
-    &.animating {
-        height: auto;
-    }
+  &.animating {
+    height: auto;
+  }
 
-    &.closed {
-        height: 0;
-    }
+  &.closed {
+    height: 0;
+  }
 }
 
 .answer {
-    padding-top: 1rem;
+  padding-top: 1rem;
 
-    p:first-child {
-        margin-top: 0;
-    }
+  p:first-child {
+    margin-top: 0;
+  }
 
-    p:last-child {
-        margin-bottom: 0;
-    }
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .questionAndAnswer {
-    margin: 2rem 0;
+  margin: 2rem 0;
 }

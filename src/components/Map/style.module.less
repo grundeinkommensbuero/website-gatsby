@@ -1,39 +1,39 @@
 @import '../style/vars.less';
 
 .container {
-    height: 40rem;
-    max-height: 60vh;
-    color: @red;
+  height: 40rem;
+  max-height: 60vh;
+  color: @red;
 }
 
 .tooltip {
-    hr {
-        border: 0;
-        background: currentColor;
-        height: 1px;
-    }
+  hr {
+    border: 0;
+    background: currentColor;
+    height: 1px;
+  }
 }
 
 .tooltipDescription {
-    p {
-        margin: .2em 0;
+  p {
+    margin: 0.2em 0;
 
-        &:last-child {
-            margin-bottom: 0;
-        }
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
 }
 
 .tooltopTitle {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .tooltopDate {
-    font-style: italic;
+  font-style: italic;
 }
 
 .popUpOutside {
-    @media (min-width: @breakPointS) {
-        display: none;
-    }
+  @media (min-width: @breakPointS) {
+    display: none;
+  }
 }
