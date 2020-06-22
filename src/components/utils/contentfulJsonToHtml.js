@@ -19,26 +19,25 @@ export function contentfulJsonToHtml(json) {
     },
     renderNode: {
       [INLINES.HYPERLINK]: node => {
-        const {uri} = node.data;
+        const { uri } = node.data;
         const target =
           (uri.startsWith(website_url) || uri.startsWith('/')) &&
           !uri.endsWith('.pdf')
             ? '_self'
             : '_blank';
         const rel =
-          (uri.startsWith(website_url) || uri.startsWith('/'))
+          uri.startsWith(website_url) || uri.startsWith('/')
             ? ''
             : 'noopener noreferrer';
 
         return (
-          <a
-            href={uri}
-            target={target}
-            rel={rel}
-          >
+          <a href={uri} target={target} rel={rel}>
             {node.content[0].value}
           </a>
         );
+      },
+      [INLINES.ENTRY_HYPERLINK]: node => {
+        return <a href={node.data.uri}>{node.content[0].value}</a>;
       },
       [BLOCKS.EMBEDDED_ENTRY]: ({
         data: {
