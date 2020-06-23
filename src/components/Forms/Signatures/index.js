@@ -164,7 +164,6 @@ export default ({ signaturesId }) => {
                       component={TextInputWrapped}
                     ></Field>
                   </div>
-                
                 </>
               ) : (
                 <FinallyMessage className={s.hint} preventScrolling={true}>
@@ -173,28 +172,28 @@ export default ({ signaturesId }) => {
                   </p>
                 </FinallyMessage>
               )}
-  
-              <CTAButtonContainer className={s.illustrationRotated} illustration="POINT_LEFT">
+
+              <CTAButtonContainer illustration="POINT_RIGHT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
 
               {!isAuthenticated && (
                 <>
-                  <p className={s.anonymousListDownloadInfo}>
-                    Du willst deine E-Mail-Adresse nicht angeben?<br></br>
-                    Du kannst die Liste{' '}
+                  <p className={s.hint}>
+                    <br />
+                    Du willst deine E-Mail-Adresse nicht angeben? Du kannst die
+                    Liste{' '}
                     <InlineButton
                       onClick={() => {
                         createPdf({ campaignCode: signaturesId });
                       }}
                       type="button"
                     >
-                      hier auch anonym herunterladen
+                      hier auch anonym herunterladen.
                     </InlineButton>
-                    . Allerdings können wir dich dann nicht informieren,
-                    wenn deine Unterschriften bei uns eingegangen sind!
                     <br />
-                    <br />
+                    Allerdings können wir dich dann nicht informieren, wenn
+                    deine Unterschriften bei uns eingegangen sind!
                   </p>
                 </>
               )}
