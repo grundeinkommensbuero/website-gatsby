@@ -50,6 +50,7 @@
 }
 
 .illustrationPointLeft,
+.illustrationPointRight,
 .illustrationPointLeftMobile {
   section:nth-child(3n + 1):not(:only-child) & {
     &.yellow {
@@ -84,6 +85,18 @@
   left: 10rem;
 
   @media (min-width: @breakPointS) {
+    display: none;
+  }
+}
+
+.illustrationPointRight {
+  position: absolute;
+  transform: scaleX(-1);
+  width: 13rem;
+  top: calc(100% - 9rem);
+  left: calc(100% - 36rem);
+
+  @media (max-width: @breakPointL) {
     display: none;
   }
 }
