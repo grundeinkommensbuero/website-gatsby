@@ -180,9 +180,9 @@ export default ({ signaturesId }) => {
                       }}
                       type="button"
                     >
-                      hier auch anonym herunterladen
+                      hier auch anonym herunterladen.
                     </InlineButton>
-                    .
+                    <br />
                     <br />
                     <br />
                     Kein Drucker?{' '}
