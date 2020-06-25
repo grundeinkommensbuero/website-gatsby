@@ -6,6 +6,7 @@ import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
 import { getMailtoUrl, objectMap } from '.';
 import s from './contentfulJsonToHtml.module.less';
 import cN from 'classnames';
+import { Link } from 'gatsby';
 
 const website_url = 'https://expedition-grundeinkommen.de/';
 
@@ -38,9 +39,9 @@ export function contentfulJsonToHtml(json) {
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
         return (
-          <a href={node.data.target.fields.slug['en-US']}>
+          <Link to={`/${node.data.target.fields.slug['en-US']}`}>
             {node.content[0].value}
-          </a>
+          </Link>
         );
       },
       [BLOCKS.EMBEDDED_ENTRY]: ({
