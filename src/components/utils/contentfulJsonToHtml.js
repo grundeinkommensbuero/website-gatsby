@@ -37,7 +37,11 @@ export function contentfulJsonToHtml(json) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        return <a href={node.data.uri}>{node.content[0].value}</a>;
+        return (
+          <a href={node.data.target.fields.slug['en-US']}>
+            {node.content[0].value}
+          </a>
+        );
       },
       [BLOCKS.EMBEDDED_ENTRY]: ({
         data: {
