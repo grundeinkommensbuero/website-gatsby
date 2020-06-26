@@ -38,8 +38,14 @@ export function Button({ children, className, size, ...other }) {
 
 export function InlineButton({ children, className, ...other }) {
   return (
-    <button className={cN(s.inlineButton, className)} {...other}>
-      <div className={s.inlineButtonWrapper}>{children}</div>
-    </button>
+    <span
+      tabindex="0"
+      role="button"
+      aria-pressed="false"
+      className={cN(s.InlineButton, className)}
+      {...other}
+    >
+      {children}
+    </span>
   );
 }
