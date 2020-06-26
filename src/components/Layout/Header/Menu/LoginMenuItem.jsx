@@ -6,17 +6,12 @@ import AvatarImage from '../../../../components/AvatarImage';
 
 import s from '../style.module.less';
 import MenuItemParent from './MenuItemParent';
-import { MenuItemButton } from './MenuItem';
+import { MenuItemButton, MenuItemLink } from './MenuItem';
 
 const LoginTitle = ({ userData, userId }) => {
   // Loading state when user identified but waiting for user data
   if (userId && !userData.username) {
     return 'Lade...';
-  }
-  // If not identified, allow user login
-  if (!userId) {
-    // Show the login popup on click
-    return <MenuItemButton>Anmelden</MenuItemButton>;
   }
 
   return (
@@ -35,7 +30,9 @@ const LoginMenuItem = () => {
 
   return (
     <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
-      {userId && <MenuItemButton onClick={signOut}>Abmelden</MenuItemButton>}
+      <MenuItemButton isChild onClick={signOut}>
+        Abmelden
+      </MenuItemButton>
     </MenuItemParent>
   );
 };
