@@ -10,7 +10,7 @@ import { MenuItemButton } from './MenuItem';
 
 const LoginTitle = ({ userData, userId }) => {
   // Loading state when user identified but waiting for user data
-  if (userId && !userData.username) {
+  if (userId && !userData.username && !userData.email) {
     return 'Lade...';
   }
 
