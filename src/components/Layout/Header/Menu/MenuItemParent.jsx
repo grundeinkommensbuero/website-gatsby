@@ -20,7 +20,12 @@ const MenuItemParent = ({ title, children, internalLink, externalLink }) => {
         </Link>
       )}
       {externalLink && (
-        <a className={s.link} href={externalLink} target="_blank">
+        <a
+          className={s.link}
+          href={externalLink}
+          rel="noreferrer"
+          target="_blank"
+        >
           {title}
         </a>
       )}
