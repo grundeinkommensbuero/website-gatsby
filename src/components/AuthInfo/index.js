@@ -14,7 +14,7 @@ export default () => {
       Du bist angemeldet als{' '}
       {customUserData && (customUserData.username || customUserData.email)}. Du
       bist jemand anderes?{' '}
-      <InlineButton onClick={signOut} type="button">
+      <InlineButton onClick={signOut} onKeyDown={signOut} type="button">
         Hier klicken zum Abmelden.
       </InlineButton>
     </>

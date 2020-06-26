@@ -63,6 +63,9 @@ export default ({ signaturesId }) => {
             onClick={() => {
               createPdf({ campaignCode: signaturesId, anonymous: true });
             }}
+            onKeyDown={() => {
+              createPdf({ campaignCode: signaturesId, anonymous: true });
+            }}
             type="button"
           >
             hier
@@ -176,6 +179,9 @@ export default ({ signaturesId }) => {
                     Liste{' '}
                     <InlineButton
                       onClick={() => {
+                        createPdf({ campaignCode: signaturesId });
+                      }}
+                      onKeyDown={() => {
                         createPdf({ campaignCode: signaturesId });
                       }}
                       type="button"
