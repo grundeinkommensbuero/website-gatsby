@@ -120,16 +120,30 @@
   justify-content: flex-start;
   align-items: center;
 
-  .loginParentAvatar {
-    object-fit: cover;
-    height: 2rem;
-    width: 2rem;
-    margin-right: 0.75rem;
-
-    @media (min-width: @breakPointL) {
-      margin-left: 1.75rem;
-    }
+  max-width: 18rem;
+  @media (max-width: @breakPointL) {
+    max-width: 10rem;
   }
+  @media (max-width: @breakPointM) {
+    max-width: min-content;
+  }
+}
+
+.loginParentAvatar {
+  object-fit: cover;
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.75rem;
+
+  @media (min-width: @breakPointL) {
+    margin-left: 1.75rem;
+  }
+}
+
+.loginParentTitleText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .link {
