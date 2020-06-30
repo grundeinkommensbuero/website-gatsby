@@ -15,8 +15,10 @@
   }
 }
 
-.titleLink {
-  text-decoration: none;
+.inner {
+  grid-column: 2 / 4;
+  display: flex;
+  justify-content: space-between;
 }
 
 .title {
@@ -29,10 +31,8 @@
   }
 }
 
-.inner {
-  grid-column: 2 / 4;
-  display: flex;
-  justify-content: space-between;
+.titleLink {
+  text-decoration: none;
 }
 
 .logo {
@@ -45,74 +45,6 @@
 
   @media (max-width: 900px) {
     font-size: @fontSizeS;
-  }
-}
-
-.navList {
-  padding: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0;
-  height: 100%;
-
-  @media (max-width: @breakPointM) {
-    position: absolute;
-    left: 0;
-    top: 100%;
-    width: 100%;
-    padding: 1rem;
-    background: @grey;
-    display: none;
-    height: auto;
-
-    &.isOpen,
-    &:focus-within {
-      display: block;
-    }
-  }
-}
-
-.navItem {
-  @media (min-width: @breakPointM) {
-    &:not(.navItemChild) {
-      & + & {
-        margin-left: 1rem;
-      }
-    }
-  }
-  @media (max-width: @breakPointM) {
-    &:not(.navItemChild) {
-      & + & {
-        margin-top: 1rem;
-      }
-    }
-  }
-
-  button {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-
-    &:hover {
-      .linkUnderlined();
-      margin-bottom: -0.05em;
-    }
-  }
-}
-
-.navItemChild {
-  & + & {
-    margin-top: 1rem;
-
-    @media (max-width: @breakPointM) {
-      margin-top: 0.5rem;
-    }
   }
 }
 
@@ -143,80 +75,6 @@
 .menuButtonBar {
   background: @red;
   height: 0.3rem;
-}
-
-.menuItemParentChildren {
-  list-style: none;
-
-  .navItemParent:hover & {
-    height: auto;
-    width: 30rem;
-  }
-
-  .navItemParent:focus-within & {
-    height: auto;
-    width: 30rem;
-  }
-
-  @media (max-width: @breakPointM) {
-    padding: 0.5rem 0 0 1rem;
-  }
-
-  @media (min-width: @breakPointM) {
-    height: 1px;
-    width: 1px;
-    padding: 0;
-    text-align: right;
-    position: absolute;
-    top: 100%;
-    right: -2rem;
-    overflow: hidden;
-  }
-}
-
-.menuItemParentChildrenInner {
-  list-style: none;
-  padding: 0;
-
-  @media (min-width: @breakPointM) {
-    background: @grey;
-    padding: 2rem 2rem 2rem;
-    display: inline-block;
-  }
-}
-
-.navItemParent {
-  position: relative;
-}
-
-.menuItemParentTitle {
-  cursor: default;
-}
-
-.loginParentTitle {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  .loginParentAvatar {
-    object-fit: cover;
-    height: 2rem;
-    width: 2rem;
-    margin-right: 0.75rem;
-
-    @media (min-width: @breakPointL) {
-      margin-left: 1.75rem;
-    }
-  }
-}
-
-.link {
-  .menuLink();
-
-  &.linkActive,
-  &:hover {
-    .linkUnderlined();
-  }
 }
 
 .ctaButtonWrapper {

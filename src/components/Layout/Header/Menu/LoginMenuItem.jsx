@@ -4,7 +4,7 @@ import AuthContext from '../../../../context/Authentication';
 import { useSignOut } from '../../../../hooks/Authentication';
 import AvatarImage from '../../../../components/AvatarImage';
 
-import s from '../style.module.less';
+import s from './style.module.less';
 import MenuItemParent from './MenuItemParent';
 import { MenuItemButton } from './MenuItem';
 
