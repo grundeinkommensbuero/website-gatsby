@@ -5,10 +5,14 @@ import {
   Section,
   SectionInner,
   SectionWrapper,
+  SectionHeader,
 } from '../../components/Layout/Sections';
+
+import s from './style.module.less';
 
 import AuthContext from '../../context/Authentication';
 import { getUser } from '../../hooks/Api/Users/Get';
+import AvatarImage from '../../components/AvatarImage';
 
 // const getUserData = async slugId => {
 //   const response = await getUser(slugId);
@@ -22,26 +26,40 @@ const ProfilePage = ({ id: slugId }) => {
 
   // Get user data on page load
   useEffect(() => {
-    if (userId && userId === slugId) {
+    // If user is viewing own page
+    if (userId && userId === slugId && customUserData) {
+      console.log(customUserData);
+      // Use the user data from the existing auth context
       setDisplayUserData(customUserData);
-    } else {
+    } else if (userId !== slugId) {
+      // If user is viewing other page
       getUser(slugId).then(({ state, user }) => {
         if (state === 'success') setDisplayUserData(user);
+        // If no data found for user with slug id, set value to null
+        else setDisplayUserData(null);
       });
     }
-  }, []);
-
-  console.log(displayUserData);
+  }, [customUserData]);
 
   if (!displayUserData) return null;
+
+  const title =
+    displayUserData === undefined ? 'Lade...' : displayUserData.username;
 
   return (
     <Layout>
       <SectionWrapper>
-        <Section title={displayUserData.username}>
+        <Section>
           <SectionInner>
-            <p>Hewwo</p>
+            <h1 className={s.username}>
+              <AvatarImage className={s.avatar} />
+              {title}
+            </h1>
+            <p>This is the user Data</p>
           </SectionInner>
+          {/* <SectionInner>
+            <p>This is the user Data</p>
+          </SectionInner> */}
         </Section>
       </SectionWrapper>
     </Layout>

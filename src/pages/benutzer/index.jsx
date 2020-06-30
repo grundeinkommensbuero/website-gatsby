@@ -5,7 +5,7 @@ import ProfilePage from './ProfilePage';
 const App = () => {
   return (
     <>
-      <Router basepath="/user">
+      <Router basepath="/benutzer">
         <ProfilePage path="/:id" />
       </Router>
     </>
