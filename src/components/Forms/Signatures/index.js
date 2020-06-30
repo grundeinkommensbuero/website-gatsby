@@ -22,6 +22,8 @@ export default ({ signaturesId }) => {
   const [email, setEmail] = useState();
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
+  const iconMail = require('../../StepList/mail.svg');
+  const iconIncognito = require('./incognito.svg');
 
   useEffect(() => {
     // If user was registered proceed by creating list
@@ -198,36 +200,52 @@ export default ({ signaturesId }) => {
 
               {!isAuthenticated && (
                 <>
-                  <p className={s.hint}>
-                    <br />
-                    Du willst deine E-Mail-Adresse nicht angeben? Du kannst die
-                    Liste{' '}
-                    <InlineButton
-                      onClick={() => {
-                        createPdf({ campaignCode: signaturesId });
-                      }}
-                      type="button"
-                    >
-                      hier auch anonym herunterladen.
-                    </InlineButton>
-                    <br />
-                    Allerdings können wir dich dann nicht informieren, wenn
-                    deine Unterschriften bei uns eingegangen sind!
-                  </p>
+                  <div className={s.iconParagraph}>
+                    <img
+                      aria-hidden="true"
+                      alt=""
+                      src={iconIncognito}
+                      className={s.icon}
+                    />
+
+                    <p>
+                      Du willst deine E-Mail-Adresse nicht angeben? Du kannst
+                      die Liste{' '}
+                      <InlineButton
+                        onClick={() => {
+                          createPdf({ campaignCode: signaturesId });
+                        }}
+                        type="button"
+                      >
+                        hier auch anonym herunterladen.
+                      </InlineButton>{' '}
+                      Allerdings können wir dich dann nicht informieren, wenn
+                      deine Unterschriften bei uns eingegangen sind!
+                    </p>
+                  </div>
                 </>
               )}
 
-              <p className={s.hint}>
-                Kein Drucker?{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://expeditionbge.typeform.com/to/Dq3SOi"
-                >
-                  Bitte schickt mir Unterschriftenlisten per Post
-                </a>
-                !
-              </p>
+              <div className={s.iconParagraph}>
+                <img
+                  aria-hidden="true"
+                  alt=""
+                  src={iconMail}
+                  className={s.icon}
+                />
+
+                <p>
+                  Kein Drucker?{' '}
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://expeditionbge.typeform.com/to/Dq3SOi"
+                  >
+                    Bitte schickt mir Unterschriftenlisten per Post
+                  </a>
+                  !
+                </p>
+              </div>
             </form>
           );
         }}
