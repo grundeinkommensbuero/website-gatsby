@@ -16,8 +16,8 @@ const MenuItemLink = ({ slug, isChild, children }) => (
   </li>
 );
 
-const MenuItemButton = ({ onClick, isChild, children }) => (
-  <li className={cN(s.navItem, { [s.navItemChild]: isChild })}>
+const MenuItemButton = ({ onClick, children }) => (
+  <li className={cN(s.navItem)}>
     <button onClick={onClick} className={s.link}>
       {children}
     </button>
