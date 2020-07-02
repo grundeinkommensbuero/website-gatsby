@@ -22,8 +22,8 @@ export default ({ signaturesId }) => {
   const [email, setEmail] = useState();
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
-  const iconMail = require('../../StepList/mail.svg');
-  const iconIncognito = require('./incognito.svg');
+  const iconMail = require('./mail_red.svg');
+  const iconIncognito = require('./incognito_red.svg');
 
   useEffect(() => {
     // If user was registered proceed by creating list
