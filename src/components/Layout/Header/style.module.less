@@ -183,6 +183,10 @@
   justify-content: flex-start;
   align-items: center;
 
+  @media (min-width: @breakPointM) {
+    justify-content: center;
+  }
+
   .loginParentAvatar {
     width: 2rem;
     margin-right: 0.75rem;
@@ -197,11 +201,7 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
-
-  &:hover {
-    .linkUnderlined();
-    margin-bottom: -0.05em;
-  }
+  text-align: left;
 }
 
 .link {
