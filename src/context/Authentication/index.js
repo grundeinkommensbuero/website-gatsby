@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useLocalStorageUser();
 
   const signUserOut = async () =>
-    await signOut({ setCognitoUser, setUserId, setIsAuthenticated, setToken });
+    await signOut({ setCognitoUser, setUserId, setIsAuthenticated });
 
   // On page load
   useEffect(() => {
@@ -87,7 +87,6 @@ const AuthProvider = ({ children }) => {
   }, [cognitoUser]);
 
   useEffect(() => {
-    console.log('get user data');
     if (userId && isAuthenticated !== undefined) {
       // Update user data with data from backend
       updateCustomUserData({
