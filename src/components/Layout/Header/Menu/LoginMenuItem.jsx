@@ -32,9 +32,13 @@ const LoginMenuItem = () => {
   const signOut = useSignOut();
 
   return (
-    <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
-      {userId && <MenuItemButton onClick={signOut}>Abmelden</MenuItemButton>}
-    </MenuItemParent>
+    <div className={s.loginParent}>
+      <MenuItemParent
+        title={<LoginTitle userData={userData} userId={userId} />}
+      >
+        {userId && <MenuItemButton onClick={signOut}>Abmelden</MenuItemButton>}
+      </MenuItemParent>
+    </div>
   );
 };
 
