@@ -36,13 +36,15 @@ export function Button({ children, className, size, ...other }) {
   );
 }
 
-export function InlineButton({ children, className, ...other }) {
+export function InlineButton({ children, onClick, className, ...other }) {
   return (
     <span
       tabindex="0"
       role="button"
       aria-pressed="false"
-      className={cN(s.InlineButton, className)}
+      className={cN(s.inlineButton, className)}
+      onKeyDown={onClick}
+      onClick={onClick}
       {...other}
     >
       {children}
