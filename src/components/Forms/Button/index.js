@@ -43,7 +43,11 @@ export function InlineButton({ children, onClick, className, ...other }) {
       role="button"
       aria-pressed="false"
       className={cN(s.inlineButton, className)}
-      onKeyDown={onClick}
+      onKeyDown={e => {
+        e.preventDefault();
+        // Emulate click when enter or space are pressed
+        if (e.key === 'Enter' || e.keyCode === 32) onClick();
+      }}
       onClick={onClick}
       {...other}
     >
