@@ -18,8 +18,7 @@ const LoginTitle = ({ userData, userId }) => {
     <div className={s.loginParentTitle}>
       <AvatarImage className={s.loginParentAvatar} user={userData} />
       <span class={s.loginParentTitleText}>
-        river@expeditiongrundeinkommen.de
-        {/* {userData.username || userData.email} */}
+        {userData.username || userData.email}
       </span>
     </div>
   );
