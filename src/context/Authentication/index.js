@@ -87,6 +87,7 @@ const AuthProvider = ({ children }) => {
   }, [cognitoUser]);
 
   useEffect(() => {
+    console.log('get user data');
     if (userId && isAuthenticated !== undefined) {
       // Update user data with data from backend
       updateCustomUserData({
