@@ -22,7 +22,7 @@ const LoginTitle = ({ userData, userId }) => {
   return (
     <div className={s.loginParentTitle}>
       <AvatarImage className={s.loginParentAvatar} user={userData} />
-      {userData.username || userData.email}
+      {userData.username}
     </div>
   );
 };
@@ -30,8 +30,6 @@ const LoginTitle = ({ userData, userId }) => {
 const LoginMenuItem = () => {
   const { customUserData: userData, userId } = useContext(AuthContext);
   const signOut = useSignOut();
-
-  if (!userId) return null;
 
   return (
     <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
