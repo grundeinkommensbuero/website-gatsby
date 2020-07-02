@@ -17,9 +17,7 @@ const LoginTitle = ({ userData, userId }) => {
   return (
     <div className={s.loginParentTitle}>
       <AvatarImage className={s.loginParentAvatar} user={userData} />
-      <span class={s.loginParentTitleText}>
-        {userData.username || userData.email}
-      </span>
+      {userData.username || userData.email}
     </div>
   );
 };
