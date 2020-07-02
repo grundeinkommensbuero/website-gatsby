@@ -72,9 +72,6 @@ const Unterschriftenliste = () => {
                   onClick={() => {
                     createPdf({ campaignCode });
                   }}
-                  onKeyDown={() => {
-                    createPdf({ campaignCode });
-                  }}
                   type="button"
                 >
                   hier
