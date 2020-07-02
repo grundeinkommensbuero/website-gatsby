@@ -1,7 +1,7 @@
 import React from 'react';
 import cN from 'classnames';
 
-import s from './style.module.less';
+import s from '../style.module.less';
 import { MenuItemLink } from './MenuItem';
 import MenuItemParent from './MenuItemParent';
 import LoginMenuItem from './LoginMenuItem';
@@ -9,6 +9,7 @@ import LoginMenuItem from './LoginMenuItem';
 const Menu = ({ menu, menuOpen }) => {
   return (
     <ul className={cN(s.navList, { [s.isOpen]: menuOpen })} id="menuHeader">
+      {/* TODO map contentful children in to MenuItem and pass values as children */}
       {menu.map((item, index) => {
         if (item.__typename === 'ContentfulStaticContent') {
           return (
