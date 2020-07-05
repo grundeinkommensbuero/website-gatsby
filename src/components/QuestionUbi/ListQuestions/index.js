@@ -25,6 +25,7 @@ export default ({ questionJustSent, userId }) => {
       )
     : questions;
 
+  console.log(questionsWithJustSent);
   return (
     <SectionInner wide={true}>
       <div className={s.container}>
