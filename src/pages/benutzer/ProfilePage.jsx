@@ -16,6 +16,7 @@ import s from './style.module.less';
 import AuthContext from '../../context/Authentication';
 import { getUser } from '../../hooks/Api/Users/Get';
 import AvatarImage from '../../components/AvatarImage';
+import { Speechbubble } from '../../components/QuestionUbi/Speechbubble';
 
 // const getUserData = async slugId => {
 //   const response = await getUser(slugId);
@@ -43,7 +44,7 @@ const ProfilePage = ({ id: slugId }) => {
     }
   }, [customUserData]);
 
-  if (!displayUserData || displayUserData === {}) return null;
+  if (!displayUserData || !displayUserData.questions) return null;
 
   console.log(displayUserData);
 
@@ -68,7 +69,15 @@ const ProfilePage = ({ id: slugId }) => {
             </div>
             <div className={s.profilePageSection}>
               <h2>Deine Frage ans Grundeinkommen</h2>
-              <ListQuestions userId={slugId} />
+              <div className={s.questionsList}>
+                {displayUserData.questions.map(question => {
+                  return (
+                    <Speechbubble isSmall>
+                      <div className={s.questionContent}>{question.body}</div>
+                    </Speechbubble>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </Section>
