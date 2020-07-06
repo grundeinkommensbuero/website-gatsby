@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 import { Form, Field } from 'react-final-form';
+import cN from 'classnames';
+import querystring from 'query-string';
+
+import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
+import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
+import AuthContext from '../../../context/Authentication';
+import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import { validateEmail } from '../../utils';
+import { SectionInner, Section } from '../../Layout/Sections';
+import CampaignVisualisations from '../../CampaignVisualisations';
+import VisualCounter from '../../VisualCounter';
+import AuthInfo from '../../AuthInfo';
+import GeneralPledge from '../Pledge/GeneralPledge';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
 import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
-import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
-import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
-import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
-import { validateEmail } from '../../utils';
-import { SectionInner, Section } from '../../Layout/Sections';
-import querystring from 'query-string';
-import { useStaticQuery, graphql } from 'gatsby';
-import CampaignVisualisations from '../../CampaignVisualisations';
-import VisualCounter from '../../VisualCounter';
-import cN from 'classnames';
-import AuthContext from '../../../context/Authentication';
-import AuthInfo from '../../AuthInfo';
 
 export default ({ successMessage, campaignCode }) => {
   const [
@@ -208,18 +210,12 @@ const CountSignaturesForm = ({
       <FinallyMessage state="error">
         {state === 'userNotFound' && (
           <>
-            Wir haben deine E-Mail-Adresse nicht gespeichert. War sie richtig
-            geschrieben? Falls du noch nicht bei uns registriert bist, kannst du
-            dich{' '}
-            <a href="https://expedition-grundeinkommen.de/expedition#generalpledge">
-              hier anmelden
-            </a>
-            . Daraufhin kannst du die Unterschriften eintragen. Falls es dann
-            noch immer nicht funktioniert, schreib uns an{' '}
-            <a href="mailto:support@expedition-grundeinkommen.de">
-              support@expedition-grundeinkommen.de
-            </a>
-            .
+            <h2>Hoppla!</h2>
+            <p>
+              Wir haben deine E-Mail-Adresse leider nicht gefunden. Hast du dich
+              vertippt? Dann versuche es erneut:
+            </p>
+
             <CTAButtonContainer
               className={cN(s.buttonContainer, s.buttonContainerMessage)}
             >
@@ -233,6 +229,23 @@ const CountSignaturesForm = ({
                 Neuer Versuch
               </CTAButton>
             </CTAButtonContainer>
+            <p>
+              Oder registriere dich neu bei uns, um die Unterschriften
+              einzutragen:
+            </p>
+            <GeneralPledge
+              pledgeId="general-1"
+              initialValues={{
+                email: eMail,
+              }}
+            />
+            <p>
+              Funktioniert auch das nicht= Dann schreib uns an{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </p>
           </>
         )}
         {state === 'error' && (

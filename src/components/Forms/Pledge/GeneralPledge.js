@@ -14,7 +14,7 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ pledgeId }) => {
+export default ({ pledgeId, initialValues }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
@@ -75,6 +75,7 @@ export default ({ pledgeId }) => {
           signUp(e.email);
         }
       }}
+      initialValues={initialValues}
       validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
         return (
