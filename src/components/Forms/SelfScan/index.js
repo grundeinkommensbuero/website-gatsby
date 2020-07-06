@@ -37,7 +37,7 @@ export default ({ successMessage, campaignCode }) => {
   const [eMail, setEMail] = useState(null);
 
   const { userId } = useContext(AuthContext);
-  const [, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -95,6 +95,7 @@ export default ({ successMessage, campaignCode }) => {
     eMail,
     setEMail,
     successMessage,
+    count,
     setCount,
     campaignCode,
     setListId,
@@ -170,6 +171,7 @@ const CountSignaturesForm = ({
   setEMail,
   eMail,
   successMessage,
+  count,
   setCount,
   campaignCode,
   setListId,
@@ -237,6 +239,18 @@ const CountSignaturesForm = ({
               pledgeId="general-1"
               initialValues={{
                 email: eMail,
+              }}
+              postSignupAction={async () => {
+                const data = {
+                  userId,
+                  listId,
+                  count,
+                  campaignCode,
+                };
+                console.log('update count');
+                setCount(parseInt(data.count));
+                console.log('abt to update sig list');
+                await updateSignatureList(data);
               }}
             />
             <p>
