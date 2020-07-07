@@ -6,7 +6,7 @@ import AvatarImage from '../../../../components/AvatarImage';
 
 import s from './style.module.less';
 import MenuItemParent from './MenuItemParent';
-import { MenuItemButton } from './MenuItem';
+import { MenuItemButton, MenuItemLink } from './MenuItem';
 
 const LoginTitle = ({ userData, userId }) => {
   // Loading state when user identified but waiting for user data
@@ -32,6 +32,9 @@ const LoginMenuItem = () => {
 
   return (
     <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
+      <MenuItemLink isChild slug={`benutzer/${userId}`}>
+        Zum Profil
+      </MenuItemLink>
       <MenuItemButton isChild onClick={signOut}>
         Abmelden
       </MenuItemButton>

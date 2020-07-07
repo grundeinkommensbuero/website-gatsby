@@ -56,8 +56,11 @@ const ProfilePage = ({ id: slugId }) => {
       <SectionWrapper>
         <Section>
           <div className={s.profilePageGrid}>
-            <AvatarImage className={s.avatar} />
-            <h1 className={s.username}>{title}</h1>
+            <AvatarImage
+              srcOverwrite={displayUserData.profilePictures['500']}
+              className={s.avatar}
+            />
+            <span className={s.username}>{title}</span>
             {/* Show profile edit button if own page */}
             {userId === slugId && (
               <CTAButton className={s.editProfileButton}>
@@ -68,7 +71,7 @@ const ProfilePage = ({ id: slugId }) => {
               <h2>Details</h2>
             </div>
             <div className={s.profilePageSection}>
-              <h2>Deine Frage ans Grundeinkommen</h2>
+              <h2>Frage ans Grundeinkommen</h2>
               <div className={s.questionsList}>
                 {displayUserData.questions.map(question => {
                   return (
@@ -78,6 +81,10 @@ const ProfilePage = ({ id: slugId }) => {
                   );
                 })}
               </div>
+            </div>
+            <div className={s.profilePageSection}>
+              <h2>Eingegaangene Unterschriften</h2>
+              <p>Du hast 233 Unterschriften eingetragen.</p>
             </div>
           </div>
         </Section>
