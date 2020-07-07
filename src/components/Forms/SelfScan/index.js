@@ -247,9 +247,7 @@ const CountSignaturesForm = ({
                   count,
                   campaignCode,
                 };
-                console.log('update count');
                 setCount(parseInt(data.count));
-                console.log('abt to update sig list');
                 await updateSignatureList(data);
               }}
             />

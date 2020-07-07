@@ -26,6 +26,9 @@ export default ({ pledgeId, initialValues, postSignupAction }) => {
   useEffect(() => {
     if (signUpState === 'success' && userId) {
       createPledge(pledge);
+      if (postSignupAction) {
+        postSignupAction();
+      }
     }
   }, [signUpState, userId]);
 
@@ -72,13 +75,8 @@ export default ({ pledgeId, initialValues, postSignupAction }) => {
         setHasSubmitted(true);
         setPledgeLocally(e);
         if (!isAuthenticated) {
-          await signUp(e.email);
+          signUp(e.email);
         }
-        setTimeout(() => {
-          if (postSignupAction) {
-            postSignupAction();
-          }
-        }, 2000);
       }}
       initialValues={initialValues}
       validate={values => validate(values, isAuthenticated)}
