@@ -39,7 +39,7 @@ export function Button({ children, className, size, ...other }) {
 export function InlineButton({ children, onClick, className, ...other }) {
   return (
     <span
-      tabindex="0"
+      tabIndex="0"
       role="button"
       aria-pressed="false"
       className={cN(s.inlineButton, className)}
