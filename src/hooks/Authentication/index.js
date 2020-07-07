@@ -40,7 +40,11 @@ export const useSignOut = () => {
 };
 
 // Amplifys Auth class is used to sign up user
-const signUp = async (email, setState, { setUserId, setTempEmail }) => {
+const signUp = async (
+  email,
+  setState,
+  { setUserId, setTempEmail, setIsAuthenticated, setCognitoUser }
+) => {
   try {
     setState('loading');
 
@@ -49,14 +53,19 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
     );
 
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-    const { userSub } = await Auth.signUp({
+    const user = await Auth.signUp({
       username: email.toLowerCase(),
       password: getRandomString(30),
     });
 
+    const { userSub } = user;
+    console.log(user);
+
     //we want to set the newly generated id
     setUserId(userSub);
     setState('success');
+    setIsAuthenticated(true);
+    setCognitoUser(user.user);
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {

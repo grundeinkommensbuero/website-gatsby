@@ -25,6 +25,7 @@ export default ({ pledgeId, initialValues, postSignupAction }) => {
   // After signup process is done we can save the pledge
   useEffect(() => {
     if (signUpState === 'success' && userId) {
+      console.log({ isAuthenticated });
       createPledge(pledge);
       if (postSignupAction) {
         postSignupAction();
