@@ -1,55 +1,30 @@
 import React, { useState, useContext, useEffect } from 'react';
 import cN from 'classnames';
+import { navigate } from '@reach/router';
+
 import Layout from '../../components/Layout';
-import {
-  Section,
-  SectionInner,
-  SectionWrapper,
-  SectionHeader,
-} from '../../components/Layout/Sections';
+import { Section, SectionWrapper } from '../../components/Layout/Sections';
 import { CTAButton } from '../../components/Layout/CTAButton';
-
-import ListQuestions from '../../components/QuestionUbi/ListQuestions';
-
-import s from './style.module.less';
-
 import AuthContext from '../../context/Authentication';
 import { getUser } from '../../hooks/Api/Users/Get';
 import AvatarImage from '../../components/AvatarImage';
 import { Speechbubble } from '../../components/QuestionUbi/Speechbubble';
 
-// const getUserData = async slugId => {
-//   const response = await getUser(slugId);
-//   if ((response.status = 'success')) return response.user;
-//   return undefined;
-// };
+import s from './style.module.less';
 
 const ProfilePage = ({ id: slugId }) => {
-  const [displayUserData, setDisplayUserData] = useState();
-  const { userId, isAuthenticated, customUserData } = useContext(AuthContext);
+  const { userId, isAuthenticated, customUserData: userData } = useContext(
+    AuthContext
+  );
 
   // Get user data on page load
   useEffect(() => {
-    // If user is viewing own page
-    if (userId && userId === slugId && customUserData) {
-      // Use the user data from the existing auth context
-      setDisplayUserData(customUserData);
-    } else if (userId !== slugId) {
-      // If user is viewing other page
-      getUser(slugId).then(({ state, user }) => {
-        if (state === 'success') setDisplayUserData(user);
-        // If no data found for user with slug id, set value to null
-        else setDisplayUserData(null);
-      });
+    // If user is viewing other user's page
+    if (userId !== slugId) {
+      // Navigate to home page
+      navigate('/', { replace: true });
     }
-  }, [customUserData]);
-
-  if (!displayUserData || !displayUserData.questions) return null;
-
-  console.log(displayUserData);
-
-  const title =
-    displayUserData === undefined ? 'Lade...' : displayUserData.username;
+  }, [userId]);
 
   return (
     <Layout>
@@ -57,30 +32,17 @@ const ProfilePage = ({ id: slugId }) => {
         <Section>
           <div className={s.profilePageGrid}>
             <AvatarImage
-              srcOverwrite={displayUserData.profilePictures['500']}
+              // srcOverwrite={userData.profilePictures['500']}
               className={s.avatar}
             />
-            <span className={s.username}>{title}</span>
+            <span className={s.username}>{userData.username}</span>
             {/* Show profile edit button if own page */}
-            {userId === slugId && (
-              <CTAButton className={s.editProfileButton}>
-                Profil editieren
-              </CTAButton>
-            )}
             <div className={cN(s.profilePageSection, s.details)}>
               <h2>Details</h2>
             </div>
             <div className={s.profilePageSection}>
               <h2>Frage ans Grundeinkommen</h2>
-              <div className={s.questionsList}>
-                {displayUserData.questions.map(question => {
-                  return (
-                    <Speechbubble isSmall>
-                      <div className={s.questionContent}>{question.body}</div>
-                    </Speechbubble>
-                  );
-                })}
-              </div>
+              <div className={s.questionsList}></div>
             </div>
             <div className={s.profilePageSection}>
               <h2>Eingegaangene Unterschriften</h2>

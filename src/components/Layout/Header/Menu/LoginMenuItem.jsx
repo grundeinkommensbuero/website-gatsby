@@ -28,7 +28,7 @@ const LoginMenuItem = () => {
   const { customUserData: userData, userId } = useContext(AuthContext);
   const signOut = useSignOut();
 
-  if (!userId) return null;
+  if (!userId) return <MenuItemButton>Einloggen</MenuItemButton>;
 
   return (
     <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
