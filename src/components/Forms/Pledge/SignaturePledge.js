@@ -17,11 +17,13 @@ import AuthInfo from '../../AuthInfo';
 import AuthContext from '../../../context/Authentication';
 import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
 import { FinallyMessage } from '../FinallyMessage';
+import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
+  const [updateUserState, updateUser] = useUpdateUser();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId, customUserData: userData } = useContext(
@@ -38,13 +40,17 @@ export default ({ pledgeId }) => {
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
+      updateUser(pledge);
     }
   }, [isAuthenticated, hasSubmitted]);
 
   if (createPledgeState || updatePledgeState) {
     return (
       <SignUpFeedbackMessage
-        state={createPledgeState || updatePledgeState}
+        state={
+          createPledgeState ||
+          (updateUserState === 'error' ? updateUserState : updatePledgeState)
+        }
         trackingId={pledgeId}
         trackingCategory="Pledge"
       />
@@ -80,12 +86,12 @@ export default ({ pledgeId }) => {
         setHasSubmitted(true);
         setPledgeLocally(e);
         if (!isAuthenticated) {
-          signUp(e.email);
+          signUp(e);
         }
       }}
       initialValues={{
         signatureCount: 1,
-        name: userId !== undefined && userData ? userData.username : '',
+        username: userId !== undefined && userData ? userData.username : '',
         zipCode: userId !== undefined && userData ? userData.zipCode : '',
       }}
       validate={values => validate(values, isAuthenticated)}
@@ -104,7 +110,7 @@ export default ({ pledgeId }) => {
                     component={TextInputWrapped}
                   ></Field>
                   <Field
-                    name="name"
+                    name="username"
                     label="Mit diesem Namen möchte ich angesprochen werden"
                     placeholder="Name"
                     type="text"

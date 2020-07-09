@@ -13,11 +13,13 @@ import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
+import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
 export default ({ pledgeId }) => {
   const [signUpState, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
+  const [updateUserState, updateUser] = useUpdateUser();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
@@ -32,13 +34,17 @@ export default ({ pledgeId }) => {
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
       updatePledge(pledge);
+      updateUser(pledge);
     }
   }, [isAuthenticated]);
 
   if (createPledgeState || updatePledgeState) {
     return (
       <SignUpFeedbackMessage
-        state={createPledgeState || updatePledgeState}
+        state={
+          createPledgeState ||
+          (updateUserState === 'error' ? updateUserState : updatePledgeState)
+        }
         trackingId={pledgeId}
         trackingCategory="Pledge"
       />
@@ -72,7 +78,7 @@ export default ({ pledgeId }) => {
         setHasSubmitted(true);
         setPledgeLocally(e);
         if (!isAuthenticated) {
-          signUp(e.email);
+          signUp(e);
         }
       }}
       validate={values => validate(values, isAuthenticated)}
@@ -90,7 +96,7 @@ export default ({ pledgeId }) => {
                   component={TextInputWrapped}
                 />
                 <Field
-                  name="name"
+                  name="username"
                   label="Vorname"
                   placeholder="Vorname"
                   type="text"
