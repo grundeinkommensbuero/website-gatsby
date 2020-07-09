@@ -4,8 +4,9 @@ import { trackEvent, addActionTrackingId } from '../../utils';
 import { LinkButton } from '../Button';
 
 export default ({ className, state, trackingId, trackingCategory }) => {
+  console.log({ state });
   let finallyState;
-  if (state === 'saved' || state === 'updated') {
+  if (state === 'saved' || state === 'updated' || state === 'success') {
     finallyState = 'success';
     trackEvent({
       category: trackingCategory,
@@ -27,7 +28,7 @@ export default ({ className, state, trackingId, trackingCategory }) => {
     <div className={className}>
       <FinallyMessage state={finallyState}>
         {state === 'saving' && 'Wird abgeschickt...'}
-        {state === 'saved' && (
+        {(state === 'saved' || state === 'success') && (
           <>
             Yay, danke! Bitte geh in dein E-Mail-Postfach und bestätige, dass
             wir deine Daten speichern dürfen. Falls du unsere E-Mail nicht
