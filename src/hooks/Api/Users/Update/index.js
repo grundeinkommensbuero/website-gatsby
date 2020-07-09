@@ -1,16 +1,20 @@
 import CONFIG from '../../../../../aws-config';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { saveUser } from '../shared';
+import AuthContext from '../../../../context/Authentication';
 
 export const useUpdateUser = () => {
   const [state, setState] = useState();
 
+  //get auth token from global context
+  const { token, userId } = useContext(AuthContext);
+
   return [
     state,
-    async ({ userId, newsletterConsent, token }) => {
+    async data => {
       try {
         setState('loading');
-        await updateUser(userId, newsletterConsent, token);
+        await updateUser({ token, userId, ...data });
 
         setState('success');
       } catch (error) {
@@ -22,15 +26,14 @@ export const useUpdateUser = () => {
 };
 
 //Makes api call to update user in db, throws error if unsuccessful
-export const updateUser = async (userId, newsletterConsent, token) => {
+export const updateUser = async ({ userId, token, ...data }) => {
   const url = `${CONFIG.API.INVOKE_URL}/users/${userId}`;
 
   const response = await saveUser({
-    userId,
-    newsletterConsent,
     method: 'PATCH',
     url,
     token,
+    ...data,
   });
 
   if (response.status !== 204) {

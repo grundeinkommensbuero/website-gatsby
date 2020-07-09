@@ -2,11 +2,12 @@
  * This file holds several hook functions regarding everything concerning authentication
  */
 import { getRandomString } from '../../components/utils';
-import { sleep } from '../utils';
+import { sleep, getReferral } from '../utils';
 import { useContext, useState } from 'react';
 import querystring from 'query-string';
 import { navigate } from '@reach/router';
 import AuthContext from '../../context/Authentication';
+import { createUser } from '../Api/Users/Create';
 
 export { useAnswerChallenge } from './AnswerChallenge';
 export { useVerification } from './Verification';
@@ -18,7 +19,7 @@ export const useSignUp = () => {
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, email => signUp(email, setState, context)];
+  return [state, data => signUp(data, setState, context)];
 };
 
 export const useSignIn = () => {
@@ -40,7 +41,7 @@ export const useSignOut = () => {
 };
 
 // Amplifys Auth class is used to sign up user
-const signUp = async (email, setState, { setUserId, setTempEmail }) => {
+const signUp = async (data, setState, { setUserId, setTempEmail }) => {
   try {
     setState('loading');
 
@@ -49,19 +50,24 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
     );
 
     // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-    const { userSub } = await Auth.signUp({
-      username: email.toLowerCase(),
+    const { userSub: userId } = await Auth.signUp({
+      username: data.email.toLowerCase(),
       password: getRandomString(30),
     });
 
+    data.referral = getReferral();
+
+    // After we signed up via cognito, we want to create the user in dynamo
+    await createUser({ userId, ...data });
+
     //we want to set the newly generated id
-    setUserId(userSub);
+    setUserId(userId);
     setState('success');
   } catch (error) {
     //We have to check, if the error happened due to the user already existing
     if (error.code === 'UsernameExistsException') {
       // Save email, so we can use it for sign in later
-      setTempEmail(email);
+      setTempEmail(data.email);
       setState('userExists');
     } else if (
       error.code === 'TooManyRequestsException' ||
@@ -69,7 +75,7 @@ const signUp = async (email, setState, { setUserId, setTempEmail }) => {
     ) {
       // If the limit of cognito requests was reached we want to wait shortly and try again
       await sleep(1500);
-      return signUp(email);
+      return signUp(data.email);
     } else {
       console.log('Error while signing up', error);
       setState('error');
