@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
-import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
-import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
@@ -15,38 +13,28 @@ import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
-export default ({ pledgeId }) => {
+export default () => {
   const [signUpState, signUp] = useSignUp();
-  const [createPledgeState, createPledge] = useCreatePledge();
-  const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [updateUserState, updateUser] = useUpdateUser();
-  const [pledge, setPledgeLocally] = useState({});
+  const [formData, setFormDataLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
-  // After signup process is done we can save the pledge
-  useEffect(() => {
-    if (signUpState === 'success') {
-      createPledge(pledge);
-    }
-  }, [signUpState]);
-
+  // After signin process is done we can save the pledge
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
-      updatePledge(pledge);
-      updateUser(pledge);
+      updateUser(formData);
     }
   }, [isAuthenticated]);
 
-  if (createPledgeState || updatePledgeState) {
+  console.log({ updateUserState, signUpState });
+  if (updateUserState || (signUpState && signUpState !== 'userExists')) {
+    console.log('returing feedback message');
     return (
       <SignUpFeedbackMessage
-        state={
-          createPledgeState ||
-          (updateUserState === 'error' ? updateUserState : updatePledgeState)
-        }
-        trackingId={pledgeId}
-        trackingCategory="Pledge"
+        state={updateUserState || signUpState}
+        trackingId={'sign-up'}
+        trackingCategory="SignUp"
       />
     );
   }
@@ -72,11 +60,10 @@ export default ({ pledgeId }) => {
   return (
     <Form
       onSubmit={e => {
-        e.pledgeId = pledgeId;
         e.privacyConsent = true;
         e.newsletterConsent = true;
         setHasSubmitted(true);
-        setPledgeLocally(e);
+        setFormDataLocally(e);
         if (!isAuthenticated) {
           signUp(e);
         }

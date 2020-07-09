@@ -16,7 +16,7 @@ export const useUpdateUser = () => {
         setState('loading');
         await updateUser({ token, userId, ...data });
 
-        setState('success');
+        setState('updated');
       } catch (error) {
         setState('error');
         console.log('Error', error);
