@@ -3,6 +3,7 @@ import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Map from '../../Map';
+import SignUp from '../../Forms/SignUp';
 import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
@@ -42,6 +43,7 @@ export function ContentfulSection({ section }) {
     titleShort,
     campainVisualisations,
     body,
+    signUpForm,
     emailSignup,
     videoLink,
     callToActionLink,
@@ -121,6 +123,11 @@ export function ContentfulSection({ section }) {
         <CampaignVisualisations visualisations={campainVisualisations} />
       )}
       {map && <Map state={map} />}
+      {signUpForm && (
+        <SectionInner>
+          <SignUp />
+        </SectionInner>
+      )}
       {emailSignup && (
         <SectionInner>
           <EmailListForm className={s.emailSignup} />
