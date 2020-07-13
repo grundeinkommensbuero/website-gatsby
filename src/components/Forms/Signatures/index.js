@@ -164,7 +164,7 @@ export default ({ signaturesId }) => {
 
           // If user is not identified
           setEmail(e.email);
-          signUp(e);
+          signUp({ newsletterConsent: true, ...e });
         }}
         validate={values => validate(values, userId)}
         render={({ handleSubmit }) => {
