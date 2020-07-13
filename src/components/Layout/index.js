@@ -82,6 +82,7 @@ function Template({ children, sections }) {
               callToActionLink
               callToActionText
               bodyTextSizeHuge
+              signUpForm
               emailSignup
               pledgeId
               signaturesId
