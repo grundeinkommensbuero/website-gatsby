@@ -11,26 +11,27 @@ import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
-import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
 export default () => {
-  const [signUpState, signUp] = useSignUp();
-  const [updateUserState, updateUser] = useUpdateUser();
-  const [formData, setFormDataLocally] = useState({});
+  const [signUpState, signUp, setSignupState] = useSignUp();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
-  // After signin process is done we can save the pledge
   useEffect(() => {
+    // If user signs in from form
     if (isAuthenticated && hasSubmitted) {
-      updateUser(formData);
+      setSignupState('signedIn');
     }
-  }, [isAuthenticated]);
+    // If user signs out after signing in
+    if (!isAuthenticated && signUpState === 'signedIn') {
+      setSignupState(undefined);
+    }
+  }, [isAuthenticated, hasSubmitted, signUp]);
 
-  if (updateUserState || (signUpState && signUpState !== 'userExists')) {
+  if (signUpState && signUpState !== 'userExists') {
     return (
       <SignUpFeedbackMessage
-        state={updateUserState || signUpState}
+        state={signUpState}
         trackingId={'sign-up'}
         trackingCategory="SignUp"
       />
@@ -61,7 +62,6 @@ export default () => {
         e.privacyConsent = true;
         e.newsletterConsent = true;
         setHasSubmitted(true);
-        setFormDataLocally(e);
         if (!isAuthenticated) {
           signUp(e);
         }

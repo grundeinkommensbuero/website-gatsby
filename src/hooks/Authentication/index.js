@@ -19,7 +19,7 @@ export const useSignUp = () => {
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, data => signUp(data, setState, context)];
+  return [state, data => signUp(data, setState, context), setState];
 };
 
 export const useSignIn = () => {

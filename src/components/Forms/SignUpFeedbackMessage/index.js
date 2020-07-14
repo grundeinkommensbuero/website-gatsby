@@ -60,6 +60,11 @@ export default ({ className, state, trackingId, trackingCategory }) => {
             .
           </>
         )}
+        {state === 'signedIn' && (
+          <>
+            Du hast dich erfolgreich angemeldet. Schön, dass du wieder da bist.
+          </>
+        )}
         {state === 'error' && (
           <>
             Da ist was schief gegangen. Melde dich bitte bei uns{' '}
