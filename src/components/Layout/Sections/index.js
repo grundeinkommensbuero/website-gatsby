@@ -9,7 +9,7 @@ import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
-import Signatures from '../../Forms/Signatures';
+import SignatureListDownload from '../../Forms/SignatureListDownload';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import HeaderBackgrounds from '../HeaderBackgrounds';
@@ -115,7 +115,10 @@ export function ContentfulSection({ section }) {
           {body && body.json ? contentfulJsonToHtml(body.json) : body}
           {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
           {signaturesId && (
-            <Signatures signaturesId={signaturesId} className={s.pledge} />
+            <SignatureListDownload
+              signaturesId={signaturesId}
+              className={s.pledge}
+            />
           )}
         </SectionInner>
       )}
