@@ -27,9 +27,7 @@ export default () => {
     }
   }, [isAuthenticated]);
 
-  console.log({ updateUserState, signUpState });
   if (updateUserState || (signUpState && signUpState !== 'userExists')) {
-    console.log('returing feedback message');
     return (
       <SignUpFeedbackMessage
         state={updateUserState || signUpState}

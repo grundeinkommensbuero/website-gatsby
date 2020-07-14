@@ -4,7 +4,6 @@ import { trackEvent, addActionTrackingId } from '../../utils';
 import { LinkButton } from '../Button';
 
 export default ({ className, state, trackingId, trackingCategory }) => {
-  console.log({ state });
   let finallyState;
   if (state === 'saved' || state === 'updated' || state === 'success') {
     finallyState = 'success';
@@ -21,13 +20,13 @@ export default ({ className, state, trackingId, trackingCategory }) => {
       name: state,
     });
   }
-  if (state === 'saving') {
+  if (state === 'saving' || state === 'loading') {
     finallyState = 'progress';
   }
   return (
     <div className={className}>
       <FinallyMessage state={finallyState}>
-        {state === 'saving' && 'Wird abgeschickt...'}
+        {finallyState === 'progress' && 'Wird abgeschickt...'}
         {(state === 'saved' || state === 'success') && (
           <>
             Yay, danke! Bitte geh in dein E-Mail-Postfach und bestätige, dass
