@@ -12,12 +12,12 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ pledgeId, initialValues, postSignupAction }) => {
+export default ({ initialValues, postSignupAction }) => {
   const [signUpState, signUp, setSignupState] = useSignUp();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
-  // After signup process is done we can save the pledge
+  // After signup process is successful, do post signup
   useEffect(() => {
     if (signUpState === 'success' && userId) {
       if (postSignupAction) {

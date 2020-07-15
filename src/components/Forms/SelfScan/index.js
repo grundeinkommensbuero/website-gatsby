@@ -251,7 +251,7 @@ const CountSignaturesForm = ({
               }}
             />
             <p>
-              Funktioniert auch das nicht= Dann schreib uns an{' '}
+              Funktioniert auch das nicht? Dann schreib uns an{' '}
               <a href="mailto:support@expedition-grundeinkommen.de">
                 support@expedition-grundeinkommen.de
               </a>

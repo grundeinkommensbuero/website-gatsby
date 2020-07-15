@@ -88,7 +88,6 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (userId && isAuthenticated !== undefined) {
-      console.log('Get custom user data', isAuthenticated, userId);
       // Update user data with data from backend
       updateCustomUserData({
         isAuthenticated,
@@ -131,11 +130,9 @@ const updateCustomUserData = async ({
 }) => {
   try {
     // Get user data from protected or public endpoint
-    console.log({ token });
     const result = isAuthenticated
       ? await getCurrentUser(token)
       : await getUser(userId);
-    console.log('custom user data', result.state, result.user);
     if (
       // If error finding user data
       result.state !== 'success' ||
