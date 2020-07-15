@@ -69,6 +69,7 @@ export const pageQuery = graphql`
             callToActionLink
             callToActionText
             bodyTextSizeHuge
+            signUpForm
             emailSignup
             pledgeId
             signaturesId

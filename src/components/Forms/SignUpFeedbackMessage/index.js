@@ -5,7 +5,7 @@ import { LinkButton } from '../Button';
 
 export default ({ className, state, trackingId, trackingCategory }) => {
   let finallyState;
-  if (state === 'saved' || state === 'updated') {
+  if (state === 'saved' || state === 'updated' || state === 'success') {
     finallyState = 'success';
     trackEvent({
       category: trackingCategory,
@@ -20,14 +20,14 @@ export default ({ className, state, trackingId, trackingCategory }) => {
       name: state,
     });
   }
-  if (state === 'saving') {
+  if (state === 'saving' || state === 'loading') {
     finallyState = 'progress';
   }
   return (
     <div className={className}>
       <FinallyMessage state={finallyState}>
-        {state === 'saving' && 'Wird abgeschickt...'}
-        {state === 'saved' && (
+        {finallyState === 'progress' && 'Wird abgeschickt...'}
+        {(state === 'saved' || state === 'success') && (
           <>
             Yay, danke! Bitte geh in dein E-Mail-Postfach und bestätige, dass
             wir deine Daten speichern dürfen. Falls du unsere E-Mail nicht
@@ -58,6 +58,11 @@ export default ({ className, state, trackingId, trackingCategory }) => {
               support@expedition-grundeinkommen.de
             </a>
             .
+          </>
+        )}
+        {state === 'signedIn' && (
+          <>
+            Du hast dich erfolgreich angemeldet. Schön, dass du wieder da bist.
           </>
         )}
         {state === 'error' && (

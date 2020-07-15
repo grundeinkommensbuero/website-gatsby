@@ -5,9 +5,7 @@
 
 import { useState, useContext } from 'react';
 import CONFIG from '../../../../../aws-config';
-import { createUser } from '../../Users/Create';
 import { updateUser } from '../../Users/Update';
-import querystring from 'query-string';
 import AuthContext from '../../../../context/Authentication';
 
 /*
@@ -79,20 +77,11 @@ const createSignatureList = async (
 
     const data = { userId, email, campaignCode };
 
-    // if it is a new user, we want to create the user
-    // in the dynamo database
-    if (!userExists) {
-      // check url params, if current user came from referral (e.g newsletter)
-      const urlParams = querystring.parse(window.location.search);
-      // the pk_source param was generated in matomo
-      const referral = urlParams.pk_source;
-
-      await createUser(userId, email, true, referral);
-    } else if (token && !shouldNotUpdateUser) {
-      // Otherwise update the user using the token
-      // but only if there is a token (user has logged in to set newsletter consent)
-      // and if the user did not already had a session going in
-      await updateUser(userId, true, token);
+    // if it is not a new user, we want to update the user to set the newsletter consent
+    // but only if there is a token (user has logged in to set newsletter consent)
+    // and if the user did not already had a session going in
+    if (userExists && token && !shouldNotUpdateUser) {
+      await updateUser({ userId, newsletterConsent: true, token });
     }
 
     //call function to make api request, returns signature list if successful (throws error otherwise)

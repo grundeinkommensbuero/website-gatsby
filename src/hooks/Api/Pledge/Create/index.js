@@ -4,7 +4,6 @@
 
 import CONFIG from '../../../../../aws-config';
 import { useState, useContext } from 'react';
-import querystring from 'query-string';
 import AuthContext from '../../../../context/Authentication';
 
 export const useCreatePledge = () => {
@@ -21,24 +20,9 @@ export const useCreatePledge = () => {
 // Function which calls the aws api to create a new pledge
 const createPledge = async (userId, pledge, setState) => {
   try {
-    // check url params, if current user came from referral (e.g newsletter)
-    const urlParams = querystring.parse(window.location.search);
-    // the pk_source param was generated in matomo
-    const referral = urlParams.pk_source;
-
     setState('saving');
 
     const data = pledge;
-    //add userId to data, because we need it in the backend
-    data.userId = userId;
-
-    if (!('newsletterConsent' in data)) {
-      data.newsletterConsent = false;
-    }
-
-    if (referral) {
-      data.referral = referral;
-    }
 
     if (data.signatureCount) {
       data.signatureCount = parseInt(data.signatureCount);
@@ -53,7 +37,10 @@ const createPledge = async (userId, pledge, setState) => {
       body: JSON.stringify(data),
     };
 
-    const response = await fetch(CONFIG.API.INVOKE_URL + '/pledges', request);
+    const response = await fetch(
+      `${CONFIG.API.INVOKE_URL}/users/${userId}/pledges`,
+      request
+    );
 
     if (response.status === 201) {
       setState('saved');

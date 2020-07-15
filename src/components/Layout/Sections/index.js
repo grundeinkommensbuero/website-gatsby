@@ -3,12 +3,13 @@ import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Map from '../../Map';
+import SignUp from '../../Forms/SignUp';
 import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
-import Signatures from '../../Forms/Signatures';
+import SignatureListDownload from '../../Forms/SignatureListDownload';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import HeaderBackgrounds from '../HeaderBackgrounds';
@@ -42,6 +43,7 @@ export function ContentfulSection({ section }) {
     titleShort,
     campainVisualisations,
     body,
+    signUpForm,
     emailSignup,
     videoLink,
     callToActionLink,
@@ -113,7 +115,10 @@ export function ContentfulSection({ section }) {
           {body && body.json ? contentfulJsonToHtml(body.json) : body}
           {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
           {signaturesId && (
-            <Signatures signaturesId={signaturesId} className={s.pledge} />
+            <SignatureListDownload
+              signaturesId={signaturesId}
+              className={s.pledge}
+            />
           )}
         </SectionInner>
       )}
@@ -121,6 +126,11 @@ export function ContentfulSection({ section }) {
         <CampaignVisualisations visualisations={campainVisualisations} />
       )}
       {map && <Map state={map} />}
+      {signUpForm && (
+        <SectionInner>
+          <SignUp />
+        </SectionInner>
+      )}
       {emailSignup && (
         <SectionInner>
           <EmailListForm className={s.emailSignup} />

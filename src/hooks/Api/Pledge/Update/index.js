@@ -4,7 +4,6 @@
 
 import CONFIG from '../../../../../aws-config';
 import { useState, useContext } from 'react';
-import querystring from 'query-string';
 import AuthContext from '../../../../context/Authentication';
 
 export const useUpdatePledge = () => {
@@ -23,22 +22,7 @@ const updatePledge = async (userId, pledge, token, setState) => {
   try {
     setState('saving');
 
-    // check url params, if current user came from referral (e.g newsletter)
-    const urlParams = querystring.parse(window.location.search);
-    // the pk_source param was generated in matomo
-    const referral = urlParams.pk_source;
-
     const data = pledge;
-    //add userId to data, because we need it in the backend
-    data.userId = userId;
-
-    if (!('newsletterConsent' in data)) {
-      data.newsletterConsent = false;
-    }
-
-    if (referral) {
-      data.referral = referral;
-    }
 
     if (data.signatureCount) {
       data.signatureCount = parseInt(data.signatureCount);
@@ -55,7 +39,7 @@ const updatePledge = async (userId, pledge, token, setState) => {
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/pledges/${userId}`,
+      `${CONFIG.API.INVOKE_URL}/users/${userId}/pledges`,
       request
     );
 

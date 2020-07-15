@@ -13,7 +13,7 @@ import { SectionInner, Section } from '../../Layout/Sections';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import VisualCounter from '../../VisualCounter';
 import AuthInfo from '../../AuthInfo';
-import GeneralPledge from '../Pledge/GeneralPledge';
+import SignUp from '../SignUp';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
 import { FinallyMessage } from '../FinallyMessage';
@@ -235,8 +235,7 @@ const CountSignaturesForm = ({
               Oder registriere dich neu bei uns, um die Unterschriften
               einzutragen:
             </p>
-            <GeneralPledge
-              pledgeId="general-1"
+            <SignUp
               initialValues={{
                 email: eMail,
               }}
