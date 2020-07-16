@@ -12,7 +12,11 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default ({ initialValues, postSignupAction }) => {
+export default ({
+  initialValues,
+  postSignupAction,
+  illustration = 'POINT_LEFT',
+}) => {
   const [signUpState, signUp, setSignupState] = useSignUp();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
@@ -113,7 +117,7 @@ export default ({ initialValues, postSignupAction }) => {
                 />
               </FormSection>
 
-              <CTAButtonContainer illustration="POINT_LEFT">
+              <CTAButtonContainer illustration={illustration}>
                 <CTAButton type="submit">Ich bin dabei</CTAButton>
               </CTAButtonContainer>
             </form>

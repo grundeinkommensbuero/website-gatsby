@@ -249,6 +249,7 @@ const CountSignaturesForm = ({
                 setCount(parseInt(data.count));
                 await updateSignatureList(data);
               }}
+              illustration={false}
             />
             <p>
               Funktioniert auch das nicht? Dann schreib uns an{' '}
