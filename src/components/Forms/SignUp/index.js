@@ -12,10 +12,23 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 
-export default () => {
+export default ({
+  initialValues,
+  postSignupAction,
+  illustration = 'POINT_LEFT',
+}) => {
   const [signUpState, signUp, setSignupState] = useSignUp();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
+
+  // After signup process is successful, do post signup
+  useEffect(() => {
+    if (signUpState === 'success' && userId) {
+      if (postSignupAction) {
+        postSignupAction();
+      }
+    }
+  }, [signUpState, userId]);
 
   useEffect(() => {
     // If user signs in from form
@@ -66,6 +79,7 @@ export default () => {
           signUp(e);
         }
       }}
+      initialValues={initialValues}
       validate={values => validate(values, isAuthenticated)}
       render={({ handleSubmit }) => {
         return (
@@ -103,7 +117,7 @@ export default () => {
                 />
               </FormSection>
 
-              <CTAButtonContainer illustration="POINT_LEFT">
+              <CTAButtonContainer illustration={illustration}>
                 <CTAButton type="submit">Ich bin dabei</CTAButton>
               </CTAButtonContainer>
             </form>
