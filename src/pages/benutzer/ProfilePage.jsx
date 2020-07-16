@@ -17,39 +17,53 @@ const ProfilePage = ({ id: slugId }) => {
     AuthContext
   );
 
+  const [isLoading, setIsLoading] = useState(true);
+
   // Get user data on page load
   useEffect(() => {
     // If user is viewing other user's page
-    if (userId !== slugId) {
+    //if (!isAuthenticated || userId !== slugId) {
+    if (false || userId !== slugId) {
       // Navigate to home page
       navigate('/', { replace: true });
+    } else {
+      setIsLoading(false);
     }
   }, [userId]);
 
   return (
     <Layout>
       <SectionWrapper>
-        <Section>
-          <div className={s.profilePageGrid}>
-            <AvatarImage
-              // srcOverwrite={userData.profilePictures['500']}
-              className={s.avatar}
-            />
-            <span className={s.username}>{userData.username}</span>
-            {/* Show profile edit button if own page */}
-            <div className={cN(s.profilePageSection, s.details)}>
-              <h2>Details</h2>
+        {isLoading && (
+          <Section>
+            <div className={s.profilePageGrid}>
+              <h1>Lade...</h1>
             </div>
-            <div className={s.profilePageSection}>
-              <h2>Frage ans Grundeinkommen</h2>
-              <div className={s.questionsList}></div>
+          </Section>
+        )}
+        {!isLoading && (
+          <Section>
+            <div className={s.profilePageGrid}>
+              <AvatarImage
+                // srcOverwrite={userData.profilePictures['500']}
+                className={s.avatar}
+              />
+              <span className={s.username}>{userData.username}</span>
+              {/* Show profile edit button if own page */}
+              <div className={cN(s.profilePageSection, s.details)}>
+                <h2>Details</h2>
+              </div>
+              <div className={s.profilePageSection}>
+                <h2>Frage ans Grundeinkommen</h2>
+                <div className={s.questionsList}></div>
+              </div>
+              <div className={s.profilePageSection}>
+                <h2>Eingegaangene Unterschriften</h2>
+                <p>Du hast 233 Unterschriften eingetragen.</p>
+              </div>
             </div>
-            <div className={s.profilePageSection}>
-              <h2>Eingegaangene Unterschriften</h2>
-              <p>Du hast 233 Unterschriften eingetragen.</p>
-            </div>
-          </div>
-        </Section>
+          </Section>
+        )}
       </SectionWrapper>
     </Layout>
   );
