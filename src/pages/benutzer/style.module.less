@@ -9,6 +9,11 @@
   grid-template-rows: auto;
   grid-column-gap: 1em;
   align-items: center;
+
+  @media (max-width: @breakPointS) {
+    grid-template-columns: auto;
+    grid-column-gap: initial;
+  }
 }
 
 .avatar {
@@ -31,8 +36,12 @@
 .profilePageSection {
   grid-column-start: 2;
   grid-column-end: 3;
-
   margin-top: 2em;
+
+  @media (max-width: @breakPointS) {
+    grid-column-start: auto;
+    grid-column-end: auto;
+  }
 }
 
 // Details section

@@ -48,7 +48,7 @@ const ProfilePage = ({ id: slugId }) => {
                 // srcOverwrite={userData.profilePictures['500']}
                 className={s.avatar}
               />
-              <span className={s.username}>{userData.username}</span>
+              <h1 className={s.username}>{userData.username}</h1>
               {/* Show profile edit button if own page */}
               <div className={cN(s.profilePageSection, s.details)}>
                 <h2>Details</h2>
