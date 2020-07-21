@@ -1,9 +1,10 @@
 import Layout from '../../components/Layout';
-import React, { useState, useContext, useEffect } from 'react';
-import cN from 'classnames';
+import React, { useContext } from 'react';
+import querystring from 'query-string';
 import { navigate } from '@reach/router';
 
 import AuthContext from '../../context/Authentication';
+
 import {
   SectionWrapper,
   Section,
@@ -12,35 +13,36 @@ import {
 import { RequestLoginCodeWithEmail } from '../../components/Login/RequestLoginCode';
 
 const LoginPage = () => {
-  const { isAuthenticated, userId } = useContext(AuthContext);
-  // const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (isAuthenticated === true) {
-      navigate('/');
-    }
-  }, isAuthenticated);
+  const urlParams = querystring.parse(window.location.search);
 
-  // Show nothing is waiting to find login state
-  // if (loading) return null;
+  // If user is authenticated, navigate to home page
+  if (isAuthenticated === true)
+    navigate(urlParams.nextPage ? `/${urlParams.nextPage}` : '/');
 
   // If user isn't authenticated, show the page to get them authenticated
-  return (
-    <Layout>
-      <SectionWrapper>
-        <Section>
-          <SectionInner>
-            <RequestLoginCodeWithEmail>
-              <p>
-                What's up dude, I heard you want to login. Please enter your
-                email address.
-              </p>
-            </RequestLoginCodeWithEmail>
-          </SectionInner>
-        </Section>
-      </SectionWrapper>
-    </Layout>
-  );
+  if (isAuthenticated === false) {
+    return (
+      <Layout>
+        <SectionWrapper>
+          <Section>
+            <SectionInner>
+              <RequestLoginCodeWithEmail>
+                <p>
+                  What's up dude, I heard you want to login. Please enter your
+                  email address.
+                </p>
+              </RequestLoginCodeWithEmail>
+            </SectionInner>
+          </Section>
+        </SectionWrapper>
+      </Layout>
+    );
+  }
+
+  // If waiting for authentication state
+  return null;
 };
 
 export default LoginPage;
