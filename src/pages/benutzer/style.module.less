@@ -22,10 +22,15 @@
 }
 
 .username {
-  margin: 0;
+  margin: 2rem 0 3rem 0;
   padding: 0;
   height: @fontSizeXXXL;
   font-size: @fontSizeXXXL;
+
+  @media (max-width: @breakPointM) {
+    margin: 1rem 0 3rem 0;
+    font-size: @fontSizeXXL;
+  }
 }
 
 .editProfileButton {

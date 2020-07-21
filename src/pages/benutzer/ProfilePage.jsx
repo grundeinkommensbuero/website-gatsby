@@ -58,7 +58,7 @@ const ProfilePage = ({ id: slugId }) => {
                 <div className={s.questionsList}></div>
               </div>
               <div className={s.profilePageSection}>
-                <h2>Eingegaangene Unterschriften</h2>
+                <h2>Eingegangene Unterschriften</h2>
                 <p>Du hast 233 Unterschriften eingetragen.</p>
               </div>
             </div>
