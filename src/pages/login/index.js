@@ -13,40 +13,34 @@ import { RequestLoginCodeWithEmail } from '../../components/Login/RequestLoginCo
 
 const LoginPage = () => {
   const { isAuthenticated, userId } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (isAuthenticated !== undefined) {
-      setLoading(false);
+    if (isAuthenticated === true) {
+      navigate('/');
     }
   }, isAuthenticated);
 
   // Show nothing is waiting to find login state
-  if (loading) return null;
-
-  // If user is authenticated, navigate to the page that they
-  if (!loading && isAuthenticated) {
-    navigate('/');
-  }
+  // if (loading) return null;
 
   // If user isn't authenticated, show the page to get them authenticated
-  if (!loading) {
-    return (
-      <Layout>
-        <SectionWrapper>
-          <Section>
-            <SectionInner>
-              <RequestLoginCodeWithEmail>
-                <p>
-                  What's up dude, I heard you want to login. Please click here
-                </p>
-              </RequestLoginCodeWithEmail>
-            </SectionInner>
-          </Section>
-        </SectionWrapper>
-      </Layout>
-    );
-  }
+  return (
+    <Layout>
+      <SectionWrapper>
+        <Section>
+          <SectionInner>
+            <RequestLoginCodeWithEmail>
+              <p>
+                What's up dude, I heard you want to login. Please enter your
+                email address.
+              </p>
+            </RequestLoginCodeWithEmail>
+          </SectionInner>
+        </Section>
+      </SectionWrapper>
+    </Layout>
+  );
 };
 
 export default LoginPage;

@@ -16,6 +16,7 @@ import {
   CTAButtons,
   CTAButtonContainer,
   CTAButton,
+  CTALink,
 } from '../../Layout/CTAButton';
 
 export const RequestLoginCode = ({ children, buttonText }) => {
@@ -70,14 +71,8 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
   if (!tempEmail) {
     return (
       <FinallyMessage type="success">
-        {children ? (
-          children
-        ) : (
-          <p>
-            Du bist angemeldet als{' '}
-            {userData && (userData.username || userData.email)}.
-          </p>
-        )}
+        {/* Custom text */}
+        {children}
         {/* Form for getting email */}
         <Form
           onSubmit={e => {
