@@ -86,6 +86,8 @@ const signUp = async (data, setState, { setUserId, setTempEmail }) => {
 // Sign in user through AWS Cognito (passwordless)
 const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
   try {
+    setState('loading');
+
     const { default: Auth } = await import(
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
     );

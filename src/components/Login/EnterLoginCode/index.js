@@ -16,7 +16,7 @@ export const EnterLoginCode = ({ children }) => {
     startSignIn();
   }, []);
 
-  if (answerChallengeState === 'loading') {
+  if (answerChallengeState === 'loading' || signInState === 'loading') {
     return (
       <FinallyMessage state="progress">Einen Moment bitte...</FinallyMessage>
     );
@@ -40,6 +40,21 @@ export const EnterLoginCode = ({ children }) => {
           support@expedition-grundeinkommen.de
         </a>
         .
+      </FinallyMessage>
+    );
+  }
+
+  if (signInState === 'userNotFound') {
+    return (
+      <FinallyMessage state="error">
+        Shit! There's no user registered with this email address. Basically, you
+        can either:
+        <br />
+        <a href="/login">Go back and enter a new email</a>
+        <br />
+        or
+        <br />
+        <a href="/expedition">Sign up</a>
       </FinallyMessage>
     );
   }
