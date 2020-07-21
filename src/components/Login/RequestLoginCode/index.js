@@ -64,11 +64,14 @@ export const RequestLoginCode = ({ children, buttonText }) => {
 };
 
 export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
-  const { customUserData: userData, tempEmail, setTempEmail } = useContext(
-    AuthContext
-  );
+  const {
+    customUserData: userData,
+    userId,
+    tempEmail,
+    setTempEmail,
+  } = useContext(AuthContext);
 
-  if (!tempEmail) {
+  if (!userId && !tempEmail) {
     return (
       <FinallyMessage type="success">
         {/* Custom text */}

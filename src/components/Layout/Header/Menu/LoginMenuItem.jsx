@@ -25,14 +25,24 @@ const LoginTitle = ({ userData, userId }) => {
 };
 
 const LoginMenuItem = () => {
-  const { customUserData: userData, userId } = useContext(AuthContext);
+  const { customUserData: userData, userId, isAuthenticated } = useContext(
+    AuthContext
+  );
   const signOut = useSignOut();
 
+  // If user is not identified, show "login" button
   if (!userId) return <MenuItemLink slug={'login'}>Einloggen</MenuItemLink>;
+
+  // Where to send user when clicking "to profile" link
+  const toProfileLinkLocation = isAuthenticated
+    ? // If authenticated send them to profile page.
+      `benutzer/${userId}`
+    : // If not, send them to login page
+      `login/?nextPage=benutzer%2F${userId}`;
 
   return (
     <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
-      <MenuItemLink isChild slug={`benutzer/${userId}`}>
+      <MenuItemLink isChild slug={toProfileLinkLocation}>
         Zum Profil
       </MenuItemLink>
       <MenuItemButton isChild onClick={signOut}>
