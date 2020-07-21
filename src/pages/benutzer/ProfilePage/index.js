@@ -2,13 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import cN from 'classnames';
 import { navigate } from '@reach/router';
 
-import Layout from '../../components/Layout';
-import { Section, SectionWrapper } from '../../components/Layout/Sections';
-import { CTAButton } from '../../components/Layout/CTAButton';
-import AuthContext from '../../context/Authentication';
-import { getUser } from '../../hooks/Api/Users/Get';
-import AvatarImage from '../../components/AvatarImage';
-import { Speechbubble } from '../../components/QuestionUbi/Speechbubble';
+import AuthContext from '../../../context/Authentication';
+
+import Layout from '../../../components/Layout';
+import { Section, SectionWrapper } from '../../../components/Layout/Sections';
+import AvatarImage from '../../../components/AvatarImage';
 
 import s from './style.module.less';
 

@@ -91,7 +91,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   if (page.path.match(/^\/benutzer/)) {
     page.matchPath = '/benutzer/*';
-    page.component = path.resolve('src/pages/benutzer/index.jsx');
+    page.component = path.resolve('src/pages/benutzer/index.js');
     createPage(page);
   }
 };
