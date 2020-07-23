@@ -13,10 +13,10 @@ import { SectionInner, Section } from '../../Layout/Sections';
 import querystring from 'query-string';
 import { useStaticQuery, graphql } from 'gatsby';
 import CampaignVisualisations from '../../CampaignVisualisations';
-import VisualCounter from '../../VisualCounter';
 import cN from 'classnames';
 import AuthContext from '../../../context/Authentication';
 import AuthInfo from '../../AuthInfo';
+import SignatureStats from '../../SignatureStats';
 
 export default ({ successMessage, campaignCode }) => {
   const [
@@ -103,30 +103,10 @@ export default ({ successMessage, campaignCode }) => {
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
         <Section>
-          <div className={s.statisticsOverall}>
-            <div className={s.statisticsOverallCountItem}>
-              <div className={s.statisticsOverallCount}>
-                <VisualCounter end={signatureCountOfUser.scannedByUser} />
-              </div>
-              <div className={s.statisticsOverallLabel}>
-                Unterschriften
-                <br />
-                von dir gemeldet
-              </div>
-            </div>{' '}
-            <div className={s.statisticsOverallCountItem}>
-              <div className={s.statisticsOverallCount}>
-                <VisualCounter end={signatureCountOfUser.received} />
-              </div>
-              <div className={s.statisticsOverallLabel}>
-                Unterschriften
-                <br />
-                von dir bei uns
-                <br />
-                angekommen
-              </div>
-            </div>
-          </div>
+          <SignatureStats
+            signatureCount={signatureCountOfUser}
+            className={s.statisticsOverall}
+          />
           <div className={s.visualisation}>
             <CountSignaturesForm {...countSignaturesFormProps} />
             {campaignVisualisationsMapped.length && (
