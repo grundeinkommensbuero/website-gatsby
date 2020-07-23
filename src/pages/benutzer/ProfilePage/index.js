@@ -9,11 +9,26 @@ import { Section, SectionWrapper } from '../../../components/Layout/Sections';
 import AvatarImage from '../../../components/AvatarImage';
 
 import s from './style.module.less';
+import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
+import SignatureStats from '../../../components/SignatureStats';
+
+// We need the following mappings for the link to the self scan page
+const SELF_SCAN_SLUGS = {
+  brandenburg: 'qr/bb',
+  berlin: 'qr/b',
+  'schlewsig-holstein': 'qr/sh',
+  hamburg: 'qr/hh',
+  bremen: 'qr/hb',
+};
 
 const ProfilePage = ({ id: slugId }) => {
   const { userId, isAuthenticated, customUserData: userData } = useContext(
     AuthContext
   );
+  const [
+    signatureCountOfUser,
+    getSignatureCountOfUser,
+  ] = useSignatureCountOfUser();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +40,8 @@ const ProfilePage = ({ id: slugId }) => {
       // Navigate to home page
       navigate('/', { replace: true });
     } else {
+      getSignatureCountOfUser({ userId });
+
       setIsLoading(false);
     }
   }, [userId]);
@@ -57,7 +74,29 @@ const ProfilePage = ({ id: slugId }) => {
               </div>
               <div className={s.profilePageSection}>
                 <h2>Eingegangene Unterschriften</h2>
-                <p>Du hast 233 Unterschriften eingetragen.</p>
+                {signatureCountOfUser && (
+                  <>
+                    <SignatureStats
+                      signatureCount={signatureCountOfUser}
+                      className={s.signatureStats}
+                      layout="horizontal"
+                    />
+
+                    <div className={s.link}>
+                      <a
+                        href={`https://expedition-grundeinkommen.de/${
+                          signatureCountOfUser.mostRecentCampaign
+                            ? SELF_SCAN_SLUGS[
+                                signatureCountOfUser.mostRecentCampaign.state
+                              ]
+                            : 'qr/b' // if user has no recent campaign default is just berlin
+                        }?userId=${userId}`}
+                      >
+                        Hier mehr eintragen...
+                      </a>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </Section>
