@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { navigate } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 
+import AuthContext from '../../../context/Authentication';
 import { useAnswerChallenge, useSignIn } from '../../../hooks/Authentication';
+
 import FormSection from '../../Forms/FormSection';
 import FormWrapper from '../../Forms/FormWrapper';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { TextInputWrapped } from '../../Forms/TextInput';
+import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 
 export const EnterLoginCode = ({ children }) => {
+  const { setTempEmail } = useContext(AuthContext);
   const [answerChallengeState, setCode] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
@@ -47,14 +52,29 @@ export const EnterLoginCode = ({ children }) => {
   if (signInState === 'userNotFound') {
     return (
       <FinallyMessage state="error">
-        Shit! There's no user registered with this email address. Basically, you
-        can either:
-        <br />
-        <a href="/login">Go back and enter a new email</a>
-        <br />
-        or
-        <br />
-        <a href="/expedition">Sign up</a>
+        <p>
+          Oh! Es scheint, diese Email-Addresse ist noch nicht bei uns
+          registriert.{' '}
+          <InlineButton
+            onClick={() => {
+              navigate('/expedition/#generalpledge');
+            }}
+          >
+            Klicke hier, um dich neu zu registrieren.
+          </InlineButton>
+        </p>
+
+        <p>Falls du hast deine Email-Adresse falsch eingegeben...</p>
+
+        <CTAButtonContainer>
+          <CTAButton
+            onClick={() => {
+              setTempEmail(undefined);
+            }}
+          >
+            Nochmal versuchen
+          </CTAButton>
+        </CTAButtonContainer>
       </FinallyMessage>
     );
   }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 
 import AuthContext from '../../../context/Authentication';
@@ -16,7 +16,6 @@ import {
   CTAButtons,
   CTAButtonContainer,
   CTAButton,
-  CTALink,
 } from '../../Layout/CTAButton';
 
 export const RequestLoginCode = ({ children, buttonText }) => {
@@ -64,12 +63,7 @@ export const RequestLoginCode = ({ children, buttonText }) => {
 };
 
 export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
-  const {
-    customUserData: userData,
-    userId,
-    tempEmail,
-    setTempEmail,
-  } = useContext(AuthContext);
+  const { userId, tempEmail, setTempEmail } = useContext(AuthContext);
 
   if (!userId && !tempEmail) {
     return (

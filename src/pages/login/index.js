@@ -37,10 +37,7 @@ const LoginPage = () => {
           <Section>
             <SectionInner>
               <RequestLoginCodeWithEmail>
-                <p>
-                  What's up dude, I heard you want to login. Please enter your
-                  email address.
-                </p>
+                <h3>Hey! Schön, dass du da bist. Hier geht's zum Login.</h3>
               </RequestLoginCodeWithEmail>
             </SectionInner>
           </Section>
