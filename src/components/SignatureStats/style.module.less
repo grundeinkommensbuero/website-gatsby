@@ -3,6 +3,14 @@
 .statisticsCountItem {
   padding-right: 4rem;
   max-width: 20rem;
+
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 2rem;
+  }
 }
 
 .statisticsCount {
