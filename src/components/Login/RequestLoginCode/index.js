@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 
 import AuthContext from '../../../context/Authentication';
