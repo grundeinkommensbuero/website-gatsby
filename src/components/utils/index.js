@@ -92,6 +92,7 @@ export function formatDateTime(date) {
 }
 
 export function formatDate(date) {
+  console.log({ date });
   const options = {
     year: 'numeric',
     month: 'long',
