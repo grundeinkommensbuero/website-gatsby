@@ -23,7 +23,12 @@ const LoginPage = () => {
   }, []);
 
   // Get next page from query params
-  const urlParams = querystring.parse(window.location.search);
+  const urlParams =
+    // Check for window to make sure that build works
+    typeof window !== `undefined`
+      ? // If window, parse params
+        querystring.parse(window.location.search)
+      : undefined;
 
   // If user is authenticated, navigate to home page or the specified next page
   if (isAuthenticated === true)
