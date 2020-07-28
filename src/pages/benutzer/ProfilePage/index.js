@@ -11,6 +11,7 @@ import AvatarImage from '../../../components/AvatarImage';
 import s from './style.module.less';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import SignatureStats from '../../../components/SignatureStats';
+import { formatDate } from '../../../components/utils';
 
 // We need the following mappings for the link to the self scan page
 const SELF_SCAN_SLUGS = {
@@ -63,10 +64,18 @@ const ProfilePage = ({ id: slugId }) => {
                 // srcOverwrite={userData.profilePictures['500']}
                 className={s.avatar}
               />
-              <h1 className={s.username}>{userData.username}</h1>
+              <h1
+                className={cN({
+                  [s.username]: userData.username,
+                  [s.email]: !userData.username,
+                })}
+              >
+                {userData.username || userData.email}
+              </h1>
               {/* Show profile edit button if own page */}
               <div className={cN(s.profilePageSection, s.details)}>
-                <h2>Details</h2>
+                Dabei seit dem{' '}
+                {userData.createdAt && formatDate(new Date(userData.createdAt))}
               </div>
               <div className={s.profilePageSection}>
                 <h2>Frage ans Grundeinkommen</h2>
