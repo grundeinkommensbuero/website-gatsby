@@ -64,7 +64,7 @@ export const EnterLoginCode = ({ children }) => {
           </InlineButton>
         </p>
 
-        <p>Falls du hast deine Email-Adresse falsch eingegeben...</p>
+        <p>Oder hast du deine Email-Adresse falsch eingegeben?</p>
 
         <CTAButtonContainer>
           <CTAButton
