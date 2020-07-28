@@ -133,7 +133,6 @@ const updateCustomUserData = async ({
     const result = isAuthenticated
       ? await getCurrentUser(token)
       : await getUser(userId);
-
     if (
       // If error finding user data
       result.state !== 'success' ||
