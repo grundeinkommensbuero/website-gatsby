@@ -64,28 +64,18 @@
   }
 }
 
-// Questions
-.questionsList {
-  display: grid;
-  grid-gap: 1em;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-}
-.questionContent {
-  padding: 0.5rem;
-  hyphens: auto;
-}
-
-.signatureStats {
-  display: flex;
-  justify-content: left;
-
-  @media (max-width: @breakPointS) {
-    flex-direction: column;
+.signaturesSection {
+  .link {
+    margin-top: 2rem;
+    font-size: @fontSizeM;
   }
-}
 
-.link {
-  margin-top: 2rem;
-  font-size: @fontSizeM;
+  .signatureStats {
+    display: flex;
+    justify-content: left;
+
+    @media (max-width: @breakPointS) {
+      flex-direction: column;
+    }
+  }
 }

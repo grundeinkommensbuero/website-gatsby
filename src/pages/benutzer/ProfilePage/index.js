@@ -74,7 +74,7 @@ const ProfilePage = ({ id: slugId }) => {
                 Dabei seit dem{' '}
                 {userData.createdAt && formatDate(new Date(userData.createdAt))}
               </div>
-              <div className={s.profilePageSection}>
+              <div className={cN([s.profilePageSection, s.signaturesSection])}>
                 <h2>Eingegangene Unterschriften</h2>
                 {signatureCountOfUser && (
                   <>
