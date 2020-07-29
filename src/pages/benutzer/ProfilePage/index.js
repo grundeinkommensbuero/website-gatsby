@@ -60,10 +60,7 @@ const ProfilePage = ({ id: slugId }) => {
         {!isLoading && (
           <Section>
             <div className={s.profilePageGrid}>
-              <AvatarImage
-                // srcOverwrite={userData.profilePictures['500']}
-                className={s.avatar}
-              />
+              <AvatarImage user={userData} className={s.avatar} />
               <h1
                 className={cN({
                   [s.username]: userData.username,
@@ -76,10 +73,6 @@ const ProfilePage = ({ id: slugId }) => {
               <div className={cN(s.profilePageSection, s.details)}>
                 Dabei seit dem{' '}
                 {userData.createdAt && formatDate(new Date(userData.createdAt))}
-              </div>
-              <div className={s.profilePageSection}>
-                <h2>Frage ans Grundeinkommen</h2>
-                <div className={s.questionsList}></div>
               </div>
               <div className={s.profilePageSection}>
                 <h2>Eingegangene Unterschriften</h2>
