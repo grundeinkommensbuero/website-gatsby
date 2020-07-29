@@ -100,6 +100,13 @@ const ProfilePage = ({ id: slugId }) => {
                   </>
                 )}
               </div>
+              <div className={cN(s.profilePageSection, s.supportText)}>
+                In case you want to change your user data, or delete your
+                account, please contact us at:{' '}
+                <a href="mailto:support@expedition-grundeinkommen.de">
+                  support@expedition-grundeinkommen.de
+                </a>
+              </div>
             </div>
           </Section>
         )}
