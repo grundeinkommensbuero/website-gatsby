@@ -19,7 +19,7 @@ export default ({
   illustration = 'POINT_LEFT',
 }) => {
   const [signUpState, signUp, setSignupState] = useSignUp();
-  const [updateUserState, updateUser] = useUpdateUser();
+  const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
