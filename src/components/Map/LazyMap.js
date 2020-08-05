@@ -22,6 +22,7 @@ const BOUNDS = {
   hamburg: [9.5, 53.35, 10.5, 53.8],
   brandenburg: [11, 51.3, 15, 53.6],
   berlin: [13.05, 52.2, 13.8, 52.8],
+  bremen: [7.4, 51.9, 9.9, 54.7],
 };
 
 export default ({ state }) => {
