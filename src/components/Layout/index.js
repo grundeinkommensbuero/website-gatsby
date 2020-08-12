@@ -145,6 +145,7 @@ function Template({ children, sections }) {
           name="description"
           content={globalStuff.siteDescription.siteDescription}
         />
+        <meta property="og:title" content={globalStuff.siteTitle} />
         <meta
           property="og:description"
           content={globalStuff.siteDescription.siteDescription}
