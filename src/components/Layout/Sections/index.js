@@ -58,6 +58,7 @@ export function ContentfulSection({ section }) {
     callToActionReference,
     twitterFeed,
     map,
+    maps,
     backgroundIllustration,
     socialMediaButtons,
     blogTeaser,
@@ -81,6 +82,8 @@ export function ContentfulSection({ section }) {
       ></SectionHeader>
     );
   }
+
+  console.log(maps);
 
   return (
     <Section
