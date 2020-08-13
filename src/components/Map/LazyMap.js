@@ -50,6 +50,7 @@ export default ({ state }) => {
       }
     }
   `);
+
   const [hasWebGl, setHasWebGL] = useState(null);
 
   const container = useRef(null);
@@ -81,6 +82,16 @@ export default ({ state }) => {
         style: 'mapbox://styles/mapbox/streets-v9',
         maxBounds: BOUNDS[state],
       }).addControl(new mapboxgl.NavigationControl(), 'top-left');
+
+      // If bremen, create second map
+      // const secondMap =
+      //   state === 'bremen'
+      //     ? new mapboxgl.Map({
+      //         container: container.current,
+      //         style: 'mapbox://styles/mapbox/streets-v9',
+      //         maxBounds: BOUNDS[state],
+      //       }).addControl(new mapboxgl.NavigationControl(), 'top-left')
+      //     : undefined;
 
       collectSignaturesLocationsFiltered.forEach(({ node: location }) => {
         if (location.location) {

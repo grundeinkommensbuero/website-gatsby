@@ -79,6 +79,13 @@ function Template({ children, sections }) {
                 json
               }
               map
+              maps {
+                name
+                state
+                config {
+                  bounds
+                }
+              }
               callToActionLink
               callToActionText
               bodyTextSizeHuge
