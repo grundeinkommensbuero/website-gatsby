@@ -66,6 +66,13 @@ export const pageQuery = graphql`
               json
             }
             map
+            maps {
+              name
+              state
+              config {
+                bounds
+              }
+            }
             callToActionLink
             callToActionText
             bodyTextSizeHuge
