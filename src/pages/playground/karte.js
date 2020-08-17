@@ -18,10 +18,13 @@ export default () => {
         <Section title="karte">
           <SectionInner wide={true}>
             <Map
-              config={{
+              mapConfig={{
                 state: 'berlin',
                 config: {
-                  bounds: [1, 2, 3, 4],
+                  bounds: [
+                    [3, 47.217923],
+                    [17.030017, 55.437655],
+                  ],
                 },
               }}
             />
