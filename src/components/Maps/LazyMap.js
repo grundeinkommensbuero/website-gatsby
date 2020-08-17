@@ -16,6 +16,11 @@ if (!process.env.STATIC) {
     'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
 }
 
+const DEFAULT_BOUNDS = [
+  [3, 47.217923],
+  [17.030017, 55.437655],
+];
+
 export default ({ mapConfig }) => {
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
@@ -65,14 +70,13 @@ export default ({ mapConfig }) => {
           return +new Date(location.date) > +yesterday;
         })
         .filter(({ node: location }) => {
-          console.log(location.state, mapConfig.state);
           return location.state === mapConfig.state;
         });
 
       map = new mapboxgl.Map({
         container: container.current,
         style: 'mapbox://styles/mapbox/streets-v9',
-        maxBounds: mapConfig.config.bounds,
+        maxBounds: mapConfig.config?.bounds || DEFAULT_BOUNDS,
       }).addControl(new mapboxgl.NavigationControl(), 'top-left');
 
       collectSignaturesLocationsFiltered.forEach(({ node: location }) => {
