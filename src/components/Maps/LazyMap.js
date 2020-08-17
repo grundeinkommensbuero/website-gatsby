@@ -17,7 +17,6 @@ if (!process.env.STATIC) {
 }
 
 export default ({ mapConfig }) => {
-  console.log(mapConfig);
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
   } = useStaticQuery(graphql`
