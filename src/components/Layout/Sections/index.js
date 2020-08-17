@@ -2,7 +2,7 @@ import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
-import Map from '../../Map';
+import Map, { Maps } from '../../Map';
 import SignUp from '../../Forms/SignUp';
 import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
@@ -57,7 +57,6 @@ export function ContentfulSection({ section }) {
     signaturesId,
     callToActionReference,
     twitterFeed,
-    map,
     maps,
     backgroundIllustration,
     socialMediaButtons,
@@ -82,8 +81,6 @@ export function ContentfulSection({ section }) {
       ></SectionHeader>
     );
   }
-
-  console.log(maps);
 
   return (
     <Section
@@ -128,7 +125,7 @@ export function ContentfulSection({ section }) {
       {campainVisualisations && (
         <CampaignVisualisations visualisations={campainVisualisations} />
       )}
-      {map && <Map state={map} />}
+      {maps && <Maps config={maps} />}
       {signUpForm && (
         <SectionInner>
           <SignUp />
