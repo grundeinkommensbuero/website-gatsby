@@ -4,7 +4,7 @@ import { SectionInner } from '../Layout/Sections';
 
 const LoadableMap = React.lazy(() => import('./LazyMap'));
 
-const Map = ({ config }) => {
+export default ({ config }) => {
   const isSSR = typeof window === 'undefined';
   return (
     <>
@@ -24,16 +24,3 @@ const Fallback = () => (
     <div className={s.container}>Lade...</div>
   </SectionInner>
 );
-
-const Maps = ({ config }) => {
-  return (
-    <>
-      {config.map(map => {
-        return <Map config={map} />;
-      })}
-    </>
-  );
-};
-
-export default Map;
-export { Maps };
