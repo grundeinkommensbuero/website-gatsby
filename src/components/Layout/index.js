@@ -78,7 +78,6 @@ function Template({ children, sections }) {
               body {
                 json
               }
-              map
               callToActionLink
               callToActionText
               bodyTextSizeHuge

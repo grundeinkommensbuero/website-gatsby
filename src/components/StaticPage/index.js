@@ -65,7 +65,6 @@ export const pageQuery = graphql`
             body {
               json
             }
-            map
             maps {
               name
               state
