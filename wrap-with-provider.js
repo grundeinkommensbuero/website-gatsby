@@ -1,9 +1,8 @@
 import React from 'react';
 import CONFIG from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
+import SurveySaver from './src/components/SurveySaver';
 import { OverlayProvider } from './src/context/Overlay';
-import querystring from 'query-string';
-import { saveSurveyAnswer } from './src/hooks/Api/Surveys';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
@@ -26,18 +25,11 @@ export default ({ element }) => {
     console.log('no userPoolWebClientId provided');
   }
 
-  if (typeof window !== `undefined`) {
-    // Check if there are url params from a survey
-    const urlParams = querystring.parse(window.location.search);
-
-    if (urlParams.surveyCode) {
-      saveSurveyAnswer(urlParams);
-    }
-  }
-
   return (
     <AuthProvider>
-      <OverlayProvider>{element}</OverlayProvider>
+      <SurveySaver>
+        <OverlayProvider>{element}</OverlayProvider>
+      </SurveySaver>
     </AuthProvider>
   );
 };

@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import Map from '../../components/Map';
+import Map from '../../components/Maps/Map';
 
 export default () => {
   return (
@@ -17,7 +17,17 @@ export default () => {
       <SectionWrapper>
         <Section title="karte">
           <SectionInner wide={true}>
-            <Map state="schleswig-holstein" />
+            <Map
+              mapConfig={{
+                state: 'berlin',
+                config: {
+                  bounds: [
+                    [3, 47.217923],
+                    [17.030017, 55.437655],
+                  ],
+                },
+              }}
+            />
           </SectionInner>
         </Section>
       </SectionWrapper>

@@ -75,7 +75,7 @@ export default ({ signaturesId }) => {
     );
   }
 
-  if (state === 'creating') {
+  if (state === 'creating' || signUpState === 'loading') {
     return (
       <FinallyMessage state="progress">
         Liste wird generiert, bitte einen Moment Geduld...

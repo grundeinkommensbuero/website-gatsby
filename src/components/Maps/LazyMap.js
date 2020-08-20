@@ -16,15 +16,12 @@ if (!process.env.STATIC) {
     'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
 }
 
-// [w, s, e, n]
-const BOUNDS = {
-  'schleswig-holstein': [8.226, 53.4095, 11.6428, 54.9823],
-  hamburg: [9.5, 53.35, 10.5, 53.8],
-  brandenburg: [11, 51.3, 15, 53.6],
-  berlin: [13.05, 52.2, 13.8, 52.8],
-};
+const DEFAULT_BOUNDS = [
+  [3, 47.217923],
+  [17.030017, 55.437655],
+];
 
-export default ({ state }) => {
+export default ({ mapConfig }) => {
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
   } = useStaticQuery(graphql`
@@ -49,6 +46,7 @@ export default ({ state }) => {
       }
     }
   `);
+
   const [hasWebGl, setHasWebGL] = useState(null);
 
   const container = useRef(null);
@@ -72,13 +70,13 @@ export default ({ state }) => {
           return +new Date(location.date) > +yesterday;
         })
         .filter(({ node: location }) => {
-          return location.state === state;
+          return location.state === mapConfig.state;
         });
 
       map = new mapboxgl.Map({
         container: container.current,
         style: 'mapbox://styles/mapbox/streets-v9',
-        maxBounds: BOUNDS[state],
+        maxBounds: mapConfig.config?.bounds || DEFAULT_BOUNDS,
       }).addControl(new mapboxgl.NavigationControl(), 'top-left');
 
       collectSignaturesLocationsFiltered.forEach(({ node: location }) => {

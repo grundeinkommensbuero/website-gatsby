@@ -78,7 +78,6 @@ function Template({ children, sections }) {
               body {
                 json
               }
-              map
               callToActionLink
               callToActionText
               bodyTextSizeHuge
@@ -143,6 +142,11 @@ function Template({ children, sections }) {
       >
         <meta
           name="description"
+          content={globalStuff.siteDescription.siteDescription}
+        />
+        <meta property="og:title" content={globalStuff.siteTitle} />
+        <meta
+          property="og:description"
           content={globalStuff.siteDescription.siteDescription}
         />
         <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
