@@ -7,6 +7,7 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import { useSignUp } from '../../../hooks/Authentication';
+import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
@@ -18,6 +19,7 @@ export default ({
   illustration = 'POINT_LEFT',
 }) => {
   const [signUpState, signUp, setSignupState] = useSignUp();
+  const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
@@ -33,13 +35,16 @@ export default ({
   useEffect(() => {
     // If user signs in from form
     if (isAuthenticated && hasSubmitted) {
+      updateUser({
+        updatedOnXbge: true,
+      });
       setSignupState('signedIn');
     }
     // If user signs out after signing in
     if (!isAuthenticated && signUpState === 'signedIn') {
       setSignupState(undefined);
     }
-  }, [isAuthenticated, hasSubmitted, signUp]);
+  }, [isAuthenticated, hasSubmitted]);
 
   if (signUpState && signUpState !== 'userExists') {
     return (

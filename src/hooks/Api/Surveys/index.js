@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import AuthContext from '../../../context/Authentication';
 import CONFIG from '../../../../aws-config';
 
 /*
@@ -10,20 +11,23 @@ import CONFIG from '../../../../aws-config';
 */
 
 export const useSaveSurveyAnswer = () => {
+  const { userId } = useContext(AuthContext);
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our saveSurveyAnswer function, so we can set the state from there
   const [state, setState] = useState(null);
   return [
     state,
-    data => {
+    (surveyCode, answer) => {
       setState('saving');
-      saveSurveyAnswer(data).then(result => setState(result.state));
+      saveSurveyAnswer(surveyCode, answer, userId).then(result =>
+        setState(result.state)
+      );
     },
   ];
 };
 
 // Function which calls the aws api to save the survey answer
-export const saveSurveyAnswer = async ({ userId, surveyCode, answer }) => {
+export const saveSurveyAnswer = async (surveyCode, answer, userId) => {
   try {
     if (userId && surveyCode && answer) {
       const data = { surveyCode, answer };
