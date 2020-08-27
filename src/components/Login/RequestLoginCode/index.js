@@ -116,8 +116,8 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
     <EnterLoginCode>
       <p>
         {' '}
-        Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-        geschickt. Bitte gib diesen ein:
+        Um dich zu identifizieren, haben wir dir einen Code per E-Mail (
+        {tempEmail}) geschickt. Bitte gib diesen ein:
       </p>
     </EnterLoginCode>
   );

@@ -115,6 +115,14 @@ export const EnterLoginCode = ({ children }) => {
 
                 <CTAButtonContainer>
                   <CTAButton type="submit">Abschicken</CTAButton>
+                  <CTAButton
+                    type="button"
+                    onClick={() => {
+                      startSignIn();
+                    }}
+                  >
+                    Code erneut senden
+                  </CTAButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
