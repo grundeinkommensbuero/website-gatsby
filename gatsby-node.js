@@ -89,9 +89,9 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions;
 
-  if (page.path.match(/^\/benutzer/)) {
-    page.matchPath = '/benutzer/*';
-    page.component = path.resolve('src/pages/benutzer/index.js');
+  if (page.path.match(/^\/mensch/)) {
+    page.matchPath = '/mensch/*';
+    page.component = path.resolve('src/pages/mensch/index.js');
     createPage(page);
   }
 };

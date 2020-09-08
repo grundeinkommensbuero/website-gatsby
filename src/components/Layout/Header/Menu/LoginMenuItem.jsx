@@ -18,7 +18,7 @@ const LoginTitle = ({ userData, userId }) => {
     <div className={s.loginParentTitle}>
       <AvatarImage className={s.loginParentAvatar} user={userData} />
       <span className={s.loginParentTitleText}>
-        {userData.username || userData.email}
+        {userData.username || 'Profil'}
       </span>
     </div>
   );
@@ -36,9 +36,9 @@ const LoginMenuItem = () => {
   // Where to send user when clicking "to profile" link
   const toProfileLinkLocation = isAuthenticated
     ? // If authenticated send them to profile page.
-      `benutzer/${userId}`
+      `mensch/${userId}`
     : // If not, send them to login page
-      `login/?nextPage=benutzer%2F${userId}`;
+      `login/?nextPage=mensch%2F${userId}`;
 
   return (
     <MenuItemParent title={<LoginTitle userData={userData} userId={userId} />}>
