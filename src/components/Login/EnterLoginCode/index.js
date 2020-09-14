@@ -13,8 +13,12 @@ import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 
 export const EnterLoginCode = ({ children }) => {
-  const { setTempEmail } = useContext(AuthContext);
-  const [answerChallengeState, setCode] = useAnswerChallenge();
+  const { tempEmail, setTempEmail } = useContext(AuthContext);
+  const [
+    answerChallengeState,
+    setCode,
+    setAnswerChallengeState,
+  ] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
   useEffect(() => {
@@ -81,12 +85,17 @@ export const EnterLoginCode = ({ children }) => {
 
   return (
     <FinallyMessage state="error">
-      {children ? (
+      {answerChallengeState === 'wrongCode' ? (
+        <p>
+          Der eingegeben Code ist falsch oder bereits abgelaufen. Bitte
+          überprüfe die Email erneut oder fordere einen neuen Code an.
+        </p>
+      ) : children ? (
         children
       ) : (
         <p>
-          Du bist schon bei uns im System. Um dich zu identifizieren, haben wir
-          dir einen Code per E-Mail geschickt. Bitte gib diesen ein:
+          Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+          {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen ein:
         </p>
       )}
       <Form
@@ -118,6 +127,7 @@ export const EnterLoginCode = ({ children }) => {
                   <CTAButton
                     type="button"
                     onClick={() => {
+                      setAnswerChallengeState(undefined);
                       startSignIn();
                     }}
                   >
