@@ -23,7 +23,9 @@ const SELF_SCAN_SLUGS = {
 };
 
 const ProfilePage = ({ id: slugId }) => {
-  const { userId, customUserData: userData } = useContext(AuthContext);
+  const { userId, isAuthenticated, customUserData: userData } = useContext(
+    AuthContext
+  );
   const [
     signatureCountOfUser,
     getSignatureCountOfUser,
@@ -33,9 +35,8 @@ const ProfilePage = ({ id: slugId }) => {
 
   // Get user data on page load
   useEffect(() => {
-    // If user is viewing other user's page
-    //if (!isAuthenticated || userId !== slugId) {
-    if (false || userId !== slugId) {
+    // If user is viewing other user's page or isn't authenticated
+    if (!isAuthenticated || userId !== slugId) {
       // Navigate to home page
       navigate('/', { replace: true });
     } else {
