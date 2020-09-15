@@ -112,13 +112,5 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
   }
 
   // If there is a temporary email, show EnterLoginCode
-  return (
-    <EnterLoginCode>
-      <p>
-        {' '}
-        Um dich zu identifizieren, haben wir dir einen Code per E-Mail (
-        {tempEmail}) geschickt. Bitte gib diesen ein:
-      </p>
-    </EnterLoginCode>
-  );
+  return <EnterLoginCode />;
 };
