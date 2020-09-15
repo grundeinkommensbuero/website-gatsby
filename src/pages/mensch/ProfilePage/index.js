@@ -23,9 +23,7 @@ const SELF_SCAN_SLUGS = {
 };
 
 const ProfilePage = ({ id: slugId }) => {
-  const { userId, isAuthenticated, customUserData: userData } = useContext(
-    AuthContext
-  );
+  const { userId, customUserData: userData } = useContext(AuthContext);
   const [
     signatureCountOfUser,
     getSignatureCountOfUser,
@@ -101,11 +99,12 @@ const ProfilePage = ({ id: slugId }) => {
                 )}
               </div>
               <div className={cN(s.profilePageSection, s.supportText)}>
-                In case you want to change your user data, or delete your
-                account, please contact us at:{' '}
+                Falls du deine persönlichen Daten ändern oder deinen Account
+                löschen möchtest, schick eine E-Mail an{' '}
                 <a href="mailto:support@expedition-grundeinkommen.de">
                   support@expedition-grundeinkommen.de
                 </a>
+                .
               </div>
             </div>
           </Section>
