@@ -86,7 +86,7 @@ const ProfilePage = ({ id: slugId }) => {
 
                     <div className={s.link}>
                       <a
-                        href={`https://expedition-grundeinkommen.de/${
+                        href={`/${
                           signatureCountOfUser.mostRecentCampaign
                             ? SELF_SCAN_SLUGS[
                                 signatureCountOfUser.mostRecentCampaign.state
