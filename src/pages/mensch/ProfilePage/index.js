@@ -16,6 +16,7 @@ import { formatDate } from '../../../components/utils';
 import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
 import { LinkButtonLocal } from '../../../components/Forms/Button';
 import { FinallyMessage } from '../../../components/Forms/FinallyMessage';
+import { EnterLoginCode } from '../../../components/Login/EnterLoginCode';
 
 // We need the following mappings for the link to the self scan page
 const SELF_SCAN_SLUGS = {
@@ -38,7 +39,7 @@ const ProfilePage = ({ id: slugId }) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  // Get user data on page load
+  // Get user data on page load and handle redirects
   useEffect(() => {
     console.log('gets called', { isAuthenticated }, { userId }, { slugId });
     // If user isn't authenticated
@@ -52,6 +53,8 @@ const ProfilePage = ({ id: slugId }) => {
       // to the identified state.
       bounceToIdentifiedState();
 
+      setIsLoading(false);
+    } else if (isAuthenticated === false && userId === slugId) {
       setIsLoading(false);
     } else {
       getSignatureCountOfUser({ userId });
@@ -125,8 +128,8 @@ const ProfilePage = ({ id: slugId }) => {
           </Section>
         )}
 
-        {/* If not authenticated show option to go to own user page */}
-        {!isLoading && !isAuthenticated && (
+        {/* If not authenticated and trying to access different profile show option to go to own user page */}
+        {!isLoading && !isAuthenticated && slugId !== userId && (
           <Section>
             <SectionInner>
               <FinallyMessage>
@@ -138,6 +141,22 @@ const ProfilePage = ({ id: slugId }) => {
                   Zu meinem Profil{' '}
                 </LinkButtonLocal>
               </FinallyMessage>
+            </SectionInner>
+          </Section>
+        )}
+
+        {/* If not authenticated show login code */}
+        {!isLoading && !isAuthenticated && slugId === userId && (
+          <Section>
+            <SectionInner>
+              <EnterLoginCode>
+                <p>
+                  {' '}
+                  Du bist mit der E-Mail-Adresse {userData.email} eingeloggt. Um
+                  dich zu identifizieren, haben wir dir einen Code per E-Mail
+                  geschickt. Bitte gib diesen ein, um dein Profil zu sehen:
+                </p>
+              </EnterLoginCode>
             </SectionInner>
           </Section>
         )}
