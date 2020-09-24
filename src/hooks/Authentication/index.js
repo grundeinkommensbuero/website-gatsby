@@ -40,6 +40,16 @@ export const useSignOut = () => {
   return () => signOut(context);
 };
 
+// This hook signs the user out of amplify session,
+// while keeping the user in the identified state (keeping user id in context).
+// Same as sign out hook we only return the function.
+export const useBounceToIdentifiedState = () => {
+  //get global context
+  const context = useContext(AuthContext);
+
+  return () => bounceToIdentifiedState(context);
+};
+
 // Amplifys Auth class is used to sign up user
 const signUp = async (data, setState, { setUserId, setTempEmail }) => {
   try {
@@ -144,5 +154,28 @@ export const signOut = async ({
     return;
   } catch (error) {
     console.log('Error while signing out', error);
+  }
+};
+
+// This function signs the user out of amplify session,
+// while keeping the user in the identified state (keeping user id in context)
+const bounceToIdentifiedState = async ({
+  setCognitoUser,
+  setToken,
+  setIsAuthenticated,
+}) => {
+  try {
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
+    await Auth.signOut();
+
+    // Update user state
+    setCognitoUser(null);
+    setToken(undefined);
+    setIsAuthenticated(false);
+  } catch (error) {
+    console.log('Error while bouncing user to identified state', error);
   }
 };

@@ -1,17 +1,21 @@
 import React, { useState, useContext, useEffect } from 'react';
 import cN from 'classnames';
-import { navigate } from '@reach/router';
-
 import AuthContext from '../../../context/Authentication';
-
 import Layout from '../../../components/Layout';
-import { Section, SectionWrapper } from '../../../components/Layout/Sections';
+import {
+  Section,
+  SectionInner,
+  SectionWrapper,
+} from '../../../components/Layout/Sections';
 import AvatarImage from '../../../components/AvatarImage';
 
 import s from './style.module.less';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import SignatureStats from '../../../components/SignatureStats';
 import { formatDate } from '../../../components/utils';
+import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
+import { LinkButtonLocal } from '../../../components/Forms/Button';
+import { FinallyMessage } from '../../../components/Forms/FinallyMessage';
 
 // We need the following mappings for the link to the self scan page
 const SELF_SCAN_SLUGS = {
@@ -30,21 +34,31 @@ const ProfilePage = ({ id: slugId }) => {
     signatureCountOfUser,
     getSignatureCountOfUser,
   ] = useSignatureCountOfUser();
+  const bounceToIdentifiedState = useBounceToIdentifiedState();
 
   const [isLoading, setIsLoading] = useState(true);
 
   // Get user data on page load
   useEffect(() => {
-    // If user is viewing other user's page or isn't authenticated
-    if (!isAuthenticated || userId !== slugId) {
+    console.log('gets called', { isAuthenticated }, { userId }, { slugId });
+    // If user isn't authenticated
+    if (isAuthenticated === false) {
       // Navigate to home page
-      navigate('/', { replace: true });
+      // navigate('/', { replace: true });
+    } else if (isAuthenticated && userId !== slugId) {
+      console.log('about to bounce');
+      // We want to tell the user that they are trying to view the page
+      // of a different user. Furthermore we want to bounce the user back
+      // to the identified state.
+      bounceToIdentifiedState();
+
+      setIsLoading(false);
     } else {
       getSignatureCountOfUser({ userId });
 
       setIsLoading(false);
     }
-  }, [userId]);
+  }, [userId, isAuthenticated]);
 
   return (
     <Layout>
@@ -56,7 +70,7 @@ const ProfilePage = ({ id: slugId }) => {
             </div>
           </Section>
         )}
-        {!isLoading && (
+        {!isLoading && isAuthenticated && (
           <Section>
             <div className={s.profilePageGrid}>
               <AvatarImage user={userData} className={s.avatar} />
@@ -108,6 +122,23 @@ const ProfilePage = ({ id: slugId }) => {
                 .
               </div>
             </div>
+          </Section>
+        )}
+
+        {/* If not authenticated show option to go to own user page */}
+        {!isLoading && !isAuthenticated && (
+          <Section>
+            <SectionInner>
+              <FinallyMessage>
+                <p>
+                  Du bist mit der E-Mail-Adresse {userData.email} eingeloggt und
+                  versuchst eine andere Profilseite aufzurufen.
+                </p>
+                <LinkButtonLocal to={`/login/?nextPage=mensch%2F${userId}`}>
+                  Zu meinem Profil{' '}
+                </LinkButtonLocal>
+              </FinallyMessage>
+            </SectionInner>
           </Section>
         )}
       </SectionWrapper>
