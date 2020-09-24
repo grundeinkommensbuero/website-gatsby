@@ -128,12 +128,25 @@ const ProfilePage = ({ id: slugId }) => {
           <Section>
             <SectionInner>
               <FinallyMessage>
-                <p>
-                  Du bist mit der E-Mail-Adresse {userData.email} eingeloggt und
-                  versuchst eine andere Profilseite aufzurufen.
-                </p>
-                <LinkButtonLocal to={`/login/?nextPage=mensch%2F${userId}`}>
-                  Zu meinem Profil{' '}
+                {userId && (
+                  <p>
+                    Du bist mit der E-Mail-Adresse {userData.email} eingeloggt
+                    und versuchst eine andere Profilseite aufzurufen.
+                  </p>
+                )}
+
+                {!userId && (
+                  <p>
+                    Du versuchst auf ein Profil zuzugreifen. Dafür musst dich
+                    zuerst einloggen.
+                  </p>
+                )}
+
+                {/* If user id is undefined we don't want to redirect the next page to be the profile */}
+                <LinkButtonLocal
+                  to={userId ? `/login/?nextPage=mensch%2F${userId}` : '/login'}
+                >
+                  {userId ? 'Zu meinem Profil' : 'Zum Login'}
                 </LinkButtonLocal>
               </FinallyMessage>
             </SectionInner>
