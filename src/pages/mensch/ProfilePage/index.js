@@ -41,23 +41,18 @@ const ProfilePage = ({ id: slugId }) => {
 
   // Get user data on page load and handle redirects
   useEffect(() => {
-    console.log('gets called', { isAuthenticated }, { userId }, { slugId });
     // If user isn't authenticated
     if (isAuthenticated === false) {
-      // Navigate to home page
-      // navigate('/', { replace: true });
-    } else if (isAuthenticated && userId !== slugId) {
-      console.log('about to bounce');
-      // We want to tell the user that they are trying to view the page
-      // of a different user. Furthermore we want to bounce the user back
-      // to the identified state.
-      bounceToIdentifiedState();
-
       setIsLoading(false);
-    } else if (isAuthenticated === false && userId === slugId) {
-      setIsLoading(false);
-    } else {
-      getSignatureCountOfUser({ userId });
+    } else if (isAuthenticated) {
+      if (userId !== slugId) {
+        // We want to tell the user that they are trying to view the page
+        // of a different user. Furthermore we want to bounce the user back
+        // to the identified state.
+        bounceToIdentifiedState();
+      } else {
+        getSignatureCountOfUser({ userId });
+      }
 
       setIsLoading(false);
     }
@@ -129,7 +124,7 @@ const ProfilePage = ({ id: slugId }) => {
         )}
 
         {/* If not authenticated and trying to access different profile show option to go to own user page */}
-        {!isLoading && !isAuthenticated && slugId !== userId && (
+        {!isLoading && slugId !== userId && (
           <Section>
             <SectionInner>
               <FinallyMessage>
