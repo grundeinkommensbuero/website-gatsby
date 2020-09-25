@@ -129,6 +129,7 @@ export const signOut = async ({
   setIsAuthenticated,
   setToken,
   setTempEmail,
+  setPreviousAction,
 }) => {
   try {
     const { default: Auth } = await import(
@@ -151,6 +152,7 @@ export const signOut = async ({
     setToken(undefined);
     setIsAuthenticated(false);
     setTempEmail(undefined);
+    setPreviousAction('signOut');
     return;
   } catch (error) {
     console.log('Error while signing out', error);

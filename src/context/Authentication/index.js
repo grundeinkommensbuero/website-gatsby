@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
+  const [previousAction, setPreviousAction] = useState();
   const [userId, setUserId] = useLocalStorageUser();
 
   const signUserOut = async () =>
@@ -113,6 +114,8 @@ const AuthProvider = ({ children }) => {
         tempEmail,
         setTempEmail,
         customUserData,
+        previousAction,
+        setPreviousAction,
       }}
     >
       {children}

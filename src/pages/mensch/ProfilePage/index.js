@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import cN from 'classnames';
+import { navigate } from '@reach/router';
 import AuthContext from '../../../context/Authentication';
 import Layout from '../../../components/Layout';
 import {
@@ -28,13 +29,19 @@ const SELF_SCAN_SLUGS = {
 };
 
 const ProfilePage = ({ id: slugId }) => {
-  const { userId, isAuthenticated, customUserData: userData } = useContext(
-    AuthContext
-  );
+  const {
+    userId,
+    isAuthenticated,
+    customUserData: userData,
+    previousAction,
+    setPreviousAction,
+  } = useContext(AuthContext);
+
   const [
     signatureCountOfUser,
     getSignatureCountOfUser,
   ] = useSignatureCountOfUser();
+
   const bounceToIdentifiedState = useBounceToIdentifiedState();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +64,14 @@ const ProfilePage = ({ id: slugId }) => {
       setIsLoading(false);
     }
   }, [userId, isAuthenticated]);
+
+  // If the user signed out (e.g. through the menu, we want to navigate to homepage)
+  useEffect(() => {
+    if (previousAction === 'signOut') {
+      setPreviousAction(undefined);
+      navigate('/');
+    }
+  }, previousAction);
 
   return (
     <Layout>
