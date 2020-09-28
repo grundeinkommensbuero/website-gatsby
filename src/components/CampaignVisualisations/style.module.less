@@ -154,6 +154,14 @@
         @w -@w 0 var(--bg-color), -@w -@w 0 var(--bg-color);
     }
   }
+
+  &.completed {
+    color: var(--bg-color);
+
+    &::before {
+      background: @blueBright;
+    }
+  }
 }
 
 .eyeCatcher {
