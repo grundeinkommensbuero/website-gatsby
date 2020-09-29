@@ -7,7 +7,11 @@ export const useAnswerChallenge = () => {
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, answer => answerCustomChallenge(answer, setState, context)];
+  return [
+    state,
+    answer => answerCustomChallenge(answer, setState, context),
+    setState,
+  ];
 };
 
 // Function to send login code to aws

@@ -2,6 +2,9 @@ import React from 'react';
 import { Router } from '@reach/router';
 import ProfilePage from './ProfilePage';
 
+/**
+ * Single Page Application for user profile pages.
+ */
 const App = () => {
   return (
     <>
