@@ -11,6 +11,7 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import s from './style.module.less';
 
 export const EnterLoginCode = ({ children }) => {
   const { tempEmail, setTempEmail } = useContext(AuthContext);
@@ -111,7 +112,7 @@ export const EnterLoginCode = ({ children }) => {
           return (
             <FormWrapper>
               <form onSubmit={handleSubmit}>
-                <FormSection>
+                <FormSection className={s.loginForm}>
                   <Field
                     name="code"
                     label="Geheimer Code"
@@ -122,9 +123,9 @@ export const EnterLoginCode = ({ children }) => {
                   ></Field>
                 </FormSection>
 
-                <CTAButtonContainer>
+                <CTAButtonContainer className={s.buttonContainer}>
                   <CTAButton type="submit">Abschicken</CTAButton>
-                  <CTAButton
+                  <InlineButton
                     type="button"
                     onClick={() => {
                       setAnswerChallengeState(undefined);
@@ -132,7 +133,7 @@ export const EnterLoginCode = ({ children }) => {
                     }}
                   >
                     Code erneut senden
-                  </CTAButton>
+                  </InlineButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
