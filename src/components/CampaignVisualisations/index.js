@@ -4,7 +4,7 @@ import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal, LinkButton } from '../Forms/Button';
-import { useSignatureCount } from '../../hooks/Api/Signatures/Get';
+import { useSignatureCount } from 'frontend-hooks';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
