@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
+import { navigate } from 'gatsby';
 
 import AuthContext from '../../../context/Authentication';
 import { useSignOut } from '../../../hooks/Authentication';
@@ -65,6 +66,11 @@ export const RequestLoginCode = ({ children, buttonText }) => {
 export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
   const { userId, tempEmail, setTempEmail } = useContext(AuthContext);
 
+  // Add event listener on url hash change
+  useEffect(() => {
+    window.addEventListener('hashchange', () => setTempEmail(undefined));
+  }, [setTempEmail]);
+
   if (!userId && !tempEmail) {
     return (
       <FinallyMessage type="success">
@@ -74,6 +80,12 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
         <Form
           onSubmit={e => {
             setTempEmail(e.email);
+
+            // We want to navigate to same url with hash, so we add
+            // a the current url to the browser history, so we go back
+            // to email form after user presses back button in login code form.
+            // If the hash was already #code we want to replace the current page in the stack.
+            navigate('#code', { replace: window.location.hash === '#code' });
           }}
           validate={e => {
             let errors = {};
