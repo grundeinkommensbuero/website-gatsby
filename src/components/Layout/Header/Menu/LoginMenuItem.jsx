@@ -36,7 +36,13 @@ const LoginMenuItem = () => {
   // should be the current page
   if (!userId)
     return (
-      <MenuItemLink slug={`login/?nextPage=${location.pathname.slice(1, -1)}`}>
+      <MenuItemLink
+        slug={`login${
+          location.pathname !== '/'
+            ? `/?nextPage=${location.pathname.slice(1, -1)}`
+            : ''
+        }`}
+      >
         Einloggen
       </MenuItemLink>
     );
