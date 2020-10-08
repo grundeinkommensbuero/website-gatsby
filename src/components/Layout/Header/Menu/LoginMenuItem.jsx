@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useLocation } from '@reach/router';
 
 import AuthContext from '../../../../context/Authentication';
 import { useSignOut } from '../../../../hooks/Authentication';
@@ -29,9 +30,16 @@ const LoginMenuItem = () => {
     AuthContext
   );
   const signOut = useSignOut();
+  const location = useLocation();
 
-  // If user is not identified, show "login" button
-  if (!userId) return <MenuItemLink slug={'login'}>Einloggen</MenuItemLink>;
+  // If user is not identified, show "login" button`, next page after login
+  // should be the current page
+  if (!userId)
+    return (
+      <MenuItemLink slug={`login/?nextPage=${location.pathname.slice(1, -1)}`}>
+        Einloggen
+      </MenuItemLink>
+    );
 
   // Where to send user when clicking "to profile" link
   const toProfileLinkLocation = isAuthenticated

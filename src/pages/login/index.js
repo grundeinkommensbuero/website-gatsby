@@ -1,5 +1,5 @@
 import Layout from '../../components/Layout';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import querystring from 'query-string';
 import { navigate } from '@reach/router';
 
@@ -14,6 +14,7 @@ import { RequestLoginCodeWithEmail } from '../../components/Login/RequestLoginCo
 
 const LoginPage = () => {
   const { isAuthenticated, setTempEmail } = useContext(AuthContext);
+  const [urlParams, setUrlParams] = useState();
 
   // Remove tempEmail when user navigates away
   useEffect(() => {
@@ -23,12 +24,16 @@ const LoginPage = () => {
   }, []);
 
   // Get next page from query params
-  const urlParams =
-    // Check for window to make sure that build works
-    typeof window !== `undefined`
-      ? // If window, parse params
-        querystring.parse(window.location.search)
-      : undefined;
+  useEffect(() => {
+    const params =
+      // Check for window to make sure that build works
+      typeof window !== `undefined`
+        ? // If window, parse params
+          querystring.parse(window.location.search)
+        : undefined;
+
+    setUrlParams(params);
+  }, []);
 
   // If user is authenticated, navigate to home page or the specified next page
   if (isAuthenticated === true)
