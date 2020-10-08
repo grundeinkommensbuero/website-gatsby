@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
-import AuthContext from '../../../../context/Authentication';
-import { useSignOut } from '../../../../hooks/Authentication';
+import { AuthContext } from 'context';
+import { useSignOut } from 'hooks';
 import AvatarImage from '../../../../components/AvatarImage';
 
 import s from './style.module.less';

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { InlineButton } from '../Forms/Button';
-import { useSignOut } from '../../hooks/Authentication';
-import AuthContext from '../../context/Authentication';
+import { useSignOut } from 'hooks';
+import { AuthContext } from 'context';
 
 // The component can optionally take in a username, which will be shown
 // If not, the default will be to get the email from context

@@ -4,12 +4,12 @@ import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal, LinkButton } from '../Forms/Button';
-import { useSignatureCount } from 'frontend-hooks';
+import { useSignatureCount } from 'hooks';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 import { Tooltip } from '../Tooltip';
 import VisualCounter from '../VisualCounter';
-import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
+import { useGetCrowdfundingDirectly } from 'hooks';
 import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 
 export default ({ visualisations }) => {

@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useUploadImage } from '../../hooks/images';
+import { useUploadImage } from 'hooks';
 
 export default () => {
   const [, uploadImage] = useUploadImage();

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 
-import { useAnswerChallenge, useSignIn } from '../../../hooks/Authentication';
+import { useAnswerChallenge, useSignIn } from 'hooks';
 import FormSection from '../../Forms/FormSection';
 import FormWrapper from '../../Forms/FormWrapper';
 import { FinallyMessage } from '../../Forms/FinallyMessage';

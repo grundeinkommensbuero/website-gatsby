@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import s from './style.module.less';
-import { OverlayContext } from '../../context/Overlay';
+import { OverlayContext } from 'context';
 
 export const Overlay = ({ isOpenInitially = true, ...props }) => {
   return (

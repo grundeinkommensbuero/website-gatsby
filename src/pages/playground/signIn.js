@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useSignIn, useAnswerChallenge } from '../../hooks/Authentication';
+import { useSignIn, useAnswerChallenge } from 'hooks';
 
 export default () => {
   const [email, setEmail] = useState('');

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'gatsby-link';
 
-import { OverlayContext } from '../../../context/Overlay';
+import { OverlayContext } from 'context';
 import { Button } from '../../Forms/Button';
 
 import s from './style.module.less';

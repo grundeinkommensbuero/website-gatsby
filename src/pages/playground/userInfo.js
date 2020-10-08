@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useUserData } from '../../hooks/Api/Users/Get';
+import { useUserData } from 'hooks';
 
 export default () => {
   const [userData, requestUserData] = useUserData();

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 
-import AuthContext from '../../../context/Authentication';
-import { useSignOut } from '../../../hooks/Authentication';
+import { AuthContext } from 'context';
+import { useSignOut } from 'hooks';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { EnterLoginCode } from '../EnterLoginCode';
 import {

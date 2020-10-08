@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
-import { useCreatePledge } from '../../../hooks/Api/Pledge/Create';
+import { useCreatePledge } from 'hooks';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
@@ -10,14 +10,14 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
-import { useSignUp } from '../../../hooks/Authentication';
+import { useSignUp } from 'hooks';
 import { RequestLoginCode } from '../../Login/RequestLoginCode';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
-import AuthContext from '../../../context/Authentication';
-import { useUpdatePledge } from '../../../hooks/Api/Pledge/Update';
+import { AuthContext } from 'context';
+import { useUpdatePledge } from 'hooks';
 import { FinallyMessage } from '../FinallyMessage';
-import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+import { useUpdateUser } from 'hooks';
 
 export default ({ className, pledgeId }) => {
   return (
