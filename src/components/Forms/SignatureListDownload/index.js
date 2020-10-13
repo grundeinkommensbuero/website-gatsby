@@ -22,6 +22,7 @@ export default ({ signaturesId }) => {
   const [email, setEmail] = useState();
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
+  const isBerlin = signaturesId === 'berlin-1';
   const iconMail = require('./mail_red.svg');
   const iconIncognito = require('./incognito_red.svg');
 
@@ -138,7 +139,6 @@ export default ({ signaturesId }) => {
       </>
     );
   }
-
   return (
     <>
       <Form
@@ -224,26 +224,30 @@ export default ({ signaturesId }) => {
                 </>
               )}
 
-              <div className={s.iconParagraph}>
-                <img
-                  aria-hidden="true"
-                  alt=""
-                  src={iconMail}
-                  className={s.icon}
-                />
+              {!isBerlin && (
+                <>
+                  <div className={s.iconParagraph}>
+                    <img
+                      aria-hidden="true"
+                      alt=""
+                      src={iconMail}
+                      className={s.icon}
+                    />
 
-                <p>
-                  Kein Drucker?{' '}
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href="https://expeditionbge.typeform.com/to/Dq3SOi"
-                  >
-                    Bitte schickt mir Unterschriftenlisten per Post
-                  </a>
-                  !
-                </p>
-              </div>
+                    <p>
+                      Kein Drucker?{' '}
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://expeditionbge.typeform.com/to/Dq3SOi"
+                      >
+                        Bitte schickt mir Unterschriftenlisten per Post
+                      </a>
+                      !
+                    </p>
+                  </div>
+                </>
+              )}
             </form>
           );
         }}
