@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useUploadImage } from 'hooks';
+import { useUploadImage } from '@xbge/hooks';
 
 export default () => {
   const [, uploadImage] = useUploadImage();

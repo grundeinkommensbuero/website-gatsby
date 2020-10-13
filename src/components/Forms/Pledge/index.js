@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
-import { useCreatePledge } from 'hooks';
+import {
+  useCreatePledge,
+  useSignUp,
+  useUpdatePledge,
+  useUpdateUser,
+} from '@xbge/hooks';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
@@ -10,14 +15,11 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
 import s from './style.module.less';
-import { useSignUp } from 'hooks';
 import { RequestLoginCode } from '../../Login/RequestLoginCode';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
-import { AuthContext } from 'context';
-import { useUpdatePledge } from 'hooks';
+import { AuthContext } from '@xbge/context';
 import { FinallyMessage } from '../FinallyMessage';
-import { useUpdateUser } from 'hooks';
 
 export default ({ className, pledgeId }) => {
   return (

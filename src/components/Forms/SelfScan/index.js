@@ -4,9 +4,11 @@ import { Form, Field } from 'react-final-form';
 import cN from 'classnames';
 import querystring from 'query-string';
 
-import { useUpdateSignatureListByUser } from 'hooks';
-import { useSignatureCountOfUser } from 'hooks';
-import { AuthContext } from 'context';
+import {
+  useUpdateSignatureListByUser,
+  useSignatureCountOfUser,
+} from '@xbge/hooks';
+import { AuthContext } from '@xbge/context';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { SectionInner, Section } from '../../Layout/Sections';

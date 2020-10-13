@@ -7,10 +7,9 @@ import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
 import { StepListItem } from '../../StepList';
-import { useCreateSignatureList } from 'hooks';
-import { useSignUp } from 'hooks';
+import { useCreateSignatureList, useSignUp } from '@xbge/hooks';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
-import { AuthContext } from 'context';
+import { AuthContext } from '@xbge/context';
 import AuthInfo from '../../AuthInfo';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Layout from '../../components/Layout';
 import { LinkButton, InlineButton } from '../../components/Forms/Button';
-import { useCreateSignatureList } from 'hooks';
+import { useCreateSignatureList } from '@xbge/hooks';
 import DownloadListsNextSteps from '../../components/Forms/DownloadListsNextSteps';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import { trackEvent, addActionTrackingId } from '../../components/utils';
@@ -9,7 +9,7 @@ import { StepListItem } from '../../components/StepList';
 import querystring from 'query-string';
 import { Link } from 'gatsby';
 import { EnterLoginCode } from '../../components/Login/EnterLoginCode';
-import { AuthContext } from 'context';
+import { AuthContext } from '@xbge/context';
 
 const trackingCategory = 'ListDownload';
 

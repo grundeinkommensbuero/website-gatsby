@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
-import { AuthContext } from 'context';
-import { useSignOut } from 'hooks';
+import { AuthContext } from '@xbge/context';
+import { useSignOut } from '@xbge/hooks';
 import AvatarImage from '../../../../components/AvatarImage';
 
 import s from './style.module.less';

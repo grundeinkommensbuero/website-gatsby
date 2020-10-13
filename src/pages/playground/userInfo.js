@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useUserData } from 'hooks';
+import { useUserData } from '@xbge/hooks';
 
 export default () => {
   const [userData, requestUserData] = useUserData();

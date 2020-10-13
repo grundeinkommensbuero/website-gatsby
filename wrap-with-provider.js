@@ -1,8 +1,7 @@
 import React from 'react';
 import CONFIG from './aws-config';
-import { AuthProvider } from 'context';
+import { AuthProvider, OverlayProvider } from '@xbge/context';
 import SurveySaver from './src/components/SurveySaver';
-import { OverlayProvider } from 'context';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes

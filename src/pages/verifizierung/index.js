@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
-import { useVerification } from 'hooks';
+import { useVerification } from '@xbge/hooks';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import SocialMediaButtons from '../../components/SocialMedia/Share';
 import s from './style.module.less';

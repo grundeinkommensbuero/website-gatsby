@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useSignIn, useAnswerChallenge } from 'hooks';
+import { useSignIn, useAnswerChallenge } from '@xbge/hooks';
 
 export default () => {
   const [email, setEmail] = useState('');
