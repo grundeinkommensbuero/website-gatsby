@@ -29,6 +29,14 @@ const LoginMenuItem = () => {
     AuthContext
   );
   const signOut = useSignOut();
+  console.log({userId});
+
+  // We need this loading state, because otherwise for some ssg reason
+  // the hover of the MenuItemParent would not work. Also this way we don't
+  // render "Einloggen" -> "Lade..." -> "Profil"
+  if(typeof isAuthenticated === 'undefined'){
+    return <MenuItemParent title={'Lade...'} />
+  }
 
   // If user is not identified, show "login" button
   if (!userId) return <MenuItemLink slug={'login'}>Einloggen</MenuItemLink>;
