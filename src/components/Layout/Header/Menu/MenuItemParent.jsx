@@ -6,7 +6,7 @@ import s from './style.module.less';
 
 const MenuItemParent = ({ title, children, internalLink, externalLink }) => {
   return (
-    <li className={cN(s.navItem, s.navItemParent)}>
+    <li className={cN({[s.navItemParent]: true}, s.navItem)}>
       {!internalLink && !externalLink && (
         <div className={s.menuItemParentTitle}>{title}</div>
       )}
