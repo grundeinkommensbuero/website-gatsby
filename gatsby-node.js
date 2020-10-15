@@ -82,3 +82,16 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
     ],
   });
 };
+
+/**
+ * Allows routes for user profile pages, and serves the user profile pages to those routes
+ */
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions;
+
+  if (page.path.match(/^\/mensch/)) {
+    page.matchPath = '/mensch/*';
+    page.component = path.resolve('src/pages/mensch/index.js');
+    createPage(page);
+  }
+};

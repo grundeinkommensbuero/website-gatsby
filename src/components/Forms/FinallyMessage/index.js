@@ -21,11 +21,7 @@ export const FinallyMessage = ({
     <div className={cN(s.container, className)}>
       {state === 'success' && <HurrayCrowd />}
       <div className={s.message} ref={messageRef}>
-        <div
-          className={cN(s.messageInner, {
-            [s.blinkShort]: state === 'success' || state === 'error',
-          })}
-        >
+        <div className={cN(s.messageInner)}>
           {state === 'progress' && <div className={s.savingIndicator} />}
           <div className={s.children}>{children}</div>
         </div>

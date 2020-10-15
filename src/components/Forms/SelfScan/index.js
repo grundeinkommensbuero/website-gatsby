@@ -11,7 +11,7 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { SectionInner, Section } from '../../Layout/Sections';
 import CampaignVisualisations from '../../CampaignVisualisations';
-import VisualCounter from '../../VisualCounter';
+import SignatureStats from '../../SignatureStats';
 import AuthInfo from '../../AuthInfo';
 import SignUp from '../SignUp';
 import FormWrapper from '../FormWrapper';
@@ -106,30 +106,10 @@ export default ({ successMessage, campaignCode }) => {
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
         <Section>
-          <div className={s.statisticsOverall}>
-            <div className={s.statisticsOverallCountItem}>
-              <div className={s.statisticsOverallCount}>
-                <VisualCounter end={signatureCountOfUser.scannedByUser} />
-              </div>
-              <div className={s.statisticsOverallLabel}>
-                Unterschriften
-                <br />
-                von dir gemeldet
-              </div>
-            </div>{' '}
-            <div className={s.statisticsOverallCountItem}>
-              <div className={s.statisticsOverallCount}>
-                <VisualCounter end={signatureCountOfUser.received} />
-              </div>
-              <div className={s.statisticsOverallLabel}>
-                Unterschriften
-                <br />
-                von dir bei uns
-                <br />
-                angekommen
-              </div>
-            </div>
-          </div>
+          <SignatureStats
+            signatureCount={signatureCountOfUser}
+            className={s.statisticsOverall}
+          />
           <div className={s.visualisation}>
             <CountSignaturesForm {...countSignaturesFormProps} />
             {campaignVisualisationsMapped.length && (

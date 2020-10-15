@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { navigate } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 
+import AuthContext from '../../../context/Authentication';
 import { useAnswerChallenge, useSignIn } from '../../../hooks/Authentication';
+
 import FormSection from '../../Forms/FormSection';
 import FormWrapper from '../../Forms/FormWrapper';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { TextInputWrapped } from '../../Forms/TextInput';
+import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import s from './style.module.less';
 
 export const EnterLoginCode = ({ children }) => {
-  const [answerChallengeState, setCode] = useAnswerChallenge();
+  const { tempEmail, setTempEmail } = useContext(AuthContext);
+  const [
+    answerChallengeState,
+    setCode,
+    setAnswerChallengeState,
+  ] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
 
   useEffect(() => {
     startSignIn();
   }, []);
 
-  if (answerChallengeState === 'loading') {
+  if (answerChallengeState === 'loading' || signInState === 'loading') {
     return (
       <FinallyMessage state="progress">Einen Moment bitte...</FinallyMessage>
     );
@@ -44,14 +54,49 @@ export const EnterLoginCode = ({ children }) => {
     );
   }
 
+  if (signInState === 'userNotFound') {
+    return (
+      <FinallyMessage state="error">
+        <p>
+          Oh! Es scheint, diese Email-Addresse ist noch nicht bei uns
+          registriert.{' '}
+          <InlineButton
+            onClick={() => {
+              navigate('/expedition/#generalpledge');
+            }}
+          >
+            Klicke hier, um dich neu zu registrieren.
+          </InlineButton>
+        </p>
+
+        <p>Oder hast du deine Email-Adresse falsch eingegeben?</p>
+
+        <CTAButtonContainer>
+          <CTAButton
+            onClick={() => {
+              setTempEmail(undefined);
+            }}
+          >
+            Nochmal versuchen
+          </CTAButton>
+        </CTAButtonContainer>
+      </FinallyMessage>
+    );
+  }
+
   return (
     <FinallyMessage state="error">
-      {children ? (
+      {answerChallengeState === 'wrongCode' ? (
+        <p>
+          Der eingegeben Code ist falsch oder bereits abgelaufen. Bitte
+          überprüfe die Email erneut oder fordere einen neuen Code an.
+        </p>
+      ) : children ? (
         children
       ) : (
         <p>
-          Du bist schon bei uns im System. Um dich zu identifizieren, haben wir
-          dir einen Code per E-Mail geschickt. Bitte gib diesen ein:
+          Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+          {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen ein:
         </p>
       )}
       <Form
@@ -67,7 +112,7 @@ export const EnterLoginCode = ({ children }) => {
           return (
             <FormWrapper>
               <form onSubmit={handleSubmit}>
-                <FormSection>
+                <FormSection className={s.loginForm}>
                   <Field
                     name="code"
                     label="Geheimer Code"
@@ -78,8 +123,17 @@ export const EnterLoginCode = ({ children }) => {
                   ></Field>
                 </FormSection>
 
-                <CTAButtonContainer>
+                <CTAButtonContainer className={s.buttonContainer}>
                   <CTAButton type="submit">Abschicken</CTAButton>
+                  <InlineButton
+                    type="button"
+                    onClick={() => {
+                      setAnswerChallengeState(undefined);
+                      startSignIn();
+                    }}
+                  >
+                    Code erneut senden
+                  </InlineButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>

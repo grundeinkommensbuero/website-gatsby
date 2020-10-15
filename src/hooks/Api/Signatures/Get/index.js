@@ -31,12 +31,39 @@ export const useSignatureCountOfUser = () => {
   return [
     stats,
     data => {
-      getSignatureCountOfUser(data).then(data => setStats(data));
+      getSignatureCountOfUser(data).then(data => {
+        // get the most recent relevant campaing
+        data.mostRecentCampaign = getMostRecentCampaign(data);
+
+        setStats(data);
+      });
     },
     () => {
       setStats(null);
     },
   ];
+};
+
+// Looks though the scans of user to find out what the most recent campaign is
+const getMostRecentCampaign = data => {
+  if (data.receivedList.length > 0 && data.scannedByUserList.length > 0) {
+    // If user has scanned AND sent list we compare what happened the most recently
+    if (
+      new Date(
+        data.scannedByUserList[data.scannedByUserList.length - 1].timestamp
+      ) > new Date(data.receivedList[data.receivedList.length - 1].timestamp)
+    ) {
+      return data.scannedByUserList[data.scannedByUserList.length - 1].campaign;
+    } else {
+      return data.receivedList[data.receivedList.length - 1].campaign;
+    }
+  } else if (data.scannedByUserList > 0) {
+    return data.scannedByUserList[data.scannedByUserList.length - 1].campaign;
+  } else if (data.receivedList > 0) {
+    return data.receivedList[data.receivedList.length - 1].campaign;
+  }
+
+  return null;
 };
 
 // gets stats (count of signatures) for each campaign

@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [customUserData, setCustomUserData] = useState({});
   const [token, setToken] = useState();
   const [tempEmail, setTempEmail] = useState();
+  const [previousAction, setPreviousAction] = useState();
   const [userId, setUserId] = useLocalStorageUser();
 
   const signUserOut = async () =>
@@ -86,9 +87,9 @@ const AuthProvider = ({ children }) => {
     }
   }, [cognitoUser]);
 
+  // Getting user data from backend
   useEffect(() => {
     if (userId && isAuthenticated !== undefined) {
-      // Update user data with data from backend
       updateCustomUserData({
         isAuthenticated,
         token,
@@ -113,6 +114,8 @@ const AuthProvider = ({ children }) => {
         tempEmail,
         setTempEmail,
         customUserData,
+        previousAction,
+        setPreviousAction,
       }}
     >
       {children}
