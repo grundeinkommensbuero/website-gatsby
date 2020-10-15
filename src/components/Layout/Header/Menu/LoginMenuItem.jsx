@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useLocation } from '@reach/router';
 
 import AuthContext from '../../../../context/Authentication';
 import { useSignOut } from '../../../../hooks/Authentication';
@@ -29,7 +30,7 @@ const LoginMenuItem = () => {
     AuthContext
   );
   const signOut = useSignOut();
-  console.log({userId});
+  const location = useLocation();
 
   // We need this loading state, because otherwise for some ssg reason
   // the hover of the MenuItemParent would not work. Also this way we don't
@@ -38,8 +39,20 @@ const LoginMenuItem = () => {
     return <MenuItemParent title={'Lade...'} />
   }
 
-  // If user is not identified, show "login" button
-  if (!userId) return <MenuItemLink slug={'login'}>Einloggen</MenuItemLink>;
+  // If user is not identified, show "login" button`, next page after login
+  // should be the current page
+  if (!userId)
+    return (
+      <MenuItemLink
+        slug={`login${
+          location.pathname !== '/'
+            ? `/?nextPage=${location.pathname.slice(1, -1)}`
+            : ''
+        }`}
+      >
+        Einloggen
+      </MenuItemLink>
+    );
 
   // Where to send user when clicking "to profile" link
   const toProfileLinkLocation = isAuthenticated
