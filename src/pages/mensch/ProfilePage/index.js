@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import cN from 'classnames';
 import { navigate } from '@reach/router';
-import AuthContext from '../../../context/Authentication';
+import { AuthContext } from '@xbge/context';
 import Layout from '../../../components/Layout';
 import {
   Section,
@@ -11,10 +11,12 @@ import {
 import AvatarImage from '../../../components/AvatarImage';
 
 import s from './style.module.less';
-import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
+import {
+  useSignatureCountOfUser,
+  useBounceToIdentifiedState,
+} from '@xbge/hooks';
 import SignatureStats from '../../../components/SignatureStats';
 import { formatDate } from '../../../components/utils';
-import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
 import { LinkButtonLocal } from '../../../components/Forms/Button';
 import { FinallyMessage } from '../../../components/Forms/FinallyMessage';
 import { EnterLoginCode } from '../../../components/Login/EnterLoginCode';
