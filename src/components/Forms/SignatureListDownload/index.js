@@ -16,13 +16,13 @@ import DownloadListsNextSteps from '../DownloadListsNextSteps';
 
 const trackingCategory = 'ListDownload';
 
-export default ({ signaturesId }) => {
+export default ({ signaturesId, disableRequestListsByMail }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, signUp] = useSignUp();
   const [email, setEmail] = useState();
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
-  const isBerlin = signaturesId === 'berlin-1';
+  const isDisabledRequestListsByMail = !!disableRequestListsByMail;
   const iconMail = require('./mail_red.svg');
   const iconIncognito = require('./incognito_red.svg');
 
@@ -224,7 +224,7 @@ export default ({ signaturesId }) => {
                 </>
               )}
 
-              {!isBerlin && (
+              {!isDisabledRequestListsByMail && (
                 <>
                   <div className={s.iconParagraph}>
                     <img
