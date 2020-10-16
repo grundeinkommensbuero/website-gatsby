@@ -85,6 +85,7 @@ function Template({ children, sections }) {
               emailSignup
               pledgeId
               signaturesId
+              disableRequestListsByMail
               callToActionReference {
                 slug
                 title

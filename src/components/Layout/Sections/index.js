@@ -55,6 +55,7 @@ export function ContentfulSection({ section }) {
     bodyTextSizeHuge,
     pledgeId,
     signaturesId,
+    disableRequestListsByMail,
     callToActionReference,
     twitterFeed,
     maps,
@@ -117,6 +118,7 @@ export function ContentfulSection({ section }) {
           {signaturesId && (
             <SignatureListDownload
               signaturesId={signaturesId}
+              disableRequestListsByMail={disableRequestListsByMail}
               className={s.pledge}
             />
           )}

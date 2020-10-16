@@ -79,6 +79,7 @@ export const pageQuery = graphql`
             emailSignup
             pledgeId
             signaturesId
+            disableRequestListsByMail
             callToActionReference {
               slug
               title
