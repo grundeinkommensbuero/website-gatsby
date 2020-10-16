@@ -32,7 +32,7 @@ npm start
 
 #### Git
 
-It's preferable to use rebase when merging.
+You can either rebase when merging if it is important to keep the commits of the pr. When merging pull requests (without rebasing) merge commit messages should have the following structure: Merged #155: Short description
 
 #### Linting and formatting
 

@@ -1,0 +1,31 @@
+@import '../style/vars.less';
+
+.statisticsCountItem {
+  padding-right: 4rem;
+  max-width: 20rem;
+
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 2rem;
+  }
+}
+
+.statisticsCount {
+  font-size: @fontSizeXXXL;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXXL;
+  }
+}
+
+.statisticsLabel {
+  font-size: @fontSizeM;
+  line-height: 1.3;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeS;
+  }
+}

@@ -1,0 +1,86 @@
+@import '../../../components/style/vars.less';
+
+.profilePageGrid {
+  grid-column-start: wide-start;
+  grid-column-end: wide-end;
+
+  display: grid;
+  grid-template-columns: 6em 1fr auto;
+  grid-template-rows: auto;
+  grid-column-gap: 1em;
+  align-items: center;
+
+  @media (max-width: @breakPointS) {
+    grid-template-columns: auto;
+    grid-column-gap: initial;
+  }
+}
+
+.avatar {
+  width: 6em;
+  height: 6em;
+
+  @media (max-width: @breakPointS) {
+    margin: 0 auto;
+  }
+}
+
+.username {
+  font-size: @fontSizeXXL;
+
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXL;
+  }
+
+  @media (max-width: @breakPointS) {
+    text-align: center;
+  }
+}
+
+// Content sections
+.profilePageSection {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  margin-top: 2em;
+
+  @media (max-width: @breakPointS) {
+    grid-column-start: auto;
+    grid-column-end: auto;
+  }
+}
+
+// Details section
+.details {
+  margin: 0;
+  font-size: @fontSizeM;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 1em;
+    text-align: center;
+    font-size: @fontSizeS;
+  }
+}
+
+.signaturesSection {
+  .link {
+    margin-top: 2rem;
+    font-size: @fontSizeM;
+  }
+
+  .signatureStats {
+    display: flex;
+    justify-content: left;
+
+    @media (max-width: @breakPointS) {
+      flex-direction: column;
+    }
+  }
+}
+
+.supportText {
+  margin-top: 5em;
+  font-size: @fontSizeM;
+}
