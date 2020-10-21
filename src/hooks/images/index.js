@@ -3,13 +3,17 @@ import CONFIG from '../../../aws-config';
 
 export const useUploadImage = () => {
   const [state, setState] = useState({});
-  return [state, (userId, image) => uploadImage(userId, image, setState)];
+  return [state, data => uploadImage(data, setState)];
 };
 
 // Requests a presigned url and uploads image to S3
-const uploadImage = async (userId, image, setState) => {
+const uploadImage = async ({ userId, imageFile, imageUrl }, setState) => {
   try {
     setState('saving');
+    // If the image url was provided instead of file, we first want to get
+    // the file from a url
+    const image = imageUrl ? await getImageFromUrl(imageUrl) : imageFile;
+
     const contentType = image.type;
 
     const uploadUrl = await requestPresignedUrl(userId, contentType);
@@ -68,4 +72,10 @@ const uploadToS3 = async (uploadUrl, image, contentType) => {
   };
 
   return fetch(uploadUrl, params);
+};
+
+// Fetches image from url and returns a blob
+const getImageFromUrl = async url => {
+  const response = await fetch(url);
+  return response.blob();
 };

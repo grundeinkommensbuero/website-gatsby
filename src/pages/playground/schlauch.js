@@ -6,29 +6,18 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { useUploadImage } from '../../hooks/images';
+import Schlauch from '../../components/Forms/Schlauch';
 
 export default () => {
-  const [, uploadImage] = useUploadImage();
-
   return (
     <Layout>
       <Helmet>
         <title>Playground</title>
       </Helmet>
       <SectionWrapper>
-        <Section title="karte">
+        <Section title="Schlauch">
           <SectionInner wide={true}>
-            <input
-              aria-label="just a test hey"
-              type="file"
-              onChange={e =>
-                uploadImage(
-                  '53b95dd2-74b8-49f4-abeb-add9c950c7d9',
-                  e.target.files[0]
-                )
-              }
-            />
+            <Schlauch />
           </SectionInner>
         </Section>
       </SectionWrapper>

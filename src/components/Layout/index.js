@@ -152,6 +152,7 @@ function Template({ children, sections }) {
         <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
       </Helmet>
       <main className={s.main}>
         {children}
