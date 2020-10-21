@@ -67,6 +67,7 @@ exports.createPages = ({ graphql, actions }) => {
 };
 
 const clientId = process.env.COGNITO_APP_CLIENT_ID;
+const apiUrl = process.env.API_URL;
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
@@ -77,7 +78,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
         APP_CLIENT_ID: JSON.stringify(clientId),
         'process.env': {
           STATIC: stage === 'build-html',
-          API_URL: process.env.API_URL,
+          API_URL: JSON.stringify(apiUrl),
         },
       }),
     ],
