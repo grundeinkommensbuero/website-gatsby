@@ -6,7 +6,4 @@ export default {
         ? 'eu-central-1_SYtDaO0qH'
         : 'eu-central-1_xx4VmPPdF',
   },
-  API: {
-    INVOKE_URL: process.env.API_URL,
-  },
 };
