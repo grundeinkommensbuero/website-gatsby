@@ -77,6 +77,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
         APP_CLIENT_ID: JSON.stringify(clientId),
         'process.env': {
           STATIC: stage === 'build-html',
+          API_URL: process.env.API_URL,
         },
       }),
     ],
