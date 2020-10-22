@@ -147,6 +147,7 @@ export const Visualisation = ({
   showCTA,
   ctaLink,
   eyeCatcher,
+  eyeCatcherLink,
   goalUnbuffered,
   index,
   hint,
@@ -218,6 +219,9 @@ export const Visualisation = ({
   const goalHasBeenReached = percentage >= 100;
 
   const barGoalWidth = Math.min(100, ((goalInbetween || goal) / count) * 100);
+
+  const eyeCatcherLinkToDisplay = eyeCatcherLink ? eyeCatcherLink : (showCTA && ctaLink);
+
   return (
     <SectionInner
       wide={true}
@@ -315,7 +319,7 @@ export const Visualisation = ({
               [s.eyeCatcherWithCta]: showCTA && ctaLink,
             })}
           >
-            <WrapInLink link={showCTA && ctaLink} className={s.eyeCatcherLink}>
+            <WrapInLink link={eyeCatcherLinkToDisplay} className={s.eyeCatcherLink}>
               <div
                 className={s.eyeCatcherBackground}
                 dangerouslySetInnerHTML={{ __html: eyeCatcherBackground }}

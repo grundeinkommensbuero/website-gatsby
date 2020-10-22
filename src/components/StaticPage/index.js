@@ -55,6 +55,7 @@ export const pageQuery = graphql`
               eyeCatcher {
                 json
               }
+              eyeCatcherLink
               goalUnbuffered
               goalInbetweenMultiple
               startnextId
