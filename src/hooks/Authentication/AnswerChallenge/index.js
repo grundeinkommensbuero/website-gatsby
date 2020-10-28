@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import AuthContext from '../../../context/Authentication';
+import { updateUser } from '../../Api/Users/Update';
 
 export const useAnswerChallenge = () => {
   const [state, setState] = useState({});
@@ -45,7 +46,12 @@ const answerCustomChallenge = async (
 
       // We also want to set that the user is confirmed now
       // if e.g. it was the first login (= double opt in)
-      Auth.updateUserAttributes(tempUser, { 'custom:confirmed': 'true' });
+      // We save this value in dynamo db, because cognito doesn't
+      // offer enough flexibility
+      confirmSignUp(
+        tempUser.attributes.sub,
+        tempUser.signInUserSession.idToken.jwtToken
+      );
     } catch (error) {
       setState('wrongCode');
       console.log('Apparently the user did not enter the right code', error);
@@ -56,5 +62,14 @@ const answerCustomChallenge = async (
       'User entered wrong code three times or user was never set',
       error
     );
+  }
+};
+
+// We use updateUser function to confirm user in dynamo db
+const confirmSignUp = async (userId, token) => {
+  try {
+    await updateUser({ userId, token, confirmed: true });
+  } catch (error) {
+    console.log('Error while confirming user', error);
   }
 };

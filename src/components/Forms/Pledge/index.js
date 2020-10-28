@@ -31,7 +31,7 @@ export default ({ className, pledgeId }) => {
 };
 
 const SignaturePledge = ({ pledgeId }) => {
-  const [signUpState, signUp] = useSignUp();
+  const [signUpState, userExists, signUp] = useSignUp();
   const [createPledgeState, createPledge] = useCreatePledge();
   const [updatePledgeState, updatePledge] = useUpdatePledge();
   const [updateUserState, updateUser] = useUpdateUser();
@@ -41,24 +41,30 @@ const SignaturePledge = ({ pledgeId }) => {
     AuthContext
   );
 
-  // After signup process is done we can save the pledge
-  useEffect(() => {
-    if (signUpState === 'success') {
-      createPledge(pledge);
-    }
-  }, [signUpState]);
-
+  // After signin process is done we can save the pledge
   useEffect(() => {
     if (isAuthenticated && hasSubmitted) {
-      updatePledge(pledge);
-      updateUser(pledge);
+      // If the user is new, we create a new pledge.
+      // If the user is old, we update the pledge
+      // (may create a new one if non-existing) and user data.
+      if (userExists) {
+        updatePledge(pledge);
+        updateUser(pledge);
+      } else {
+        createPledge(pledge);
+      }
     }
-  }, [isAuthenticated, hasSubmitted]);
+  }, [isAuthenticated, hasSubmitted, userExists]);
 
-  if (createPledgeState || updatePledgeState) {
+  if (signUpState === 'success' && !isAuthenticated) {
+    return <EnterLoginCode />;
+  }
+
+  if (signUpState || createPledgeState || updatePledgeState) {
     return (
       <SignUpFeedbackMessage
         state={
+          signUpState ||
           createPledgeState ||
           (updateUserState === 'error' ? updateUserState : updatePledgeState)
         }
@@ -66,10 +72,6 @@ const SignaturePledge = ({ pledgeId }) => {
         trackingCategory="Pledge"
       />
     );
-  }
-
-  if (signUpState === 'userExists') {
-    return <EnterLoginCode />;
   }
 
   if (userId && !isAuthenticated) {
@@ -96,6 +98,7 @@ const SignaturePledge = ({ pledgeId }) => {
         e.pledgeId = pledgeId;
         setHasSubmitted(true);
         setPledgeLocally(e);
+
         if (!isAuthenticated) {
           signUp(e);
         }

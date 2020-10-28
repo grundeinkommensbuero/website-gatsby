@@ -13,13 +13,46 @@ export { useAnswerChallenge } from './AnswerChallenge';
 export { useVerification } from './Verification';
 export { useLocalStorageUser } from './LocalStorageUser';
 
-export const useSignIn = () => {
-  const [state, setState] = useState({});
+export const useSignUp = () => {
+  const [state, setState] = useState();
+  const [userExists, setUserExists] = useState();
 
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, data => startSignInProcess(data, setState, context)];
+  return [
+    state,
+    userExists,
+    data => startSignInProcess(data, setState, setUserExists, context),
+    setState,
+  ];
+};
+
+export const useSignIn = () => {
+  const [state, setState] = useState();
+
+  //get global context
+  const { tempEmail, ...context } = useContext(AuthContext);
+
+  return [
+    state,
+    () => {
+      setState('loading');
+
+      signIn({ email: tempEmail }, context)
+        .then(() => {
+          setState('success');
+        })
+        .catch(error => {
+          if (error.code === 'UserNotFoundException') {
+            setState('userNotFound');
+          } else {
+            setState('error');
+            console.log('Error while signing in', error);
+          }
+        });
+    },
+  ];
 };
 
 // hook for signing out
@@ -41,7 +74,7 @@ export const useBounceToIdentifiedState = () => {
   return () => bounceToIdentifiedState(context);
 };
 
-const startSignInProcess = async (data, setState, context) => {
+const startSignInProcess = async (data, setState, setUserExists, context) => {
   try {
     setState('loading');
 
@@ -50,6 +83,7 @@ const startSignInProcess = async (data, setState, context) => {
     // User did not exist
     await signIn(data, context);
 
+    setUserExists(false);
     setState('success');
   } catch (error) {
     // We have to check, if the error happened due to the user already existing.
@@ -57,6 +91,8 @@ const startSignInProcess = async (data, setState, context) => {
     if (error.code === 'UsernameExistsException') {
       try {
         await signIn(data, context);
+
+        setUserExists(true);
         setState('success');
       } catch (error) {
         console.log('Error while signing in', error);

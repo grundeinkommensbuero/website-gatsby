@@ -14,7 +14,7 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 
 export const EnterLoginCode = ({ children }) => {
-  const { tempEmail, setTempEmail } = useContext(AuthContext);
+  const { tempEmail, setTempEmail, isAuthenticated } = useContext(AuthContext);
   const [
     answerChallengeState,
     setCode,
@@ -23,7 +23,9 @@ export const EnterLoginCode = ({ children }) => {
   const [signInState, startSignIn] = useSignIn();
 
   useEffect(() => {
-    startSignIn();
+    if (!isAuthenticated) {
+      startSignIn();
+    }
   }, []);
 
   if (answerChallengeState === 'loading' || signInState === 'loading') {
