@@ -3,7 +3,7 @@ import { SectionInner } from '../../Layout/Sections';
 import s from './style.module.less';
 import { Speechbubble } from '../Speechbubble';
 import AvatarImage from '../../AvatarImage';
-import { useGetMostRecentQuestions } from '@xbge/hooks';
+import { useGetMostRecentQuestions } from '@xbge/logic';
 import cN from 'classnames';
 
 export default ({ questionJustSent, userId }) => {

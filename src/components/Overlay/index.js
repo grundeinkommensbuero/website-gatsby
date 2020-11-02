@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import s from './style.module.less';
-import { OverlayContext } from '@xbge/context';
+import { OverlayContext } from '@xbge/logic';
 
 export const Overlay = ({ isOpenInitially = true, ...props }) => {
   return (

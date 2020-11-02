@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useLocation } from '@reach/router';
 
-import { AuthContext } from '@xbge/context';
-import { useSignOut } from '@xbge/hooks';
+import { AuthContext } from '@xbge/logic';
+import { useSignOut } from '@xbge/logic';
 import AvatarImage from '../../../../components/AvatarImage';
 
 import s from './style.module.less';

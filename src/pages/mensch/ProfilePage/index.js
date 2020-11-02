@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import cN from 'classnames';
 import { navigate } from '@reach/router';
-import { AuthContext } from '@xbge/context';
+import { AuthContext } from '@xbge/logic';
 import Layout from '../../../components/Layout';
 import {
   Section,
@@ -14,7 +14,7 @@ import s from './style.module.less';
 import {
   useSignatureCountOfUser,
   useBounceToIdentifiedState,
-} from '@xbge/hooks';
+} from '@xbge/logic';
 import SignatureStats from '../../../components/SignatureStats';
 import { formatDate } from '../../../components/utils';
 import { LinkButtonLocal } from '../../../components/Forms/Button';

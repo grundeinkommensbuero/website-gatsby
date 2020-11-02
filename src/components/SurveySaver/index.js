@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import querystring from 'query-string';
-import { useSaveSurveyAnswer } from '@xbge/hooks';
+import { useSaveSurveyAnswer } from '@xbge/logic';
 
 export default ({ children }) => {
   const [, saveSurveyAnswer] = useSaveSurveyAnswer();

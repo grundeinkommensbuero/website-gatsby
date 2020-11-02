@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreateQuestion from './CreateQuestion';
 import ListQuestions from './ListQuestions';
-import { useUserData } from '@xbge/hooks';
+import { useUserData } from '@xbge/logic';
 import querystring from 'query-string';
 
 export default ({ mode }) => {

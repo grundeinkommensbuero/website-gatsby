@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { navigate } from 'gatsby';
 
-import { AuthContext } from '@xbge/context';
-import { useSignOut } from '@xbge/hooks';
+import { AuthContext } from '@xbge/logic';
+import { useSignOut } from '@xbge/logic';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { EnterLoginCode } from '../EnterLoginCode';
 

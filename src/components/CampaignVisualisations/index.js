@@ -4,7 +4,7 @@ import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateMonthYear } from '../utils';
 import { LinkButtonLocal, LinkButton } from '../Forms/Button';
-import { useSignatureCount, useGetCrowdfundingDirectly } from '@xbge/hooks';
+import { useSignatureCount, useGetCrowdfundingDirectly } from '@xbge/logic';
 import { Link } from 'gatsby';
 import eyeCatcherBackground from '!svg-inline-loader!./eye_catcher.svg';
 import { Tooltip } from '../Tooltip';

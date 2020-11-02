@@ -67,6 +67,8 @@ exports.createPages = ({ graphql, actions }) => {
 };
 
 const clientId = process.env.COGNITO_APP_CLIENT_ID;
+const userPoolId = process.env.COGNITO_USER_POOL_ID;
+const region = process.env.COGNITO_REGION;
 const apiUrl = process.env.API_URL;
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
@@ -75,10 +77,12 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(gitRevisionPlugin.version()),
         COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
-        APP_CLIENT_ID: JSON.stringify(clientId),
         'process.env': {
           STATIC: stage === 'build-html',
           API_URL: JSON.stringify(apiUrl),
+          COGNITO_APP_CLIENT_ID: JSON.stringify(clientId),
+          COGNITO_USER_POOL_ID: JSON.stringify(userPoolId),
+          COGNTIO_REGION: JSON.stringify(region),
         },
       }),
     ],

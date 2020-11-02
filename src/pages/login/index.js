@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import querystring from 'query-string';
 import { navigate } from '@reach/router';
 
-import { AuthContext } from '@xbge/context';
+import { AuthContext } from '@xbge/logic';
 
 import {
   SectionWrapper,

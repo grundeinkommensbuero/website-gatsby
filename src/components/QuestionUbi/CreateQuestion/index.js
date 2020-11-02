@@ -7,7 +7,7 @@ import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
-import { useUploadImage, useSaveQuestion } from '@xbge/hooks';
+import { useUploadImage, useSaveQuestion } from '@xbge/logic';
 import AvatarImage from '../../AvatarImage';
 
 export default ({ setQuestionJustSent, userId, userData }) => {

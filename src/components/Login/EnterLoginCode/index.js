@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { navigate } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 
-import { useAnswerChallenge, useSignIn } from '@xbge/hooks';
-import { AuthContext } from '@xbge/context';
+import { useAnswerChallenge, useSignIn } from '@xbge/logic';
+import { AuthContext } from '@xbge/logic';
 
 import FormSection from '../../Forms/FormSection';
 import FormWrapper from '../../Forms/FormWrapper';

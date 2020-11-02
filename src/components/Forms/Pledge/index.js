@@ -6,7 +6,7 @@ import {
   useSignUp,
   useUpdatePledge,
   useUpdateUser,
-} from '@xbge/hooks';
+} from '@xbge/logic';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
@@ -18,7 +18,7 @@ import s from './style.module.less';
 import { RequestLoginCode } from '../../Login/RequestLoginCode';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
-import { AuthContext } from '@xbge/context';
+import { AuthContext } from '@xbge/logic';
 import { FinallyMessage } from '../FinallyMessage';
 
 export default ({ className, pledgeId }) => {

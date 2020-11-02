@@ -7,8 +7,8 @@ import querystring from 'query-string';
 import {
   useUpdateSignatureListByUser,
   useSignatureCountOfUser,
-} from '@xbge/hooks';
-import { AuthContext } from '@xbge/context';
+} from '@xbge/logic';
+import { AuthContext } from '@xbge/logic';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { SectionInner, Section } from '../../Layout/Sections';

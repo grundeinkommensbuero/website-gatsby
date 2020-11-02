@@ -7,7 +7,7 @@ import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
-import { buildVisualisationsWithCrowdfunding } from '@xbge/hooks';
+import { buildVisualisationsWithCrowdfunding } from '@xbge/logic';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
