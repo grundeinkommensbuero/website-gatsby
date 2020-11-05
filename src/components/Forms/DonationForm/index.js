@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
+import * as ibantools from 'ibantools';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
 import { InlineButton } from '../Button';
@@ -18,6 +19,8 @@ export default () => {
   const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState();
+  let formData = {}
+  let formErrors = {}
 
   useEffect(() => {
     if (updateUserState === 'updated') {
@@ -25,11 +28,55 @@ export default () => {
     }
   }, [updateUserState]);
 
-  const Condition = ({ when, is, children }) => (
-    <Field name={when} subscription={{ value: true }}>
-      {({ input: { value } }) => (value === is ? children : null)}
-    </Field>
-  );
+  const onAmountClick = (recurring) => {
+    setIsRecurring(recurring);
+
+    if (formErrors.customAmount) {
+      return
+    }
+    setEnteredAmount(true);
+    
+  }
+
+  const getFormDataAmount = (amount, customAmount) => {
+      return amount === 'custom' && customAmount ? +customAmount : +amount;
+  }
+
+  const validate = values => {
+    formData = JSON.parse(JSON.stringify(values));
+    console.log(formData)
+    
+    const errors = {};
+
+    if (values.amount === 'custom' && !values.customAmount) {
+      errors.customAmount = 'Muss ausgefüllt sein';
+    }
+
+    if (values.amount === 'custom' && values.customAmount < 0) {
+      errors.customAmount = 'Bitte gib eine positive Zahl ein.';
+    }
+
+    if (!values.firstname) {
+      errors.firstname = 'Muss ausgefüllt sein';
+    }
+
+    if (!values.lastname) {
+      errors.lastname = 'Muss ausgefüllt sein';
+    }
+
+
+    let extractedIban = ibantools.electronicFormatIBAN(formData.iban)
+    if (!ibantools.isValidIBAN(extractedIban)) {
+      errors.iban = "Muss eine gültige IBAN sein"
+    } else {
+      formData.extractedIban = extractedIban
+    }
+
+    formErrors = {...errors};
+    return errors;
+  };
+
+
 
   return (
     <>
@@ -45,11 +92,16 @@ export default () => {
               ...inputData,
               amount: finalAmount,
               recurring: isRecurring,
+              iban: formData.extractedIban
             };
             const donationInfo = { userId: userId, donation };
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
           }}
+          initialValues={{
+            amount: "5",
+          }}
+          validate={values => validate(values)}
           render={({ handleSubmit }) => {
             return (
               <FormWrapper>
@@ -111,6 +163,9 @@ export default () => {
                               placeholder="100"
                               type="number"
                               component={TextInputWrapped}
+                              min={2}
+                              inputMode="numeric"
+                              pattern="[0-9]*"
                             />{' '}
                             €
                           </div>
@@ -121,18 +176,18 @@ export default () => {
 
                       <CTAButtonContainer className={s.buttonContainer}>
                         <CTAButton
+                          type="submit"
                           onClick={() => {
-                            setEnteredAmount(true);
-                            setIsRecurring(true);
+                            onAmountClick(true);
                           }}
                           size="MEDIUM"
                         >
                           Monatlich unterstützen
                         </CTAButton>
                         <CTAButton
+                          type="submit"
                           onClick={() => {
-                            setEnteredAmount(true);
-                            setIsRecurring(false);
+                            onAmountClick(false);
                           }}
                           size="MEDIUM"
                         >
@@ -145,6 +200,18 @@ export default () => {
                   {enteredAmount === true && (
                     <div className={s.partialForm}>
                       <h3>Bitte gib deine Zahlungsinformationen ein</h3>
+                      <p>
+                        Du möchtest{' '}
+                        <span>
+                          {isRecurring ? 'monatlich' : 'einmalig'}{' '}
+                          {getFormDataAmount(
+                            formData.amount,
+                            formData.customAmount
+                          )}{' '}
+                          €
+                        </span>{' '}
+                        an die Expedition spenden.
+                      </p>
 
                       <FormSection>
                         <Field
@@ -205,12 +272,12 @@ export default () => {
             IBAN: <span>{donationInfo.donation.iban}</span>
           </p>
           <p>
-            Du spendest{' '}
+            Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
             <span>
               {isRecurring ? 'monatlich' : 'einmalig'}{' '}
               {donationInfo.donation.amount} €
             </span>{' '}
-            an die Expedition.
+            an die Expedition spenden möchtest.
           </p>
 
           <CTAButtonContainer className={s.buttonContainer}>
@@ -256,3 +323,11 @@ export default () => {
     </>
   );
 };
+
+const Condition = ({ when, is, children }) => (
+  <Field name={when} subscription={{ value: true }}>
+    {({ input: { value } }) => (value === is ? children : null)}
+  </Field>
+);
+
+
