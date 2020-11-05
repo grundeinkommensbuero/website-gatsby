@@ -79,7 +79,7 @@ export default () => {
 
 
   return (
-    <>
+    <div className={s.donationForm}>
       {!hasDonated && !enteredPaymentInfo && (
         <Form
           onSubmit={data => {
@@ -113,7 +113,7 @@ export default () => {
                         Wir finanzieren uns komplett durch Spenden. Bitte hilf
                         uns, die Expedition am Laufen zu halten!
                       </p>
-                      <p>Unterstütze uns mit</p>
+                      <p>Unterstütze uns mit:</p>
 
                       <FormSection>
                         <label>
@@ -147,43 +147,31 @@ export default () => {
                         </label>
                         <br></br>
                         <label>
-                          <Field
-                            name="amount"
-                            component="input"
-                            type="radio"
-                            value="custom"
-                          />
-                          Eigener Betrag{' '}
-                        </label>
-
-                        <Condition when="amount" is="custom">
-                          <div>
                             <Field
-                              name="customAmount"
-                              placeholder="100"
-                              type="number"
-                              component={TextInputWrapped}
-                              min={2}
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                            />{' '}
-                            €
-                          </div>
-                        </Condition>
-
-                        <br></br>
+                              name="amount"
+                              component="input"
+                              type="radio"
+                              value="custom"
+                            />
+                            Eigenen Betrag eingeben{' '}
+                          </label>
+                          <Condition when="amount" is="custom">
+                            <div className={s.customAmount}>
+                              <Field
+                                name="customAmount"
+                                placeholder="100"
+                                type="number"
+                                component={TextInputWrapped}
+                                min={2}
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                              />{' '}
+                              <span className={s.currency}>€</span>
+                            </div>
+                          </Condition>
                       </FormSection>
 
                       <CTAButtonContainer className={s.buttonContainer}>
-                        <CTAButton
-                          type="submit"
-                          onClick={() => {
-                            onAmountClick(true);
-                          }}
-                          size="MEDIUM"
-                        >
-                          Monatlich unterstützen
-                        </CTAButton>
                         <CTAButton
                           type="submit"
                           onClick={() => {
@@ -192,6 +180,16 @@ export default () => {
                           size="MEDIUM"
                         >
                           Einmalig spenden
+                        </CTAButton>
+
+                        <CTAButton
+                          type="submit"
+                          onClick={() => {
+                            onAmountClick(true);
+                          }}
+                          size="MEDIUM"
+                        >
+                          Monatlich unterstützen
                         </CTAButton>
                       </CTAButtonContainer>
                     </div>
@@ -320,7 +318,7 @@ export default () => {
           </CTAButtonContainer>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
