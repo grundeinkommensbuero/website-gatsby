@@ -55,3 +55,11 @@ export function InlineButton({ children, onClick, className, ...other }) {
     </span>
   );
 }
+
+export function PrimarySecondaryButtonContainer({ children, className, size, ...other }) {
+  return (
+    <div className={cN(s.primarySecondaryButtonContainer, className)}>
+      {children}
+    </div>
+  );
+}

@@ -58,3 +58,20 @@
 p a.linkButton {
   box-shadow: none;
 }
+
+.primarySecondaryButtonContainer {
+  display: flex;
+  width: 25rem;
+  margin-top: 3rem;
+  justify-content: space-between;
+  align-items: center;
+
+  .inlineButton {
+    font-size: @fontSizeM;
+    font-weight: bold;
+  }
+
+  @media (max-width: @breakPointS) {
+    width: 100%;
+  }
+}

@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import * as ibantools from 'ibantools';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
-import { InlineButton } from '../Button';
+import { Button, InlineButton, PrimarySecondaryButtonContainer } from '../Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
@@ -171,7 +171,7 @@ export default () => {
                           </Condition>
                       </FormSection>
 
-                      <CTAButtonContainer className={s.buttonContainer}>
+                      <CTAButtonContainer>
                         <CTAButton
                           type="submit"
                           onClick={() => {
@@ -196,11 +196,11 @@ export default () => {
                   )}
 
                   {enteredAmount === true && (
-                    <div className={s.partialForm}>
+                    <div>
                       <h3>Bitte gib deine Zahlungsinformationen ein</h3>
                       <p>
                         Du möchtest{' '}
-                        <span>
+                        <span className={s.info}>
                           {isRecurring ? 'monatlich' : 'einmalig'}{' '}
                           {getFormDataAmount(
                             formData.amount,
@@ -211,7 +211,7 @@ export default () => {
                         an die Expedition spenden.
                       </p>
 
-                      <FormSection>
+                      <FormSection className={s.partialForm}>
                         <Field
                           name="firstname"
                           label="Vorname"
@@ -235,10 +235,7 @@ export default () => {
                         />
                       </FormSection>
 
-                      <CTAButtonContainer className={s.buttonContainer}>
-                        <CTAButton type="submit" size="MEDIUM">
-                          Weiter
-                        </CTAButton>
+                      <PrimarySecondaryButtonContainer>
                         <InlineButton
                           onClick={() => {
                             setIsRecurring(false);
@@ -247,7 +244,10 @@ export default () => {
                         >
                           Zurück
                         </InlineButton>
-                      </CTAButtonContainer>
+                        <Button type="submit" size="MEDIUM">
+                          Weiter
+                        </Button>
+                      </PrimarySecondaryButtonContainer>
                     </div>
                   )}
                 </form>
@@ -258,27 +258,34 @@ export default () => {
       )}
 
       {!hasDonated && enteredPaymentInfo && (
-        <div className={s.partialForm}>
+        <div>
           <h3>Bitte überprüfe deine Daten</h3>
           <p>
             Name:{' '}
-            <span>
+            <span className={s.info}>
               {donationInfo.donation.firstname} {donationInfo.donation.lastname}
             </span>
           </p>
           <p>
-            IBAN: <span>{donationInfo.donation.iban}</span>
+            IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
           </p>
           <p>
             Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
-            <span>
+            <span className={s.info}>
               {isRecurring ? 'monatlich' : 'einmalig'}{' '}
               {donationInfo.donation.amount} €
             </span>{' '}
             an die Expedition spenden möchtest.
           </p>
 
-          <CTAButtonContainer className={s.buttonContainer}>
+          <PrimarySecondaryButtonContainer>
+            <InlineButton
+              onClick={() => {
+                setEnteredPaymentInfo(false);
+              }}
+            >
+              Zurück
+            </InlineButton>
             <CTAButton
               onClick={() => {
                 updateUser(donationInfo);
@@ -288,14 +295,7 @@ export default () => {
             >
               Jetzt spenden
             </CTAButton>
-            <InlineButton
-              onClick={() => {
-                setEnteredPaymentInfo(false);
-              }}
-            >
-              Zurück
-            </InlineButton>
-          </CTAButtonContainer>
+          </PrimarySecondaryButtonContainer>
         </div>
       )}
 
