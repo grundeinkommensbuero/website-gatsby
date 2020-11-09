@@ -180,6 +180,7 @@ export default () => {
                             onAmountClick(true);
                           }}
                           size="MEDIUM"
+                          className={s.primaryButton}
                         >
                           Monatlich unterstützen
                         </CTAButton>
