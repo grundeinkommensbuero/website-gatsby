@@ -17,6 +17,7 @@ export default () => {
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
   const [hasDonated, setHasDonated] = useState(false);
+  const [donationError, setDonationError] = useState(false);
   const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState();
@@ -26,6 +27,9 @@ export default () => {
   useEffect(() => {
     if (updateUserState === 'updated') {
       setHasDonated(true);
+    }
+    if (updateUserState === 'error') {
+      setDonationError(true);
     }
   }, [updateUserState]);
 
@@ -80,7 +84,7 @@ export default () => {
 
   return (
     <div className={s.donationForm}>
-      {!hasDonated && !enteredPaymentInfo && (
+      {(!hasDonated && !enteredPaymentInfo && !donationError) &&(
         <Form
           onSubmit={data => {
             const { customAmount, amount, ...inputData } = data;
@@ -250,7 +254,7 @@ export default () => {
         ></Form>
       )}
 
-      {!hasDonated && enteredPaymentInfo && (
+      {(!hasDonated && enteredPaymentInfo && !donationError) && (
         <div>
           <h3>Bitte überprüfe deine Daten</h3>
           <p>
@@ -282,7 +286,6 @@ export default () => {
             <CTAButton
               onClick={() => {
                 updateUser(donationInfo);
-                setHasDonated(true);
               }}
               size="MEDIUM"
             >
@@ -292,7 +295,7 @@ export default () => {
         </div>
       )}
 
-      {hasDonated && (
+      {(hasDonated && !donationError) && (
         <div>
           <h3>Vielen Dank!</h3>
           <p>Wir haben deine Daten erhalten und werden die Spende in Kürze von deinem Konto einziehen.</p>
@@ -304,6 +307,29 @@ export default () => {
                 setEnteredAmount(false);
                 setEnteredPaymentInfo(false);
                 setHasDonated(false);
+              }}
+              size="MEDIUM"
+            >
+              Zurück zum Formular
+            </CTAButton>
+          </CTAButtonContainer>
+        </div>
+      )}
+
+      {donationError && (
+        <div>
+          <h3>Hoppla!</h3>
+          <p>Bei der Verarbeitung deiner Daten ist ein Fehler aufgetreten! :(</p>
+          <p>Bitte versuche es erneut, oder überweise den Betrag direkt auf unser Konto: </p>
+          <p className={s.info}>Vertrauensgesellschaft e.V.<br></br>IBAN: DE74 4306 0967 1218 1056 01</p>
+          <p>Vielen Dank für deine Unterstützung!</p>
+          <CTAButtonContainer className={s.buttonContainer}>
+            <CTAButton
+              onClick={() => {
+                setIsRecurring(false);
+                setEnteredAmount(false);
+                setEnteredPaymentInfo(false);
+                setDonationError(false);
               }}
               size="MEDIUM"
             >
