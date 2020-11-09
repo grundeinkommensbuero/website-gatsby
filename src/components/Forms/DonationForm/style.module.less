@@ -9,8 +9,16 @@
   margin-top: 3em;
   padding: 30px 40px 40px 40px;
 
+  h3 {
+    hyphens: unset;
+  }
+
   div {
     font-size: @fontSizeM;
+
+    @media (max-width: @breakPointM) {
+      font-size: @fontSizeS;
+    }
   }
 
   input[type='radio'] {

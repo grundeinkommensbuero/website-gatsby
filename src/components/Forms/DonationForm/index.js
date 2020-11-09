@@ -190,7 +190,7 @@ export default () => {
 
                   {enteredAmount === true && (
                     <div>
-                      <h3>Bitte gib deine Zahlungsinformationen ein</h3>
+                      <h3>Bitte gib deine &#8203;Zahlungs&shy;informationen ein</h3>
                       <p>
                         Du möchtest{' '}
                         <span className={s.info}>
@@ -294,8 +294,9 @@ export default () => {
 
       {hasDonated && (
         <div>
-          <h3>Danke für deine Spende!</h3>
-          <p>Lorem ipsum … </p>
+          <h3>Vielen Dank!</h3>
+          <p>Wir haben deine Daten erhalten und werden die Spende in Kürze von deinem Konto einziehen.</p>
+          <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
             <CTAButton
               onClick={() => {
