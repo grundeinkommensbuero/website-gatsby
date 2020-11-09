@@ -4,6 +4,7 @@ import * as ibantools from 'ibantools';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
 import { Button, InlineButton, PrimarySecondaryButtonContainer } from '../Button';
+import {Checkbox} from '../Checkbox';
 import {RadioButton} from '../RadioButton';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../TextInput';
@@ -66,6 +67,14 @@ export default () => {
 
     if (!values.lastName) {
       errors.lastName = 'Muss ausgefüllt sein';
+    }
+
+    if (!values.sepa) {
+      errors.sepa = 'Bitte stimme zu, um fortzufahren.';
+    }
+
+    if (!values.privacy) {
+      errors.privacy = 'Bitte stimme zu, um fortzufahren.';
     }
 
 
@@ -230,7 +239,31 @@ export default () => {
                           type="text"
                           component={TextInputWrapped}
                         />
+
+                        <Field
+                          name="sepa"
+                          label={
+                            <>
+                              Es gilt meine Ermächtigung gemäß SEPA-Mandat.*
+                            </>
+                          }
+                          type="checkbox"
+                          component={Checkbox}
+                        ></Field>
+
+                          <Field
+                          name="privacy"
+                          label={
+                            <>
+                              Ich habe die Datenschutzbedingungen zur Kenntnis genommen.*
+                            </>
+                          }
+                          type="checkbox"
+                          component={Checkbox}
+                        ></Field>
                       </FormSection>
+
+                      <p className={s.hint}>*Pflichtfeld</p>
 
                       <PrimarySecondaryButtonContainer>
                         <InlineButton
