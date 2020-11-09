@@ -56,12 +56,12 @@ export default () => {
       errors.customAmount = 'Bitte gib eine positive Zahl ein.';
     }
 
-    if (!values.firstname) {
-      errors.firstname = 'Muss ausgefüllt sein';
+    if (!values.firstName) {
+      errors.firstName = 'Muss ausgefüllt sein';
     }
 
-    if (!values.lastname) {
-      errors.lastname = 'Muss ausgefüllt sein';
+    if (!values.lastName) {
+      errors.lastName = 'Muss ausgefüllt sein';
     }
 
 
@@ -206,14 +206,14 @@ export default () => {
 
                       <FormSection className={s.partialForm}>
                         <Field
-                          name="firstname"
+                          name="firstName"
                           label="Vorname"
                           placeholder="Vorname"
                           type="text"
                           component={TextInputWrapped}
                         />
                         <Field
-                          name="lastname"
+                          name="lastName"
                           label="Nachname"
                           placeholder="Nachname"
                           type="text"
@@ -256,7 +256,7 @@ export default () => {
           <p>
             Name:{' '}
             <span className={s.info}>
-              {donationInfo.donation.firstname} {donationInfo.donation.lastname}
+              {donationInfo.donation.firstName} {donationInfo.donation.lastName}
             </span>
           </p>
           <p>
