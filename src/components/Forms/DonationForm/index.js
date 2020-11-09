@@ -4,6 +4,7 @@ import * as ibantools from 'ibantools';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
 import { Button, InlineButton, PrimarySecondaryButtonContainer } from '../Button';
+import {RadioButton} from '../RadioButton';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
@@ -44,7 +45,6 @@ export default () => {
 
   const validate = values => {
     formData = JSON.parse(JSON.stringify(values));
-    console.log(formData)
     
     const errors = {};
 
@@ -83,7 +83,6 @@ export default () => {
       {!hasDonated && !enteredPaymentInfo && (
         <Form
           onSubmit={data => {
-            console.log(data);
             const { customAmount, amount, ...inputData } = data;
             const finalAmount =
               amount === 'custom' && customAmount ? +customAmount : +amount;
@@ -116,45 +115,38 @@ export default () => {
                       <p>Unterstütze uns mit:</p>
 
                       <FormSection>
-                        <label>
-                          <Field
-                            name="amount"
-                            component="input"
-                            type="radio"
-                            value="1"
-                          />{' '}
-                          1€
-                        </label>
-                        <br></br>
-                        <label>
-                          <Field
-                            name="amount"
-                            component="input"
-                            type="radio"
-                            value="5"
-                          />{' '}
-                          5€
-                        </label>
-                        <br></br>
-                        <label>
-                          <Field
-                            name="amount"
-                            component="input"
-                            type="radio"
-                            value="10"
-                          />{' '}
-                          10€
-                        </label>
-                        <br></br>
-                        <label>
-                            <Field
-                              name="amount"
-                              component="input"
-                              type="radio"
-                              value="custom"
-                            />
-                            Eigenen Betrag eingeben{' '}
-                          </label>
+                        <Field
+                          name="amount"
+                          label="1€"
+                          component={RadioButton}
+                          type="radio"
+                          value="1"
+                        />{' '}
+
+                        <Field
+                          name="amount"
+                          label="5€"
+                          component={RadioButton}
+                          type="radio"
+                          value="5"
+                        />{' '}
+
+                        <Field
+                          name="amount"
+                          label="10€"
+                          component={RadioButton}
+                          type="radio"
+                          value="10"
+                        />{' '}
+
+                        <Field
+                          name="amount"
+                          label="Eigenen Betrag eingeben"
+                          component={RadioButton}
+                          type="radio"
+                          value="custom"
+                        />{' '}
+
                           <Condition when="amount" is="custom">
                             <div className={s.customAmount}>
                               <Field
