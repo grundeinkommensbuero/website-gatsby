@@ -259,7 +259,7 @@ export default () => {
                               <InlineButton onClick={toggleSepaOverlay}>
                                 SEPA-Mandat
                               </InlineButton>
-                              .*
+                              .
                             </>
                           }
                           type="checkbox"
@@ -304,15 +304,13 @@ export default () => {
                               >
                                 Datenschutzbedingungen
                               </a>{' '}
-                              zur Kenntnis genommen.*
+                              zur Kenntnis genommen.
                             </>
                           }
                           type="checkbox"
                           component={Checkbox}
                         ></Field>
                       </FormSection>
-
-                      <p className={s.hint}>*Pflichtfeld</p>
 
                       <PrimarySecondaryButtonContainer>
                         <InlineButton
