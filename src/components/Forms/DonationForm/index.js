@@ -3,13 +3,19 @@ import { Form, Field } from 'react-final-form';
 import * as ibantools from 'ibantools';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
-import { Button, InlineButton, PrimarySecondaryButtonContainer } from '../Button';
-import {Checkbox} from '../Checkbox';
-import {RadioButton} from '../RadioButton';
+import {
+  Button,
+  InlineButton,
+  PrimarySecondaryButtonContainer,
+} from '../Button';
+import { Checkbox } from '../Checkbox';
+import { RadioButton } from '../RadioButton';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+import { Overlay } from '../../Overlay';
 
 import s from './style.module.less';
 
@@ -22,8 +28,9 @@ export default () => {
   const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState();
-  let formData = {}
-  let formErrors = {}
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  let formData = {};
+  let formErrors = {};
 
   useEffect(() => {
     if (updateUserState === 'updated') {
@@ -34,23 +41,32 @@ export default () => {
     }
   }, [updateUserState]);
 
-  const onAmountClick = (recurring) => {
+  const onAmountClick = recurring => {
     setIsRecurring(recurring);
 
     if (formErrors.customAmount) {
-      return
+      return;
     }
     setEnteredAmount(true);
-    
-  }
+  };
+
+  const toggleOverlay = () => {
+    setIsOverlayOpen(prev => !prev);
+  };
+  const toggleSepaOverlay = e => {
+    if (e.key !== 'Enter' && e.keyCode !== 13) {
+      e.preventDefault();
+    }
+    toggleOverlay();
+  };
 
   const getFormDataAmount = (amount, customAmount) => {
-      return amount === 'custom' && customAmount ? +customAmount : +amount;
-  }
+    return amount === 'custom' && customAmount ? +customAmount : +amount;
+  };
 
   const validate = values => {
     formData = JSON.parse(JSON.stringify(values));
-    
+
     const errors = {};
 
     if (values.amount === 'custom' && !values.customAmount) {
@@ -77,23 +93,20 @@ export default () => {
       errors.privacy = 'Bitte stimme zu, um fortzufahren.';
     }
 
-
-    let extractedIban = ibantools.electronicFormatIBAN(formData.iban)
+    let extractedIban = ibantools.electronicFormatIBAN(formData.iban);
     if (!ibantools.isValidIBAN(extractedIban)) {
-      errors.iban = "Muss eine gültige IBAN sein"
+      errors.iban = 'Muss eine gültige IBAN sein';
     } else {
-      formData.extractedIban = extractedIban
+      formData.extractedIban = extractedIban;
     }
 
-    formErrors = {...errors};
+    formErrors = { ...errors };
     return errors;
   };
 
-
-
   return (
     <div className={s.donationForm}>
-      {(!hasDonated && !enteredPaymentInfo && !donationError) &&(
+      {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
             const { customAmount, amount, ...inputData } = data;
@@ -104,14 +117,14 @@ export default () => {
               ...inputData,
               amount: finalAmount,
               recurring: isRecurring,
-              iban: formData.extractedIban
+              iban: formData.extractedIban,
             };
             const donationInfo = { userId: userId, donation };
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
           }}
           initialValues={{
-            amount: "5",
+            amount: '5',
           }}
           validate={values => validate(values)}
           render={({ handleSubmit }) => {
@@ -135,7 +148,6 @@ export default () => {
                           type="radio"
                           value="1"
                         />{' '}
-
                         <Field
                           name="amount"
                           label="5€"
@@ -143,7 +155,6 @@ export default () => {
                           type="radio"
                           value="5"
                         />{' '}
-
                         <Field
                           name="amount"
                           label="10€"
@@ -151,7 +162,6 @@ export default () => {
                           type="radio"
                           value="10"
                         />{' '}
-
                         <Field
                           name="amount"
                           label="Eigenen Betrag eingeben"
@@ -159,21 +169,20 @@ export default () => {
                           type="radio"
                           value="custom"
                         />{' '}
-
-                          <Condition when="amount" is="custom">
-                            <div className={s.customAmount}>
-                              <Field
-                                name="customAmount"
-                                placeholder="100"
-                                type="number"
-                                component={TextInputWrapped}
-                                min={2}
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                              />{' '}
-                              <span className={s.currency}>€</span>
-                            </div>
-                          </Condition>
+                        <Condition when="amount" is="custom">
+                          <div className={s.customAmount}>
+                            <Field
+                              name="customAmount"
+                              placeholder="100"
+                              type="number"
+                              component={TextInputWrapped}
+                              min={2}
+                              inputMode="numeric"
+                              pattern="[0-9]*"
+                            />{' '}
+                            <span className={s.currency}>€</span>
+                          </div>
+                        </Condition>
                       </FormSection>
 
                       <CTAButtonContainer>
@@ -203,7 +212,9 @@ export default () => {
 
                   {enteredAmount === true && (
                     <div>
-                      <h3>Bitte gib deine &#8203;Zahlungs&shy;informationen ein</h3>
+                      <h3>
+                        Bitte gib deine &#8203;Zahlungs&shy;informationen ein
+                      </h3>
                       <p>
                         Du möchtest{' '}
                         <span className={s.info}>
@@ -244,18 +255,56 @@ export default () => {
                           name="sepa"
                           label={
                             <>
-                              Es gilt meine Ermächtigung gemäß SEPA-Mandat.*
+                              Es gilt meine Ermächtigung gemäß{' '}
+                              <InlineButton onClick={toggleSepaOverlay}>
+                                SEPA-Mandat
+                              </InlineButton>
+                              .*
                             </>
                           }
                           type="checkbox"
                           component={Checkbox}
                         ></Field>
-
-                          <Field
+                        <Overlay
+                          isOpen={isOverlayOpen}
+                          toggleOverlay={toggleOverlay}
+                          title="SEPA-Mandat"
+                        >
+                          <p>
+                            Ich ermächtige Vertrauensgesellschaft e.V.,
+                            Zahlungen von meinem Konto mittels Lastschrift
+                            einzuziehen. Zugleich weise ich mein Kreditinstitut
+                            an, die von Vertrauensgesellschaft e.V. auf mein
+                            Konto gezogenen Lastschriften einzulösen.
+                          </p>
+                          <p>
+                            Hinweis: Ich kann innerhalb von acht Wochen,
+                            beginnend mit dem Belastungsdatum, die Erstattung
+                            des belasteten Betrages verlangen. Es gelten dabei
+                            die mit meinem Kreditinstitut vereinbarten
+                            Bedingungen. Die Frist für die Vorabinformation der
+                            SEPA-Lastschrift wird auf drei Tage verkürzt.
+                          </p>
+                          <p>
+                            Vertrauensgesellschaft e.V., Isarstrasse 11, 12053
+                            Berlin <br />
+                            Gläubiger-Identifikationsnummer:
+                            DE74ZZZZ09671218105601
+                          </p>
+                        </Overlay>
+                        <Field
                           name="privacy"
                           label={
                             <>
-                              Ich habe die Datenschutzbedingungen zur Kenntnis genommen.*
+                              Ich habe die{' '}
+                              <a
+                                href="/datenschutz/"
+                                target="_blank"
+                                className={s.link}
+                              >
+                                Datenschutzbedingungen
+                              </a>{' '}
+                              zur Kenntnis genommen.*
                             </>
                           }
                           type="checkbox"
@@ -287,9 +336,10 @@ export default () => {
         ></Form>
       )}
 
-      {(!hasDonated && enteredPaymentInfo && !donationError) && (
+      {!hasDonated && enteredPaymentInfo && !donationError && (
         <div>
           <h3>Bitte überprüfe deine Daten</h3>
+
           <p>
             Name:{' '}
             <span className={s.info}>
@@ -328,10 +378,13 @@ export default () => {
         </div>
       )}
 
-      {(hasDonated && !donationError) && (
+      {hasDonated && !donationError && (
         <div>
           <h3>Vielen Dank!</h3>
-          <p>Wir haben deine Daten erhalten und werden die Spende in Kürze von deinem Konto einziehen.</p>
+          <p>
+            Wir haben deine Daten erhalten und werden die Spende in Kürze von
+            deinem Konto einziehen.
+          </p>
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
             <CTAButton
@@ -352,9 +405,17 @@ export default () => {
       {donationError && (
         <div>
           <h3>Hoppla!</h3>
-          <p>Bei der Verarbeitung deiner Daten ist ein Fehler aufgetreten! :(</p>
-          <p>Bitte versuche es erneut, oder überweise den Betrag direkt auf unser Konto: </p>
-          <p className={s.info}>Vertrauensgesellschaft e.V.<br></br>IBAN: DE74 4306 0967 1218 1056 01</p>
+          <p>
+            Bei der Verarbeitung deiner Daten ist ein Fehler aufgetreten! :(
+          </p>
+          <p>
+            Bitte versuche es erneut, oder überweise den Betrag direkt auf unser
+            Konto: 
+          </p>
+          <p className={s.info}>
+            Vertrauensgesellschaft e.V.<br></br>IBAN: DE74 4306 0967 1218 1056
+            01
+          </p>
           <p>Vielen Dank für deine Unterstützung!</p>
           <CTAButtonContainer className={s.buttonContainer}>
             <CTAButton
@@ -380,5 +441,3 @@ const Condition = ({ when, is, children }) => (
     {({ input: { value } }) => (value === is ? children : null)}
   </Field>
 );
-
-

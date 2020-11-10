@@ -46,7 +46,7 @@ export function InlineButton({ children, onClick, className, ...other }) {
       onKeyDown={e => {
         e.preventDefault();
         // Emulate click when enter or space are pressed
-        if (e.key === 'Enter' || e.keyCode === 32) onClick();
+        if (e.key === 'Enter' || e.keyCode === 32) onClick(e);
       }}
       onClick={onClick}
       {...other}
@@ -56,7 +56,12 @@ export function InlineButton({ children, onClick, className, ...other }) {
   );
 }
 
-export function PrimarySecondaryButtonContainer({ children, className, size, ...other }) {
+export function PrimarySecondaryButtonContainer({
+  children,
+  className,
+  size,
+  ...other
+}) {
   return (
     <div className={cN(s.primarySecondaryButtonContainer, className)}>
       {children}
