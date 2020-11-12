@@ -16,13 +16,16 @@ import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
+import { HurrayCrowd } from '../../HurrayCrowd';
 
 import s from './style.module.less';
+import { FinallyMessage } from '../FinallyMessage';
 
 export default () => {
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
+  const [waitingForApi, setWaitingForApi] = useState(false);
   const [hasDonated, setHasDonated] = useState(false);
   const [donationError, setDonationError] = useState(false);
   const { userId } = useContext(AuthContext);
@@ -33,11 +36,18 @@ export default () => {
   let formErrors = {};
 
   useEffect(() => {
+    if (updateUserState === 'loading') {
+      setWaitingForApi(true);
+    }
     if (updateUserState === 'updated') {
-      setHasDonated(true);
+      setTimeout(() => {
+        setHasDonated(true);
+        setWaitingForApi(false);
+      }, 750);
     }
     if (updateUserState === 'error') {
       setDonationError(true);
+      setWaitingForApi(false);
     }
   }, [updateUserState]);
 
@@ -65,7 +75,7 @@ export default () => {
   };
 
   const validate = values => {
-    formData = JSON.parse(JSON.stringify(values));
+    formData = { ...values };
 
     const errors = {};
 
@@ -109,7 +119,8 @@ export default () => {
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
-            const { customAmount, amount, ...inputData } = data;
+            console.log(data);
+            const { customAmount, amount, privacy, sepa, ...inputData } = data;
             const finalAmount =
               amount === 'custom' && customAmount ? +customAmount : +amount;
 
@@ -120,6 +131,7 @@ export default () => {
               iban: formData.extractedIban,
             };
             const donationInfo = { userId: userId, donation };
+            console.log({ donationInfo });
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
           }}
@@ -334,7 +346,7 @@ export default () => {
         ></Form>
       )}
 
-      {!hasDonated && enteredPaymentInfo && !donationError && (
+      {!hasDonated && enteredPaymentInfo && !waitingForApi && !donationError && (
         <div>
           <h3>Bitte überprüfe deine Daten</h3>
 
@@ -374,6 +386,15 @@ export default () => {
             </CTAButton>
           </PrimarySecondaryButtonContainer>
         </div>
+      )}
+      {waitingForApi && (
+        <FinallyMessage
+          className={s.waitingHint}
+          preventScrolling="true"
+          state="progress"
+        >
+          Sichere Datenübertragung, bitte einen Moment Geduld...
+        </FinallyMessage>
       )}
 
       {hasDonated && !donationError && (
