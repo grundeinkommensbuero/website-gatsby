@@ -43,8 +43,10 @@
   color: var(--bg-color);
   border: none;
 
-  &:hover {
-    background: darken(@red, 5%);
+  &:hover,
+  &:focus {
+    background: darken(@red, 10%);
+    box-shadow: none;
   }
 }
 

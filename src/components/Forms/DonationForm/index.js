@@ -16,7 +16,6 @@ import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
-import { HurrayCrowd } from '../../HurrayCrowd';
 
 import s from './style.module.less';
 import { FinallyMessage } from '../FinallyMessage';
