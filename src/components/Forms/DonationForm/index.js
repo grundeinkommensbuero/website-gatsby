@@ -29,7 +29,8 @@ export default () => {
   const [donationError, setDonationError] = useState(false);
   const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
-  const [donationInfo, setDonationInfo] = useState();
+  const [donationInfo, setDonationInfo] = useState({});
+  const [initialValues, setInitialValues] = useState({amount: '5'});
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   let formData = {};
   let formErrors = {};
@@ -129,12 +130,14 @@ export default () => {
               iban: formData.extractedIban,
             };
             const donationInfo = { userId: userId, donation };
+
+            setInitialValues(data);
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
           }}
-          initialValues={{
-            amount: '5',
-          }}
+          initialValues={
+            initialValues
+          }
           validate={values => validate(values)}
           render={({ handleSubmit }) => {
             return (
