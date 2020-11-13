@@ -118,7 +118,6 @@ export default () => {
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
-            console.log(data);
             const { customAmount, amount, privacy, sepa, ...inputData } = data;
             const finalAmount =
               amount === 'custom' && customAmount ? +customAmount : +amount;
@@ -130,7 +129,6 @@ export default () => {
               iban: formData.extractedIban,
             };
             const donationInfo = { userId: userId, donation };
-            console.log({ donationInfo });
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
           }}
