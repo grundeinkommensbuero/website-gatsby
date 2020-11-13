@@ -19,6 +19,7 @@ import { Overlay } from '../../Overlay';
 
 import s from './style.module.less';
 import { FinallyMessage } from '../FinallyMessage';
+import Confetti from '../../Confetti';
 
 export default () => {
   const [isRecurring, setIsRecurring] = useState(false);
@@ -147,7 +148,7 @@ export default () => {
                     <div className={s.partialForm}>
                       <h3>Unterstütze uns!</h3>
                       <p>
-                        Wir finanzieren uns komplett durch Spenden. Bitte hilf
+                        Wir finanzieren uns fast ausschließlich durch Spenden. Bitte hilf
                         uns, die Expedition am Laufen zu halten!
                       </p>
                       <p>Unterstütze uns mit:</p>
@@ -418,6 +419,8 @@ export default () => {
               Zurück zum Formular
             </CTAButton>
           </CTAButtonContainer>
+
+          <Confetti></Confetti>
         </div>
       )}
 
