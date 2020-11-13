@@ -22,9 +22,9 @@ const DEFAULT_BOUNDS = [
 ];
 
 /**
- * The `config` field on a contentful map object takes values that will be directly
- * passed in to the mapboxgl map constructor. This function adds properties to the default mapbox config,
- * only adding properties that have a value on the backend.
+ * The `config` JSON field on a Contentful Map takes values that will be directly
+ * passed in to the mapboxgl map constructor. This function extends the default mapbox config
+ * only adding or overriding any properties that have a value on Contentful.
  *
  * @param {{}} defaultConfig Default mapbox config to add props to
  * @param {{key: string; value: any}[]} props Props that get added to or override default config
@@ -45,6 +45,7 @@ const addPropsToMapboxConfig = (defaultConfig, props) => {
     return acc;
   }, {});
 
+  // Merge Contentful properties with the default
   return {
     ...defaultConfig,
     ...configWithoutNulls,
