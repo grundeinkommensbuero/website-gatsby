@@ -1,19 +1,39 @@
 @import '../../../components/style/vars.less';
 
 .profilePageGrid {
-  grid-column-start: wide-start;
-  grid-column-end: wide-end;
-
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 5rem 0 10rem;
   display: grid;
-  grid-template-columns: 6em 1fr auto;
-  grid-template-rows: auto;
-  grid-column-gap: 1em;
-  align-items: center;
+  grid-gap: 2rem;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
 
   @media (max-width: @breakPointS) {
-    grid-template-columns: auto;
-    grid-column-gap: initial;
+    display: grid;
   }
+}
+
+.profilePageSection {
+  position: relative;
+  background-color: @white;
+  padding: 3.3rem 4rem;
+}
+
+.sectionLink {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.userInfo,
+.supportText {
+  grid-column: 1 / span 2;
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: 200px auto;
 }
 
 .avatar {
@@ -41,7 +61,7 @@
 }
 
 // Content sections
-.profilePageSection {
+/* .profilePageSection {
   grid-column-start: 2;
   grid-column-end: 3;
   margin-top: 2em;
@@ -50,7 +70,7 @@
     grid-column-start: auto;
     grid-column-end: auto;
   }
-}
+} */
 
 // Details section
 .details {
