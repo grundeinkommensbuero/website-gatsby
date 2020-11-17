@@ -8,7 +8,6 @@ import { Button } from '../Button';
 import { navigate } from 'gatsby';
 
 import Fuse from 'fuse.js';
-import places from './places.json';
 
 export default function SearchPlaces({ showButton, onPlaceSelect }) {
   const [query, setQuery] = useState('');
@@ -16,50 +15,63 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
   const [selectedPlace, setSelectedPlace] = useState({});
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
-
-  const fuse = new Fuse(places, {
-    keys: ['name', 'zipCodes'],
-    includeScore: true,
-    threshold: 0.2,
-  });
+  const [fuse, setFuse] = useState();
 
   useEffect(() => {
-    if (query !== selectedPlace.name) {
-      setSuggestionsActive(true);
-      setSelectedPlace({});
-    }
-    console.time('Search');
+    import('./places.json').then(({ default: places }) => {
+      setFuse(
+        new Fuse(places, {
+          keys: ['name', 'zipCodes'],
+          includeScore: true,
+          threshold: 0.2,
+        })
+      );
+    });
+  }, []);
 
-    // We need to split the query string into zip code
-    // and municipality name, so the user can search
-    // for something like 99955 Bad Tennstedt
-    let digits = query.match(/\d+/);
-    digits = digits ? digits[0] : '';
-    const name = query.replace(/\d+/g, '').trim();
+  useEffect(() => {
+    if (query.length > 1) {
+      if (query !== selectedPlace.name) {
+        setSuggestionsActive(true);
+        setSelectedPlace({});
+      }
+      console.time('Search');
 
-    let searchProps;
-    // If both zip code and name were inside the query string
-    // we should search the data for name AND zip code
-    if (digits !== '' && name !== '') {
-      searchProps = {
-        $and: [{ name: name }, { zipCodes: digits }],
-      };
-    } else if (digits !== '') {
-      searchProps = digits;
-    } else if (name !== '') {
-      searchProps = name;
+      if (fuse) {
+        // We need to split the query string into zip code
+        // and municipality name, so the user can search
+        // for something like 99955 Bad Tennstedt
+        let digits = query.match(/\d+/);
+        digits = digits ? digits[0] : '';
+        const name = query.replace(/\d+/g, '').trim();
+
+        let searchProps;
+        // If both zip code and name were inside the query string
+        // we should search the data for name AND zip code
+        if (digits !== '' && name !== '') {
+          searchProps = {
+            $and: [{ name: name }, { zipCodes: digits }],
+          };
+        } else if (digits !== '') {
+          searchProps = digits;
+        } else if (name !== '') {
+          searchProps = name;
+        } else {
+          searchProps = '';
+        }
+
+        const fuseResults = fuse.search(searchProps);
+        console.log({ fuseResults });
+        console.timeEnd('Search');
+        const results = fuseResults
+          .map(x => ({ ...x.item, score: x.score }))
+          .slice(0, 10);
+        setResults(results);
+      }
     } else {
-      searchProps = '';
+      setResults([]);
     }
-
-    const fuseResults = fuse.search(searchProps);
-    console.log({ fuseResults });
-    console.timeEnd('Search');
-    const results = fuseResults
-      .map(x => ({ ...x.item, score: x.score }))
-      .slice(0, 10);
-    setResults(results);
-  }, [query]);
+  }, [query, fuse]);
 
   const handleSuggestionClick = suggestion => {
     setQuery(suggestion.name);
@@ -85,7 +97,7 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
     console.log({ selectedPlace, result: results[0] });
     if (selectedPlace.ags) {
       navigate(`/kommune/${selectedPlace.ags}`);
-    } else if (results && results[0].score < 0.001) {
+    } else if (results.length > 0 && results[0].score < 0.001) {
       navigate(`/kommune/${results[0].ags}`);
     } else {
       const touched = true;
@@ -95,9 +107,13 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
   };
 
   return (
-    <div>
-      <div className={s.container}>
+    <div className={s.container}>
+      <div className={s.inputContainer}>
+        <label htmlFor="gemeinde">Stadt:</label>
         <TextInput
+          id="gemeinde"
+          placeholder="Stadt"
+          label="Stadt"
           value={query}
           onChange={handleChange}
           onBlur={e => {
@@ -113,47 +129,59 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
         />
         <LabelInputErrorWrapper meta={formState} />
         <AutoCompleteList
+          query={query}
           results={results}
           suggestionsActive={suggestionsActive}
           handleSuggestionClick={handleSuggestionClick}
         />
       </div>
-      {showButton && <Button onClick={handleSubmit}>Finde deine Stadt</Button>}
+      {showButton && (
+        <Button className={s.sideButton} onClick={handleSubmit}>
+          Finde deine Stadt
+        </Button>
+      )}
     </div>
   );
 }
 
 export function AutoCompleteList({
+  query,
   results,
   suggestionsActive,
   handleSuggestionClick,
 }) {
   return (
     <div className={cN(s.suggestions, { [s.active]: suggestionsActive })}>
-      {results.map(x => {
-        return (
-          <div
-            key={x.ags}
-            className={s.suggestionsItem}
-            role="button"
-            aria-pressed="false"
-            tabIndex={0}
-            onClick={e => handleSuggestionClick(x)}
-            onKeyDown={e => {
-              // Emulate click when enter or space are pressed
-              if (e.key === 'Enter' || e.keyCode === 32) {
-                e.preventDefault();
-                handleSuggestionClick(x);
-              }
-            }}
-          >
-            {x.name},{' '}
-            {x.zipCodes.length === 1
-              ? `${x.zipCodes[0]}`
-              : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
-          </div>
-        );
-      })}
+      {results.length === 0 && query.length > 1 && (
+        <div className={s.noSuggestionsItem}>Keine Ergebnisse</div>
+      )}
+
+      {results.length > 0 &&
+        query.length > 1 &&
+        results.map(x => {
+          return (
+            <div
+              key={x.ags}
+              className={s.suggestionsItem}
+              role="button"
+              aria-pressed="false"
+              tabIndex={0}
+              onClick={e => handleSuggestionClick(x)}
+              onKeyDown={e => {
+                // Emulate click when enter or space are pressed
+                if (e.key === 'Enter' || e.keyCode === 32) {
+                  e.preventDefault();
+                  handleSuggestionClick(x);
+                }
+              }}
+            >
+              {x.name},{' '}
+              {x.zipCodes.length === 1
+                ? `${x.zipCodes[0]}`
+                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
+            </div>
+          );
+        })}
     </div>
   );
 }

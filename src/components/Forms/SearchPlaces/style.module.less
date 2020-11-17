@@ -2,7 +2,18 @@
 @inputWidth: 25rem;
 
 .container {
+  display: grid;
+  grid-template-columns: @inputWidth 1fr;
+  grid-gap: 2rem;
+  align-items: flex-end;
+  @media (max-width: @breakPointM) {
+    grid-template-columns: @inputWidth;
+    margin-bottom: 1rem;
+  }
+}
+.inputContainer {
   position: relative;
+
   width: @inputWidth;
 }
 
@@ -30,4 +41,13 @@
   &:hover {
     background-color: @greyBright;
   }
+}
+
+.noSuggestionsItem {
+  padding: 0.5rem 1.25rem;
+  color: @greyMedium;
+}
+
+.sideButton {
+  max-width: @inputWidth;
 }
