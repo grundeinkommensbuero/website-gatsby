@@ -35,7 +35,6 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
         setSuggestionsActive(true);
         setSelectedPlace({});
       }
-      console.time('Search');
 
       if (fuse) {
         // We need to split the query string into zip code
@@ -61,8 +60,6 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
         }
 
         const fuseResults = fuse.search(searchProps);
-        console.log({ fuseResults });
-        console.timeEnd('Search');
         const results = fuseResults
           .map(x => ({ ...x.item, score: x.score }))
           .slice(0, 10);
@@ -88,13 +85,15 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
   const handleChange = e => {
     const { value } = e.target;
     setQuery(value);
+    const touched = false;
+    const error = '';
+    setFormState({ error, touched });
   };
 
   const handleSubmit = e => {
     // If no place was selected, we check if the top result
     // has a very good score, if yes -> navigate to the page
     // of that place
-    console.log({ selectedPlace, result: results[0] });
     if (selectedPlace.ags) {
       navigate(`/kommune/${selectedPlace.ags}`);
     } else if (results.length > 0 && results[0].score < 0.001) {
@@ -107,39 +106,49 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
   };
 
   return (
-    <div className={s.container}>
-      <div className={s.inputContainer}>
-        <label htmlFor="gemeinde">Stadt:</label>
-        <TextInput
-          id="gemeinde"
-          placeholder="Stadt"
-          label="Stadt"
-          value={query}
-          onChange={handleChange}
-          onBlur={e => {
-            if (
-              e.relatedTarget &&
-              e.relatedTarget.getAttribute('id') === 'gatsby-focus-wrapper'
-            ) {
-              setTimeout(() => {
-                setSuggestionsActive(false);
-              }, 300);
-            }
-          }}
-        />
-        <LabelInputErrorWrapper meta={formState} />
-        <AutoCompleteList
-          query={query}
-          results={results}
-          suggestionsActive={suggestionsActive}
-          handleSuggestionClick={handleSuggestionClick}
-        />
+    <div>
+      <label htmlFor="gemeinde">Stadt:</label>
+      <div className={s.container}>
+        <div className={s.inputContainer}>
+          <TextInput
+            id="gemeinde"
+            placeholder="Stadt"
+            autoComplete="off"
+            label="Stadt"
+            value={query}
+            onChange={handleChange}
+            onBlur={e => {
+              if (
+                e.relatedTarget &&
+                (e.relatedTarget.getAttribute('id') ===
+                  'gatsby-focus-wrapper' ||
+                  e.relatedTarget.getAttribute('id') === 'linkButton')
+              ) {
+                setTimeout(() => {
+                  setSuggestionsActive(false);
+                }, 300);
+              }
+            }}
+          />
+
+          <AutoCompleteList
+            query={query}
+            results={results}
+            suggestionsActive={suggestionsActive}
+            handleSuggestionClick={handleSuggestionClick}
+          />
+          <LabelInputErrorWrapper meta={formState} />
+        </div>
+        {showButton && (
+          <Button
+            id="linkButton"
+            className={s.sideButton}
+            onClick={handleSubmit}
+          >
+            Finde deine Stadt
+          </Button>
+        )}
       </div>
-      {showButton && (
-        <Button className={s.sideButton} onClick={handleSubmit}>
-          Finde deine Stadt
-        </Button>
-      )}
     </div>
   );
 }
