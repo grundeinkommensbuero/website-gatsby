@@ -50,7 +50,8 @@ const answerCustomChallenge = async (
       // offer enough flexibility
       confirmSignUp(
         tempUser.attributes.sub,
-        tempUser.signInUserSession.idToken.jwtToken
+        tempUser.signInUserSession.idToken.jwtToken,
+        answer
       );
     } catch (error) {
       setState('wrongCode');
@@ -66,9 +67,10 @@ const answerCustomChallenge = async (
 };
 
 // We use updateUser function to confirm user in dynamo db
-const confirmSignUp = async (userId, token) => {
+// Code needs to be saved in the db as well for legal reasons
+const confirmSignUp = async (userId, token, code) => {
   try {
-    await updateUser({ userId, token, confirmed: true });
+    await updateUser({ userId, token, confirmed: true, code });
   } catch (error) {
     console.log('Error while confirming user', error);
   }
