@@ -122,9 +122,6 @@ const signUp = async (data, { setUserId }) => {
   const { userSub: userId } = await Auth.signUp({
     username: data.email.toLowerCase(),
     password: getRandomString(30),
-    attributes: {
-      'custom:confirmed': 'false', // booleans not possible
-    },
   });
 
   data.referral = getReferral();
