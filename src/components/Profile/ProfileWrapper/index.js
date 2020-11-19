@@ -1,32 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
-import cN from 'classnames';
+import { Router } from '@reach/router';
+
 import { navigate } from '@reach/router';
 import AuthContext from '../../../context/Authentication';
-import Layout from '../../../components/Layout';
-import {
-  Section,
-  SectionInner,
-  SectionWrapper,
-} from '../../../components/Layout/Sections';
-import AvatarImage from '../../../components/AvatarImage';
+import Layout from '../../Layout';
+import { Section, SectionInner, SectionWrapper } from '../../Layout/Sections';
 
 import s from './style.module.less';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
-import SignatureStats from '../../../components/SignatureStats';
-import { formatDate } from '../../../components/utils';
 import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
-import { LinkButtonLocal } from '../../../components/Forms/Button';
-import { FinallyMessage } from '../../../components/Forms/FinallyMessage';
-import { EnterLoginCode } from '../../../components/Login/EnterLoginCode';
-
-// We need the following mappings for the link to the self scan page
-const SELF_SCAN_SLUGS = {
-  brandenburg: 'qr/bb',
-  berlin: 'qr/b',
-  'schlewsig-holstein': 'qr/sh',
-  hamburg: 'qr/hh',
-  bremen: 'qr/hb',
-};
+import { LinkButtonLocal } from '../../Forms/Button';
+import { FinallyMessage } from '../../Forms/FinallyMessage';
+import { EnterLoginCode } from '../../Login/EnterLoginCode';
+import ProfileNotifications from '../ProfileNotifications';
+import ProfileOverview from '../ProfileOverview';
 
 const ProfilePage = ({ id: slugId }) => {
   const {
@@ -84,68 +71,15 @@ const ProfilePage = ({ id: slugId }) => {
           </Section>
         )}
         {!isLoading && isAuthenticated && (
-          <section className={s.profilePageGrid}>
-            <section className={cN(s.profilePageSection, s.userInfo)}>
-              <AvatarImage user={userData} className={s.avatar} />
-              <div>
-                <h1
-                  className={cN({
-                    [s.username]: userData.username,
-                    [s.email]: !userData.username,
-                  })}
-                >
-                  {userData.username || userData.email}
-                </h1>
-                {/* Show profile edit button if own page */}
-                <div className={s.details}>
-                  Dabei seit dem{' '}
-                  {userData.createdAt && formatDate(new Date(userData.createdAt))}
-                </div>
-              </div>
-              <span className={s.sectionLink}>Stammdaten bearbeiten</span>
-            </section>
-
-            <section className={cN([s.profilePageSection, s.signaturesSection])}>
-              <h2>Eingegangene Unterschriften</h2>
-              {signatureCountOfUser && (
-                <>
-                  <SignatureStats
-                    signatureCount={signatureCountOfUser}
-                    className={s.signatureStats}
-                    layout="horizontal"
-                  />
-
-                  <div className={cN(s.sectionLink, s.link)}>
-                    <a
-                      href={`/${
-                        signatureCountOfUser.mostRecentCampaign
-                          ? SELF_SCAN_SLUGS[
-                              signatureCountOfUser.mostRecentCampaign.state
-                            ]
-                          : 'qr/b' // if user has no recent campaign default is just berlin
-                      }?userId=${userId}`}
-                    >
-                      Hier mehr eintragen...
-                    </a>
-                  </div>
-                </>
-              )}
-            </section>
-
-            <section className={cN([s.profilePageSection, s.contactInfo])}>
-              <h2>Newsletter & Kontakt</h2>
-              <p>Du erhältst folgende Newsletter: Berlin, Kiel</p>
-            </section>
-
-            <div className={s.supportText}>
-              Falls du deine persönlichen Daten ändern oder deinen Account
-              löschen möchtest, schick eine E-Mail an{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </div>
-          </section>
+          <Router>
+            <ProfileOverview
+              userData={userData}
+              signatureCountOfUser={signatureCountOfUser}
+              userId={userId}
+              path="/"
+            />
+            <ProfileNotifications path="notifications" />
+          </Router>
         )}
 
         {/* If not authenticated and trying to access different profile show option to go to own user page */}
