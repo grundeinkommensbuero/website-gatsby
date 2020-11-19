@@ -21,7 +21,7 @@ export default () => {
               mapConfig={{
                 state: 'berlin',
                 config: {
-                  bounds: [
+                  maxBounds: [
                     [3, 47.217923],
                     [17.030017, 55.437655],
                   ],
