@@ -7,14 +7,10 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-  const raw = fs.readFileSync(
-    // './content/municipalities-development.json',
-    './content/municipalities-production.json',
-    'utf8'
-  );
-  const places = JSON.parse(raw);
+  const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
+  const municipalities = JSON.parse(raw);
 
-  places.forEach(e => {
+  municipalities.forEach(e => {
     createPage({
       path: `/gemeinden/${e.ags}`,
       component: require.resolve('./src/components/Municipality/index.js'),

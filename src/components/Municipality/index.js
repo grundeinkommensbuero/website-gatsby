@@ -32,7 +32,7 @@ const Municipality = ({ pageContext: { municipality } }) => {
           <SectionInner>
             <h3>
               {municipality.district ? `Kreis: ${municipality.district}, ` : ''}{' '}
-              Bundesland: {municipality.state}
+              Bundesland: {municipality.state}.
             </h3>
             <p>
               Koordinaten: {municipality.latitude}, {municipality.longitude}

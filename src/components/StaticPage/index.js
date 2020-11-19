@@ -70,7 +70,7 @@ export const pageQuery = graphql`
               name
               state
               config {
-                bounds
+                maxBounds
               }
             }
             callToActionLink
