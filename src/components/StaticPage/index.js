@@ -71,6 +71,8 @@ export const pageQuery = graphql`
               state
               config {
                 bounds
+                zoom
+                center
               }
             }
             callToActionLink
