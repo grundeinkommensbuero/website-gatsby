@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Promise = require('bluebird');
 const path = require('path');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
@@ -6,6 +7,22 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
+  const raw = fs.readFileSync(
+    // './content/municipalities-development.json',
+    './content/municipalities-production.json',
+    'utf8'
+  );
+  const places = JSON.parse(raw);
+
+  places.forEach(e => {
+    createPage({
+      path: `/gemeinden/${e.ags}`,
+      component: require.resolve('./src/components/Municipality/index.js'),
+      context: {
+        municipality: e,
+      },
+    });
+  });
 
   return new Promise((resolve, reject) => {
     const staticPage = path.resolve('./src/components/StaticPage/index.js');
