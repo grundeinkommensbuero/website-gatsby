@@ -35,7 +35,9 @@ export default ({ userData, signatureCountOfUser, userId }) => {
             {userData.createdAt && formatDate(new Date(userData.createdAt))}
           </div>
         </div>
-        <span className={s.sectionLink}>Stammdaten bearbeiten</span>
+        <div className={s.sectionLink}>
+          <Link to="stammdaten">Stammdaten bearbeiten</Link>
+        </div>
       </section>
 
       <section className={cN([s.profilePageSection, s.signaturesSection])}>
@@ -48,7 +50,7 @@ export default ({ userData, signatureCountOfUser, userId }) => {
               layout="horizontal"
             />
 
-            <div className={cN(s.sectionLink, s.link)}>
+            <div className={s.sectionLink}>
               <a
                 href={`/${
                   signatureCountOfUser.mostRecentCampaign
@@ -58,7 +60,7 @@ export default ({ userData, signatureCountOfUser, userId }) => {
                     : 'qr/b' // if user has no recent campaign default is just berlin
                 }?userId=${userId}`}
               >
-                Hier mehr eintragen...
+                Mehr sehen und eintragen
               </a>
             </div>
           </>
@@ -68,7 +70,9 @@ export default ({ userData, signatureCountOfUser, userId }) => {
       <section className={cN([s.profilePageSection, s.contactInfo])}>
         <h2>Newsletter & Kontakt</h2>
         <p>Du erhältst folgende Newsletter: Berlin, Kiel</p>
-        <Link to="notifications">Hier klicken</Link>
+        <div className={s.sectionLink}>
+          <Link to="kontakt-einstellungen">Einstellungen ändern</Link>
+        </div>
       </section>
 
       <div className={s.supportText}>

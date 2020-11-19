@@ -14,6 +14,8 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import ProfileNotifications from '../ProfileNotifications';
 import ProfileOverview from '../ProfileOverview';
+import PersonalSettings from '../PersonalSettings';
+import ProfileSignatures from '../ProfileSignatures';
 
 const ProfilePage = ({ id: slugId }) => {
   const {
@@ -78,7 +80,9 @@ const ProfilePage = ({ id: slugId }) => {
               userId={userId}
               path="/"
             />
-            <ProfileNotifications path="notifications" />
+            <PersonalSettings path="stammdaten" />
+            <ProfileNotifications path="kontakt-einstellungen" />
+            <ProfileSignatures path="unterschriften-eintragen" />
           </Router>
         )}
 

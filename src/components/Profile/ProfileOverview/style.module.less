@@ -20,10 +20,18 @@
   padding: 3.3rem 4rem;
 }
 
+h2 {
+  margin-top: 0;
+}
+
 .sectionLink {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 0.5rem;
+  right: 1rem;
+
+  &:after {
+    content: ' >';
+  }
 }
 
 .userInfo,
@@ -89,6 +97,6 @@
 }
 
 .supportText {
-  margin-top: 5em;
-  font-size: @fontSizeM;
+  margin-top: 3em;
+  font-size: @fontSizeS;
 }
