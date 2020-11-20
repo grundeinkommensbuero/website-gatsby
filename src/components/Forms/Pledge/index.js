@@ -57,7 +57,7 @@ const SignaturePledge = ({ pledgeId }) => {
   }, [isAuthenticated, hasSubmitted, userExists]);
 
   if (signUpState === 'success' && !isAuthenticated) {
-    return <EnterLoginCode />;
+    return <EnterLoginCode preventSignIn={true} />;
   }
 
   if (signUpState || createPledgeState || updatePledgeState) {

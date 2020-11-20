@@ -13,8 +13,8 @@ import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 
-export const EnterLoginCode = ({ children }) => {
-  const { tempEmail, setTempEmail, isAuthenticated } = useContext(AuthContext);
+export const EnterLoginCode = ({ children, preventSignIn }) => {
+  const { tempEmail, setTempEmail } = useContext(AuthContext);
   const [
     answerChallengeState,
     setCode,
@@ -23,7 +23,9 @@ export const EnterLoginCode = ({ children }) => {
   const [signInState, startSignIn] = useSignIn();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // We don't want to start sign in again, if flag is set
+    // (we might already have started sign in outside of component)
+    if (!preventSignIn) {
       startSignIn();
     }
   }, []);

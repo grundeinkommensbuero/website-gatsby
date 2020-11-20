@@ -46,7 +46,7 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
     !anonymous
   ) {
     return (
-      <EnterLoginCode>
+      <EnterLoginCode preventSignIn={signUpState === 'success'}>
         <p>
           Zur Verifizierung gib bitte den Code ein, den wir dir gerade in einer
           E-Mail geschickt haben. Alternativ kannst du auch eine Liste{' '}

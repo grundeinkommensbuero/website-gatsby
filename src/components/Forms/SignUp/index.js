@@ -47,7 +47,7 @@ export default ({
   }, [isAuthenticated, hasSubmitted]);
 
   if (signUpState === 'success') {
-    return <EnterLoginCode />;
+    return <EnterLoginCode preventSignIn={true} />;
   }
 
   if (signUpState) {
