@@ -100,8 +100,7 @@ const createSignatureList = async (
 };
 
 // Function which calls our api to create a (new) signature list
-// Depending on whether or not the user already was authenticated,
-// we use a different endpoint: /signatures for anonymous lists, and
+// We use different endpoints: /signatures for anonymous lists, and
 // /users/{userId}/signatures for personalized lists
 
 // Returns the list {id, url} or null
