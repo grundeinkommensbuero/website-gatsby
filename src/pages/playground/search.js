@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import Map from '../../components/Maps/Map';
+import SearchPlaces from '../../components/Forms/SearchPlaces';
 
 export default () => {
   return (
@@ -15,19 +15,9 @@ export default () => {
         <title>Playground</title>
       </Helmet>
       <SectionWrapper>
-        <Section title="karte">
+        <Section title="Gemeindesuche">
           <SectionInner wide={true}>
-            <Map
-              mapConfig={{
-                state: 'berlin',
-                config: {
-                  maxBounds: [
-                    [3, 47.217923],
-                    [17.030017, 55.437655],
-                  ],
-                },
-              }}
-            />
+            <SearchPlaces showButton={true} />
           </SectionInner>
         </Section>
       </SectionWrapper>
