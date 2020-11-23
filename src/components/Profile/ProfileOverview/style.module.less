@@ -1,16 +1,18 @@
 @import '../../../components/style/vars.less';
 
 .profilePageGrid {
-  max-width: 70rem;
+  width: 100%;
+  max-width: 72rem;
   margin: 0 auto;
-  padding: 5rem 0 10rem;
+  padding: 5rem 2rem 10rem;
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: 50% 50%;
   justify-content: center;
 
-  @media (max-width: @breakPointS) {
-    display: grid;
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 90%;
+    padding: 2rem 0 2rem;
   }
 }
 
@@ -25,10 +27,22 @@
   &:focus {
     background-color: @greyBright;
   }
+
+  @media (max-width: @breakPointS) {
+    padding: 3rem 3rem 5rem;
+  }
 }
 
 .profilePageSectionLarge {
   grid-column: 1 / span 2;
+
+  @media (max-width: @breakPointM) {
+    grid-column: unset;
+  }
+}
+
+h1 {
+  line-height: normal;
 }
 
 h2 {
@@ -56,6 +70,14 @@ h2 {
 .userInfo {
   display: grid;
   grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 160px auto;
+  }
+
+  @media (max-width: @breakPointS) {
+    display: block;
+  }
 }
 
 .avatar {
@@ -63,33 +85,31 @@ h2 {
   height: 6em;
 
   @media (max-width: @breakPointS) {
-    margin: 0 auto;
+    margin-bottom: 1.5rem;
   }
 }
 
 .username {
   font-size: @fontSizeXXL;
-
   margin: 0;
   padding: 0;
 
   @media (max-width: @breakPointM) {
     font-size: @fontSizeXL;
   }
-
-  @media (max-width: @breakPointS) {
-    text-align: center;
-  }
 }
 
 // Details section
+.placeInfo {
+  margin-bottom: 0.3rem;
+  font-size: @fontSizeM;
+}
+
 .details {
   margin: 0;
-  font-size: @fontSizeM;
 
   @media (max-width: @breakPointS) {
     margin-top: 1em;
-    text-align: center;
     font-size: @fontSizeS;
   }
 }
@@ -102,7 +122,8 @@ h2 {
 
   .signatureStats {
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
     @media (max-width: @breakPointS) {
       flex-direction: column;
@@ -111,5 +132,9 @@ h2 {
 }
 
 .supportText {
-  margin-top: 3em;
+  margin-top: 3rem;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 1rem;
+  }
 }
