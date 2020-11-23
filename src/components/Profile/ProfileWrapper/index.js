@@ -80,7 +80,10 @@ const ProfilePage = ({ id: slugId }) => {
               userId={userId}
               path="/"
             />
-            <PersonalSettings path="stammdaten" />
+            <PersonalSettings
+              userData={userData}
+              userId={userId}
+              path="stammdaten" />
             <ProfileNotifications path="kontakt-einstellungen" />
             <ProfileSignatures path="unterschriften-eintragen" />
           </Router>

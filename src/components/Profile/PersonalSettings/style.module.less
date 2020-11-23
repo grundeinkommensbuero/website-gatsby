@@ -1,0 +1,146 @@
+@import '../../../components/style/vars.less';
+
+.profilePageGrid {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 5rem 0 10rem;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+
+  @media (max-width: @breakPointS) {
+    display: grid;
+  }
+}
+
+.profilePageSection {
+  position: relative;
+  background-color: #dddddd;
+  padding: 3.3rem 4rem;
+}
+
+.avatar {
+  width: 6em;
+  height: 6em;
+
+  @media (max-width: @breakPointS) {
+    margin: 0 auto;
+  }
+}
+
+.userInfo,
+.supportText {
+  grid-column: 1 / span 2;
+}
+
+.userInfo {
+  padding: 3rem 0 3rem 0;
+  display: grid;
+  grid-template-columns: 150px auto;
+}
+
+.username {
+  font-size: @fontSizeXXL;
+
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXL;
+  }
+
+  @media (max-width: @breakPointS) {
+    text-align: center;
+  }
+}
+
+// Details section
+.details {
+  margin: 0;
+  font-size: @fontSizeM;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 1em;
+    text-align: center;
+    font-size: @fontSizeS;
+  }
+}
+
+.dataEditWrapper {
+  display: grid;
+  grid-template-columns: 150px auto;
+}
+
+.dataEditSection {
+  grid-column: 2 / span 2;
+}
+
+.editSettings {
+  grid-column: 1 / span 2;
+}
+
+.optionSectionHeading {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.optionSectionDescription {
+  margin-bottom: 0.75em;
+  font-weight: 100;
+}
+
+.optionHeading {
+  margin: 0;
+}
+
+.optionDescription {
+  margin: 0;
+  font-weight: 100;
+}
+
+.editableRow {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.socialButtonRow {
+  padding-top: 1em;
+}
+
+.saveChangesBtn {
+  font-size: 14px;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.saveChangesBtnSmall {
+  font-size: 14px;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 1em;
+}
+
+.editTextInput {
+  margin-bottom: 1em;
+}
+
+.backToProfile {
+  left: 1rem;
+
+  &:before {
+    content: '< ';
+  }
+}
+
+.bottomRightLink {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
