@@ -1,0 +1,84 @@
+@import '../../style/vars.less';
+
+.donationForm {
+  --secondary-color: @blueBright;
+  --bg-color: @yellow;
+  --font-color: @red;
+  background-color: var(--bg-color);
+  font-weight: normal;
+  margin-top: 3em;
+  padding: 30px 40px 40px 40px;
+  // Only for HurrayCrowd component:
+  // position: relative;
+  // z-index: 1;
+
+  h3 {
+    hyphens: unset;
+  }
+
+  div {
+    font-size: @fontSizeM;
+
+    @media (max-width: @breakPointM) {
+      font-size: @fontSizeS;
+    }
+  }
+
+  input[type='radio'] {
+    margin-bottom: 0.8rem;
+  }
+
+  label div {
+    font-size: @fontSizeS;
+    font-weight: bold;
+  }
+}
+
+.waitingHint {
+  --secondary-color: @yellow;
+}
+
+.primaryButton {
+  background: var(--font-color);
+  color: var(--bg-color);
+  border: none;
+
+  &:hover,
+  &:focus {
+    background: darken(@red, 10%);
+    box-shadow: none;
+  }
+}
+
+.link {
+  .linkUnderlined();
+
+  &:hover {
+    .menuLink();
+  }
+}
+
+.partialForm {
+  margin-bottom: 0;
+}
+
+.customAmount {
+  display: flex;
+
+  input {
+    margin: 0.5rem 0.5rem 0 0;
+  }
+}
+
+.currency {
+  font-size: @fontSizeXL;
+  margin-top: 16px;
+}
+
+.info {
+  font-weight: bold;
+}
+
+.hint {
+  font-size: @fontSizeXS;
+}
