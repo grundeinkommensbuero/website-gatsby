@@ -1,0 +1,53 @@
+@import '../../style/vars.less';
+@inputWidth: 25rem;
+
+.container {
+  display: grid;
+  grid-template-columns: @inputWidth 1fr;
+  grid-gap: 2rem;
+  align-items: baseline;
+  @media (max-width: @breakPointM) {
+    grid-template-columns: @inputWidth;
+    margin-bottom: 1rem;
+  }
+}
+.inputContainer {
+  position: relative;
+
+  width: @inputWidth;
+}
+
+.suggestions {
+  background-color: @white;
+  font-weight: normal;
+  list-style: none;
+  margin-top: 0;
+  max-height: 15rem;
+  padding-left: 0;
+  position: absolute;
+  overflow-y: scroll;
+  visibility: hidden;
+  width: @inputWidth;
+  z-index: 1;
+
+  &.active {
+    visibility: visible;
+  }
+}
+
+.suggestionsItem {
+  padding: 0.5rem 1.25rem;
+
+  &:hover {
+    background-color: @greyBright;
+  }
+}
+
+.noSuggestionsItem {
+  padding: 0.5rem 1.25rem;
+  color: @greyMedium;
+}
+
+.sideButton {
+  max-width: @inputWidth;
+}
