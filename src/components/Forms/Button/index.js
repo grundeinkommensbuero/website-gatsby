@@ -41,17 +41,28 @@ export function InlineButton({ children, onClick, className, ...other }) {
     <span
       tabIndex="0"
       role="button"
-      aria-pressed="false"
       className={cN(s.inlineButton, className)}
       onKeyDown={e => {
-        e.preventDefault();
         // Emulate click when enter or space are pressed
-        if (e.key === 'Enter' || e.keyCode === 32) onClick();
+        if (e.key === 'Enter' || e.key === ' ') onClick(e);
       }}
       onClick={onClick}
       {...other}
     >
       {children}
     </span>
+  );
+}
+
+export function PrimarySecondaryButtonContainer({
+  children,
+  className,
+  size,
+  ...other
+}) {
+  return (
+    <div className={cN(s.primarySecondaryButtonContainer, className)}>
+      {children}
+    </div>
   );
 }
