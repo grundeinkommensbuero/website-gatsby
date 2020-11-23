@@ -18,64 +18,73 @@ const SELF_SCAN_SLUGS = {
 export default ({ userData, signatureCountOfUser, userId }) => {
   return (
     <section className={s.profilePageGrid}>
-      <section className={cN(s.profilePageSection, s.userInfo)}>
-        <AvatarImage user={userData} className={s.avatar} />
-        <div>
-          <h1
-            className={cN({
-              [s.username]: userData.username,
-              [s.email]: !userData.username,
-            })}
-          >
-            {userData.username || userData.email}
-          </h1>
-          {/* Show profile edit button if own page */}
-          <div className={s.details}>
-            Dabei seit dem{' '}
-            {userData.createdAt && formatDate(new Date(userData.createdAt))}
-          </div>
-        </div>
-        <div className={s.sectionLink}>
-          <Link to="stammdaten">Stammdaten bearbeiten</Link>
-        </div>
-      </section>
-
-      <section className={cN([s.profilePageSection, s.signaturesSection])}>
-        <h2>Eingegangene Unterschriften</h2>
-        {signatureCountOfUser && (
-          <>
-            <SignatureStats
-              signatureCount={signatureCountOfUser}
-              className={s.signatureStats}
-              layout="horizontal"
-            />
-
-            <div className={s.sectionLink}>
-              <a
-                href={`/${
-                  signatureCountOfUser.mostRecentCampaign
-                    ? SELF_SCAN_SLUGS[
-                        signatureCountOfUser.mostRecentCampaign.state
-                      ]
-                    : 'qr/b' // if user has no recent campaign default is just berlin
-                }?userId=${userId}`}
-              >
-                Mehr sehen und eintragen
-              </a>
+      <Link to="stammdaten" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
+        <section className={s.userInfo}>
+          <AvatarImage user={userData} className={s.avatar} />
+          <div>
+            <h1
+              className={cN({
+                [s.username]: userData.username,
+                [s.email]: !userData.username,
+              })}
+            >
+              {userData.username || userData.email}
+            </h1>
+            {/* Show profile edit button if own page */}
+            <div className={s.details}>
+              Dabei seit dem{' '}
+              {userData.createdAt && formatDate(new Date(userData.createdAt))}
             </div>
-          </>
-        )}
-      </section>
+          </div>
+          <div className={s.sectionLink}>
+            <span>Stammdaten bearbeiten</span>
+          </div>
+        </section>
+      </Link>
 
-      <section className={cN([s.profilePageSection, s.contactInfo])}>
-        <h2>Newsletter & Kontakt</h2>
-        <p>Du erhältst folgende Newsletter: Berlin, Kiel</p>
-        <div className={s.sectionLink}>
-          <Link to="kontakt-einstellungen">Einstellungen ändern</Link>
-        </div>
-      </section>
+      {signatureCountOfUser && (
+        <a className={s.profilePageSection}
+          href={`/${
+            signatureCountOfUser.mostRecentCampaign
+              ? SELF_SCAN_SLUGS[
+                  signatureCountOfUser.mostRecentCampaign.state
+                ]
+              : 'qr/b' // if user has no recent campaign default is just berlin
+          }?userId=${userId}`}
+        >
+          <section className={s.signaturesSection}>
+            <h2>Eingegangene Unterschriften</h2>
+            {signatureCountOfUser && (
+              <>
+                <SignatureStats
+                  signatureCount={signatureCountOfUser}
+                  className={s.signatureStats}
+                  layout="horizontal"
+                />
 
-      <div className={s.supportText}>
+                <div className={s.sectionLink}>
+                  <span>
+                    Mehr sehen und eintragen
+                  </span>
+                </div>
+              </>
+            )}
+          </section>
+        </a>
+      )}
+    
+      <Link to="kontakt-einstellungen" className={s.profilePageSection}>
+        <section className={s.contactInfo}>
+          <h2>Newsletter & Kontakt</h2>
+          <p>Du erhältst folgende Newsletter: Berlin, Kiel</p>
+          <div className={s.sectionLink}>
+            <span>Einstellungen ändern</span>
+          </div>
+        </section>
+      </Link>
+
+
+      <div className={cN(s.profilePageSectionLarge, s.supportText)}>
         Falls du deine persönlichen Daten ändern oder deinen Account löschen
         möchtest, schick eine E-Mail an{' '}
         <a href="mailto:support@expedition-grundeinkommen.de">

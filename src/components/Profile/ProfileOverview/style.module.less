@@ -18,6 +18,11 @@
   position: relative;
   background-color: @white;
   padding: 3.3rem 4rem;
+  text-decoration: none;
+}
+
+.profilePageSectionLarge {
+  grid-column: 1 / span 2;
 }
 
 h2 {
@@ -28,15 +33,11 @@ h2 {
   position: absolute;
   bottom: 0.5rem;
   right: 1rem;
+  text-decoration: underline;
 
   &:after {
     content: ' >';
   }
-}
-
-.userInfo,
-.supportText {
-  grid-column: 1 / span 2;
 }
 
 .userInfo {
@@ -98,5 +99,4 @@ h2 {
 
 .supportText {
   margin-top: 3em;
-  font-size: @fontSizeS;
 }
