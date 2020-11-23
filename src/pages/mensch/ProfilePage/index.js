@@ -18,7 +18,6 @@ import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
 import { LinkButtonLocal } from '../../../components/Forms/Button';
 import { FinallyMessage } from '../../../components/Forms/FinallyMessage';
 import { EnterLoginCode } from '../../../components/Login/EnterLoginCode';
-import DonationForm from '../../../components/Forms/DonationForm';
 
 // We need the following mappings for the link to the self scan page
 const SELF_SCAN_SLUGS = {
@@ -127,11 +126,6 @@ const ProfilePage = ({ id: slugId }) => {
                   </>
                 )}
               </div>
-
-              <div className={cN(s.profilePageSection)}>
-                <DonationForm></DonationForm>
-              </div>
-
               <div className={cN(s.profilePageSection, s.supportText)}>
                 Falls du deine persönlichen Daten ändern oder deinen Account
                 löschen möchtest, schick eine E-Mail an{' '}
