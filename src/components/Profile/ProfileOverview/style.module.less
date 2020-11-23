@@ -19,6 +19,12 @@
   background-color: @white;
   padding: 3.3rem 4rem;
   text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: @greyBright;
+  }
 }
 
 .profilePageSectionLarge {
@@ -33,7 +39,14 @@ h2 {
   position: absolute;
   bottom: 0.5rem;
   right: 1rem;
-  text-decoration: underline;
+
+  > span {
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
 
   &:after {
     content: ' >';
