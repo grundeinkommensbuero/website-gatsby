@@ -3,8 +3,6 @@ import Link from 'gatsby-link';
 import s from './style.module.less';
 import SocialMediaButtons from '../../SocialMedia/Follow';
 
-const bmbfLogo = require('./bmbf-logo.jpg');
-
 export default ({ footerText, footerMenu }) => (
 
   <footer>
@@ -12,12 +10,6 @@ export default ({ footerText, footerMenu }) => (
       <div className={s.columnLeft}>
         <div className={s.footerText}>{footerText}</div>
         <SocialMediaButtons className={s.socialMedia} />
-        <img
-          aria-hidden="true"
-          alt=""
-          src={bmbfLogo}
-          className={s.bmbfLogo}
-        />
       </div>
       <nav className={s.columnRight}>
         <ul className={s.nav}>
@@ -30,15 +22,6 @@ export default ({ footerText, footerMenu }) => (
           ))}
         </ul>
       </nav>
-    </div>
-
-    <div className={s.preFooter}>
-      <img
-          aria-hidden="true"
-          alt=""
-          src={bmbfLogo}
-          className={s.bmbfLogo}
-        />
     </div>
   </footer>
 );
