@@ -1,75 +1,14 @@
 @import '../../../components/style/vars.less';
 
-.profilePageGrid {
-  max-width: 70rem;
-  margin: 0 auto;
-  padding: 5rem 0 10rem;
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: 50% 50%;
-  justify-content: center;
-
-  @media (max-width: @breakPointS) {
-    display: grid;
-  }
-}
-
-.profilePageSection {
+.editPageSection {
   position: relative;
-  background-color: #dddddd;
+  background-color: @greyMedium;
   padding: 3.3rem 4rem;
-}
-
-.avatar {
-  width: 6em;
-  height: 6em;
-
-  @media (max-width: @breakPointS) {
-    margin: 0 auto;
-  }
-}
-
-.userInfo,
-.supportText {
-  grid-column: 1 / span 2;
-}
-
-.userInfo {
-  padding: 3rem 0 3rem 0;
-  display: grid;
-  grid-template-columns: 150px auto;
-}
-
-.username {
-  font-size: @fontSizeXXL;
-
-  margin: 0;
-  padding: 0;
-
-  @media (max-width: @breakPointM) {
-    font-size: @fontSizeXL;
-  }
-
-  @media (max-width: @breakPointS) {
-    text-align: center;
-  }
-}
-
-// Details section
-.details {
-  margin: 0;
-  font-size: @fontSizeM;
-
-  @media (max-width: @breakPointS) {
-    margin-top: 1em;
-    text-align: center;
-    font-size: @fontSizeS;
-  }
 }
 
 .dataEditWrapper {
   display: grid;
-  grid-template-columns: 150px auto;
+  grid-template-columns: 200px auto;
 }
 
 .dataEditSection {
@@ -133,6 +72,7 @@
 
 .backToProfile {
   left: 1rem;
+  margin-bottom: 3rem;
 
   &:before {
     content: '< ';
