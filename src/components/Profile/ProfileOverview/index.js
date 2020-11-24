@@ -30,6 +30,7 @@ export default ({ userData, signatureCountOfUser, userId }) => {
             >
               {userData.username || userData.email}
             </h1>
+            <div className={s.placeInfo}>{userData.city}</div>
             {/* Show profile edit button if own page */}
             <div className={s.details}>
               Dabei seit dem{' '}
