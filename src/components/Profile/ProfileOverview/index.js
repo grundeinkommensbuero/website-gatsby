@@ -3,6 +3,7 @@ import AvatarImage from '../../AvatarImage';
 import SignatureStats from '../../SignatureStats';
 import { formatDate } from '../../utils';
 import s from './style.module.less';
+import gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 
@@ -17,22 +18,22 @@ const SELF_SCAN_SLUGS = {
 
 export default ({ userData, signatureCountOfUser, userId }) => {
   return (
-    <section className={s.profilePageGrid}>
+    <section className={gS.profilePageGrid}>
       <Link to="stammdaten" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
-        <section className={s.userInfo}>
-          <AvatarImage user={userData} className={s.avatar} />
+        <section className={gS.userInfo}>
+          <AvatarImage user={userData} className={gS.avatar} />
           <div>
             <h1
               className={cN({
-                [s.username]: userData.username,
+                [gS.username]: userData.username,
                 [s.email]: !userData.username,
               })}
             >
               {userData.username || userData.email}
             </h1>
-            <div className={s.placeInfo}>{userData.city}</div>
+            <div className={gS.placeInfo}>{userData.city}</div>
             {/* Show profile edit button if own page */}
-            <div className={s.details}>
+            <div className={gS.details}>
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
             </div>
@@ -45,13 +46,12 @@ export default ({ userData, signatureCountOfUser, userId }) => {
 
       {signatureCountOfUser && (
         <a className={s.profilePageSection}
-          href={`/${
-            signatureCountOfUser.mostRecentCampaign
-              ? SELF_SCAN_SLUGS[
-                  signatureCountOfUser.mostRecentCampaign.state
-                ]
-              : 'qr/b' // if user has no recent campaign default is just berlin
-          }?userId=${userId}`}
+          href={`/${signatureCountOfUser.mostRecentCampaign
+            ? SELF_SCAN_SLUGS[
+            signatureCountOfUser.mostRecentCampaign.state
+            ]
+            : 'qr/b' // if user has no recent campaign default is just berlin
+            }?userId=${userId}`}
         >
           <section className={s.signaturesSection}>
             <h2>Eingegangene Unterschriften</h2>
@@ -73,7 +73,7 @@ export default ({ userData, signatureCountOfUser, userId }) => {
           </section>
         </a>
       )}
-    
+
       <Link to="kontakt-einstellungen" className={s.profilePageSection}>
         <section className={s.contactInfo}>
           <h2>Newsletter & Kontakt</h2>

@@ -1,0 +1,64 @@
+@import '../../components/style/vars.less';
+
+.profilePageGrid {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 5rem 2rem 10rem;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 90%;
+    padding: 2rem 0 2rem;
+  }
+}
+
+.avatar {
+  width: 6em;
+  height: 6em;
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 160px auto;
+  }
+
+  @media (max-width: @breakPointS) {
+    display: block;
+  }
+}
+
+.username {
+  font-size: @fontSizeXXL;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXL;
+  }
+}
+
+// Details section
+.placeInfo {
+  margin-bottom: 0.3rem;
+  font-size: @fontSizeM;
+}
+
+.details {
+  margin: 0;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 1em;
+    font-size: @fontSizeS;
+  }
+}

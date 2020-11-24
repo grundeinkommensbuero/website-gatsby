@@ -7,7 +7,7 @@ import { useUploadImage } from '../../../hooks/images';
 import AvatarImage from '../../AvatarImage';
 import { CTAButton } from '../../Layout/CTAButton';
 
-export default ({ userData, userId, onUploadDone }) => {
+export default ({ userData, userId, onUploadDone, showLabel }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
 
   useEffect(() => {
@@ -32,8 +32,8 @@ export default ({ userData, userId, onUploadDone }) => {
               sizes="80px"
             />
           ) : (
-            <Field name="image" component={ImageInput} user={userData.user} />
-          )}
+              <Field name="image" component={ImageInput} user={userData} showLabel={showLabel} />
+            )}
           <CTAButton
             type="submit"
             className={cN(s.submitButton, {
@@ -48,7 +48,7 @@ export default ({ userData, userId, onUploadDone }) => {
   );
 };
 
-export const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
+export const ImageInput = ({ input: { value, onChange, ...input }, user, showLabel }) => {
   const [avatarImage, setAvatarImage] = useState(null);
   const handleChange = ({ target }) => {
     if (target.files && target.files[0]) {
@@ -62,6 +62,12 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
       onChange({ files: target.files });
     }
   };
+  /* conditionally show upload picture label, defaults to true */
+  let showUploadLabel = false;
+  if (showLabel) {
+    showUploadLabel = showLabel;
+  }
+
   return (
     <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
       <AvatarImage
@@ -70,7 +76,7 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
         user={user}
         sizes="80px"
       />
-      <div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>
+      {showUploadLabel ? (<div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>) : null}
       <input
         type="file"
         onChange={handleChange}

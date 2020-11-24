@@ -3,37 +3,45 @@ import AvatarImage from '../../AvatarImage';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
 import s from './style.module.less';
+import gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
 import SocialMediaButton from '../../SocialMedia/Button';
+import ImageUpload from '../../Forms/ImageUpload'
 
 export default ({ userData, userId }) => {
   return (
-    <section className={s.profilePageGrid}>
-      <section className={cN(s.profilePageSection, s.editSettings)}>
+    <section className={gS.profilePageGrid}>
+
+      <section className={cN(s.editPageSection, s.editSettings)}>
         <div className={s.backToProfile}>
           {/* add a cancel method */}
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
-        <section className={cN(s.profilePageSection, s.userInfo)}>
-          <AvatarImage user={userData} className={s.avatar} />
+
+        <section className={gS.userInfo}>
+          <AvatarImage user={userData} className={gS.avatar} />
           <div>
             <h1
               className={cN({
-                [s.username]: userData.username,
+                [gS.username]: userData.username,
                 [s.email]: !userData.username,
               })}
             >
               {userData.username || userData.email}
             </h1>
+            <div className={gS.placeInfo}>{userData.city}</div>
+            {/* Show profile edit button if own page */}
             <div className={s.details}>
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
             </div>
           </div>
         </section>
+
+
 
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
@@ -94,9 +102,11 @@ export default ({ userData, userId }) => {
 
             <Button className={s.saveChangesBtn}>Ändern</Button>
 
-            <h4 className={s.optionSectionHeading}>Deine Profilbild</h4>
+            <h4 className={s.optionSectionHeading}>Dein Profilbild</h4>
 
-            <a href="" className={s.bottomRightLink}>Profil löschen</a>
+            <ImageUpload userData={userData} userId={userId} showLabel={false} onUploadDone={() => { }} />
+
+            <Link to={`/mensch/${userId}/`} className={s.bottomRightLink}>Profil löschen</Link>
           </div>
         </section>
       </section>
