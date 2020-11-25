@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import AuthContext from '../../../context/Authentication';
 
 export const useAnswerChallenge = () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState();
 
   //get global context
   const context = useContext(AuthContext);
@@ -29,6 +29,11 @@ const answerCustomChallenge = async (
 
     // sendCustomChallengeAnswer() will throw an error if it’s the 3rd wrong answer
     const tempUser = await Auth.sendCustomChallengeAnswer(cognitoUser, answer);
+
+    if (answer === 'resendCode') {
+      setState('resentCode');
+      return;
+    }
 
     // It we get here, the answer was sent successfully,
     // but it might have been wrong (1st or 2nd time)
