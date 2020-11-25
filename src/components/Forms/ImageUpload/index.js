@@ -64,7 +64,7 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, showLab
   };
   /* conditionally show 'upload picture label', defaults to true */
   let showUploadLabel = true;
-  if (showLabel) {
+  if (showLabel !== undefined) {
     showUploadLabel = showLabel;
   }
 

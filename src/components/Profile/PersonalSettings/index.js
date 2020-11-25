@@ -13,13 +13,11 @@ import ImageUpload from '../../Forms/ImageUpload'
 export default ({ userData, userId }) => {
   return (
     <section className={gS.profilePageGrid}>
-
-      <section className={cN(s.editPageSection, s.editSettings)}>
-        <div className={s.backToProfile}>
+      <section className={cN(gS.editPageSection, gS.editSettings)}>
+        <div className={gS.backToProfile}>
           {/* add a cancel method */}
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
-
 
         <section className={gS.userInfo}>
           <AvatarImage user={userData} className={gS.avatar} />
@@ -40,8 +38,6 @@ export default ({ userData, userId }) => {
             </div>
           </div>
         </section>
-
-
 
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
