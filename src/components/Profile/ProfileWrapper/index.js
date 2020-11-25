@@ -83,9 +83,18 @@ const ProfilePage = ({ id: slugId }) => {
             <PersonalSettings
               userData={userData}
               userId={userId}
-              path="stammdaten" />
-            <ProfileNotifications path="kontakt-einstellungen" />
-            <ProfileSignatures path="unterschriften-eintragen" />
+              path="stammdaten"
+            />
+            <ProfileNotifications
+              userData={userData}
+              path="kontakt-einstellungen"
+              userId={userId}
+            />
+            <ProfileSignatures
+              userData={userData}
+              path="unterschriften-eintragen"
+              userId={userId}
+            />
           </Router>
         )}
 

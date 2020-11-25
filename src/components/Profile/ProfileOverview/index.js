@@ -85,14 +85,14 @@ export default ({ userData, signatureCountOfUser, userId }) => {
       </Link>
 
 
-      <div className={cN(s.profilePageSectionLarge, s.supportText)}>
+      {/* <div className={cN(s.profilePageSectionLarge, s.supportText)}>
         Falls du deine persönlichen Daten ändern oder deinen Account löschen
         möchtest, schick eine E-Mail an{' '}
         <a href="mailto:support@expedition-grundeinkommen.de">
           support@expedition-grundeinkommen.de
         </a>
         .
-      </div>
+      </div> */}
     </section>
   );
 };
