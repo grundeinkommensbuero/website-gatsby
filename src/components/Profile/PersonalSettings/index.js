@@ -41,7 +41,7 @@ export default ({ userData, userId }) => {
 
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
-            <h4 className={s.optionSectionHeading}>Deine Kontaktdaten</h4>
+            <h4 className={gS.optionSectionHeading}>Deine Kontaktdaten</h4>
             <p className={s.optionHeading}><b>Email-Adresse</b></p>
             <p className={s.optionDescription}>Die Email-Adresse, die du verwendest um dich einzuloggen und Neuigkeiten von uns zu erhalten.</p>
 
@@ -67,17 +67,16 @@ export default ({ userData, userId }) => {
             <p className={s.optionHeading}><b>Messenger</b></p>
             <p className={s.optionDescription}>Wir sind auf mehreren Messenger-Diensten unterwegs. Du findest uns hier:</p>
 
-            <div className={s.socialButtonRow}>
+            <div className={gS.socialButtonRow}>
               <SocialMediaButton
                 icon="Facebook"
                 link=""
                 iconSize="S"
                 label="Teile auf Facebook"
-                className={s.shareButton}
               />
             </div>
 
-            <h4 className={s.optionSectionHeading}>Deine Stammdaten</h4>
+            <h4 className={gS.optionSectionHeading}>Deine Stammdaten</h4>
 
             <p className={s.optionSectionDescription}>Name oder Adresse ändern:</p>
 
@@ -98,11 +97,11 @@ export default ({ userData, userId }) => {
 
             <Button className={s.saveChangesBtn}>Ändern</Button>
 
-            <h4 className={s.optionSectionHeading}>Dein Profilbild</h4>
+            <h4 className={gS.optionSectionHeading}>Dein Profilbild</h4>
 
             <ImageUpload userData={userData} userId={userId} showLabel={false} onUploadDone={() => { }} />
 
-            <Link to={`/mensch/${userId}/`} className={s.bottomRightLink}>Profil löschen</Link>
+            <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>Profil löschen</Link>
           </div>
         </section>
       </section>
