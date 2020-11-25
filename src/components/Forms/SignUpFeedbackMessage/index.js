@@ -27,16 +27,10 @@ export default ({ className, state, trackingId, trackingCategory }) => {
     <div className={className}>
       <FinallyMessage state={finallyState}>
         {finallyState === 'progress' && 'Wird abgeschickt...'}
+
         {(state === 'saved' || state === 'success') && (
           <>
-            Yay, danke! Bitte geh in dein E-Mail-Postfach und bestätige, dass
-            wir deine Daten speichern dürfen. Falls du unsere E-Mail nicht
-            findest, sieh bitte auch in deinem Spam-Ordner nach!
-          </>
-        )}
-        {state === 'updated' && (
-          <>
-            Yay, danke! Deine Informationen wurden ergänzt.
+            Yay, danke für deine Anmeldung!
             <br />
             <br />
             Wir sind gemeinnützig und auf Spenden angewiesen. Bitte unterstütze
@@ -44,20 +38,6 @@ export default ({ className, state, trackingId, trackingCategory }) => {
             <br />
             <br />
             <LinkButton href="/spenden">Jetzt spenden</LinkButton>
-          </>
-        )}
-        {state === 'userExists' && (
-          <>
-            Danke! Diese E-Mail-Adresse kennen wir schon - Hast du unsere
-            Antwort-Mail bekommen? Dann fehlt nur noch der letzte Klick zum
-            Bestätigen. <br />
-            <br />
-            Nichts gefunden? Dann schau doch bitte noch einmal in deinen
-            Spam-Ordner, oder schreibe uns an{' '}
-            <a href="mailto:support@expedition-grundeinkommen.de">
-              support@expedition-grundeinkommen.de
-            </a>
-            .
           </>
         )}
         {state === 'signedIn' && (
