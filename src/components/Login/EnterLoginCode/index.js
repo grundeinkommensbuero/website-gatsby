@@ -88,7 +88,7 @@ export const EnterLoginCode = ({ children }) => {
     <FinallyMessage state="error">
       {answerChallengeState === 'wrongCode' && (
         <p>
-          Der eingegeben Code ist falsch oder bereits abgelaufen. Bitte
+          Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
           überprüfe die Email erneut oder lade die Seite neu.
         </p>
       )}
