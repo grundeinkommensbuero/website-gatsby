@@ -7,7 +7,7 @@ import NewsletterCard from './NewsletterCard';
 import SearchPlaces from '../../Forms/SearchPlaces';
 import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
-import SocialMediaButton from '../../SocialMedia/Button';
+import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
 export default ({ userData, userId }) => {
   const [mockupMainNewsletterConsent, updateMockupMainNewsletterConsent] = useState({});
@@ -103,14 +103,7 @@ export default ({ userData, userId }) => {
         <p className={s.newsletterCardDescription}>
           Wenn du möchtest, kannst du auch per Messenger mit uns Kontakt aufnehmen:
         </p>
-        <div className={gS.socialButtonRow}>
-          <SocialMediaButton
-            icon="Facebook"
-            link=""
-            iconSize="S"
-            label="Teile auf Facebook"
-          />
-        </div>
+        <MessengerButtonRow iconSize="XL" />
       </section>
     </section >
   )

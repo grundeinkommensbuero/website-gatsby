@@ -7,7 +7,7 @@ import gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
-import SocialMediaButton from '../../SocialMedia/Button';
+import { MessengerButtonRow } from '../MessengerButtonRow.js';
 import ImageUpload from '../../Forms/ImageUpload'
 
 export default ({ userData, userId }) => {
@@ -67,14 +67,7 @@ export default ({ userData, userId }) => {
             <p className={s.optionHeading}><b>Messenger</b></p>
             <p className={s.optionDescription}>Wir sind auf mehreren Messenger-Diensten unterwegs. Du findest uns hier:</p>
 
-            <div className={gS.socialButtonRow}>
-              <SocialMediaButton
-                icon="Facebook"
-                link=""
-                iconSize="S"
-                label="Teile auf Facebook"
-              />
-            </div>
+            <MessengerButtonRow iconSize="L" />
 
             <h4 className={gS.optionSectionHeading}>Deine Stammdaten</h4>
 

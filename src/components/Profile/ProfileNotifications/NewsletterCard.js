@@ -25,7 +25,7 @@ export default ({ newsletter }) => {
         return (
           <Field
             name="extraInfoConsent"
-            label="Zusätzliche Sammelinfos erhalten"
+            label={`Für ${newsletter.city} zusätzliche Sammelinfos erhalten`}
             type="checkbox"
             component={Checkbox}
           ></Field>
