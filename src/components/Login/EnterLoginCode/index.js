@@ -90,18 +90,32 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
 
   return (
     <FinallyMessage state="error">
-      {answerChallengeState === 'wrongCode' ? (
+      {answerChallengeState === 'wrongCode' && (
         <p>
-          Der eingegeben Code ist falsch oder bereits abgelaufen. Bitte
-          überprüfe die Email erneut oder fordere einen neuen Code an.
+          Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
+          überprüfe die Email erneut oder lade die Seite neu.
         </p>
-      ) : children ? (
-        children
-      ) : (
+      )}
+
+      {answerChallengeState === 'resentCode' && (
         <p>
-          Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-          {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen ein:
+          Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
+          geschickt.
         </p>
+      )}
+
+      {!answerChallengeState && (
+        <>
+          {children ? (
+            children
+          ) : (
+            <p>
+              Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+              {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen
+              ein:
+            </p>
+          )}{' '}
+        </>
       )}
       <Form
         onSubmit={e => {
@@ -133,7 +147,7 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
                     type="button"
                     onClick={() => {
                       setAnswerChallengeState(undefined);
-                      startSignIn();
+                      setCode('resendCode');
                     }}
                   >
                     Code erneut senden
