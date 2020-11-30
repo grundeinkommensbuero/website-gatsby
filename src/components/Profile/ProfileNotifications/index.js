@@ -4,7 +4,7 @@ import gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import NewsletterCard from './NewsletterCard';
-import SearchPlaces from '../../Forms/SearchPlaces';
+import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
 import { MessengerButtonRow } from '../MessengerButtonRow.js';
@@ -39,7 +39,8 @@ export default ({ userData, userId }) => {
   const [customNewsletterSettings, updateCustomNewsletterSettings] = useState(
     userCustomNewslettersFromDB
   );
-  const [muncipality, setMuncipality] = useState();
+  const [municipality, setMunicipality] = useState();
+
   // userData is undefined on intitial pageload, fill state when it is ready:
   if (
     userData &&
@@ -57,9 +58,9 @@ export default ({ userData, userId }) => {
     updateMainNewsletterConsent(updatedMainNewsletterConsent);
   };
 
-  const handlePlaceSelect = muncipality => {
-    console.log(muncipality);
-    setMuncipality(muncipality);
+  const handlePlaceSelect = municipality => {
+    console.log(municipality);
+    setMunicipality(municipality);
   };
 
   const addNewsletter = newsletterToAdd => {
@@ -123,7 +124,12 @@ export default ({ userData, userId }) => {
         <p className={gS.linkLikeFormated}>Alle abbestellen</p>
 
         <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
-        <SearchPlaces showButton={false} onPlaceSelect={handlePlaceSelect} />
+        <SearchPlaces
+          showButton={municipality !== undefined}
+          onPlaceSelect={handlePlaceSelect}
+          buttonLabel={`${municipality ? municipality.name : ''} hinzufügen`}
+          handleButtonClick={() => addNewsletter(newNewsletter)}
+        />
 
         <p
           onClick={() => addNewsletter(newNewsletter)}
