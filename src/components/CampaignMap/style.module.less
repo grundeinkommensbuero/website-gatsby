@@ -1,0 +1,46 @@
+@import '../style/vars.less';
+
+.interfaceContainer {
+  position: relative;
+}
+
+.mapContainer {
+  // background: #f2f2f2;
+  // border: 1px solid #e8e8e8;
+  position: relative;
+  height: 70vh;
+}
+
+.buttonContainer {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+}
+
+.mapButton {
+  display: block;
+  width: 2.3rem;
+  height: 2.3rem;
+
+  border: var(--bg-color) solid @borderWidth;
+  border-radius: 10%;
+
+  text-decoration: none;
+  font-size: @fontSizeM;
+  font-weight: bold;
+  color: var(--bg-color);
+  background: var(--font-color);
+
+  cursor: pointer;
+
+  &:hover {
+    color: var(--bg-color);
+    background: #f17476;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 @borderWidthThick var(--font-color);
+  }
+}
