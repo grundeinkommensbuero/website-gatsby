@@ -9,7 +9,7 @@ import { navigate } from 'gatsby';
 
 import Fuse from 'fuse.js';
 
-const handleButtonClickDefault = ({ event, validate }) => {
+const handleButtonClickDefault = ({ validate }) => {
   // If no place was selected, we check if the top result
   // has a very good score, if yes -> navigate to the page
   // of that place
@@ -185,6 +185,7 @@ export function AutoCompleteList({
 }) {
   return (
     <div
+      aria-hidden="true"
       className={cN(s.suggestions, { [s.active]: suggestionsActive })}
       onBlur={handleBlur}
     >
@@ -202,7 +203,7 @@ export function AutoCompleteList({
               role="button"
               aria-pressed="false"
               tabIndex={0}
-              onClick={e => handleSuggestionClick(x)}
+              onClick={x => handleSuggestionClick(x)}
               onKeyDown={e => {
                 // Emulate click when enter or space are pressed
                 if (e.key === 'Enter' || e.keyCode === 32) {

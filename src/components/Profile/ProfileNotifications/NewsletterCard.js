@@ -27,22 +27,24 @@ export default ({ newsletter }) => {
     <div className={s.newsletterCard}>
       {!newsletterRevokeState ?
         <section>
-          <p className={s.newsletterCardHeading}>{newsletter.city}</p>
-          <p className={s.newsletterCardDescription}>Du erhälst die wichtigsten Infos für {newsletter.city}.</p>
+          <p className={s.newsletterCardHeading}>{newsletter.name}</p>
+          <p className={s.newsletterCardDescription}>
+            Du erhälst die wichtigsten Infos für {newsletter.name}.
+          </p>
 
-          <Form onSubmit={() => console.log('Checked')} render={() => {
-            return (
-              <Field
-                name="extraInfoConsent"
-                label={`Für ${newsletter.city} zusätzliche Sammelinfos erhalten`}
-                type="checkbox"
-                component={Checkbox}
-              ></Field>
-            )
-          }}>
-
+          <Form
+            validate={(values) => console.log(values)}
+            render={() => {
+              return (
+                <Field
+                  name="extraInfoConsent"
+                  label={`Für ${newsletter.name} zusätzliche Sammelinfos erhalten`}
+                  type="checkbox"
+                  component={Checkbox}
+                ></Field>
+              )
+            }}>
           </Form>
-
 
           <p className={cN(gS.alignRight, gS.noMargin)}>
             {mockupNewsletterConsent ?
@@ -60,14 +62,20 @@ export default ({ newsletter }) => {
           </p>
         </section> :
         <section>
-          <p className={s.newsletterCardHeading}>Bist du sicher, dass du keine Neuigkeiten mehr aus {newsletter.city} bekommen möchtest?</p>
+          <p className={s.newsletterCardHeading}>Bist du sicher, dass du keine Neuigkeiten mehr aus {newsletter.name} bekommen möchtest?</p>
           <br />
-          <p className={s.newsletterCardDescription}>Wir können dich nicht mehr informieren, wenn sich etwas an der Kampagne in {newsletter.city}
+          <p className={s.newsletterCardDescription}>Wir können dich nicht mehr informieren, wenn sich etwas an der Kampagne in {newsletter.name}
           ändert oder neue Sammelevents in deiner Nähe geplant werden.</p>
           <div className={s.revokeButtonRow}>
             <Button className={gS.floatRight} onClick={revokeNewsletterConsent}>Abbestellen</Button>
             <div className={s.cancelRevokeProcess}>
-              <span className={gS.linkLikeFormated} onClick={toggleNewsletterRevokeProcess}>Newsletter weiter erhalten</span>
+              <span
+                aria-hidden="true"
+                className={gS.linkLikeFormated}
+                onClick={toggleNewsletterRevokeProcess}
+                onKeyUp={toggleNewsletterRevokeProcess}>
+                Newsletter weiter erhalten
+              </span>
             </div>
           </div>
         </section>}
