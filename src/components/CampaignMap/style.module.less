@@ -1,5 +1,7 @@
 @import '../style/vars.less';
 
+@mapHeight: 65vh;
+
 .interfaceContainer {
   position: relative;
 }
@@ -7,27 +9,28 @@
 .mapContainer {
   // background: #f2f2f2;
   // border: 1px solid #e8e8e8;
-  position: relative;
-  height: 70vh;
+  height: @mapHeight;
 }
 
 .buttonContainer {
   position: absolute;
-  z-index: 1;
   top: 0;
   right: 0;
+  z-index: 1;
 }
 
 .mapButton {
   display: block;
-  width: 2.3rem;
-  height: 2.3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
 
   border: var(--bg-color) solid @borderWidth;
   border-radius: 10%;
 
   text-decoration: none;
   font-size: @fontSizeM;
+  line-height: 1;
   font-weight: bold;
   color: var(--bg-color);
   background: var(--font-color);
@@ -42,5 +45,21 @@
   &:focus {
     outline: none;
     box-shadow: inset 0 0 0 @borderWidthThick var(--font-color);
+  }
+}
+
+.blockTouchOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100%;
+  pointer-events: none;
+
+  .right {
+    float: right;
+    height: @mapHeight;
+    width: 25%;
+    pointer-events: all;
   }
 }

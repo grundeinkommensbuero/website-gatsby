@@ -144,7 +144,6 @@ export const CampaignMap = ({
       <div className={s.buttonContainer}>
         <button
           className={s.mapButton}
-          id="zoomInButton"
           onClick={() => {
             handleZoomClick(1);
           }}
@@ -154,7 +153,6 @@ export const CampaignMap = ({
         </button>
         <button
           className={s.mapButton}
-          id="zoomOutButton"
           onClick={() => {
             handleZoomClick(-1);
           }}
@@ -163,7 +161,9 @@ export const CampaignMap = ({
           &#x2212;
         </button>
       </div>
-
+      <div className={s.blockTouchOverlay}>
+        <div className={s.right}></div>
+      </div>
       <div className={s.mapContainer}>
         <Map
           dataStates={dataStates}
@@ -365,6 +365,7 @@ const Map = ({
   const [controllerOptions, setControllerOptions] = useState({
     dragRotate: false,
     scrollZoom: true,
+    touchRotate: false,
   });
 
   // ---- useEffects -----------------------------------------------------------------------
@@ -433,12 +434,16 @@ const Map = ({
       touched,
       setTouched,
     });
-    if (!dimensions) {
-      const scrollZoom = dimensionsUpdate.width < 400 ? false : true;
-      setControllerOptions({ ...controllerOptions, scrollZoom });
-    }
-    if (dimensions && dimensions.width !== dimensionsUpdate.width) {
-      const scrollZoom = dimensionsUpdate.width < 400 ? false : true;
+
+    if (
+      !dimensions ||
+      (dimensions && dimensions.width !== dimensionsUpdate.width)
+    ) {
+      const isNarrow = dimensionsUpdate.width < 400;
+      const scrollZoom = isNarrow ? false : true;
+      // Suggestion: solve with a scrollable area
+      // -->
+      // const dragPan = isNarrow ? false : true;
       setControllerOptions({ ...controllerOptions, scrollZoom });
     }
   };
