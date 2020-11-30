@@ -11,27 +11,27 @@ import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
 const userCustomNewslettersFromDB = [
   {
-    city: 'Berlin',
+    name: 'Berlin',
     value: true,
     extraInfo: false,
     timestamp: '2020-11-20T12:35:42.218Z',
-    key: 'abc-67890',
+    ags: 'abc-67890',
   },
   {
-    city: 'Eberswalde',
+    name: 'Eberswalde',
     value: true,
     extraInfo: true,
     timestamp: '2020-11-21T12:35:42.218Z',
-    key: 'abc-12345',
+    ags: 'abc-12345',
   },
 ];
 
 const newNewsletter = {
-  city: 'Hamburg',
+  name: 'Hamburg',
   value: true,
   extraInfo: true,
   timestamp: '2020-11-23T12:35:42.218Z',
-  key: 'abc-24680',
+  ags: 'abc-24680',
 };
 
 export default ({ userData, userId }) => {
@@ -70,7 +70,7 @@ export default ({ userData, userId }) => {
   };
 
   const activeNewsletterCards = customNewsletterSettings.map(newsletter => {
-    return <NewsletterCard newsletter={newsletter} key={newsletter.key} />;
+    return <NewsletterCard newsletter={newsletter} key={`${newsletter.name}${newsletter.ags}`} />;
   });
 
   return (
@@ -106,15 +106,15 @@ export default ({ userData, userId }) => {
                     abbestellen
                   </span>
                 ) : (
-                  <span
-                    aria-hidden="true"
-                    className={gS.linkLikeFormated}
-                    onClick={revokeMainNewsletterConsent}
-                    onKeyDown={revokeMainNewsletterConsent}
-                  >
-                    Newsletter erhalten
-                  </span>
-                )}
+                    <span
+                      aria-hidden="true"
+                      className={gS.linkLikeFormated}
+                      onClick={revokeMainNewsletterConsent}
+                      onKeyDown={revokeMainNewsletterConsent}
+                    >
+                      Newsletter erhalten
+                    </span>
+                  )}
               </p>
             </div>
             {/* Conditionally render individual Cards */}
@@ -130,13 +130,6 @@ export default ({ userData, userId }) => {
           buttonLabel={`${municipality ? municipality.name : ''} hinzufügen`}
           handleButtonClick={() => addNewsletter(newNewsletter)}
         />
-
-        <p
-          onClick={() => addNewsletter(newNewsletter)}
-          className={gS.linkLikeFormated}
-        >
-          Test: Newsletter hinzufügen!
-        </p>
 
         <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
         <p className={s.newsletterCardDescription}>
