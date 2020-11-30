@@ -9,7 +9,25 @@ import { navigate } from 'gatsby';
 
 import Fuse from 'fuse.js';
 
-export default function SearchPlaces({ showButton, onPlaceSelect }) {
+const handleButtonClickDefault = ({ event, validate }) => {
+  // If no place was selected, we check if the top result
+  // has a very good score, if yes -> navigate to the page
+  // of that place
+  // --> validate function
+  const validation = validate();
+  if (validation.status === 'success') {
+    navigate(validation.ags);
+  }
+};
+
+export const SearchPlaces = ({
+  showButton,
+  onPlaceSelect,
+  label = 'Stadt:',
+  validateOnBlur,
+  handleButtonClick = handleButtonClickDefault,
+  buttonLabel = 'Finde deine Stadt',
+}) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState({});
@@ -70,6 +88,22 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
     }
   }, [query, fuse]);
 
+  const validate = () => {
+    let ags;
+    if (selectedPlace.ags) {
+      ags = `/kommune/${selectedPlace.ags}`;
+      return { status: 'success', ags };
+    }
+    if (results.length > 0 && results[0].score < 0.001) {
+      ags = `/kommune/${results[0].ags}`;
+      return { status: 'success', ags };
+    }
+    const touched = true;
+    const error = 'Bitte wähle eine Stadt aus';
+    setFormState({ error, touched });
+    return { status: 'failed' };
+  };
+
   const handleSuggestionClick = suggestion => {
     setQuery(suggestion.name);
     setSelectedPlace(suggestion);
@@ -90,24 +124,23 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
     setFormState({ error, touched });
   };
 
-  const handleSubmit = e => {
-    // If no place was selected, we check if the top result
-    // has a very good score, if yes -> navigate to the page
-    // of that place
-    if (selectedPlace.ags) {
-      navigate(`/kommune/${selectedPlace.ags}`);
-    } else if (results.length > 0 && results[0].score < 0.001) {
-      navigate(`/kommune/${results[0].ags}`);
-    } else {
-      const touched = true;
-      const error = 'Bitte wähle eine Stadt aus';
-      setFormState({ error, touched });
+  const handleBlur = e => {
+    const isAutoCompleteTarget =
+      e.relatedTarget &&
+      [...e.relatedTarget.classList].join('').includes('suggestionsItem');
+    if (!isAutoCompleteTarget) {
+      setTimeout(() => {
+        setSuggestionsActive(false);
+        if (validateOnBlur) {
+          validate();
+        }
+      }, 300);
     }
   };
 
   return (
     <div>
-      <label htmlFor="gemeinde">Stadt:</label>
+      <label htmlFor="gemeinde">{label}</label>
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
@@ -117,18 +150,7 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
             label="Stadt"
             value={query}
             onChange={handleChange}
-            onBlur={e => {
-              if (
-                e.relatedTarget &&
-                (e.relatedTarget.getAttribute('id') ===
-                  'gatsby-focus-wrapper' ||
-                  e.relatedTarget.getAttribute('id') === 'linkButton')
-              ) {
-                setTimeout(() => {
-                  setSuggestionsActive(false);
-                }, 300);
-              }
-            }}
+            onBlur={handleBlur}
           />
 
           <AutoCompleteList
@@ -136,6 +158,7 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
             results={results}
             suggestionsActive={suggestionsActive}
             handleSuggestionClick={handleSuggestionClick}
+            handleBlur={handleBlur}
           />
           <LabelInputErrorWrapper meta={formState} />
         </div>
@@ -143,24 +166,28 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
           <Button
             id="linkButton"
             className={s.sideButton}
-            onClick={handleSubmit}
+            onClick={event => handleButtonClick({ event, validate })}
           >
-            Finde deine Stadt
+            {buttonLabel}
           </Button>
         )}
       </div>
     </div>
   );
-}
+};
 
 export function AutoCompleteList({
   query,
   results,
   suggestionsActive,
   handleSuggestionClick,
+  handleBlur,
 }) {
   return (
-    <div className={cN(s.suggestions, { [s.active]: suggestionsActive })}>
+    <div
+      className={cN(s.suggestions, { [s.active]: suggestionsActive })}
+      onBlur={handleBlur}
+    >
       {results.length === 0 && query.length > 1 && (
         <div className={s.noSuggestionsItem}>Keine Ergebnisse</div>
       )}
