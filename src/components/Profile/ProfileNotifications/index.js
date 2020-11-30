@@ -9,41 +9,57 @@ import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
 import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
-export default ({ userData, userId }) => {
-  const [mockupMainNewsletterConsent, updateMockupMainNewsletterConsent] = useState({});
-
-  if (userData && userData.newsletterConsent && (mockupMainNewsletterConsent.value === undefined)) {
-    updateMockupMainNewsletterConsent(userData.newsletterConsent);
+const userCustomNewslettersFromDB = [
+  {
+    city: 'Berlin',
+    value: true,
+    extraInfo: false,
+    timestamp: '2020-11-20T12:35:42.218Z',
+    key: 'abc-67890'
+  },
+  {
+    city: 'Eberswalde',
+    value: true,
+    extraInfo: true,
+    timestamp: '2020-11-21T12:35:42.218Z',
+    key: 'abc-12345'
   }
+]
 
-  const userCustomNewsletters = [
-    {
-      city: 'Berlin',
-      value: true,
-      extraInfo: false,
-      timestamp: '2020-11-20T12:35:42.218Z',
-      key: 'abc-' + Math.random()
-    },
-    {
-      city: 'Eberswalde',
-      value: true,
-      extraInfo: true,
-      timestamp: '2020-11-21T12:35:42.218Z',
-      key: 'abc-' + Math.random()
-    }
-  ]
+const newNewsletter = {
+  city: 'Hamburg',
+  value: true,
+  extraInfo: true,
+  timestamp: '2020-11-23T12:35:42.218Z',
+  key: 'abc-24680'
+}
+
+export default ({ userData, userId }) => {
+  const [mainNewsletterConsent, updateMainNewsletterConsent] = useState({});
+  const [customNewsletterSettings, updateCustomNewsletterSettings] = useState(userCustomNewslettersFromDB);
+
+  // userData is undefined on intitial pageload, fill state when it is ready:
+  if (userData && userData.newsletterConsent && (mainNewsletterConsent.value === undefined)) {
+    updateMainNewsletterConsent(userData.newsletterConsent);
+  }
 
   const revokeMainNewsletterConsent = () => {
-    let updatedMainNewsletterConstent = {
-      ...mockupMainNewsletterConsent
+    let updatedMainNewsletterConsent = {
+      ...mainNewsletterConsent
     }
-    updatedMainNewsletterConstent.value = !mockupMainNewsletterConsent.value;
-    updateMockupMainNewsletterConsent(updatedMainNewsletterConstent);
+    updatedMainNewsletterConsent.value = !mainNewsletterConsent.value;
+    updateMainNewsletterConsent(updatedMainNewsletterConsent);
   }
 
-  const activeNewsletterCards = userCustomNewsletters.map((newsletter) => {
+  const addNewsletter = (newsletterToAdd) => {
+    let updatedNewsletter = [...customNewsletterSettings];
+    updatedNewsletter.push(newsletterToAdd);
+    updateCustomNewsletterSettings(updatedNewsletter);
+  }
+
+  const activeNewsletterCards = customNewsletterSettings.map((newsletter) => {
     return <NewsletterCard newsletter={newsletter} key={newsletter.key} />
-  })
+  });
 
   return (
     <section className={gS.profilePageGrid}>
@@ -62,7 +78,7 @@ export default ({ userData, userId }) => {
               <p className={s.newsletterCardHeading}>Allgemeiner Expeditions-Letter</p>
               <p className={s.newsletterCardDescription}>Du erhälst die wichtigsten Infos über die Expedition.</p>
               <p className={cN(gS.alignRight, gS.noMargin)}>
-                {mockupMainNewsletterConsent && mockupMainNewsletterConsent.value ?
+                {mainNewsletterConsent && mainNewsletterConsent.value ?
                   <span
                     aria-hidden="true"
                     className={gS.linkLikeFormated}
@@ -84,6 +100,8 @@ export default ({ userData, userId }) => {
 
         <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
         <SearchPlaces showButton={false} />
+
+        <p onClick={() => addNewsletter(newNewsletter)} className={gS.linkLikeFormated}>Test: Newsletter hinzufügen!</p>
 
         <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
         <p className={s.newsletterCardDescription}>
