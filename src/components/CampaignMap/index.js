@@ -105,7 +105,7 @@ export const CampaignMap = ({
           initialFly,
           updateFocus,
         });
-      }, 800);
+      }, 1200);
     } else {
       animate({
         dataEvents,
@@ -141,6 +141,9 @@ export const CampaignMap = ({
   // ---- Template -------------------------------------------------------------------------
   return (
     <div className={s.interfaceContainer}>
+      <div className={s.blockTouchOverlay}>
+        <div className={s.right}></div>
+      </div>
       <div className={s.buttonContainer}>
         <button
           className={s.mapButton}
@@ -161,9 +164,7 @@ export const CampaignMap = ({
           &#x2212;
         </button>
       </div>
-      <div className={s.blockTouchOverlay}>
-        <div className={s.right}></div>
-      </div>
+
       <div className={s.mapContainer}>
         <Map
           dataStates={dataStates}

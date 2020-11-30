@@ -22,7 +22,7 @@ const MapAndSearch = () => {
         onPlaceSelect={handlePlaceSelect}
       />
       <br />
-      <CampaignMap focusAGS={ags} initialAnimation={true} initialFly={false} />
+      <CampaignMap focusAGS={ags} initialAnimation={true} initialFly={true} />
     </div>
   );
 };
