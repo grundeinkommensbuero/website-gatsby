@@ -13,10 +13,12 @@ import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
 export default ({ userData, userId }) => {
   const [waitingForApi, setWaitingForApi] = useState(false);
+  const [componentToBeUpdated, setComponentToBeUpdated] = useState();
   const [updateUserState, updateUser] = useUpdateUser();
   const [mainNewsletterConsent, updateMainNewsletterConsent] = useState();
   const [customNewsletterSettings, updateCustomNewsletterSettings] = useState([]);
   const [municipality, setMunicipality] = useState();
+  const [newsletterRevokeState, setNewsletterRevokeState] = useState(false);
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -44,12 +46,24 @@ export default ({ userData, userId }) => {
     updateCustomNewsletterSettings(userData.customNewsletters);
   }
 
-  const revokeMainNewsletterConsent = () => {
-    let updatedMainNewsletterConsent = {
-      ...mainNewsletterConsent,
-    };
-    updatedMainNewsletterConsent.value = !mainNewsletterConsent.value;
-    updateMainNewsletterConsent(updatedMainNewsletterConsent);
+  const toggleMainNewsletterRevokeProcess = () => {
+    setComponentToBeUpdated('Main');
+    setNewsletterRevokeState(!newsletterRevokeState);
+  }
+
+  const toggleMainNewsletterConsent = async () => {
+    setComponentToBeUpdated('Main');
+    try {
+      let updatedMainNewsletterConsent = !mainNewsletterConsent.value;
+
+      updateUser({ userId: userId, newsletterConsent: updatedMainNewsletterConsent })
+      updateMainNewsletterConsent({ value: updatedMainNewsletterConsent });
+
+      setNewsletterRevokeState(false);
+
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handlePlaceSelect = municipality => {
@@ -86,7 +100,7 @@ export default ({ userData, userId }) => {
     return newNewsletter;
   };
 
-  const reactivateNewsletter = (newsletter) => {
+  const reactivateNewsletter = async (newsletter) => {
     try {
       const updatedNewsletters = [...customNewsletterSettings];
       for (let i = 0; i < updatedNewsletters.length; i++) {
@@ -95,7 +109,7 @@ export default ({ userData, userId }) => {
           updatedNewsletters[i] = newsletter;
         }
       }
-      updateUser({ userId: userId, customNewsletters: updatedNewsletters });
+      await updateUser({ userId: userId, customNewsletters: updatedNewsletters });
       updateCustomNewsletterSettings(updatedNewsletters);
     } catch (e) {
       console.log(e);
@@ -114,6 +128,8 @@ export default ({ userData, userId }) => {
   };
 
   const updateSingleNewsletter = async (newsletter) => {
+    console.log(componentToBeUpdated);
+    setComponentToBeUpdated(newsletter.ags);
     try {
       const updatedNewsletters = [...customNewsletterSettings];
       for (let i = 0; i < updatedNewsletters.length; i++) {
@@ -142,7 +158,8 @@ export default ({ userData, userId }) => {
         newsletter={newsletter}
         key={`${newsletter.name}${newsletter.ags}`}
         updateSingleNewsletter={updateSingleNewsletter}
-        waitingForApi={waitingForApi} />;
+        waitingForApi={waitingForApi}
+        componentToBeUpdated={componentToBeUpdated} />;
     } else {
       return null;
     }
@@ -163,35 +180,68 @@ export default ({ userData, userId }) => {
         {userData && userData.newsletterConsent ? (
           <section>
             {/* Main Card always visible */}
-            <div className={s.newsletterCard}>
+            {!newsletterRevokeState ? <div className={s.newsletterCard}>
               <p className={s.newsletterCardHeading}>
                 Allgemeiner Expeditions-Letter
               </p>
-              <p className={s.newsletterCardDescription}>
-                Du erhälst die wichtigsten Infos über die Expedition.
-              </p>
-              <p className={cN(gS.alignRight, gS.noMargin)}>
-                {mainNewsletterConsent && mainNewsletterConsent.value ? (
-                  <span
-                    aria-hidden="true"
-                    className={gS.linkLikeFormated}
-                    onClick={revokeMainNewsletterConsent}
-                    onKeyDown={revokeMainNewsletterConsent}
-                  >
-                    abbestellen
-                  </span>
-                ) : (
+              {mainNewsletterConsent && mainNewsletterConsent.value ?
+                <p className={s.newsletterCardDescription}>
+                  Du erhälst die wichtigsten Infos über die Expedition.
+                </p> : <p className={s.newsletterCardDescription}>
+                  Du erhälst keine Infos über die Expedition.
+              </p>}
+              {waitingForApi && componentToBeUpdated === 'Main' ?
+                <p className={cN(gS.alignRight, gS.noMargin)}>
+                  <span className={gS.loading}></span>
+                  <b className={gS.loadingMsg}>Speichern</b>
+                </p>
+                :
+                <p className={cN(gS.alignRight, gS.noMargin)}>
+                  {mainNewsletterConsent && mainNewsletterConsent.value ? (
                     <span
                       aria-hidden="true"
                       className={gS.linkLikeFormated}
-                      onClick={revokeMainNewsletterConsent}
-                      onKeyDown={revokeMainNewsletterConsent}
+                      onClick={toggleMainNewsletterRevokeProcess}
+                      onKeyDown={toggleMainNewsletterRevokeProcess}
                     >
-                      Newsletter erhalten
+                      abbestellen
                     </span>
-                  )}
-              </p>
-            </div>
+                  ) : (
+                      <span
+                        aria-hidden="true"
+                        className={gS.linkLikeFormated}
+                        onClick={toggleMainNewsletterConsent}
+                        onKeyDown={toggleMainNewsletterConsent}
+                      >
+                        Newsletter erhalten
+                      </span>
+                    )}
+                </p>
+              }
+            </div> :
+              <section className={s.newsletterCard}>
+                <p className={s.newsletterCardHeading}>
+                  Bist du sicher, dass du keinen allgmeinen Newsletter mehr bekommen möchtest?
+                </p>
+                <br />
+                <p className={s.newsletterCardDescription}>
+                  Wir können dich nicht mehr informieren.
+                </p>
+                <div className={s.revokeButtonRow}>
+                  <Button className={gS.floatRight} onClick={toggleMainNewsletterConsent}>
+                    Abbestellen
+                  </Button>
+                  <div className={s.cancelRevokeProcess}>
+                    <span
+                      aria-hidden="true"
+                      className={gS.linkLikeFormated}
+                      onClick={toggleMainNewsletterRevokeProcess}
+                      onKeyUp={toggleMainNewsletterRevokeProcess}>
+                      Newsletter weiter erhalten
+                    </span>
+                  </div>
+                </div>
+              </section>}
             {/* Conditionally render individual Cards */}
             <div>{activeNewsletterCards}</div>
           </section>
