@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from './style.module.less';
 import gS from '../style.module.less';
 import cN from 'classnames';
@@ -9,45 +9,39 @@ import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
 import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
-const userCustomNewslettersFromDB = [
-  {
-    name: 'Berlin',
-    value: true,
-    extraInfo: false,
-    timestamp: '2020-11-20T12:35:42.218Z',
-    ags: 'abc-67890',
-  },
-  {
-    name: 'Eberswalde',
-    value: true,
-    extraInfo: true,
-    timestamp: '2020-11-21T12:35:42.218Z',
-    ags: 'abc-12345',
-  },
-];
-
-const newNewsletter = {
-  name: 'Hamburg',
-  value: true,
-  extraInfo: true,
-  timestamp: '2020-11-23T12:35:42.218Z',
-  ags: 'abc-24680',
-};
+import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
 export default ({ userData, userId }) => {
-  const [mainNewsletterConsent, updateMainNewsletterConsent] = useState({});
-  const [customNewsletterSettings, updateCustomNewsletterSettings] = useState(
-    userCustomNewslettersFromDB
-  );
+  const [waitingForApi, setWaitingForApi] = useState(false);
+  const [updateUserState, updateUser] = useUpdateUser();
+  const [mainNewsletterConsent, updateMainNewsletterConsent] = useState();
+  const [customNewsletterSettings, updateCustomNewsletterSettings] = useState([]);
   const [municipality, setMunicipality] = useState();
 
-  // userData is undefined on intitial pageload, fill state when it is ready:
-  if (
-    userData &&
+  useEffect(() => {
+    if (updateUserState === 'loading') {
+      setWaitingForApi(true);
+    }
+    if (updateUserState === 'updated') {
+      setTimeout(() => {
+        setWaitingForApi(false);
+      }, 750);
+    }
+    if (updateUserState === 'error') {
+      setWaitingForApi(false);
+    }
+  }, [updateUserState]);
+
+  if (userData &&
     userData.newsletterConsent &&
-    mainNewsletterConsent.value === undefined
-  ) {
+    mainNewsletterConsent === undefined) {
     updateMainNewsletterConsent(userData.newsletterConsent);
+  }
+
+  if (userData &&
+    userData.customNewsletters &&
+    userData.customNewsletters.length > customNewsletterSettings.length) {
+    updateCustomNewsletterSettings(userData.customNewsletters);
   }
 
   const revokeMainNewsletterConsent = () => {
@@ -59,18 +53,99 @@ export default ({ userData, userId }) => {
   };
 
   const handlePlaceSelect = municipality => {
-    console.log(municipality);
     setMunicipality(municipality);
   };
 
-  const addNewsletter = newsletterToAdd => {
-    let updatedNewsletter = [...customNewsletterSettings];
-    updatedNewsletter.push(newsletterToAdd);
-    updateCustomNewsletterSettings(updatedNewsletter);
+  const handleNewsletterAddRequest = () => {
+    const newsletterToAdd = constructNewsletter(municipality);
+    let newsletterExists = false;
+    for (let i = 0; i < customNewsletterSettings.length; i++) {
+      if (customNewsletterSettings[i].ags === newsletterToAdd.ags) {
+        newsletterExists = true;
+        if (customNewsletterSettings[i].value) {
+          /* Notify user, that newsletter already exists? */
+        } else {
+          reactivateNewsletter(newsletterToAdd);
+        }
+      }
+    }
+    /* If newsletter does not exist, create a new entry */
+    if (!newsletterExists) {
+      addNewsletter(newsletterToAdd);
+    }
+  }
+
+  const constructNewsletter = (municipality) => {
+    const newNewsletter = {
+      name: municipality.name,
+      value: true,
+      extraInfo: false,
+      timestamp: new Date().toISOString(),
+      ags: municipality.ags
+    }
+    return newNewsletter;
   };
 
+  const reactivateNewsletter = (newsletter) => {
+    try {
+      const updatedNewsletters = [...customNewsletterSettings];
+      for (let i = 0; i < updatedNewsletters.length; i++) {
+        if (updatedNewsletters[i].ags === newsletter.ags) {
+          newsletter.value = true;
+          updatedNewsletters[i] = newsletter;
+        }
+      }
+      updateUser({ userId: userId, customNewsletters: updatedNewsletters });
+      updateCustomNewsletterSettings(updatedNewsletters);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const addNewsletter = async (newsletter) => {
+    try {
+      const updatedNewsletters = [...customNewsletterSettings];
+      updatedNewsletters.push(newsletter);
+      updateUser({ userId: userId, customNewsletters: updatedNewsletters });
+      updateCustomNewsletterSettings(updatedNewsletters);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateSingleNewsletter = async (newsletter) => {
+    try {
+      const updatedNewsletters = [...customNewsletterSettings];
+      for (let i = 0; i < updatedNewsletters.length; i++) {
+        if (updatedNewsletters[i].ags === newsletter.ags) {
+          updatedNewsletters[i] = newsletter;
+        }
+      }
+      updateUser({ userId: userId, customNewsletters: updatedNewsletters });
+      updateCustomNewsletterSettings(updatedNewsletters);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  // const updateUserPhone = () => {
+  //   try {
+  //     updateUser({ userId: userId, phone: userPhone })
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
+
   const activeNewsletterCards = customNewsletterSettings.map(newsletter => {
-    return <NewsletterCard newsletter={newsletter} key={`${newsletter.name}${newsletter.ags}`} />;
+    if (newsletter.value) {
+      return <NewsletterCard
+        newsletter={newsletter}
+        key={`${newsletter.name}${newsletter.ags}`}
+        updateSingleNewsletter={updateSingleNewsletter}
+        waitingForApi={waitingForApi} />;
+    } else {
+      return null;
+    }
   });
 
   return (
@@ -125,10 +200,10 @@ export default ({ userData, userId }) => {
 
         <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
         <SearchPlaces
-          showButton={municipality !== undefined}
+          showButton={municipality !== undefined && !waitingForApi}
           onPlaceSelect={handlePlaceSelect}
           buttonLabel={`${municipality ? municipality.name : ''} hinzufügen`}
-          handleButtonClick={() => addNewsletter(newNewsletter)}
+          handleButtonClick={() => handleNewsletterAddRequest()}
         />
 
         <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
