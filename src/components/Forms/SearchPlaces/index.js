@@ -9,11 +9,24 @@ import { navigate } from 'gatsby';
 
 import Fuse from 'fuse.js';
 
+const handleButtonClickDefault = ({ validate }) => {
+  // If no place was selected, we check if the top result
+  // has a very good score, if yes -> navigate to the page
+  // of that place
+  // --> validate function
+  const validation = validate();
+  if (validation.status === 'success') {
+    navigate(validation.ags);
+  }
+};
+
 export const SearchPlaces = ({
   showButton,
   onPlaceSelect,
   label = 'Stadt:',
   validateOnBlur,
+  handleButtonClick = handleButtonClickDefault,
+  buttonLabel = 'Finde deine Stadt',
 }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -111,16 +124,6 @@ export const SearchPlaces = ({
     setFormState({ error, touched });
   };
 
-  const handleSubmit = e => {
-    // If no place was selected, we check if the top result
-    // has a very good score, if yes -> navigate to the page
-    // of that place
-    // --> validate function
-    const validation = validate();
-    if (validation.status === 'success') {
-      navigate(validation.ags);
-    }
-  };
   const handleBlur = e => {
     const isAutoCompleteTarget =
       e.relatedTarget &&
@@ -163,9 +166,9 @@ export const SearchPlaces = ({
           <Button
             id="linkButton"
             className={s.sideButton}
-            onClick={handleSubmit}
+            onClick={() => handleButtonClick({ validate })}
           >
-            Finde deine Stadt
+            {buttonLabel}
           </Button>
         )}
       </div>
