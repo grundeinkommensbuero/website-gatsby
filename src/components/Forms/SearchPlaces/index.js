@@ -208,7 +208,7 @@ export function AutoCompleteList({
                 // Emulate click when enter or space are pressed
                 if (e.key === 'Enter' || e.keyCode === 32) {
                   e.preventDefault();
-                  handleSuggestionClick(x);
+                  handleSuggestionClick({ e, suggestion: x });
                 }
               }}
             >
