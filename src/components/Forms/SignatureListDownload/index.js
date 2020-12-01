@@ -174,7 +174,7 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
             newsletterConsent: true,
             customNewsletters: [
               {
-                municipalityName: mapCampaignCodeToState(signaturesId),
+                name: mapCampaignCodeToState(signaturesId),
                 value: true,
                 extraInfo: false,
                 timestamp: new Date().toISOString(),
