@@ -29,7 +29,7 @@ export const useCreateSignatureList = () => {
     anonymous,
     data => {
       // If non-anonymous download
-      if (!data.anonymous && (userId || data.email)) {
+      if (!data.anonymous && userId) {
         data.token = token;
         data.userId = userId;
 
@@ -66,7 +66,7 @@ const createSignatureListAnonymous = async (
 };
 
 // Function to create (or get) a signature list
-// userId or email is passed
+// userId is passed
 const createSignatureList = async (
   { userId, email, campaignCode, userExists, token, shouldNotUpdateUser },
   setState,
@@ -85,12 +85,7 @@ const createSignatureList = async (
     }
 
     //call function to make api request, returns signature list if successful (throws error otherwise)
-    const signatureList = await makeApiCall(
-      data,
-      shouldNotUpdateUser,
-      userId,
-      token
-    );
+    const signatureList = await makeApiCall(data, userId, token);
 
     setState('created');
     setPdf(signatureList);
@@ -105,12 +100,11 @@ const createSignatureList = async (
 };
 
 // Function which calls our api to create a (new) signature list
-// Depending on whether or not the user already was authenticated,
-// we use a different endpoint, because the /signatures endpoint returns 401,
-// if user does not have newsletter consent
+// We use different endpoints: /signatures for anonymous lists, and
+// /users/{userId}/signatures for personalized lists
 
 // Returns the list {id, url} or null
-const makeApiCall = async (data, shouldNotUpdateUser, userId, token) => {
+const makeApiCall = async (data, userId, token) => {
   // Make api call to create new singature list and get pdf
   const request = {
     method: 'POST',
@@ -122,9 +116,7 @@ const makeApiCall = async (data, shouldNotUpdateUser, userId, token) => {
     body: JSON.stringify(data),
   };
 
-  const endpoint = shouldNotUpdateUser
-    ? `/users/${userId}/signatures`
-    : '/signatures';
+  const endpoint = userId ? `/users/${userId}/signatures` : '/signatures';
 
   const response = await fetch(`${CONFIG.API.INVOKE_URL}${endpoint}`, request);
   const json = await response.json();

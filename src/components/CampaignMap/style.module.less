@@ -1,0 +1,78 @@
+@import '../style/vars.less';
+
+@mapHeight: 65vh;
+
+.interfaceContainer {
+  position: relative;
+  height: @mapHeight;
+}
+
+.mapContainer {
+  // position: relative;
+  // background: #f0f0f0;
+  // border: 1px solid #e8e8e8;
+  height: @mapHeight;
+}
+
+.mapFallback {
+  position: absolute;
+  width: 100%;
+  height: @mapHeight;
+  z-index: 0;
+  background-image: url('./assets/map.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.mapButton {
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+
+  border: var(--bg-color) solid @borderWidth;
+  border-radius: 10%;
+
+  text-decoration: none;
+  font-size: @fontSizeM;
+  line-height: 1;
+  font-weight: bold;
+  color: var(--bg-color);
+  background: var(--font-color);
+
+  cursor: pointer;
+
+  &:hover {
+    color: var(--bg-color);
+    background: #f17476;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 @borderWidthThick var(--font-color);
+  }
+}
+
+.blockTouchOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100%;
+  pointer-events: none;
+
+  .right {
+    float: right;
+    height: @mapHeight;
+    width: 25%;
+    pointer-events: all;
+  }
+}

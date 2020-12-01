@@ -21,6 +21,37 @@ const DEFAULT_BOUNDS = [
   [17.030017, 55.437655],
 ];
 
+/**
+ * The `config` JSON field on a Contentful Map takes values that will be directly
+ * passed in to the mapboxgl map constructor. This function extends the default mapbox config
+ * only adding or overriding any properties that have a value on Contentful.
+ *
+ * @param {{}} defaultConfig Default mapbox config to add props to
+ * @param {{key: string; value: any}[]} props Props that get added to or override default config
+ */
+const addPropsToMapboxConfig = (defaultConfig, props) => {
+  if (!props) return defaultConfig;
+
+  // Loop through each key of each prop
+  const configWithoutNulls = Object.keys(props).reduce((acc, key) => {
+    // If value, add to accumulator
+    if (props[key]) {
+      return {
+        ...acc,
+        [key]: props[key],
+      };
+    }
+    // Otherwise, return accumulator
+    return acc;
+  }, {});
+
+  // Merge Contentful properties with the default
+  return {
+    ...defaultConfig,
+    ...configWithoutNulls,
+  };
+};
+
 export default ({ mapConfig }) => {
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
@@ -73,11 +104,22 @@ export default ({ mapConfig }) => {
           return location.state === mapConfig.state;
         });
 
-      map = new mapboxgl.Map({
+      // Default config for mapboxgl
+      const mapboxConfigDefault = {
         container: container.current,
         style: 'mapbox://styles/mapbox/streets-v9',
-        maxBounds: mapConfig.config?.bounds || DEFAULT_BOUNDS,
-      }).addControl(new mapboxgl.NavigationControl(), 'top-left');
+        maxBounds: DEFAULT_BOUNDS,
+      };
+
+      const mapboxConfig = addPropsToMapboxConfig(
+        mapboxConfigDefault,
+        mapConfig.config
+      );
+
+      map = new mapboxgl.Map(mapboxConfig).addControl(
+        new mapboxgl.NavigationControl(),
+        'top-left'
+      );
 
       collectSignaturesLocationsFiltered.forEach(({ node: location }) => {
         if (location.location) {
