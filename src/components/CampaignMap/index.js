@@ -43,6 +43,7 @@ export const CampaignMap = ({
   const [zoom, setZoom] = useState(4.56);
   const [zoomMin, setZoomMin] = useState(Infinity);
   const [maxZoom, setMaxZoom] = useState(9);
+  const [showFallback, setShowFallback] = useState(true);
 
   // ---- Data -----------------------------------------------------------------------------
   useEffect(() => {
@@ -99,6 +100,9 @@ export const CampaignMap = ({
   useEffect(() => {
     if (animationCounter === 1) {
       setTimeout(() => {
+        // TODO: verify this is the right time to replace the fallback
+        setShowFallback(false);
+
         animate({
           dataEvents,
           setDataEvents,
@@ -144,7 +148,7 @@ export const CampaignMap = ({
       <div className={s.blockTouchOverlay}>
         <div className={s.right}></div>
       </div>
-      <div className={s.buttonContainer}>
+      <div id="mapButtonContainer" className={s.buttonContainer}>
         <button
           className={s.mapButton}
           onClick={() => {
@@ -165,6 +169,7 @@ export const CampaignMap = ({
         </button>
       </div>
 
+      {showFallback && <div className={s.mapFallback}></div>}
       <div className={s.mapContainer}>
         <Map
           dataStates={dataStates}

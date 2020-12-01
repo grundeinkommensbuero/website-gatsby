@@ -4,12 +4,25 @@
 
 .interfaceContainer {
   position: relative;
+  height: @mapHeight;
 }
 
 .mapContainer {
-  // background: #f2f2f2;
+  // position: relative;
+  // background: #f0f0f0;
   // border: 1px solid #e8e8e8;
   height: @mapHeight;
+}
+
+.mapFallback {
+  position: absolute;
+  width: 100%;
+  height: @mapHeight;
+  z-index: 0;
+  background-image: url('./assets/map.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .buttonContainer {
