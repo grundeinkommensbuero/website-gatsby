@@ -23,6 +23,14 @@ export default ({ newsletter }) => {
     updateMockupNewsletterConsent(updatedNewsletterConstent);
   }
 
+  const isEmptyObj = (obj) => {
+    if (Object.keys(obj).length === 0 && obj.constructor === Object) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <div className={s.newsletterCard}>
       {!newsletterRevokeState ?
@@ -33,7 +41,8 @@ export default ({ newsletter }) => {
           </p>
 
           <Form
-            validate={(values) => console.log(values)}
+            onSubmit={() => { }}
+            validate={(values) => !isEmptyObj(values) ? console.log(values) : null}
             render={() => {
               return (
                 <Field
@@ -62,12 +71,18 @@ export default ({ newsletter }) => {
           </p>
         </section> :
         <section>
-          <p className={s.newsletterCardHeading}>Bist du sicher, dass du keine Neuigkeiten mehr aus {newsletter.name} bekommen möchtest?</p>
+          <p className={s.newsletterCardHeading}>
+            Bist du sicher, dass du keine Neuigkeiten mehr aus {newsletter.name} bekommen möchtest?
+          </p>
           <br />
-          <p className={s.newsletterCardDescription}>Wir können dich nicht mehr informieren, wenn sich etwas an der Kampagne in {newsletter.name}
-          ändert oder neue Sammelevents in deiner Nähe geplant werden.</p>
+          <p className={s.newsletterCardDescription}>
+            Wir können dich nicht mehr informieren, wenn sich etwas an der Kampagne in {newsletter.name}
+            ändert oder neue Sammelevents in deiner Nähe geplant werden.
+          </p>
           <div className={s.revokeButtonRow}>
-            <Button className={gS.floatRight} onClick={revokeNewsletterConsent}>Abbestellen</Button>
+            <Button className={gS.floatRight} onClick={revokeNewsletterConsent}>
+              Abbestellen
+            </Button>
             <div className={s.cancelRevokeProcess}>
               <span
                 aria-hidden="true"
