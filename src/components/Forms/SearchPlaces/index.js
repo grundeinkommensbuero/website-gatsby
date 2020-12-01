@@ -104,7 +104,7 @@ export const SearchPlaces = ({
     return { status: 'failed' };
   };
 
-  const handleSuggestionClick = suggestion => {
+  const handleSuggestionClick = ({ suggestion }) => {
     setQuery(suggestion.name);
     setSelectedPlace(suggestion);
 
@@ -166,7 +166,7 @@ export const SearchPlaces = ({
           <Button
             id="linkButton"
             className={s.sideButton}
-            onClick={() => handleButtonClick({ validate })}
+            onClick={event => handleButtonClick({ event, validate })}
           >
             {buttonLabel}
           </Button>
@@ -185,6 +185,7 @@ export function AutoCompleteList({
 }) {
   return (
     <div
+      aria-hidden="true"
       className={cN(s.suggestions, { [s.active]: suggestionsActive })}
       onBlur={handleBlur}
     >
@@ -202,7 +203,7 @@ export function AutoCompleteList({
               role="button"
               aria-pressed="false"
               tabIndex={0}
-              onClick={e => handleSuggestionClick(x)}
+              onClick={event => handleSuggestionClick({ event, suggestion: x })}
               onKeyDown={e => {
                 // Emulate click when enter or space are pressed
                 if (e.key === 'Enter' || e.keyCode === 32) {
