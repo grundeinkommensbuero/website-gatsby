@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import SearchPlaces from '../../components/Forms/SearchPlaces';
+import { SearchPlaces } from '../../components/Forms/SearchPlaces';
 
 export default () => {
   return (
