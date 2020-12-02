@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AvatarImage from '../../AvatarImage';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
@@ -8,14 +8,68 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
 import { MessengerButtonRow } from '../MessengerButtonRow.js';
-import ImageUpload from '../../Forms/ImageUpload'
+import ImageUpload from '../../Forms/ImageUpload';
 
-export default ({ userData, userId }) => {
+import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+
+export const PersonalSettings = ({ userData, userId }) => {
+  const [updateUserState, updateUser] = useUpdateUser();
+  const [waitingForApi, setWaitingForApi] = useState(false);
+  const [editMailAddress, setEditMailAddress] = useState(false);
+  const [editPhoneNumber, setEditPhoneNumber] = useState(false);
+
+  const [tempMail, setTempMail] = useState();
+  const [tempPhone, setTempPhone] = useState();
+  const [tempName, setTempName] = useState();
+  const [tempZIP, setTempZIP] = useState();
+  const [tempCity, setTempCity] = useState();
+
+  // until phonenumber is included in userData
+  const fakePhone = '';
+
+  if (
+    userData &&
+    userData.username !== tempName &&
+    userData.zipCode !== tempZIP &&
+    userData.city !== tempCity
+  ) {
+    setTempName(userData.username);
+    setTempZIP(userData.zipCode);
+    setTempCity(userData.city);
+    setTempMail(userData.email);
+    setTempPhone('');
+  }
+
+  useEffect(() => {
+    if (updateUserState === 'loading') {
+      setWaitingForApi(true);
+    }
+    if (updateUserState === 'updated') {
+      setTimeout(() => {
+        setWaitingForApi(false);
+      }, 750);
+    }
+    if (updateUserState === 'error') {
+      setWaitingForApi(false);
+    }
+  }, [updateUserState]);
+
+  const saveUserDataChanges = () => {
+    if (tempName !== userData.username) {
+      updateUser({ userId: userId, username: tempName });
+    }
+    if (tempZIP !== userData.zipCode) {
+      updateUser({ userId: userId, zipCode: tempZIP });
+    }
+    if (tempCity !== userData.city) {
+      updateUser({ userId: userId, city: tempCity });
+    }
+  };
+
   return (
     <section className={gS.profilePageGrid}>
       <section className={cN(gS.editPageSection, gS.editSettings)}>
         <div className={gS.backToProfile}>
-          {/* add a cancel method */}
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
@@ -42,62 +96,190 @@ export default ({ userData, userId }) => {
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
             <h4 className={gS.optionSectionHeading}>Deine Kontaktdaten</h4>
-            <p className={s.optionHeading}><b>Email-Adresse</b></p>
-            <p className={s.optionDescription}>Die Email-Adresse, die du verwendest um dich einzuloggen und Neuigkeiten von uns zu erhalten.</p>
+            <p className={s.optionHeading}>
+              <b>Email-Adresse</b>
+            </p>
+            <p className={s.optionDescription}>
+              Die Email-Adresse, die du verwendest um dich einzuloggen und
+              Neuigkeiten von uns zu erhalten.
+            </p>
 
-            <div className={s.editableRow}>
-              <span>{userData.email}</span>
-              <Button className={s.saveChangesBtnSmall}>Ändern</Button>
-            </div>
-
-            <p className={s.optionHeading}><b>Telefonnummer</b></p>
-            <p className={s.optionDescription}>Eine Telefonnummer erleichtert es uns, die für die Koordination von Veranstaltungen zu erreichen.</p>
-
-            {userData.phone ?
+            {!editMailAddress ? (
               <div className={s.editableRow}>
-                <span>{userData.phone}</span>
-                <Button className={s.saveChangesBtnSmall}>Ändern</Button>
-              </div> :
-              <div className={s.editableRow}>
-                <span>Noch keine Telefonnummer angegeben</span>
-                <Button className={s.saveChangesBtnSmall}>Eintragen</Button>
+                <span>{userData.email}</span>
+                <Button
+                  className={s.saveChangesBtnSmall}
+                  onClick={() => setEditMailAddress(true)}
+                >
+                  Ändern
+                </Button>
               </div>
-            }
+            ) : (
+              <div className={s.editableRow}>
+                <TextInput
+                  onChange={evt => setTempMail(evt.target.value)}
+                  placeholder="E-Mail"
+                  value={tempMail || ''}
+                  className={cN(
+                    s.inputWide,
+                    tempMail !== userData.email ? s.inputHighlighted : null
+                  )}
+                />
+                <br />
+                <br />
+                {tempMail !== userData.email ? (
+                  <Button className={s.saveChangesBtn}>Ändern</Button>
+                ) : (
+                  <Button
+                    className={s.saveChangesBtn}
+                    onClick={() => setEditMailAddress(false)}
+                  >
+                    abbrechen
+                  </Button>
+                )}
+              </div>
+            )}
 
-            <p className={s.optionHeading}><b>Messenger</b></p>
-            <p className={s.optionDescription}>Wir sind auf mehreren Messenger-Diensten unterwegs. Du findest uns hier:</p>
+            <p className={s.optionHeading}>
+              <b>Telefonnummer</b>
+            </p>
+            <p className={s.optionDescription}>
+              Eine Telefonnummer erleichtert es uns, die für die Koordination
+              von Veranstaltungen zu erreichen.
+            </p>
+
+            {!editPhoneNumber ? (
+              <div className={s.editableRow}>
+                {fakePhone ? (
+                  <span>{fakePhone}</span>
+                ) : (
+                  <span>Noch keine Telefonnummer angegeben</span>
+                )}
+                <Button
+                  className={s.saveChangesBtnSmall}
+                  onClick={() => setEditPhoneNumber(true)}
+                >
+                  {fakePhone ? (
+                    <span>Ändern</span>
+                  ) : (
+                    <span>Eintragen</span>
+                  )}
+                </Button>
+              </div>
+            ) : (
+              <div className={s.editableRow}>
+                <TextInput
+                  onChange={evt => setTempPhone(evt.target.value)}
+                  placeholder="Telefonnummer"
+                  value={tempPhone || ''}
+                  className={cN(
+                    s.inputWide,
+                    tempPhone !== fakePhone ? s.inputHighlighted : null
+                  )}
+                />
+                <br />
+                <br />
+                {tempPhone !== fakePhone ? (
+                  <Button className={s.saveChangesBtn}>Ändern</Button>
+                ) : (
+                  <Button
+                    className={s.saveChangesBtn}
+                    onClick={() => setEditPhoneNumber(false)}
+                  >
+                    abbrechen
+                  </Button>
+                )}
+              </div>
+            )}
+
+            <p className={s.optionHeading}>
+              <b>Messenger</b>
+            </p>
+            <p className={s.optionDescription}>
+              Wir sind auf mehreren Messenger-Diensten unterwegs. Du findest uns
+              hier:
+            </p>
 
             <MessengerButtonRow iconSize="L" />
 
             <h4 className={gS.optionSectionHeading}>Deine Stammdaten</h4>
 
-            <p className={s.optionSectionDescription}>Name oder Adresse ändern:</p>
+            <p className={s.optionSectionDescription}>
+              Name oder Adresse ändern:
+            </p>
 
             <p className={s.optionHeading}>Name</p>
             <div className={s.editTextInput}>
-              <TextInput placeholder="Name" />
+              <TextInput
+                onChange={evt => setTempName(evt.target.value)}
+                placeholder="Name"
+                value={tempName || ''}
+                className={
+                  tempName !== userData.username ? s.inputHighlighted : null
+                }
+              />
             </div>
 
             <p className={s.optionHeading}>Postleitzahl</p>
             <div className={s.editTextInput}>
-              <TextInput placeholder="Postleitzahl" />
+              <TextInput
+                onChange={evt => setTempZIP(evt.target.value)}
+                placeholder="Postleitzahl"
+                value={tempZIP || ''}
+                className={
+                  tempZIP !== userData.zipCode ? s.inputHighlighted : null
+                }
+              />
             </div>
 
             <p className={s.optionHeading}>Ort</p>
             <div className={s.editTextInput}>
-              <TextInput placeholder="Ort" />
+              <TextInput
+                onChange={evt => setTempCity(evt.target.value)}
+                placeholder="Ort"
+                value={tempCity || ''}
+                className={
+                  tempCity !== userData.city ? s.inputHighlighted : null
+                }
+              />
             </div>
 
-            <Button className={s.saveChangesBtn}>Ändern</Button>
+            {!waitingForApi &&
+            (tempName !== userData.username ||
+              tempZIP !== userData.zipCode ||
+              tempCity !== userData.city) ? (
+              <Button
+                className={s.saveChangesBtn}
+                onClick={saveUserDataChanges}
+              >
+                Änderungen speichern
+              </Button>
+            ) : (
+              <section>
+                {waitingForApi ? (
+                  <span>
+                    <span className={gS.loading}></span>
+                    <b className={gS.loadingMsg}>Speichern</b>
+                  </span>
+                ) : null}
+              </section>
+            )}
 
             <h4 className={gS.optionSectionHeading}>Dein Profilbild</h4>
 
-            <ImageUpload userData={userData} userId={userId} showLabel={false} onUploadDone={() => { }} />
+            <ImageUpload
+              userData={userData}
+              userId={userId}
+              showLabel={false}
+              onUploadDone={() => {}}
+            />
 
-            <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>Profil löschen</Link>
+            <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
+              Profil löschen
+            </Link>
           </div>
         </section>
       </section>
-    </section >
-  )
+    </section>
+  );
 };

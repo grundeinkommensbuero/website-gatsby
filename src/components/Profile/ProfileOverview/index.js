@@ -16,7 +16,7 @@ const SELF_SCAN_SLUGS = {
   bremen: 'qr/hb',
 };
 
-export default ({ userData, signatureCountOfUser, userId }) => {
+export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
   return (
     <section className={gS.profilePageGrid}>
       <Link to="stammdaten" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>

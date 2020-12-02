@@ -12,10 +12,10 @@ import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
 import { LinkButtonLocal } from '../../Forms/Button';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
-import ProfileNotifications from '../ProfileNotifications';
-import ProfileOverview from '../ProfileOverview';
-import PersonalSettings from '../PersonalSettings';
-import ProfileSignatures from '../ProfileSignatures';
+import { ProfileNotifications } from '../ProfileNotifications';
+import { ProfileOverview } from '../ProfileOverview';
+import { PersonalSettings } from '../PersonalSettings';
+import { ProfileSignatures } from '../ProfileSignatures';
 
 const ProfilePage = ({ id: slugId }) => {
   const {
