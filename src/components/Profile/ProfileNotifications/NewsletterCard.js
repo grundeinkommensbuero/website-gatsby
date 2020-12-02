@@ -68,21 +68,24 @@ export default ({ newsletter, updateSingleNewsletter, waitingForApi, componentTo
             <span>
               <span className={gS.loading}></span>
               <b className={gS.loadingMsg}>Speichern</b>
-            </span> : <Form
-              onSubmit={() => { }}
-              initialValues={{ extraInfoConsent: newsletterSettings.extraInfo }}
-              validate={(values) => !isEmptyObj(values) ? toggleExtraInfoConsent(values) : null}
-              render={() => {
-                return (
-                  <Field
-                    name="extraInfoConsent"
-                    label={`Für ${newsletterSettings.name} zusätzliche Sammelinfos erhalten`}
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
+            </span>
+          : 
+          <Form
+            onSubmit={() => { }}
+            initialValues={{ extraInfoConsent: newsletterSettings.extraInfo }}
+            validate={(values) => !isEmptyObj(values) ? toggleExtraInfoConsent(values) : null}
+            render={() => {
+              return (
+                <Field
+                  name="extraInfoConsent"
+                  label={`Für ${newsletterSettings.name} zusätzliche Sammelinfos erhalten`}
+                  type="checkbox"
+                  component={Checkbox}
+                ></Field>
                 )
               }}>
-            </Form>}
+            </Form>
+          }
 
           <p className={cN(gS.alignRight, gS.noMargin)}>
             <span
@@ -98,8 +101,8 @@ export default ({ newsletter, updateSingleNewsletter, waitingForApi, componentTo
           </p>
           <br />
           <p className={s.newsletterCardDescription}>
-            Wir können dich nicht mehr informieren, wenn sich etwas an der Kampagne in {newsletterSettings.name}
-            ändert oder neue Sammelevents in deiner Nähe geplant werden.
+            Wir können dich nicht mehr informieren, wenn sich etwas an der Kampagne in {newsletterSettings.name} ändert 
+            oder neue Sammelevents in deiner Nähe geplant werden.
           </p>
           <div className={s.revokeButtonRow}>
             <Button className={gS.floatRight} onClick={toggleNewsletterConsent}>
