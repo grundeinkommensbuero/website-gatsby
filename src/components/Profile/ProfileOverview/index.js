@@ -113,7 +113,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
 
       <Link to="spenden-einstellungen" className={s.profilePageSection}>
         <section className={s.contactInfo}>
-          <h2>Sependen Einstellungen</h2>
+          <h2>Spenden Einstellungen</h2>
           <p>Hier kannst du deine Spende verwalten.</p>
           <div className={s.sectionLink}>
             <span>Spenden!</span>
