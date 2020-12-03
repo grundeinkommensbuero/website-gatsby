@@ -60,6 +60,16 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         </section>
       </Link>
 
+      <Link to="spenden-einstellungen" className={s.profilePageSection}>
+        <section className={s.contactInfo}>
+          <h2>Spenden Einstellungen</h2>
+          <p>Hier kannst du deine Spende verwalten.</p>
+          <div className={s.sectionLink}>
+            <span>Spendeneinstellungen ändern</span>
+          </div>
+        </section>
+      </Link>
+
       {signatureCountOfUser && (
         <a className={s.profilePageSection}
           href={`/${signatureCountOfUser.mostRecentCampaign
@@ -90,6 +100,16 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         </a>
       )}
 
+      <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
+        <section className={s.contactInfo}>
+          <h2>Deine Frage ans Grundeinkommen</h2>
+          <p>Würden sich mehr Menschen selbstständig machen?</p>
+          <div className={s.sectionLink}>
+            <span>Mehr</span>
+          </div>
+        </section>
+      </Link>
+
       <Link to="kontakt-einstellungen" className={s.profilePageSection}>
         <section className={s.contactInfo}>
           <h2>Newsletter & Kontakt</h2>
@@ -100,27 +120,6 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
           </div>
         </section>
       </Link>
-
-      <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
-        <section className={s.contactInfo}>
-          <h2>Frage an das Grundeinkommen</h2>
-          <p>Sieh dir deine Fragen an. oder erstelle eine neue!</p>
-          <div className={s.sectionLink}>
-            <span>Fragen verwalten</span>
-          </div>
-        </section>
-      </Link>
-
-      <Link to="spenden-einstellungen" className={s.profilePageSection}>
-        <section className={s.contactInfo}>
-          <h2>Spenden Einstellungen</h2>
-          <p>Hier kannst du deine Spende verwalten.</p>
-          <div className={s.sectionLink}>
-            <span>Spenden!</span>
-          </div>
-        </section>
-      </Link>
-
 
       {/* <div className={cN(s.profilePageSectionLarge, s.supportText)}>
         Falls du deine persönlichen Daten ändern oder deinen Account löschen
