@@ -131,7 +131,7 @@ const MapHeader = ({ municipality }) => {
   );
 };
 
-export const MunicipalitySection = ({ pageContext, className }) => {
+export const MunicipalityIntro = ({ pageContext, className }) => {
   const { slug } = pageContext;
   let { municipality } = pageContext;
   let type = municipality?.type;
@@ -156,32 +156,15 @@ export const MunicipalitySection = ({ pageContext, className }) => {
     console.log(ags);
     setAGS(ags);
   };
+  const bodyProps = { municipality, type, handlePlaceSelect };
   return (
     <Section className={cN(className)}>
       <MapHeader municipality={municipality} />
       <div className={s.bodyContainer}>
         <SectionInner>
-          {type === 'qualifying' && (
-            <BodyQualifing
-              municipality={municipality}
-              type={type}
-              handlePlaceSelect={handlePlaceSelect}
-            />
-          )}
-          {type === 'collecting' && (
-            <BodyCollecting
-              municipality={municipality}
-              type={type}
-              handlePlaceSelect={handlePlaceSelect}
-            />
-          )}
-          {type === 'state' && (
-            <BodyState
-              municipality={municipality}
-              type={type}
-              handlePlaceSelect={handlePlaceSelect}
-            />
-          )}
+          {type === 'qualifying' && <BodyQualifing {...bodyProps} />}
+          {type === 'collecting' && <BodyCollecting {...bodyProps} />}
+          {type === 'state' && <BodyState {...bodyProps} />}
         </SectionInner>
       </div>
     </Section>

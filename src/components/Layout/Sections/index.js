@@ -19,7 +19,7 @@ import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
-import { MunicipalitySection } from '../../Municipality/MunicipalityHeader';
+import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 
 export default function Sections({ sections, pageContext }) {
   if (sections && sections.length) {
@@ -80,7 +80,7 @@ export function ContentfulSection({ section, pageContext }) {
 
   if (__typename === 'ContentfulPageSectionGemeindeIntro') {
     return (
-      <MunicipalitySection
+      <MunicipalityIntro
         pageContext={pageContext}
         className={s.sectionGemeindeIntro}
       />

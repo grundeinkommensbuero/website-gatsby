@@ -17,6 +17,8 @@ export default ({ data, location, pageContext }) => {
       sections={page.sections}
       pageContext={pageContext}
     >
+      {/* TODO: adjust for municipality case 
+      check for pageContext.municpality */}
       <Helmet>
         <title>{page.title}</title>
 
