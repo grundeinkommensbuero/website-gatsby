@@ -9,7 +9,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
-function Template({ children, sections }) {
+function Template({ children, sections, pageContext }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
     query SiteTitleQuery {
       contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
@@ -156,7 +156,7 @@ function Template({ children, sections }) {
       </Helmet>
       <main className={s.main}>
         {children}
-        <Sections sections={sections} />
+        <Sections sections={sections} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}

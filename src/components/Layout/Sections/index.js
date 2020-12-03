@@ -19,13 +19,18 @@ import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
+import { MunicipalitySection } from '../../Municipality/MunicipalityHeader';
 
-export default function Sections({ sections }) {
+export default function Sections({ sections, pageContext }) {
   if (sections && sections.length) {
     return (
       <SectionWrapper>
         {sections.map((section, index) => (
-          <ContentfulSection section={section} key={index} />
+          <ContentfulSection
+            section={section}
+            pageContext={pageContext}
+            key={index}
+          />
         ))}
       </SectionWrapper>
     );
@@ -37,7 +42,7 @@ export function SectionWrapper({ children, className }) {
   return <div className={cN(s.sections, className)}>{children}</div>;
 }
 
-export function ContentfulSection({ section }) {
+export function ContentfulSection({ section, pageContext }) {
   const {
     title,
     titleShort,
@@ -68,9 +73,19 @@ export function ContentfulSection({ section }) {
     questionUbi,
     bodyAtTheEnd,
   } = section;
+
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
+
+  if (__typename === 'ContentfulPageSectionGemeindeIntro') {
+    return (
+      <MunicipalitySection
+        pageContext={pageContext}
+        className={s.sectionGemeindeIntro}
+      />
+    );
+  }
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (

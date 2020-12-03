@@ -6,11 +6,17 @@ import MatomoTrackingStuff from './MatomoTrackingStuff';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-export default ({ data, location }) => {
+export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
+  // const title = page ? page.title : municipality.name;
 
   return (
-    <Layout location={location} title={page.title} sections={page.sections}>
+    <Layout
+      location={location}
+      title={page.title}
+      sections={page.sections}
+      pageContext={pageContext}
+    >
       <Helmet>
         <title>{page.title}</title>
 

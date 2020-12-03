@@ -9,9 +9,16 @@ import {
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from '../StaticPage/MatomoTrackingStuff';
 
-const Municipality = ({ pageContext: { municipality } }) => {
+import s from './style.module.less';
+import { MapAndSearch } from './MapAndSearch';
+import { CampainVisualisation } from '../CampaignVisualisations';
+
+const Municipality = ({ data, pageContext: { municipality } }) => {
+  const page = data.contentfulStaticContent;
+  // console.log(page);
+  // console.log(municipality);
   return (
-    <Layout title={municipality.name}>
+    <Layout title={municipality.name} sections={page.sections}>
       <Helmet>
         <title>{municipality.name}</title>
 
@@ -27,24 +34,153 @@ const Municipality = ({ pageContext: { municipality } }) => {
       </Helmet>
 
       <SectionWrapper>
-        <SectionHeader title={municipality.name}></SectionHeader>
+        {/* <SectionHeader title={municipality.name}></SectionHeader> */}
         <Section>
           <SectionInner>
-            <h3>
-              {municipality.district ? `Kreis: ${municipality.district}, ` : ''}{' '}
-              Bundesland: {municipality.state}.
-            </h3>
+            <MapAndSearch municipality={municipality} />
+            <br />
+            <h2>Bringe das Grundeinkommen nach {municipality.name}!</h2>
+            <CampainVisualisation
+              goal={5000}
+              currentCount={1000}
+              receivedCount={2000}
+              count={3000}
+              // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
+              labels={{
+                NEEDED: () => <>Benötigte Anmeldungen</>,
+                GOAL_INBETWEEN_TOOLTIP: count => (
+                  <>
+                    Insgesamt benötigt:
+                    <br />
+                    {count} Anmeldungen
+                  </>
+                ),
+                GOAL_INBETWEEN: count => (
+                  <>Nächstes Ziel: {count} Anmeldungen</>
+                ),
+                CURRENT_COUNT: () => <>Anmeldungen</>,
+                CTA: () => <>Mitmachen</>,
+              }}
+              currency="Anmeldungen"
+              startDate={new Date()}
+            />
             <p>
-              Koordinaten: {municipality.latitude}, {municipality.longitude}
+              Melde dich an und werde Teil der Expedition in {municipality.name}
+              ! Hilf uns, das Grundeinkommen in {municipality.name} zu testen,
+              vernetze dich mit Gleichgesinnten und bleib auf dem Laufenden!
             </p>
-            <h4>Postleitzahlen:</h4>
-            {municipality.zipCodes.map((x, i) => (
-              <span key={`zipCode-${i}`}>{x}, </span>
-            ))}
           </SectionInner>
         </Section>
       </SectionWrapper>
     </Layout>
   );
 };
+
+export const pageQuery = graphql`
+  query StaticMunicipalityPageBySlug($slug: String!) {
+    contentfulStaticContent(slug: { eq: $slug }) {
+      title
+      description {
+        internal {
+          content
+        }
+      }
+      sections {
+        ... on Node {
+          ... on ContentfulPageSection {
+            __typename
+            title
+            titleShort
+            campainVisualisations {
+              campainCode
+              goal
+              startDate
+              title
+              minimum
+              maximum
+              addToSignatureCount
+              ctaLink
+              eyeCatcher {
+                json
+              }
+              eyeCatcherLink
+              goalUnbuffered
+              goalInbetweenMultiple
+              startnextId
+              hint {
+                hint
+              }
+            }
+            body {
+              json
+            }
+            maps {
+              name
+              state
+              config {
+                maxBounds
+                zoom
+                center
+              }
+            }
+            callToActionLink
+            callToActionText
+            bodyTextSizeHuge
+            signUpForm
+            emailSignup
+            pledgeId
+            signaturesId
+            disableRequestListsByMail
+            callToActionReference {
+              slug
+              title
+              shortTitle
+            }
+            teamMembers {
+              image {
+                fluid(maxWidth: 200, quality: 80) {
+                  ...GatsbyContentfulFluid
+                }
+              }
+              name
+              twitter
+              linkedin
+              website
+              role
+            }
+            twitterFeed
+            backgroundIllustration
+            socialMediaButtons
+            blogTeaser
+            questionUbi
+            bodyAtTheEnd {
+              json
+            }
+          }
+          ... on ContentfulPageSectionVideo {
+            __typename
+            videoLink
+          }
+          ... on ContentfulPageSectionIllustration {
+            __typename
+            sloganLine1
+            sloganLine2
+          }
+          ... on ContentfulPageSectionIntro {
+            __typename
+            preTitle
+            title
+            subTitle
+            backgroundImage {
+              fluid(maxWidth: 1500, quality: 80) {
+                ...GatsbyContentfulFluid
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export default Municipality;

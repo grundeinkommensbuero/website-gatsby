@@ -2,22 +2,26 @@
 
 @mapHeight: 65vh;
 
+.heightSetter {
+  height: @mapHeight;
+}
+
 .interfaceContainer {
   position: relative;
-  height: @mapHeight;
+  height: 100%;
 }
 
 .mapContainer {
   // position: relative;
   // background: #f0f0f0;
   // border: 1px solid #e8e8e8;
-  height: @mapHeight;
+  height: 100%;
 }
 
 .mapFallback {
   position: absolute;
   width: 100%;
-  height: @mapHeight;
+  height: 100%;
   z-index: 0;
   background-image: url('./assets/map.png');
   background-size: contain;
@@ -65,14 +69,32 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
   width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: grid;
+  grid-template-areas:
+    'top  top top'
+    'left empty right'
+    'bottom bottom bottom';
+  grid-template-rows: 15% 70% 15%;
+  grid-template-columns: 30% 40% 30%;
   pointer-events: none;
 
-  .right {
-    float: right;
-    height: @mapHeight;
-    width: 25%;
+  & div {
     pointer-events: all;
+    // background: rgba(255, 0, 0, 0.2);
+  }
+  .top {
+    grid-area: top;
+  }
+  .left {
+    grid-area: left;
+  }
+  .right {
+    grid-area: right;
+  }
+  .bottom {
+    grid-area: bottom;
   }
 }

@@ -22,11 +22,12 @@ const handleButtonClickDefault = ({ validate }) => {
 
 export const SearchPlaces = ({
   showButton,
+  buttonLabel = 'Finde deine Stadt',
+  placeholder = 'Gemeinde',
   onPlaceSelect,
   label = 'Stadt:',
   validateOnBlur,
   handleButtonClick = handleButtonClickDefault,
-  buttonLabel = 'Finde deine Stadt',
 }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -91,11 +92,11 @@ export const SearchPlaces = ({
   const validate = () => {
     let ags;
     if (selectedPlace.ags) {
-      ags = `/kommune/${selectedPlace.ags}`;
+      ags = `/gemeinden/${selectedPlace.ags}`;
       return { status: 'success', ags };
     }
     if (results.length > 0 && results[0].score < 0.001) {
-      ags = `/kommune/${results[0].ags}`;
+      ags = `/gemeinden/${results[0].ags}`;
       return { status: 'success', ags };
     }
     const touched = true;
@@ -140,12 +141,12 @@ export const SearchPlaces = ({
 
   return (
     <div>
-      <label htmlFor="gemeinde">{label}</label>
+      {label && <label htmlFor="gemeinde">{label}</label>}
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
             id="gemeinde"
-            placeholder="Stadt"
+            placeholder={placeholder}
             autoComplete="off"
             label="Stadt"
             value={query}

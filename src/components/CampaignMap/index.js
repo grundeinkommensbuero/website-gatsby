@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import s from './style.module.less';
+
 import characterSet from './data/characterSet.json';
 import labels from './data/labels.json';
 
@@ -21,9 +22,10 @@ import { animate } from './animate';
 console.time('timeToMountMap');
 
 export const CampaignMap = ({
-  focusAGS = '08221000',
+  focusAGS,
   initialAnimation = true,
   initialFly = false,
+  className = s.heightSetter,
 }) => {
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
@@ -144,46 +146,51 @@ export const CampaignMap = ({
 
   // ---- Template -------------------------------------------------------------------------
   return (
-    <div className={s.interfaceContainer}>
-      <div className={s.blockTouchOverlay}>
-        <div className={s.right}></div>
-      </div>
-      <div id="mapButtonContainer" className={s.buttonContainer}>
-        <button
-          className={s.mapButton}
-          onClick={() => {
-            handleZoomClick(1);
-          }}
-        >
-          {/* Plus */}
-          &#x2b;
-        </button>
-        <button
-          className={s.mapButton}
-          onClick={() => {
-            handleZoomClick(-1);
-          }}
-        >
-          {/* Minus */}
-          &#x2212;
-        </button>
-      </div>
+    <div className={className}>
+      <div className={s.interfaceContainer}>
+        <div className={s.blockTouchOverlay}>
+          <div className={s.top}></div>
+          <div className={s.right}></div>
+          <div className={s.left}></div>
+          <div className={s.bottom}></div>
+        </div>
+        <div id="mapButtonContainer" className={s.buttonContainer}>
+          <button
+            className={s.mapButton}
+            onClick={() => {
+              handleZoomClick(1);
+            }}
+          >
+            {/* Plus */}
+            &#x2b;
+          </button>
+          <button
+            className={s.mapButton}
+            onClick={() => {
+              handleZoomClick(-1);
+            }}
+          >
+            {/* Minus */}
+            &#x2212;
+          </button>
+        </div>
 
-      {showFallback && <div className={s.mapFallback}></div>}
-      <div className={s.mapContainer}>
-        <Map
-          dataStates={dataStates}
-          dataSignups={dataSignups}
-          dataLabels={dataLabels}
-          dataEvents={dataEvents}
-          signupScale={signupScale}
-          focus={focus}
-          zoom={zoom}
-          setZoom={setZoom}
-          zoomMin={zoomMin}
-          setZoomMin={setZoomMin}
-          maxZoom={maxZoom}
-        />
+        {showFallback && <div className={s.mapFallback}></div>}
+        <div className={s.mapContainer}>
+          <Map
+            dataStates={dataStates}
+            dataSignups={dataSignups}
+            dataLabels={dataLabels}
+            dataEvents={dataEvents}
+            signupScale={signupScale}
+            focus={focus}
+            zoom={zoom}
+            setZoom={setZoom}
+            zoomMin={zoomMin}
+            setZoomMin={setZoomMin}
+            maxZoom={maxZoom}
+          />
+        </div>
       </div>
     </div>
   );
@@ -223,7 +230,7 @@ const Map = ({
   };
 
   const flyTo = useCallback(
-    ({ longitude, latitude, zoom = 7.5, transitionDuration = 2000 }) => {
+    ({ longitude, latitude, zoom = 6.9, transitionDuration = 2000 }) => {
       setInitialViewState({
         longitude,
         latitude,

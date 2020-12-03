@@ -58,6 +58,7 @@ export const getMergedEvents = ({ municipalities, events }) => {
     } else {
       category = categories[2];
     }
+    // TODO: Decide the destinction is necessary?
     // } else if (changeAbsolute >= thresholds.absolute) {
     //   category = categories[2];
     // } else if (changeRelative >= thresholds.relative) {

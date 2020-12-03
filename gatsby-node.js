@@ -9,13 +9,33 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
   const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
   const municipalities = JSON.parse(raw);
+  const agsStates = [
+    { ags: '11000000', slug: 'berlin' },
+    { ags: '04011000', slug: 'bremen' },
+    { ags: '02000000', slug: 'hamburg' },
+  ];
+  const agsQualified = ['08121000'];
 
-  municipalities.forEach(e => {
+  municipalities.forEach(municipality => {
+    // let type = 'qualifying';
+    let slug = 'gemeinden';
+    const stateCampaign = agsStates.find(s => s.ags === municipality.ags);
+    if (stateCampaign) {
+      // type = 'state';
+      slug = stateCampaign.slug;
+    } else if (agsQualified.includes(municipality.ags)) {
+      // type = 'collecting';
+      slug = 'gemeinden-sammelphase';
+    }
+    if (stateCampaign) {
+      console.log(slug);
+    }
     createPage({
-      path: `/gemeinden/${e.ags}`,
-      component: require.resolve('./src/components/Municipality/index.js'),
+      path: `/gemeinden/${municipality.ags}`,
+      component: require.resolve('./src/components/StaticPage/index.js'),
       context: {
-        municipality: e,
+        municipality: { ...municipality },
+        slug,
       },
     });
   });
