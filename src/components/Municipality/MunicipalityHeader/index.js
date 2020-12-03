@@ -77,7 +77,7 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
         />
       )}
       <EngagementText municipality={municipality} />
-      {type === 'qualifying' && <SignUp />}
+      <SignUp />
     </>
   );
 };
@@ -96,7 +96,6 @@ const BodyCollecting = ({ municipality, type, handlePlaceSelect }) => {
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
       />
-      <EngagementText municipality={municipality} />
     </>
   );
 };
@@ -150,6 +149,7 @@ export const MunicipalitySection = ({ pageContext, className }) => {
     type = 'state';
     municipality = state;
   }
+  console.log(type);
 
   const [ags, setAGS] = useState();
   const handlePlaceSelect = ({ ags }) => {
@@ -168,7 +168,7 @@ export const MunicipalitySection = ({ pageContext, className }) => {
               handlePlaceSelect={handlePlaceSelect}
             />
           )}
-          {type === 'qualifying' && (
+          {type === 'collecting' && (
             <BodyCollecting
               municipality={municipality}
               type={type}
@@ -182,9 +182,6 @@ export const MunicipalitySection = ({ pageContext, className }) => {
               handlePlaceSelect={handlePlaceSelect}
             />
           )}
-
-          {/* 
-          {type === 'qualifying' && <SignUp />} */}
         </SectionInner>
       </div>
     </Section>
