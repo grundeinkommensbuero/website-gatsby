@@ -16,14 +16,20 @@ import { ProfileNotifications } from '../ProfileNotifications';
 import { ProfileOverview } from '../ProfileOverview';
 import { PersonalSettings } from '../PersonalSettings';
 import { ProfileSignatures } from '../ProfileSignatures';
+import { ProfileQuestionUbi } from '../ProfileQuestionUbi';
+import { ProfileDonationSettings } from '../ProfileDonationSettings';
 
 const ProfilePage = ({ id: slugId }) => {
   const {
     userId,
     isAuthenticated,
+    token,
     customUserData: userData,
     previousAction,
     setPreviousAction,
+    updateCustomUserData,
+    setCustomUserData,
+    signUserOut
   } = useContext(AuthContext);
 
   const [
@@ -62,6 +68,16 @@ const ProfilePage = ({ id: slugId }) => {
     }
   }, previousAction);
 
+  const triggerUpdateCustomUserData = () => {
+    updateCustomUserData({
+      isAuthenticated,
+      token,
+      setCustomUserData,
+      userId,
+      signUserOut,
+    })
+  }
+
   return (
     <Layout>
       <SectionWrapper>
@@ -82,17 +98,29 @@ const ProfilePage = ({ id: slugId }) => {
             />
             <PersonalSettings
               userData={userData}
+              updateCustomUserData={triggerUpdateCustomUserData}
               userId={userId}
               path="stammdaten"
-            />
-            <ProfileNotifications
-              userData={userData}
-              path="kontakt-einstellungen"
-              userId={userId}
             />
             <ProfileSignatures
               userData={userData}
               path="unterschriften-eintragen"
+              userId={userId}
+            />
+            <ProfileNotifications
+              userData={userData}
+              updateCustomUserData={triggerUpdateCustomUserData}
+              path="kontakt-einstellungen"
+              userId={userId}
+            />
+            <ProfileQuestionUbi
+              userData={userData}
+              path="frage-an-das-grundeinkommen"
+              userId={userId}
+            />
+            <ProfileDonationSettings
+              userData={userData}
+              path="spenden-einstellungen"
               userId={userId}
             />
           </Router>

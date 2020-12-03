@@ -116,6 +116,8 @@ const AuthProvider = ({ children }) => {
         customUserData,
         previousAction,
         setPreviousAction,
+        setCustomUserData,
+        updateCustomUserData
       }}
     >
       {children}

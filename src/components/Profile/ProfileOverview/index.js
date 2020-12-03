@@ -17,6 +17,22 @@ const SELF_SCAN_SLUGS = {
 };
 
 export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
+  /* list newsletters of current user as human readable string */
+  const customNewsletterEnumeration = () => {
+    const newsletterLabels = [];
+    if (userData && userData.newsletterConsent && userData.customNewsletters) {
+      if (userData.newsletterConsent.value) {
+        newsletterLabels.push('Expeditions-Letter');
+      }
+      userData.customNewsletters.forEach(n => {
+        if (n.value) {
+          newsletterLabels.push(n.name);
+        }
+      });
+    }
+    return [newsletterLabels.slice(0, -1).join(', '), newsletterLabels.slice(-1)[0]].join(newsletterLabels.length < 2 ? '' : ' und ');
+  }
+
   return (
     <section className={gS.profilePageGrid}>
       <Link to="stammdaten" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
@@ -77,9 +93,30 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
       <Link to="kontakt-einstellungen" className={s.profilePageSection}>
         <section className={s.contactInfo}>
           <h2>Newsletter & Kontakt</h2>
-          <p>Du erhältst folgende Newsletter: Berlin, Kiel</p>
+          <p>Du erhältst folgende Newsletter: </p>
+          <p>{customNewsletterEnumeration()}</p>
           <div className={s.sectionLink}>
             <span>Einstellungen ändern</span>
+          </div>
+        </section>
+      </Link>
+
+      <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
+        <section className={s.contactInfo}>
+          <h2>Frage an das Grundeinkommen</h2>
+          <p>Sieh dir deine Fragen an. oder erstelle eine neue!</p>
+          <div className={s.sectionLink}>
+            <span>Fragen verwalten</span>
+          </div>
+        </section>
+      </Link>
+
+      <Link to="spenden-einstellungen" className={s.profilePageSection}>
+        <section className={s.contactInfo}>
+          <h2>Sependen Einstellungen</h2>
+          <p>Hier kannst du deine Spende verwalten.</p>
+          <div className={s.sectionLink}>
+            <span>Spenden!</span>
           </div>
         </section>
       </Link>
