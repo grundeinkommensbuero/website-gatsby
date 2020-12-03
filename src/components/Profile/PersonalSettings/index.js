@@ -27,19 +27,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   // until phonenumber is included in userData
   const fakePhone = '';
 
-  if (
-    userData &&
-    userData.username !== tempName &&
-    userData.zipCode !== tempZIP &&
-    userData.city !== tempCity
-  ) {
-    setTempName(userData.username);
-    setTempZIP(userData.zipCode);
-    setTempCity(userData.city);
-    setTempMail(userData.email);
-    setTempPhone('');
-  }
-
   useEffect(() => {
     if (updateUserState === 'loading') {
       setWaitingForApi(true);
@@ -54,6 +41,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
       setWaitingForApi(false);
     }
   }, [updateUserState]);
+
+  useEffect(() => {
+    if (userData && tempName === undefined) {
+      setTempName(userData.username);
+      setTempZIP(userData.zipCode);
+      setTempCity(userData.city);
+      setTempMail(userData.email);
+      setTempPhone('');
+    }
+  });
 
   const saveUserDataChanges = () => {
     if (tempName !== userData.username) {
