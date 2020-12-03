@@ -11,7 +11,7 @@ import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
-export const ProfileNotifications = ({ userData, userId }) => {
+export const ProfileNotifications = ({ userData, userId, updateCustomUserData }) => {
   const [componentToBeUpdated, setComponentToBeUpdated] = useState();
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
@@ -29,6 +29,7 @@ export const ProfileNotifications = ({ userData, userId }) => {
     if (updateUserState === 'updated') {
       setTimeout(() => {
         setWaitingForApi(false);
+        updateCustomUserData();
       }, 750);
     }
     if (updateUserState === 'error') {
@@ -76,7 +77,6 @@ export const ProfileNotifications = ({ userData, userId }) => {
         newsletterConsent: updatedMainNewsletterConsent,
       });
       updateMainNewsletterConsent({ value: updatedMainNewsletterConsent });
-
       setShowUnsubscribeDialog(false);
     } catch (e) {
       console.log(e);
@@ -180,38 +180,38 @@ export const ProfileNotifications = ({ userData, userId }) => {
             Du erhälst die wichtigsten Infos über die Expedition.
           </p>
         ) : (
-          <p className={s.newsletterCardDescription}>
-            Du erhälst keine Infos über die Expedition.
-          </p>
-        )}
+            <p className={s.newsletterCardDescription}>
+              Du erhälst keine Infos über die Expedition.
+            </p>
+          )}
         {waitingForApi && componentToBeUpdated === 'Main' ? (
           <p className={cN(gS.alignRight, gS.noMargin)}>
             <span className={gS.loading}></span>
             <b className={gS.loadingMsg}>Speichern</b>
           </p>
         ) : (
-          <p className={cN(gS.alignRight, gS.noMargin)}>
-            {mainNewsletterConsent && mainNewsletterConsent.value ? (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormated}
-                onClick={toggleUnsubscribeDialog}
-                onKeyDown={toggleUnsubscribeDialog}
-              >
-                abbestellen
-              </span>
-            ) : (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormated}
-                onClick={toggleMainNewsletterConsent}
-                onKeyDown={toggleMainNewsletterConsent}
-              >
-                Newsletter erhalten
-              </span>
-            )}
-          </p>
-        )}
+            <p className={cN(gS.alignRight, gS.noMargin)}>
+              {mainNewsletterConsent && mainNewsletterConsent.value ? (
+                <span
+                  aria-hidden="true"
+                  className={gS.linkLikeFormated}
+                  onClick={toggleUnsubscribeDialog}
+                  onKeyDown={toggleUnsubscribeDialog}
+                >
+                  abbestellen
+                </span>
+              ) : (
+                  <span
+                    aria-hidden="true"
+                    className={gS.linkLikeFormated}
+                    onClick={toggleMainNewsletterConsent}
+                    onKeyDown={toggleMainNewsletterConsent}
+                  >
+                    Newsletter erhalten
+                  </span>
+                )}
+            </p>
+          )}
       </div>
     );
   };

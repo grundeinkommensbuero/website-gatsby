@@ -12,7 +12,7 @@ import ImageUpload from '../../Forms/ImageUpload';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
-export const PersonalSettings = ({ userData, userId }) => {
+export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
   const [editMailAddress, setEditMailAddress] = useState(false);
@@ -47,6 +47,7 @@ export const PersonalSettings = ({ userData, userId }) => {
     if (updateUserState === 'updated') {
       setTimeout(() => {
         setWaitingForApi(false);
+        updateCustomUserData();
       }, 750);
     }
     if (updateUserState === 'error') {
@@ -115,30 +116,30 @@ export const PersonalSettings = ({ userData, userId }) => {
                 </Button>
               </div>
             ) : (
-              <div className={s.editableRow}>
-                <TextInput
-                  onChange={evt => setTempMail(evt.target.value)}
-                  placeholder="E-Mail"
-                  value={tempMail || ''}
-                  className={cN(
-                    s.inputWide,
-                    tempMail !== userData.email ? s.inputHighlighted : null
-                  )}
-                />
-                <br />
-                <br />
-                {tempMail !== userData.email ? (
-                  <Button className={s.saveChangesBtn}>Ändern</Button>
-                ) : (
-                  <Button
-                    className={s.saveChangesBtn}
-                    onClick={() => setEditMailAddress(false)}
-                  >
-                    abbrechen
-                  </Button>
-                )}
-              </div>
-            )}
+                <div className={s.editableRow}>
+                  <TextInput
+                    onChange={evt => setTempMail(evt.target.value)}
+                    placeholder="E-Mail"
+                    value={tempMail || ''}
+                    className={cN(
+                      s.inputWide,
+                      tempMail !== userData.email ? s.inputHighlighted : null
+                    )}
+                  />
+                  <br />
+                  <br />
+                  {tempMail !== userData.email ? (
+                    <Button className={s.saveChangesBtn}>Ändern</Button>
+                  ) : (
+                      <Button
+                        className={s.saveChangesBtn}
+                        onClick={() => setEditMailAddress(false)}
+                      >
+                        abbrechen
+                      </Button>
+                    )}
+                </div>
+              )}
 
             <p className={s.optionHeading}>
               <b>Telefonnummer</b>
@@ -153,8 +154,8 @@ export const PersonalSettings = ({ userData, userId }) => {
                 {fakePhone ? (
                   <span>{fakePhone}</span>
                 ) : (
-                  <span>Noch keine Telefonnummer angegeben</span>
-                )}
+                    <span>Noch keine Telefonnummer angegeben</span>
+                  )}
                 <Button
                   className={s.saveChangesBtnSmall}
                   onClick={() => setEditPhoneNumber(true)}
@@ -162,35 +163,35 @@ export const PersonalSettings = ({ userData, userId }) => {
                   {fakePhone ? (
                     <span>Ändern</span>
                   ) : (
-                    <span>Eintragen</span>
-                  )}
+                      <span>Eintragen</span>
+                    )}
                 </Button>
               </div>
             ) : (
-              <div className={s.editableRow}>
-                <TextInput
-                  onChange={evt => setTempPhone(evt.target.value)}
-                  placeholder="Telefonnummer"
-                  value={tempPhone || ''}
-                  className={cN(
-                    s.inputWide,
-                    tempPhone !== fakePhone ? s.inputHighlighted : null
-                  )}
-                />
-                <br />
-                <br />
-                {tempPhone !== fakePhone ? (
-                  <Button className={s.saveChangesBtn}>Ändern</Button>
-                ) : (
-                  <Button
-                    className={s.saveChangesBtn}
-                    onClick={() => setEditPhoneNumber(false)}
-                  >
-                    abbrechen
-                  </Button>
-                )}
-              </div>
-            )}
+                <div className={s.editableRow}>
+                  <TextInput
+                    onChange={evt => setTempPhone(evt.target.value)}
+                    placeholder="Telefonnummer"
+                    value={tempPhone || ''}
+                    className={cN(
+                      s.inputWide,
+                      tempPhone !== fakePhone ? s.inputHighlighted : null
+                    )}
+                  />
+                  <br />
+                  <br />
+                  {tempPhone !== fakePhone ? (
+                    <Button className={s.saveChangesBtn}>Ändern</Button>
+                  ) : (
+                      <Button
+                        className={s.saveChangesBtn}
+                        onClick={() => setEditPhoneNumber(false)}
+                      >
+                        abbrechen
+                      </Button>
+                    )}
+                </div>
+              )}
 
             <p className={s.optionHeading}>
               <b>Messenger</b>
@@ -245,25 +246,25 @@ export const PersonalSettings = ({ userData, userId }) => {
             </div>
 
             {!waitingForApi &&
-            (tempName !== userData.username ||
-              tempZIP !== userData.zipCode ||
-              tempCity !== userData.city) ? (
-              <Button
-                className={s.saveChangesBtn}
-                onClick={saveUserDataChanges}
-              >
-                Änderungen speichern
-              </Button>
-            ) : (
-              <section>
-                {waitingForApi ? (
-                  <span>
-                    <span className={gS.loading}></span>
-                    <b className={gS.loadingMsg}>Speichern</b>
-                  </span>
-                ) : null}
-              </section>
-            )}
+              (tempName !== userData.username ||
+                tempZIP !== userData.zipCode ||
+                tempCity !== userData.city) ? (
+                <Button
+                  className={s.saveChangesBtn}
+                  onClick={saveUserDataChanges}
+                >
+                  Änderungen speichern
+                </Button>
+              ) : (
+                <section>
+                  {waitingForApi ? (
+                    <span>
+                      <span className={gS.loading}></span>
+                      <b className={gS.loadingMsg}>Speichern</b>
+                    </span>
+                  ) : null}
+                </section>
+              )}
 
             <h4 className={gS.optionSectionHeading}>Dein Profilbild</h4>
 
@@ -271,7 +272,7 @@ export const PersonalSettings = ({ userData, userId }) => {
               userData={userData}
               userId={userId}
               showLabel={false}
-              onUploadDone={() => {}}
+              onUploadDone={() => { }}
             />
 
             <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
