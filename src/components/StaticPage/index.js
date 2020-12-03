@@ -129,6 +129,25 @@ export const pageQuery = graphql`
               }
             }
           }
+          ... on ContentfulPageSectionTwoColumns {
+            __typename
+            imageLeft {
+              fluid(maxWidth: 200, quality: 80) {
+                ...GatsbyContentfulFluid
+              }
+            }
+            columnLeft {
+              json
+            }
+            imageRight {
+              fluid(maxWidth: 200, quality: 80) {
+                ...GatsbyContentfulFluid
+              }
+            }
+            columnRight {
+              json
+            }
+          }
         }
       }
     }
