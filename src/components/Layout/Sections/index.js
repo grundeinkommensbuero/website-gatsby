@@ -67,10 +67,15 @@ export function ContentfulSection({ section }) {
     backgroundImage,
     questionUbi,
     bodyAtTheEnd,
+    imageLeft,
+    imageRight,
+    columnLeft,
+    columnRight
   } = section;
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
+  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
@@ -82,6 +87,8 @@ export function ContentfulSection({ section }) {
       ></SectionHeader>
     );
   }
+
+  console.log(imageLeft.fluid);
 
   return (
     <Section
@@ -101,6 +108,7 @@ export function ContentfulSection({ section }) {
         [s.sectionNewsletter]: !!emailSignup,
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
+        [s.sectionTwoColumns]: isTwoColumns,
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
@@ -110,6 +118,17 @@ export function ContentfulSection({ section }) {
     >
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
+      )}
+      {isTwoColumns && (
+        <SectionInner wide={true}>
+          <TwoColumns>           
+            <img src={imageLeft.fluid.src}></img>
+            <Img className={s.heroImage} fluid={imageLeft.fluid} />
+            {contentfulJsonToHtml(columnLeft.json)}
+            <img src={imageRight.fluid.src}></img>
+            {contentfulJsonToHtml(columnRight.json)}
+          </TwoColumns>
+        </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
@@ -268,6 +287,14 @@ export function SectionInner({ children, hugeText, wide, className }) {
         [s.innerWide]: wide,
       })}
     >
+      {children}
+    </div>
+  );
+}
+
+export function TwoColumns({ children, className }) {
+  return (
+    <div className={cN(s.inner, className)}>
       {children}
     </div>
   );
