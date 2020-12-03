@@ -177,11 +177,11 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         </p>
         {mainNewsletterConsent && mainNewsletterConsent.value ? (
           <p className={s.newsletterCardDescription}>
-            Du erhälst die wichtigsten Infos über die Expedition.
+            Du erhältst die wichtigsten Infos über die Expedition.
           </p>
         ) : (
             <p className={s.newsletterCardDescription}>
-              Du erhälst keine Infos über die Expedition.
+              Du erhältst keine Infos über die Expedition.
             </p>
           )}
         {waitingForApi && componentToBeUpdated === 'Main' ? (
