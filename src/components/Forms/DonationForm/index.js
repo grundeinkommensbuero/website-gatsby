@@ -18,10 +18,11 @@ import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
 
 import s from './style.module.less';
+import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
 
-export default () => {
+export default (theme) => {
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
@@ -115,8 +116,12 @@ export default () => {
     return errors;
   };
 
+  var themeClass = theme[Object.keys(theme)[0]];
+
   return (
-    <div className={s.donationForm}>
+    <div className={cN(s.donationForm, {
+      [s.christmasTheme]: themeClass === 'christmas',
+    })}>
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
