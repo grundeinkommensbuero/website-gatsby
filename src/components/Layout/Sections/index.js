@@ -18,6 +18,7 @@ import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
+import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 
 export default function Sections({ sections }) {
@@ -76,6 +77,7 @@ export function ContentfulSection({ section }) {
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
+  const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
@@ -87,8 +89,6 @@ export function ContentfulSection({ section }) {
       ></SectionHeader>
     );
   }
-
-  console.log(imageLeft.fluid);
 
   return (
     <Section
@@ -121,13 +121,22 @@ export function ContentfulSection({ section }) {
       )}
       {isTwoColumns && (
         <SectionInner wide={true}>
-          <TwoColumns>           
-            <img src={imageLeft.fluid.src}></img>
-            <Img className={s.heroImage} fluid={imageLeft.fluid} />
-            {contentfulJsonToHtml(columnLeft.json)}
-            <img src={imageRight.fluid.src}></img>
-            {contentfulJsonToHtml(columnRight.json)}
+          <TwoColumns className={s.columnWrapper}>
+            <section className={s.column}>
+              <Img className={s.columnIcon} fixed={imageLeft.fixed} />
+              <div className={s.columnIcon}>{contentfulJsonToHtml(columnLeft.json)}</div>
+            </section>
+            <section className={s.column}>
+              <Img className={s.columnIcon} fixed={imageRight.fixed} />
+              <div>{contentfulJsonToHtml(columnRight.json)}</div>
+            </section>
           </TwoColumns>
+        </SectionInner>
+      )}
+      {isDonationFeature && (
+        <SectionInner>
+          <div>Test</div>
+          <DonationForm></DonationForm>
         </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (

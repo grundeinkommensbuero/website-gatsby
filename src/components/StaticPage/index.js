@@ -129,19 +129,25 @@ export const pageQuery = graphql`
               }
             }
           }
+          ... on ContentfulPageSectionDonation {
+            __typename
+            title
+            introText
+            theme
+          }
           ... on ContentfulPageSectionTwoColumns {
             __typename
             imageLeft {
-              fluid(maxWidth: 200, quality: 80) {
-                ...GatsbyContentfulFluid
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
               }
             }
             columnLeft {
               json
             }
             imageRight {
-              fluid(maxWidth: 200, quality: 80) {
-                ...GatsbyContentfulFluid
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
               }
             }
             columnRight {
