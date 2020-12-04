@@ -1,10 +1,8 @@
 @import '../../style/vars.less';
 
 .donationForm {
-  --secondary-color: @blueBright;
-  --bg-color: @yellow;
-  --font-color: @red;
   background-color: var(--bg-color);
+  border: 1px solid var(--font-color);
   font-weight: normal;
   margin-top: 3em;
   padding: 30px 40px 40px 40px;
@@ -35,7 +33,7 @@
 }
 
 .waitingHint {
-  --secondary-color: @yellow;
+  --secondary-color: var(--bg-color);
 }
 
 .primaryButton {
