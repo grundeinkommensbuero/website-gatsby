@@ -71,13 +71,16 @@ export function ContentfulSection({ section }) {
     imageLeft,
     imageRight,
     columnLeft,
-    columnRight
+    columnRight,
+    theme
   } = section;
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
+
+  const isChristmasTheme = theme === 'christmas';
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
@@ -109,6 +112,7 @@ export function ContentfulSection({ section }) {
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
         [s.sectionTwoColumns]: isTwoColumns,
+        [s.sectionChristmas]: isChristmasTheme,
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
@@ -136,7 +140,8 @@ export function ContentfulSection({ section }) {
       {isDonationFeature && (
         <SectionInner>
           <div>Test</div>
-          <DonationForm></DonationForm>
+          <DonationForm theme={theme}></DonationForm>
+          {/* {theme === 'christmas' && <Confetti />} */}
         </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (
