@@ -146,13 +146,6 @@ export default () => {
                 <form onSubmit={handleSubmit}>
                   {enteredAmount === false && (
                     <div className={s.partialForm}>
-                      <h3>Unterstütze uns!</h3>
-                      <p>
-                        Wir finanzieren uns fast ausschließlich durch Spenden. Bitte hilf
-                        uns, die Expedition am Laufen zu halten!
-                      </p>
-                      <p>Unterstütze uns mit:</p>
-
                       <FormSection>
                         <Field
                           name="amount"
