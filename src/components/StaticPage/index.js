@@ -8,19 +8,40 @@ const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
-  // const title = page ? page.title : municipality.name;
+  let title = page.title;
+
+  const { municipality } = pageContext;
+  const { titleObject } = page;
+  console.log(municipality, titleObject);
+  // TODO: Ask for feedback / better solution
+  // Same for Headlines
+  // --> possible util function?
+  if (titleObject && municipality) {
+    const { municipality } = pageContext;
+    let replaceTitle = '';
+    for (const part of titleObject) {
+      if (part.replace) {
+        replaceTitle += municipality[part.text] + ' ';
+      } else {
+        replaceTitle += part.text + ' ';
+      }
+    }
+    title = replaceTitle.trim() + '!';
+  }
+
+  console.log(title);
 
   return (
     <Layout
       location={location}
-      title={page.title}
+      title={title}
       sections={page.sections}
       pageContext={pageContext}
     >
       {/* TODO: adjust for municipality case 
       check for pageContext.municpality */}
       <Helmet>
-        <title>{page.title}</title>
+        <title>{title}</title>
 
         {page.description && (
           <meta
@@ -40,6 +61,10 @@ export const pageQuery = graphql`
   query StaticPageBySlug($slug: String!) {
     contentfulStaticContent(slug: { eq: $slug }) {
       title
+      titleObject {
+        text
+        replace
+      }
       description {
         internal {
           content

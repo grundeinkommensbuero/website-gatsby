@@ -2,49 +2,61 @@
   "events": [
     {
       "ags": "09162000",
-      "signups": [0, 4000]
+      "signups": [0, 4000],
+      "category": "new"
     },
     {
       "ags": "14612000",
-      "signups": [0, 2800]
+      "signups": [0, 2800],
+      "category": "new"
     },
     {
       "ags": "05113000",
-      "signups": [0, 2000]
+      "signups": [0, 2000],
+      "category": "new"
     },
     {
       "ags": "07315000",
-      "signups": [0, 1400]
+      "signups": [0, 1400],
+      "category": "new"
     },
     {
       "ags": "08221000",
-      "signups": [1000, 1500]
+      "signups": [1000, 1500], 
+      "category": "change"
     },
     {
       "ags": "08416041",
-      "signups": [2000, 3000]
+      "signups": [2000, 3000], 
+      "category": "change"
     },
     {
       "ags": "03241001",
-      "signups": [4000, 5600]
+      "signups": [4000, 5600], 
+      "category": "change"
     },
     {
       "ags": "03241001",
-      "signups": [4000, 5600]
+      "signups": [4000, 5600], 
+      "category": "change"
     },
     {
       "ags": "14713000",
-      "signups": [6000, 10000]
+      "signups": [6000, 10000], 
+      "category": "change"
     },
     {
       "ags": "14628270",
-      "signups": [0, 1200]
+      "signups": [0, 1200],
+      "category": "win"
     },
     {
       "ags": "12069020",
-      "signups": [0, 700]
+      "signups": [0, 700],
+      "category": "win"
     },
-    { "ags": "11000000", "signups": [30000, 40000] }
+    { "ags": "11000000", "signups": [30000, 40000],
+    "category": "win" }
   ],
   "municipalities": [
     { "ags": "08335001", "signups": 13 },

@@ -1,93 +1,151 @@
 import { WebMercatorViewport } from '@deck.gl/core';
 
-export const getMergedSignups = ({ municipalities, signups, events }) => {
-  let data = signups.filter(x => x.signups > 0);
-  const eventAGS = events.map(e => e.ags);
-  data = signups.filter(s => !eventAGS.includes(s.ags));
-
-  data = data.map((s, i) => {
-    const data = municipalities.find(m => m.ags === s.ags);
-    const percentToGoal = +((s.signups / data.goal) * 100).toFixed(1);
-    const [longitude, latitude] = data.coordinates;
-    return { ...data, ...s, longitude, latitude, percentToGoal };
-  });
-
-  return data;
+export const getPercentToGoal = (number, goal) => {
+  return Number(((number / goal) * 100).toFixed(1));
 };
 
-export const getMergedLabels = ({ municipalities, labels, signups }) => {
-  const dataLabels = labels.map(l => {
-    const data = municipalities.find(m => m.name === l);
-    const { ags, name, coordinates, goal } = data;
-    const curSignups = signups.find(s => s.ags === ags).signups;
-    const percentToGoal = (curSignups / goal) * 100;
-    const [longitude, latitude] = data.coordinates;
-
-    return { coordinates, longitude, latitude, name, percentToGoal };
-  });
-  return dataLabels;
-};
-
-export const getMergedEvents = ({ municipalities, events }) => {
-  const categories = ['win', 'new', 'change'];
-  // Only necessary for the backend:
-  // NOTE: small relative changes are not visible on the map
-  // right now
-  // const thresholds = { absolute: 5000, relative: 30 };
-  const latitudeStart = 58;
-  const dataEvents = events.map(e => {
-    const data = municipalities.find(m => m.ags === e.ags);
+export const getLayeredData = ({
+  municipalities,
+  signups,
+  events,
+  labels,
+  animateOnLoad,
+}) => {
+  console.time('timeToLoopMunicipalities');
+  const dataMunicipalities = [];
+  const signupsLookup = [...signups];
+  const dataSignups = [];
+  const eventsLookup = [...events];
+  const dataEvents = [];
+  const labelsLookup = [...labels];
+  const dataLabels = [];
+  for (let i = 0; i < municipalities.length; i++) {
+    // Signups, percentToGoal, isEvent are needed
+    // accross signups, events and labels
+    // 1. Initialized 0
+    // 2. Overwrite in events on match
+    // 3a. Check if isEvents in signups --> marker not added to signups
+    // 3b. Overwrite in labels on match
+    // 4. Stays 0 if not overwritten for labels
+    let signups = 0;
+    let percentToGoal = 0;
+    let isEvent = false;
+    // ---
+    // constants
     const {
       goal,
       coordinates: [longitude, latitudeEnd],
-    } = data;
-    const [prev, cur] = e.signups;
-    const signupsRange = e.signups;
-    const signups = prev;
-    const percentToGoalRange = [(prev / goal) * 100, (cur / goal) * 100];
-    const percentToGoal = percentToGoalRange[0];
-    const changeAbsolute = cur - prev;
-    const changeRelative = (cur / prev - 1) * 100;
-    let category = '';
-    // TODO: multiple animations for one municipality?
-    // --> Change to array
-    if (cur >= goal) {
-      category = categories[0];
-    } else if (prev === 0) {
-      category = categories[1];
-    } else {
-      category = categories[2];
-    }
-    // TODO: Decide the destinction is necessary?
-    // } else if (changeAbsolute >= thresholds.absolute) {
-    //   category = categories[2];
-    // } else if (changeRelative >= thresholds.relative) {
-    //   category = categories[3];
-    // }
-    const latitudeRange = [latitudeStart, latitudeEnd];
-    const latitude = category === 'new' ? latitudeStart : latitudeEnd;
-    return {
-      ...data,
-      ...e,
-      signupsRange,
-      signups,
-      percentToGoalRange,
-      percentToGoal,
-      longitude,
-      latitudeRange,
-      latitude,
-      changeAbsolute,
-      changeRelative,
-      category,
-    };
-  });
-  // Group? --> not needed
-  // const groupedByCategories = categories
-  //   .map(c => dataEvents.filter(d => d.category === c))
-  //   .filter(g => g.length > 0);
+    } = municipalities[i];
 
+    // ---- Check events / animation ---------------------------------------------------------
+    for (let k = 0; k < eventsLookup.length; k++) {
+      if (municipalities[i].ags === eventsLookup[k].ags) {
+        // Flag
+        isEvent = true;
+
+        // Destructuring
+        const { category, signups: signupsRange } = eventsLookup[k];
+
+        // Numbers
+        signups = signupsRange[0];
+        if (!animateOnLoad) {
+          signups = signupsRange[1];
+        }
+        const [prev, cur] = signupsRange;
+        const percentToGoalRange = [
+          getPercentToGoal(prev, goal),
+          getPercentToGoal(cur, goal),
+        ];
+        percentToGoal = percentToGoalRange[0];
+        if (!animateOnLoad) {
+          percentToGoal = percentToGoalRange[1];
+        }
+
+        // Coordinates
+        const latitudeStart = 58;
+        const latitudeRange = [latitudeStart, latitudeEnd];
+        let latitude = category === 'new' ? latitudeStart : latitudeEnd;
+        if (!animateOnLoad) {
+          latitude = latitudeEnd;
+        }
+
+        // Push
+        dataEvents.push({
+          ...municipalities[i],
+          ...eventsLookup[k],
+          signups,
+          signupsRange,
+          percentToGoal,
+          percentToGoalRange,
+          longitude,
+          latitude,
+          latitudeRange,
+        });
+
+        // TODO: decide if one ags should only be once in the animation
+        // Currently: muliple occurences are possible
+        // Uncomment the next two line for unique ags in animations
+        // eventsLookup.splice(k, 1);
+        // break;
+      }
+    }
+
+    // ---- Check signups --------------------------------------------------------------------
+    for (let j = 0; j < signupsLookup.length; j++) {
+      // const signup = signupsLookup[j];
+      if (isEvent || signupsLookup[j].signups === 0) {
+        signupsLookup.splice(j, 1);
+        break;
+      }
+
+      if (municipalities[i].ags === signupsLookup[j].ags) {
+        signups = signupsLookup[j].signups;
+        percentToGoal = getPercentToGoal(signups, municipalities[i].goal);
+        const [longitude, latitude] = municipalities[i].coordinates;
+
+        dataSignups.push({
+          ...municipalities[i],
+          signups,
+          percentToGoal,
+          longitude,
+          latitude,
+        });
+        signupsLookup.splice(j, 1);
+        break;
+      }
+    }
+
+    // ---- Check labels ---------------------------------------------------------------------
+    for (let l = 0; l < labelsLookup.length; l++) {
+      if (municipalities[i].name === labelsLookup[l]) {
+        const [longitude, latitude] = municipalities[i].coordinates;
+
+        dataLabels.push({
+          ...municipalities[i],
+          signups,
+          percentToGoal,
+          longitude,
+          latitude,
+        });
+        labelsLookup.splice(l, 1);
+        break;
+      }
+    }
+    dataMunicipalities.push({
+      ...municipalities[i],
+      longitude,
+      latitude: latitudeEnd,
+      signups,
+      percentToGoal,
+    });
+  }
+  console.timeEnd('timeToLoopMunicipalities');
+  // Checks
+  // console.log(dataSignups);
+  // console.log(dataLabels);
   // console.log(dataEvents);
-  return dataEvents;
+
+  return { dataSignups, dataLabels, dataEvents, dataMunicipalities };
 };
 
 export const zoomToBounds = ({

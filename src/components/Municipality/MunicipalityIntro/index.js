@@ -123,9 +123,9 @@ const MapHeader = ({ municipality }) => {
     <div className={s.headerContainer}>
       <CampaignMap
         className={s.mapContainer}
-        focusAGS={!!municipality ? municipality.ags : undefined}
-        initialAnimation={true}
-        initialFly={true}
+        AgsToFlyTo={!!municipality ? municipality.ags : undefined}
+        animateOnLoad={true}
+        flyToAgsOnLoad={true}
       />
     </div>
   );
@@ -151,10 +151,10 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
   }
   console.log(type);
 
-  const [ags, setAGS] = useState();
+  const [ags, setAgs] = useState();
   const handlePlaceSelect = ({ ags }) => {
     console.log(ags);
-    setAGS(ags);
+    setAgs(ags);
   };
   const bodyProps = { municipality, type, handlePlaceSelect };
   return (

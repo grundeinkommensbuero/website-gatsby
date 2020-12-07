@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import s from './style.module.less';
 
 import characterSet from './data/characterSet.json';
@@ -10,45 +16,41 @@ import { FlyToInterpolator } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
 import { scaleLinear, scaleSqrt } from 'd3-scale';
 
-import {
-  getMergedSignups,
-  getMergedLabels,
-  getMergedEvents,
-  zoomToBounds,
-} from './utils';
-
+import { getLayeredData, zoomToBounds } from './utils';
 import { animate } from './animate';
 
 console.time('timeToMountMap');
 
 export const CampaignMap = ({
-  focusAGS,
-  initialAnimation = true,
-  initialFly = false,
+  AgsToFlyTo,
+  // TODO: show finished state at the beginning
+  animateOnLoad = true,
+  flyToAgsOnLoad = false,
   className = s.heightSetter,
 }) => {
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
-  // const [dataMunicipalities, setDataMunicipalities] = useState([]);
+  const [dataMunicipalities, setDataMunicipalities] = useState([]);
   const [dataSignups, setDataSignups] = useState([]);
   const [dataLabels, setDataLabels] = useState([]);
   const [dataEvents, setDataEvents] = useState([]);
   const [signupScale, setSignupScale] = useState([
-    // Scale everything below 1 to 0
-    [0, 0.99, 1, 40000],
-    [0, 0, 2000, 80000],
+    [1, 40000],
+    [2000, 80000],
   ]);
   const [timePassed, setTimePassed] = useState();
-  const [animationCounter, setAnimationCounter] = useState(0);
-  const [focusAGSCounter, setFocusAGSCounter] = useState(0);
   const [focus, setFocus] = useState();
+  const [mapReady, setMapReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
   const [zoomMin, setZoomMin] = useState(Infinity);
   const [maxZoom, setMaxZoom] = useState(9);
-  const [showFallback, setShowFallback] = useState(true);
+  const [fadeOpacities, setFadeOpacities] = useState({
+    fallback: 1,
+    map: 0,
+  });
 
   // ---- Data -----------------------------------------------------------------------------
-  useEffect(() => {
+  useLayoutEffect(() => {
     import('./data/states-geo.json').then(({ default: states }) => {
       setDataStates(states);
     });
@@ -58,77 +60,69 @@ export const CampaignMap = ({
     Promise.all([municipalities, response]).then(modules => {
       const [{ default: municipalities }, { default: response }] = modules;
       const { municipalities: signups, events, scale, timePassed } = response;
-      console.time('timeToMergeData');
-      setDataSignups(getMergedSignups({ municipalities, signups, events }));
-      setDataLabels(getMergedLabels({ municipalities, labels, signups }));
-      setDataEvents(getMergedEvents({ municipalities, events }));
-      console.timeEnd('timeToMergeData');
-
-      // Order is important here
-      // to pass options to the controller
-      setTimePassed(timePassed);
+      const {
+        dataSignups,
+        dataEvents,
+        dataLabels,
+        dataMunicipalities,
+      } = getLayeredData({
+        municipalities,
+        signups,
+        events,
+        labels,
+        animateOnLoad,
+      });
+      setDataSignups(dataSignups);
+      setDataEvents(dataEvents);
+      setDataLabels(dataLabels);
       setSignupScale(scale);
-      // is this the right time?
+      setDataMunicipalities(dataMunicipalities);
+      setTimePassed(timePassed);
+      setMapReady(true);
     });
   }, []);
-
   // ---- Utils ----------------------------------------------------------------------------
-  const getAGSData = ags => {
-    let data = dataEvents.find(e => e.ags === ags);
-    if (!data) {
-      data = dataSignups.find(s => s.ags === ags);
-    }
-    return data;
-  };
+  const getAgsData = useCallback(
+    ags => {
+      const data = dataMunicipalities.find(m => m.ags === ags);
+      return data;
+    },
+    [dataMunicipalities]
+  );
 
-  const updateFocus = (ags = focusAGS) => {
-    const focus = getAGSData(ags);
-    if (focus) {
-      setDataLabels([...dataLabels, focus]);
-      setFocus(focus);
-    }
-  };
+  const updateFocus = useCallback(
+    (ags = AgsToFlyTo) => {
+      console.log(ags);
+      const focusData = ags && getAgsData(ags);
 
-  // ---- Animation ------------------------------------------------------------------------
-  useEffect(() => {
-    // TODO: verify this is the best entry point for the animation
-    // --> seems to work well, but needs an initial setTimeout
-    if (dataEvents.length > 0 && animationCounter === 0) {
-      console.timeEnd('timeToMountMap');
-      setAnimationCounter(prev => prev + 1);
-    }
-  }, [dataEvents]);
-
-  useEffect(() => {
-    if (animationCounter === 1) {
-      setTimeout(() => {
-        // TODO: verify this is the right time to replace the fallback
-        setShowFallback(false);
-
-        animate({
-          dataEvents,
-          setDataEvents,
-          initialFly,
-          updateFocus,
-        });
-      }, 1200);
-    } else {
-      animate({
-        dataEvents,
-        setDataEvents,
-        initialFly,
-        updateFocus,
-      });
-    }
-  }, [animationCounter]);
+      if (focusData) {
+        setDataLabels([...dataLabels, focusData]);
+        setFocus(focusData);
+      }
+    },
+    [AgsToFlyTo, getAgsData, dataLabels]
+  );
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
-    if (focusAGSCounter > 0) {
-      updateFocus();
+    if (mapReady) {
+      animate({
+        fadeOpacities,
+        setFadeOpacities,
+        dataEvents,
+        setDataEvents,
+        flyToAgsOnLoad,
+        updateFocus,
+        animateOnLoad,
+      });
     }
-    setFocusAGSCounter(focusAGSCounter + 1);
-  }, [focusAGS]);
+  }, [mapReady, animate]);
+
+  useEffect(() => {
+    if (mapReady) {
+      updateFocus(AgsToFlyTo);
+    }
+  }, [AgsToFlyTo]);
 
   // ---- Handlers -------------------------------------------------------------------------
   const handleZoomClick = change => {
@@ -143,7 +137,6 @@ export const CampaignMap = ({
       setZoom(updated);
     }
   };
-
   // ---- Template -------------------------------------------------------------------------
   return (
     <div className={className}>
@@ -175,8 +168,11 @@ export const CampaignMap = ({
           </button>
         </div>
 
-        {showFallback && <div className={s.mapFallback}></div>}
-        <div className={s.mapContainer}>
+        <div
+          className={s.mapFallback}
+          style={{ opacity: fadeOpacities.fallback }}
+        ></div>
+        <div className={s.mapContainer} style={{ opacity: fadeOpacities.map }}>
           <Map
             dataStates={dataStates}
             dataSignups={dataSignups}
@@ -210,6 +206,7 @@ const Map = ({
   maxZoom,
 }) => {
   // ---- Utils ----------------------------------------------------------------------------
+  // TODO: useCallback
   const [signupDomain, signupRange] = signupScale;
   const scaleSignupsToMeters = scaleSqrt()
     .domain(signupDomain)
@@ -219,14 +216,20 @@ const Map = ({
     .domain([0, 100])
     .range(['#00C8F0', '#43006a']);
 
+  // TODO: useCallback
   const colorToArray = (string, alpha = 255) => {
     const onlyValues = string.replace('rgb(', '').replace(')', '');
     const addedAlpha = onlyValues + ', ' + alpha;
     return addedAlpha.split(', ').map(x => +x);
   };
 
-  const getColor = (percent, alpha = 255) => {
-    return colorToArray(scalePercentToColor(percent), alpha);
+  // TODO: useCallback
+  const getColor = (percent, alpha = 255, rgb = false) => {
+    if (rgb) {
+      return scalePercentToColor(percent);
+    } else {
+      return colorToArray(scalePercentToColor(percent), alpha);
+    }
   };
 
   const flyTo = useCallback(
@@ -248,6 +251,7 @@ const Map = ({
   );
 
   // ---- Layers ---------------------------------------------------------------------------
+  // TODO: useState with function
   const layerStates = useMemo(() => {
     return new GeoJsonLayer({
       id: 'states',
@@ -263,6 +267,7 @@ const Map = ({
     });
   }, [dataStates]);
 
+  // TODO: define only once
   const iconMapping = {
     marker: {
       x: 0,
@@ -298,8 +303,9 @@ const Map = ({
       sizeUnits: 'meters',
       getSize: d => scaleSignupsToMeters(d.signups),
       getColor: d => getColor(d.percentToGoal),
+      onHover: info => setHoverInfo(info),
     });
-  }, [dataSignups, scaleSignupsToMeters]);
+  }, [dataSignups, scaleSignupsToMeters, getColor]);
 
   const layerAnimatedMarker = useMemo(() => {
     return new IconLayer({
@@ -314,9 +320,7 @@ const Map = ({
       sizeUnits: 'meters',
       getSize: d => scaleSignupsToMeters(d.signups),
       getColor: d => getColor(d.percentToGoal),
-      // updateTriggers: {
-      //   getPosition: [dataEvents],
-      // },
+      onHover: info => setHoverInfo(info),
     });
   }, [dataEvents]);
 
@@ -381,10 +385,11 @@ const Map = ({
     touchRotate: false,
   });
 
+  const [hoverInfo, setHoverInfo] = useState();
+
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
     if (dataEvents.length > 0) {
-      // console.log('setLayers effect');
       setLayers([
         layerStates,
         layerPermanentMarker,
@@ -399,14 +404,17 @@ const Map = ({
 
   useEffect(() => {
     if (focus) {
-      // console.log(focus);
       const { longitude, latitude } = focus;
       flyTo({ longitude, latitude });
     }
   }, [focus]);
 
   useEffect(() => {
-    setInitialViewState(prev => ({ ...prev, zoom, transitionDuration: 300 }));
+    setInitialViewState(prev => ({
+      ...prev,
+      zoom,
+      transitionDuration: 300,
+    }));
   }, [zoom]);
 
   useEffect(() => {
@@ -447,7 +455,7 @@ const Map = ({
       touched,
       setTouched,
     });
-
+    // TODO: improve?
     if (
       !dimensions ||
       (dimensions && dimensions.width !== dimensionsUpdate.width)
@@ -507,6 +515,38 @@ const Map = ({
       // getTooltip={({ object }) =>
       //   object && `${object.name}\nEinwohner: ${object.population}`
       // }
-    ></DeckGL>
+    >
+      {hoverInfo && hoverInfo.object && (
+        <div
+          className={s.tooltipContainer}
+          style={{
+            background: getColor(hoverInfo.object.percentToGoal, 255, true),
+            left: hoverInfo.x,
+            top: hoverInfo.y,
+            color: 'rgba(255,255,255,0.9)',
+          }}
+        >
+          <div className={s.tooltipHeader}>
+            <span className={s.tooltipMunicipality}>
+              {hoverInfo.object.name}
+            </span>
+          </div>
+          <div className={s.tooltipInfoContainer}>
+            <div className={s.tooltipInfo}>
+              <span className={s.tooltipNumber}>
+                {hoverInfo.object.percentToGoal} %
+              </span>
+              <span className={s.tooltipLabel}> der nötigen Anmeldungen</span>
+            </div>
+            <div className={s.tooltipInfo}>
+              <span className={s.tooltipNumber}>
+                {hoverInfo.object.signups}
+              </span>
+              <span className={s.tooltipLabel}> Anmeldungen insgesamt</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </DeckGL>
   );
 };

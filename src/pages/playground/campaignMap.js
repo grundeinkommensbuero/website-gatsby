@@ -10,10 +10,10 @@ import { CampaignMap } from '../../components/CampaignMap';
 import { SearchPlaces } from '../../components/Forms/SearchPlaces';
 
 const MapAndSearch = () => {
-  const [ags, setAGS] = useState();
+  const [ags, setAgs] = useState('09177123');
   const handlePlaceSelect = ({ ags }) => {
     console.log(ags);
-    setAGS(ags);
+    setAgs(ags);
   };
   return (
     <div>
@@ -22,7 +22,11 @@ const MapAndSearch = () => {
         onPlaceSelect={handlePlaceSelect}
       />
       <br />
-      <CampaignMap focusAGS={ags} initialAnimation={true} initialFly={true} />
+      <CampaignMap
+        AgsToFlyTo={ags}
+        animateOnLoad={false}
+        flyToAgsOnLoad={true}
+      />
     </div>
   );
 };
