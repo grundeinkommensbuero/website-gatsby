@@ -92,7 +92,7 @@ export const CampaignMap = ({
 
   const updateFocus = useCallback(
     (ags = AgsToFlyTo) => {
-      console.log(ags);
+      // console.log(ags);
       const focusData = ags && getAgsData(ags);
 
       if (focusData) {
@@ -261,9 +261,11 @@ const Map = ({
       lineWidthScale: 1,
       lineWidthMinPixels: 2,
       getLineColor: [255, 255, 255],
+      // getLineColor: [209, 201, 99],
       getLineWidth: 2,
       filled: true,
       getFillColor: [240, 240, 240],
+      // getFillColor: [255, 242, 120],
     });
   }, [dataStates]);
 
@@ -472,23 +474,6 @@ const Map = ({
   const handleLoad = () => {
     // console.log('map loaded');
   };
-
-  // ---- Controller -----------------------------------------------------------------------
-  // let MyViewState;
-  // class MyController extends Controller {
-  //   constructor(options = {}) {
-  //     super(MyViewState, options);
-  //     this.events = ['pointermove'];
-  //   }
-
-  //   handleEvent(event) {
-  //     if (event.type === 'pointermove') {
-  //       console.log(event);
-  //     } else {
-  //       super.handleEvent(event);
-  //     }
-  //   }
-  // }
 
   // ---- Template -------------------------------------------------------------------------
   return (

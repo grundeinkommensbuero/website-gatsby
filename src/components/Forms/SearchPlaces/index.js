@@ -27,6 +27,7 @@ export const SearchPlaces = ({
   onPlaceSelect,
   label = 'Stadt:',
   validateOnBlur,
+  size,
   handleButtonClick = handleButtonClickDefault,
 }) => {
   const [query, setQuery] = useState('');
@@ -53,6 +54,9 @@ export const SearchPlaces = ({
       if (query !== selectedPlace.name) {
         setSuggestionsActive(true);
         setSelectedPlace({});
+        if (onPlaceSelect) {
+          onPlaceSelect();
+        }
       }
 
       if (fuse) {
@@ -140,12 +144,13 @@ export const SearchPlaces = ({
   };
 
   return (
-    <div>
+    <>
       {label && <label htmlFor="gemeinde">{label}</label>}
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
             id="gemeinde"
+            size={size}
             placeholder={placeholder}
             autoComplete="off"
             label="Stadt"
@@ -166,14 +171,15 @@ export const SearchPlaces = ({
         {showButton && (
           <Button
             id="linkButton"
+            size={size === 'SMALL' ? 'MEDIUM' : ''}
             className={s.sideButton}
-            onClick={() => handleButtonClick({ validate })}
+            onClick={event => handleButtonClick({ event, validate })}
           >
             {buttonLabel}
           </Button>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

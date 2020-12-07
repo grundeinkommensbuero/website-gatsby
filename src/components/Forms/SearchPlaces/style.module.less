@@ -2,19 +2,21 @@
 @inputWidth: 25rem;
 
 .container {
-  display: grid;
-  grid-template-columns: @inputWidth 1fr;
-  grid-gap: 2rem;
-  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
   @media (max-width: @breakPointM) {
-    grid-template-columns: @inputWidth;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
   }
 }
 .inputContainer {
   position: relative;
-
   width: @inputWidth;
+  margin-right: 2rem;
+  // TODO: Check if ok for profile
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .suggestions {
@@ -49,6 +51,7 @@
 }
 
 .sideButton {
-  // min-width: 20rem;
-  max-width: @inputWidth;
+  // TODO: Check if ok for profile
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }

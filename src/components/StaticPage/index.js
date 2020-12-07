@@ -12,10 +12,9 @@ export default ({ data, location, pageContext }) => {
 
   const { municipality } = pageContext;
   const { titleObject } = page;
-  console.log(municipality, titleObject);
+
   // TODO: Ask for feedback / better solution
-  // Same for Headlines
-  // --> possible util function?
+  // Compare with headlines
   if (titleObject && municipality) {
     const { municipality } = pageContext;
     let replaceTitle = '';
@@ -28,8 +27,6 @@ export default ({ data, location, pageContext }) => {
     }
     title = replaceTitle.trim() + '!';
   }
-
-  console.log(title);
 
   return (
     <Layout

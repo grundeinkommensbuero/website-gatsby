@@ -11,7 +11,7 @@ export const getLayeredData = ({
   labels,
   animateOnLoad,
 }) => {
-  console.time('timeToLoopMunicipalities');
+  // console.time('timeToLoopMunicipalities');
   const dataMunicipalities = [];
   const signupsLookup = [...signups];
   const dataSignups = [];
@@ -83,7 +83,7 @@ export const getLayeredData = ({
         });
 
         // TODO: decide if one ags should only be once in the animation
-        // Currently: muliple occurences are possible
+        // Currently: multiple occurences are possible
         // Uncomment the next two line for unique ags in animations
         // eventsLookup.splice(k, 1);
         // break;
@@ -139,7 +139,7 @@ export const getLayeredData = ({
       percentToGoal,
     });
   }
-  console.timeEnd('timeToLoopMunicipalities');
+  // console.timeEnd('timeToLoopMunicipalities');
   // Checks
   // console.log(dataSignups);
   // console.log(dataLabels);

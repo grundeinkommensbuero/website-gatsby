@@ -4,14 +4,19 @@ import cN from 'classnames';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { ValidationError } from '../ValidationError';
 
-export function TextInput({ children, className, label, ...input }) {
+export function TextInput({ children, className, label, size, ...input }) {
   return (
     <input
       aria-label={label}
-      className={cN(s.textInput, className, {
-        [s.hideNumberArrows]:
-          input.name === 'zipCode' || input.name === 'listId',
-      })}
+      className={cN(
+        s.textInput,
+        { [s.textInputSmall]: size === 'SMALL' },
+        className,
+        {
+          [s.hideNumberArrows]:
+            input.name === 'zipCode' || input.name === 'listId',
+        }
+      )}
       {...input}
     />
   );

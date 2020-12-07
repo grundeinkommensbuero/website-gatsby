@@ -46,6 +46,7 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
         label={false}
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
+        size="SMALL"
       />
       <MunicipalityHeadline
         className={s.headline}
@@ -77,7 +78,14 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
         />
       )}
       <EngagementText municipality={municipality} />
-      <SignUp />
+      {/* <MunicipalitySignUp
+        signupAgs={municipality ? municipality.ags : undefined}
+      /> */}
+      <SignUp
+        AuthenticatedDialog="municipality"
+        // fields={['username', 'email']}
+        forMunicipality={municipality ? municipality : true}
+      />
     </>
   );
 };
@@ -95,6 +103,7 @@ const BodyCollecting = ({ municipality, type, handlePlaceSelect }) => {
         label={false}
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
+        size="SMALL"
       />
     </>
   );
@@ -113,6 +122,7 @@ const BodyState = ({ municipality, type, handlePlaceSelect }) => {
         label={false}
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
+        size="SMALL"
       />
     </>
   );
@@ -131,15 +141,17 @@ const MapHeader = ({ municipality }) => {
   );
 };
 
+const states = [
+  { ags: '11000000', slug: 'berlin', name: 'Berlin' },
+  { ags: '04011000', slug: 'bremen', name: 'Bremen' },
+  { ags: '02000000', slug: 'hamburg', name: 'Hamburg' },
+];
+
 export const MunicipalityIntro = ({ pageContext, className }) => {
   const { slug } = pageContext;
   let { municipality } = pageContext;
   let type = municipality?.type;
-  const states = [
-    { ags: '11000000', slug: 'berlin', name: 'Berlin' },
-    { ags: '04011000', slug: 'bremen', name: 'Bremen' },
-    { ags: '02000000', slug: 'hamburg', name: 'Hamburg' },
-  ];
+
   if (slug === 'gemeinden') {
     type = 'qualifying';
   } else if (slug === 'gemeinden-sammelphase') {
@@ -149,12 +161,14 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
     type = 'state';
     municipality = state;
   }
-  console.log(type);
 
   const [ags, setAgs] = useState();
-  const handlePlaceSelect = ({ ags }) => {
-    console.log(ags);
-    setAgs(ags);
+  const handlePlaceSelect = municipality => {
+    if (municipality) {
+      setAgs(municipality.ags);
+    } else {
+      setAgs();
+    }
   };
   const bodyProps = { municipality, type, handlePlaceSelect };
   return (
