@@ -2,19 +2,19 @@
 @inputWidth: 25rem;
 
 .container {
-  display: grid;
-  grid-template-columns: @inputWidth 1fr;
-  grid-gap: 2rem;
-  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   @media (max-width: @breakPointM) {
-    grid-template-columns: @inputWidth;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
   }
 }
 .inputContainer {
   position: relative;
-
   width: @inputWidth;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
 }
 
 .suggestions {
@@ -46,8 +46,4 @@
 .noSuggestionsItem {
   padding: 0.5rem 1.25rem;
   color: @greyMedium;
-}
-
-.sideButton {
-  max-width: @inputWidth;
 }
