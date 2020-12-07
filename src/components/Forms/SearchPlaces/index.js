@@ -166,6 +166,7 @@ export const SearchPlaces = ({
           <Button
             id="linkButton"
             className={s.sideButton}
+            size="MEDIUM"
             onClick={event => handleButtonClick({ event, validate })}
           >
             {buttonLabel}
