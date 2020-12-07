@@ -120,6 +120,8 @@ export function ContentfulSection({ section }) {
       })}
       sectionBodyNoEvents={isIllustration || isVideoSection}
     >
+      {/* TODO: conditional on theme */}
+      {/* or: componentTheme={theme} --> undefined is caught by component */}
       <Confetti componentTheme="christmas" />
 
       {isIllustration && (

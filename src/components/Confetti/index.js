@@ -34,14 +34,14 @@ const themes = [
   {
     name: 'christmas',
     shapes: ['circle'],
-    gravity: 0.5,
+    gravity: 0.4,
     ticks: 800,
     spreads: [160, 160, 160],
     colors: ['#fefefe', '#ffffff', '#fafdff', '#fafeff'],
     origins: [
-      { x: 0.25, y: -0.1 },
-      { x: 1, y: -0.1 },
-      { x: 0.75, y: -0.1 },
+      { x: 0.2, y: -0.1 },
+      { x: 0.8, y: -0.1 },
+      { x: 0.5, y: -0.1 },
     ],
     angles: [120, 120, 120],
     velocities: [20, 20, 20],
@@ -94,7 +94,7 @@ export default ({ className, componentTheme = 'default' }) => {
                   Math.round(Math.random() * (theme.colors.length - 1))
                 ],
               ],
-              ticks: 400,
+              ticks: theme.ticks,
             });
             confetti.confetti({
               particleCount: 1,
@@ -109,7 +109,7 @@ export default ({ className, componentTheme = 'default' }) => {
                   Math.round(Math.random() * (theme.colors.length - 1))
                 ],
               ],
-              ticks: 400,
+              ticks: theme.ticks,
             });
           } else {
             confetti.confetti({
@@ -125,6 +125,7 @@ export default ({ className, componentTheme = 'default' }) => {
                   Math.round(Math.random() * (theme.colors.length - 1))
                 ],
               ],
+              ticks: theme.ticks,
             });
           }
         }
