@@ -72,7 +72,7 @@ export function ContentfulSection({ section }) {
     imageRight,
     columnLeft,
     columnRight,
-    theme
+    theme,
   } = section;
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
@@ -120,6 +120,8 @@ export function ContentfulSection({ section }) {
       })}
       sectionBodyNoEvents={isIllustration || isVideoSection}
     >
+      <Confetti componentTheme="christmas" />
+
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
@@ -128,7 +130,9 @@ export function ContentfulSection({ section }) {
           <TwoColumns className={s.columnWrapper}>
             <section className={s.column}>
               <Img className={s.columnIcon} fixed={imageLeft.fixed} />
-              <div className={s.columnIcon}>{contentfulJsonToHtml(columnLeft.json)}</div>
+              <div className={s.columnIcon}>
+                {contentfulJsonToHtml(columnLeft.json)}
+              </div>
             </section>
             <section className={s.column}>
               <Img className={s.columnIcon} fixed={imageRight.fixed} />
@@ -307,11 +311,7 @@ export function SectionInner({ children, hugeText, wide, className }) {
 }
 
 export function TwoColumns({ children, className }) {
-  return (
-    <div className={cN(s.inner, className)}>
-      {children}
-    </div>
-  );
+  return <div className={cN(s.inner, className)}>{children}</div>;
 }
 
 function Slogan({ sloganLine1, sloganLine2 }) {
