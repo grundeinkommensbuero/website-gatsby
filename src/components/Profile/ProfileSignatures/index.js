@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './style.module.less';
 import gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
@@ -15,7 +16,7 @@ export const ProfileSignatures = ({ userId }) => {
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
-        <section>
+        <section className={s.signatureSection}>
           <Helmet>
             <title>Selbsteingabe Unterschriftsliste</title>
           </Helmet>

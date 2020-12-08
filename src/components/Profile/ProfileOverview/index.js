@@ -8,15 +8,15 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 
 // We need the following mappings for the link to the self scan page
-// const SELF_SCAN_SLUGS = {
-//   brandenburg: 'qr/bb',
-//   berlin: 'qr/b',
-//   'schlewsig-holstein': 'qr/sh',
-//   hamburg: 'qr/hh',
-//   bremen: 'qr/hb',
-// };
+const SELF_SCAN_SLUGS = {
+  brandenburg: 'qr/bb',
+  berlin: 'qr/b',
+  'schlewsig-holstein': 'qr/sh',
+  hamburg: 'qr/hh',
+  bremen: 'qr/hb',
+};
 
-export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
+export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
   /* list newsletters of current user as human readable string */
   const customNewsletterEnumeration = () => {
     const newsletterLabels = [];
@@ -70,8 +70,19 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
         </section>
       </Link>
 
-      {/* {signatureCountOfUser && (
-        <a className={s.profilePageSection}
+      <Link to="kontakt-einstellungen" className={s.profilePageSection}>
+        <section>
+          <h2>Newsletter & Kontakt</h2>
+          <p>Du erhältst folgende Newsletter: </p>
+          <p>{customNewsletterEnumeration()}</p>
+          <div className={s.sectionLink}>
+            <span>Einstellungen ändern</span>
+          </div>
+        </section>
+      </Link>
+
+      {signatureCountOfUser && (
+        <a className={cN(s.profilePageSection, s.profilePageSectionLarge)}
           href={`/${signatureCountOfUser.mostRecentCampaign
             ? SELF_SCAN_SLUGS[
             signatureCountOfUser.mostRecentCampaign.state
@@ -98,9 +109,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
             )}
           </section>
         </a>
-      )} */}
+      )}
 
-      <Link to="unterschriften-eintragen" className={s.profilePageSection}>
+      {/* <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
           {signatureCountOfUser && (
@@ -119,9 +130,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
             </>
           )}
         </section>
-      </Link>
+      </Link> */}
 
-      <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
+      {/* <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
         <section>
           <h2>Deine Frage ans Grundeinkommen</h2>
           <p>Würden sich mehr Menschen selbstständig machen?</p>
@@ -129,18 +140,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
             <span>Mehr</span>
           </div>
         </section>
-      </Link>
-
-      <Link to="kontakt-einstellungen" className={s.profilePageSection}>
-        <section>
-          <h2>Newsletter & Kontakt</h2>
-          <p>Du erhältst folgende Newsletter: </p>
-          <p>{customNewsletterEnumeration()}</p>
-          <div className={s.sectionLink}>
-            <span>Einstellungen ändern</span>
-          </div>
-        </section>
-      </Link>
+      </Link> */}
 
       {/* <div className={cN(s.profilePageSectionLarge, s.supportText)}>
         Falls du deine persönlichen Daten ändern oder deinen Account löschen

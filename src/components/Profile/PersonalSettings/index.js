@@ -70,7 +70,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
-        <section className={gS.userInfo}>
+        <section className={s.userInfo}>
           <ImageUpload
             className={gS.avatar}
             userData={userData}
@@ -114,6 +114,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 <span>{userData.email}</span>
                 <Button
                   size="SMALL"
+                  className={s.mobileBtn}
                   onClick={() => setEditMailAddress(true)}
                 >
                   Ändern
@@ -131,10 +132,11 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     )}
                   />
                   {tempMail !== userData.email ? (
-                    <Button size="SMALL">Ändern</Button>
+                    <Button size="SMALL" className={s.mobileBtn}>Ändern</Button>
                   ) : (
                       <Button
                         size="SMALL"
+                        className={s.mobileBtn}
                         onClick={() => setEditMailAddress(false)}
                       >
                         abbrechen
@@ -160,6 +162,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   )}
                 <Button
                   size="SMALL"
+                  className={s.mobileBtn}
                   onClick={() => setEditPhoneNumber(true)}
                 >
                   {fakePhone ? (
@@ -181,10 +184,11 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     )}
                   />
                   {tempPhone !== fakePhone ? (
-                    <Button size="SMALL">Ändern</Button>
+                    <Button size="SMALL" className={s.mobileBtn}>Ändern</Button>
                   ) : (
                       <Button
                         size="SMALL"
+                        className={s.mobileBtn}
                         onClick={() => setEditPhoneNumber(false)}
                       >
                         abbrechen
