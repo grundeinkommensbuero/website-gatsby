@@ -48,20 +48,28 @@
     top: calc(100% + 6.5rem);
     left: calc(100% + 4.5rem);
     font-size: @fontSizeS;
+
+    @media (max-width: @breakPointM) {
+      transform: rotate(70deg);
+      transform-origin: 0 0;
+      top: 100%;
+      left: 2rem;
+      font-size: @fontSizeXS;
+    }
   }
 
   &.editing {
     top: calc(100% - 1rem);
     left: calc(100% + 2rem);
     font-size: @fontSizeXS;
-  }
 
-  @media (max-width: @breakPointM) {
-    transform: rotate(70deg);
-    transform-origin: 0 0;
-    top: 100%;
-    left: 2rem;
-    font-size: @fontSizeXS;
+    @media (max-width: @breakPointM) {
+      transform: rotate(10deg);
+      transform-origin: 0 0;
+      top: calc(100% - 2rem);
+      left: 2rem;
+      font-size: @fontSizeXS;
+    }
   }
 
   &:hover {

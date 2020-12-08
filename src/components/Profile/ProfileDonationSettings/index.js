@@ -12,7 +12,7 @@ export const ProfileDonationSettings = ({ userId }) => {
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
-        <DonationForm />
+        <DonationForm styling="noBackgroundAndPadding" />
       </section>
     </section>
   )

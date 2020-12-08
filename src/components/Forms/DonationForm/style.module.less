@@ -2,15 +2,23 @@
 
 .donationForm {
   --secondary-color: @blueBright;
-  --bg-color: @yellow;
   --font-color: @red;
-  background-color: var(--bg-color);
   font-weight: normal;
-  margin-top: 3em;
-  padding: 30px 40px 40px 40px;
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
+
+  &.default {
+    --bg-color: @yellow;
+    background-color: var(--bg-color);
+    margin-top: 3em;
+    padding: 30px 40px 40px 40px;
+  }
+
+  &.noBackgroundAndPadding {
+    margin-top: 0;
+    padding: 0;
+  }
 
   h3 {
     hyphens: unset;

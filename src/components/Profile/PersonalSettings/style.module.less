@@ -3,6 +3,21 @@
 .dataEditWrapper {
   display: grid;
   grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    display: block;
+    min-width: 25rem;
+  }
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    display: flex;
+    flex-wrap: nowrap;
+  }
 }
 
 .dataEditSection {
@@ -30,6 +45,12 @@
 
 .saveChangesBtn {
   margin-top: 0.5em;
+}
+
+.mobileBtn {
+  @media (max-width: @breakPointM) {
+    margin-top: 1em;
+  }
 }
 
 .editTextInput {
