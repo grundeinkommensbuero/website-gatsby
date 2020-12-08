@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AvatarImage from '../../AvatarImage';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
 import s from './style.module.less';
@@ -7,7 +6,7 @@ import gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
-import { MessengerButtonRow } from '../MessengerButtonRow.js';
+// import { MessengerButtonRow } from '../MessengerButtonRow.js';
 import ImageUpload from '../../Forms/ImageUpload';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
@@ -72,7 +71,15 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
         </div>
 
         <section className={gS.userInfo}>
-          <AvatarImage user={userData} className={gS.avatar} />
+          <ImageUpload
+            className={gS.avatar}
+            userData={userData}
+            userId={userId}
+            showUploadLabel={false}
+            showEditLabel={true}
+            size={'large'}
+            onUploadDone={() => { }}
+          />
           <div>
             <h1
               className={cN({
@@ -106,7 +113,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               <div className={s.editableRow}>
                 <span>{userData.email}</span>
                 <Button
-                  className={s.saveChangesBtnSmall}
+                  size="SMALL"
                   onClick={() => setEditMailAddress(true)}
                 >
                   Ändern
@@ -118,18 +125,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     onChange={evt => setTempMail(evt.target.value)}
                     placeholder="E-Mail"
                     value={tempMail || ''}
+                    size="small"
                     className={cN(
-                      s.inputWide,
                       tempMail !== userData.email ? s.inputHighlighted : null
                     )}
                   />
-                  <br />
-                  <br />
                   {tempMail !== userData.email ? (
-                    <Button className={s.saveChangesBtn}>Ändern</Button>
+                    <Button size="SMALL">Ändern</Button>
                   ) : (
                       <Button
-                        className={s.saveChangesBtn}
+                        size="SMALL"
                         onClick={() => setEditMailAddress(false)}
                       >
                         abbrechen
@@ -154,7 +159,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     <span>Noch keine Telefonnummer angegeben</span>
                   )}
                 <Button
-                  className={s.saveChangesBtnSmall}
+                  size="SMALL"
                   onClick={() => setEditPhoneNumber(true)}
                 >
                   {fakePhone ? (
@@ -170,18 +175,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     onChange={evt => setTempPhone(evt.target.value)}
                     placeholder="Telefonnummer"
                     value={tempPhone || ''}
+                    size="small"
                     className={cN(
-                      s.inputWide,
                       tempPhone !== fakePhone ? s.inputHighlighted : null
                     )}
                   />
-                  <br />
-                  <br />
                   {tempPhone !== fakePhone ? (
-                    <Button className={s.saveChangesBtn}>Ändern</Button>
+                    <Button size="SMALL">Ändern</Button>
                   ) : (
                       <Button
-                        className={s.saveChangesBtn}
+                        size="SMALL"
                         onClick={() => setEditPhoneNumber(false)}
                       >
                         abbrechen
@@ -190,7 +193,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 </div>
               )}
 
-            <p className={s.optionHeading}>
+            {/* <p className={s.optionHeading}>
               <b>Messenger</b>
             </p>
             <p className={s.optionDescription}>
@@ -198,7 +201,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               hier:
             </p>
 
-            <MessengerButtonRow iconSize="L" />
+            <MessengerButtonRow iconSize="L" /> */}
 
             <h4 className={gS.optionSectionHeading}>Deine Stammdaten</h4>
 
@@ -262,15 +265,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   ) : null}
                 </section>
               )}
-
-            <h4 className={gS.optionSectionHeading}>Dein Profilbild</h4>
-
-            <ImageUpload
-              userData={userData}
-              userId={userId}
-              showLabel={false}
-              onUploadDone={() => { }}
-            />
 
             <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
               Profil löschen

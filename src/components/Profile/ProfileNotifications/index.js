@@ -7,7 +7,7 @@ import { NewsletterCard } from './NewsletterCard';
 import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
-import { MessengerButtonRow } from '../MessengerButtonRow.js';
+// import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
@@ -175,6 +175,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         <p className={s.newsletterCardHeading}>
           Allgemeiner Expeditions-Letter
         </p>
+        {/* main newsletter info claim */}
         {mainNewsletterConsent && mainNewsletterConsent.value ? (
           <p className={s.newsletterCardDescription}>
             Du erhältst die wichtigsten Infos über die Expedition.
@@ -184,6 +185,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
               Du erhältst keine Infos über die Expedition.
             </p>
           )}
+        {/* toggle main newsletter consent */}
         {waitingForApi && componentToBeUpdated === 'Main' ? (
           <p className={cN(gS.alignRight, gS.noMargin)}>
             <span className={gS.loading}></span>
@@ -313,12 +315,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <Button className={s.savePhoneNumberBtn}>Eintragen</Button>
         </div>
 
-        <h4 className={gS.optionSectionHeading}>Kontakt per Messenger</h4>
+        {/* <h4 className={gS.optionSectionHeading}>Kontakt per Messenger</h4>
         <p className={s.newsletterCardDescription}>
           Wenn du möchtest, kannst du auch per Messenger mit uns Kontakt
           aufnehmen:
         </p>
-        <MessengerButtonRow iconSize="XL" />
+        <MessengerButtonRow iconSize="XL" /> */}
       </section>
     </section>
   );
