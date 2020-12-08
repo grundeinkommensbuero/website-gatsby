@@ -117,6 +117,7 @@ export default (theme) => {
   };
 
   var themeClass = theme[Object.keys(theme)[0]];
+  const isChristmas = themeClass === 'christmas';
 
   return (
     <div className={cN(s.donationForm, {
@@ -152,27 +153,52 @@ export default (theme) => {
                   {enteredAmount === false && (
                     <div className={s.partialForm}>
                       <FormSection>
-                        <Field
-                          name="amount"
-                          label="1€"
-                          component={RadioButton}
-                          type="radio"
-                          value="1"
-                        />{' '}
-                        <Field
-                          name="amount"
-                          label="5€"
-                          component={RadioButton}
-                          type="radio"
-                          value="5"
-                        />{' '}
-                        <Field
-                          name="amount"
-                          label="10€"
-                          component={RadioButton}
-                          type="radio"
-                          value="10"
-                        />{' '}
+                        {!isChristmas && <div>
+                          <Field
+                            name="amount"
+                            label="3€"
+                            component={RadioButton}
+                            type="radio"
+                            value="3"
+                          />{' '}
+                          <Field
+                            name="amount"
+                            label="6€"
+                            component={RadioButton}
+                            type="radio"
+                            value="6"
+                          />{' '}
+                          <Field
+                            name="amount"
+                            label="12€"
+                            component={RadioButton}
+                            type="radio"
+                            value="12"
+                          />{' '}
+                        </div>}
+                        {isChristmas && <div>
+                          <Field
+                            name="amount"
+                            label="20€"
+                            component={RadioButton}
+                            type="radio"
+                            value="20"
+                          />{' '}
+                          <Field
+                            name="amount"
+                            label="50€"
+                            component={RadioButton}
+                            type="radio"
+                            value="50"
+                          />{' '}
+                          <Field
+                            name="amount"
+                            label="100€"
+                            component={RadioButton}
+                            type="radio"
+                            value="100"
+                          />{' '}
+                        </div>}
                         <Field
                           name="amount"
                           label="Eigenen Betrag eingeben"
@@ -194,9 +220,22 @@ export default (theme) => {
                             <span className={s.currency}>€</span>
                           </div>
                         </Condition>
+
+                        {isChristmas &&
+                        <section className={s.certificateInfo}>
+                          <Field
+                          name="certificateName"
+                          label="Wie heißt die Person, die du beschenken möchtest?"
+                          placeholder="Name"
+                          type="text"
+                          component={TextInputWrapped}
+                          />
+                          <p className={s.hint}>Hinweis: Du erhältst eine personalisierte Spendenurkunde mit dem Namen der beschenkten Person von uns.</p>
+                        </section>}
                       </FormSection>
 
-                      <CTAButtonContainer>
+                      <div>
+                      {!isChristmas && <CTAButtonContainer>
                         <CTAButton
                           type="submit"
                           onClick={() => {
@@ -217,7 +256,22 @@ export default (theme) => {
                         >
                           Monatlich unterstützen
                         </CTAButton>
-                      </CTAButtonContainer>
+                      </CTAButtonContainer>}
+
+                      {isChristmas &&
+                        <CTAButton
+                        type="submit"
+                        onClick={() => {
+                          onAmountClick(false);
+                        }}
+                        size="MEDIUM"
+                        className={s.primaryButton}
+                        >
+                          Spende verschenken
+                        </CTAButton>
+                      }
+                      </div>
+                      
                     </div>
                   )}
 
