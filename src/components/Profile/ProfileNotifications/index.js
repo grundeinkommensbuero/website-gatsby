@@ -21,6 +21,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   );
   const [municipality, setMunicipality] = useState();
   const [unsubscribeDialogActive, setShowUnsubscribeDialog] = useState();
+  const [unsubscribeAllDialogActive, setShowUnsubscribeAllDialog] = useState();
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -37,22 +38,17 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     }
   }, [updateUserState]);
 
-  // setup state depending on userData when available
-  if (
-    userData &&
-    userData.newsletterConsent &&
-    mainNewsletterConsent === undefined
-  ) {
-    updateMainNewsletterConsent(userData.newsletterConsent);
-  }
-
-  if (
-    userData &&
-    userData.customNewsletters &&
-    userData.customNewsletters.length > customNewsletterSettings.length
-  ) {
-    updateCustomNewsletterSettings(userData.customNewsletters);
-  }
+  // setup newsletter state depending on userData
+  useEffect(() => {
+    if (userData &&
+      userData.newsletterConsent) {
+      updateMainNewsletterConsent(userData.newsletterConsent);
+    }
+    if (userData &&
+      userData.customNewsletters) {
+      updateCustomNewsletterSettings(userData.customNewsletters);
+    }
+  }, [userData]);
 
   // store user selected location to add custom newsletters
   const handlePlaceSelect = municipality => {
@@ -107,7 +103,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     const newNewsletter = {
       name: municipality.name,
       value: true,
-      extraInfo: false,
+      extraInfo: true,
       timestamp: new Date().toISOString(),
       ags: municipality.ags,
     };
@@ -116,10 +112,13 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
 
   const reactivateNewsletter = async newsletter => {
     try {
+      setComponentToBeUpdated(newsletter.ags);
       const updatedNewsletters = [...customNewsletterSettings];
       for (let i = 0; i < updatedNewsletters.length; i++) {
         if (updatedNewsletters[i].ags === newsletter.ags) {
           newsletter.value = true;
+          newsletter.timestamp = new Date().toISOString();
+          newsletter.extraInfo = true;
           updatedNewsletters[i] = newsletter;
         }
       }
@@ -135,6 +134,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
 
   const addNewsletter = async newsletter => {
     try {
+      setComponentToBeUpdated(newsletter.ags);
       const updatedNewsletters = [...customNewsletterSettings];
       updatedNewsletters.push(newsletter);
       updateUser({ userId: userId, customNewsletters: updatedNewsletters });
@@ -160,6 +160,21 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
       console.log(e);
     }
   };
+
+  const unsubscribeAllNewsletters = () => {
+    const updatedNewsletters = [...customNewsletterSettings];
+    for (let i = 0; i < updatedNewsletters.length; i++) {
+      updatedNewsletters[i].value = false;
+    }
+    updateUser({
+      userId: userId,
+      newsletterConsent: false,
+      customNewsletters: updatedNewsletters
+    });
+    updateCustomNewsletterSettings(updatedNewsletters);
+    updateMainNewsletterConsent({ value: false });
+    setShowUnsubscribeAllDialog(false);
+  }
 
   // const updateUserPhone = () => {
   //   try {
@@ -251,6 +266,39 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     );
   };
 
+  const UnsubscribeAllDialog = () => {
+    return (
+      <section className={s.newsletterCard}>
+        <p className={s.newsletterCardHeading}>
+          Bist du sicher, dass du keine Newsletter von uns mehr bekommen
+          möchtest?
+        </p>
+        <br />
+        <p className={s.newsletterCardDescription}>
+          Wir können dich nicht mehr informieren.
+        </p>
+        <div className={s.revokeButtonRow}>
+          <Button
+            className={gS.floatRight}
+            onClick={unsubscribeAllNewsletters}
+          >
+            Abbestellen
+          </Button>
+          <div className={s.cancelRevokeProcess}>
+            <span
+              aria-hidden="true"
+              className={gS.linkLikeFormated}
+              onClick={() => setShowUnsubscribeAllDialog(false)}
+              onKeyUp={() => setShowUnsubscribeAllDialog(false)}
+            >
+              Newsletter weiter erhalten
+            </span>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
   // return active newsletter components
   const activeNewsletterCards = customNewsletterSettings.map(newsletter => {
     if (newsletter.value) {
@@ -290,7 +338,14 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           </section>
         ) : null}
 
-        <p className={gS.linkLikeFormated}>Alle abbestellen</p>
+        {!unsubscribeAllDialogActive ?
+          <p
+            aria-hidden="true"
+            className={gS.linkLikeFormated}
+            onClick={() => setShowUnsubscribeAllDialog(true)}
+            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
+          : <UnsubscribeAllDialog />
+        }
 
         <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
         <SearchPlaces
