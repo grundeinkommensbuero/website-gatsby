@@ -61,7 +61,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
       </Link>
 
       <Link to="spenden-einstellungen" className={s.profilePageSection}>
-        <section className={s.contactInfo}>
+        <section>
           <h2>Spenden Einstellungen</h2>
           <p>Hier kannst du deine Spende verwalten.</p>
           <div className={s.sectionLink}>
@@ -70,7 +70,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         </section>
       </Link>
 
-      {signatureCountOfUser && (
+      {/* {signatureCountOfUser && (
         <a className={s.profilePageSection}
           href={`/${signatureCountOfUser.mostRecentCampaign
             ? SELF_SCAN_SLUGS[
@@ -98,10 +98,31 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             )}
           </section>
         </a>
-      )}
+      )} */}
+
+      <Link to="unterschriften-eintragen" className={s.profilePageSection}>
+        <section className={s.signaturesSection}>
+          <h2>Eingegangene Unterschriften</h2>
+          {signatureCountOfUser && (
+            <>
+              <SignatureStats
+                signatureCount={signatureCountOfUser}
+                className={s.signatureStats}
+                layout="horizontal"
+              />
+
+              <div className={s.sectionLink}>
+                <span>
+                  Mehr sehen und eintragen
+                  </span>
+              </div>
+            </>
+          )}
+        </section>
+      </Link>
 
       <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
-        <section className={s.contactInfo}>
+        <section>
           <h2>Deine Frage ans Grundeinkommen</h2>
           <p>Würden sich mehr Menschen selbstständig machen?</p>
           <div className={s.sectionLink}>
@@ -111,7 +132,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
       </Link>
 
       <Link to="kontakt-einstellungen" className={s.profilePageSection}>
-        <section className={s.contactInfo}>
+        <section>
           <h2>Newsletter & Kontakt</h2>
           <p>Du erhältst folgende Newsletter: </p>
           <p>{customNewsletterEnumeration()}</p>
