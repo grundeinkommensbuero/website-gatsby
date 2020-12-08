@@ -7,14 +7,14 @@ import { useUploadImage } from '../../../hooks/images';
 import AvatarImage from '../../AvatarImage';
 import { CTAButton } from '../../Layout/CTAButton';
 
-export default ({ userData, userId, onUploadDone, showLabel }) => {
+export default ({ userData, userId, onUploadDone, showUploadLabel, showEditLabel, size = 'default' }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
 
   useEffect(() => {
     if (uploadImageState === 'success') {
       onUploadDone();
     }
-  }, [uploadImageState, onUploadDone]);
+  }, [uploadImageState]);
 
   return (
     <Form
@@ -28,17 +28,22 @@ export default ({ userData, userId, onUploadDone, showLabel }) => {
           {userData.user && userData.user.profilePictures ? (
             <AvatarImage
               user={userData.user}
-              className={s.avatarImage}
+              className={cN(s.avatarImage,
+                { [s.default]: size === 'default' },
+                { [s.large]: size === 'large' }
+              )}
               sizes="80px"
             />
           ) : (
-              <Field name="image" component={ImageInput} user={userData} showLabel={showLabel} />
+              <Field name="image" component={ImageInput} user={userData} showUploadLabel={showUploadLabel} showEditLabel={showEditLabel} size={size} />
             )}
           <CTAButton
             type="submit"
-            className={cN(s.submitButton, {
-              [s.submitButtonDirty]: dirtyFields.image,
-            })}
+            className={cN(
+              { [s.submitButton]: !showEditLabel },
+              { [s.submitButtonEditing]: showEditLabel },
+              { [s.submitButtonDirty]: dirtyFields.image }
+            )}
           >
             Hochladen
           </CTAButton>
@@ -48,7 +53,7 @@ export default ({ userData, userId, onUploadDone, showLabel }) => {
   );
 };
 
-export const ImageInput = ({ input: { value, onChange, ...input }, user, showLabel }) => {
+export const ImageInput = ({ input: { value, onChange, ...input }, user, showUploadLabel = true, showEditLabel = false, size }) => {
   const [avatarImage, setAvatarImage] = useState(null);
   const handleChange = ({ target }) => {
     if (target.files && target.files[0]) {
@@ -62,21 +67,20 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, showLab
       onChange({ files: target.files });
     }
   };
-  /* conditionally show 'upload picture label', defaults to true */
-  let showUploadLabel = true;
-  if (showLabel !== undefined) {
-    showUploadLabel = showLabel;
-  }
 
   return (
     <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
       <AvatarImage
         srcOverwrite={avatarImage}
-        className={s.avatarImage}
+        className={cN(s.avatarImage,
+          { [s.default]: size === 'default' },
+          { [s.large]: size === 'large' }
+        )}
         user={user}
         sizes="80px"
       />
-      {showUploadLabel ? (<div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>) : null}
+      {showUploadLabel ? (<div className={cN(s.avatarImageLabel, { [s.default]: !showEditLabel })}>Lad’ ein Bild hoch!</div>) : null}
+      {showEditLabel ? (<div className={cN(s.avatarImageLabel, { [s.editing]: showEditLabel })}>Bild ändern</div>) : null}
       <input
         type="file"
         onChange={handleChange}
