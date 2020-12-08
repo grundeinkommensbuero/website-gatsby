@@ -16,6 +16,7 @@
 
   div {
     font-size: @fontSizeM;
+    margin-bottom: 0;
 
     @media (max-width: @breakPointM) {
       font-size: @fontSizeS;
@@ -85,11 +86,30 @@
   background-color: @red;
   color: @grey;
 
-  button {
-    background-color: @grey;
+  button 
+    border: 1px solid @grey;
+    color: @grey !important;
   }
 
-  label > span {
-    //background-color: green;
+  .primaryButton {
+    background-color: @grey;
+    color: @red !important;
+    border: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: darken(@grey, 10%);
+      border: none;
+    }
+  }
+
+  // Radio Buttons
+  input:checked ~ span {
+    background-color: @grey !important;
+
+    &:after {
+      background-color: @red;
+    }
   }
 }
