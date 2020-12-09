@@ -366,8 +366,8 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         </p>
         <div className={s.optionRow}>
           <p className={cN(gS.noMargin, gS.inputDescription)}>Telefonnummer:</p>
-          <TextInput placeholder="Telefonnummer" />
-          <Button className={s.savePhoneNumberBtn}>Eintragen</Button>
+          <TextInput placeholder="Telefonnummer" className={s.phoneNumberInput} />
+          <Button>Eintragen</Button>
         </div>
 
         {/* <h4 className={gS.optionSectionHeading}>Kontakt per Messenger</h4>
