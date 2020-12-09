@@ -65,7 +65,7 @@ export default (theme) => {
     if (formErrors.customAmount) {
       return;
     }
-    if (formErrors.certificateName) {
+    if ((isChristmas && formErrors.certificateName)) {
       return;
     }
     setEnteredAmount(true);
@@ -87,7 +87,6 @@ export default (theme) => {
 
   const validate = values => {
     formData = { ...values };
-    console.log(values);
 
     const errors = {};
 
@@ -111,7 +110,7 @@ export default (theme) => {
       errors.lastName = 'Muss ausgefüllt sein';
     }
 
-    if (!values.certificateName) {
+    if (isChristmas && !values.certificateName) {
       errors.certificateName = 'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
     }
 
@@ -141,6 +140,8 @@ export default (theme) => {
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
+
+            console.log(data);
             const { customAmount, amount, privacy, sepa, ...inputData } = data;
             const finalAmount =
               amount === 'custom' && customAmount ? +customAmount : +amount;
