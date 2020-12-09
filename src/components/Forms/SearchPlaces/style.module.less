@@ -1,11 +1,13 @@
 @import '../../style/vars.less';
 @inputWidth: 25rem;
+@inputButtonMargin: 0.4rem;
 
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  margin-top: -@inputButtonMargin;
   @media (max-width: @breakPointM) {
     // margin-bottom: 1rem;
   }
@@ -14,7 +16,9 @@
   position: relative;
   width: @inputWidth;
   margin-right: 2rem;
-  margin-bottom: 1rem;
+  // TODO: Check if ok for profile
+  margin-top: @inputButtonMargin;
+  margin-bottom: @inputButtonMargin;
 }
 
 .suggestions {
@@ -46,4 +50,10 @@
 .noSuggestionsItem {
   padding: 0.5rem 1.25rem;
   color: @greyMedium;
+}
+
+.sideButton {
+  // TODO: Check if ok for profile
+  margin-top: @inputButtonMargin;
+  margin-bottom: @inputButtonMargin;
 }

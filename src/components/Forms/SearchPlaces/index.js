@@ -22,11 +22,14 @@ const handleButtonClickDefault = ({ validate }) => {
 
 export const SearchPlaces = ({
   showButton,
-  onPlaceSelect,
-  label = 'Stadt:',
-  validateOnBlur,
-  handleButtonClick = handleButtonClickDefault,
   buttonLabel = 'Finde deine Stadt',
+  placeholder = 'Stadt oder Gemeinde',
+  onPlaceSelect,
+  label = 'Stadt oder Gemeinde:',
+  validateOnBlur,
+  inputSize,
+  buttonSize,
+  handleButtonClick = handleButtonClickDefault,
 }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -52,6 +55,9 @@ export const SearchPlaces = ({
       if (query !== selectedPlace.name) {
         setSuggestionsActive(true);
         setSelectedPlace({});
+        if (onPlaceSelect) {
+          onPlaceSelect();
+        }
       }
 
       if (fuse) {
@@ -91,11 +97,11 @@ export const SearchPlaces = ({
   const validate = () => {
     let ags;
     if (selectedPlace.ags) {
-      ags = `/kommune/${selectedPlace.ags}`;
+      ags = `/gemeinden/${selectedPlace.ags}`;
       return { status: 'success', ags };
     }
     if (results.length > 0 && results[0].score < 0.001) {
-      ags = `/kommune/${results[0].ags}`;
+      ags = `/gemeinden/${results[0].ags}`;
       return { status: 'success', ags };
     }
     const touched = true;
@@ -104,7 +110,7 @@ export const SearchPlaces = ({
     return { status: 'failed' };
   };
 
-  const handleSuggestionClick = ({ suggestion }) => {
+  const handleSuggestionClick = suggestion => {
     setQuery(suggestion.name);
     setSelectedPlace(suggestion);
 
@@ -124,6 +130,13 @@ export const SearchPlaces = ({
     setFormState({ error, touched });
   };
 
+  const handleKeyDown = e => {
+    // Emulate click when enter or space are pressed
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleSuggestionClick(results[0]);
+    }
+  };
+
   const handleBlur = e => {
     const isAutoCompleteTarget =
       e.relatedTarget &&
@@ -139,17 +152,18 @@ export const SearchPlaces = ({
   };
 
   return (
-    <div>
-      <label htmlFor="gemeinde">{label}</label>
+    <>
+      {label && <label>{label}</label>}
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
-            id="gemeinde"
-            placeholder="Stadt"
+            size={inputSize}
+            placeholder={placeholder}
             autoComplete="off"
             label="Stadt"
             value={query}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             onBlur={handleBlur}
           />
 
@@ -165,15 +179,15 @@ export const SearchPlaces = ({
         {showButton && (
           <Button
             id="linkButton"
+            size={buttonSize}
             className={s.sideButton}
-            size="MEDIUM"
             onClick={event => handleButtonClick({ event, validate })}
           >
             {buttonLabel}
           </Button>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
@@ -186,7 +200,7 @@ export function AutoCompleteList({
 }) {
   return (
     <div
-      aria-hidden="true"
+      aria-hidden={true}
       className={cN(s.suggestions, { [s.active]: suggestionsActive })}
       onBlur={handleBlur}
     >
@@ -204,19 +218,19 @@ export function AutoCompleteList({
               role="button"
               aria-pressed="false"
               tabIndex={0}
-              onClick={event => handleSuggestionClick({ event, suggestion: x })}
+              onClick={e => handleSuggestionClick(x)}
               onKeyDown={e => {
                 // Emulate click when enter or space are pressed
                 if (e.key === 'Enter' || e.keyCode === 32) {
                   e.preventDefault();
-                  handleSuggestionClick({ e, suggestion: x });
+                  handleSuggestionClick(x);
                 }
               }}
             >
               {x.name},{' '}
               {x.zipCodes.length === 1
                 ? `${x.zipCodes[0]}`
-                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
+                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
             </div>
           );
         })}
