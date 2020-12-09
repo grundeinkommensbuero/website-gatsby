@@ -21,39 +21,6 @@ import { animate } from './animate';
 
 console.time('timeToMountMap');
 
-const Legend = () => {
-  const view = new OrthographicView({ id: 'orthographic' });
-  const test = ['Test'];
-  const text = new TextLayer({
-    id: 'permanentLabel',
-    data: test,
-    // opacity: 0.7,
-    // Only characters of this array will be rendered,
-    // default does not include German alphabet
-    pickable: false,
-    getPosition: d => [100, 0],
-    getText: d => d,
-    backgroundColor: [255, 255, 255],
-    getColor: d => [0, 0, 0],
-    getSize: 20, // 30000 meters
-    sizeMinPixels: 10,
-    sizeMaxPixels: 20,
-    sizeUnits: 'pixels',
-    getAngle: 0,
-    fontFamily: 'Ideal, Tahoma, sans-serif',
-    fontWeight: '900',
-    getTextAnchor: 'middle',
-    getAlignmentBaseline: 'top',
-  });
-  const layers = [text];
-
-  return (
-    <div className={s.legendContainer}>
-      <DeckGL views={[view]} layers={layers} />
-    </div>
-  );
-};
-
 export const CampaignMap = ({
   AgsToFlyTo,
   // TODO: show finished state at the beginning
