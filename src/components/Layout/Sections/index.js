@@ -122,7 +122,7 @@ export function ContentfulSection({ section }) {
     >
       {/* TODO: conditional on theme */}
       {/* or: componentTheme={theme} --> undefined is caught by component */}
-      <Confetti componentTheme="christmas" />
+      {/* <Confetti componentTheme="christmas" /> */}
 
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />

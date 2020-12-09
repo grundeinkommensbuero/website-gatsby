@@ -1,3 +1,5 @@
+@import '../../style/vars.less';
+
 .error {
   background: var(--secondary-color);
   color: var(--text-on-secondary-color);
@@ -6,6 +8,11 @@
   animation-iteration-count: 3;
   animation-name: blink;
   display: inline-block;
+}
+
+.christmas {
+  background: @grey;
+  color: @red;
 }
 
 @keyframes blink {

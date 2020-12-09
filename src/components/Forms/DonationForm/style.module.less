@@ -27,6 +27,7 @@
     margin-bottom: 0.8rem;
   }
 
+  // Error message
   label div {
     font-size: @fontSizeS;
     font-weight: bold;
@@ -35,6 +36,10 @@
 
 .waitingHint {
   --secondary-color: var(--bg-color);
+}
+
+.donationButtons {
+  margin-top: 2rem;
 }
 
 .primaryButton {
@@ -83,6 +88,7 @@
 }
 
 .christmasTheme {
+  --bg-color: @grey;
   background-color: @red;
   color: @grey;
 
@@ -112,4 +118,20 @@
       background-color: @red;
     }
   }
+
+  // Checkboxes
+  label > input {
+    background-color: @grey;
+    border: none;
+  }
+
+  label > input:checked {
+    background-color: @grey;
+    border: none;
+    color: @red;
+  }
+}
+
+.certificateInfo {
+  margin-top: 3rem;
 }
