@@ -145,11 +145,10 @@ export const SearchPlaces = ({
 
   return (
     <>
-      {label && <label htmlFor="gemeinde">{label}</label>}
+      {label && <label>{label}</label>}
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
-            id="gemeinde"
             size={size}
             placeholder={placeholder}
             autoComplete="off"

@@ -12,7 +12,7 @@ import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
 import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
-import { FlyToInterpolator } from '@deck.gl/core';
+import { FlyToInterpolator, OrthographicView } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
 import { scaleLinear, scaleSqrt } from 'd3-scale';
 
@@ -21,6 +21,39 @@ import { animate } from './animate';
 
 console.time('timeToMountMap');
 
+const Legend = () => {
+  const view = new OrthographicView({ id: 'orthographic' });
+  const test = ['Test'];
+  const text = new TextLayer({
+    id: 'permanentLabel',
+    data: test,
+    // opacity: 0.7,
+    // Only characters of this array will be rendered,
+    // default does not include German alphabet
+    pickable: false,
+    getPosition: d => [100, 0],
+    getText: d => d,
+    backgroundColor: [255, 255, 255],
+    getColor: d => [0, 0, 0],
+    getSize: 20, // 30000 meters
+    sizeMinPixels: 10,
+    sizeMaxPixels: 20,
+    sizeUnits: 'pixels',
+    getAngle: 0,
+    fontFamily: 'Ideal, Tahoma, sans-serif',
+    fontWeight: '900',
+    getTextAnchor: 'middle',
+    getAlignmentBaseline: 'top',
+  });
+  const layers = [text];
+
+  return (
+    <div className={s.legendContainer}>
+      <DeckGL views={[view]} layers={layers} />
+    </div>
+  );
+};
+
 export const CampaignMap = ({
   AgsToFlyTo,
   // TODO: show finished state at the beginning
@@ -28,6 +61,11 @@ export const CampaignMap = ({
   flyToAgsOnLoad = false,
   className = s.heightSetter,
 }) => {
+  const [hasWebGl, setHasWebGL] = useState(null);
+  useEffect(() => {
+    setHasWebGL(detectWebGLContext());
+  }, []);
+
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
   const [dataMunicipalities, setDataMunicipalities] = useState([]);
@@ -138,6 +176,17 @@ export const CampaignMap = ({
     }
   };
   // ---- Template -------------------------------------------------------------------------
+
+  if (!hasWebGl) {
+    return (
+      <div className={className}>
+        <div className={s.interfaceContainer}>
+          <div className={s.mapFallback}></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={className}>
       <div className={s.interfaceContainer}>
@@ -251,7 +300,7 @@ const Map = ({
   );
 
   // ---- Layers ---------------------------------------------------------------------------
-  // TODO: useState with function
+  // TODO: useState with function, for calculating this layer only once
   const layerStates = useMemo(() => {
     return new GeoJsonLayer({
       id: 'states',
@@ -290,7 +339,6 @@ const Map = ({
       mask: true,
     },
   };
-  // useMemo(() => computeExpensiveValue(a, b), [a, b]);
 
   const layerPermanentMarker = useMemo(() => {
     return new IconLayer({
@@ -477,61 +525,83 @@ const Map = ({
 
   // ---- Template -------------------------------------------------------------------------
   return (
-    <DeckGL
-      initialViewState={initialViewState}
-      // viewState={viewState}
-      onViewStateChange={event => {
-        const { viewState, interactionState } = event;
-        handleViewState({ viewState });
+    <>
+      <DeckGL
+        initialViewState={initialViewState}
+        // viewState={viewState}
+        onViewStateChange={event => {
+          const { viewState, interactionState } = event;
+          handleViewState({ viewState });
 
-        const { isZooming, isPanning } = interactionState;
-        if (!touched && (isZooming || isPanning)) {
-          setTouched(true);
-        }
-      }}
-      controller={controllerOptions}
-      layers={layers}
-      onLoad={props => {
-        handleLoad();
-      }}
-      onResize={dimensions => {
-        handleResize(dimensions);
-      }}
-      // getTooltip={({ object }) =>
-      //   object && `${object.name}\nEinwohner: ${object.population}`
-      // }
-    >
-      {hoverInfo && hoverInfo.object && (
-        <div
-          className={s.tooltipContainer}
-          style={{
-            background: getColor(hoverInfo.object.percentToGoal, 255, true),
-            left: hoverInfo.x,
-            top: hoverInfo.y,
-            color: 'rgba(255,255,255,0.9)',
-          }}
-        >
-          <div className={s.tooltipHeader}>
-            <span className={s.tooltipMunicipality}>
-              {hoverInfo.object.name}
-            </span>
-          </div>
-          <div className={s.tooltipInfoContainer}>
-            <div className={s.tooltipInfo}>
-              <span className={s.tooltipNumber}>
-                {hoverInfo.object.percentToGoal} %
+          const { isZooming, isPanning } = interactionState;
+          if (!touched && (isZooming || isPanning)) {
+            setTouched(true);
+          }
+        }}
+        controller={controllerOptions}
+        layers={layers}
+        onLoad={props => {
+          handleLoad();
+        }}
+        onResize={dimensions => {
+          handleResize(dimensions);
+        }}
+        // getTooltip={({ object }) =>
+        //   object && `${object.name}\nEinwohner: ${object.population}`
+        // }
+      >
+        {hoverInfo && hoverInfo.object && (
+          <div
+            className={s.tooltipContainer}
+            style={{
+              background: getColor(hoverInfo.object.percentToGoal, 255, true),
+              left: hoverInfo.x,
+              top: hoverInfo.y,
+              color: 'rgba(255,255,255,0.9)',
+            }}
+          >
+            <div className={s.tooltipHeader}>
+              <span className={s.tooltipMunicipality}>
+                {hoverInfo.object.name}
               </span>
-              <span className={s.tooltipLabel}> der nötigen Anmeldungen</span>
             </div>
-            <div className={s.tooltipInfo}>
-              <span className={s.tooltipNumber}>
-                {hoverInfo.object.signups}
-              </span>
-              <span className={s.tooltipLabel}> Anmeldungen insgesamt</span>
+            <div className={s.tooltipInfoContainer}>
+              <div className={s.tooltipInfo}>
+                <span className={s.tooltipNumber}>
+                  {hoverInfo.object.percentToGoal} %
+                </span>
+                <span className={s.tooltipLabel}> der nötigen Anmeldungen</span>
+              </div>
+              <div className={s.tooltipInfo}>
+                <span className={s.tooltipNumber}>
+                  {hoverInfo.object.signups}
+                </span>
+                <span className={s.tooltipLabel}> Anmeldungen insgesamt</span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </DeckGL>
+        )}
+      </DeckGL>
+      {/* <Legend /> */}
+    </>
   );
 };
+
+function detectWebGLContext() {
+  // Create canvas element. The canvas is not added to the
+  // document itself, so it is never displayed in the
+  // browser window.
+  if (typeof window !== `undefined`) {
+    var canvas = document.createElement('canvas');
+    // Get WebGLRenderingContext from canvas element.
+    var gl =
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    // Report the result.
+    if (gl && gl instanceof WebGLRenderingContext) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
+}
