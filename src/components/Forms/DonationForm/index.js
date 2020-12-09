@@ -97,6 +97,10 @@ export default (theme) => {
       errors.lastName = 'Muss ausgefüllt sein';
     }
 
+    if (!values.certificateName) {
+      errors.certificateName = 'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
+    }
+
     if (!values.sepa) {
       errors.sepa = 'Bitte stimme zu, um fortzufahren.';
     }
@@ -205,6 +209,7 @@ export default (theme) => {
                           component={RadioButton}
                           type="radio"
                           value="custom"
+                          theme="christmas"
                         />{' '}
                         <Condition when="amount" is="custom">
                           <div className={s.customAmount}>
@@ -216,6 +221,7 @@ export default (theme) => {
                               min={2}
                               inputMode="numeric"
                               pattern="[0-9]*"
+                              theme="christmas"
                             />{' '}
                             <span className={s.currency}>€</span>
                           </div>
@@ -224,17 +230,18 @@ export default (theme) => {
                         {isChristmas &&
                         <section className={s.certificateInfo}>
                           <Field
-                          name="certificateName"
-                          label="Wie heißt die Person, die du beschenken möchtest?"
-                          placeholder="Name"
-                          type="text"
-                          component={TextInputWrapped}
+                            name="certificateName"
+                            label="Wie heißt die Person, die du beschenken möchtest?"
+                            placeholder="Name"
+                            type="text"
+                            component={TextInputWrapped}
+                            theme="christmas"
                           />
                           <p className={s.hint}>Hinweis: Du erhältst eine personalisierte Spendenurkunde mit dem Namen der beschenkten Person von uns.</p>
                         </section>}
                       </FormSection>
 
-                      <div>
+                      <div className={s.donationButtons}>
                       {!isChristmas && <CTAButtonContainer>
                         <CTAButton
                           type="submit"
@@ -300,6 +307,7 @@ export default (theme) => {
                           placeholder="Vorname"
                           type="text"
                           component={TextInputWrapped}
+                          theme="christmas"
                         />
                         <Field
                           name="lastName"
@@ -307,6 +315,7 @@ export default (theme) => {
                           placeholder="Nachname"
                           type="text"
                           component={TextInputWrapped}
+                          theme="christmas"
                         />
                         <Field
                           name="iban"
@@ -314,6 +323,7 @@ export default (theme) => {
                           placeholder="IBAN"
                           type="text"
                           component={TextInputWrapped}
+                          theme="christmas"
                         />
 
                         <Field
@@ -329,11 +339,13 @@ export default (theme) => {
                           }
                           type="checkbox"
                           component={Checkbox}
+                          theme="christmas"
                         ></Field>
                         <Overlay
                           isOpen={isOverlayOpen}
                           toggleOverlay={toggleOverlay}
                           title="SEPA-Mandat"
+                          theme="christmas"
                         >
                           <p>
                             Ich ermächtige Vertrauensgesellschaft e.V.,
@@ -374,6 +386,7 @@ export default (theme) => {
                           }
                           type="checkbox"
                           component={Checkbox}
+                          theme="christmas"
                         ></Field>
                       </FormSection>
 

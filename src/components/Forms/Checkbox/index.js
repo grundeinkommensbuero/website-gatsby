@@ -2,10 +2,11 @@ import React from 'react';
 import s from './style.module.less';
 import { ValidationError } from '../ValidationError';
 
-export const Checkbox = ({ input, label, meta, hide }) => {
+export const Checkbox = ({ input, label, meta, hide, theme }) => {
   if (hide) {
     return null;
   }
+
   return (
     <label className={s.container}>
       <input className={s.checkbox} {...input} />
@@ -14,7 +15,7 @@ export const Checkbox = ({ input, label, meta, hide }) => {
         {meta.error && meta.touched && (
           <>
             <br />
-            <ValidationError>{meta.error}</ValidationError>
+            <ValidationError theme={theme}>{meta.error}</ValidationError>
           </>
         )}
       </div>
