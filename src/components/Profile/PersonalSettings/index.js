@@ -126,7 +126,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     onChange={evt => setTempMail(evt.target.value)}
                     placeholder="E-Mail"
                     value={tempMail || ''}
-                    size="small"
+                    size="SMALL"
                     className={cN(
                       tempMail !== userData.email ? s.inputHighlighted : null
                     )}
@@ -183,7 +183,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     onChange={evt => setTempPhone(evt.target.value)}
                     placeholder="Telefonnummer"
                     value={tempPhone || ''}
-                    size="small"
+                    size="SMALL"
                     className={cN(
                       tempPhone !== fakePhone ? s.inputHighlighted : null
                     )}
