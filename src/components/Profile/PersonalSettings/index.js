@@ -80,7 +80,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             size={'large'}
             onUploadDone={() => { }}
           />
-          <div>
+          <div className={s.marginBottomOnMobile}>
             <h1
               className={cN({
                 [gS.username]: userData.username,
@@ -117,7 +117,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   className={s.mobileBtn}
                   onClick={() => setEditMailAddress(true)}
                 >
-                  Ändern
+                  ändern
                 </Button>
               </div>
             ) : (
@@ -131,17 +131,19 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                       tempMail !== userData.email ? s.inputHighlighted : null
                     )}
                   />
+                  <Button
+                    size="SMALL"
+                    className={s.mobileBtn}
+                    onClick={() => {
+                      setTempMail(userData.email);
+                      setEditMailAddress(false);
+                    }}
+                  >
+                    abbrechen
+                  </Button>
                   {tempMail !== userData.email ? (
-                    <Button size="SMALL" className={s.mobileBtn}>Ändern</Button>
-                  ) : (
-                      <Button
-                        size="SMALL"
-                        className={s.mobileBtn}
-                        onClick={() => setEditMailAddress(false)}
-                      >
-                        abbrechen
-                      </Button>
-                    )}
+                    <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
+                  ) : null}
                 </div>
               )}
 
@@ -163,12 +165,15 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 <Button
                   size="SMALL"
                   className={s.mobileBtn}
-                  onClick={() => setEditPhoneNumber(true)}
+                  onClick={() => {
+                    setTempPhone(fakePhone);
+                    setEditPhoneNumber(true);
+                  }}
                 >
                   {fakePhone ? (
-                    <span>Ändern</span>
+                    <span>ändern</span>
                   ) : (
-                      <span>Eintragen</span>
+                      <span>eintragen</span>
                     )}
                 </Button>
               </div>
@@ -183,17 +188,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                       tempPhone !== fakePhone ? s.inputHighlighted : null
                     )}
                   />
+                  <Button
+                    size="SMALL"
+                    className={s.mobileBtn}
+                    onClick={() => setEditPhoneNumber(false)}
+                  >
+                    abbrechen
+                  </Button>
                   {tempPhone !== fakePhone ? (
-                    <Button size="SMALL" className={s.mobileBtn}>Ändern</Button>
-                  ) : (
-                      <Button
-                        size="SMALL"
-                        className={s.mobileBtn}
-                        onClick={() => setEditPhoneNumber(false)}
-                      >
-                        abbrechen
-                      </Button>
-                    )}
+                    <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
+                  ) : null}
                 </div>
               )}
 
@@ -253,12 +257,26 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               (tempName !== userData.username ||
                 tempZIP !== userData.zipCode ||
                 tempCity !== userData.city) ? (
-                <Button
-                  className={s.saveChangesBtn}
-                  onClick={saveUserDataChanges}
-                >
-                  Änderungen speichern
+                <>
+                  <Button
+                    size="SMALL"
+                    className={s.mobileBtn}
+                    onClick={() => {
+                      setTempName(userData.username);
+                      setTempZIP(userData.zipCode);
+                      setTempCity(userData.city);
+                    }}
+                  >
+                    abbrechen
+                  </Button>
+                  <Button
+                    size="SMALL"
+                    className={s.mobileBtn}
+                    onClick={saveUserDataChanges}
+                  >
+                    speichern
                 </Button>
+                </>
               ) : (
                 <section>
                   {waitingForApi ? (

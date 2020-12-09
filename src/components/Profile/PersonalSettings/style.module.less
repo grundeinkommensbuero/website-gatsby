@@ -6,7 +6,6 @@
 
   @media (max-width: @breakPointM) {
     display: block;
-    min-width: 25rem;
   }
 }
 
@@ -17,6 +16,17 @@
   @media (max-width: @breakPointM) {
     display: flex;
     flex-wrap: nowrap;
+  }
+  @media (max-width: @breakPointS) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
+}
+
+.marginBottomOnMobile {
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1.5rem;
   }
 }
 
