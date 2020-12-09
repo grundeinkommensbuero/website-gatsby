@@ -23,6 +23,9 @@ import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
 
 export default (theme) => {
+  var themeClass = theme[Object.keys(theme)[0]];
+  const isChristmas = themeClass === 'christmas';
+
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
@@ -32,7 +35,7 @@ export default (theme) => {
   const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
-  const [initialValues, setInitialValues] = useState({amount: '5'});
+  const [initialValues, setInitialValues] = useState(!isChristmas ? {amount: '6'} : {amount: '50'});
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   let formData = {};
   let formErrors = {};
@@ -56,7 +59,13 @@ export default (theme) => {
   const onAmountClick = recurring => {
     setIsRecurring(recurring);
 
+    if (formErrors.amount) {
+      return;
+    }
     if (formErrors.customAmount) {
+      return;
+    }
+    if (formErrors.certificateName) {
       return;
     }
     setEnteredAmount(true);
@@ -78,8 +87,13 @@ export default (theme) => {
 
   const validate = values => {
     formData = { ...values };
+    console.log(values);
 
     const errors = {};
+
+    if (!values.amount) {
+      errors.customAmount = 'Bitte wähle einen Betrag aus.';
+    }
 
     if (values.amount === 'custom' && !values.customAmount) {
       errors.customAmount = 'Muss ausgefüllt sein';
@@ -120,9 +134,6 @@ export default (theme) => {
     return errors;
   };
 
-  var themeClass = theme[Object.keys(theme)[0]];
-  const isChristmas = themeClass === 'christmas';
-
   return (
     <div className={cN(s.donationForm, {
       [s.christmasTheme]: themeClass === 'christmas',
@@ -157,7 +168,7 @@ export default (theme) => {
                   {enteredAmount === false && (
                     <div className={s.partialForm}>
                       <FormSection>
-                        {!isChristmas && <div>
+                        {!isChristmas && <>
                           <Field
                             name="amount"
                             label="3€"
@@ -179,8 +190,8 @@ export default (theme) => {
                             type="radio"
                             value="12"
                           />{' '}
-                        </div>}
-                        {isChristmas && <div>
+                        </>}
+                        {isChristmas && <>
                           <Field
                             name="amount"
                             label="20€"
@@ -202,7 +213,7 @@ export default (theme) => {
                             type="radio"
                             value="100"
                           />{' '}
-                        </div>}
+                        </>}
                         <Field
                           name="amount"
                           label="Eigenen Betrag eingeben"
