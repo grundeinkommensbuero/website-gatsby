@@ -72,10 +72,18 @@
   position: relative;
   background-color: @greyMedium;
   padding: 3.3rem 4rem;
+
+  @media (max-width: @breakPointS) {
+    padding: 3.3rem 2rem;
+  }
 }
 
 .editSettings {
   grid-column: 1 / span 2;
+
+  @media (max-width: @breakPointS) {
+    grid-column: 1 / span 1;
+  }
 }
 
 .backToProfile {
