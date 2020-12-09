@@ -116,8 +116,7 @@ const AuthProvider = ({ children }) => {
         customUserData,
         previousAction,
         setPreviousAction,
-        setCustomUserData,
-        updateCustomUserData
+        updateCustomUserData: () => updateCustomUserData({ isAuthenticated, token, setCustomUserData, userId, signUserOut })
       }}
     >
       {children}

@@ -23,13 +23,10 @@ const ProfilePage = ({ id: slugId }) => {
   const {
     userId,
     isAuthenticated,
-    token,
     customUserData: userData,
     previousAction,
     setPreviousAction,
     updateCustomUserData,
-    setCustomUserData,
-    signUserOut
   } = useContext(AuthContext);
 
   const [
@@ -69,13 +66,7 @@ const ProfilePage = ({ id: slugId }) => {
   }, previousAction);
 
   const triggerUpdateCustomUserData = () => {
-    updateCustomUserData({
-      isAuthenticated,
-      token,
-      setCustomUserData,
-      userId,
-      signUserOut,
-    })
+    updateCustomUserData()
   }
 
   return (
