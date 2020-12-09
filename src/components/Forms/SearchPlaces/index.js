@@ -23,11 +23,12 @@ const handleButtonClickDefault = ({ validate }) => {
 export const SearchPlaces = ({
   showButton,
   buttonLabel = 'Finde deine Stadt',
-  placeholder = 'Gemeinde',
+  placeholder = 'Stadt oder Gemeinde',
   onPlaceSelect,
-  label = 'Stadt:',
+  label = 'Stadt oder Gemeinde:',
   validateOnBlur,
-  size,
+  inputSize,
+  buttonSize,
   handleButtonClick = handleButtonClickDefault,
 }) => {
   const [query, setQuery] = useState('');
@@ -129,6 +130,13 @@ export const SearchPlaces = ({
     setFormState({ error, touched });
   };
 
+  const handleKeyDown = e => {
+    // Emulate click when enter or space are pressed
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleSuggestionClick(results[0]);
+    }
+  };
+
   const handleBlur = e => {
     const isAutoCompleteTarget =
       e.relatedTarget &&
@@ -149,12 +157,13 @@ export const SearchPlaces = ({
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
-            size={size}
+            size={inputSize}
             placeholder={placeholder}
             autoComplete="off"
             label="Stadt"
             value={query}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             onBlur={handleBlur}
           />
 
@@ -170,7 +179,7 @@ export const SearchPlaces = ({
         {showButton && (
           <Button
             id="linkButton"
-            size={size === 'SMALL' ? 'MEDIUM' : ''}
+            size={buttonSize}
             className={s.sideButton}
             onClick={event => handleButtonClick({ event, validate })}
           >
