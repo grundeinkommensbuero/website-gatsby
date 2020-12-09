@@ -49,12 +49,10 @@ const themes = [
 ];
 
 export default ({ className, componentTheme = 'default' }) => {
-  console.log(componentTheme);
   let theme = themes.find(t => t.name === componentTheme);
   if (!theme) {
     theme = themes[0];
   }
-  console.log(theme);
   const canvas = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [confetti, setConfetti] = useState({});
