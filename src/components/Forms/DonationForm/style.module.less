@@ -39,7 +39,10 @@
 }
 
 .donationButtons {
+  display: flex;
+  flex-wrap: wrap;
   margin-top: 2rem;
+  width: 20rem;
 }
 
 .primaryButton {
@@ -60,6 +63,11 @@
   &:hover {
     .menuLink();
   }
+}
+
+.secondaryLink {
+  font-size: @fontSizeXS;
+  margin: 1.5rem 0.5rem;
 }
 
 .partialForm {

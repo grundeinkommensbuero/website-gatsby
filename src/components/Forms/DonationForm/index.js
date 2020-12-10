@@ -19,6 +19,7 @@ import { useSignUp } from '../../../hooks/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
+import Link from 'gatsby-link';
 
 import s from './style.module.less';
 import cN from 'classnames';
@@ -300,6 +301,7 @@ export default theme => {
                         )}
                       </FormSection>
 
+<<<<<<< HEAD
                       <div className={s.donationButtons}>
                         {!isChristmas && (
                           <CTAButtonContainer>
@@ -339,6 +341,38 @@ export default theme => {
                           </CTAButton>
                         )}
                       </div>
+=======
+                      {!isChristmas && <div className={s.donationButtons}>
+                        <CTAButton
+                          type="submit"
+                          onClick={() => {
+                            onAmountClick(true);
+                          }}
+                          size="MEDIUM"
+                          className={s.primaryButton}
+                        >
+                          Monatlich unterstützen
+                        </CTAButton>
+
+                        <Link to="/spenden" className={cN(s.link, s.secondaryLink)}>
+                          Lieber einmalig spenden
+                        </Link>
+                      </div>}
+
+                      {isChristmas && <div className={s.donationButtons}>
+                        <CTAButton
+                        type="submit"
+                        onClick={() => {
+                          onAmountClick(false);
+                        }}
+                        size="MEDIUM"
+                        className={s.primaryButton}
+                        >
+                          Spende verschenken
+                        </CTAButton>
+                      </div>}
+                      
+>>>>>>> 31c9d83... "Einmalig spenden" now links
                     </div>
                   )}
 
