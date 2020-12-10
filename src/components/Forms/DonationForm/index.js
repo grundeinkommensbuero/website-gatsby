@@ -111,8 +111,12 @@ export default (theme) => {
       errors.customAmount = 'Muss ausgefüllt sein';
     }
 
-    if (values.amount === 'custom' && values.customAmount < 0) {
-      errors.customAmount = 'Bitte gib eine positive Zahl ein.';
+    if (!isChristmas && values.amount === 'custom' && values.customAmount < 2) {
+      errors.customAmount = 'Bitte gib einen Betrag von mindestens 2€ ein.';
+    }
+
+    if (isChristmas && values.amount === 'custom' && values.customAmount < 10) {
+      errors.customAmount = 'Bitte gib einen Betrag von mindestens 10€ ein.';
     }
 
     if (!values.firstName) {
@@ -246,7 +250,7 @@ export default (theme) => {
                               placeholder="100"
                               type="number"
                               component={TextInputWrapped}
-                              min={2}
+                              min={isChristmas ? 10 : 2}
                               inputMode="numeric"
                               pattern="[0-9]*"
                               theme="christmas"
