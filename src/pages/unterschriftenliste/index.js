@@ -24,11 +24,14 @@ const Unterschriftenliste = () => {
   }, []);
 
   useEffect(() => {
-    if (campaignCode && userId && isAuthenticated !== undefined) {
-      createPdf({
-        campaignCode,
-        userExists: true,
-      });
+    if (campaignCode && userId) {
+      if (isAuthenticated) {
+        createPdf({
+          campaignCode,
+          userExists: true,
+          shouldNotUpdateUser: true,
+        });
+      }
     }
   }, [isAuthenticated, userId, campaignCode]);
 
@@ -62,7 +65,7 @@ const Unterschriftenliste = () => {
               Da ist was schief gegangen
             </FinallyMessage>
           )}
-          {state === 'unauthorized' && (
+          {isAuthenticated === false && (
             <EnterLoginCode>
               <p>
                 Hey, wir kennen dich schon! Bitte gib den Code ein, den wir dir
