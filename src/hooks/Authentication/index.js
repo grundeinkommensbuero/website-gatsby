@@ -15,20 +15,44 @@ export { useLocalStorageUser } from './LocalStorageUser';
 
 export const useSignUp = () => {
   const [state, setState] = useState();
+  const [userExists, setUserExists] = useState();
 
   //get global context
   const context = useContext(AuthContext);
 
-  return [state, data => signUp(data, setState, context), setState];
+  return [
+    state,
+    userExists,
+    data => startSignInProcess(data, setState, setUserExists, context),
+    setState,
+  ];
 };
 
 export const useSignIn = () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState();
 
   //get global context
-  const context = useContext(AuthContext);
+  const { tempEmail, ...context } = useContext(AuthContext);
 
-  return [state, () => signIn(setState, context)];
+  return [
+    state,
+    () => {
+      setState('loading');
+
+      signIn({ email: tempEmail }, context)
+        .then(() => {
+          setState('success');
+        })
+        .catch(error => {
+          if (error.code === 'UserNotFoundException') {
+            setState('userNotFound');
+          } else {
+            setState('error');
+            console.log('Error while signing in', error);
+          }
+        });
+    },
+  ];
 };
 
 // hook for signing out
@@ -50,35 +74,30 @@ export const useBounceToIdentifiedState = () => {
   return () => bounceToIdentifiedState(context);
 };
 
-// Amplifys Auth class is used to sign up user
-const signUp = async (data, setState, { setUserId, setTempEmail }) => {
+const startSignInProcess = async (data, setState, setUserExists, context) => {
   try {
     setState('loading');
 
-    const { default: Auth } = await import(
-      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
-    );
+    await signUp(data, context);
 
-    // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
-    const { userSub: userId } = await Auth.signUp({
-      username: data.email.toLowerCase(),
-      password: getRandomString(30),
-    });
+    // User did not exist
+    await signIn(data, context);
 
-    data.referral = getReferral();
-
-    // After we signed up via cognito, we want to create the user in dynamo
-    await createUser({ userId, ...data });
-
-    //we want to set the newly generated id
-    setUserId(userId);
+    setUserExists(false);
     setState('success');
   } catch (error) {
-    //We have to check, if the error happened due to the user already existing
+    // We have to check, if the error happened due to the user already existing.
+    // If that's the case we call signIn() anyway.
     if (error.code === 'UsernameExistsException') {
-      // Save email, so we can use it for sign in later
-      setTempEmail(data.email);
-      setState('userExists');
+      try {
+        await signIn(data, context);
+
+        setUserExists(true);
+        setState('success');
+      } catch (error) {
+        console.log('Error while signing in', error);
+        setState('error');
+      }
     } else if (
       error.code === 'TooManyRequestsException' ||
       error.code === 'ThrottlingException'
@@ -93,33 +112,43 @@ const signUp = async (data, setState, { setUserId, setTempEmail }) => {
   }
 };
 
+// Amplifys Auth class is used to sign up user
+const signUp = async (data, { setUserId }) => {
+  const { default: Auth } = await import(
+    /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+  );
+
+  // We have to “generate” a password for them, because a password is required by Amazon Cognito when users sign up
+  const { userSub: userId } = await Auth.signUp({
+    username: data.email.toLowerCase(),
+    password: getRandomString(30),
+  });
+
+  data.referral = getReferral();
+
+  // After we signed up via cognito, we want to create the user in dynamo
+  await createUser({ userId, ...data });
+
+  //we want to set the newly generated id
+  setUserId(userId);
+};
+
 // Sign in user through AWS Cognito (passwordless)
-const signIn = async (setState, { setCognitoUser, userId, tempEmail }) => {
-  try {
-    setState('loading');
+const signIn = async ({ email }, { setCognitoUser, userId }) => {
+  const { default: Auth } = await import(
+    /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+  );
 
-    const { default: Auth } = await import(
-      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
-    );
+  // If no email was passed we use the userId from context
+  const param = email ? email.toLowerCase() : userId;
 
-    // This will initiate the custom flow, which will lead to the user receiving a mail.
-    // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
-    const user = await Auth.signIn(userId || tempEmail.toLowerCase());
+  // This will initiate the custom flow, which will lead to the user receiving a mail.
+  // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
+  const user = await Auth.signIn(param);
 
-    // We already set the user here in the global context,
-    // because we need the object in answerCustomChallenge()
-    setCognitoUser(user);
-    setState('success');
-  } catch (error) {
-    if (error.code === 'UserNotFoundException') {
-      setState('userNotFound');
-    } else if (error.code === 'UserNotConfirmedException') {
-      setState('userNotConfirmed');
-    } else {
-      setState('error');
-    }
-    console.log('Error while signing in', error);
-  }
+  // We already set the user here in the global context,
+  // because we need the object in answerCustomChallenge()
+  setCognitoUser(user);
 };
 
 //Function, which uses the amplify api to sign out user
