@@ -252,6 +252,7 @@ export default (theme) => {
                               component={TextInputWrapped}
                               min={isChristmas ? 10 : 2}
                               inputMode="numeric"
+                              step="1"
                               pattern="[0-9]*"
                               theme="christmas"
                             />{' '}
@@ -400,25 +401,16 @@ export default (theme) => {
                           theme="christmas"
                         >
                           <p>
-                            Ich ermächtige Vertrauensgesellschaft e.V.,
-                            Zahlungen von meinem Konto mittels Lastschrift
-                            einzuziehen. Zugleich weise ich mein Kreditinstitut
-                            an, die von Vertrauensgesellschaft e.V. auf mein
-                            Konto gezogenen Lastschriften einzulösen.
+                          Ich ermächtige Vertrauensgesellschaft e.V. (Gläubiger-Identifikationsnummer: DE80ZZZ00002240199), Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von Vertrauensgesellschaft e.V. auf mein Konto gezogenen Lastschriften einzulösen.
                           </p>
                           <p>
-                            Hinweis: Ich kann innerhalb von acht Wochen,
-                            beginnend mit dem Belastungsdatum, die Erstattung
-                            des belasteten Betrages verlangen. Es gelten dabei
-                            die mit meinem Kreditinstitut vereinbarten
-                            Bedingungen. Die Frist für die Vorabinformation der
-                            SEPA-Lastschrift wird auf drei Tage verkürzt.
+                          Widerrufsrecht: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. 
                           </p>
                           <p>
                             Vertrauensgesellschaft e.V., Isarstrasse 11, 12053
                             Berlin <br />
                             Gläubiger-Identifikationsnummer:
-                            DE74ZZZZ09671218105601
+                            DE80ZZZ00002240199
                           </p>
                         </Overlay>
                         <Field
