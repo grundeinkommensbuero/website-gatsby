@@ -14,6 +14,9 @@ import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
+import { useSignUp } from '../../../hooks/Authentication';
+
+import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
 
@@ -26,13 +29,16 @@ export default (theme) => {
   var themeClass = theme[Object.keys(theme)[0]];
   const isChristmas = themeClass === 'christmas';
 
+  const { isAuthenticated, userId, customUserData: userData, tempEmail, setTempEmail } = useContext(AuthContext);
+  const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
+
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
+  const [needsToLogin, setNeedsToLogin] = useState(false);
   const [waitingForApi, setWaitingForApi] = useState(false);
   const [hasDonated, setHasDonated] = useState(false);
   const [donationError, setDonationError] = useState(false);
-  const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
   const [initialValues, setInitialValues] = useState(!isChristmas ? {amount: '6'} : {amount: '50'});
@@ -55,6 +61,10 @@ export default (theme) => {
       setWaitingForApi(false);
     }
   }, [updateUserState]);
+
+  useEffect(() => {
+      setDonationInfo(prev => ({...prev, userId}))
+  }, [userId])
 
   const onAmountClick = recurring => {
     setIsRecurring(recurring);
@@ -140,8 +150,6 @@ export default (theme) => {
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
-
-            console.log(data);
             const { customAmount, amount, privacy, sepa, ...inputData } = data;
             const finalAmount =
               amount === 'custom' && customAmount ? +customAmount : +amount;
@@ -153,7 +161,8 @@ export default (theme) => {
               iban: formData.extractedIban,
             };
             const donationInfo = { userId: userId, donation };
-
+            setTempEmail(data.email);
+            signUp({ newsletterConsent: false, email: data.email })
             setInitialValues(data);
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
@@ -329,6 +338,18 @@ export default (theme) => {
                           component={TextInputWrapped}
                           theme="christmas"
                         />
+                        {!isAuthenticated && <Field
+                          name="email"
+                          label="E-Mail"
+                          placeholder="E-Mail-Adresse"
+                          type="text"
+                          component={TextInputWrapped}
+                          theme="christmas"
+                        />}
+                        {isAuthenticated && <p>
+                          E-Mail-Adresse:
+                          </p>}
+                        <p className={s.hint}>Hinweis: Wir schicken deine Spendenbestätigung an diese Adresse.</p>
                         <Field
                           name="iban"
                           label="IBAN"
@@ -424,8 +445,9 @@ export default (theme) => {
         ></Form>
       )}
 
-      {!hasDonated && enteredPaymentInfo && !waitingForApi && !donationError && (
+      {!hasDonated && enteredPaymentInfo && !waitingForApi && !donationError && !needsToLogin && (
         <div>
+          
           <h3>Bitte überprüfe deine Daten</h3>
 
           <p>
@@ -435,8 +457,56 @@ export default (theme) => {
             </span>
           </p>
           <p>
+            E-Mail: <span className={s.info}>{donationInfo.donation.email}</span>
+          </p>
+          <p>
             IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
           </p>
+          <p>
+            Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
+            <span className={s.info}>
+              {isRecurring ? 'monatlich' : 'einmalig'}{' '}
+              {donationInfo.donation.amount} €
+            </span>{' '}
+            an die Expedition spenden möchtest.
+          </p>
+
+          <PrimarySecondaryButtonContainer>
+            <InlineButton
+              onClick={() => {
+                setEnteredPaymentInfo(false);
+              }}
+            >
+              Zurück
+            </InlineButton>
+            <CTAButton
+              onClick={() => {
+                if (isAuthenticated) {
+                updateUser(donationInfo);
+                } else {
+                  setNeedsToLogin(true);
+                }
+              }}
+              size="MEDIUM"
+            >
+              Jetzt spenden
+            </CTAButton>
+          </PrimarySecondaryButtonContainer>
+        </div>
+      )}
+
+
+      {!hasDonated && enteredPaymentInfo && !waitingForApi && !donationError && needsToLogin &&(
+
+        <div>
+          {!isAuthenticated && (<EnterLoginCode />)}
+          {isAuthenticated && (<>
+            <h3>Vielen Dank!</h3>
+            <p>
+                Du hast dich eingeloggt. Super!
+            </p>
+          </>)}
+          
           <p>
             Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
             <span className={s.info}>
@@ -464,7 +534,8 @@ export default (theme) => {
             </CTAButton>
           </PrimarySecondaryButtonContainer>
         </div>
-      )}
+      )}  
+
       {waitingForApi && (
         <FinallyMessage
           className={s.waitingHint}
