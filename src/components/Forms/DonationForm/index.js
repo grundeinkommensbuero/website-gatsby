@@ -75,7 +75,10 @@ export default (theme) => {
     if (formErrors.customAmount) {
       return;
     }
-    if ((isChristmas && formErrors.certificateName)) {
+    if ((isChristmas && formErrors.certificateReceiver)) {
+      return;
+    }
+    if ((isChristmas && formErrors.certificateGiver)) {
       return;
     }
     setEnteredAmount(true);
@@ -120,8 +123,12 @@ export default (theme) => {
       errors.lastName = 'Muss ausgefüllt sein';
     }
 
-    if (isChristmas && !values.certificateName) {
-      errors.certificateName = 'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
+    if (isChristmas && !values.certificateReceiver) {
+      errors.certificateReceiver= 'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
+    }
+
+    if (isChristmas && !values.certificateGiver) {
+      errors.certificateGiver = 'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
     }
 
     if (!values.sepa) {
@@ -251,14 +258,22 @@ export default (theme) => {
                         {isChristmas &&
                         <section className={s.certificateInfo}>
                           <Field
-                            name="certificateName"
+                            name="certificateReceiver"
                             label="Wie heißt die Person, die du beschenken möchtest?"
                             placeholder="Name"
                             type="text"
                             component={TextInputWrapped}
                             theme="christmas"
                           />
-                          <p className={s.hint}>Hinweis: Du erhältst eine personalisierte Spendenurkunde mit dem Namen der beschenkten Person von uns.</p>
+                          <p className={s.hint}>Hinweis: Du erhältst eine personalisierte Weihnachtskarte mit dem Namen der beschenkten Person von uns.</p>
+                          <Field
+                            name="certificateGiver"
+                            label="Mit welchem Namen soll die Weihnachtskarte unterschrieben sein?"
+                            placeholder="Name"
+                            type="text"
+                            component={TextInputWrapped}
+                            theme="christmas"
+                          />
                         </section>}
                       </FormSection>
 
