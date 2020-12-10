@@ -14,14 +14,35 @@
 }
 
 .mapContainer {
-  height: 45vh;
+  height: 90vh;
+  padding: 2rem;
+  @media (max-width: @breakPointL) {
+    height: 60vh;
+  }
 }
 
 .bodyContainer {
-  grid-column: slim-start / slim-end;
+  @media (max-width: @breakPointL) {
+    margin-top: 0;
+  }
+  padding: 2rem;
+
+  // grid-column: slim-start / slim-end;
 }
 
 .headline {
   font-size: @fontSizeXXL;
   line-height: 1.15;
+}
+
+.flexContainer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+.flexItem {
+  width: 50%;
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
 }

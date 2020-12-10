@@ -175,15 +175,21 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
   };
   const bodyProps = { municipality, type, handlePlaceSelect };
   return (
-    <Section className={cN(className, s.mapSection)}>
-      <MapHeader municipality={municipality} />
-      <div className={s.bodyContainer}>
-        <SectionInner>
-          {type === 'qualifying' && <BodyQualifing {...bodyProps} />}
-          {type === 'collecting' && <BodyCollecting {...bodyProps} />}
-          {type === 'state' && <BodyState {...bodyProps} />}
-        </SectionInner>
+    <div className={cN(className, s.mapSection)}>
+      <div className={s.flexContainer}>
+        <div className={s.flexItem}>
+          <MapHeader municipality={municipality} />
+        </div>
+        <div className={s.flexItem}>
+          <div className={s.bodyContainer}>
+            <SectionInner>
+              {type === 'qualifying' && <BodyQualifing {...bodyProps} />}
+              {type === 'collecting' && <BodyCollecting {...bodyProps} />}
+              {type === 'state' && <BodyState {...bodyProps} />}
+            </SectionInner>
+          </div>
+        </div>
       </div>
-    </Section>
+    </div>
   );
 };
