@@ -16,7 +16,7 @@
 
   div {
     font-size: @fontSizeM;
-    margin-bottom: 0;
+    // margin-bottom: 0; // NOTE: Removed, but not sure where it was needed?
 
     @media (max-width: @breakPointM) {
       font-size: @fontSizeS;
@@ -134,4 +134,9 @@
 
 .certificateInfo {
   margin-top: 3rem;
+}
+
+.loginContainer {
+  --secondary-color: @red;
+  --text-on-secondary-color: @greyBright;
 }

@@ -13,8 +13,13 @@ import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 
-export const EnterLoginCode = ({ children, preventSignIn }) => {
-  const { tempEmail, setTempEmail } = useContext(AuthContext);
+export const EnterLoginCode = ({
+  children,
+  preventSignIn,
+  buttonText,
+  onAnswerChallengeSuccess,
+}) => {
+  const { tempEmail, setTempEmail, isAuthenticated } = useContext(AuthContext);
   const [
     answerChallengeState,
     setCode,
@@ -29,6 +34,16 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
       startSignIn();
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      onAnswerChallengeSuccess &&
+      answerChallengeState === 'success' &&
+      isAuthenticated
+    ) {
+      onAnswerChallengeSuccess();
+    }
+  }, [answerChallengeState, isAuthenticated]);
 
   if (answerChallengeState === 'loading' || signInState === 'loading') {
     return (
@@ -142,7 +157,9 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
                 </FormSection>
 
                 <CTAButtonContainer className={s.buttonContainer}>
-                  <CTAButton type="submit">Abschicken</CTAButton>
+                  <CTAButton type="submit">
+                    {buttonText ? buttonText : 'Abschicken'}
+                  </CTAButton>
                   <InlineButton
                     type="button"
                     onClick={() => {
