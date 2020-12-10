@@ -19,6 +19,7 @@ import { useSignUp } from '../../../hooks/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
+import Link from 'gatsby-link';
 
 import s from './style.module.less';
 import cN from 'classnames';
@@ -282,18 +283,7 @@ export default (theme) => {
                         </section>}
                       </FormSection>
 
-                      <div className={s.donationButtons}>
-                      {!isChristmas && <CTAButtonContainer>
-                        <CTAButton
-                          type="submit"
-                          onClick={() => {
-                            onAmountClick(false);
-                          }}
-                          size="MEDIUM"
-                        >
-                          Einmalig spenden
-                        </CTAButton>
-
+                      {!isChristmas && <div className={s.donationButtons}>
                         <CTAButton
                           type="submit"
                           onClick={() => {
@@ -304,9 +294,13 @@ export default (theme) => {
                         >
                           Monatlich unterstützen
                         </CTAButton>
-                      </CTAButtonContainer>}
 
-                      {isChristmas &&
+                        <Link to="/spenden" className={cN(s.link, s.secondaryLink)}>
+                          Lieber einmalig spenden
+                        </Link>
+                      </div>}
+
+                      {isChristmas && <div className={s.donationButtons}>
                         <CTAButton
                         type="submit"
                         onClick={() => {
@@ -317,8 +311,7 @@ export default (theme) => {
                         >
                           Spende verschenken
                         </CTAButton>
-                      }
-                      </div>
+                      </div>}
                       
                     </div>
                   )}
