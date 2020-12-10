@@ -9,6 +9,15 @@
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
+  .loginContainer {
+    --secondary-color: var(--bg-color);
+    --text-on-secondary-color: var(--font-color);
+  }
+  .waitingHint {
+    // --secondary-color: var(--bg-color);
+    --secondary-color: var(--bg-color);
+    --text-on-secondary-color: var(--font-color);
+  }
 
   h3 {
     hyphens: unset;
@@ -32,10 +41,6 @@
     font-size: @fontSizeS;
     font-weight: bold;
   }
-}
-
-.waitingHint {
-  --secondary-color: var(--bg-color);
 }
 
 .donationButtons {
@@ -142,9 +147,4 @@
 
 .certificateInfo {
   margin-top: 3rem;
-}
-
-.loginContainer {
-  --secondary-color: @red;
-  --text-on-secondary-color: @greyBright;
 }
