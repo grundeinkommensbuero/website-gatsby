@@ -229,8 +229,8 @@ const Map = ({
     .range(signupRange);
 
   const scalePercentToColor = scaleLinear()
-    .domain([0, 100])
-    .range(['#00C8F0', '#43006a']);
+    .domain([0, 100, 100.000001, Infinity])
+    .range(['#00C8F0', '#43006a', '#fc484c', '#fc484c']);
 
   // TODO: useCallback
   const colorToArray = (string, alpha = 255) => {
@@ -276,12 +276,17 @@ const Map = ({
       stroked: true,
       lineWidthScale: 1,
       lineWidthMinPixels: 2,
-      getLineColor: [255, 255, 255],
+      // getLineColor: [255, 255, 255], // white
+      // getLineColor: [125, 105, 247], // @pink
+      getLineColor: [248, 246, 255], // @pink bright
       // getLineColor: [209, 201, 99],
       getLineWidth: 2,
       filled: true,
-      getFillColor: [240, 240, 240],
-      // getFillColor: [255, 242, 120],
+      // getFillColor: [240, 240, 240], // "grey"
+      getFillColor: [236, 234, 247], // @pink light
+      // getFillColor: [230, 227, 247], // @pink medium
+      // getFillColor: [213, 208, 247], // @pink dark
+      // getFillColor: [255, 242, 120], // "rosa"
     });
   }, [dataStates]);
 
@@ -354,10 +359,10 @@ const Map = ({
       getText: d => d.name,
       backgroundColor: [255, 255, 255],
       getColor: d => getColor(d.percentToGoal, 180),
-      getSize: 20, // 30000 meters
-      sizeMinPixels: 10,
-      sizeMaxPixels: 20,
-      sizeUnits: 'pixels',
+      getSize: 40000, // 30000 meters
+      sizeMinPixels: 11,
+      sizeMaxPixels: 18,
+      sizeUnits: 'meters',
       getAngle: 0,
       fontFamily: 'Ideal, Tahoma, sans-serif',
       fontWeight: '900',

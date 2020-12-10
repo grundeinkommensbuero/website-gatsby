@@ -46,7 +46,8 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
         label={false}
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
-        size="SMALL"
+        inputSize="SMALL"
+        buttonSize="MEDIUM"
       />
       <MunicipalityHeadline
         className={s.headline}
@@ -103,7 +104,8 @@ const BodyCollecting = ({ municipality, type, handlePlaceSelect }) => {
         label={false}
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
-        size="SMALL"
+        inputSize="SMALL"
+        buttonSize="MEDIUM"
       />
     </>
   );
@@ -122,7 +124,8 @@ const BodyState = ({ municipality, type, handlePlaceSelect }) => {
         label={false}
         onPlaceSelect={handlePlaceSelect}
         showButton={true}
-        size="SMALL"
+        inputSize="SMALL"
+        buttonSize="MEDIUM"
       />
     </>
   );
@@ -172,7 +175,7 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
   };
   const bodyProps = { municipality, type, handlePlaceSelect };
   return (
-    <Section className={cN(className)}>
+    <Section className={cN(className, s.mapSection)}>
       <MapHeader municipality={municipality} />
       <div className={s.bodyContainer}>
         <SectionInner>

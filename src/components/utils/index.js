@@ -156,3 +156,47 @@ export function getMailtoUrl(to, subject, body) {
   }
   return url;
 }
+
+export const getStringFromPlaceholderText = (string, object) => {
+  let result = string;
+  const regexSubInCurlyBrackets = /(?<=\{).+?(?=\})/g;
+  const regexSubInSingleQuotes = /^'.*'$/;
+  const matches = string.match(regexSubInCurlyBrackets);
+  // Without curly braces in the string
+  // no placeholder is defined and
+  // we can return
+  if (!matches) {
+    return result;
+  }
+
+  matches.forEach(e => {
+    let replacement = '';
+    // The condition is not evaluated!
+    // The ternary structure is only
+    // a reminder for the structure
+    // of the replacement.
+    const splitByCondition = e.split('?');
+
+    const options = splitByCondition[1].split(':');
+    // Second option should be the generic one
+    // based on the template
+    let selector = 1;
+    // If the object is defined
+    // the specific option is used
+    if (object) {
+      selector = 0;
+    }
+    // NOTE: check with . is a bit impractical,
+    // when a dot is needed in the string
+    const isInQuotes = regexSubInSingleQuotes.test(options[selector].trim());
+    if (isInQuotes) {
+      replacement = options[selector].replaceAll(`'`, ``).trim();
+    } else {
+      const objectKey = options[selector].split(`.`)[1].trim();
+      replacement = object[objectKey];
+    }
+    result = result.replace(e, replacement);
+  });
+  result = result.replaceAll('{', '').replaceAll('}', '');
+  return result;
+};

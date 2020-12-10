@@ -3,30 +3,17 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
+import { getStringFromPlaceholderText } from '../utils';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
   let title = page.title;
-
   const { municipality } = pageContext;
-  const { titleObject } = page;
-
-  // TODO: Ask for feedback / better solution
-  // Compare with headlines
-  if (titleObject && municipality) {
-    const { municipality } = pageContext;
-    let replaceTitle = '';
-    for (const part of titleObject) {
-      if (part.replace) {
-        replaceTitle += municipality[part.text] + ' ';
-      } else {
-        replaceTitle += part.text + ' ';
-      }
-    }
-    title = replaceTitle.trim() + '!';
-  }
+  console.log({ title });
+  title = getStringFromPlaceholderText(title, municipality);
+  console.log({ title });
 
   return (
     <Layout

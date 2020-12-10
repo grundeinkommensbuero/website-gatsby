@@ -14,7 +14,6 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 import { SearchPlaces } from '../SearchPlaces';
-import { scaleSequentialSymlog } from 'd3-scale';
 
 const AuthenticatedDialogDefault = () => {
   return (
@@ -65,6 +64,9 @@ const AuthenticatedDialogMunicipality = ({
             // TODO: Once implemented
             // Update User
             // updateUser(user);
+            // if (! userExists) {
+            //  Signup(user)
+            // }
             // Feedback
             setHasSubmittedMunicipality(true);
           }}
