@@ -1,0 +1,99 @@
+@import '../../../components/style/vars.less';
+
+.pageContainer {
+  max-width: 70rem;
+  padding: 2rem;
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.descriptionTextLarge {
+  font-size: @fontSizeM;
+  font-weight: 100;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: normal;
+}
+
+.fullWidthBtn {
+  width: 100%;
+  text-align: left;
+  font-weight: 100;
+}
+
+.lightFont {
+  font-weight: 100;
+}
+
+.noTextDecoration {
+  text-decoration: none;
+}
+
+.ProgressBarTitle {
+  margin-bottom: 0.25em;
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 34px;
+  background-color: lightgray;
+  border: solid black 1px;
+}
+
+.progressBar {
+  width: 16%;
+  height: 32px;
+  background-color: black;
+}
+
+.breadcrumbContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.breadcrumbElement {
+  padding-top: 0.75em;
+  padding-bottom: 0.6em;
+  width: 100%;
+  background: #00c8f0;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+
+  clip-path: polygon(95% 0, 100% 50%, 95% 100%, 0% 100%, 5% 50%, 0% 0%);
+
+  &:hover {
+    background: #ff4646;
+  }
+
+  &:first-child {
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px 0 0 4px;
+    clip-path: polygon(95% 0, 100% 50%, 95% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+
+  &:last-child {
+    -moz-border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 0;
+    border-radius: 0 4px 4px 0;
+    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 5% 50%, 0% 0%);
+  }
+
+  &:nth-child(even) {
+    background-color: darken(#00c8f0, 10%);
+
+    &:hover {
+      background: #ff4646;
+    }
+  }
+}
+
+.breadcrumbElementActive {
+  background: #ff4646;
+}
