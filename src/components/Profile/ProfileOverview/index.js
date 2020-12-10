@@ -63,7 +63,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
       <Link to="spenden-einstellungen" className={s.profilePageSection}>
         <section>
           <h2>Spenden Einstellungen</h2>
-          <p>Hier kannst du deine Spende verwalten.</p>
+          {userData && userData.donations && userData.donations.recurringDonation && userData.donations.recurringDonation.amount > 0 ?
+            <h4>Du bist Dauerspender:in.<br />Vielen Dank!</h4> :
+            <p>Hier kannst du deine Spende verwalten.</p>}
           <div className={s.sectionLink}>
             <span>Spendeneinstellungen ändern</span>
           </div>

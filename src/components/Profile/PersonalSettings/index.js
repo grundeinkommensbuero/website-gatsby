@@ -14,10 +14,10 @@ import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
-  const [editMailAddress, setEditMailAddress] = useState(false);
+  // const [editMailAddress, setEditMailAddress] = useState(false);
   const [editPhoneNumber, setEditPhoneNumber] = useState(false);
 
-  const [tempMail, setTempMail] = useState();
+  // const [tempMail, setTempMail] = useState();
   const [tempPhone, setTempPhone] = useState();
   const [tempName, setTempName] = useState();
   const [tempZIP, setTempZIP] = useState();
@@ -46,7 +46,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
       setTempName(userData.username);
       setTempZIP(userData.zipCode);
       setTempCity(userData.city);
-      setTempMail(userData.email);
+      // setTempMail(userData.email);
       setTempPhone('');
     }
   });
@@ -101,7 +101,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
             <h4 className={gS.optionSectionHeading}>Deine Kontaktdaten</h4>
-            <p className={s.optionHeading}>
+            {/*<p className={s.optionHeading}>
               <b>Email-Adresse</b>
             </p>
             <p className={s.optionDescription}>
@@ -109,7 +109,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               Neuigkeiten von uns zu erhalten.
             </p>
 
-            {!editMailAddress ? (
+             {!editMailAddress ? (
               <div className={s.editableRow}>
                 <span>{userData.email}</span>
                 <Button
@@ -145,7 +145,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
                   ) : null}
                 </div>
-              )}
+              )} */}
 
             <p className={s.optionHeading}>
               <b>Telefonnummer</b>
@@ -288,9 +288,24 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 </section>
               )}
 
-            <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
+
+
+            <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
+
+            <div className={s.optionSectionDescription}>
+              Falls du deine E-Mail Adresse ändern oder deinen Account löschen
+              möchtest, schick uns eine E-Mail an{' '}
+              <a href="mailto:support@expedition-grundeinkommen.de">
+                support@expedition-grundeinkommen.de
+              </a>
+              .
+            </div>
+
+            {/* <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
               Profil löschen
-            </Link>
+            </Link> */}
+
+
           </div>
         </section>
       </section>
