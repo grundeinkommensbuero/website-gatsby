@@ -111,8 +111,6 @@ export default theme => {
     formData = { ...values };
     const errors = {};
 
-    console.log({ formData });
-
     if (emailRequired && values.email && values.email.includes('+')) {
       errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
     }
@@ -549,7 +547,6 @@ export default theme => {
                     updateUser(donationInfo);
                   } else {
                     setNeedsToLogin(true);
-                    console.log(tempEmail);
                     signUp({ email: tempEmail });
                   }
                 }}
