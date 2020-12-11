@@ -138,20 +138,40 @@ export const pageQuery = graphql`
           }
           ... on ContentfulPageSectionTwoColumns {
             __typename
-            imageLeft {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnLeft {
+            title
+            columnIntroText {
               json
             }
-            imageRight {
+            imageTopLeft {
               fixed(height: 150, quality: 80) {
                 ...GatsbyContentfulFixed
               }
             }
-            columnRight {
+            columnTopLeft {
+              json
+            }
+            imageTopRight {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnTopRight {
+              json
+            }
+            imageBottomLeft {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnBottomLeft {
+              json
+            }
+            imageBottomRight {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnBottomRight {
               json
             }
           }
