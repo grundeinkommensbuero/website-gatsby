@@ -30,7 +30,12 @@ export default theme => {
   var themeClass = theme[Object.keys(theme)[0]];
   const isChristmas = themeClass === 'christmas';
 
-  const { isAuthenticated, tempEmail, setTempEmail } = useContext(AuthContext);
+  const {
+    isAuthenticated,
+    tempEmail,
+    setTempEmail,
+    customUserData: userData,
+  } = useContext(AuthContext);
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
 
   const [isRecurring, setIsRecurring] = useState(false);
@@ -103,11 +108,18 @@ export default theme => {
 
   const validate = values => {
     formData = { ...values };
-
     const errors = {};
 
     if (!values.amount) {
       errors.customAmount = 'Bitte wähle einen Betrag aus.';
+    }
+
+    if (values.customAmount) {
+      const decimalPlacesRegex = /(?<=,|\.).*$/;
+      const decimalPlaces = values.customAmount.match(decimalPlacesRegex);
+      if (decimalPlaces && decimalPlaces[0].length > 2) {
+        errors.customAmount = 'Bitte nur zwei Nachkommastellen.';
+      }
     }
 
     if (values.amount === 'custom' && !values.customAmount) {
@@ -378,7 +390,9 @@ export default theme => {
                             theme="christmas"
                           />
                         )}
-                        {isAuthenticated && <p>E-Mail-Adresse:</p>}
+                        {isAuthenticated && (
+                          <p>E-Mail Adresse: {userData.email}</p>
+                        )}
                         <p className={s.hint}>
                           Hinweis: Wir schicken deine Spendenbestätigung an
                           diese Adresse.
@@ -496,6 +510,7 @@ export default theme => {
             <p>
               E-Mail:{' '}
               <span className={s.info}>{donationInfo.donation.email}</span>
+              {isAuthenticated && <span>{userData.email}</span>}
             </p>
             <p>
               IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
@@ -541,7 +556,7 @@ export default theme => {
         !donationError &&
         needsToLogin && (
           <div>
-            <div className={s.loginContainer}>
+            <div className={s.adjustFinallyMessage}>
               <EnterLoginCode
                 buttonText={'Spende bestätigen'}
                 preventSignIn={true}
@@ -581,7 +596,7 @@ export default theme => {
 
       {waitingForApi && (
         <FinallyMessage
-          className={s.waitingHint}
+          className={s.adjustFinallyMessage}
           preventScrolling="true"
           state="progress"
         >
