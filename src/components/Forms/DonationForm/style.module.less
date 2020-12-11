@@ -9,15 +9,6 @@
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
-  .loginContainer {
-    --secondary-color: var(--bg-color);
-    --text-on-secondary-color: var(--font-color);
-  }
-  .waitingHint {
-    // --secondary-color: var(--bg-color);
-    --secondary-color: var(--bg-color);
-    --text-on-secondary-color: var(--font-color);
-  }
 
   h3 {
     hyphens: unset;
@@ -102,12 +93,18 @@
 
 .christmasTheme {
   --bg-color: @grey;
+
   background-color: @red;
   color: @grey;
 
+  .adjustFinallyMessage {
+    --secondary-color: @red;
+    --text-on-secondary-color: var(--bg-color);
+  }
+
   button {
     border: 1px solid @grey;
-    color: @grey !important;
+    color: @grey;
   }
 
   .primaryButton {
@@ -143,6 +140,11 @@
     border: none;
     color: @red;
   }
+}
+
+.adjustFinallyMessage {
+  --secondary-color: var(--bg-color);
+  --text-on-secondary-color: var(--font-color);
 }
 
 .certificateInfo {
