@@ -301,34 +301,30 @@ export default theme => {
                         )}
                       </FormSection>
 
-<<<<<<< HEAD
-                      <div className={s.donationButtons}>
-                        {!isChristmas && (
-                          <CTAButtonContainer>
-                            <CTAButton
-                              type="submit"
-                              onClick={() => {
-                                onAmountClick(false);
-                              }}
-                              size="MEDIUM"
-                            >
-                              Einmalig spenden
-                            </CTAButton>
+                      {!isChristmas && (
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(true);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Monatlich unterstützen
+                          </CTAButton>
 
-                            <CTAButton
-                              type="submit"
-                              onClick={() => {
-                                onAmountClick(true);
-                              }}
-                              size="MEDIUM"
-                              className={s.primaryButton}
-                            >
-                              Monatlich unterstützen
-                            </CTAButton>
-                          </CTAButtonContainer>
-                        )}
+                          <Link
+                            to="/spenden"
+                            className={cN(s.link, s.secondaryLink)}
+                          >
+                            Lieber einmalig spenden
+                          </Link>
+                        </div>
+                      )}
 
-                        {isChristmas && (
+                      {isChristmas && (
+                        <div className={s.donationButtons}>
                           <CTAButton
                             type="submit"
                             onClick={() => {
@@ -339,40 +335,8 @@ export default theme => {
                           >
                             Spende verschenken
                           </CTAButton>
-                        )}
-                      </div>
-=======
-                      {!isChristmas && <div className={s.donationButtons}>
-                        <CTAButton
-                          type="submit"
-                          onClick={() => {
-                            onAmountClick(true);
-                          }}
-                          size="MEDIUM"
-                          className={s.primaryButton}
-                        >
-                          Monatlich unterstützen
-                        </CTAButton>
-
-                        <Link to="/spenden" className={cN(s.link, s.secondaryLink)}>
-                          Lieber einmalig spenden
-                        </Link>
-                      </div>}
-
-                      {isChristmas && <div className={s.donationButtons}>
-                        <CTAButton
-                        type="submit"
-                        onClick={() => {
-                          onAmountClick(false);
-                        }}
-                        size="MEDIUM"
-                        className={s.primaryButton}
-                        >
-                          Spende verschenken
-                        </CTAButton>
-                      </div>}
-                      
->>>>>>> 31c9d83... "Einmalig spenden" now links
+                        </div>
+                      )}
                     </div>
                   )}
 
