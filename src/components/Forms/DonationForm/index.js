@@ -10,7 +10,7 @@ import {
 } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
-import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import { CTAButtonContainer, CTAButton, CTALink } from '../../Layout/CTAButton';
 
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
@@ -613,17 +613,7 @@ export default theme => {
           </p>
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
-            <CTAButton
-              onClick={() => {
-                setIsRecurring(false);
-                setEnteredAmount(false);
-                setEnteredPaymentInfo(false);
-                setHasDonated(false);
-              }}
-              size="MEDIUM"
-            >
-              Zurück zum Formular
-            </CTAButton>
+            <CTALink to="/">Zur Startseite</CTALink>
           </CTAButtonContainer>
 
           <Confetti></Confetti>
