@@ -138,29 +138,29 @@ export function ContentfulSection({ section }) {
           <div className={s.columnIntroText}>
             {contentfulJsonToHtml(columnIntroText.json)}
           </div>
-          <TwoColumns className={s.columnWrapper}>
-            <section className={s.column}>
-              <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
-              <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnTopLeft.json)}
-              </div>
-            </section>
-            <section className={s.column}>
-              <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
-              <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
-            </section>
-            <section className={s.column}>
-              <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
-              <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnBottomLeft.json)}
-              </div>
-            </section>
-            <section className={s.column}>
-              <Img className={s.columnIcon} fixed={imageBottomRight.fixed} />
-              <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
-            </section>
-          </TwoColumns>
-        </SectionInner>
+        <TwoColumns className={s.columnWrapper}>
+          <section className={s.column}>
+            {imageTopLeft && <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />}
+            <div className={s.columnIcon}>
+              {contentfulJsonToHtml(columnTopLeft.json)}
+            </div>
+          </section>
+          <section className={s.column}>
+           {imageTopRight &&<Img className={s.columnIcon} fixed={imageTopRight.fixed} />}
+            <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+          </section>
+          <section className={s.column}>
+            {imageBottomLeft && <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />}
+            <div className={s.columnIcon}>
+              {contentfulJsonToHtml(columnBottomLeft.json)}
+            </div>
+          </section>
+          <section className={s.column}>
+            {imageBottomRight && <Img className={s.columnIcon} fixed={imageBottomRight.fixed} />}
+            <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+          </section>
+        </TwoColumns>
+      </SectionInner>
       )}
       {isDonationFeature && (
         <SectionInner>
