@@ -3,9 +3,9 @@ import s from './style.module.less';
 import cN from 'classnames';
 
 export const ValidationError = ({ children, className, theme }) => {
-  const isChristmasTheme = theme === 'christmas';
+  const isChristmasDonationTheme = theme === 'christmas';
   return (
-    <div className={cN(s.error, className, {[s.christmas]: isChristmasTheme})}>{children}</div>
+    <div className={cN(s.error, className, {[s.christmas]: isChristmasDonationTheme})}>{children}</div>
   );
 }
 

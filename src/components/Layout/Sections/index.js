@@ -53,6 +53,7 @@ export function ContentfulSection({ section }) {
     sloganLine2,
     __typename,
     teamMembers,
+    colorScheme,
     bodyTextSizeHuge,
     pledgeId,
     signaturesId,
@@ -79,8 +80,7 @@ export function ContentfulSection({ section }) {
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
-
-  const isChristmasTheme = theme === 'christmas';
+  const isChristmasDonationTheme = theme === 'christmas';
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
@@ -112,11 +112,15 @@ export function ContentfulSection({ section }) {
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
         [s.sectionTwoColumns]: isTwoColumns,
-        [s.sectionChristmas]: isChristmasTheme,
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
+        [s.sectionYellow]: colorScheme === 'yellow',
+        [s.sectionRed]: colorScheme === 'red',
+        [s.sectionGrey]: colorScheme === 'grey',
+        [s.sectionChristmas]: colorScheme === 'christmas',
+        [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
       sectionBodyNoEvents={isIllustration || isVideoSection}
     >
