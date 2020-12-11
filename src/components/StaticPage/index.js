@@ -77,6 +77,7 @@ export const pageQuery = graphql`
             }
             callToActionLink
             callToActionText
+            colorScheme
             bodyTextSizeHuge
             signUpForm
             emailSignup

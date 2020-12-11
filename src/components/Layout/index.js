@@ -80,6 +80,7 @@ function Template({ children, sections }) {
               }
               callToActionLink
               callToActionText
+              colorScheme
               bodyTextSizeHuge
               signUpForm
               emailSignup
