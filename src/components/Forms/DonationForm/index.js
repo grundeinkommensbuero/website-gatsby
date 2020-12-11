@@ -10,7 +10,7 @@ import {
 } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
-import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import { CTAButtonContainer, CTAButton, CTALink } from '../../Layout/CTAButton';
 
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
@@ -25,12 +25,18 @@ import s from './style.module.less';
 import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
+import { validateEmail } from '../../utils';
 
 export default theme => {
   var themeClass = theme[Object.keys(theme)[0]];
   const isChristmas = themeClass === 'christmas';
 
-  const { isAuthenticated, tempEmail, setTempEmail } = useContext(AuthContext);
+  const {
+    isAuthenticated,
+    tempEmail,
+    setTempEmail,
+    customUserData: userData,
+  } = useContext(AuthContext);
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
 
   const [isRecurring, setIsRecurring] = useState(false);
@@ -101,13 +107,30 @@ export default theme => {
     return amount === 'custom' && customAmount ? +customAmount : +amount;
   };
 
-  const validate = values => {
+  const validate = (values, emailRequired) => {
     formData = { ...values };
-
     const errors = {};
+
+    console.log({ formData });
+
+    if (emailRequired && values.email && values.email.includes('+')) {
+      errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
+    }
+
+    if (emailRequired && !validateEmail(values.email)) {
+      errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+    }
 
     if (!values.amount) {
       errors.customAmount = 'Bitte wähle einen Betrag aus.';
+    }
+
+    if (values.customAmount) {
+      const decimalPlacesRegex = /(?<=,|\.).*$/;
+      const decimalPlaces = values.customAmount.match(decimalPlacesRegex);
+      if (decimalPlaces && decimalPlaces[0].length > 2) {
+        errors.customAmount = 'Bitte nur zwei Nachkommastellen.';
+      }
     }
 
     if (values.amount === 'custom' && !values.customAmount) {
@@ -185,7 +208,7 @@ export default theme => {
             setEnteredPaymentInfo(true);
           }}
           initialValues={initialValues}
-          validate={values => validate(values)}
+          validate={values => validate(values, !isAuthenticated)}
           render={({ handleSubmit }) => {
             return (
               <FormWrapper>
@@ -294,36 +317,42 @@ export default theme => {
                         )}
                       </FormSection>
 
-                      {!isChristmas && <div className={s.donationButtons}>
-                        <CTAButton
-                          type="submit"
-                          onClick={() => {
-                            onAmountClick(true);
-                          }}
-                          size="MEDIUM"
-                          className={s.primaryButton}
-                        >
-                          Monatlich unterstützen
-                        </CTAButton>
+                      {!isChristmas && (
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(true);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Monatlich unterstützen
+                          </CTAButton>
 
-                        <Link to="/spenden" className={cN(s.link, s.secondaryLink)}>
-                          Lieber einmalig spenden
-                        </Link>
-                      </div>}
+                          <Link
+                            to="/spenden"
+                            className={cN(s.link, s.secondaryLink)}
+                          >
+                            Lieber einmalig spenden
+                          </Link>
+                        </div>
+                      )}
 
-                      {isChristmas && <div className={s.donationButtons}>
-                        <CTAButton
-                        type="submit"
-                        onClick={() => {
-                          onAmountClick(false);
-                        }}
-                        size="MEDIUM"
-                        className={s.primaryButton}
-                        >
-                          Spende verschenken
-                        </CTAButton>
-                      </div>}
-                      
+                      {isChristmas && (
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(false);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Spende verschenken
+                          </CTAButton>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -372,7 +401,9 @@ export default theme => {
                             theme="christmas"
                           />
                         )}
-                        {isAuthenticated && <p>E-Mail-Adresse:</p>}
+                        {isAuthenticated && (
+                          <p>E-Mail Adresse: {userData.email}</p>
+                        )}
                         <p className={s.hint}>
                           Hinweis: Wir schicken deine Spendenbestätigung an
                           diese Adresse.
@@ -490,6 +521,7 @@ export default theme => {
             <p>
               E-Mail:{' '}
               <span className={s.info}>{donationInfo.donation.email}</span>
+              {isAuthenticated && <span>{userData.email}</span>}
             </p>
             <p>
               IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
@@ -535,7 +567,7 @@ export default theme => {
         !donationError &&
         needsToLogin && (
           <div>
-            <div className={s.loginContainer}>
+            <div className={s.adjustFinallyMessage}>
               <EnterLoginCode
                 buttonText={'Spende bestätigen'}
                 preventSignIn={true}
@@ -575,7 +607,7 @@ export default theme => {
 
       {waitingForApi && (
         <FinallyMessage
-          className={s.waitingHint}
+          className={s.adjustFinallyMessage}
           preventScrolling="true"
           state="progress"
         >
@@ -592,17 +624,7 @@ export default theme => {
           </p>
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
-            <CTAButton
-              onClick={() => {
-                setIsRecurring(false);
-                setEnteredAmount(false);
-                setEnteredPaymentInfo(false);
-                setHasDonated(false);
-              }}
-              size="MEDIUM"
-            >
-              Zurück zum Formular
-            </CTAButton>
+            <CTALink to="/">Zur Startseite</CTALink>
           </CTAButtonContainer>
 
           <Confetti></Confetti>
