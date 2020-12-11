@@ -25,6 +25,7 @@ import s from './style.module.less';
 import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
+import { validateEmail } from '../../utils';
 
 export default theme => {
   var themeClass = theme[Object.keys(theme)[0]];
@@ -106,9 +107,19 @@ export default theme => {
     return amount === 'custom' && customAmount ? +customAmount : +amount;
   };
 
-  const validate = values => {
+  const validate = (values, emailRequired) => {
     formData = { ...values };
     const errors = {};
+
+    console.log({ formData });
+
+    if (emailRequired && values.email && values.email.includes('+')) {
+      errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
+    }
+
+    if (emailRequired && !validateEmail(values.email)) {
+      errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+    }
 
     if (!values.amount) {
       errors.customAmount = 'Bitte wähle einen Betrag aus.';
@@ -197,7 +208,7 @@ export default theme => {
             setEnteredPaymentInfo(true);
           }}
           initialValues={initialValues}
-          validate={values => validate(values)}
+          validate={values => validate(values, !isAuthenticated)}
           render={({ handleSubmit }) => {
             return (
               <FormWrapper>
