@@ -41,6 +41,46 @@
     color: @red;
   }
 
+  // COLOR SCHEMES
+  /* We have to use !important to overwrite 
+  the rules set with nth-child*/
+
+  &.sectionChristmas {
+    background-color: @grey !important;
+    color: @red !important;
+    --bg-color: @grey !important;
+    --font-color: @red !important;
+    --secondary-color: @yellow !important;
+    --text-on-secondary-color: @red !important;
+  }
+
+  &.sectionGrey {
+    background-color: @grey !important;
+    color: @red !important;
+    --bg-color: @grey !important;
+    --font-color: @red !important;
+    --secondary-color: @yellow !important;
+    --text-on-secondary-color: @red !important;
+  }
+
+  &.sectionRed {
+    background-color: @red !important;
+    color: @greyBright !important;
+    --bg-color: @red !important;
+    --font-color: @greyBright !important;
+    --secondary-color: @pink !important;
+    --text-on-secondary-color: @grey !important;
+  }
+
+  &.sectionYellow {
+    background-color: @yellow !important;
+    color: @red !important;
+    --bg-color: @yellow !important;
+    --font-color: @red !important;
+    --secondary-color: @blueBright !important;
+    --text-on-secondary-color: @yellow !important;
+  }
+
   &:nth-child(3n + 1):not(:only-child),
   &:nth-child(3n + 3),
   &:only-child {
@@ -435,6 +475,6 @@
   }
 }
 
-.sectionChristmas {
+.sectionChristmasDonation {
   background-color: @grey !important;
 }
