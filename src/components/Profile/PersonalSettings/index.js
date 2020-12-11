@@ -151,7 +151,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               <b>Telefonnummer</b>
             </p>
             <p className={s.optionDescription}>
-              Eine Telefonnummer erleichtert es uns, die für die Koordination
+              Eine Telefonnummer erleichtert es uns, dich für die Koordination
               von Veranstaltungen zu erreichen.
             </p>
 
