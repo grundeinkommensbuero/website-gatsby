@@ -94,4 +94,10 @@ exports.onCreatePage = async ({ page, actions }) => {
     page.component = path.resolve('src/pages/mensch/index.js');
     createPage(page);
   }
+
+  if (page.path.match(/^\/onboarding/)) {
+    page.matchPath = '/onboarding/*';
+    page.component = path.resolve('src/pages/onboarding/index.js');
+    createPage(page);
+  }
 };

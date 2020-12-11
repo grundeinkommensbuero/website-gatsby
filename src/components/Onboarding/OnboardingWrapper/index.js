@@ -11,7 +11,7 @@ export const OnboardingWrapper = ({ userData, userId }) => {
     <>
       <Layout>
         <SectionWrapper>
-          <Router>
+          <Router basepath="onboarding">
             <OnboardingOverview
               userData={userData}
               userId={userId}
