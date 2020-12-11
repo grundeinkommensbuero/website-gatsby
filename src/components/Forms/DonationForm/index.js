@@ -37,7 +37,7 @@ export default theme => {
     setTempEmail,
     customUserData: userData,
   } = useContext(AuthContext);
-  const [signUp] = useSignUp();
+  const [, , signUp] = useSignUp();
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
