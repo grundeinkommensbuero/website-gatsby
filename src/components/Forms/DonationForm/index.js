@@ -30,13 +30,7 @@ export default theme => {
   var themeClass = theme[Object.keys(theme)[0]];
   const isChristmas = themeClass === 'christmas';
 
-  const {
-    isAuthenticated,
-    userId,
-    customUserData: userData,
-    tempEmail,
-    setTempEmail,
-  } = useContext(AuthContext);
+  const { isAuthenticated, tempEmail, setTempEmail } = useContext(AuthContext);
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
 
   const [isRecurring, setIsRecurring] = useState(false);
@@ -90,7 +84,6 @@ export default theme => {
   };
 
   const onAnswerChallengeSuccess = () => {
-    console.log('success from EnterLoginCode');
     updateUser(donationInfo);
   };
 
@@ -185,7 +178,7 @@ export default theme => {
               recurring: isRecurring,
               iban: formData.extractedIban,
             };
-            const donationInfo = { userId: userId, donation };
+            const donationInfo = { donation };
             setTempEmail(data.email);
             setInitialValues(data);
             setDonationInfo(donationInfo);
@@ -542,22 +535,19 @@ export default theme => {
         !donationError &&
         needsToLogin && (
           <div>
-            {!isAuthenticated && (
-              <div className={s.loginContainer}>
-                <EnterLoginCode
-                  buttonText={'Spende bestätigen'}
-                  preventSignIn={true}
-                  onAnswerChallengeSuccess={onAnswerChallengeSuccess}
-                />
-              </div>
-            )}
-            {isAuthenticated && (
+            <div className={s.loginContainer}>
+              <EnterLoginCode
+                buttonText={'Spende bestätigen'}
+                preventSignIn={true}
+                onAnswerChallengeSuccess={onAnswerChallengeSuccess}
+              />
+            </div>
+            {/* {isAuthenticated && (
               <>
                 <h3>Vielen Dank!</h3>
                 <p>Du hast dich eingeloggt. Super!</p>
               </>
-            )}
-
+            )} */}
             <p>
               Mit dem Klick auf "Spende bestätigen" bestätigst du, dass du{' '}
               <span className={s.info}>
@@ -566,7 +556,6 @@ export default theme => {
               </span>{' '}
               an die Expedition spenden möchtest.
             </p>
-
             {/* <CTAButtonContainer className={s.buttonContainer}>
               <CTAButton
                 onClick={() => {
