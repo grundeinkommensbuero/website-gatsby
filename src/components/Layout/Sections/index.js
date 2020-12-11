@@ -78,6 +78,7 @@ export function ContentfulSection({ section }) {
     columnTopRight,
     columnBottomLeft,
     columnBottomRight,
+    introText,
     theme,
   } = section;
   const id = stringToId(titleShort);
@@ -166,9 +167,10 @@ export function ContentfulSection({ section }) {
       )}
       {isDonationFeature && (
         <SectionInner>
-          <div>Test</div>
+          {introText && <div className={s.columnIntroText}>
+            {contentfulJsonToHtml(introText.json)}
+          </div>}
           <DonationForm theme={theme}></DonationForm>
-          {/* {theme === 'christmas' && <Confetti />} */}
         </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (
