@@ -69,10 +69,15 @@ export function ContentfulSection({ section }) {
     backgroundImage,
     questionUbi,
     bodyAtTheEnd,
-    imageLeft,
-    imageRight,
-    columnLeft,
-    columnRight,
+    columnIntroText,
+    imageTopLeft,
+    imageTopRight,
+    imageBottomLeft,
+    imageBottomRight,
+    columnTopLeft,
+    columnTopRight,
+    columnBottomLeft,
+    columnBottomRight,
     theme,
   } = section;
   const id = stringToId(titleShort);
@@ -129,17 +134,30 @@ export function ContentfulSection({ section }) {
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
       {isTwoColumns && (
-        <SectionInner wide={true}>
+        <SectionInner> 
+          <div className={s.columnIntroText}>
+            {contentfulJsonToHtml(columnIntroText.json)}
+          </div>
           <TwoColumns className={s.columnWrapper}>
             <section className={s.column}>
-              <Img className={s.columnIcon} fixed={imageLeft.fixed} />
+              <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
               <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnLeft.json)}
+                {contentfulJsonToHtml(columnTopLeft.json)}
               </div>
             </section>
             <section className={s.column}>
-              <Img className={s.columnIcon} fixed={imageRight.fixed} />
-              <div>{contentfulJsonToHtml(columnRight.json)}</div>
+              <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
+              <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+            </section>
+            <section className={s.column}>
+              <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
+              <div className={s.columnIcon}>
+                {contentfulJsonToHtml(columnBottomLeft.json)}
+              </div>
+            </section>
+            <section className={s.column}>
+              <Img className={s.columnIcon} fixed={imageBottomRight.fixed} />
+              <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
             </section>
           </TwoColumns>
         </SectionInner>
