@@ -325,6 +325,11 @@ export default theme => {
                           >
                             Lieber einmalig spenden
                           </Link>
+
+                          <p className={s.hint}>
+                            Hinweis: Du kannst deine monatliche Spende jederzeit
+                            wieder beenden.
+                          </p>
                         </div>
                       )}
 
