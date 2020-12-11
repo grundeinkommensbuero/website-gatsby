@@ -423,11 +423,16 @@
 
 .columnWrapper {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
 .column {
   width: 48%;
+
+  @media (max-width: @breakPointM) {
+    width: 100%;
+  }
 }
 
 .sectionChristmas {
