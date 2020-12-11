@@ -105,7 +105,7 @@ export function ContentfulSection({ section }) {
       isVideoSection={isVideoSection}
       afterBodyContent={
         <>
-          {(isIllustration || isVideoSection) && (
+          {(isIllustration) && (
             <MainIllustration className={s.illustration} />
           )}
           {backgroundIllustration === 'confetti' && <Confetti />}
@@ -130,6 +130,8 @@ export function ContentfulSection({ section }) {
       sectionBodyNoEvents={isIllustration || isVideoSection}
     >
       {theme === 'christmas' && <Confetti componentTheme="christmas" />}
+      {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
+
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
