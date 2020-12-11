@@ -37,8 +37,7 @@ export default theme => {
     setTempEmail,
     customUserData: userData,
   } = useContext(AuthContext);
-  const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
-
+  const [signUp] = useSignUp();
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
@@ -110,8 +109,6 @@ export default theme => {
   const validate = (values, emailRequired) => {
     formData = { ...values };
     const errors = {};
-
-    console.log({ formData });
 
     if (emailRequired && values.email && values.email.includes('+')) {
       errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
@@ -554,7 +551,6 @@ export default theme => {
                     updateUser(donationInfo);
                   } else {
                     setNeedsToLogin(true);
-                    console.log(tempEmail);
                     signUp({ email: tempEmail });
                   }
                 }}
