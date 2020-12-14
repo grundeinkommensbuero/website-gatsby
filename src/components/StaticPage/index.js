@@ -113,6 +113,7 @@ export const pageQuery = graphql`
           ... on ContentfulPageSectionVideo {
             __typename
             videoLink
+            title
           }
           ... on ContentfulPageSectionIllustration {
             __typename
