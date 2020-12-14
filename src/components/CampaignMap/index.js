@@ -228,14 +228,11 @@ const Map = ({
   setZoomMin,
 }) => {
   // ---- Utils ----------------------------------------------------------------------------
-  // TODO: useCallback
-  // --> constant functions out of component
-  const scaleSignupsToMeters = useCallback(() => {
-    const [signupDomain, signupRange] = signupScale;
-    return scaleSqrt()
-      .domain(signupDomain)
-      .range(signupRange);
-  }, [signupScale]);
+
+  const [signupDomain, signupRange] = signupScale;
+  const scaleSignupsToMeters = scaleSqrt()
+    .domain(signupDomain)
+    .range(signupRange);
 
   const flyTo = useCallback(
     ({ longitude, latitude, zoom = 6.9, transitionDuration = 2000 }) => {
