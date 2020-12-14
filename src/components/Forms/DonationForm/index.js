@@ -131,7 +131,7 @@ export default theme => {
     }
 
     if (values.amount === 'custom' && !values.customAmount) {
-      errors.customAmount = 'Muss ausgefüllt sein';
+      errors.customAmount = 'Muss eine Zahl sein';
     }
 
     if (!isChristmas && values.amount === 'custom' && values.customAmount < 2) {
