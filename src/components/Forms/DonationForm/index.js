@@ -123,9 +123,9 @@ export default theme => {
     }
 
     if (values.customAmount) {
-      const decimalPlacesRegex = /(?<=,|\.).*$/;
+      const decimalPlacesRegex = /(,|\.)(.*$)/;
       const decimalPlaces = values.customAmount.match(decimalPlacesRegex);
-      if (decimalPlaces && decimalPlaces[0].length > 2) {
+      if (decimalPlaces && decimalPlaces[2].length > 2) {
         errors.customAmount = 'Bitte nur zwei Nachkommastellen.';
       }
     }
