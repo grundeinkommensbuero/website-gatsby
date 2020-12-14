@@ -3,8 +3,8 @@ import { Router } from '@reach/router';
 import AuthContext from '../../context/Authentication';
 import s from './style.module.less';
 
-import Layout from '../../Layout';
-import { SectionWrapper } from '../../Layout/Sections';
+import Layout from '../Layout';
+import { SectionWrapper } from '../Layout/Sections';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
 import { Mitmachen } from './Mitmachen';

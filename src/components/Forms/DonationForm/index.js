@@ -18,10 +18,11 @@ import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
 
 import s from './style.module.less';
+import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
 
-export default () => {
+export default ({ styling = 'default' }) => {
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
@@ -31,7 +32,7 @@ export default () => {
   const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
-  const [initialValues, setInitialValues] = useState({amount: '5'});
+  const [initialValues, setInitialValues] = useState({ amount: '5' });
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   let formData = {};
   let formErrors = {};
@@ -116,7 +117,11 @@ export default () => {
   };
 
   return (
-    <div className={s.donationForm}>
+    <div className={cN(
+      s.donationForm,
+      { [s.default]: styling === 'default' },
+      { [s.noBackgroundAndPadding]: styling === 'noBackgroundAndPadding' }
+    )}>
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
@@ -432,7 +437,7 @@ export default () => {
           </p>
           <p>
             Bitte versuche es erneut, oder überweise den Betrag direkt auf unser
-            Konto: 
+            Konto:
           </p>
           <p className={s.info}>
             Vertrauensgesellschaft e.V.<br></br>IBAN: DE74 4306 0967 1218 1056
