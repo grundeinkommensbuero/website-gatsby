@@ -1,4 +1,5 @@
 import { WebMercatorViewport } from '@deck.gl/core';
+import { scaleLinear } from 'd3-scale';
 
 export const getPercentToGoal = (number, goal) => {
   return Number(((number / goal) * 100).toFixed(1));
@@ -22,14 +23,14 @@ export const getLayeredData = ({
   for (let i = 0; i < municipalities.length; i++) {
     // Signups, percentToGoal, isEvent are needed
     // accross signups, events and labels
-    // 1. Initialized 0
+    // 1. Initialized 0 / false
     // 2. Overwrite in events on match
-    // 3a. Check if isEvents in signups --> marker not added to signups
-    // 3b. Overwrite in labels on match
+    // 3a. Overwrite in signups on match
+    // 3b. isEvents: Check if municipality is in events --> marker will not be added to dataSignups
     // 4. Stays 0 if not overwritten for labels
     let signups = 0;
     let percentToGoal = 0;
-    let isEvent = false;
+    let isEvent = false; // Check if municipality is in events
     // ---
     // constants
     const {
@@ -47,27 +48,22 @@ export const getLayeredData = ({
         const { category, signups: signupsRange } = eventsLookup[k];
 
         // Numbers
-        signups = signupsRange[0];
-        if (!animateOnLoad) {
-          signups = signupsRange[1];
-        }
+        signups = animateOnLoad ? signupsRange[0] : signupsRange[1];
+
         const [prev, cur] = signupsRange;
         const percentToGoalRange = [
           getPercentToGoal(prev, goal),
           getPercentToGoal(cur, goal),
         ];
-        percentToGoal = percentToGoalRange[0];
-        if (!animateOnLoad) {
-          percentToGoal = percentToGoalRange[1];
-        }
+        percentToGoal = animateOnLoad
+          ? percentToGoalRange[0]
+          : percentToGoalRange[1];
 
         // Coordinates
         const latitudeStart = 58;
         const latitudeRange = [latitudeStart, latitudeEnd];
-        let latitude = category === 'new' ? latitudeStart : latitudeEnd;
-        if (!animateOnLoad) {
-          latitude = latitudeEnd;
-        }
+        let latitude =
+          category === 'new' && animateOnLoad ? latitudeStart : latitudeEnd;
 
         // Push
         dataEvents.push({
@@ -146,6 +142,26 @@ export const getLayeredData = ({
   // console.log(dataEvents);
 
   return { dataSignups, dataLabels, dataEvents, dataMunicipalities };
+};
+
+// ---- Colors ---------------------------------------------------------------------------
+
+const scalePercentToColor = scaleLinear()
+  .domain([0, 100, 100.000001, Infinity])
+  .range(['#00C8F0', '#43006a', '#fc484c', '#fc484c']);
+
+const colorToArray = (string, alpha = 255) => {
+  const onlyValues = string.replace('rgb(', '').replace(')', '');
+  const addedAlpha = onlyValues + ', ' + alpha;
+  return addedAlpha.split(', ').map(x => +x);
+};
+
+export const getColor = (percent, alpha = 255, rgb = false) => {
+  if (rgb) {
+    return scalePercentToColor(percent);
+  } else {
+    return colorToArray(scalePercentToColor(percent), alpha);
+  }
 };
 
 export const zoomToBounds = ({

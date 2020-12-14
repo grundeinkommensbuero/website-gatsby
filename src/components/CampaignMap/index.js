@@ -12,20 +12,22 @@ import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
 import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
-import { FlyToInterpolator, OrthographicView } from '@deck.gl/core';
+import { FlyToInterpolator } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
-import { scaleLinear, scaleSqrt } from 'd3-scale';
+import { scaleSqrt } from 'd3-scale';
 
-import { getLayeredData, zoomToBounds } from './utils';
+import { getLayeredData, getColor, zoomToBounds } from './utils';
 import { animate } from './animate';
 
 console.time('timeToMountMap');
 
+const maxZoom = 9;
+const zoomPadding = { padding: 10 };
+
 export const CampaignMap = ({
   AgsToFlyTo,
-  // TODO: show finished state at the beginning
   animateOnLoad = true,
-  flyToAgsOnLoad = false,
+  flyToAgsOnLoad = true,
   className = s.heightSetter,
 }) => {
   const [hasWebGl, setHasWebGL] = useState(null);
@@ -48,7 +50,6 @@ export const CampaignMap = ({
   const [mapReady, setMapReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
   const [zoomMin, setZoomMin] = useState(Infinity);
-  const [maxZoom, setMaxZoom] = useState(9);
   const [fadeOpacities, setFadeOpacities] = useState({
     fallback: 1,
     map: 0,
@@ -85,7 +86,7 @@ export const CampaignMap = ({
       setTimePassed(timePassed);
       setMapReady(true);
     });
-  }, []);
+  }, [animateOnLoad]);
   // ---- Utils ----------------------------------------------------------------------------
   const getAgsData = useCallback(
     ags => {
@@ -121,13 +122,20 @@ export const CampaignMap = ({
         animateOnLoad,
       });
     }
-  }, [mapReady, animate]);
+  }, [
+    mapReady,
+    fadeOpacities,
+    dataEvents,
+    flyToAgsOnLoad,
+    updateFocus,
+    animateOnLoad,
+  ]);
 
   useEffect(() => {
     if (mapReady) {
       updateFocus(AgsToFlyTo);
     }
-  }, [AgsToFlyTo]);
+  }, [AgsToFlyTo, mapReady, updateFocus]);
 
   // ---- Handlers -------------------------------------------------------------------------
   const handleZoomClick = change => {
@@ -200,7 +208,6 @@ export const CampaignMap = ({
             setZoom={setZoom}
             zoomMin={zoomMin}
             setZoomMin={setZoomMin}
-            maxZoom={maxZoom}
           />
         </div>
       </div>
@@ -219,34 +226,16 @@ const Map = ({
   setZoom,
   zoomMin,
   setZoomMin,
-  maxZoom,
 }) => {
   // ---- Utils ----------------------------------------------------------------------------
   // TODO: useCallback
-  const [signupDomain, signupRange] = signupScale;
-  const scaleSignupsToMeters = scaleSqrt()
-    .domain(signupDomain)
-    .range(signupRange);
-
-  const scalePercentToColor = scaleLinear()
-    .domain([0, 100, 100.000001, Infinity])
-    .range(['#00C8F0', '#43006a', '#fc484c', '#fc484c']);
-
-  // TODO: useCallback
-  const colorToArray = (string, alpha = 255) => {
-    const onlyValues = string.replace('rgb(', '').replace(')', '');
-    const addedAlpha = onlyValues + ', ' + alpha;
-    return addedAlpha.split(', ').map(x => +x);
-  };
-
-  // TODO: useCallback
-  const getColor = (percent, alpha = 255, rgb = false) => {
-    if (rgb) {
-      return scalePercentToColor(percent);
-    } else {
-      return colorToArray(scalePercentToColor(percent), alpha);
-    }
-  };
+  // --> constant functions out of component
+  const scaleSignupsToMeters = useCallback(() => {
+    const [signupDomain, signupRange] = signupScale;
+    return scaleSqrt()
+      .domain(signupDomain)
+      .range(signupRange);
+  }, [signupScale]);
 
   const flyTo = useCallback(
     ({ longitude, latitude, zoom = 6.9, transitionDuration = 2000 }) => {
@@ -267,7 +256,6 @@ const Map = ({
   );
 
   // ---- Layers ---------------------------------------------------------------------------
-  // TODO: useState with function, for calculating this layer only once
   const layerStates = useMemo(() => {
     return new GeoJsonLayer({
       id: 'states',
@@ -291,6 +279,7 @@ const Map = ({
   }, [dataStates]);
 
   // TODO: define only once
+  // -> mov out of component
   const iconMapping = {
     marker: {
       x: 0,
@@ -327,7 +316,7 @@ const Map = ({
       getColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
-  }, [dataSignups, scaleSignupsToMeters, getColor]);
+  }, [dataSignups, iconMapping, scaleSignupsToMeters]);
 
   const layerAnimatedMarker = useMemo(() => {
     return new IconLayer({
@@ -344,7 +333,7 @@ const Map = ({
       getColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
-  }, [dataEvents]);
+  }, [dataEvents, iconMapping, scaleSignupsToMeters]);
 
   const layerPermanentLabels = useMemo(() => {
     return new TextLayer({
@@ -396,8 +385,8 @@ const Map = ({
     [5.9, 55],
     [15, 47.3],
   ]);
-  const [zoomPadding, setZoomPadding] = useState({ padding: 10 });
-  // TODO: refactor to sizes –– only works without too many resizes right now
+  // NOTE: Possible refactor to sizes ––
+  // to fix zoom out of bounds afert too many resizes
   // 1. Keep max dimensions in state
   // 2. and adjust minZoom when the maxdimensions change
   const [touched, setTouched] = useState(false);
@@ -419,17 +408,21 @@ const Map = ({
         layerPermanentLabels,
       ]);
     }
-    // TODO: check dependencies
-    // --> opinion: good for now
-    // }, [dataStates, dataSignups, dataLabels, dataEvents]);
-  }, [dataLabels, dataEvents]);
+  }, [
+    dataLabels,
+    dataEvents,
+    layerStates,
+    layerPermanentMarker,
+    layerAnimatedMarker,
+    layerPermanentLabels,
+  ]);
 
   useEffect(() => {
     if (focus) {
       const { longitude, latitude } = focus;
       flyTo({ longitude, latitude });
     }
-  }, [focus]);
+  }, [flyTo, focus]);
 
   useEffect(() => {
     setInitialViewState(prev => ({
@@ -463,7 +456,6 @@ const Map = ({
 
   const handleResize = dimensionsUpdate => {
     // console.log('resized');
-    setDimensions(dimensionsUpdate);
     zoomToBounds({
       initialViewState,
       setInitialViewState,
@@ -477,18 +469,15 @@ const Map = ({
       touched,
       setTouched,
     });
-    // TODO: improve?
     if (
       !dimensions ||
       (dimensions && dimensions.width !== dimensionsUpdate.width)
     ) {
       const isNarrow = dimensionsUpdate.width < 400;
       const scrollZoom = isNarrow ? false : true;
-      // Suggestion: solve with a scrollable area
-      // -->
-      // const dragPan = isNarrow ? false : true;
       setControllerOptions({ ...controllerOptions, scrollZoom });
     }
+    setDimensions(dimensionsUpdate);
   };
 
   const handleLoad = () => {

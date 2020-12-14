@@ -25,7 +25,7 @@ module.exports = {
     'no-inner-declarations': 'off',
     'import/no-webpack-loader-syntax': [0],
     'react-hooks/rules-of-hooks': 'off',
-    'react-hooks/exhaustive-deps': 'off',
+    // 'react-hooks/exhaustive-deps': 'off',
     // 'graphql/template-strings': [
     //   `error`,
     //   {
