@@ -575,12 +575,6 @@ export default theme => {
                 onAnswerChallengeSuccess={onAnswerChallengeSuccess}
               />
             </div>
-            {/* {isAuthenticated && (
-              <>
-                <h3>Vielen Dank!</h3>
-                <p>Du hast dich eingeloggt. Super!</p>
-              </>
-            )} */}
             <p>
               Mit dem Klick auf "Spende bestätigen" bestätigst du, dass du{' '}
               <span className={s.info}>
@@ -589,20 +583,6 @@ export default theme => {
               </span>{' '}
               an die Expedition spenden möchtest.
             </p>
-            {/* <CTAButtonContainer className={s.buttonContainer}>
-              <CTAButton
-                onClick={() => {
-                  setIsRecurring(false);
-                  setEnteredAmount(false);
-                  setEnteredPaymentInfo(false);
-                  setHasDonated(false);
-                  setNeedsToLogin(false)
-                }}
-                size="MEDIUM"
-              >
-                Zurück zum Formular
-              </CTAButton>
-            </CTAButtonContainer> */}
           </div>
         )}
 
@@ -623,6 +603,12 @@ export default theme => {
             Wir haben deine Daten erhalten und werden die Spende in Kürze von
             deinem Konto einziehen.
           </p>
+          {isChristmas && (
+            <p>
+              Deine Weihnachtskarte zum ausdrucken findest du in deinem
+              E-Mail-Postfach.
+            </p>
+          )}
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
             <CTALink to="/">Zur Startseite</CTALink>
