@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
 import { Router } from '@reach/router';
-import AuthContext from '../../../context/Authentication';
+import AuthContext from '../../context/Authentication';
 import s from './style.module.less';
 
 import Layout from '../../Layout';
 import { SectionWrapper } from '../../Layout/Sections';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
-import { Mitmachen } from '../Mitmachen';
-import { Teilen } from '../Teilen';
-import { Spenden } from '../Spenden';
-import { ProfilEinrichten } from '../ProfilEinrichten';
+import { Mitmachen } from './Mitmachen';
+import { Teilen } from './Teilen';
+import { Spenden } from './Spenden';
+import { ProfilEinrichten } from './ProfilEinrichten';
 import { LoadingAnimation } from './LoadingAnimation';
 
-export const OnboardingWrapper = () => {
+export const Onboarding = () => {
   const {
     userId,
     customUserData: userData,

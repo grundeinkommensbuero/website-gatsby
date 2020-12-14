@@ -1,11 +1,11 @@
 import React from 'react';
-import { OnboardingWrapper } from '../../components/Onboarding/OnboardingWrapper';
+import { Onboarding } from '../../components/Onboarding';
 
 /**
  * Single Page Application for user onboarding.
  */
 const App = () => {
-  return <OnboardingWrapper />
+  return <Onboarding />
 };
 
 export default App;
