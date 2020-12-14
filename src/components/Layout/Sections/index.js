@@ -106,9 +106,7 @@ export function ContentfulSection({ section }) {
       isVideoSection={isVideoSection}
       afterBodyContent={
         <>
-          {(isIllustration) && (
-            <MainIllustration className={s.illustration} />
-          )}
+          {isIllustration && <MainIllustration className={s.illustration} />}
           {backgroundIllustration === 'confetti' && <Confetti />}
         </>
       }
@@ -132,44 +130,55 @@ export function ContentfulSection({ section }) {
     >
       {theme === 'christmas' && <Confetti componentTheme="christmas" />}
       {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
+      {isVideoSection && <Confetti componentTheme="christmas" />}
 
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
       {isTwoColumns && (
-        <SectionInner> 
+        <SectionInner>
           <div className={s.columnIntroText}>
             {contentfulJsonToHtml(columnIntroText.json)}
           </div>
-        <TwoColumns className={s.columnWrapper}>
-          <section className={s.column}>
-            {imageTopLeft && <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />}
-            <div className={s.columnIcon}>
-              {contentfulJsonToHtml(columnTopLeft.json)}
-            </div>
-          </section>
-          <section className={s.column}>
-           {imageTopRight &&<Img className={s.columnIcon} fixed={imageTopRight.fixed} />}
-            <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
-          </section>
-          <section className={s.column}>
-            {imageBottomLeft && <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />}
-            <div className={s.columnIcon}>
-              {contentfulJsonToHtml(columnBottomLeft.json)}
-            </div>
-          </section>
-          <section className={s.column}>
-            {imageBottomRight && <Img className={s.columnIcon} fixed={imageBottomRight.fixed} />}
-            <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
-          </section>
-        </TwoColumns>
-      </SectionInner>
+          <TwoColumns className={s.columnWrapper}>
+            <section className={s.column}>
+              {imageTopLeft && (
+                <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
+              )}
+              <div className={s.columnIcon}>
+                {contentfulJsonToHtml(columnTopLeft.json)}
+              </div>
+            </section>
+            <section className={s.column}>
+              {imageTopRight && (
+                <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
+              )}
+              <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+            </section>
+            <section className={s.column}>
+              {imageBottomLeft && (
+                <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
+              )}
+              <div className={s.columnIcon}>
+                {contentfulJsonToHtml(columnBottomLeft.json)}
+              </div>
+            </section>
+            <section className={s.column}>
+              {imageBottomRight && (
+                <Img className={s.columnIcon} fixed={imageBottomRight.fixed} />
+              )}
+              <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+            </section>
+          </TwoColumns>
+        </SectionInner>
       )}
       {isDonationFeature && (
         <SectionInner>
-          {introText && <div className={s.columnIntroText}>
-            {contentfulJsonToHtml(introText.json)}
-          </div>}
+          {introText && (
+            <div className={s.columnIntroText}>
+              {contentfulJsonToHtml(introText.json)}
+            </div>
+          )}
           <DonationForm theme={theme}></DonationForm>
         </SectionInner>
       )}
