@@ -12,7 +12,7 @@ import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
 import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
-import { FlyToInterpolator } from '@deck.gl/core';
+import { FlyToInterpolator, OrthographicView } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
 import { scaleSqrt } from 'd3-scale';
 
@@ -21,13 +21,34 @@ import { animate } from './animate';
 
 console.time('timeToMountMap');
 
+// ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
 const zoomPadding = { padding: 10 };
+const iconMapping = {
+  marker: {
+    x: 0,
+    y: 0,
+    anchorX: 256,
+    anchorY: 512,
+    width: 512,
+    height: 512,
+    mask: true,
+  },
+  win: {
+    x: 1024,
+    y: 0,
+    anchorX: 256,
+    anchorY: 512,
+    width: 512,
+    height: 512,
+    mask: true,
+  },
+};
 
 export const CampaignMap = ({
   AgsToFlyTo,
   animateOnLoad = true,
-  flyToAgsOnLoad = true,
+  flyToAgsOnLoad = false,
   className = s.heightSetter,
 }) => {
   const [hasWebGl, setHasWebGL] = useState(null);
@@ -86,7 +107,7 @@ export const CampaignMap = ({
       setTimePassed(timePassed);
       setMapReady(true);
     });
-  }, [animateOnLoad]);
+  }, []);
   // ---- Utils ----------------------------------------------------------------------------
   const getAgsData = useCallback(
     ags => {
@@ -122,20 +143,13 @@ export const CampaignMap = ({
         animateOnLoad,
       });
     }
-  }, [
-    mapReady,
-    fadeOpacities,
-    dataEvents,
-    flyToAgsOnLoad,
-    updateFocus,
-    animateOnLoad,
-  ]);
+  }, [mapReady, animate]);
 
   useEffect(() => {
     if (mapReady) {
       updateFocus(AgsToFlyTo);
     }
-  }, [AgsToFlyTo, mapReady, updateFocus]);
+  }, [AgsToFlyTo]);
 
   // ---- Handlers -------------------------------------------------------------------------
   const handleZoomClick = change => {
@@ -228,7 +242,6 @@ const Map = ({
   setZoomMin,
 }) => {
   // ---- Utils ----------------------------------------------------------------------------
-
   const [signupDomain, signupRange] = signupScale;
   const scaleSignupsToMeters = scaleSqrt()
     .domain(signupDomain)
@@ -261,42 +274,12 @@ const Map = ({
       stroked: true,
       lineWidthScale: 1,
       lineWidthMinPixels: 2,
-      // getLineColor: [255, 255, 255], // white
-      // getLineColor: [125, 105, 247], // @pink
       getLineColor: [248, 246, 255], // @pink bright
-      // getLineColor: [209, 201, 99],
       getLineWidth: 2,
       filled: true,
-      // getFillColor: [240, 240, 240], // "grey"
       getFillColor: [236, 234, 247], // @pink light
-      // getFillColor: [230, 227, 247], // @pink medium
-      // getFillColor: [213, 208, 247], // @pink dark
-      // getFillColor: [255, 242, 120], // "rosa"
     });
   }, [dataStates]);
-
-  // TODO: define only once
-  // -> mov out of component
-  const iconMapping = {
-    marker: {
-      x: 0,
-      y: 0,
-      anchorX: 256,
-      anchorY: 512,
-      width: 512,
-      height: 512,
-      mask: true,
-    },
-    win: {
-      x: 1024,
-      y: 0,
-      anchorX: 256,
-      anchorY: 512,
-      width: 512,
-      height: 512,
-      mask: true,
-    },
-  };
 
   const layerPermanentMarker = useMemo(() => {
     return new IconLayer({
@@ -313,7 +296,7 @@ const Map = ({
       getColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
-  }, [dataSignups, iconMapping, scaleSignupsToMeters]);
+  }, [dataSignups, scaleSignupsToMeters, getColor]);
 
   const layerAnimatedMarker = useMemo(() => {
     return new IconLayer({
@@ -330,7 +313,7 @@ const Map = ({
       getColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
-  }, [dataEvents, iconMapping, scaleSignupsToMeters]);
+  }, [dataEvents]);
 
   const layerPermanentLabels = useMemo(() => {
     return new TextLayer({
@@ -372,18 +355,14 @@ const Map = ({
     minZoom: 4.5,
     maxZoom,
   });
-  // Not in use because of controller options:
-  // const [viewState, setViewState] = useState({
-  //   ...initialViewState,
-  // });
 
   const [dimensions, setDimensions] = useState();
   const [zoomBounds, setZoomBounds] = useState([
     [5.9, 55],
     [15, 47.3],
   ]);
-  // NOTE: Possible refactor to sizes ––
-  // to fix zoom out of bounds afert too many resizes
+
+  // NOTE: possible refactor to limit bounds after multiple resizes
   // 1. Keep max dimensions in state
   // 2. and adjust minZoom when the maxdimensions change
   const [touched, setTouched] = useState(false);
@@ -405,21 +384,17 @@ const Map = ({
         layerPermanentLabels,
       ]);
     }
-  }, [
-    dataLabels,
-    dataEvents,
-    layerStates,
-    layerPermanentMarker,
-    layerAnimatedMarker,
-    layerPermanentLabels,
-  ]);
+    // TODO: check dependencies
+    // --> opinion: good for now
+    // }, [dataStates, dataSignups, dataLabels, dataEvents]);
+  }, [dataLabels, dataEvents]);
 
   useEffect(() => {
     if (focus) {
       const { longitude, latitude } = focus;
       flyTo({ longitude, latitude });
     }
-  }, [flyTo, focus]);
+  }, [focus]);
 
   useEffect(() => {
     setInitialViewState(prev => ({
@@ -453,6 +428,7 @@ const Map = ({
 
   const handleResize = dimensionsUpdate => {
     // console.log('resized');
+    setDimensions(dimensionsUpdate);
     zoomToBounds({
       initialViewState,
       setInitialViewState,
@@ -472,9 +448,11 @@ const Map = ({
     ) {
       const isNarrow = dimensionsUpdate.width < 400;
       const scrollZoom = isNarrow ? false : true;
+      // Suggestion: solve with a scrollable area
+      // -->
+      // const dragPan = isNarrow ? false : true;
       setControllerOptions({ ...controllerOptions, scrollZoom });
     }
-    setDimensions(dimensionsUpdate);
   };
 
   const handleLoad = () => {
