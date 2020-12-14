@@ -12,6 +12,7 @@
     // margin-bottom: 1rem;
   }
 }
+
 .inputContainer {
   position: relative;
   width: @inputWidth;
@@ -19,10 +20,11 @@
   // TODO: Check if ok for profile
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
+  color: var(--secondary-color);
 }
 
 .suggestions {
-  background-color: @white;
+  background-color: @greyBright;
   font-weight: normal;
   list-style: none;
   margin-top: 0;
@@ -41,6 +43,7 @@
 
 .suggestionsItem {
   padding: 0.5rem 1.25rem;
+  color: var(--text-on-secondary-color);
 
   &:hover {
     background-color: @greyBright;

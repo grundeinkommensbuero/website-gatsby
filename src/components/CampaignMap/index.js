@@ -384,9 +384,6 @@ const Map = ({
         layerPermanentLabels,
       ]);
     }
-    // TODO: check dependencies
-    // --> opinion: good for now
-    // }, [dataStates, dataSignups, dataLabels, dataEvents]);
   }, [dataLabels, dataEvents]);
 
   useEffect(() => {
@@ -418,7 +415,7 @@ const Map = ({
     setInitialViewState({
       ...viewState,
     });
-    // viewState gives even more control,
+    // NOTE: viewState gives even more control,
     // but controller handling is
     // more complex
     // setViewState({

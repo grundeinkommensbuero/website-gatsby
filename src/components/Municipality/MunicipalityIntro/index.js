@@ -82,11 +82,13 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
       {/* <MunicipalitySignUp
         signupAgs={municipality ? municipality.ags : undefined}
       /> */}
-      <SignUp
-        AuthenticatedDialog="municipality"
-        // fields={['username', 'email']}
-        forMunicipality={municipality ? municipality : true}
-      />
+      <div className={s.adjustFinallyMessage}>
+        <SignUp
+          AuthenticatedDialog="municipality"
+          // fields={['username', 'email']}
+          forMunicipality={municipality ? municipality : true}
+        />
+      </div>
     </>
   );
 };

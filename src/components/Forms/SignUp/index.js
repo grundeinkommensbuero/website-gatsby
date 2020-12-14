@@ -41,7 +41,7 @@ const AuthenticatedDialogMunicipality = ({
   return (
     <FinallyMessage preventScrolling={true}>
       <div>
-        <p>Du bist angemeldet als {username}.</p>
+        {username && <p>Du bist angemeldet als {username}.</p>}
         {isSpecificMunicipality && (
           <p>Möchtest du die Expedtion in {municipality.name} unterstützen?</p>
         )}
