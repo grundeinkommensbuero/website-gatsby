@@ -1,0 +1,18 @@
+[
+  {
+    "link": "/onboarding",
+    "name": "Mitmachen"
+  },
+  {
+    "link": "/onboarding/teilen",
+    "name": "Teilen"
+  },
+  {
+    "link": "/onboarding/spenden",
+    "name": "Spenden"
+  },
+  {
+    "link": "/onboarding/profil-einrichten",
+    "name": "Profil einrichten"
+  }
+]

@@ -1,33 +1,18 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import s from './style.module.less';
+import gS from '../style.module.less';
 import { Button } from '../../Forms/Button';
-import cN from 'classnames';
 
-export const OnboardingOverview = () => {
-  console.log(window.location.pathname);
+
+export const Mitmachen = ({ userData, userId }) => {
 
   return (
     <>
-      <section className={s.pageContainer}>
-
-        <section className={s.breadcrumbContainer}>
-          <Link
-            className={
-              cN(s.breadcrumbElement,
-                { [s.breadcrumbElementActive]: window.location.pathname === '/onboarding' }
-              )}
-            to="/onboarding"
-          >Mitmachen</Link>
-
-          <Link className={s.breadcrumbElement} to="teilen">Teilen</Link>
-          <Link className={s.breadcrumbElement} to="spenden">Spenden</Link>
-          <Link className={s.breadcrumbElement} to="profil-einrichten">Profil einrichten</Link>
-        </section>
+      <section className={gS.pageContainer}>
 
         <h1>Willkommen bei der Expedition Grundeinkommen!</h1>
-        <p className={s.descriptionTextLarge}>Hallo User:in!</p>
-        <p className={s.descriptionTextLarge}>
+        <p className={gS.descriptionTextLarge}>Hallo {userData.username}!</p>
+        <p className={gS.descriptionTextLarge}>
           Unser Ziel ist es, das Grundeinkommen in die Städte und Gemeinden{' '}
           Deutschlands zu holen. Wir freuen uns sehr, dass du uns in GEMEINDE{' '}
           dabei hilfst!
@@ -37,15 +22,15 @@ export const OnboardingOverview = () => {
         <div className={s.progressBarContainer}>
           <div className={s.progressBar}></div>
         </div>
-        <p className={s.descriptionTextLarge}>16/100 Unterstützer:innen</p>
+        <p className={gS.descriptionTextLarge}>16/100 Unterstützer:innen</p>
         <br />
 
         <h4>Wie kannst du dich einbringen?</h4>
-        <p className={s.descriptionTextLarge}>
+        <p className={gS.descriptionTextLarge}>
           Wir werden dich per Email benachrichtigen, sobald sie Unterschriftensammlung{' '}
           in GEMEINDE losgeht.
         </p>
-        <p className={s.descriptionTextLarge}>
+        <p className={gS.descriptionTextLarge}>
           Weißt du schon, wie du helfen kannst?
         </p>
         <br />
