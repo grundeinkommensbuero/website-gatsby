@@ -123,15 +123,15 @@ export default theme => {
     }
 
     if (values.customAmount) {
-      const decimalPlacesRegex = /(?<=,|\.).*$/;
+      const decimalPlacesRegex = /(,|\.)(.*$)/;
       const decimalPlaces = values.customAmount.match(decimalPlacesRegex);
-      if (decimalPlaces && decimalPlaces[0].length > 2) {
+      if (decimalPlaces && decimalPlaces[2].length > 2) {
         errors.customAmount = 'Bitte nur zwei Nachkommastellen.';
       }
     }
 
     if (values.amount === 'custom' && !values.customAmount) {
-      errors.customAmount = 'Muss ausgefüllt sein';
+      errors.customAmount = 'Muss eine Zahl sein';
     }
 
     if (!isChristmas && values.amount === 'custom' && values.customAmount < 2) {
