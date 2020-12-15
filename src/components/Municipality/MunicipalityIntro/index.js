@@ -38,7 +38,7 @@ const EngagementText = ({ municipality }) => {
   );
 };
 
-const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
+const ColumnQualifying = ({ municipality, type, handlePlaceSelect }) => {
   return (
     <>
       <SearchPlaces
@@ -54,6 +54,7 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
         municipality={municipality}
         type={type}
       />
+
       {!!municipality && (
         <CampainVisualisation
           goal={5000}
@@ -78,10 +79,14 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
           startDate={new Date()}
         />
       )}
+    </>
+  );
+};
+
+const BodyQualifying = ({ municipality }) => {
+  return (
+    <div>
       <EngagementText municipality={municipality} />
-      {/* <MunicipalitySignUp
-        signupAgs={municipality ? municipality.ags : undefined}
-      /> */}
       <div className={s.adjustFinallyMessage}>
         <SignUp
           AuthenticatedDialog="municipality"
@@ -89,11 +94,11 @@ const BodyQualifing = ({ municipality, type, handlePlaceSelect }) => {
           forMunicipality={municipality ? municipality : true}
         />
       </div>
-    </>
+    </div>
   );
 };
 
-const BodyCollecting = ({ municipality, type, handlePlaceSelect }) => {
+const ColumnCollecting = ({ municipality, type, handlePlaceSelect }) => {
   return (
     <>
       <MunicipalityHeadline
@@ -113,7 +118,7 @@ const BodyCollecting = ({ municipality, type, handlePlaceSelect }) => {
   );
 };
 
-const BodyState = ({ municipality, type, handlePlaceSelect }) => {
+const ColumnState = ({ municipality, type, handlePlaceSelect }) => {
   return (
     <>
       <MunicipalityHeadline
@@ -133,7 +138,7 @@ const BodyState = ({ municipality, type, handlePlaceSelect }) => {
   );
 };
 
-const MapHeader = ({ municipality }) => {
+const MapColumn = ({ municipality }) => {
   return (
     <div className={s.headerContainer}>
       <CampaignMap
@@ -175,22 +180,27 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
       setAgs();
     }
   };
-  const bodyProps = { municipality, type, handlePlaceSelect };
+  const columnProps = { municipality, type, handlePlaceSelect };
   return (
     <div className={cN(className, s.mapSection)}>
-      <div className={s.flexContainer}>
-        <div className={s.flexItem}>
-          <MapHeader municipality={municipality} />
+      <div className={s.twoColumnContainer}>
+        <div className={s.twoColumnItem}>
+          <MapColumn municipality={municipality} />
         </div>
-        <div className={s.flexItem}>
-          <div className={s.bodyContainer}>
+        <div className={s.twoColumnItem}>
+          <div className={s.rightColumnContainer}>
             <SectionInner>
-              {type === 'qualifying' && <BodyQualifing {...bodyProps} />}
-              {type === 'collecting' && <BodyCollecting {...bodyProps} />}
-              {type === 'state' && <BodyState {...bodyProps} />}
+              {type === 'qualifying' && <ColumnQualifying {...columnProps} />}
+              {type === 'collecting' && <ColumnCollecting {...columnProps} />}
+              {type === 'state' && <ColumnState {...columnProps} />}
             </SectionInner>
           </div>
         </div>
+      </div>
+      <div className={s.sectionBody}>
+        <SectionInner>
+          <BodyQualifying municipality={municipality} />
+        </SectionInner>
       </div>
     </div>
   );

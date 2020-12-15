@@ -7,26 +7,30 @@
   --text-on-secondary-color: @greyBright;
   background-color: @pink;
   color: @greyBright;
+  padding: 0rem var(--grid-gap) 10rem;
 }
 
 .headerContainer {
-  grid-column: wide-start / wide-end;
+  // grid-column: wide-start / wide-end;
 }
 
 .mapContainer {
   // TODO: check vh
   height: 90vh;
-  padding: 2rem;
+  padding: 2rem 1rem 2rem 2rem;
   @media (max-width: @breakPointL) {
     height: 60vh;
+    padding: 0rem;
   }
 }
 
-.bodyContainer {
+.rightColumnContainer {
+  padding: 2.15rem 2rem 1rem 2rem;
   @media (max-width: @breakPointL) {
-    margin-top: 0;
+    padding: 1rem 0 0;
+    .contentGrid();
   }
-  padding: 2rem;
+  
 
   // grid-column: slim-start / slim-end;
 }
@@ -36,18 +40,28 @@
   line-height: 1.15;
 }
 
-.flexContainer {
+.twoColumnContainer {
+  margin: 0 auto;
   position: relative;
+  max-width: @contentWidthL;
   display: flex;
   flex-wrap: wrap;
 }
 
-.flexItem {
+.twoColumnItem {
   width: 50%;
   @media (max-width: @breakPointL) {
     width: 100%;
   }
 }
+
+.sectionBody {
+  margin: 0 auto;
+  .contentGrid();
+  max-width: 70rem;
+}
+
+
 
 .adjustFinallyMessage {
   padding-top: 1rem;

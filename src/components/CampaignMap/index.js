@@ -229,6 +229,36 @@ export const CampaignMap = ({
   );
 };
 
+const Tooltip = ({ hoverInfo }) => {
+  return (
+    <div
+      className={s.tooltipContainer}
+      style={{
+        background: getColor(hoverInfo.object.percentToGoal, 255, true),
+        left: hoverInfo.x,
+        top: hoverInfo.y,
+        color: 'rgba(255,255,255,0.9)',
+      }}
+    >
+      <div className={s.tooltipHeader}>
+        <span className={s.tooltipMunicipality}>{hoverInfo.object.name}</span>
+      </div>
+      <div className={s.tooltipInfoContainer}>
+        <div className={s.tooltipInfo}>
+          <span className={s.tooltipNumber}>
+            {hoverInfo.object.percentToGoal} %
+          </span>
+          <span className={s.tooltipLabel}> der nötigen Anmeldungen</span>
+        </div>
+        <div className={s.tooltipInfo}>
+          <span className={s.tooltipNumber}>{hoverInfo.object.signups}</span>
+          <span className={s.tooltipLabel}> Anmeldungen insgesamt</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Map = ({
   dataStates,
   dataSignups,
@@ -483,37 +513,7 @@ const Map = ({
         //   object && `${object.name}\nEinwohner: ${object.population}`
         // }
       >
-        {hoverInfo && hoverInfo.object && (
-          <div
-            className={s.tooltipContainer}
-            style={{
-              background: getColor(hoverInfo.object.percentToGoal, 255, true),
-              left: hoverInfo.x,
-              top: hoverInfo.y,
-              color: 'rgba(255,255,255,0.9)',
-            }}
-          >
-            <div className={s.tooltipHeader}>
-              <span className={s.tooltipMunicipality}>
-                {hoverInfo.object.name}
-              </span>
-            </div>
-            <div className={s.tooltipInfoContainer}>
-              <div className={s.tooltipInfo}>
-                <span className={s.tooltipNumber}>
-                  {hoverInfo.object.percentToGoal} %
-                </span>
-                <span className={s.tooltipLabel}> der nötigen Anmeldungen</span>
-              </div>
-              <div className={s.tooltipInfo}>
-                <span className={s.tooltipNumber}>
-                  {hoverInfo.object.signups}
-                </span>
-                <span className={s.tooltipLabel}> Anmeldungen insgesamt</span>
-              </div>
-            </div>
-          </div>
-        )}
+        {hoverInfo && hoverInfo.object && <Tooltip hoverInfo={hoverInfo} />}
       </DeckGL>
       {/* <Legend /> */}
     </>

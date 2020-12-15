@@ -8,6 +8,7 @@
   justify-content: flex-start;
   align-items: center;
   margin-top: -@inputButtonMargin;
+  --secondary-color: @red;
   @media (max-width: @breakPointM) {
     // margin-bottom: 1rem;
   }
@@ -24,7 +25,7 @@
 }
 
 .suggestions {
-  background-color: @greyBright;
+  background-color: @white;
   font-weight: normal;
   list-style: none;
   margin-top: 0;
@@ -43,7 +44,7 @@
 
 .suggestionsItem {
   padding: 0.5rem 1.25rem;
-  color: var(--text-on-secondary-color);
+  color: @red;
 
   &:hover {
     background-color: @greyBright;
