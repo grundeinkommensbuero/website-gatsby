@@ -25,8 +25,105 @@
   border: solid black 1px;
 }
 
+.progressBarAnimatedContainer {
+  width: 100%;
+  height: 100%;
+}
+
 .progressBar {
   width: 16%;
   height: 32px;
   background-color: black;
+}
+
+.barGoal {
+  background: var(--font-color);
+  color: var(--bg-color);
+  font-size: @fontSizeM;
+}
+
+.goal {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  text-align: right;
+  font-size: @fontSizeL;
+
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeS;
+  }
+}
+
+.barGoalBar {
+  height: 3rem;
+  z-index: 0;
+  transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
+
+  .hasNotStarted & {
+    border: 1px solid var(--font-color);
+  }
+}
+
+.barGoalInbetween {
+  height: 100%;
+  background: var(--font-color);
+}
+
+.barCurrent {
+  position: absolute;
+  height: 3rem;
+  font-size: @fontSizeXXXL;
+  color: var(--text-on-secondary-color);
+  display: flex;
+  transition: width 0.25s ease;
+  z-index: 3;
+
+  @media (max-width: @breakPointS) {
+    font-size: @fontSizeXXL;
+  }
+
+  @media (max-width: 360px) {
+    font-size: @fontSizeXL;
+  }
+
+  &::before {
+    content: '';
+    background: var(--secondary-color);
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
+  }
+
+  .barCurrentLabel {
+    position: absolute;
+    z-index: 1;
+    bottom: -0.3rem;
+    right: 1rem;
+
+    @media (max-width: @breakPointS) {
+      font-size: @fontSizeXL;
+      bottom: 0rem;
+      right: 0.25rem;
+    }
+  }
+
+  &.outside {
+    .barCurrentLabel {
+      left: calc(100% + 1rem);
+      right: auto;
+      color: var(--font-color);
+      @w: 2px;
+      text-shadow: @w @w 0 var(--bg-color), -@w @w 0 var(--bg-color),
+        @w -@w 0 var(--bg-color), -@w -@w 0 var(--bg-color);
+    }
+  }
+
+  &.completed {
+    color: var(--bg-color);
+
+    &::before {
+      background: @blueBright;
+    }
+  }
 }

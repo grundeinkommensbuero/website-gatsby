@@ -23,7 +23,7 @@ export const Onboarding = () => {
     <Layout>
       <SectionWrapper>
         {userData.username ?
-          <section>
+          <>
             <div className={s.breadcrumbContainer}>
               <BreadcrumbLinks />
             </div>
@@ -50,7 +50,7 @@ export const Onboarding = () => {
                 path="profil-einrichten"
               />
             </Router>
-          </section>
+          </>
           : <LoadingAnimation />}
       </SectionWrapper>
     </Layout>
