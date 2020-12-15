@@ -14,6 +14,9 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 import { SearchPlaces } from '../SearchPlaces';
+import cN from 'classnames';
+import s from './style.module.less';
+import { navigate } from 'gatsby';
 
 const AuthenticatedDialogDefault = () => {
   return (
@@ -41,7 +44,7 @@ const AuthenticatedDialogMunicipality = ({
   return (
     <FinallyMessage preventScrolling={true}>
       <div>
-        {username && <p>Du bist angemeldet als {username}.</p>}
+        {/* {username && <p>Du bist angemeldet als {username}.</p>} */}
         {isSpecificMunicipality && (
           <p>Möchtest du die Expedtion in {municipality.name} unterstützen?</p>
         )}
@@ -53,20 +56,22 @@ const AuthenticatedDialogMunicipality = ({
         )}
         <Form
           onSubmit={e => {
-            let ags = municipality.ags;
-            if (e.municipality) {
-              ags = municipality.ags;
-            }
-            const { isEngaged } = e;
-            const engagement = { ags, isEngaged };
-            const user = { ...customUserData, engagement };
+            // let ags = municipality.ags;
+            // if (e.municipality) {
+            //   ags = municipality.ags;
+            // }
+            // const { isEngaged } = e;
+            // const engagement = { ags, isEngaged };
+            // const user = { ...customUserData, engagement };
 
             // TODO: Once implemented
             // Update User
             // updateUser(user);
-            // if (! userExists) {
-            //  Signup(user)
+
+            // if (isEngaged) {
+            //   navigate('onboarding')
             // }
+
             // Feedback
             setHasSubmittedMunicipality(true);
           }}
@@ -197,12 +202,14 @@ export default ({
     return (
       <>
         <SignUpFeedbackMessage
+          className={cN({ [s.adjustFinallyMessage]: isForMunicipality })}
           state={
             signUpState === 'signedIn' && !userExists ? 'success' : signUpState
           }
           trackingId={'sign-up'}
           trackingCategory="SignUp"
         />
+
         {isForMunicipality && customUserData && (
           <AuthenticatedDialogMunicipality
             customUserData={customUserData}
@@ -278,9 +285,12 @@ export default ({
   return (
     <Form
       onSubmit={e => {
-        if (e.municipality) {
-          e.ags = municipality.ags;
-        }
+        // TODO: Signup to specific municipality
+        // make sure the data has the right structure
+        // if (e.municipality) {
+        //   e.ags = municipality.ags;
+        // }
+        // ––
         e.privacyConsent = true;
         e.newsletterConsent = true;
         setHasSubmitted(true);

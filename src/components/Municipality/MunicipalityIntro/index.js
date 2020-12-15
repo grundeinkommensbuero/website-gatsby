@@ -4,7 +4,7 @@ import cN from 'classnames';
 
 import { CampaignMap } from '../../CampaignMap';
 import { SearchPlaces } from '../../Forms/SearchPlaces';
-import { Section, SectionInner } from '../../Layout/Sections';
+import { SectionInner } from '../../Layout/Sections';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
 
@@ -144,8 +144,8 @@ const MapColumn = ({ municipality }) => {
       <CampaignMap
         className={s.mapContainer}
         AgsToFlyTo={!!municipality ? municipality.ags : undefined}
-        animateOnLoad={true}
-        flyToAgsOnLoad={true}
+        animateOnLoad={false}
+        flyToAgsOnLoad={false}
       />
     </div>
   );
@@ -172,7 +172,7 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
     municipality = state;
   }
 
-  const [ags, setAgs] = useState();
+  const [, setAgs] = useState();
   const handlePlaceSelect = municipality => {
     if (municipality) {
       setAgs(municipality.ags);
