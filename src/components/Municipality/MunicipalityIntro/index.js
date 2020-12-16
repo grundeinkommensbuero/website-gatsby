@@ -7,38 +7,32 @@ import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { SectionInner } from '../../Layout/Sections';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
+import { getStringFromPlaceholderText } from '../../utils';
 
-const MunicipalityHeadline = ({ className, municipality, type }) => {
-  const action =
-    type === 'qualifying'
-      ? 'Bring das Grundeinkommen '
-      : 'Teste Grundeinkommen ';
-  const localPreposition =
-    type === 'qualifying' && !!municipality ? 'nach ' : 'in ';
-  const generic = type === 'qualifying' ? 'deine Gemeinde' : 'deiner Gemeinde';
-  const place = !!municipality ? `${municipality.name}` : generic;
-  return (
-    <h1 className={cN(s.headline, className)}>
-      {action}
-      {localPreposition}
-      {place}!
-    </h1>
-  );
-};
+// const MunicipalityHeadline = ({ className, municipality, type }) => {
+//   const action =
+//     type === 'qualifying'
+//       ? 'Bring das Grundeinkommen '
+//       : 'Teste Grundeinkommen ';
+//   const localPreposition =
+//     type === 'qualifying' && !!municipality ? 'nach ' : 'in ';
+//   const generic = type === 'qualifying' ? 'deine Gemeinde' : 'deiner Gemeinde';
+//   const place = !!municipality ? `${municipality.name}` : generic;
+//   return (
+//     <h1 className={cN(s.headline, className)}>
+//       {action}
+//       {localPreposition}
+//       {place}!
+//     </h1>
+//   );
+// };
 
-const EngagementText = ({ municipality }) => {
-  return (
-    <p>
-      Melde dich an und werde Teil der Expedition in{' '}
-      {!!municipality ? `${municipality.name}` : 'deiner Gemeinde'}! Hilf uns,
-      das Grundeinkommen in{' '}
-      {!!municipality ? `${municipality.name}` : 'deiner Gemeinde'} zu testen,
-      vernetze dich mit Gleichgesinnten und bleib auf dem Laufenden!
-    </p>
-  );
-};
-
-const ColumnQualifying = ({ municipality, type, handlePlaceSelect }) => {
+const ColumnQualifying = ({
+  municipality,
+  type,
+  handlePlaceSelect,
+  displayTitle,
+}) => {
   return (
     <>
       <SearchPlaces
@@ -49,11 +43,7 @@ const ColumnQualifying = ({ municipality, type, handlePlaceSelect }) => {
         inputSize="SMALL"
         buttonSize="MEDIUM"
       />
-      <MunicipalityHeadline
-        className={s.headline}
-        municipality={municipality}
-        type={type}
-      />
+      <h1 className={s.headline}>{displayTitle}</h1>
 
       {!!municipality && (
         <CampainVisualisation
@@ -83,10 +73,10 @@ const ColumnQualifying = ({ municipality, type, handlePlaceSelect }) => {
   );
 };
 
-const BodyQualifying = ({ municipality }) => {
+const BodyQualifying = ({ municipality, displayBody }) => {
   return (
     <div>
-      <EngagementText municipality={municipality} />
+      <p>{displayBody}</p>
       <div className={s.adjustFinallyMessage}>
         <SignUp
           AuthenticatedDialog="municipality"
@@ -98,14 +88,15 @@ const BodyQualifying = ({ municipality }) => {
   );
 };
 
-const ColumnCollecting = ({ municipality, type, handlePlaceSelect }) => {
+const ColumnCollecting = ({
+  municipality,
+  type,
+  handlePlaceSelect,
+  displayTitle,
+}) => {
   return (
     <>
-      <MunicipalityHeadline
-        className={s.headline}
-        municipality={municipality}
-        type={type}
-      />
+      <h1 className={s.headline}>{displayTitle}</h1>
       <SearchPlaces
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
@@ -118,14 +109,15 @@ const ColumnCollecting = ({ municipality, type, handlePlaceSelect }) => {
   );
 };
 
-const ColumnState = ({ municipality, type, handlePlaceSelect }) => {
+const ColumnState = ({
+  municipality,
+  type,
+  handlePlaceSelect,
+  displayTitle,
+}) => {
   return (
     <>
-      <MunicipalityHeadline
-        className={s.headline}
-        municipality={municipality}
-        type={type}
-      />
+      <h1 className={s.headline}>{displayTitle}</h1>
       <SearchPlaces
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
@@ -157,7 +149,7 @@ const states = [
   { ags: '02000000', slug: 'hamburg', name: 'Hamburg' },
 ];
 
-export const MunicipalityIntro = ({ pageContext, className }) => {
+export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   const { slug } = pageContext;
   let { municipality } = pageContext;
   let type = municipality?.type;
@@ -172,6 +164,9 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
     municipality = state;
   }
 
+  let displayTitle = getStringFromPlaceholderText(title, municipality);
+  let displayBody = getStringFromPlaceholderText(body, municipality);
+
   const [, setAgs] = useState();
   const handlePlaceSelect = municipality => {
     if (municipality) {
@@ -180,7 +175,7 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
       setAgs();
     }
   };
-  const columnProps = { municipality, type, handlePlaceSelect };
+  const columnProps = { municipality, type, handlePlaceSelect, displayTitle };
   return (
     <div className={cN(className, s.mapSection)}>
       <div className={s.twoColumnContainer}>
@@ -199,7 +194,10 @@ export const MunicipalityIntro = ({ pageContext, className }) => {
       </div>
       <div className={s.sectionBody}>
         <SectionInner>
-          <BodyQualifying municipality={municipality} />
+          <BodyQualifying
+            municipality={municipality}
+            displayBody={displayBody}
+          />
         </SectionInner>
       </div>
     </div>

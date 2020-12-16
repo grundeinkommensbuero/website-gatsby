@@ -9,7 +9,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
-function Template({ children, sections, pageContext }) {
+function Template({ children, sections, pageContext, title, description }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
     query SiteTitleQuery {
       contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
@@ -129,6 +129,20 @@ function Template({ children, sections, pageContext }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
+  const municipality = pageContext?.municipality;
+  let ogImage = globalStuff.ogimage.fixed.src;
+  // TODO og:image based on municipality ags
+  // console.log(municipality);
+  // create img url based on ags
+  // ogImage = municipality ? getOgImageLink(municipality.ags) : ogImage
+
+  const ogTitle = title ? title : globalStuff.siteTitle;
+  const ogDescription = description
+    ? description
+    : globalStuff.siteDescription.siteDescription;
+
+  // console.log(ogImage, ogTitle, ogDescription);
+  // ---
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -141,16 +155,10 @@ function Template({ children, sections, pageContext }) {
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
       >
-        <meta
-          name="description"
-          content={globalStuff.siteDescription.siteDescription}
-        />
-        <meta property="og:title" content={globalStuff.siteTitle} />
-        <meta
-          property="og:description"
-          content={globalStuff.siteDescription.siteDescription}
-        />
-        <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
+        <meta name="description" content={ogDescription} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:image" content={ogImage} />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>

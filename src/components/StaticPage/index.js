@@ -9,11 +9,13 @@ const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
-  let title = page.title;
   const { municipality } = pageContext;
-  console.log({ title });
-  title = getStringFromPlaceholderText(title, municipality);
-  console.log({ title });
+
+  const title = getStringFromPlaceholderText(page.title, municipality);
+  const description = getStringFromPlaceholderText(
+    page.description.internal.content,
+    municipality
+  );
 
   return (
     <Layout
@@ -21,18 +23,12 @@ export default ({ data, location, pageContext }) => {
       title={title}
       sections={page.sections}
       pageContext={pageContext}
+      description={description}
     >
-      {/* TODO: adjust for municipality case 
-      check for pageContext.municpality */}
       <Helmet>
         <title>{title}</title>
 
-        {page.description && (
-          <meta
-            name="description"
-            content={page.description.internal.content}
-          />
-        )}
+        {page.description && <meta name="description" content={description} />}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={URL + location.pathname} />
         <script type="text/javascript">{MatomoTrackingStuff}</script>
@@ -45,10 +41,6 @@ export const pageQuery = graphql`
   query StaticPageBySlug($slug: String!) {
     contentfulStaticContent(slug: { eq: $slug }) {
       title
-      titleObject {
-        text
-        replace
-      }
       description {
         internal {
           content
@@ -144,6 +136,13 @@ export const pageQuery = graphql`
               fluid(maxWidth: 1500, quality: 80) {
                 ...GatsbyContentfulFluid
               }
+            }
+          }
+          ... on ContentfulPageSectionGemeindeIntro {
+            __typename
+            title
+            body {
+              body
             }
           }
         }

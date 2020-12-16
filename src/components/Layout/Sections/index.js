@@ -79,10 +79,13 @@ export function ContentfulSection({ section, pageContext }) {
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
 
   if (__typename === 'ContentfulPageSectionGemeindeIntro') {
+    // console.log(section);
     return (
       <MunicipalityIntro
         pageContext={pageContext}
         className={s.sectionGemeindeIntro}
+        title={title}
+        body={body?.body}
       />
     );
   }
