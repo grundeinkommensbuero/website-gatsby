@@ -5,13 +5,14 @@ import cN from 'classnames';
 import s from './style.module.less';
 
 export const BreadcrumbLinks = () => {
+
   return menuElements.map(element =>
     <Link
       to={element.link}
       key={element.link}
       className={
         cN(s.breadcrumbElement,
-          { [s.breadcrumbElementActive]: window.location.pathname === element.link }
+          { [s.breadcrumbElementActive]: window.location.pathname.replace(/\//g, '') === element.link.replace(/\//g, '') }
         )}
     >
       {element.name}
