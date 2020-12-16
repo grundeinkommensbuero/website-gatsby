@@ -13,8 +13,13 @@ import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 
-export const EnterLoginCode = ({ children, preventSignIn }) => {
-  const { tempEmail, setTempEmail } = useContext(AuthContext);
+export const EnterLoginCode = ({
+  children,
+  preventSignIn,
+  buttonText,
+  onAnswerChallengeSuccess,
+}) => {
+  const { tempEmail, setTempEmail, isAuthenticated } = useContext(AuthContext);
   const [
     answerChallengeState,
     setCode,
@@ -29,6 +34,16 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
       startSignIn();
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      onAnswerChallengeSuccess &&
+      answerChallengeState === 'success' &&
+      isAuthenticated
+    ) {
+      onAnswerChallengeSuccess();
+    }
+  }, [answerChallengeState, isAuthenticated]);
 
   if (answerChallengeState === 'loading' || signInState === 'loading') {
     return (
@@ -90,18 +105,32 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
 
   return (
     <FinallyMessage state="error">
-      {answerChallengeState === 'wrongCode' ? (
+      {answerChallengeState === 'wrongCode' && (
         <p>
-          Der eingegeben Code ist falsch oder bereits abgelaufen. Bitte
-          überprüfe die Email erneut oder fordere einen neuen Code an.
+          Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
+          überprüfe die Email erneut oder lade die Seite neu.
         </p>
-      ) : children ? (
-        children
-      ) : (
+      )}
+
+      {answerChallengeState === 'resentCode' && (
         <p>
-          Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-          {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen ein:
+          Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
+          geschickt.
         </p>
+      )}
+
+      {!answerChallengeState && (
+        <>
+          {children ? (
+            children
+          ) : (
+            <p>
+              Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+              {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen
+              ein:
+            </p>
+          )}{' '}
+        </>
       )}
       <Form
         onSubmit={e => {
@@ -128,12 +157,14 @@ export const EnterLoginCode = ({ children, preventSignIn }) => {
                 </FormSection>
 
                 <CTAButtonContainer className={s.buttonContainer}>
-                  <CTAButton type="submit">Abschicken</CTAButton>
+                  <CTAButton type="submit">
+                    {buttonText ? buttonText : 'Abschicken'}
+                  </CTAButton>
                   <InlineButton
                     type="button"
                     onClick={() => {
                       setAnswerChallengeState(undefined);
-                      startSignIn();
+                      setCode('resendCode');
                     }}
                   >
                     Code erneut senden
