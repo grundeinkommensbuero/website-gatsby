@@ -20,6 +20,7 @@ export const getLayeredData = ({
   const dataEvents = [];
   const labelsLookup = [...labels];
   const dataLabels = [];
+  console.log(eventsLookup);
   for (let i = 0; i < municipalities.length; i++) {
     // Signups, percentToGoal, isEvent are needed
     // accross signups, events and labels

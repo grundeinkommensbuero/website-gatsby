@@ -12,12 +12,14 @@ import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
 import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
-import { FlyToInterpolator, OrthographicView } from '@deck.gl/core';
+import { FlyToInterpolator } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
 import { scaleSqrt } from 'd3-scale';
 
 import { getLayeredData, getColor, zoomToBounds } from './utils';
 import { animate } from './animate';
+
+import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
 
 console.time('timeToMountMap');
 
@@ -48,13 +50,71 @@ const iconMapping = {
 export const CampaignMap = ({
   AgsToFlyTo,
   animateOnLoad = true,
-  flyToAgsOnLoad = false,
+  flyToAgsOnLoad = true,
   className = s.heightSetter,
 }) => {
+  // WebGL
   const [hasWebGl, setHasWebGL] = useState(null);
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
   }, []);
+
+  const [
+    municipalityStatsState,
+    municipalityStats,
+    getMunicipalityStats,
+  ] = useGetMunicipalityStats();
+
+  useEffect(() => {
+    getMunicipalityStats();
+  }, []);
+
+  useEffect(() => {
+    console.log('effect', municipalityStats);
+    if (municipalityStats.municipalities) {
+      import('./data/states-geo.json').then(({ default: states }) => {
+        setDataStates(states);
+      });
+
+      import('./data/municipalities.json').then(
+        ({ default: municipalities }) => {
+          const {
+            municipalities: signups,
+            events,
+            scale,
+            timePassed,
+          } = municipalityStats;
+          console.log(
+            'stats',
+            municipalityStats,
+            signups,
+            events,
+            scale,
+            timePassed
+          );
+          const {
+            dataSignups,
+            dataEvents,
+            dataLabels,
+            dataMunicipalities,
+          } = getLayeredData({
+            municipalities,
+            signups,
+            events,
+            labels,
+            animateOnLoad,
+          });
+          setDataSignups(dataSignups);
+          setDataEvents(dataEvents);
+          setDataLabels(dataLabels);
+          setSignupScale(scale);
+          setDataMunicipalities(dataMunicipalities);
+          setTimePassed(timePassed);
+          setMapReady(true);
+        }
+      );
+    }
+  }, [municipalityStats]);
 
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
@@ -76,38 +136,6 @@ export const CampaignMap = ({
     map: 0,
   });
 
-  // ---- Data -----------------------------------------------------------------------------
-  useLayoutEffect(() => {
-    import('./data/states-geo.json').then(({ default: states }) => {
-      setDataStates(states);
-    });
-
-    const municipalities = import('./data/municipalities.json');
-    const response = import('./data/response.json');
-    Promise.all([municipalities, response]).then(modules => {
-      const [{ default: municipalities }, { default: response }] = modules;
-      const { municipalities: signups, events, scale, timePassed } = response;
-      const {
-        dataSignups,
-        dataEvents,
-        dataLabels,
-        dataMunicipalities,
-      } = getLayeredData({
-        municipalities,
-        signups,
-        events,
-        labels,
-        animateOnLoad,
-      });
-      setDataSignups(dataSignups);
-      setDataEvents(dataEvents);
-      setDataLabels(dataLabels);
-      setSignupScale(scale);
-      setDataMunicipalities(dataMunicipalities);
-      setTimePassed(timePassed);
-      setMapReady(true);
-    });
-  }, []);
   // ---- Utils ----------------------------------------------------------------------------
   const getAgsData = useCallback(
     ags => {

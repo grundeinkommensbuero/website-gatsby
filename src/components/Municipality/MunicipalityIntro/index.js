@@ -136,7 +136,7 @@ const MapColumn = ({ municipality }) => {
       <CampaignMap
         className={s.mapContainer}
         AgsToFlyTo={!!municipality ? municipality.ags : undefined}
-        animateOnLoad={false}
+        animateOnLoad={true}
         flyToAgsOnLoad={false}
       />
     </div>
