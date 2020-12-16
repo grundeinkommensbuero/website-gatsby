@@ -12,6 +12,7 @@ import { Teilen } from './Teilen';
 import { Spenden } from './Spenden';
 import { ProfilEinrichten } from './ProfilEinrichten';
 import { LoadingAnimation } from './LoadingAnimation';
+import { LoggedOutHint } from './LoggedOutHint';
 
 export const Onboarding = () => {
   const {
@@ -20,21 +21,15 @@ export const Onboarding = () => {
     customUserData: userData,
   } = useContext(AuthContext);
 
-  const LoggedOutHint = () => {
-    return (
-      <h1 className={s.loggedOutHint}>
-        <a href="/login">Logg dich ein</a>, um diese Seite zu sehen.
-      </h1>
-    )
-  }
-
   return (
     <Layout>
       <SectionWrapper>
-        {isAuthenticated && userData.username ?
-          <>
-            {userData.username ?
-              <>
+        {isAuthenticated === undefined && userData.username === undefined ?
+          <LoadingAnimation />
+          : <>
+            {isAuthenticated === false && userData.username === undefined ?
+              <LoggedOutHint />
+              : <>
                 <div className={s.breadcrumbContainer}>
                   <BreadcrumbLinks />
                 </div>
@@ -62,10 +57,8 @@ export const Onboarding = () => {
                   />
                 </Router>
               </>
-              : <LoggedOutHint />
             }
           </>
-          : <LoadingAnimation />
         }
       </SectionWrapper>
     </Layout>

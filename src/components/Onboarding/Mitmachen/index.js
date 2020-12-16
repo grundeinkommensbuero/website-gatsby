@@ -21,7 +21,7 @@ export const Mitmachen = ({ userData }) => {
 
       <MunicipalityInfo
         start={0}
-        end={16}
+        end={25}
         goal={100}
         title={'GEMEINDE'}
         description={'Unterstützer:innen'}

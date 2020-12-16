@@ -52,7 +52,7 @@ export const MunicipalityInfo = ({ start = 0, end = 0, goal = 0, title, descript
         {/* actual status bar */}
         <div className={cN(
           s.barCurrent,
-          { [s.outside]: finalPercentage < 16 },
+          { [s.outside]: finalPercentage < 25 },
           { [s.barAlmostFull]: finalPercentage > 95 },
           { [s.completed]: true }
         )}
