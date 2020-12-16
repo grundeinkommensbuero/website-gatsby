@@ -8,7 +8,7 @@
 .progressBarDescription {
   font-size: @fontSizeM;
   font-weight: 100;
-  margin-top: 0.25rem;
+  margin-top: 1rem;
   margin-bottom: 0rem;
 }
 
@@ -23,7 +23,6 @@
 }
 
 .progressBarContainer {
-  margin-bottom: 4rem;
   width: 100%;
 }
 
@@ -63,7 +62,18 @@
 
 .barGoalInbetween {
   height: 100%;
+  width: 100%;
   background: var(--font-color);
+}
+
+.barGoalReached {
+  height: 100%;
+  width: 93%;
+  background: var(--font-color);
+
+  .goalLabel {
+    color: var(--font-color);
+  }
 }
 
 .barCurrent {
@@ -113,6 +123,12 @@
       @w: 2px;
       text-shadow: @w @w 0 var(--bg-color), -@w @w 0 var(--bg-color),
         @w -@w 0 var(--bg-color), -@w -@w 0 var(--bg-color);
+    }
+  }
+
+  &.barAlmostFull {
+    .barCurrentLabel {
+      right: 5rem;
     }
   }
 

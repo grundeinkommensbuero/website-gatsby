@@ -6,7 +6,7 @@ import cN from 'classnames';
 
 import { MunicipalityInfo } from './MunicipalityInfo';
 
-export const Mitmachen = ({ userData, userId }) => {
+export const Mitmachen = ({ userData }) => {
 
   return (
     <section className={gS.pageContainer}>
@@ -19,7 +19,7 @@ export const Mitmachen = ({ userData, userId }) => {
           dabei hilfst!
         </p>
 
-      <MunicipalityInfo />
+      <MunicipalityInfo start={0} end={16} goal={100} title={'GEMEINDE'} description={'Unterstützer:innen'} />
 
       <h4>Wie kannst du dich einbringen?</h4>
       <p className={gS.descriptionTextLarge}>
