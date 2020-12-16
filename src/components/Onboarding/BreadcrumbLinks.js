@@ -6,13 +6,17 @@ import s from './style.module.less';
 
 export const BreadcrumbLinks = () => {
 
+  const pathMatchesMenuElement = (path) => {
+    return window.location.pathname.replace(/\//g, '') === path.replace(/\//g, '')
+  }
+
   return menuElements.map(element =>
     <Link
       to={element.link}
       key={element.link}
       className={
         cN(s.breadcrumbElement,
-          { [s.breadcrumbElementActive]: window.location.pathname.replace(/\//g, '') === element.link.replace(/\//g, '') }
+          { [s.breadcrumbElementActive]: pathMatchesMenuElement(element.link) }
         )}
     >
       {element.name}

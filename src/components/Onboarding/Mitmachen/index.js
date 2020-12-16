@@ -19,7 +19,13 @@ export const Mitmachen = ({ userData }) => {
           dabei hilfst!
         </p>
 
-      <MunicipalityInfo start={0} end={16} goal={100} title={'GEMEINDE'} description={'Unterstützer:innen'} />
+      <MunicipalityInfo
+        start={0}
+        end={16}
+        goal={100}
+        title={'GEMEINDE'}
+        description={'Unterstützer:innen'}
+      />
 
       <h4>Wie kannst du dich einbringen?</h4>
       <p className={gS.descriptionTextLarge}>

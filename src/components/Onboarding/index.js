@@ -16,42 +16,57 @@ import { LoadingAnimation } from './LoadingAnimation';
 export const Onboarding = () => {
   const {
     userId,
+    isAuthenticated,
     customUserData: userData,
   } = useContext(AuthContext);
+
+  const LoggedOutHint = () => {
+    return (
+      <h1 className={s.loggedOutHint}>
+        <a href="/login">Logg dich ein</a>, um diese Seite zu sehen.
+      </h1>
+    )
+  }
 
   return (
     <Layout>
       <SectionWrapper>
-        {userData.username ?
+        {isAuthenticated && userData.username ?
           <>
-            <div className={s.breadcrumbContainer}>
-              <BreadcrumbLinks />
-            </div>
+            {userData.username ?
+              <>
+                <div className={s.breadcrumbContainer}>
+                  <BreadcrumbLinks />
+                </div>
 
-            <Router basepath="onboarding">
-              <Mitmachen
-                userData={userData}
-                userId={userId}
-                path="/"
-              />
-              <Teilen
-                userData={userData}
-                userId={userId}
-                path="teilen"
-              />
-              <Spenden
-                userData={userData}
-                userId={userId}
-                path="spenden"
-              />
-              <ProfilEinrichten
-                userData={userData}
-                userId={userId}
-                path="profil-einrichten"
-              />
-            </Router>
+                <Router basepath="onboarding">
+                  <Mitmachen
+                    userData={userData}
+                    userId={userId}
+                    path="/"
+                  />
+                  <Teilen
+                    userData={userData}
+                    userId={userId}
+                    path="teilen"
+                  />
+                  <Spenden
+                    userData={userData}
+                    userId={userId}
+                    path="spenden"
+                  />
+                  <ProfilEinrichten
+                    userData={userData}
+                    userId={userId}
+                    path="profil-einrichten"
+                  />
+                </Router>
+              </>
+              : <LoggedOutHint />
+            }
           </>
-          : <LoadingAnimation />}
+          : <LoadingAnimation />
+        }
       </SectionWrapper>
     </Layout>
   );
