@@ -27,7 +27,7 @@ import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
 import { validateEmail } from '../../utils';
 
-export default theme => {
+export default ({ theme, styling = 'default' }) => {
   var themeClass = theme[Object.keys(theme)[0]];
   const isChristmas = themeClass === 'christmas';
 
@@ -183,6 +183,8 @@ export default theme => {
     <div
       className={cN(s.donationForm, {
         [s.christmasTheme]: themeClass === 'christmas',
+        [s.default]: styling === 'default',
+        [s.noBackgroundAndPadding]: styling === 'noBackgroundAndPadding'
       })}
     >
       {!hasDonated && !enteredPaymentInfo && !donationError && (

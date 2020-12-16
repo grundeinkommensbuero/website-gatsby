@@ -5,7 +5,16 @@ import DonationForm from '../../Forms/DonationForm';
 export const Spenden = ({ userData, userId }) => {
   return (
     <section className={gS.pageContainer}>
-      <DonationForm styling="noBackgroundAndPadding" />
+      <h1>Unterstütze uns!</h1>
+      <p className={gS.descriptionTextLarge}>
+        Um Städte und Gemeinden in ganz Deutschland erreichen zu können, sind{' '}
+        wir auf eine gesicherte Finanzierung angewiesen. Ein kleiner monatlicher{' '}
+        Beitrag von dir hilft uns enorm!
+      </p>
+      <p className={gS.descriptionTextLarge}>
+        Unterstütze uns mit
+      </p>
+      <DonationForm theme={{}} styling="noBackgroundAndPadding" />
     </section>
   );
 };
