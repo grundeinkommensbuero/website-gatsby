@@ -6,6 +6,16 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
+
+  @media (max-width: @breakPointM) {
+    max-width: 72rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    max-width: 72rem;
+    padding: 1rem;
+  }
 }
 
 .descriptionTextLarge {
@@ -31,6 +41,20 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
+
+  @media (max-width: @breakPointM) {
+    margin-top: 6rem;
+    max-width: 72rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-top: 4.75rem;
+    max-width: 71rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
 .breadcrumbElement {
