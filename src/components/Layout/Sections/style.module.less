@@ -42,8 +42,9 @@
   }
 
   // COLOR SCHEMES
-  /* We have to use !important to overwrite 
-  the rules set with nth-child*/
+  /* Allows editors in contentful to override the default colors.
+  /* We have to use !important to overwrite */
+  /* the rules set with nth-child */
 
   &.sectionChristmas {
     background-color: @red !important;
@@ -52,6 +53,24 @@
     --font-color: @greyBright !important;
     --secondary-color: @yellow !important;
     --text-on-secondary-color: @red !important;
+
+    .sectionBody:after {
+      background: url('./Weihnachten.svg') center/contain no-repeat;
+      content: '';
+      display: block;
+      width: 300px;
+      height: 400px;
+      position: absolute;
+      bottom: 1rem;
+      right: 10%;
+
+      @media (max-width: @breakPointL) {
+        width: 150px;
+        height: 150px;
+        bottom: -1rem;
+        right: 0;
+      }
+    }
   }
 
   &.sectionGrey {
@@ -126,8 +145,13 @@
     }
 
     @media (max-width: @breakPointM) {
-      padding-top: 10rem;
-      padding-bottom: 12rem;
+      //padding-top: 10rem;
+      //padding-bottom: 12rem;
+
+      h1 {
+        font-size: @fontSizeL;
+        margin-bottom: 2rem;
+      }
     }
   }
 
@@ -487,6 +511,12 @@
 
 .sectionChristmasDonation {
   background-color: @grey !important;
+}
+
+.donationIntroText {
+  margin-bottom: 2rem;
+  font-size: @fontSizeS;
+  font-weight: normal;
 }
 
 .sectionVideo {

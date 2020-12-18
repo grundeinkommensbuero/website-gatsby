@@ -128,9 +128,9 @@ export function ContentfulSection({ section }) {
       })}
       sectionBodyNoEvents={isIllustration || isVideoSection}
     >
-      {theme === 'christmas' && <Confetti componentTheme="christmas" />}
+      {/* {theme === 'christmas' && <Confetti componentTheme="christmas" />}
       {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
-      {isVideoSection && <Confetti componentTheme="christmas" />}
+      {isVideoSection && <Confetti componentTheme="christmas" />} */}
 
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
@@ -186,8 +186,8 @@ export function ContentfulSection({ section }) {
       {isDonationFeature && (
         <SectionInner>
           {introText && (
-            <div className={s.columnIntroText}>
-              {contentfulJsonToHtml(introText.json)}
+            <div className={s.donationIntroText}>
+              {introText}
             </div>
           )}
           <DonationForm theme={theme}></DonationForm>

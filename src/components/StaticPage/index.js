@@ -136,6 +136,7 @@ export const pageQuery = graphql`
             title
             introText
             theme
+            colorScheme
           }
           ... on ContentfulPageSectionTwoColumns {
             __typename
