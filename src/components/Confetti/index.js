@@ -80,7 +80,7 @@ export default ({ className, componentTheme = 'default' }) => {
         if (isInView && Math.random() < 0.2) {
           if (window.innerWidth > 600) {
             confetti.confetti({
-              // disableForReducedMotion: true,
+              disableForReducedMotion: true,
               particleCount: 1,
               angle: theme.angles[0],
               startVelocity: theme.velocities[0],
@@ -96,7 +96,7 @@ export default ({ className, componentTheme = 'default' }) => {
               ticks: theme.ticks,
             });
             confetti.confetti({
-              // disableForReducedMotion: true,
+              disableForReducedMotion: true,
               particleCount: 1,
               angle: theme.angles[1],
               startVelocity: theme.velocities[1],
@@ -113,7 +113,7 @@ export default ({ className, componentTheme = 'default' }) => {
             });
           } else {
             confetti.confetti({
-              // disableForReducedMotion: true,
+              disableForReducedMotion: true,
               particleCount: 1,
               angle: theme.angles[2],
               startVelocity: theme.velocities[2],
