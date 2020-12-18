@@ -53,6 +53,24 @@
     --font-color: @greyBright !important;
     --secondary-color: @yellow !important;
     --text-on-secondary-color: @red !important;
+
+    .sectionBody:after {
+      background: url('./Weihnachten.svg') center/contain no-repeat;
+      content: '';
+      display: block;
+      width: 300px;
+      height: 400px;
+      position: absolute;
+      bottom: 1rem;
+      right: 10%;
+
+      @media (max-width: @breakPointL) {
+        width: 150px;
+        height: 150px;
+        bottom: -1rem;
+        right: 0;
+      }
+    }
   }
 
   &.sectionGrey {
@@ -127,8 +145,13 @@
     }
 
     @media (max-width: @breakPointM) {
-      padding-top: 10rem;
-      padding-bottom: 12rem;
+      //padding-top: 10rem;
+      //padding-bottom: 12rem;
+
+      h1 {
+        font-size: @fontSizeL;
+        margin-bottom: 2rem;
+      }
     }
   }
 
@@ -493,6 +516,7 @@
 .donationIntroText {
   margin-bottom: 2rem;
   font-size: @fontSizeS;
+  font-weight: normal;
 }
 
 .sectionVideo {
