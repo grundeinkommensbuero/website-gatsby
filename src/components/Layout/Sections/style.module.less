@@ -42,8 +42,9 @@
   }
 
   // COLOR SCHEMES
-  /* We have to use !important to overwrite 
-  the rules set with nth-child*/
+  /* Allows editors in contentful to override the default colors.
+  /* We have to use !important to overwrite */
+  /* the rules set with nth-child */
 
   &.sectionChristmas {
     background-color: @red !important;
@@ -487,6 +488,11 @@
 
 .sectionChristmasDonation {
   background-color: @grey !important;
+}
+
+.donationIntroText {
+  margin-bottom: 2rem;
+  font-size: @fontSizeS;
 }
 
 .sectionVideo {

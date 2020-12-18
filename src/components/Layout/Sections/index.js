@@ -186,8 +186,8 @@ export function ContentfulSection({ section }) {
       {isDonationFeature && (
         <SectionInner>
           {introText && (
-            <div className={s.columnIntroText}>
-              {contentfulJsonToHtml(introText.json)}
+            <div className={s.donationIntroText}>
+              {introText}
             </div>
           )}
           <DonationForm theme={theme}></DonationForm>
