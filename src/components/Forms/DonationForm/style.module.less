@@ -7,11 +7,16 @@
   background-color: @red;
   color: @grey;
   font-weight: normal;
-  margin-top: 3em;
-  padding: 30px 40px 40px 40px;
+  margin-top: 2em;
+  padding: 3rem;
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 0;
+    padding: 2.5rem 1.5rem;
+  }
 
   h3 {
     hyphens: unset;

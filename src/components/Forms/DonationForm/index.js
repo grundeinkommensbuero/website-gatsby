@@ -314,7 +314,7 @@ export default theme => {
                         )}
                       </FormSection>
 
-                      {!isChristmas && (
+                      {!isChristmas && ( <>
                         <div className={s.donationButtons}>
                           <CTAButton
                             type="submit"
@@ -333,13 +333,12 @@ export default theme => {
                           >
                             Lieber einmalig spenden
                           </Link>
-
-                          <p className={s.hint}>
-                            Hinweis: Du kannst deine monatliche Spende jederzeit
-                            wieder beenden.
-                          </p>
                         </div>
-                      )}
+                        <p className={s.hint}>
+                          Hinweis: Du kannst deine monatliche Spende jederzeit
+                          wieder beenden.
+                        </p>
+                      </>)}
 
                       {isChristmas && (
                         <div className={s.donationButtons}>
