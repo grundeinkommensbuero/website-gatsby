@@ -5,10 +5,84 @@ const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const webpack = require('webpack');
 const gitRevisionPlugin = new GitRevisionPlugin();
 
+const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
+let municipalities = JSON.parse(raw);
+
+const getAndStoreDataVariations = municipalities => {
+  const roundTo = (number, factor) => {
+    return Math.round(number / factor) * factor;
+  };
+
+  const prettifyNumber = number => {
+    let pretty = number;
+    let steps = [
+      { threshold: 20, roundTo: 1 },
+      { threshold: 50, roundTo: 5 },
+      { threshold: 150, roundTo: 10 },
+      { threshold: 400, roundTo: 50 },
+      { threshold: 4000, roundTo: 100 },
+      { threshold: 10000, roundTo: 500 },
+      { threshold: 40000, roundTo: 1000 },
+      { threshold: 100000, roundTo: 5000 },
+      { threshold: Infinity, roundTo: 10000 },
+    ];
+    const step = steps.find(x => number < x.threshold);
+    pretty = roundTo(number, step.roundTo);
+    return pretty;
+  };
+
+  const getGoal = (population, minGoal = 7, goalFactor = 0.01) => {
+    let goal = population * goalFactor;
+    goal = Math.max(minGoal, prettifyNumber(goal));
+    return goal;
+  };
+
+  // Goal
+  const municipalitiesForSearch = [];
+  const municipalitiesForMap = [];
+  const municipalitiesForPage = [];
+  for (const municipality of municipalities) {
+    const {
+      ags,
+      name,
+      longitude,
+      latitude,
+      zipCodes,
+      population,
+    } = municipality;
+    const goal = getGoal(population);
+    municipalitiesForSearch.push({ ags, name, zipCodes });
+    municipalitiesForMap.push({
+      ags,
+      name,
+      coordinates: [longitude, latitude],
+      goal,
+    });
+    municipalitiesForPage.push({ ...municipality, goal });
+  }
+
+  fs.writeFileSync(
+    './src/components/MunicipalityMap/data/municipalitiesForMap.json',
+    JSON.stringify(municipalitiesForMap)
+  );
+  fs.writeFileSync(
+    './src/components/Forms/SearchPlaces/municipalitiesForSearch.json',
+    JSON.stringify(municipalitiesForSearch)
+  );
+
+  // fs.writeFileSync(
+  //   './content/municipalitiesForPage.json',
+  //   JSON.stringify(municipalitiesForPage)
+  // );
+
+  return municipalitiesForPage;
+};
+
+municipalities = getAndStoreDataVariations(municipalities);
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-  const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
-  const municipalities = JSON.parse(raw);
+
   const agsStates = [
     { ags: '11000000', slug: 'berlin' },
     { ags: '04011000', slug: 'bremen' },
