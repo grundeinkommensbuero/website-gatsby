@@ -62,7 +62,6 @@ export const animate = ({
         delay: anime.stagger(400),
         easing: 'easeOutElastic(10,0.4)',
         update() {
-          console.log('win');
           setDataEvents([...localEvents]);
         },
       },

@@ -158,6 +158,9 @@ export function getMailtoUrl(to, subject, body) {
 }
 
 export const getStringFromPlaceholderText = (string, object) => {
+  if (!string) {
+    return '';
+  }
   let result = string;
   const regexSubInCurlyBrackets = /(?<=\{).+?(?=\})/g;
   const regexSubInSingleQuotes = /^'.*'$/;

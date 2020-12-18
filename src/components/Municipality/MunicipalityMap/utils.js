@@ -10,7 +10,7 @@ export const getLayeredData = ({
   signups,
   events,
   labels,
-  animateOnLoad,
+  animateEvents,
 }) => {
   // console.time('timeToLoopMunicipalities');
   const dataMunicipalities = [];
@@ -20,7 +20,6 @@ export const getLayeredData = ({
   const dataEvents = [];
   const labelsLookup = [...labels];
   const dataLabels = [];
-  console.log(eventsLookup);
   for (let i = 0; i < municipalities.length; i++) {
     // Signups, percentToGoal, isEvent are needed
     // accross signups, events and labels
@@ -49,14 +48,14 @@ export const getLayeredData = ({
         const { category, signups: signupsRange } = eventsLookup[k];
 
         // Numbers
-        signups = animateOnLoad ? signupsRange[0] : signupsRange[1];
+        signups = animateEvents ? signupsRange[0] : signupsRange[1];
 
         const [prev, cur] = signupsRange;
         const percentToGoalRange = [
           getPercentToGoal(prev, goal),
           getPercentToGoal(cur, goal),
         ];
-        percentToGoal = animateOnLoad
+        percentToGoal = animateEvents
           ? percentToGoalRange[0]
           : percentToGoalRange[1];
 
@@ -64,7 +63,7 @@ export const getLayeredData = ({
         const latitudeStart = 58;
         const latitudeRange = [latitudeStart, latitudeEnd];
         let latitude =
-          category === 'new' && animateOnLoad ? latitudeStart : latitudeEnd;
+          category === 'new' && animateEvents ? latitudeStart : latitudeEnd;
 
         // Push
         dataEvents.push({

@@ -13,7 +13,7 @@ export default ({ data, location, pageContext }) => {
 
   const title = getStringFromPlaceholderText(page.title, municipality);
   const description = getStringFromPlaceholderText(
-    page.description.internal.content,
+    page.description?.internal?.content,
     municipality
   );
 

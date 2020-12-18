@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import s from './style.module.less';
 
 import characterSet from './data/characterSet.json';
@@ -19,9 +13,7 @@ import { scaleSqrt } from 'd3-scale';
 import { getLayeredData, getColor, zoomToBounds } from './utils';
 import { animate } from './animate';
 
-import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
-
-console.time('timeToMountMap');
+import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
 // ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
@@ -47,75 +39,14 @@ const iconMapping = {
   },
 };
 
-export const CampaignMap = ({
+export const MunicipalityMap = ({
   AgsToFlyTo,
-  animateOnLoad = true,
+  shouldStartAnimation,
+  onDataReady,
+  animateEvents = true,
   flyToAgsOnLoad = true,
   className = s.heightSetter,
 }) => {
-  // WebGL
-  const [hasWebGl, setHasWebGL] = useState(null);
-  useEffect(() => {
-    setHasWebGL(detectWebGLContext());
-  }, []);
-
-  const [
-    municipalityStatsState,
-    municipalityStats,
-    getMunicipalityStats,
-  ] = useGetMunicipalityStats();
-
-  useEffect(() => {
-    getMunicipalityStats();
-  }, []);
-
-  useEffect(() => {
-    console.log('effect', municipalityStats);
-    if (municipalityStats.municipalities) {
-      import('./data/states-geo.json').then(({ default: states }) => {
-        setDataStates(states);
-      });
-
-      import('./data/municipalities.json').then(
-        ({ default: municipalities }) => {
-          const {
-            municipalities: signups,
-            events,
-            scale,
-            timePassed,
-          } = municipalityStats;
-          console.log(
-            'stats',
-            municipalityStats,
-            signups,
-            events,
-            scale,
-            timePassed
-          );
-          const {
-            dataSignups,
-            dataEvents,
-            dataLabels,
-            dataMunicipalities,
-          } = getLayeredData({
-            municipalities,
-            signups,
-            events,
-            labels,
-            animateOnLoad,
-          });
-          setDataSignups(dataSignups);
-          setDataEvents(dataEvents);
-          setDataLabels(dataLabels);
-          setSignupScale(scale);
-          setDataMunicipalities(dataMunicipalities);
-          setTimePassed(timePassed);
-          setMapReady(true);
-        }
-      );
-    }
-  }, [municipalityStats]);
-
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
   const [dataMunicipalities, setDataMunicipalities] = useState([]);
@@ -126,15 +57,70 @@ export const CampaignMap = ({
     [1, 40000],
     [2000, 80000],
   ]);
-  const [timePassed, setTimePassed] = useState();
+  const [, setTimePassed] = useState();
+  const [, municipalityStats, getMunicipalityStats] = useGetMunicipalityStats();
   const [focus, setFocus] = useState();
-  const [mapReady, setMapReady] = useState(false);
+  const [mapDataReady, setMapDataReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
   const [zoomMin, setZoomMin] = useState(Infinity);
   const [fadeOpacities, setFadeOpacities] = useState({
     fallback: 1,
     map: 0,
   });
+  // WebGL
+  const [hasWebGl, setHasWebGL] = useState(null);
+
+  useEffect(() => {
+    setHasWebGL(detectWebGLContext());
+  }, []);
+
+  useEffect(() => {
+    getMunicipalityStats();
+  }, []);
+
+  useEffect(() => {
+    if (municipalityStats.municipalities) {
+      import('./data/states-geo.json').then(({ default: states }) => {
+        setDataStates(states);
+      });
+
+      import('./data/municipalitiesForMap.json').then(
+        ({ default: municipalities }) => {
+          const {
+            municipalities: signups,
+            events,
+            scale,
+            timePassed,
+          } = municipalityStats;
+          const {
+            dataSignups,
+            dataEvents,
+            dataLabels,
+            dataMunicipalities,
+          } = getLayeredData({
+            municipalities,
+            signups,
+            events,
+            labels,
+            animateEvents,
+          });
+          setDataSignups(dataSignups);
+          setDataEvents(dataEvents);
+          setDataLabels(dataLabels);
+          setSignupScale(scale);
+          setDataMunicipalities(dataMunicipalities);
+          setTimePassed(timePassed);
+          setMapDataReady(true);
+        }
+      );
+    }
+  }, [municipalityStats]);
+
+  useEffect(() => {
+    if (mapDataReady) {
+      onDataReady();
+    }
+  }, [mapDataReady]);
 
   // ---- Utils ----------------------------------------------------------------------------
   const getAgsData = useCallback(
@@ -160,7 +146,7 @@ export const CampaignMap = ({
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
-    if (mapReady) {
+    if (mapDataReady && shouldStartAnimation) {
       animate({
         fadeOpacities,
         setFadeOpacities,
@@ -168,13 +154,13 @@ export const CampaignMap = ({
         setDataEvents,
         flyToAgsOnLoad,
         updateFocus,
-        animateOnLoad,
+        animateEvents,
       });
     }
-  }, [mapReady, animate]);
+  }, [shouldStartAnimation, mapDataReady, animate]);
 
   useEffect(() => {
-    if (mapReady) {
+    if (mapDataReady) {
       updateFocus(AgsToFlyTo);
     }
   }, [AgsToFlyTo]);

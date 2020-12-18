@@ -8,6 +8,7 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
 let municipalities = JSON.parse(raw);
 
+// Should this be in a file?
 const getAndStoreDataVariations = municipalities => {
   const roundTo = (number, factor) => {
     return Math.round(number / factor) * factor;
@@ -37,7 +38,9 @@ const getAndStoreDataVariations = municipalities => {
     return goal;
   };
 
-  // Goal
+  // Create versions of the data
+  // only with the necessary info
+  // for each component
   const municipalitiesForSearch = [];
   const municipalitiesForMap = [];
   const municipalitiesForPage = [];
@@ -58,22 +61,18 @@ const getAndStoreDataVariations = municipalities => {
       coordinates: [longitude, latitude],
       goal,
     });
+    // The page has access to all information including the goal
     municipalitiesForPage.push({ ...municipality, goal });
   }
 
   fs.writeFileSync(
-    './src/components/MunicipalityMap/data/municipalitiesForMap.json',
+    './src/components/Municipality/MunicipalityMap/data/municipalitiesForMap.json',
     JSON.stringify(municipalitiesForMap)
   );
   fs.writeFileSync(
     './src/components/Forms/SearchPlaces/municipalitiesForSearch.json',
     JSON.stringify(municipalitiesForSearch)
   );
-
-  // fs.writeFileSync(
-  //   './content/municipalitiesForPage.json',
-  //   JSON.stringify(municipalitiesForPage)
-  // );
 
   return municipalitiesForPage;
 };
@@ -83,6 +82,8 @@ municipalities = getAndStoreDataVariations(municipalities);
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
 
+  // NOTE this info should be moved out
+  // of this file in the future
   const agsStates = [
     { ags: '11000000', slug: 'berlin' },
     { ags: '04011000', slug: 'bremen' },
@@ -91,19 +92,17 @@ exports.createPages = ({ graphql, actions }) => {
   const agsQualified = ['08121000'];
 
   municipalities.forEach(municipality => {
-    // let type = 'qualifying';
+    // Type 'qualifying';
     let slug = 'gemeinden';
     const stateCampaign = agsStates.find(s => s.ags === municipality.ags);
     if (stateCampaign) {
-      // type = 'state';
+      // Type 'state';
       slug = stateCampaign.slug;
     } else if (agsQualified.includes(municipality.ags)) {
-      // type = 'collecting';
+      // Type 'collecting';
       slug = 'gemeinden-sammelphase';
     }
-    if (stateCampaign) {
-      console.log(slug);
-    }
+
     createPage({
       path: `/gemeinden/${municipality.ags}`,
       component: require.resolve('./src/components/StaticPage/index.js'),

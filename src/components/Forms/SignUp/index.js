@@ -16,7 +16,7 @@ import { FinallyMessage } from '../FinallyMessage';
 import { SearchPlaces } from '../SearchPlaces';
 import cN from 'classnames';
 import s from './style.module.less';
-import { navigate } from 'gatsby';
+// import { navigate } from 'gatsby';
 
 const AuthenticatedDialogDefault = () => {
   return (
@@ -40,7 +40,7 @@ const AuthenticatedDialogMunicipality = ({
   setHasSubmittedMunicipality,
 }) => {
   const isSpecificMunicipality = municipality && municipality.ags;
-  const { username } = customUserData;
+  // const { username } = customUserData;
   return (
     <FinallyMessage preventScrolling={true}>
       <div>

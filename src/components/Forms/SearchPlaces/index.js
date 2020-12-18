@@ -39,7 +39,7 @@ export const SearchPlaces = ({
   const [fuse, setFuse] = useState();
 
   useEffect(() => {
-    import('./places.json').then(({ default: places }) => {
+    import('./municipalitiesForSearch.json').then(({ default: places }) => {
       setFuse(
         new Fuse(places, {
           keys: ['name', 'zipCodes'],
@@ -200,6 +200,7 @@ export function AutoCompleteList({
 }) {
   return (
     <div
+      role="listbox"
       className={cN(s.suggestions, { [s.active]: suggestionsActive })}
       onBlur={handleBlur}
     >

@@ -1,38 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
-import { CampaignMap } from '../../CampaignMap';
+import { MunicipalityMap } from '../MunicipalityMap';
 import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { SectionInner } from '../../Layout/Sections';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
 import { getStringFromPlaceholderText } from '../../utils';
 
-// const MunicipalityHeadline = ({ className, municipality, type }) => {
-//   const action =
-//     type === 'qualifying'
-//       ? 'Bring das Grundeinkommen '
-//       : 'Teste Grundeinkommen ';
-//   const localPreposition =
-//     type === 'qualifying' && !!municipality ? 'nach ' : 'in ';
-//   const generic = type === 'qualifying' ? 'deine Gemeinde' : 'deiner Gemeinde';
-//   const place = !!municipality ? `${municipality.name}` : generic;
-//   return (
-//     <h1 className={cN(s.headline, className)}>
-//       {action}
-//       {localPreposition}
-//       {place}!
-//     </h1>
-//   );
-// };
+import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
 const ColumnQualifying = ({
   municipality,
-  type,
   handlePlaceSelect,
   displayTitle,
+  mapDataReady,
 }) => {
+  const [
+    municipalityStatsState,
+    municipalityStats,
+    getMunicipalityStats,
+  ] = useGetMunicipalityStats();
+  useEffect(() => {
+    getMunicipalityStats(municipality.ags);
+  }, []);
+  console.log(municipalityStats);
   return (
     <>
       <SearchPlaces
@@ -45,29 +38,33 @@ const ColumnQualifying = ({
       />
       <h1 className={s.headline}>{displayTitle}</h1>
 
-      {!!municipality && (
-        <CampainVisualisation
-          goal={5000}
-          currentCount={1000}
-          receivedCount={2000}
-          count={3000}
-          // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
-          labels={{
-            NEEDED: () => <>Benötigte Anmeldungen</>,
-            GOAL_INBETWEEN_TOOLTIP: count => (
-              <>
-                Insgesamt benötigt:
-                <br />
-                {count} Anmeldungen
-              </>
-            ),
-            GOAL_INBETWEEN: count => <>Nächstes Ziel: {count} Anmeldungen</>,
-            CURRENT_COUNT: () => <>Anmeldungen</>,
-            CTA: () => <>Mitmachen</>,
-          }}
-          currency="Anmeldungen"
-          startDate={new Date()}
-        />
+      {!!municipality && municipalityStatsState === 'success' && mapDataReady && (
+        <>
+          <CampainVisualisation
+            goal={municipalityStats.goal}
+            count={municipalityStats.signups}
+            // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
+            labels={{
+              NEEDED: () => <>Benötigte Anmeldungen</>,
+              GOAL_INBETWEEN_TOOLTIP: count => (
+                <>
+                  Insgesamt benötigt:
+                  <br />
+                  {count} Anmeldungen
+                </>
+              ),
+              GOAL_INBETWEEN: count => <>Nächstes Ziel: {count} Anmeldungen</>,
+              CURRENT_COUNT: () => <>Anmeldungen</>,
+              CTA: () => <>Mitmachen</>,
+            }}
+            currency="Anmeldungen"
+            startDate={new Date()}
+          />
+          <p>
+            Schon {municipalityStats.signups?.toLocaleString('de')} Anmeldungen
+            in {municipality.name}!{' '}
+          </p>
+        </>
       )}
     </>
   );
@@ -130,13 +127,19 @@ const ColumnState = ({
   );
 };
 
-const MapColumn = ({ municipality }) => {
+const MapColumn = ({ municipality, setMapDataReady }) => {
+  const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
   return (
     <div className={s.headerContainer}>
-      <CampaignMap
+      <MunicipalityMap
         className={s.mapContainer}
         AgsToFlyTo={!!municipality ? municipality.ags : undefined}
-        animateOnLoad={true}
+        onDataReady={() => {
+          setMapDataReady(true);
+          setShouldStartAnimation(true);
+        }}
+        shouldStartAnimation={shouldStartAnimation}
+        animateEvents={true}
         flyToAgsOnLoad={false}
       />
     </div>
@@ -150,6 +153,8 @@ const states = [
 ];
 
 export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
+  const [mapDataReady, setMapDataReady] = useState(false);
+  // const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
   const { slug } = pageContext;
   let { municipality } = pageContext;
   let type = municipality?.type;
@@ -175,12 +180,24 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
       setAgs();
     }
   };
-  const columnProps = { municipality, type, handlePlaceSelect, displayTitle };
+
+  const columnProps = {
+    municipality,
+    type,
+    handlePlaceSelect,
+    displayTitle,
+    mapDataReady,
+    setMapDataReady,
+  };
   return (
     <div className={cN(className, s.mapSection)}>
       <div className={s.twoColumnContainer}>
         <div className={s.twoColumnItem}>
-          <MapColumn municipality={municipality} />
+          <MapColumn
+            municipality={municipality}
+            setMapDataReady={setMapDataReady}
+            // shouldStartAnimation={shouldStartAnimation}
+          />
         </div>
         <div className={s.twoColumnItem}>
           <div className={s.rightColumnContainer}>

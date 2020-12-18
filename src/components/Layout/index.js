@@ -129,9 +129,9 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const municipality = pageContext?.municipality;
   let ogImage = globalStuff.ogimage.fixed.src;
   // TODO og:image based on municipality ags
+  // const municipality = pageContext?.municipality;
   // console.log(municipality);
   // create img url based on ags
   // ogImage = municipality ? getOgImageLink(municipality.ags) : ogImage
