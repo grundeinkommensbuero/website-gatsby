@@ -3,9 +3,6 @@ import gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 import s from './style.module.less';
 
-import placeholderImage from './sharing_placeholder.jpg';
-
-
 export const Teilen = () => {
   return (
     <section className={gS.pageContainer}>
@@ -18,13 +15,9 @@ export const Teilen = () => {
       <div className={s.previewContainer}>
         <img
           className={s.imagePlaceholder}
-          src={placeholderImage}
+          src={"https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png"}
           alt="PlaceholderImage"
         />
-        <div className={s.imageDescription}>
-          <h1>Ich bringe das Grundeinkommen nach GEMEINDE!</h1>
-          <h1>Sei auch du dabei!</h1>
-        </div>
       </div>
       <ShareButtonRow />
     </section>
