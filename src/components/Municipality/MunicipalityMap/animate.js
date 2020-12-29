@@ -9,6 +9,8 @@ export const animate = ({
   updateFocus,
   animateOnLoad,
 }) => {
+  console.log(animateOnLoad);
+
   const localEvents = [...dataEvents];
   const localOpacities = { ...fadeOpacities };
   const tl = anime.timeline();

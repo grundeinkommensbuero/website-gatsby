@@ -138,9 +138,9 @@ const MapColumn = ({ municipality, setMapDataReady }) => {
           setMapDataReady(true);
           setShouldStartAnimation(true);
         }}
-        shouldStartAnimation={shouldStartAnimation}
+        shouldStartAnimation={true}
         animateEvents={true}
-        flyToAgsOnLoad={false}
+        flyToAgsOnLoad={true}
       />
     </div>
   );

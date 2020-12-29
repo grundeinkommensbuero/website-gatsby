@@ -5,15 +5,29 @@ import characterSet from './data/characterSet.json';
 import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
-import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
+import {
+  ScatterplotLayer,
+  IconLayer,
+  GeoJsonLayer,
+  TextLayer,
+} from '@deck.gl/layers';
 import { FlyToInterpolator } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
-import { scaleSqrt } from 'd3-scale';
+import { scaleSqrt, scaleLinear } from 'd3-scale';
+import { extent } from 'd3-array';
 
-import { getLayeredData, getColor, zoomToBounds } from './utils';
+import {
+  getLayeredData,
+  getColor,
+  zoomToBounds,
+  DelayedPointLayer,
+} from './utils';
 import { animate } from './animate';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
+
+import anime from 'animejs';
+import GL from '@luma.gl/constants';
 
 // ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
@@ -55,13 +69,14 @@ export const MunicipalityMap = ({
   const [dataEvents, setDataEvents] = useState([]);
   const [signupScale, setSignupScale] = useState([
     [1, 40000],
-    [2000, 80000],
+    [1000, 60000],
   ]);
   const [, setTimePassed] = useState();
-  const [
-    ,
-    municipalityStats /* getMunicipalityStats */,
-  ] = useGetMunicipalityStats();
+  // const [
+  //   ,
+  //   municipalityStats /* getMunicipalityStats */,
+  // ] = useGetMunicipalityStats();
+  const [municipalityStats, setMunicipalityStats] = useState();
   const [focus, setFocus] = useState();
   const [mapDataReady, setMapDataReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
@@ -73,16 +88,21 @@ export const MunicipalityMap = ({
   // WebGL
   const [hasWebGl, setHasWebGL] = useState(null);
 
+  const [animationProgress, setAnimationProgress] = useState(0);
+
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
   }, []);
 
   useEffect(() => {
+    import('./data/response.json').then(({ default: stats }) => {
+      setMunicipalityStats(stats);
+    });
     // getMunicipalityStats();
   }, []);
 
   useEffect(() => {
-    if (municipalityStats.municipalities) {
+    if (municipalityStats?.municipalities) {
       import('./data/states-geo.json').then(({ default: states }) => {
         setDataStates(states);
       });
@@ -122,6 +142,19 @@ export const MunicipalityMap = ({
   useEffect(() => {
     if (mapDataReady) {
       onDataReady();
+      // Animation test
+      setTimeout(() => {
+        const animation = { progress: 0, duration: 8000 };
+        anime({
+          duration: animation.duration,
+          targets: animation,
+          progress: [0, 1],
+          easing: 'easeInOutQuad',
+          update() {
+            setAnimationProgress(animation.progress);
+          },
+        });
+      }, 200);
     }
   }, [mapDataReady]);
 
@@ -149,6 +182,8 @@ export const MunicipalityMap = ({
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
+    console.log(mapDataReady, shouldStartAnimation);
+
     if (mapDataReady && shouldStartAnimation) {
       animate({
         fadeOpacities,
@@ -157,7 +192,7 @@ export const MunicipalityMap = ({
         setDataEvents,
         flyToAgsOnLoad,
         updateFocus,
-        animateEvents,
+        animateOnLoad: animateEvents,
       });
     }
   }, [shouldStartAnimation, mapDataReady, animate]);
@@ -239,6 +274,7 @@ export const MunicipalityMap = ({
             setZoom={setZoom}
             zoomMin={zoomMin}
             setZoomMin={setZoomMin}
+            animationProgress={animationProgress}
           />
         </div>
       </div>
@@ -262,14 +298,17 @@ const Tooltip = ({ hoverInfo }) => {
       </div>
       <div className={s.tooltipInfoContainer}>
         <div className={s.tooltipInfo}>
-          <span className={s.tooltipNumber}>
-            {hoverInfo.object.percentToGoal} %
+          <span className={s.tooltipLabel}>
+            In {hoverInfo.object.name} wurden bereits
           </span>
-          <span className={s.tooltipLabel}> der nötigen Anmeldungen</span>
-        </div>
-        <div className={s.tooltipInfo}>
-          <span className={s.tooltipNumber}>{hoverInfo.object.signups}</span>
-          <span className={s.tooltipLabel}> Anmeldungen insgesamt</span>
+          <span className={s.tooltipNumber}>
+            {' '}
+            {hoverInfo.object.percentToGoal}&nbsp;%{' '}
+          </span>
+          <span className={s.tooltipLabel}>
+            der nötigen Anmeldungen erreicht, das sind insgesamt
+          </span>
+          <span className={s.tooltipNumber}> {hoverInfo.object.signups}!</span>
         </div>
       </div>
     </div>
@@ -287,7 +326,11 @@ const Map = ({
   setZoom,
   zoomMin,
   setZoomMin,
+  animationProgress,
 }) => {
+  const longitudeDelayScale = scaleLinear()
+    .domain(extent(dataSignups, d => d.distance))
+    .range([0, 1]);
   // ---- Utils ----------------------------------------------------------------------------
   const [signupDomain, signupRange] = signupScale;
   const scaleSignupsToMeters = scaleSqrt()
@@ -328,22 +371,55 @@ const Map = ({
     });
   }, [dataStates]);
 
+  // const layerPermanentMarker = useMemo(() => {
+  //   return new IconLayer({
+  //     id: 'permanentMarker',
+  //     data: dataSignups,
+  //     pickable: true,
+  //     iconAtlas,
+  //     iconMapping,
+  //     // getIcon: return a key of icon mapping as string
+  //     getIcon: d => (d.signups > d.goal ? 'win' : 'marker'),
+  //     getPosition: d => d.coordinates,
+  //     sizeUnits: 'meters',
+  //     getSize: d => scaleSignupsToMeters(d.signups),
+  //     getColor: d => getColor(d.percentToGoal),
+  //     onHover: info => setHoverInfo(info),
+  //   });
+  // }, [dataSignups, scaleSignupsToMeters, getColor]);
+
   const layerPermanentMarker = useMemo(() => {
-    return new IconLayer({
+    return new DelayedPointLayer({
       id: 'permanentMarker',
       data: dataSignups,
       pickable: true,
-      iconAtlas,
-      iconMapping,
-      // getIcon: return a key of icon mapping as string
-      getIcon: d => (d.signups > d.goal ? 'win' : 'marker'),
       getPosition: d => d.coordinates,
       sizeUnits: 'meters',
-      getSize: d => scaleSignupsToMeters(d.signups),
-      getColor: d => getColor(d.percentToGoal),
+      getRadius: d => scaleSignupsToMeters(d.signups),
+      getFillColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
+      animationProgress: animationProgress,
+      getDelayFactor: d => {
+        return longitudeDelayScale(d.distance);
+      },
+      parameters: {
+        // prevent flicker from z-fighting
+        [GL.DEPTH_TEST]: false,
+
+        // turn on additive blending to make them look more glowy
+        // [GL.BLEND]: true,
+        // [GL.BLEND_SRC_RGB]: GL.ONE,
+        // [GL.BLEND_DST_RGB]: GL.ONE,
+        // [GL.BLEND_EQUATION]: GL.FUNC_ADD,
+      },
     });
-  }, [dataSignups, scaleSignupsToMeters, getColor]);
+  }, [
+    dataSignups,
+    scaleSignupsToMeters,
+    getColor,
+    longitudeDelayScale,
+    animationProgress,
+  ]);
 
   const layerAnimatedMarker = useMemo(() => {
     return new IconLayer({
@@ -431,7 +507,7 @@ const Map = ({
         layerPermanentLabels,
       ]);
     }
-  }, [dataLabels, dataEvents]);
+  }, [dataLabels, dataEvents, animationProgress]);
 
   useEffect(() => {
     if (focus) {
