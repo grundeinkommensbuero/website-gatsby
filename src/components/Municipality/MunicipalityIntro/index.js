@@ -20,12 +20,12 @@ const ColumnQualifying = ({
   const [
     municipalityStatsState,
     municipalityStats,
-    getMunicipalityStats,
+    /* getMunicipalityStats, */
   ] = useGetMunicipalityStats();
   useEffect(() => {
-    getMunicipalityStats(municipality.ags);
+    // getMunicipalityStats(municipality.ags);
   }, []);
-  console.log(municipalityStats);
+  // console.log(municipalityStats);
   return (
     <>
       <SearchPlaces

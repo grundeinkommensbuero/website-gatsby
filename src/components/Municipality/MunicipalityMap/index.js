@@ -58,7 +58,10 @@ export const MunicipalityMap = ({
     [2000, 80000],
   ]);
   const [, setTimePassed] = useState();
-  const [, municipalityStats, getMunicipalityStats] = useGetMunicipalityStats();
+  const [
+    ,
+    municipalityStats /* getMunicipalityStats */,
+  ] = useGetMunicipalityStats();
   const [focus, setFocus] = useState();
   const [mapDataReady, setMapDataReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
@@ -75,7 +78,7 @@ export const MunicipalityMap = ({
   }, []);
 
   useEffect(() => {
-    getMunicipalityStats();
+    // getMunicipalityStats();
   }, []);
 
   useEffect(() => {
@@ -489,9 +492,6 @@ const Map = ({
     ) {
       const isNarrow = dimensionsUpdate.width < 400;
       const scrollZoom = isNarrow ? false : true;
-      // Suggestion: solve with a scrollable area
-      // -->
-      // const dragPan = isNarrow ? false : true;
       setControllerOptions({ ...controllerOptions, scrollZoom });
     }
   };
@@ -523,9 +523,6 @@ const Map = ({
         onResize={dimensions => {
           handleResize(dimensions);
         }}
-        // getTooltip={({ object }) =>
-        //   object && `${object.name}\nEinwohner: ${object.population}`
-        // }
       >
         {hoverInfo && hoverInfo.object && <Tooltip hoverInfo={hoverInfo} />}
       </DeckGL>
