@@ -9,7 +9,7 @@ export const animate = ({
   updateFocus,
   animateOnLoad,
 }) => {
-  console.log(animateOnLoad);
+  // console.log(animateOnLoad);
 
   const localEvents = [...dataEvents];
   const localOpacities = { ...fadeOpacities };

@@ -149,7 +149,7 @@ export const MunicipalityMap = ({
           duration: animation.duration,
           targets: animation,
           progress: [0, 1],
-          easing: 'linear',
+          easing: 'easeOutCubic',
           update() {
             setAnimationProgress(animation.progress);
           },
@@ -182,7 +182,7 @@ export const MunicipalityMap = ({
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
-    console.log(mapDataReady, shouldStartAnimation);
+    // console.log(mapDataReady, shouldStartAnimation);
 
     if (mapDataReady && shouldStartAnimation) {
       animate({
