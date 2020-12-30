@@ -168,12 +168,15 @@
   height: 100%;
   width: 87%;
   max-width: 500px;
-  padding: 1.2rem
+  padding: 1.5rem
 }
 
 .legendHeadline {
-  margin-top: 1.2rem;
+  // margin-top: 1.2rem;
   font-size: @fontSizeM;
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeS;
+  }
 }
 
 .legendIcon {
