@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import s from './style.module.less';
+import cN from 'classnames';
 
 import characterSet from './data/characterSet.json';
 import labels from './data/labels.json';
@@ -17,12 +18,20 @@ import {
   zoomToBounds,
   DelayedPointLayer,
 } from './utils';
+import { detectWebGLContext } from '../../utils';
 import { animate } from './animate';
+
+import { MapTooltip } from './MapTooltip';
+import { Button } from '../../Forms/Button';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
 import anime from 'animejs';
 import GL from '@luma.gl/constants';
+
+const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
+const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
+const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
 
 // ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
@@ -48,13 +57,76 @@ const iconMapping = {
   },
 };
 
+const Legend = () => {
+  const [isActive, setIsActive] = useState(false);
+  return (
+    <div className={s.legendContainer}>
+      <Button
+        size={'SMALL'}
+        className={s.legendButton}
+        aria-label="Legende öffnen"
+        onClick={() => {
+          setIsActive(true);
+        }}
+      >
+        Legende
+      </Button>
+
+      {isActive && (
+        <div
+          className={s.legendOverlay}
+          role="dialog"
+          aria-describedby="dialogTitle"
+        >
+          <button
+            className={s.closeButton}
+            onClick={() => setIsActive(false)}
+            aria-label="Legende schließen"
+          ></button>
+          <div className={s.legendContent}>
+            {/* <div className={s.legendLabel}>Legende</div> */}
+            <div className={s.legendHeadline}>
+              Jede Stadt oder Gemeinde mit Anmeldungen hat einen Pin.
+            </div>
+            <p className={s.legendIconLabel}>
+              Die Größe der Pins entspricht der Anzahl der Anmeldungen:
+            </p>
+            <div className={s.legendIcon}>
+              <div dangerouslySetInnerHTML={{ __html: legendSize }}></div>
+              <span> mehr</span>
+            </div>
+            <p className={s.legendIconLabel}>
+              Wird das Anmeldeziel erreicht, bekommt der Pin einen Stern:
+            </p>
+            <div className={s.legendIcon}>
+              <div dangerouslySetInnerHTML={{ __html: legendMarker }}></div>
+              <span> geschafft!</span>
+            </div>
+            <p className={s.legendIconLabel}>
+              Die Farbe der Pins zeigt wieviel Prozent des Anmeldeziels erreicht
+              wurde:
+            </p>
+            <div className={s.legendIcon}>
+              <div
+                className={s.legendGradient}
+                dangerouslySetInnerHTML={{ __html: legendGradient }}
+              ></div>
+            </div>
+            <div className={s.legendSpacer}></div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const MunicipalityMap = ({
   AgsToFlyTo,
   shouldStartAnimation,
   onDataReady,
   animateEvents = true,
   flyToAgsOnLoad = true,
-  className = s.heightSetter,
+  className = s.defaultHeightContainer,
 }) => {
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
@@ -215,7 +287,7 @@ export const MunicipalityMap = ({
 
   if (!hasWebGl) {
     return (
-      <div className={className}>
+      <div className={cN(s.defaultPositionRelative, className)}>
         <div className={s.interfaceContainer}>
           <div className={s.mapFallback}></div>
         </div>
@@ -224,7 +296,7 @@ export const MunicipalityMap = ({
   }
 
   return (
-    <div className={className}>
+    <div className={cN(s.defaultPositionRelative, className)}>
       <div className={s.interfaceContainer}>
         <div className={s.blockTouchOverlay}>
           <div className={s.top}></div>
@@ -273,39 +345,7 @@ export const MunicipalityMap = ({
           />
         </div>
       </div>
-    </div>
-  );
-};
-
-const Tooltip = ({ hoverInfo }) => {
-  return (
-    <div
-      className={s.tooltipContainer}
-      style={{
-        background: getColor(hoverInfo.object.percentToGoal, 255, true),
-        left: hoverInfo.x,
-        top: hoverInfo.y,
-        color: 'rgba(255,255,255,0.9)',
-      }}
-    >
-      <div className={s.tooltipHeader}>
-        <span className={s.tooltipMunicipality}>{hoverInfo.object.name}</span>
-      </div>
-      <div className={s.tooltipInfoContainer}>
-        <div className={s.tooltipInfo}>
-          <span className={s.tooltipLabel}>
-            In {hoverInfo.object.name} wurden bereits
-          </span>
-          <span className={s.tooltipNumber}>
-            {' '}
-            {hoverInfo.object.percentToGoal}&nbsp;%{' '}
-          </span>
-          <span className={s.tooltipLabel}>
-            der nötigen Anmeldungen erreicht, das sind insgesamt
-          </span>
-          <span className={s.tooltipNumber}> {hoverInfo.object.signups}!</span>
-        </div>
-      </div>
+      <Legend />
     </div>
   );
 };
@@ -595,28 +635,10 @@ const Map = ({
           handleResize(dimensions);
         }}
       >
-        {hoverInfo && hoverInfo.object && <Tooltip hoverInfo={hoverInfo} />}
+        {hoverInfo && hoverInfo.object && (
+          <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
+        )}
       </DeckGL>
-      {/* <Legend /> */}
     </>
   );
 };
-
-function detectWebGLContext() {
-  // Create canvas element. The canvas is not added to the
-  // document itself, so it is never displayed in the
-  // browser window.
-  if (typeof window !== `undefined`) {
-    var canvas = document.createElement('canvas');
-    // Get WebGLRenderingContext from canvas element.
-    var gl =
-      canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    // Report the result.
-    if (gl && gl instanceof WebGLRenderingContext) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  return false;
-}

@@ -8,6 +8,8 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { SectionInner } from '../Layout/Sections';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 
+import { detectWebGLContext } from '../utils';
+
 let mapboxgl;
 
 if (!process.env.STATIC) {
@@ -204,22 +206,3 @@ const PopupContent = ({ title, description, date, phone, mail }) => (
     )}
   </div>
 );
-
-function detectWebGLContext() {
-  // Create canvas element. The canvas is not added to the
-  // document itself, so it is never displayed in the
-  // browser window.
-  if (typeof window !== `undefined`) {
-    var canvas = document.createElement('canvas');
-    // Get WebGLRenderingContext from canvas element.
-    var gl =
-      canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    // Report the result.
-    if (gl && gl instanceof WebGLRenderingContext) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  return false;
-}

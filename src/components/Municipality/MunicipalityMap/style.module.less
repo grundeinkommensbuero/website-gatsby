@@ -2,7 +2,11 @@
 
 @mapHeight: 65vh;
 
-.heightSetter {
+.defaultPositionRelative {
+  position: relative;
+}
+
+.defaultHeightContainer {
   height: @mapHeight;
 }
 
@@ -100,44 +104,111 @@
   }
 }
 
-.tooltipContainer {
+.legendContainer {
   position: absolute;
-  min-width: 200px;
-  width: 60%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   pointer-events: none;
-  padding: 1.5rem;
-  z-index: 1;
-  border: 2px solid #fff;
+  
+  & button {
+    pointer-events: all;
+  }
 }
 
-.tooltipHeader {
-  // margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+.legendButton {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  background-color: var(--bg-color);
+  margin-left: 0.5rem !important;
+}
+
+.legendOverlay {
+  position: absolute;
+  top:0;
+  left:0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  pointer-events: all;
+  background-color: @pink;
+  overflow-y: scroll;
+  border: 1px solid @greyBright;
+}
+
+
+
+.closeButton {
+  position: sticky;
+  top: 1.2rem;
+  float: right;
+  margin-right: 1.2rem;
+  height: 3.2rem;
+  width: 3.2rem;
+  cursor: pointer;
+  font-size: 0;
+  background-image: url('./assets/close-icon.svg');
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+
+  @media (max-width: @breakPointM) {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.legendLabel {
+  font-size: @fontSizeXS;
+}
+
+.legendContent {
+  height: 100%;
+  width: 87%;
+  max-width: 500px;
+  padding: 1.2rem
+}
+
+.legendHeadline {
+  margin-top: 1.2rem;
   font-size: @fontSizeM;
 }
-.tooltipMunicipality {
-  .linkUnderlined()
+
+.legendIcon {
+  height: 9%;
+  margin-bottom: 1.75rem;
+  & span {
+    font-size: @fontSizeXS;
+  }
+  & div {
+    display: inline-block;
+    height: 100%;
+    & svg {
+      height: 100%;
+    }
+  }
+  & .legendGradient {
+    width: 100%;
+  }
 }
 
-.tooltipInfo {
-  margin-top: 0.4rem;
-  line-height: @fontSizeS;
-}
-
-.tooltipNumber {
+.legendIconLabel {
   font-size: @fontSizeXS;
 }
 
-.tooltipLabel {
-  font-size: @fontSizeXS;
-  font-weight: 400;
+.legendSpacer {
+  height: 0.1rem;
 }
 
-// .legendContainer {
-//   position: absolute;
-//   top: 0;
-//   transform: translate(5%, 5%);
-//   height: 90%;
-//   width: 90%;
-//   background-color: rgba(255, 255, 255, 0.9);
-// }
+
+
+
+
+
+
+
+
+
+
