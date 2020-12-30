@@ -144,17 +144,17 @@ export const MunicipalityMap = ({
       onDataReady();
       // Animation test
       setTimeout(() => {
-        const animation = { progress: 0, duration: 8000 };
+        const animation = { progress: 0, duration: 4000 };
         anime({
           duration: animation.duration,
           targets: animation,
           progress: [0, 1],
-          easing: 'easeInOutQuad',
+          easing: 'linear',
           update() {
             setAnimationProgress(animation.progress);
           },
         });
-      }, 200);
+      }, 1000);
     }
   }, [mapDataReady]);
 
@@ -329,8 +329,8 @@ const Map = ({
   animationProgress,
 }) => {
   const longitudeDelayScale = scaleLinear()
-    .domain(extent(dataSignups, d => d.distance))
-    .range([0, 1]);
+    .domain(extent(dataSignups, d => d.population))
+    .range([1, 0]);
   // ---- Utils ----------------------------------------------------------------------------
   const [signupDomain, signupRange] = signupScale;
   const scaleSignupsToMeters = scaleSqrt()
@@ -400,7 +400,7 @@ const Map = ({
       onHover: info => setHoverInfo(info),
       animationProgress: animationProgress,
       getDelayFactor: d => {
-        return longitudeDelayScale(d.distance);
+        return longitudeDelayScale(d.population);
       },
       parameters: {
         // prevent flicker from z-fighting

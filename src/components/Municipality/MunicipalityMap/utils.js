@@ -101,6 +101,7 @@ export const getLayeredData = ({
         signups = signupsLookup[j].signups;
         percentToGoal = getPercentToGoal(signups, municipalities[i].goal);
         const [longitude, latitude] = municipalities[i].coordinates;
+        const population = municipalities[i].population;
 
         dataSignups.push({
           ...municipalities[i],
@@ -108,6 +109,7 @@ export const getLayeredData = ({
           percentToGoal,
           longitude,
           latitude,
+          population,
         });
         signupsLookup.splice(j, 1);
         break;
