@@ -5,12 +5,7 @@ import characterSet from './data/characterSet.json';
 import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
-import {
-  ScatterplotLayer,
-  IconLayer,
-  GeoJsonLayer,
-  TextLayer,
-} from '@deck.gl/layers';
+import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
 import { FlyToInterpolator } from '@deck.gl/core';
 import iconAtlas from './assets/pins_512.png';
 import { scaleSqrt, scaleLinear } from 'd3-scale';
