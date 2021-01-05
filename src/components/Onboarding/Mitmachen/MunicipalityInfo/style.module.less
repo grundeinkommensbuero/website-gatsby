@@ -41,7 +41,7 @@
 
 .goalLabel {
   position: absolute;
-  top: 0.5rem;
+  top: 0;
   right: 0.5rem;
   text-align: right;
   font-size: @fontSizeL;
@@ -52,6 +52,7 @@
 }
 
 .barGoalBar {
+  position: relative;
   height: 3rem;
   z-index: 0;
   transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
@@ -69,11 +70,26 @@
 
 .barGoalReached {
   height: 100%;
-  width: 93%;
+  width: 92%;
   background: var(--font-color);
 
   .goalLabel {
     color: var(--font-color);
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+  }
+
+  @media (max-width: @breakPointL) {
+    width: 90%;
+  }
+
+  @media (max-width: @breakPointM) {
+    width: 85%;
+  }
+
+  @media (max-width: @breakPointS) {
+    width: 75%;
   }
 }
 
@@ -130,7 +146,7 @@
 
   &.barAlmostFull {
     .barCurrentLabel {
-      right: 5rem;
+      right: 6rem;
     }
   }
 
