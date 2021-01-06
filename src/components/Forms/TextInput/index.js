@@ -50,6 +50,7 @@ export const TextInputWrapped = ({
   placeholder,
   description,
   hide,
+  theme,
   className,
   inputClassName,
   maxLength,
@@ -71,6 +72,7 @@ export const TextInputWrapped = ({
       meta={meta}
       className={className}
       explanation={explanation}
+      theme={theme}
     >
       {input.type === 'textarea' ? (
         <Textarea

@@ -18,19 +18,19 @@ export default ({
   postSignupAction,
   illustration = 'POINT_LEFT',
 }) => {
-  const [signUpState, signUp, setSignupState] = useSignUp();
+  const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
   // After signup process is successful, do post signup
   useEffect(() => {
-    if (signUpState === 'success' && userId) {
+    if (hasSubmitted && isAuthenticated && userId) {
       if (postSignupAction) {
         postSignupAction();
       }
     }
-  }, [signUpState, userId]);
+  }, [hasSubmitted, isAuthenticated, userId]);
 
   useEffect(() => {
     // If user signs in from form
@@ -38,26 +38,28 @@ export default ({
       updateUser({
         updatedOnXbge: true,
       });
-      setSignupState('signedIn');
+      setSignUpState('signedIn');
     }
     // If user signs out after signing in
     if (!isAuthenticated && signUpState === 'signedIn') {
-      setSignupState(undefined);
+      setSignUpState(undefined);
     }
   }, [isAuthenticated, hasSubmitted]);
 
-  if (signUpState && signUpState !== 'userExists') {
+  if (signUpState === 'success') {
+    return <EnterLoginCode preventSignIn={true} />;
+  }
+
+  if (signUpState) {
     return (
       <SignUpFeedbackMessage
-        state={signUpState}
+        state={
+          signUpState === 'signedIn' && !userExists ? 'success' : signUpState
+        }
         trackingId={'sign-up'}
         trackingCategory="SignUp"
       />
     );
-  }
-
-  if (signUpState === 'userExists') {
-    return <EnterLoginCode />;
   }
 
   if (isAuthenticated || userId) {

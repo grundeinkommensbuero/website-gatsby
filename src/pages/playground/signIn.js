@@ -30,7 +30,7 @@ export default () => {
                 <form
                   onSubmit={e => {
                     e.preventDefault();
-                    signIn(email);
+                    signIn({ email });
                   }}
                 >
                   <input

@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import Confetti from '../Confetti';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -80,6 +81,7 @@ function Template({ children, sections }) {
               }
               callToActionLink
               callToActionText
+              colorScheme
               bodyTextSizeHuge
               signUpForm
               emailSignup
@@ -157,6 +159,7 @@ function Template({ children, sections }) {
       <main className={s.main}>
         {children}
         <Sections sections={sections} />
+        <Confetti componentTheme="christmas" />
       </main>
       <Footer
         footerText={globalStuff.footerText}

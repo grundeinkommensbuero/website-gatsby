@@ -1,23 +1,21 @@
 @import '../../style/vars.less';
 
 .donationForm {
-  --secondary-color: @blueBright;
-  --font-color: @red;
+  --bg-color: @red;
+  --font-color: @grey;
+  --text-on-secondary-color: @grey;
+  background-color: @red;
+  color: @grey;
   font-weight: normal;
+  margin-top: 2em;
+  padding: 3rem;
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
 
-  &.default {
-    --bg-color: @yellow;
-    background-color: var(--bg-color);
-    margin-top: 3em;
-    padding: 30px 40px 40px 40px;
-  }
-
-  &.noBackgroundAndPadding {
+  @media (max-width: @breakPointS) {
     margin-top: 0;
-    padding: 0;
+    padding: 2.5rem 1.5rem;
   }
 
   h3 {
@@ -26,6 +24,7 @@
 
   div {
     font-size: @fontSizeM;
+    margin-bottom: 0; // Overwrites unneeded field container margins
 
     @media (max-width: @breakPointM) {
       font-size: @fontSizeS;
@@ -36,26 +35,18 @@
     margin-bottom: 0.8rem;
   }
 
+  // Error message
   label div {
     font-size: @fontSizeS;
     font-weight: bold;
   }
 }
 
-.waitingHint {
-  --secondary-color: @yellow;
-}
-
-.primaryButton {
-  background: var(--font-color);
-  color: var(--bg-color);
-  border: none;
-
-  &:hover,
-  &:focus {
-    background: darken(@red, 10%);
-    box-shadow: none;
-  }
+.donationButtons {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  width: 20rem;
 }
 
 .link {
@@ -64,6 +55,11 @@
   &:hover {
     .menuLink();
   }
+}
+
+.secondaryLink {
+  font-size: @fontSizeXS;
+  margin: 1.5rem 0.5rem;
 }
 
 .partialForm {
@@ -89,4 +85,99 @@
 
 .hint {
   font-size: @fontSizeXS;
+}
+
+.christmasTheme {
+  --bg-color: @grey;
+  background-color: @red;
+  color: @grey;
+  & input:checked {
+    color: @red;
+  }
+}
+
+// Put all the following styles back into christmas theme when christmas is over
+.adjustFinallyMessage {
+  --secondary-color: @red;
+  --text-on-secondary-color: @grey;
+}
+
+.buttonContainer a {
+  border-color: @grey;
+  &:hover {
+    color: var(--font-color);
+    background: var(--bg-color);
+  }
+}
+
+button {
+  border: 1px solid @grey;
+  color: @grey;
+
+  &:hover {
+    color: @red;
+    background: @grey;
+  }
+}
+
+.primaryButton {
+  background-color: @grey;
+  color: @red !important;
+  border: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: darken(@grey, 10%);
+    border: none;
+  }
+}
+
+// Radio Buttons
+input:checked ~ span {
+  background-color: @grey !important;
+
+  &:after {
+    background-color: @red !important;
+  }
+}
+
+// Checkboxes
+label > input {
+  background-color: @grey;
+  border: none;
+}
+
+label > input:checked {
+  background-color: @grey;
+  border: none;
+  color: @red;
+}
+
+.certificateInfo {
+  margin-top: 3rem;
+}
+
+/* Leftover styles in case we want to 
+switch back from christmas theme */
+.standardColors {
+  background-color: var(--bg-color);
+  border: 1px solid var(--font-color);
+
+  .primaryButton {
+    background: var(--font-color);
+    color: var(--bg-color);
+    border: none;
+
+    &:hover,
+    &:focus {
+      background: darken(@red, 10%);
+      box-shadow: none;
+    }
+  }
+
+  .adjustFinallyMessage {
+    --secondary-color: var(--bg-color);
+    --text-on-secondary-color: var(--font-color);
+  }
 }
