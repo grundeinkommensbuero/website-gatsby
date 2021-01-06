@@ -29,6 +29,7 @@ export const SearchPlaces = ({
   validateOnBlur,
   inputSize,
   buttonSize,
+  profileButtonStyle,
   handleButtonClick = handleButtonClickDefault,
 }) => {
   const [query, setQuery] = useState('');
@@ -180,7 +181,10 @@ export const SearchPlaces = ({
           <Button
             id="linkButton"
             size={buttonSize}
-            className={s.sideButton}
+            className={cN(
+              { [s.sideButton]: !profileButtonStyle },
+              { [s.profileSideButton]: profileButtonStyle }
+            )}
             onClick={event => handleButtonClick({ event, validate })}
           >
             {buttonLabel}
