@@ -348,12 +348,15 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         }
 
         <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
-        <SearchPlaces
-          showButton={municipality !== undefined && !waitingForApi}
-          onPlaceSelect={handlePlaceSelect}
-          buttonLabel={`${municipality ? municipality.name : ''} hinzufügen`}
-          handleButtonClick={() => handleNewsletterAddRequest()}
-        />
+        <div className={s.searchPlaces}>
+          <SearchPlaces
+            showButton={municipality !== undefined && !waitingForApi}
+            profileButtonStyle={true}
+            onPlaceSelect={handlePlaceSelect}
+            buttonLabel={`${municipality ? municipality.name : ''} hinzufügen`}
+            handleButtonClick={() => handleNewsletterAddRequest()}
+          />
+        </div>
 
         <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
         <p className={s.newsletterCardDescription}>

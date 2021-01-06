@@ -75,8 +75,14 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
       <Link to="kontakt-einstellungen" className={s.profilePageSection}>
         <section>
           <h2>Newsletter & Kontakt</h2>
-          <p>Du erhältst folgende Newsletter: </p>
-          <p>{customNewsletterEnumeration()}</p>
+          {
+            customNewsletterEnumeration().length > 0 ?
+              <>
+                <p>Du erhältst folgende Newsletter: </p>
+                <p>{customNewsletterEnumeration()}</p>
+              </> :
+              <p>Du erhältst keinen Newsletter von uns.</p>
+          }
           <div className={s.sectionLink}>
             <span>Einstellungen ändern</span>
           </div>

@@ -14,6 +14,12 @@
     grid-template-columns: 90%;
     padding: 2rem 0 2rem;
   }
+
+  @media (max-width: @breakPointS) {
+    grid-template-columns: 100%;
+    grid-gap: 1rem;
+    padding: 1rem 0 1rem;
+  }
 }
 
 .avatar {
@@ -80,6 +86,8 @@
 
 .editSettings {
   grid-column: 1 / span 2;
+  background-color: @red;
+  color: @white;
 
   @media (max-width: @breakPointS) {
     grid-column: 1 / span 1;
