@@ -77,6 +77,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             userId={userId}
             showUploadLabel={false}
             showEditLabel={true}
+            buttonOnRedBackground={true}
             size={'large'}
             onUploadDone={() => { }}
           />

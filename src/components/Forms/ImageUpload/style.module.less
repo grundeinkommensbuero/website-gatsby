@@ -112,3 +112,28 @@
 .submitButtonDirty {
   visibility: visible;
 }
+
+.buttonOnRedBackground {
+  color: @white;
+  border: @white solid 1px;
+
+  &:hover {
+    color: @red;
+    background-color: @white;
+  }
+}
+
+.uploadMessageContainer {
+  position: relative;
+}
+
+.uploadStateMessage {
+  position: absolute;
+  top: 1rem;
+  font-size: 18px;
+}
+
+.loadingMsg {
+  margin-left: 0.5em;
+  font-size: 18px;
+}

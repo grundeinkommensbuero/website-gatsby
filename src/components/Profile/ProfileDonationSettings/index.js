@@ -12,6 +12,11 @@ export const ProfileDonationSettings = ({ userId }) => {
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
+        <h4>
+          Die Expedition ist gemeinnützig und finanziert sich ausschließlich aus den{' '}
+          Spenden vieler, vieler Expeditionsmitglieder und einiger Stiftungen.{' '}
+          Deine Spende macht die Expedition also erst möglich!
+        </h4>
         <DonationForm styling="noBackgroundAndPadding" />
       </section>
     </section>
