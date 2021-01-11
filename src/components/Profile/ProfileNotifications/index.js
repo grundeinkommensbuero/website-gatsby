@@ -5,7 +5,7 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 import { NewsletterCard } from './NewsletterCard';
 import { SearchPlaces } from '../../Forms/SearchPlaces';
-import { TextInput } from '../../Forms/TextInput';
+// import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
 // import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
@@ -358,7 +358,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           />
         </div>
 
-        <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
+        {/* <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
         <p className={s.newsletterCardDescription}>
           Hier kannst du angeben, ob wir dich auch telefonisch erreichen können.
           Eine Telefonnummer erleichtert es uns, dich für die Koordination von
@@ -371,7 +371,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <p className={cN(gS.noMargin, gS.inputDescription)}>Telefonnummer:</p>
           <TextInput placeholder="Telefonnummer" className={s.phoneNumberInput} />
           <Button>Eintragen</Button>
-        </div>
+        </div> */}
 
         {/* <h4 className={gS.optionSectionHeading}>Kontakt per Messenger</h4>
         <p className={s.newsletterCardDescription}>

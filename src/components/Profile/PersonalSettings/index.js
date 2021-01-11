@@ -15,16 +15,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
   // const [editMailAddress, setEditMailAddress] = useState(false);
-  const [editPhoneNumber, setEditPhoneNumber] = useState(false);
+  // const [editPhoneNumber, setEditPhoneNumber] = useState(false);
 
   // const [tempMail, setTempMail] = useState();
-  const [tempPhone, setTempPhone] = useState();
+  // const [tempPhone, setTempPhone] = useState();
   const [tempName, setTempName] = useState();
   const [tempZIP, setTempZIP] = useState();
   const [tempCity, setTempCity] = useState();
 
   // until phonenumber is included in userData
-  const fakePhone = '';
+  // const fakePhone = '';
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -47,7 +47,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
       setTempZIP(userData.zipCode);
       setTempCity(userData.city);
       // setTempMail(userData.email);
-      setTempPhone('');
+      // setTempPhone('');
     }
   });
 
@@ -101,7 +101,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
-            <h4 className={gS.optionSectionHeading}>Deine Kontaktdaten</h4>
+            {/*<h4 className={gS.optionSectionHeading}>Deine Kontaktdaten</h4>*/}
             {/*<p className={s.optionHeading}>
               <b>Email-Adresse</b>
             </p>
@@ -148,7 +148,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 </div>
               )} */}
 
-            <p className={s.optionHeading}>
+            {/* <p className={s.optionHeading}>
               <b>Telefonnummer</b>
             </p>
             <p className={s.optionDescription}>
@@ -200,7 +200,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
                   ) : null}
                 </div>
-              )}
+              )} */}
 
             {/* <p className={s.optionHeading}>
               <b>Messenger</b>

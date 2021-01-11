@@ -5,8 +5,8 @@ import {
   validateEmail,
   addActionTrackingId,
   trackEvent,
-  mapCampaignCodeToAgs,
-  mapCampaignCodeToState,
+  // mapCampaignCodeToAgs,
+  // mapCampaignCodeToState,
 } from '../../utils';
 import s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
