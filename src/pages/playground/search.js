@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import SearchPlaces from '../../components/Forms/SearchPlaces';
+import { SearchPlaces } from '../../components/Forms/SearchPlaces';
 
 export default () => {
   return (
@@ -17,7 +17,11 @@ export default () => {
       <SectionWrapper>
         <Section title="Gemeindesuche">
           <SectionInner wide={true}>
-            <SearchPlaces showButton={true} />
+            <SearchPlaces
+              showButton={true}
+              inputSize="SMALL"
+              buttonSize="MEDIUM"
+            />
           </SectionInner>
         </Section>
       </SectionWrapper>

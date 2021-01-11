@@ -28,7 +28,7 @@ export function LinkButtonLocal({ children, className, size, ...other }) {
 export function Button({ children, className, size, ...other }) {
   return (
     <button
-      className={cN(s.button, className, { [s.medium]: size === 'MEDIUM' })}
+      className={cN(s.button, className, { [s.medium]: size === 'MEDIUM' }, { [s.small]: size === 'SMALL' })}
       {...other}
     >
       {children}
