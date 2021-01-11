@@ -314,7 +314,7 @@ export default theme => {
                         )}
                       </FormSection>
 
-                      {!isChristmas && ( <>
+                      {!isChristmas && (<>
                         <div className={s.donationButtons}>
                           <CTAButton
                             type="submit"
@@ -328,7 +328,7 @@ export default theme => {
                           </CTAButton>
 
                           <Link
-                            to="/spenden"
+                            to="/spenden#bankverbindung"
                             className={cN(s.link, s.secondaryLink)}
                           >
                             Lieber einmalig spenden
@@ -625,7 +625,7 @@ export default theme => {
           </p>
           <p>
             Bitte versuche es erneut, oder überweise den Betrag direkt auf unser
-            Konto: 
+            Konto:
           </p>
           <p className={s.info}>
             Vertrauensgesellschaft e.V.<br></br>IBAN: DE74 4306 0967 1218 1056
