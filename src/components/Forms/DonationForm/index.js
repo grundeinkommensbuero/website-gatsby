@@ -328,7 +328,7 @@ export default theme => {
                           </CTAButton>
 
                           <Link
-                            to="/spenden"
+                            to="/spenden#bankverbindung"
                             className={cN(s.link, s.secondaryLink)}
                           >
                             Lieber einmalig spenden

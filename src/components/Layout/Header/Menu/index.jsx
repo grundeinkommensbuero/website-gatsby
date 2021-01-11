@@ -32,7 +32,9 @@ const Menu = ({ menu, menuOpen }) => {
         }
       })}
       <LoginMenuItem />
-      <Link to="/weihnachten" className={s.donationCTA}>Spenden</Link>
+      <Link to="/spenden" className={s.donationCTA}>
+        Spenden
+      </Link>
     </ul>
   );
 };
