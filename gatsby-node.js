@@ -94,4 +94,10 @@ exports.onCreatePage = async ({ page, actions }) => {
     page.component = path.resolve('src/pages/mensch/index.js');
     createPage(page);
   }
+
+  if (page.path.match(/^\/ticker/)) {
+    page.matchPath = '/ticker/*';
+    page.component = path.resolve('src/pages/ticker/index.js');
+    createPage(page);
+  }
 };
