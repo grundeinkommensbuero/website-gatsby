@@ -32,6 +32,7 @@
     "@aws-amplify/auth": "^3.4.1",
     "@contentful/rich-text-react-renderer": "^13.4.0",
     "@loadable/component": "^5.13.1",
+    "@pqina/flip": "^1.7.7",
     "canvas-confetti": "^1.2.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.5",
