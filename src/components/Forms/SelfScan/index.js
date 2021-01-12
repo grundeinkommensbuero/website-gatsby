@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 import cN from 'classnames';
 import querystring from 'query-string';
+import { Link } from 'gatsby';
 
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
@@ -106,6 +107,9 @@ export default ({ successMessage, campaignCode }) => {
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
         <Section>
+          <div className={s.backToProfile}>
+            <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
+          </div>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}
@@ -122,23 +126,26 @@ export default ({ successMessage, campaignCode }) => {
           </div>
         </Section>
       ) : (
-        <Section title="Unterschriften zählen">
-          <SectionInner hugeText={true}>
-            {!(
-              state === 'error' ||
-              state === 'userNotFound' ||
-              state === 'listNotFound' ||
-              state === 'listAndUserNotFound'
-            ) && (
-              <p>
-                Toll, dass du Unterschriften sammelst! Bitte sag uns, wie viele
-                Unterschriften du neu gesammelt hast:
-              </p>
-            )}
-            <CountSignaturesForm {...countSignaturesFormProps} />
-          </SectionInner>
-        </Section>
-      )}
+          <Section title="Unterschriften zählen">
+            <SectionInner hugeText={true}>
+              {!(
+                state === 'error' ||
+                state === 'userNotFound' ||
+                state === 'listNotFound' ||
+                state === 'listAndUserNotFound'
+              ) && (
+                  <p>
+                    Toll, dass du Unterschriften sammelst! Bitte sag uns, wie viele
+                    Unterschriften du neu gesammelt hast:
+                  </p>
+                )}
+              <CountSignaturesForm {...countSignaturesFormProps} />
+            </SectionInner>
+            <div className={s.backToProfile}>
+              <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
+            </div>
+          </Section>
+        )}
     </>
   );
 };
