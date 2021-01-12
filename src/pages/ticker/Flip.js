@@ -1,7 +1,7 @@
 import React from "react";
 
-import Tick from "@pqina/flip";
-import "@pqina/flip/dist/flip.min.css";
+import Tick from "./flip";
+import "./flip/dist/flip.min.css";
 
 export default class Flip extends React.Component {
   constructor(props) {
