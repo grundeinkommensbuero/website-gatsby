@@ -7,6 +7,7 @@ import Flip from "./Flip";
 import s from './style.module.less';
 import cN from 'classnames';
 
+
 const App = () => {
 
   const [peopleCount, setPeopleCount] = useState(3592);
