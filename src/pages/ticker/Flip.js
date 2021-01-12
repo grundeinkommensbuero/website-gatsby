@@ -1,7 +1,7 @@
 import React from "react";
 
-import Tick from "./flip";
-import "./flip/dist/flip.min.css";
+import Tick from "../../customModules/flip";
+import "../../customModules/flip/dist/flip.min.css";
 
 export default class Flip extends React.Component {
   constructor(props) {
