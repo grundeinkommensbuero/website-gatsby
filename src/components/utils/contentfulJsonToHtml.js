@@ -41,11 +41,20 @@ export function contentfulJsonToHtml(json) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        return (
-          <Link to={`/${node.data.target.fields.slug['en-US']}`}>
-            {node.content[0].value}
-          </Link>
-        );
+        console.log(node);
+        const isPage = node.data.target.fields.slug;
+        const uri = isPage
+          ? `/${node.data.target.fields.slug['en-US']}`
+          : `#${node.data.target.fields.titleShort['en-US']}`;
+        if (isPage) {
+          return <Link to={uri}>{node.content[0].value}</Link>;
+        } else {
+          return (
+            <a href={uri} target="_self">
+              {node.content[0].value}
+            </a>
+          );
+        }
       },
       [BLOCKS.EMBEDDED_ENTRY]: ({
         data: {
