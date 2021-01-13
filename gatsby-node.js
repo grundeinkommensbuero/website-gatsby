@@ -68,7 +68,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 const clientId = process.env.COGNITO_APP_CLIENT_ID;
 
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   actions.setWebpackConfig({
     plugins: [
       new webpack.DefinePlugin({
@@ -81,6 +81,18 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
       }),
     ],
   });
+  if (stage === "build-html") {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /@pqina\/flip/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
+  }
 };
 
 /**
