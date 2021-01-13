@@ -185,11 +185,7 @@ export function ContentfulSection({ section }) {
       )}
       {isDonationFeature && (
         <SectionInner>
-          {introText && (
-            <div className={s.donationIntroText}>
-              {introText}
-            </div>
-          )}
+          {introText && <div className={s.donationIntroText}>{introText}</div>}
           <DonationForm theme={theme}></DonationForm>
         </SectionInner>
       )}
