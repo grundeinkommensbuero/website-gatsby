@@ -157,6 +157,16 @@ export function getMailtoUrl(to, subject, body) {
   return url;
 }
 
+export const setWindowLocationOriginForIE = () => {
+  if (!window.location.origin) {
+    window.location.origin =
+      window.location.protocol +
+      '//' +
+      window.location.hostname +
+      (window.location.port ? ':' + window.location.port : '');
+  }
+};
+
 export const getStringFromPlaceholderText = (string, object) => {
   if (!string) {
     return '';

@@ -1,8 +1,6 @@
 import { WebMercatorViewport } from '@deck.gl/core';
 import { scaleLinear } from 'd3-scale';
 import { ScatterplotLayer } from '@deck.gl/layers';
-import distance from '@turf/distance';
-import { point } from '@turf/helpers';
 
 export const getPercentToGoal = (number, goal) => {
   return Number(((number / goal) * 100).toFixed(1));
@@ -13,7 +11,7 @@ export const getLayeredData = ({
   signups,
   events,
   labels,
-  animateEvents,
+  initialMapAnimation,
 }) => {
   // console.time('timeToLoopMunicipalities');
   const dataMunicipalities = [];
@@ -29,11 +27,11 @@ export const getLayeredData = ({
     // 1. Initialized 0 / false
     // 2. Overwrite in events on match
     // 3a. Overwrite in signups on match
-    // 3b. isEvents: Check if municipality is in events --> marker will not be added to dataSignups
-    // 4. Stays 0 if not overwritten for labels
+    // 3b. Events: Check if municipality is in events --> marker will not be added to dataSignups
     let signups = 0;
+    let signupsLabels = 0; // for labels
     let percentToGoal = 0;
-    let isEvent = false; // Check if municipality is in events
+    let percentToGoalLabels = 0;
     // ---
     // constants
     const {
@@ -44,29 +42,50 @@ export const getLayeredData = ({
     // ---- Check events / animation ---------------------------------------------------------
     for (let k = 0; k < eventsLookup.length; k++) {
       if (municipalities[i].ags === eventsLookup[k].ags) {
-        // Flag
-        isEvent = true;
+        // Important note: if the municipality is in the events-layer,
+        // we don’t want it in the signup-layer as well
+        // 1. Find ags in signupslookup
+        // Secondary Note:  you can check if there’s a faster way to do this (this should only be executed less than 20–40 times though)
+        const signupIndex = signupsLookup.findIndex(
+          x => x.ags === eventsLookup[k].ags
+        );
+        // 2. Remove it from the signupsLookup array
+        signupsLookup.splice(signupIndex, 1);
 
         // Destructuring
         const { category, signups: signupsRange } = eventsLookup[k];
 
         // Numbers
-        signups = animateEvents ? signupsRange[0] : signupsRange[1];
+        signups = initialMapAnimation ? signupsRange[0] : signupsRange[1];
+        signupsLabels = signupsRange[1]; // for Labels
 
         const [prev, cur] = signupsRange;
         const percentToGoalRange = [
           getPercentToGoal(prev, goal),
           getPercentToGoal(cur, goal),
         ];
-        percentToGoal = animateEvents
+        percentToGoal = initialMapAnimation
           ? percentToGoalRange[0]
           : percentToGoalRange[1];
+        percentToGoalLabels = percentToGoalRange[1];
 
         // Coordinates
         const latitudeStart = 58;
         const latitudeRange = [latitudeStart, latitudeEnd];
         let latitude =
-          category === 'new' && animateEvents ? latitudeStart : latitudeEnd;
+          category === 'new' && initialMapAnimation
+            ? latitudeStart
+            : latitudeEnd;
+
+        let hasLabel = false;
+        // Add event so animated labels layer
+        for (let l = 0; l < labelsLookup.length; l++) {
+          if (municipalities[i].name === labelsLookup[l]) {
+            hasLabel = true;
+            labelsLookup.splice(l, 1);
+            break;
+          }
+        }
 
         // Push
         dataEvents.push({
@@ -79,11 +98,14 @@ export const getLayeredData = ({
           longitude,
           latitude,
           latitudeRange,
+          hasLabel,
         });
+
+        // Set signupRange to end for the overall municipalities data (labels)
 
         // TODO: decide if one ags should only be once in the animation
         // Currently: multiple occurences are possible
-        // Uncomment the next two line for unique ags in animations
+        // Uncomment the next two lines for unique ags in animations
         // eventsLookup.splice(k, 1);
         // break;
       }
@@ -91,12 +113,6 @@ export const getLayeredData = ({
 
     // ---- Check signups --------------------------------------------------------------------
     for (let j = 0; j < signupsLookup.length; j++) {
-      // const signup = signupsLookup[j];
-      if (isEvent || signupsLookup[j].signups === 0) {
-        signupsLookup.splice(j, 1);
-        break;
-      }
-
       if (municipalities[i].ags === signupsLookup[j].ags) {
         signups = signupsLookup[j].signups;
         percentToGoal = getPercentToGoal(signups, municipalities[i].goal);
@@ -132,6 +148,10 @@ export const getLayeredData = ({
         break;
       }
     }
+    signups = signupsLabels > 0 ? signupsLabels : signups; // for labels
+    percentToGoal =
+      percentToGoalLabels > 0 ? percentToGoalLabels : percentToGoal; // for labels
+
     dataMunicipalities.push({
       ...municipalities[i],
       longitude,
@@ -142,34 +162,37 @@ export const getLayeredData = ({
   }
 
   // console.timeEnd('timeToLoopMunicipalities');
-  // Checks
-  // console.log(dataSignups);
-  // console.log(dataLabels);
-  // console.log(dataEvents);
 
-  // Test animation
-  const dataSignupsWithDistance = dataSignups.map((f, i) => {
-    const options = { units: 'kilometers' };
-    const tos = [
-      { name: 'Berlin', coordinates: [13.405538, 52.51767] },
-      { name: 'Hamburg', coordinates: [9.99697, 53.550678] },
-      { name: 'Köln', coordinates: [6.957068, 50.938107] },
-      { name: 'Leipzig', coordinates: [12.377931, 51.338288] },
-      { name: 'Frankfurt', coordinates: [8.682433, 50.11088] },
-      { name: 'Freiburg', coordinates: [7.849877, 47.994786] },
-      { name: 'München', coordinates: [11.573599, 48.143439] },
-    ];
-    const distances = tos.map(t =>
-      distance(point(f.coordinates), point(t.coordinates), options)
-    );
+  // This code block calculates the distance of every municipality to
+  // a set of "starter" municipalities,
+  // allows you to create an animation that looks like a viral spread
+  // calculations are done with turf:
+  // import distance from '@turf/distance';
+  // import { point } from '@turf/helpers';
+  //   const dataSignupsWithDistance = dataSignups.map((f, i) => {
+  //     const options = { units: 'kilometers' };
+  //     const tos = [
+  //       { name: 'Berlin', coordinates: [13.405538, 52.51767] },
+  //       { name: 'Hamburg', coordinates: [9.99697, 53.550678] },
+  //       { name: 'Köln', coordinates: [6.957068, 50.938107] },
+  //       { name: 'Leipzig', coordinates: [12.377931, 51.338288] },
+  //       { name: 'Frankfurt', coordinates: [8.682433, 50.11088] },
+  //       { name: 'Freiburg', coordinates: [7.849877, 47.994786] },
+  //       { name: 'München', coordinates: [11.573599, 48.143439] },
+  //     ];
+  //     const distances = tos.map(t =>
+  //       distance(point(f.coordinates), point(t.coordinates), options)
+  //     );
 
-    const minDistance = Math.min(...distances);
+  //     const minDistance = Math.min(...distances);
 
-    return { ...f, distance: minDistance };
+  //     return { ...f, distance: minDistance };
+  //   });
+  dataSignups.sort((a, b) => {
+    return b.signups - a.signups;
   });
-
   return {
-    dataSignups: dataSignupsWithDistance,
+    dataSignups,
     dataLabels,
     dataEvents,
     dataMunicipalities,
@@ -179,7 +202,7 @@ export const getLayeredData = ({
 // ---- Colors ---------------------------------------------------------------------------
 
 const scalePercentToColor = scaleLinear()
-  .domain([0, 100, 100.000001, Infinity])
+  .domain([0, 99.9999, 100, Infinity])
   .range(['#00C8F0', '#43006a', '#fc484c', '#fc484c']);
 
 const colorToArray = (string, alpha = 255) => {

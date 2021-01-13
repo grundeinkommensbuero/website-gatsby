@@ -6,11 +6,21 @@ import characterSet from './data/characterSet.json';
 import labels from './data/labels.json';
 
 import DeckGL from '@deck.gl/react';
-import { IconLayer, GeoJsonLayer, TextLayer } from '@deck.gl/layers';
+import {
+  GeoJsonLayer,
+  ScatterplotLayer /* IconLayer */,
+  TextLayer,
+} from '@deck.gl/layers';
 import { FlyToInterpolator } from '@deck.gl/core';
-import iconAtlas from './assets/pins_512.png';
+// Note: Neded for IconLayer / Pins
+// import iconAtlas from './assets/pins_512.png';
+import GL from '@luma.gl/constants';
+
 import { scaleSqrt, scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
+
+import along from '@turf/along';
+import { lineString } from '@turf/helpers';
 
 import {
   getLayeredData,
@@ -27,7 +37,6 @@ import { Button } from '../../Forms/Button';
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
 import anime from 'animejs';
-import GL from '@luma.gl/constants';
 
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
 const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
@@ -36,26 +45,27 @@ const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg'
 // ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
 const zoomPadding = { padding: 10 };
-const iconMapping = {
-  marker: {
-    x: 0,
-    y: 0,
-    anchorX: 256,
-    anchorY: 512,
-    width: 512,
-    height: 512,
-    mask: true,
-  },
-  win: {
-    x: 1024,
-    y: 0,
-    anchorX: 256,
-    anchorY: 512,
-    width: 512,
-    height: 512,
-    mask: true,
-  },
-};
+// Note: only needed if IconLayers / Pins are used
+// const iconMapping = {
+//   marker: {
+//     x: 0,
+//     y: 0,
+//     anchorX: 256,
+//     anchorY: 512,
+//     width: 512,
+//     height: 512,
+//     mask: true,
+//   },
+//   win: {
+//     x: 1024,
+//     y: 0,
+//     anchorX: 256,
+//     anchorY: 512,
+//     width: 512,
+//     height: 512,
+//     mask: true,
+//   },
+// };
 
 const Legend = () => {
   const [isActive, setIsActive] = useState(false);
@@ -121,10 +131,10 @@ const Legend = () => {
 };
 
 export const MunicipalityMap = ({
-  AgsToFlyTo,
+  agsToFlyTo,
   shouldStartAnimation,
   onDataReady,
-  animateEvents = true,
+  initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
 }) => {
@@ -136,14 +146,11 @@ export const MunicipalityMap = ({
   const [dataEvents, setDataEvents] = useState([]);
   const [signupScale, setSignupScale] = useState([
     [1, 40000],
-    [1000, 60000],
+    [1000, 30000],
   ]);
   const [, setTimePassed] = useState();
-  // const [
-  //   ,
-  //   municipalityStats /* getMunicipalityStats */,
-  // ] = useGetMunicipalityStats();
-  const [municipalityStats, setMunicipalityStats] = useState();
+  const [, municipalityStats, getMunicipalityStats] = useGetMunicipalityStats();
+  // const [municipalityStats, setMunicipalityStats] = useState();
   const [focus, setFocus] = useState();
   const [mapDataReady, setMapDataReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
@@ -155,17 +162,21 @@ export const MunicipalityMap = ({
   // WebGL
   const [hasWebGl, setHasWebGL] = useState(null);
 
-  const [animationProgress, setAnimationProgress] = useState(0);
+  const [municipalityFadeProgress, setMunicipalityFadeProgress] = useState(
+    initialMapAnimation ? 0 : 1
+  );
+
+  const [hoverInfo, setHoverInfo] = useState();
 
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
   }, []);
 
   useEffect(() => {
-    import('./data/response.json').then(({ default: stats }) => {
-      setMunicipalityStats(stats);
-    });
-    // getMunicipalityStats();
+    // import('./data/response.json').then(({ default: stats }) => {
+    //   setMunicipalityStats(stats);
+    // });
+    getMunicipalityStats();
   }, []);
 
   useEffect(() => {
@@ -192,12 +203,14 @@ export const MunicipalityMap = ({
             signups,
             events,
             labels,
-            animateEvents,
+            initialMapAnimation,
           });
+
           setDataSignups(dataSignups);
           setDataEvents(dataEvents);
           setDataLabels(dataLabels);
-          setSignupScale(scale);
+          // TODO: uncomment for production
+          // setSignupScale(scale);
           setDataMunicipalities(dataMunicipalities);
           setTimePassed(timePassed);
           setMapDataReady(true);
@@ -209,19 +222,6 @@ export const MunicipalityMap = ({
   useEffect(() => {
     if (mapDataReady) {
       onDataReady();
-      // Animation test
-      setTimeout(() => {
-        const animation = { progress: 0, duration: 4000 };
-        anime({
-          duration: animation.duration,
-          targets: animation,
-          progress: [0, 1],
-          easing: 'easeOutCubic',
-          update() {
-            setAnimationProgress(animation.progress);
-          },
-        });
-      }, 1000);
     }
   }, [mapDataReady]);
 
@@ -235,8 +235,7 @@ export const MunicipalityMap = ({
   );
 
   const updateFocus = useCallback(
-    (ags = AgsToFlyTo) => {
-      // console.log(ags);
+    (ags = agsToFlyTo) => {
       const focusData = ags && getAgsData(ags);
 
       if (focusData) {
@@ -244,7 +243,7 @@ export const MunicipalityMap = ({
         setFocus(focusData);
       }
     },
-    [AgsToFlyTo, getAgsData, dataLabels]
+    [agsToFlyTo, getAgsData, dataLabels]
   );
 
   // ---- useEffects -----------------------------------------------------------------------
@@ -259,16 +258,17 @@ export const MunicipalityMap = ({
         setDataEvents,
         flyToAgsOnLoad,
         updateFocus,
-        animateOnLoad: animateEvents,
+        initialMapAnimation,
+        setMunicipalityFadeProgress,
       });
     }
   }, [shouldStartAnimation, mapDataReady, animate]);
 
   useEffect(() => {
     if (mapDataReady) {
-      updateFocus(AgsToFlyTo);
+      updateFocus(agsToFlyTo);
     }
-  }, [AgsToFlyTo]);
+  }, [agsToFlyTo]);
 
   // ---- Handlers -------------------------------------------------------------------------
   const handleZoomClick = change => {
@@ -341,13 +341,28 @@ export const MunicipalityMap = ({
             setZoom={setZoom}
             zoomMin={zoomMin}
             setZoomMin={setZoomMin}
-            animationProgress={animationProgress}
+            municipalityFadeProgress={municipalityFadeProgress}
+            setHoverInfo={setHoverInfo}
+            initialMapAnimation={initialMapAnimation}
           />
         </div>
       </div>
+      {hoverInfo && hoverInfo.object && (
+        <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
+      )}
       <Legend />
     </div>
   );
+};
+
+const getCorrectedPositionRadius = (position, radius) => {
+  // https://turfjs.org/docs/#along
+  return along(
+    lineString([position, [position[0], position[1] - 10]]),
+    // second 0.5 equals radiusScale in this case
+    Math.max(0, radius / 1000),
+    { units: 'kilometers' }
+  ).geometry.coordinates;
 };
 
 const Map = ({
@@ -361,9 +376,11 @@ const Map = ({
   setZoom,
   zoomMin,
   setZoomMin,
-  animationProgress,
+  municipalityFadeProgress,
+  setHoverInfo,
+  initialMapAnimation,
 }) => {
-  const longitudeDelayScale = scaleLinear()
+  const signupAnimationDelayScale = scaleLinear()
     .domain(extent(dataSignups, d => d.population))
     .range([1, 0]);
   // ---- Utils ----------------------------------------------------------------------------
@@ -406,68 +423,62 @@ const Map = ({
     });
   }, [dataStates]);
 
-  // const layerPermanentMarker = useMemo(() => {
-  //   return new IconLayer({
-  //     id: 'permanentMarker',
-  //     data: dataSignups,
-  //     pickable: true,
-  //     iconAtlas,
-  //     iconMapping,
-  //     // getIcon: return a key of icon mapping as string
-  //     getIcon: d => (d.signups > d.goal ? 'win' : 'marker'),
-  //     getPosition: d => d.coordinates,
-  //     sizeUnits: 'meters',
-  //     getSize: d => scaleSignupsToMeters(d.signups),
-  //     getColor: d => getColor(d.percentToGoal),
-  //     onHover: info => setHoverInfo(info),
-  //   });
-  // }, [dataSignups, scaleSignupsToMeters, getColor]);
-
   const layerPermanentMarker = useMemo(() => {
     return new DelayedPointLayer({
       id: 'permanentMarker',
       data: dataSignups,
       pickable: true,
       getPosition: d => d.coordinates,
-      sizeUnits: 'meters',
+      radiusUnits: 'meters',
+      radiusScale: 2,
       getRadius: d => scaleSignupsToMeters(d.signups),
       getFillColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
-      animationProgress: animationProgress,
+      animationProgress: municipalityFadeProgress,
       getDelayFactor: d => {
-        return longitudeDelayScale(d.population);
+        return signupAnimationDelayScale(d.population);
       },
       parameters: {
         // prevent flicker from z-fighting
         [GL.DEPTH_TEST]: false,
-
-        // turn on additive blending to make them look more glowy
-        // [GL.BLEND]: true,
-        // [GL.BLEND_SRC_RGB]: GL.ONE,
-        // [GL.BLEND_DST_RGB]: GL.ONE,
-        // [GL.BLEND_EQUATION]: GL.FUNC_ADD,
       },
     });
   }, [
     dataSignups,
     scaleSignupsToMeters,
     getColor,
-    longitudeDelayScale,
-    animationProgress,
+    signupAnimationDelayScale,
+    municipalityFadeProgress,
   ]);
 
+  // Important note: this is the implementation if you want to switch to Icons / Pins
+
+  // const layerAnimatedMarker = useMemo(() => {
+  //   return new IconLayer({
+  //     id: 'animatedMarker',
+  //     data: dataEvents,
+  //     pickable: true,
+  //     iconAtlas,
+  //     iconMapping,
+  //     // getIcon: return a key of icon mapping as string
+  //     getIcon: d => (d.signups > d.goal ? 'win' : 'marker'),
+  //     getPosition: d => [d.longitude, d.latitude],
+  //     sizeUnits: 'meters',
+  //     getSize: d => scaleSignupsToMeters(d.signups),
+  //     getColor: d => getColor(d.percentToGoal),
+  //     onHover: info => setHoverInfo(info),
+  //   });
+  // }, [dataEvents]);
+
   const layerAnimatedMarker = useMemo(() => {
-    return new IconLayer({
+    return new ScatterplotLayer({
       id: 'animatedMarker',
       data: dataEvents,
       pickable: true,
-      iconAtlas,
-      iconMapping,
-      // getIcon: return a key of icon mapping as string
-      getIcon: d => (d.signups > d.goal ? 'win' : 'marker'),
       getPosition: d => [d.longitude, d.latitude],
-      sizeUnits: 'meters',
-      getSize: d => scaleSignupsToMeters(d.signups),
+      radiusUnits: 'meters',
+      radiusScale: 1,
+      getRadius: d => scaleSignupsToMeters(d.signups),
       getColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
@@ -482,13 +493,17 @@ const Map = ({
       // default does not include German alphabet
       characterSet,
       pickable: false,
-      getPosition: d => d.coordinates,
+      getPosition: d =>
+        getCorrectedPositionRadius(
+          d.coordinates,
+          scaleSignupsToMeters(d.signups)
+        ),
       getText: d => d.name,
       backgroundColor: [255, 255, 255],
-      getColor: d => getColor(d.percentToGoal, 180),
+      getColor: d => getColor(d.percentToGoal, 230),
       getSize: 40000, // 30000 meters
-      sizeMinPixels: 11,
-      sizeMaxPixels: 18,
+      sizeMinPixels: 12,
+      sizeMaxPixels: 20,
       sizeUnits: 'meters',
       getAngle: 0,
       fontFamily: 'Ideal, Tahoma, sans-serif',
@@ -497,6 +512,32 @@ const Map = ({
       getAlignmentBaseline: 'top',
     });
   }, [dataLabels]);
+
+  const layerAnimatedLabels = useMemo(() => {
+    return new TextLayer({
+      id: 'animatedLabels',
+      data: dataEvents.filter(x => x.category === 'win' && x.hasLabel === true),
+      characterSet,
+      pickable: false,
+      getPosition: d =>
+        getCorrectedPositionRadius(
+          d.coordinates,
+          scaleSignupsToMeters(d.signups)
+        ),
+      getText: d => d.name,
+      backgroundColor: [255, 255, 255],
+      getColor: d => getColor(d.percentToGoal, 230),
+      getSize: 40000, // 30000 meters
+      sizeMinPixels: 12,
+      sizeMaxPixels: 20,
+      sizeUnits: 'meters',
+      getAngle: 0,
+      fontFamily: 'Ideal, Tahoma, sans-serif',
+      fontWeight: '900',
+      getTextAnchor: 'middle',
+      getAlignmentBaseline: 'top',
+    });
+  }, [dataEvents]);
 
   // ---- useStates ------------------------------------------------------------------------
   const [layers, setLayers] = useState([]);
@@ -530,26 +571,30 @@ const Map = ({
     touchRotate: false,
   });
 
-  const [hoverInfo, setHoverInfo] = useState();
-
   // ---- useEffects -----------------------------------------------------------------------
+
   useEffect(() => {
     if (dataEvents.length > 0) {
       setLayers([
         layerStates,
-        layerPermanentMarker,
         layerAnimatedMarker,
+        layerPermanentMarker,
         layerPermanentLabels,
+        layerAnimatedLabels,
       ]);
     }
-  }, [dataLabels, dataEvents, animationProgress]);
+  }, [dataLabels, dataEvents, municipalityFadeProgress]);
 
   useEffect(() => {
     if (focus) {
       const { longitude, latitude } = focus;
-      flyTo({ longitude, latitude });
+      flyTo({
+        longitude,
+        latitude,
+        transitionDuration: initialMapAnimation ? 2000 : 1000,
+      });
     }
-  }, [focus]);
+  }, [focus, initialMapAnimation]);
 
   useEffect(() => {
     setInitialViewState(prev => ({
@@ -558,15 +603,6 @@ const Map = ({
       transitionDuration: 300,
     }));
   }, [zoom]);
-
-  useEffect(() => {
-    // if (dimensions) {
-    // }
-  }, [dimensions]);
-
-  useEffect(() => {
-    // console.log(initialViewState);
-  }, [initialViewState]);
 
   // ---- Handlers -------------------------------------------------------------------------
   const handleViewState = ({ viewState }) => {
@@ -634,11 +670,7 @@ const Map = ({
         onResize={dimensions => {
           handleResize(dimensions);
         }}
-      >
-        {hoverInfo && hoverInfo.object && (
-          <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
-        )}
-      </DeckGL>
+      ></DeckGL>
     </>
   );
 };

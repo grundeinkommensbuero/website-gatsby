@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -11,6 +11,9 @@ import { getStringFromPlaceholderText } from '../../utils';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
+import { setWindowLocationOriginForIE } from '../../utils/index';
+import { navigate } from 'gatsby';
+
 const ColumnQualifying = ({
   municipality,
   handlePlaceSelect,
@@ -20,12 +23,21 @@ const ColumnQualifying = ({
   const [
     municipalityStatsState,
     municipalityStats,
-    /* getMunicipalityStats, */
+    getMunicipalityStats,
   ] = useGetMunicipalityStats();
+
   useEffect(() => {
-    // getMunicipalityStats(municipality.ags);
+    if (municipality) {
+      getMunicipalityStats(municipality.ags);
+    }
   }, []);
-  // console.log(municipalityStats);
+
+  useEffect(() => {
+    if (municipality) {
+      getMunicipalityStats(municipality.ags);
+    }
+  }, [municipality]);
+
   return (
     <>
       <SearchPlaces
@@ -60,10 +72,18 @@ const ColumnQualifying = ({
             currency="Anmeldungen"
             startDate={new Date()}
           />
-          <p>
-            Schon {municipalityStats.signups?.toLocaleString('de')} Anmeldungen
-            in {municipality.name}!{' '}
-          </p>
+          {municipalityStats.signups > 0 ? (
+            <p>
+              {municipalityStats.signups === 1
+                ? 'eine Anmeldung '
+                : `${municipalityStats.signups?.toLocaleString(
+                    'de'
+                  )} Anmeldungen `}
+              in {municipality.name}!{' '}
+            </p>
+          ) : (
+            <p>Leider noch keine Anmeldungen in {municipality.name}! </p>
+          )}
         </>
       )}
     </>
@@ -129,18 +149,20 @@ const ColumnState = ({
 
 const MapColumn = ({ municipality, setMapDataReady }) => {
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
+  const initialMapAnimation = !window.history?.state?.ags;
+
   return (
     <div className={s.headerContainer}>
       <MunicipalityMap
         className={s.mapContainer}
-        AgsToFlyTo={!!municipality ? municipality.ags : undefined}
         onDataReady={() => {
           setMapDataReady(true);
           setShouldStartAnimation(true);
         }}
-        shouldStartAnimation={true}
-        animateEvents={true}
+        agsToFlyTo={!!municipality ? municipality.ags : undefined}
         flyToAgsOnLoad={true}
+        shouldStartAnimation={shouldStartAnimation}
+        initialMapAnimation={initialMapAnimation}
       />
     </div>
   );
@@ -154,9 +176,10 @@ const states = [
 
 export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   const [mapDataReady, setMapDataReady] = useState(false);
-  // const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
+  const [municipality, setMunicipality] = useState(pageContext.municipality);
+
+  // TODO: refactor to stateful:
   const { slug } = pageContext;
-  let { municipality } = pageContext;
   let type = municipality?.type;
 
   if (slug === 'gemeinden') {
@@ -164,22 +187,77 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   } else if (slug === 'gemeinden-sammelphase') {
     type = 'collecting';
   } else {
-    const state = states.find(s => s.slug === slug);
     type = 'state';
-    municipality = state;
+    if (!pageContext.municipality && !municipality) {
+      const state = states.find(s => s.slug === slug);
+      setMunicipality(state);
+    }
   }
 
-  let displayTitle = getStringFromPlaceholderText(title, municipality);
-  let displayBody = getStringFromPlaceholderText(body, municipality);
+  const [displayTitle, setDisplayTitle] = useState(
+    getStringFromPlaceholderText(title, municipality)
+  );
+  useEffect(() => {
+    setDisplayTitle(getStringFromPlaceholderText(title, municipality));
+  }, [municipality]);
 
-  const [, setAgs] = useState();
-  const handlePlaceSelect = municipality => {
-    if (municipality) {
-      setAgs(municipality.ags);
+  const [displayBody, setDisplayBody] = useState(
+    getStringFromPlaceholderText(body, municipality)
+  );
+  useEffect(() => {
+    setDisplayBody(getStringFromPlaceholderText(body, municipality));
+  }, [municipality]);
+
+  // For navigating
+
+  const adjustDocumentTitle = (municipality, replacement) => {
+    if (municipality?.name) {
+      document.title = document.title = document.title.replace(
+        municipality.name,
+        replacement
+      );
     } else {
-      setAgs();
+      document.title = document.title.replace(
+        'in deine Gemeinde',
+        `nach ${replacement}`
+      );
     }
   };
+  useEffect(() => {
+    window.onpopstate = event => {
+      console.log({ event });
+
+      if (event.state?.name) {
+        setMunicipality(event.state);
+        adjustDocumentTitle(municipality, event.state.name);
+      }
+    };
+    return () => {
+      window.onpopstate = () => {};
+    };
+  }, [municipality]);
+
+  const handlePlaceSelect = useCallback(
+    selected => {
+      if (selected) {
+        setMunicipality(selected);
+
+        // TODO: Check if library for fallback for IE should be used here:
+        if (window.history?.pushState) {
+          window.history.pushState(
+            selected,
+            null,
+            `${window.location.origin}/gemeinden/${selected.ags}`
+          );
+          adjustDocumentTitle(municipality, selected.name);
+          setWindowLocationOriginForIE();
+        } else {
+          navigate(municipality.ags);
+        }
+      }
+    },
+    [municipality]
+  );
 
   const columnProps = {
     municipality,
@@ -196,7 +274,6 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
           <MapColumn
             municipality={municipality}
             setMapDataReady={setMapDataReady}
-            // shouldStartAnimation={shouldStartAnimation}
           />
         </div>
         <div className={s.twoColumnItem}>
