@@ -7,6 +7,9 @@ import Flip from "./Flip";
 import s from './style.module.less';
 import cN from 'classnames';
 
+import Tick from "@pqina/flip/dist/flip.min.js";
+import "@pqina/flip/dist/flip.min.css";
+
 
 const App = () => {
 
