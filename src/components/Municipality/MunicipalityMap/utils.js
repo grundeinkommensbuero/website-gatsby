@@ -188,9 +188,18 @@ export const getLayeredData = ({
 
   //     return { ...f, distance: minDistance };
   //   });
+
+  // Sort the signups so small Markers are on top of bigger ones
   dataSignups.sort((a, b) => {
     return b.signups - a.signups;
   });
+
+  console.log(
+    ['change', 'win', 'new'].map(
+      e => dataEvents.filter(x => x.category === e).length + 'x ' + e
+    )
+  );
+
   return {
     dataSignups,
     dataLabels,

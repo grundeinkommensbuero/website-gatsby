@@ -158,6 +158,7 @@ export const MunicipalityMap = ({
   const [fadeOpacities, setFadeOpacities] = useState({
     fallback: 1,
     map: 0,
+    animatedMarkers: 0,
   });
   // WebGL
   const [hasWebGl, setHasWebGL] = useState(null);
@@ -344,6 +345,7 @@ export const MunicipalityMap = ({
             municipalityFadeProgress={municipalityFadeProgress}
             setHoverInfo={setHoverInfo}
             initialMapAnimation={initialMapAnimation}
+            fadeOpacities={fadeOpacities}
           />
         </div>
       </div>
@@ -379,6 +381,7 @@ const Map = ({
   municipalityFadeProgress,
   setHoverInfo,
   initialMapAnimation,
+  fadeOpacities,
 }) => {
   const signupAnimationDelayScale = scaleLinear()
     .domain(extent(dataSignups, d => d.population))
@@ -475,6 +478,7 @@ const Map = ({
       id: 'animatedMarker',
       data: dataEvents,
       pickable: true,
+      opacity: fadeOpacities.animatedMarkers,
       getPosition: d => [d.longitude, d.latitude],
       radiusUnits: 'meters',
       radiusScale: 1,
@@ -482,7 +486,7 @@ const Map = ({
       getColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
-  }, [dataEvents]);
+  }, [dataEvents, fadeOpacities]);
 
   const layerPermanentLabels = useMemo(() => {
     return new TextLayer({
@@ -516,7 +520,7 @@ const Map = ({
   const layerAnimatedLabels = useMemo(() => {
     return new TextLayer({
       id: 'animatedLabels',
-      data: dataEvents.filter(x => x.category === 'win' && x.hasLabel === true),
+      data: dataEvents.filter(x => x.hasLabel === true),
       characterSet,
       pickable: false,
       getPosition: d =>
@@ -583,7 +587,7 @@ const Map = ({
         layerAnimatedLabels,
       ]);
     }
-  }, [dataLabels, dataEvents, municipalityFadeProgress]);
+  }, [dataLabels, dataEvents, municipalityFadeProgress, fadeOpacities]);
 
   useEffect(() => {
     if (focus) {

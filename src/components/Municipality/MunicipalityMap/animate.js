@@ -29,41 +29,55 @@ export const animate = ({
   });
   if (initialMapAnimation) {
     const animation = { progress: 0 };
-    // Fade in municipalities
+    // Fadein animatedmarkers
     tl.add({
-      targets: animation,
-      delay: 1000,
-      duration: 5000,
-      progress: [0, 1],
-      easing: 'easeOutCubic',
+      targets: localOpacities,
+      animatedMarkers: [0, 1],
+      duration: 1200,
+      delay: 500,
+      easing: 'easeOutQuad',
       update() {
-        //
-        setMunicipalityFadeProgress(animation.progress);
+        setFadeOpacities({ ...localOpacities });
       },
     });
+    // Fade in municipalities
+    tl.add(
+      {
+        targets: animation,
+        duration: 5000,
+        progress: [0, 1],
+        easing: 'easeOutCubic',
+        update() {
+          //
+          setMunicipalityFadeProgress(animation.progress);
+        },
+      },
+      '-=1300'
+    );
     tl.add(
       {
         targets: localEvents.filter(x => x.category === 'new'),
         latitude: d => d.latitudeRange,
         signups: d => d.signupsRange,
         percentToGoal: d => d.percentToGoalRange,
-        duration: 400,
-        delay: anime.stagger(180),
+        duration: 900,
+        delay: anime.stagger(200),
         easing: 'easeOutQuad',
         update() {
           setDataEvents([...localEvents]);
         },
       },
-      '-=3500'
+      '-=5000'
     );
     tl.add(
       {
         targets: localEvents.filter(x => x.category === 'change'),
         signups: d => d.signupsRange,
         percentToGoal: d => d.percentToGoalRange,
-        duration: 600,
-        delay: anime.stagger(100),
+        duration: 1000,
+        delay: anime.stagger(300),
         easing: 'easeOutElastic(10,0.3)',
+        // easing: 'easeOutQuad',
         update() {
           setDataEvents([...localEvents]);
         },
@@ -76,8 +90,10 @@ export const animate = ({
         signups: d => d.signupsRange,
         percentToGoal: d => d.percentToGoalRange,
         duration: 1000,
-        delay: anime.stagger(80),
+        delay: anime.stagger(200),
         easing: 'easeOutElastic(10,0.4)',
+        // easing: 'easeOutQuad',
+
         update() {
           setDataEvents([...localEvents]);
         },

@@ -28,6 +28,8 @@ const ColumnQualifying = ({
 
   useEffect(() => {
     if (municipality) {
+      console.log(municipality);
+
       getMunicipalityStats(municipality.ags);
     }
   }, []);
@@ -37,6 +39,7 @@ const ColumnQualifying = ({
       getMunicipalityStats(municipality.ags);
     }
   }, [municipality]);
+  console.log(municipalityStats);
 
   return (
     <>
