@@ -52,6 +52,9 @@ const App = () => {
           </h1>
           <Button className={s.CTA}>Sei dabei.</Button>
         </div>
+        <p className={s.versionLabel}>Variante:{' '}
+          <em className={s.versionText}>Slot Machine</em>
+        </p>
       </section>
 
 
@@ -71,6 +74,9 @@ const App = () => {
           </h1>
           <Button className={s.CTA}>Sei dabei.</Button>
         </div>
+        <p className={s.versionLabel}>Variante:{' '}
+          <em className={s.versionText}>Flip Clock</em>
+        </p>
       </section>
 
       <section className={s.contentContainer}>
@@ -93,6 +99,9 @@ const App = () => {
           </h1>
           <Button className={s.CTA}>Sei dabei.</Button>
         </div>
+        <p className={s.versionLabel}>Variante:{' '}
+          <em className={s.versionText}>Simple Counter</em>
+        </p>
       </section>
 
       <br /><br /><br /><br /><br /><br />
