@@ -17,38 +17,37 @@ const App = () => {
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
-  const [reelCounterText, setReelCounterText] = useState();
-  const [reelCounterMunicipalityText, setReelCounterMunicipalityText] = useState();
-
   useEffect(() => {
-    setTimeout(() => {
+    const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
+    const firePeopleCounter = setTimeout(() => {
       setPeopleCount(peopleCount + 1);
-    }, 1000);
+    }, peopleRandom);
 
-    setTimeout(() => {
+    const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
+    const fireMunicipalityCounter = setTimeout(() => {
       setMunicipalityCount(municipalityCount + 1);
-    }, 5000);
-  });
+    }, municipalityRandom);
 
-  useEffect(() => {
-    setReelCounterText(reelCounterText + 'Menschen');
-    setReelCounterMunicipalityText(reelCounterMunicipalityText + 'Orten');
-  }, [peopleCount, municipalityCount]);
+    return () => {
+      clearTimeout(firePeopleCounter);
+      clearTimeout(fireMunicipalityCounter);
+    }
+  });
 
   return (
     <Layout>
       <section className={s.contentContainer}>
-        <div className={s.App}>
+        <div className={s.slotMachine}>
           <div className={s.counterContainer}>
             <Reel text={peopleCount.toString()} />
-            <h1 className={s.counterLabelThird}>Menschen</h1>
+            <h1 className={s.counterLabelSlotMachine}>Menschen</h1>
           </div>
           <div className={cN(s.counterContainer, s.alignRight)}>
-            <h1 className={s.counterLabelThird}>in</h1>
+            <h1 className={s.counterLabelSlotMachine}>in</h1>
             <Reel text={municipalityCount.toString()} />
-            <h1 className={s.counterLabelThird}>Orten</h1>
+            <h1 className={s.counterLabelSlotMachine}>Orten</h1>
           </div>
-          <h1>
+          <h1 className={s.actionText}>
             lassen das Grundeinkommen in Deutschland Realität werden.
           </h1>
           <Button className={s.CTA}>Sei dabei.</Button>
@@ -57,17 +56,17 @@ const App = () => {
 
 
       <section className={s.contentContainer}>
-        <div className={s.App}>
+        <div className={s.flipClock}>
           <div className={s.counterContainer}>
             <Flip value={peopleCount} />
-            <h1 className={s.counterLabel}>Menschen</h1>
+            <h1 className={s.counterLabelFlipClock}>Menschen</h1>
           </div>
           <div className={cN(s.counterContainer, s.alignRight)}>
-            <h1 className={s.counterLabel}>in</h1>
+            <h1 className={s.counterLabelFlipClock}>in</h1>
             <Flip value={municipalityCount} />
-            <h1 className={s.counterLabel}>Orten</h1>
+            <h1 className={s.counterLabelFlipClock}>Orten</h1>
           </div>
-          <h1>
+          <h1 className={s.actionText}>
             lassen das Grundeinkommen in Deutschland Realität werden.
           </h1>
           <Button className={s.CTA}>Sei dabei.</Button>
@@ -75,21 +74,21 @@ const App = () => {
       </section>
 
       <section className={s.contentContainer}>
-        <div className={s.App}>
+        <div className={s.simpleCounter}>
           <div className={s.counterContainer}>
             <div className={cN(s.upperCounter, s.countUpLibNum)} >
               <CountUp isCounting end={peopleCount} start={3000} duration={10} />
             </div>
-            <h1 className={s.counterLabelSecond}>Menschen</h1>
+            <h1 className={s.counterLabelSimpleCounter}>Menschen</h1>
           </div>
           <div className={cN(s.counterContainer, s.alignRight)}>
-            <h1 className={s.counterLabelSecond}>in</h1>
+            <h1 className={s.counterLabelSimpleCounter}>in</h1>
             <div className={s.countUpLibNum}>
               <CountUp isCounting end={municipalityCount} start={30} duration={10} />
             </div>
-            <h1 className={s.counterLabelSecond}>Orten</h1>
+            <h1 className={s.counterLabelSimpleCounter}>Orten</h1>
           </div>
-          <h1>
+          <h1 className={s.actionText}>
             lassen das Grundeinkommen in Deutschland Realität werden.
           </h1>
           <Button className={s.CTA}>Sei dabei.</Button>
