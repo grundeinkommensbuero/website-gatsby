@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
+
 import s from './style.module.less';
 import gS from '../style.module.less';
+// Borrow style from Newsletter-Settings
+import nS from '../ProfileNotifications/style.module.less';
+
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
@@ -10,9 +14,14 @@ import { Button } from '../../Forms/Button';
 import ImageUpload from '../../Forms/ImageUpload';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+import { useDeleteUser } from '../../../hooks/Api/Users/Delete';
+import { useSignOut } from '../../../hooks/Authentication';
 
 export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
   const [updateUserState, updateUser] = useUpdateUser();
+  const deleteUser = useDeleteUser();
+  const signOut = useSignOut();
+
   const [waitingForApi, setWaitingForApi] = useState(false);
   // const [editMailAddress, setEditMailAddress] = useState(false);
   // const [editPhoneNumber, setEditPhoneNumber] = useState(false);
@@ -25,6 +34,8 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
   // until phonenumber is included in userData
   // const fakePhone = '';
+
+  const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -61,6 +72,43 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
     if (tempCity !== userData.city) {
       updateUser({ userId: userId, city: tempCity });
     }
+  };
+
+  const deleteUserAccount = () => {
+    deleteUser({ userId });
+    signOut();
+  }
+
+  const DeleteAccountDialog = () => {
+    return (
+      <section className={nS.newsletterCard}>
+        <p className={nS.newsletterCardHeading}>
+          Bist du sicher, dass du deinen Account löschen möchtest?
+        </p>
+        <br />
+        <p className={nS.newsletterCardDescription}>
+          Diese Aktion kann nicht rückgängig gemacht werden!
+        </p>
+        <div className={nS.revokeButtonRow}>
+          <Button
+            className={gS.floatRight}
+            onClick={deleteUserAccount}
+          >
+            Account entgültig löschen
+          </Button>
+          <div className={nS.cancelRevokeProcess}>
+            <span
+              aria-hidden="true"
+              className={gS.linkLikeFormated}
+              onClick={() => setShowDeleteAccountDialog(false)}
+              onKeyUp={() => setShowDeleteAccountDialog(false)}
+            >
+              Abbrechen
+            </span>
+          </div>
+        </div>
+      </section>
+    );
   };
 
   return (
@@ -294,7 +342,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
 
             <div className={s.optionSectionDescription}>
-              Falls du deine E-Mail Adresse ändern oder deinen Account löschen
+              Falls du deine E-Mail Adresse ändern{' '}
               möchtest, schick uns eine E-Mail an{' '}
               <a href="mailto:support@expedition-grundeinkommen.de">
                 support@expedition-grundeinkommen.de
@@ -302,9 +350,20 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               .
             </div>
 
-            {/* <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
-              Profil löschen
-            </Link> */}
+
+
+            {!showDeleteAccountDialog ?
+              <span
+                aria-hidden="true"
+                className={cN(gS.linkLikeFormated, gS.bottomRightLink)}
+                onClick={() => setShowDeleteAccountDialog(true)}>
+                Profil löschen
+              </span> :
+              <div>
+                <br></br>
+                <DeleteAccountDialog />
+              </div>
+            }
 
 
           </div>
