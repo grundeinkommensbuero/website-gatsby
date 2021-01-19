@@ -203,14 +203,14 @@ export const getStringFromPlaceholderText = (string, object) => {
     // when a dot is needed in the string
     const isInQuotes = regexSubInSingleQuotes.test(options[selector].trim());
     if (isInQuotes) {
-      replacement = options[selector].replaceAll(`'`, ``).trim();
+      replacement = options[selector].replace(/'/g, ``).trim();
     } else {
       const objectKey = options[selector].split(`.`)[1].trim();
       replacement = object[objectKey];
     }
     result = result.replace(e, replacement);
   });
-  result = result.replaceAll('{', '').replaceAll('}', '');
+  result = result.replace(/{/g, '').replace(/}/g, '');
   return result;
 };
 

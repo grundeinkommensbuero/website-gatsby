@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -7,11 +7,13 @@ import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { SectionInner } from '../../Layout/Sections';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
-import { getStringFromPlaceholderText } from '../../utils';
+import {
+  getStringFromPlaceholderText,
+  setWindowLocationOriginForIE,
+} from '../../utils';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
-import { setWindowLocationOriginForIE } from '../../utils/index';
 import { navigate } from 'gatsby';
 
 const ColumnQualifying = ({
@@ -39,7 +41,6 @@ const ColumnQualifying = ({
       getMunicipalityStats(municipality.ags);
     }
   }, [municipality]);
-  console.log(municipalityStats);
 
   return (
     <>
@@ -152,7 +153,11 @@ const ColumnState = ({
 
 const MapColumn = ({ municipality, setMapDataReady }) => {
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
-  const initialMapAnimation = !window.history?.state?.ags;
+
+  let initialMapAnimation = true;
+  if (typeof window !== `undefined`) {
+    initialMapAnimation = !window.history?.state?.ags;
+  }
 
   return (
     <div className={s.headerContainer}>
@@ -172,30 +177,69 @@ const MapColumn = ({ municipality, setMapDataReady }) => {
 };
 
 const states = [
-  { ags: '11000000', slug: 'berlin', name: 'Berlin' },
-  { ags: '04011000', slug: 'bremen', name: 'Bremen' },
-  { ags: '02000000', slug: 'hamburg', name: 'Hamburg' },
+  {
+    ags: '11000000',
+    name: 'Berlin',
+    coordinates: [13.405538, 52.51767],
+    goal: 36000,
+    population: 3644826,
+  },
+  {
+    ags: '04011000',
+    name: 'Bremen',
+    coordinates: [8.809338, 53.075606],
+    goal: 5500,
+    population: 569352,
+  },
+  {
+    ags: '02000000',
+    name: 'Hamburg',
+    coordinates: [9.99697, 53.550678],
+    goal: 18000,
+    population: 1841179,
+  },
 ];
+
+const agsCollecting = ['08121000'];
 
 export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   const [mapDataReady, setMapDataReady] = useState(false);
   const [municipality, setMunicipality] = useState(pageContext.municipality);
+  const [type, setType] = useState();
 
-  // TODO: refactor to stateful:
-  const { slug } = pageContext;
-  let type = municipality?.type;
-
-  if (slug === 'gemeinden') {
-    type = 'qualifying';
-  } else if (slug === 'gemeinden-sammelphase') {
-    type = 'collecting';
-  } else {
-    type = 'state';
-    if (!pageContext.municipality && !municipality) {
-      const state = states.find(s => s.slug === slug);
-      setMunicipality(state);
+  useEffect(() => {
+    if (municipality) {
+      if (municipality.type) {
+        setType(municipality.type);
+      } else {
+        const state = states.find(s => s.name === municipality.name);
+        if (state) {
+          setMunicipality(state);
+          setType('state');
+        }
+        const collecting = agsCollecting.find(a => a === municipality.ags);
+        if (collecting) {
+          setType('collecting');
+        }
+        if (!state && !collecting) {
+          setType('qualifying');
+        }
+      }
+    } else {
+      const { slug } = pageContext;
+      if (slug === 'gemeinden') {
+        setType('qualifying');
+      } else if (slug === 'gemeinden-sammelphase') {
+        setType('collecting');
+      } else {
+        setType('state');
+        const state = states.find(s => s.slug === municipality.slug);
+        if (state) {
+          setMunicipality(state);
+        }
+      }
     }
-  }
+  }, [municipality]);
 
   const [displayTitle, setDisplayTitle] = useState(
     getStringFromPlaceholderText(title, municipality)
@@ -227,16 +271,20 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     }
   };
   useEffect(() => {
-    window.onpopstate = event => {
-      console.log({ event });
+    if (typeof window !== `undefined`) {
+      window.onpopstate = event => {
+        console.log({ event });
 
-      if (event.state?.name) {
-        setMunicipality(event.state);
-        adjustDocumentTitle(municipality, event.state.name);
-      }
-    };
+        if (event.state?.name) {
+          setMunicipality(event.state);
+          adjustDocumentTitle(municipality, event.state.name);
+        }
+      };
+    }
     return () => {
-      window.onpopstate = () => {};
+      if (typeof window !== `undefined`) {
+        window.onpopstate = () => {};
+      }
     };
   }, [municipality]);
 
@@ -246,16 +294,18 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
         setMunicipality(selected);
 
         // TODO: Check if library for fallback for IE should be used here:
-        if (window.history?.pushState) {
-          window.history.pushState(
-            selected,
-            null,
-            `${window.location.origin}/gemeinden/${selected.ags}`
-          );
-          adjustDocumentTitle(municipality, selected.name);
-          setWindowLocationOriginForIE();
-        } else {
-          navigate(municipality.ags);
+        if (typeof window !== `undefined`) {
+          if (window.history?.pushState) {
+            window.history.pushState(
+              selected,
+              null,
+              `${window.location.origin}/gemeinden/${selected.ags}`
+            );
+            adjustDocumentTitle(municipality, selected.name);
+            setWindowLocationOriginForIE();
+          } else {
+            navigate(municipality.ags);
+          }
         }
       }
     },

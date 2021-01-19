@@ -194,11 +194,12 @@ export const getLayeredData = ({
     return b.signups - a.signups;
   });
 
-  console.log(
-    ['change', 'win', 'new'].map(
-      e => dataEvents.filter(x => x.category === e).length + 'x ' + e
-    )
-  );
+  // Log the amount of municipalities per event type
+  // console.log(
+  //   ['change', 'win', 'new'].map(
+  //     e => dataEvents.filter(x => x.category === e).length + 'x ' + e
+  //   )
+  // );
 
   return {
     dataSignups,

@@ -36,8 +36,6 @@ import { Button } from '../../Forms/Button';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
-import anime from 'animejs';
-
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
 const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
 const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
@@ -96,25 +94,25 @@ const Legend = () => {
           <div className={s.legendContent}>
             {/* <div className={s.legendLabel}>Legende</div> */}
             <div className={s.legendHeadline}>
-              Jede Stadt oder Gemeinde mit Anmeldungen hat einen Pin.
+              Jede Stadt oder Gemeinde mit Anmeldungen hat einen Kreis.
             </div>
             <p className={s.legendIconLabel}>
-              Die Größe der Pins entspricht der Anzahl der Anmeldungen:
+              Die Größe der Kreise entspricht der Anzahl der Anmeldungen:
             </p>
             <div className={s.legendIcon}>
               <div dangerouslySetInnerHTML={{ __html: legendSize }}></div>
               <span> mehr</span>
             </div>
-            <p className={s.legendIconLabel}>
+            {/* <p className={s.legendIconLabel}>
               Wird das Anmeldeziel erreicht, bekommt der Pin einen Stern:
             </p>
             <div className={s.legendIcon}>
               <div dangerouslySetInnerHTML={{ __html: legendMarker }}></div>
               <span> geschafft!</span>
-            </div>
+            </div> */}
             <p className={s.legendIconLabel}>
-              Die Farbe der Pins zeigt wieviel Prozent des Anmeldeziels erreicht
-              wurde:
+              Die Farbe der Kreise zeigt, wie viel Prozent des Anmeldeziels
+              erreicht wurden:
             </p>
             <div className={s.legendIcon}>
               <div
@@ -483,7 +481,7 @@ const Map = ({
       radiusUnits: 'meters',
       radiusScale: 1,
       getRadius: d => scaleSignupsToMeters(d.signups),
-      getColor: d => getColor(d.percentToGoal),
+      getFillColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
     });
   }, [dataEvents, fadeOpacities]);

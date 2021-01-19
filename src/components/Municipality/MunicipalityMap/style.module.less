@@ -172,13 +172,13 @@
 
 .legendContent {
   height: 100%;
-  width: 87%;
+  width: 85%;
   max-width: 500px;
   padding: 1.5rem
 }
 
 .legendHeadline {
-  // margin-top: 1.2rem;
+  margin-bottom: 2rem;
   font-size: @fontSizeM;
   @media (max-width: @breakPointM) {
     font-size: @fontSizeS;
@@ -186,8 +186,9 @@
 }
 
 .legendIcon {
-  height: 9%;
-  margin-bottom: 1.75rem;
+  height: 20%;
+  width: 100%;
+  margin-bottom: 2.5rem;
   & span {
     font-size: @fontSizeXS;
   }
@@ -200,11 +201,17 @@
   }
   & .legendGradient {
     width: 100%;
+    & svg {
+      height: 100%;
+      width: 100%;
+
+    }
   }
 }
 
 .legendIconLabel {
-  font-size: @fontSizeXS;
+  font-size: @fontSizeS;
+  margin-bottom: 0.75rem;
 }
 
 .legendSpacer {
