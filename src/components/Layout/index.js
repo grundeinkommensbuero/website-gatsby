@@ -152,7 +152,7 @@ function Template({ children, sections }) {
           property="og:description"
           content={globalStuff.siteDescription.siteDescription}
         />
-        <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
+        <meta property="og:image" content={`https:${globalStuff.ogimage.fixed.src}`} />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>
