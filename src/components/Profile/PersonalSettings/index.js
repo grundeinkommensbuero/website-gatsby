@@ -16,11 +16,15 @@ import ImageUpload from '../../Forms/ImageUpload';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { useDeleteUser } from '../../../hooks/Api/Users/Delete';
 import { useSignOut } from '../../../hooks/Authentication';
+import { useSnackbar } from 'react-simple-snackbar';
+
+import snackbarTheme from './snackbarTheme.json';
 
 export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
   const [updateUserState, updateUser] = useUpdateUser();
   const deleteUser = useDeleteUser();
   const signOut = useSignOut();
+  const [openSnackbar] = useSnackbar(snackbarTheme);
 
   const [waitingForApi, setWaitingForApi] = useState(false);
   // const [editMailAddress, setEditMailAddress] = useState(false);
@@ -74,9 +78,17 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
     }
   };
 
+  const deleteSnackbarMessage = <p className={gS.snackbarMsg}>
+    <span className={gS.loading}></span>{' '}
+    <b>Dein Account wird gelöscht!</b>
+  </p>;
+
   const deleteUserAccount = () => {
-    deleteUser({ userId });
-    signOut();
+    openSnackbar(deleteSnackbarMessage, [6000]);
+    setTimeout(() => {
+      deleteUser({ userId });
+      signOut();
+    }, 3000);
   }
 
   const DeleteAccountDialog = () => {
@@ -89,23 +101,22 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
         <p className={nS.newsletterCardDescription}>
           Diese Aktion kann nicht rückgängig gemacht werden!
         </p>
-        <div className={nS.revokeButtonRow}>
+        <div className={s.revokeButtonRow}>
+
           <Button
-            className={gS.floatRight}
+            className={s.revokeButton}
+            onClick={() => setShowDeleteAccountDialog(false)}
+            size="SMALL"
+          >
+            Abbrechen
+          </Button>
+          <Button
+            className={s.revokeButton}
             onClick={deleteUserAccount}
+            size="SMALL"
           >
             Account entgültig löschen
           </Button>
-          <div className={nS.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormated}
-              onClick={() => setShowDeleteAccountDialog(false)}
-              onKeyUp={() => setShowDeleteAccountDialog(false)}
-            >
-              Abbrechen
-            </span>
-          </div>
         </div>
       </section>
     );
@@ -349,8 +360,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               </a>
               .
             </div>
-
-
 
             {!showDeleteAccountDialog ?
               <span
