@@ -65,9 +65,16 @@ const ProfilePage = ({ id: slugId }) => {
     }
   }, previousAction);
 
+  // Refresh userData to handle Image Upload
+  useEffect(() => {
+    if (userData) {
+      updateCustomUserData();
+    }
+  });
+
   const triggerUpdateCustomUserData = () => {
-    updateCustomUserData()
-  }
+    updateCustomUserData();
+  };
 
   return (
     <Layout>
