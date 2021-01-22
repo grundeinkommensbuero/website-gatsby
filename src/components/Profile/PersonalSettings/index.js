@@ -35,9 +35,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   const [tempName, setTempName] = useState();
   const [tempZIP, setTempZIP] = useState();
   const [tempCity, setTempCity] = useState();
-
-  // until phonenumber is included in userData
-  // const fakePhone = '';
+  // const phonenumber = '';
 
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
 
@@ -58,6 +56,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
   useEffect(() => {
     if (userData && tempName === undefined) {
+      updateCustomUserData();
       setTempName(userData.username);
       setTempZIP(userData.zipCode);
       setTempCity(userData.city);
@@ -134,8 +133,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             className={gS.avatar}
             userData={userData}
             userId={userId}
-            showUploadLabel={false}
-            showEditLabel={true}
             buttonOnRedBackground={true}
             size={'large'}
             onUploadDone={() => { }}
@@ -217,8 +214,8 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
             {!editPhoneNumber ? (
               <div className={s.editableRow}>
-                {fakePhone ? (
-                  <span>{fakePhone}</span>
+                {phonenumber ? (
+                  <span>{phonenumber}</span>
                 ) : (
                     <span>Noch keine Telefonnummer angegeben</span>
                   )}
@@ -226,11 +223,11 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   size="SMALL"
                   className={s.mobileBtn}
                   onClick={() => {
-                    setTempPhone(fakePhone);
+                    setTempPhone(phonenumber);
                     setEditPhoneNumber(true);
                   }}
                 >
-                  {fakePhone ? (
+                  {phonenumber ? (
                     <span>ändern</span>
                   ) : (
                       <span>eintragen</span>
@@ -245,7 +242,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     value={tempPhone || ''}
                     size="SMALL"
                     className={cN(
-                      tempPhone !== fakePhone ? s.inputHighlighted : null
+                      tempPhone !== phonenumber ? s.inputHighlighted : null
                     )}
                   />
                   <Button
@@ -255,7 +252,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   >
                     abbrechen
                   </Button>
-                  {tempPhone !== fakePhone ? (
+                  {tempPhone !== phonenumber ? (
                     <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
                   ) : null}
                 </div>
