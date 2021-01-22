@@ -56,7 +56,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
   useEffect(() => {
     if (userData && tempName === undefined) {
-      updateCustomUserData();
       setTempName(userData.username);
       setTempZIP(userData.zipCode);
       setTempCity(userData.city);

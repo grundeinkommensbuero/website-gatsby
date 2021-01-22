@@ -135,7 +135,7 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, size, u
       />
       {showUploadLabel ?
         <>
-          {(user.user && user.user.profilePictures) || unsavedChanges ?
+          {(user && user.profilePictures) || unsavedChanges ?
             <div className={cN(s.avatarImageLabel)}>Bild ändern</div>
             : <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
           }
