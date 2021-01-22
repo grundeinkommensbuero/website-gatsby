@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
 import s from './style.module.less';
@@ -9,6 +9,8 @@ import AvatarImage from '../../AvatarImage';
 import { CTAButton } from '../../Layout/CTAButton';
 import { Spinner } from '../../Spinner';
 
+import AuthContext from '../../../context/Authentication';
+
 export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedBackground = false }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
@@ -16,14 +18,25 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
   const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(false);
   const [showUploadErrorMessage, setShowUploadErrorMessage] = useState(false);
 
+  const { updateCustomUserData } = useContext(AuthContext);
+
   useEffect(() => {
     if (uploadImageState === 'success') {
-      onUploadDone();
       setImageUploadIsProcessing(false);
       setShowUploadSuccessMessage(true);
       setTimeout(() => {
         setShowUploadSuccessMessage(false);
       }, 1500);
+      onUploadDone();
+      let counter = 0;
+      const tryUpdateUserData = setInterval(() => {
+        if (counter < 20) {
+          updateCustomUserData();
+          counter++;
+        } else {
+          window.clearInterval(tryUpdateUserData);
+        }
+      }, 500);
     }
     if (uploadImageState === 'error') {
       setImageUploadIsProcessing(false);
