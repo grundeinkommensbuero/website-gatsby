@@ -1,0 +1,171 @@
+@import '../../components/style/vars.less';
+
+.profilePageGrid {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 5rem 2rem 10rem;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 90%;
+    padding: 2rem 0 2rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    grid-template-columns: 100%;
+    grid-gap: 1rem;
+    padding: 1rem 0 1rem;
+  }
+}
+
+.avatar {
+  width: 7em;
+  height: 7em;
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    grid-template-columns: 160px auto;
+  }
+
+  @media (max-width: @breakPointS) {
+    display: block;
+  }
+}
+
+.username {
+  font-size: @fontSizeXXL;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: @breakPointM) {
+    font-size: @fontSizeXL;
+  }
+}
+
+// Details section
+.placeInfo {
+  margin-bottom: 0.3rem;
+  font-size: @fontSizeM;
+}
+
+.details {
+  margin: 0;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 1em;
+    font-size: @fontSizeS;
+  }
+}
+
+.optionSectionHeading {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.editPageSection {
+  position: relative;
+  background-color: @greyMedium;
+  padding: 3.3rem 4rem;
+
+  @media (max-width: @breakPointS) {
+    padding: 3.3rem 2rem;
+  }
+}
+
+.editSettings {
+  grid-column: 1 / span 2;
+  background-color: @red;
+  color: @white;
+
+  @media (max-width: @breakPointS) {
+    grid-column: 1 / span 1;
+  }
+}
+
+.backToProfile {
+  left: 1rem;
+  margin-bottom: 3rem;
+
+  &:before {
+    content: '< ';
+  }
+}
+
+.bottomRightLink {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.linkLikeFormated {
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.floatRight {
+  float: right;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.inputDescription {
+  margin-bottom: -0.25em;
+}
+
+.socialButtonRow {
+  padding-top: 1em;
+}
+
+.messengerIcon {
+  margin-right: 0.5em;
+}
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f0f0f0;
+  border-radius: 50%;
+  border-top-color: #ff4646;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+.loadingMsg {
+  margin-left: 0.5em;
+  font-size: 18px;
+}
+
+.snackbarMsg {
+  margin: 0;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}

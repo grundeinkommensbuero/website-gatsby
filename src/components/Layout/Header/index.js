@@ -35,7 +35,7 @@ const Header = ({ menu, hasOverlay }) => {
                 size="MEDIUM"
                 onClick={() => toggleOverlay()}
               >
-                Jetzt abstimmen
+                Spenden
               </Button>
             )}
           </OverlayContext.Consumer>

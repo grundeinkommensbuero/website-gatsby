@@ -2,5 +2,6 @@ https://www.expedition-grundeinkommen.com/*     https://expedition-grundeinkomme
 http://www.expedition-grundeinkommen.com/*      https://expedition-grundeinkommen.de/:splat 301!
 www.expedition-grundeinkommen.com/*      https://expedition-grundeinkommen.de/:splat 301!
 
+/gemeinde-teilen/*  https://2j0bcp5tr9.execute-api.eu-central-1.amazonaws.com/dev/share-municipality/:splat 301!
 /downloads                                      /material
 /Briefkasten                                    /briefkasten

@@ -161,3 +161,23 @@
     .linkUnderlined();
   }
 }
+
+.donationCTA {
+  background: @red;
+  border-radius: 0.2rem;
+  color: @white;
+  display: inline-block;
+  margin: 0 1rem;
+  padding: 0.4rem 0.9rem;
+  text-decoration: none;
+
+  @media (max-width: @breakPointM) {
+    margin: 1.5rem 1rem;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: darken(@red, 10%);
+  }
+}

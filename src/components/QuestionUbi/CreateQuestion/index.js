@@ -10,6 +10,7 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useUploadImage } from '../../../hooks/images';
 import { useSaveQuestion } from '../../../hooks/Api/Questions';
 import AvatarImage from '../../AvatarImage';
+import { ImageInput } from '../../Forms/ImageUpload';
 
 export default ({ setQuestionJustSent, userId, userData }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
@@ -171,40 +172,6 @@ export default ({ setQuestionJustSent, userId, userData }) => {
         </SectionInner>
       )}
     ></Form>
-  );
-};
-
-const ImageInput = ({ input: { value, onChange, ...input }, user }) => {
-  const [avatarImage, setAvatarImage] = useState(null);
-  const handleChange = ({ target }) => {
-    if (target.files && target.files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(target.files[0]);
-      reader.onload = e => {
-        setAvatarImage(e.target.result);
-        onChange({ files: target.files, srcOverwrite: e.target.result });
-      };
-    } else {
-      onChange({ files: target.files });
-    }
-  };
-  return (
-    <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
-      <AvatarImage
-        srcOverwrite={avatarImage}
-        className={s.avatarImage}
-        user={user}
-        sizes="80px"
-      />
-      <div className={s.avatarImageLabel}>Lad’ ein Bild hoch!</div>
-      <input
-        type="file"
-        onChange={handleChange}
-        className={s.avatarUploadButton}
-        accept="image/png, image/jpeg"
-        {...input}
-      />
-    </label>
   );
 };
 

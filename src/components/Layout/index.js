@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import SnackbarProvider from 'react-simple-snackbar';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -131,7 +132,7 @@ function Template({ children, sections }) {
   };
 
   return (
-    <>
+    <SnackbarProvider>
       {globalStuff.overlayActive && globalStuff.overlay && (
         <Overlay delay={globalStuff.overlayDelay}>
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
@@ -163,7 +164,7 @@ function Template({ children, sections }) {
         footerText={globalStuff.footerText}
         footerMenu={globalStuff.footerMenu}
       />
-    </>
+    </SnackbarProvider>
   );
 }
 

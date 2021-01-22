@@ -1,0 +1,95 @@
+@import '../../../components/style/vars.less';
+
+.dataEditWrapper {
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    display: block;
+  }
+}
+
+.userInfo {
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  @media (max-width: @breakPointM) {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  @media (max-width: @breakPointS) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
+}
+
+.marginBottomOnMobile {
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.dataEditSection {
+  grid-column: 2 / span 2;
+}
+
+.optionSectionDescription {
+  margin-bottom: 0.75em;
+  font-weight: 100;
+}
+
+.optionHeading {
+  margin: 0;
+}
+
+.optionDescription {
+  margin: 0;
+  font-weight: 100;
+}
+
+.editableRow {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.saveChangesBtn {
+  margin-top: 0.5em;
+}
+
+.mobileBtn {
+  border: @white solid 1px;
+  color: @white;
+
+  &:hover {
+    background-color: @white;
+    color: @red;
+  }
+
+  @media (max-width: @breakPointM) {
+    margin-top: 1em;
+  }
+}
+
+.editTextInput {
+  margin-bottom: 1em;
+}
+
+.inputHighlighted {
+  background-color: #fff56e;
+}
+
+.inputWide {
+  width: 100%;
+}
+
+.revokeButton {
+  margin: 0.5rem;
+}
+
+.revokeButtonRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}

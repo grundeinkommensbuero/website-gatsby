@@ -7,24 +7,15 @@
   background-color: @red;
   color: @grey;
   font-weight: normal;
+  margin-top: 2em;
+  padding: 3rem;
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
 
-  &.default {
-    --bg-color: @yellow;
-    background-color: var(--bg-color);
-    margin-top: 3em;
-    padding: 30px 40px 40px 40px;
-  }
-
-  &.noBackgroundAndPadding {
+  @media (max-width: @breakPointS) {
     margin-top: 0;
-    padding: 1rem;
-    --bg-color: none;
-    background-color: var(--bg-color);
-    color: @red;
-    font-weight: normal;
+    padding: 2.5rem 1.5rem;
   }
 
   h3 {

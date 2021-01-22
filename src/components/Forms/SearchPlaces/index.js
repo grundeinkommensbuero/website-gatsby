@@ -9,7 +9,29 @@ import { navigate } from 'gatsby';
 
 import Fuse from 'fuse.js';
 
-export default function SearchPlaces({ showButton, onPlaceSelect }) {
+const handleButtonClickDefault = ({ validate }) => {
+  // If no place was selected, we check if the top result
+  // has a very good score, if yes -> navigate to the page
+  // of that place
+  // --> validate function
+  const validation = validate();
+  if (validation.status === 'success') {
+    navigate(validation.ags);
+  }
+};
+
+export const SearchPlaces = ({
+  showButton,
+  buttonLabel = 'Finde deine Stadt',
+  placeholder = 'Stadt oder Gemeinde',
+  onPlaceSelect,
+  label = 'Stadt oder Gemeinde:',
+  validateOnBlur,
+  inputSize,
+  buttonSize,
+  profileButtonStyle,
+  handleButtonClick = handleButtonClickDefault,
+}) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState({});
@@ -34,6 +56,9 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
       if (query !== selectedPlace.name) {
         setSuggestionsActive(true);
         setSelectedPlace({});
+        if (onPlaceSelect) {
+          onPlaceSelect();
+        }
       }
 
       if (fuse) {
@@ -70,6 +95,22 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
     }
   }, [query, fuse]);
 
+  const validate = () => {
+    let ags;
+    if (selectedPlace.ags) {
+      ags = `/gemeinden/${selectedPlace.ags}`;
+      return { status: 'success', ags };
+    }
+    if (results.length > 0 && results[0].score < 0.001) {
+      ags = `/gemeinden/${results[0].ags}`;
+      return { status: 'success', ags };
+    }
+    const touched = true;
+    const error = 'Bitte wähle eine Stadt aus';
+    setFormState({ error, touched });
+    return { status: 'failed' };
+  };
+
   const handleSuggestionClick = suggestion => {
     setQuery(suggestion.name);
     setSelectedPlace(suggestion);
@@ -90,45 +131,41 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
     setFormState({ error, touched });
   };
 
-  const handleSubmit = e => {
-    // If no place was selected, we check if the top result
-    // has a very good score, if yes -> navigate to the page
-    // of that place
-    if (selectedPlace.ags) {
-      navigate(`/kommune/${selectedPlace.ags}`);
-    } else if (results.length > 0 && results[0].score < 0.001) {
-      navigate(`/kommune/${results[0].ags}`);
-    } else {
-      const touched = true;
-      const error = 'Bitte wähle eine Stadt aus';
-      setFormState({ error, touched });
+  const handleKeyDown = e => {
+    // Emulate click when enter or space are pressed
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleSuggestionClick(results[0]);
+    }
+  };
+
+  const handleBlur = e => {
+    const isAutoCompleteTarget =
+      e.relatedTarget &&
+      [...e.relatedTarget.classList].join('').includes('suggestionsItem');
+    if (!isAutoCompleteTarget) {
+      setTimeout(() => {
+        setSuggestionsActive(false);
+        if (validateOnBlur) {
+          validate();
+        }
+      }, 300);
     }
   };
 
   return (
-    <div>
-      <label htmlFor="gemeinde">Stadt:</label>
+    <>
+      {label && <label>{label}</label>}
       <div className={s.container}>
         <div className={s.inputContainer}>
           <TextInput
-            id="gemeinde"
-            placeholder="Stadt"
+            size={inputSize}
+            placeholder={placeholder}
             autoComplete="off"
             label="Stadt"
             value={query}
             onChange={handleChange}
-            onBlur={e => {
-              if (
-                e.relatedTarget &&
-                (e.relatedTarget.getAttribute('id') ===
-                  'gatsby-focus-wrapper' ||
-                  e.relatedTarget.getAttribute('id') === 'linkButton')
-              ) {
-                setTimeout(() => {
-                  setSuggestionsActive(false);
-                }, 300);
-              }
-            }}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
           />
 
           <AutoCompleteList
@@ -136,31 +173,41 @@ export default function SearchPlaces({ showButton, onPlaceSelect }) {
             results={results}
             suggestionsActive={suggestionsActive}
             handleSuggestionClick={handleSuggestionClick}
+            handleBlur={handleBlur}
           />
           <LabelInputErrorWrapper meta={formState} />
         </div>
         {showButton && (
           <Button
             id="linkButton"
-            className={s.sideButton}
-            onClick={handleSubmit}
+            size={buttonSize}
+            className={cN(
+              { [s.sideButton]: !profileButtonStyle },
+              { [s.profileSideButton]: profileButtonStyle }
+            )}
+            onClick={event => handleButtonClick({ event, validate })}
           >
-            Finde deine Stadt
+            {buttonLabel}
           </Button>
         )}
       </div>
-    </div>
+    </>
   );
-}
+};
 
 export function AutoCompleteList({
   query,
   results,
   suggestionsActive,
   handleSuggestionClick,
+  handleBlur,
 }) {
   return (
-    <div className={cN(s.suggestions, { [s.active]: suggestionsActive })}>
+    <div
+      aria-hidden={true}
+      className={cN(s.suggestions, { [s.active]: suggestionsActive })}
+      onBlur={handleBlur}
+    >
       {results.length === 0 && query.length > 1 && (
         <div className={s.noSuggestionsItem}>Keine Ergebnisse</div>
       )}
@@ -187,7 +234,7 @@ export function AutoCompleteList({
               {x.name},{' '}
               {x.zipCodes.length === 1
                 ? `${x.zipCodes[0]}`
-                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
+                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
             </div>
           );
         })}
