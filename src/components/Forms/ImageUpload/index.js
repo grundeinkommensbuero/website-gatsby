@@ -29,14 +29,15 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
       }, 1500);
       onUploadDone();
       let counter = 0;
+      // Try to fetch new profile picture
       const tryUpdateUserData = setInterval(() => {
-        if (counter < 20) {
+        if (counter < 3) {
           updateCustomUserData();
           counter++;
         } else {
           window.clearInterval(tryUpdateUserData);
         }
-      }, 500);
+      }, 5000);
     }
     if (uploadImageState === 'error') {
       setImageUploadIsProcessing(false);
