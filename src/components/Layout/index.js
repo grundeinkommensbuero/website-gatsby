@@ -131,6 +131,15 @@ function Template({ children, sections }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
+  const checkUrlProtocolIdentifier = (url) => {
+    if (typeof url === 'string' && !url.includes('https://')) {
+      const updatedUrl = `https:${url}`;
+      return updatedUrl;
+    } else {
+      return url;
+    }
+  };
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -152,7 +161,7 @@ function Template({ children, sections }) {
           property="og:description"
           content={globalStuff.siteDescription.siteDescription}
         />
-        <meta property="og:image" content={globalStuff.ogimage.fixed.src} />
+        <meta property="og:image" content={checkUrlProtocolIdentifier(globalStuff.ogimage.fixed.src)} />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>
