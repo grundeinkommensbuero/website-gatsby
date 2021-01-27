@@ -9,7 +9,8 @@ import nS from '../ProfileNotifications/style.module.less';
 
 import cN from 'classnames';
 import { Link } from 'gatsby';
-import { Button } from '../../Forms/Button';
+// import { Button, SIZE_SMALL, SIZE_MEDIUM } from '../../Forms/Button';
+import * as btn from '../../Forms/Button';
 // import { MessengerButtonRow } from '../MessengerButtonRow.js';
 import ImageUpload from '../../Forms/ImageUpload';
 
@@ -94,6 +95,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   }
 
   const DeleteAccountDialog = () => {
+
     return (
       <section className={nS.newsletterCard}>
         <p className={nS.newsletterCardHeading}>
@@ -105,20 +107,20 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
         </p>
         <div className={s.revokeButtonRow}>
 
-          <Button
+          <btn.Button
             className={s.revokeButton}
             onClick={() => setShowDeleteAccountDialog(false)}
-            size="SMALL"
+            size={btn.SIZE_SMALL}
           >
             Abbrechen
-          </Button>
-          <Button
+          </btn.Button>
+          <btn.Button
             className={s.revokeButton}
             onClick={deleteUserAccount}
-            size="SMALL"
+            size={btn.SIZE_SMALL}
           >
             Account entgültig löschen
-          </Button>
+          </btn.Button>
         </div>
       </section>
     );
@@ -136,7 +138,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             className={gS.avatar}
             userData={userData}
             userId={userId}
-            buttonOnRedBackground={true}
+            btnOnRedBackground={true}
             size={'large'}
             onUploadDone={() => { }}
           />
@@ -150,7 +152,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               {userData.username || userData.email}
             </h1>
             <div className={gS.placeInfo}>{userData.city}</div>
-            {/* Show profile edit button if own page */}
+            {/* Show profile edit btn if own page */}
             <div className={s.details}>
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
@@ -172,13 +174,13 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
              {!editMailAddress ? (
               <div className={s.editableRow}>
                 <span>{userData.email}</span>
-                <Button
-                  size="SMALL"
+                <btn.Button
+                  size={btn.SIZE_SMALL}
                   className={s.mobileBtn}
                   onClick={() => setEditMailAddress(true)}
                 >
                   ändern
-                </Button>
+                </btn.Button>
               </div>
             ) : (
                 <div className={s.editableRow}>
@@ -186,13 +188,13 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     onChange={evt => setTempMail(evt.target.value)}
                     placeholder="E-Mail"
                     value={tempMail || ''}
-                    size="SMALL"
+                    size={btn.SIZE_SMALL}
                     className={cN(
                       tempMail !== userData.email ? s.inputHighlighted : null
                     )}
                   />
-                  <Button
-                    size="SMALL"
+                  <btn.Button
+                    size={btn.SIZE_SMALL}
                     className={s.mobileBtn}
                     onClick={() => {
                       setTempMail(userData.email);
@@ -200,9 +202,9 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     }}
                   >
                     abbrechen
-                  </Button>
+                  </btn.Button>
                   {tempMail !== userData.email ? (
-                    <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
+                    <btn.Button size={btn.SIZE_SMALL} className={s.mobileBtn}>speichern</btn.Button>
                   ) : null}
                 </div>
               )} */}
@@ -222,8 +224,8 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 ) : (
                     <span>Noch keine Telefonnummer angegeben</span>
                   )}
-                <Button
-                  size="SMALL"
+                <btn.Button
+                  size={btn.SIZE_SMALL}
                   className={s.mobileBtn}
                   onClick={() => {
                     setTempPhone(phonenumber);
@@ -235,7 +237,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   ) : (
                       <span>eintragen</span>
                     )}
-                </Button>
+                </btn.Button>
               </div>
             ) : (
                 <div className={s.editableRow}>
@@ -243,20 +245,20 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     onChange={evt => setTempPhone(evt.target.value)}
                     placeholder="Telefonnummer"
                     value={tempPhone || ''}
-                    size="SMALL"
+                    size={btn.SIZE_SMALL}
                     className={cN(
                       tempPhone !== phonenumber ? s.inputHighlighted : null
                     )}
                   />
-                  <Button
-                    size="SMALL"
+                  <btn.Button
+                    size={btn.SIZE_SMALL}
                     className={s.mobileBtn}
                     onClick={() => setEditPhoneNumber(false)}
                   >
                     abbrechen
-                  </Button>
+                  </btn.Button>
                   {tempPhone !== phonenumber ? (
-                    <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
+                    <btn.Button size={btn.SIZE_SMALL} className={s.mobileBtn}>speichern</btn.Button>
                   ) : null}
                 </div>
               )} */}
@@ -318,8 +320,8 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 tempZIP !== userData.zipCode ||
                 tempCity !== userData.city) ? (
                 <>
-                  <Button
-                    size="SMALL"
+                  <btn.Button
+                    size={btn.SIZE_SMALL}
                     className={s.mobileBtn}
                     onClick={() => {
                       setTempName(userData.username);
@@ -328,14 +330,14 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     }}
                   >
                     abbrechen
-                  </Button>
-                  <Button
-                    size="SMALL"
+                  </btn.Button>
+                  <btn.Button
+                    size={btn.SIZE_SMALL}
                     className={s.mobileBtn}
                     onClick={saveUserDataChanges}
                   >
                     speichern
-                </Button>
+                </btn.Button>
                 </>
               ) : (
                 <section>
