@@ -89,7 +89,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         </section>
       </Link>
 
-      {signatureCountOfUser && (
+      {/* {signatureCountOfUser && (
         <a className={cN(s.profilePageSection, s.profilePageSectionLarge)}
           href={`/${signatureCountOfUser.mostRecentCampaign
             ? SELF_SCAN_SLUGS[
@@ -117,9 +117,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             )}
           </section>
         </a>
-      )}
+      )} */}
 
-      {/* <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
+      <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
           {signatureCountOfUser && (
@@ -138,7 +138,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             </>
           )}
         </section>
-      </Link> */}
+      </Link>
 
       {/* <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
         <section>

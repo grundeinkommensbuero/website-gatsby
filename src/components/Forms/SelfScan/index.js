@@ -3,7 +3,6 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 import cN from 'classnames';
 import querystring from 'query-string';
-import { Link } from 'gatsby';
 
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
@@ -13,7 +12,6 @@ import { validateEmail } from '../../utils';
 import { SectionInner, Section } from '../../Layout/Sections';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import SignatureStats from '../../SignatureStats';
-import AuthInfo from '../../AuthInfo';
 import SignUp from '../SignUp';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
@@ -107,9 +105,6 @@ export default ({ successMessage, campaignCode }) => {
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
         <Section>
-          <div className={s.backToProfile}>
-            <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
-          </div>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}
@@ -141,9 +136,6 @@ export default ({ successMessage, campaignCode }) => {
                 )}
               <CountSignaturesForm {...countSignaturesFormProps} />
             </SectionInner>
-            <div className={s.backToProfile}>
-              <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
-            </div>
           </Section>
         )}
     </>
@@ -297,11 +289,6 @@ const CountSignaturesForm = ({
 
   return (
     <>
-      {userId && (
-        <p>
-          <AuthInfo />
-        </p>
-      )}
       <Form
         onSubmit={data => {
           data.campaignCode = campaignCode;
