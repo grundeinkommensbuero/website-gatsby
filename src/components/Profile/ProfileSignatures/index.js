@@ -47,6 +47,7 @@ export const ProfileSignatures = ({ userId }) => {
             <SelfScan
               campaignCode="berlin-1"
               successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin"
+              className={s.customStyle}
             />
           </SectionWrapper>
 

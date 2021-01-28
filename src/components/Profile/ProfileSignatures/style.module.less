@@ -5,3 +5,12 @@
   --bg-color: none;
   padding: 0;
 }
+
+.customStyle {
+  --bg-color: @red;
+  background-color: @red;
+  color: @grey;
+  & input:checked {
+    color: @red;
+  }
+}

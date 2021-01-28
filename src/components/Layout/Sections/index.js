@@ -317,8 +317,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
