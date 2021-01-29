@@ -111,6 +111,7 @@ const ProfilePage = ({ id: slugId }) => {
             /> */}
             <ProfileDonationSettings
               userData={userData}
+              updateCustomUserData={triggerUpdateCustomUserData}
               path="spenden-einstellungen"
               userId={userId}
             />
