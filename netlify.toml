@@ -1,5 +1,5 @@
 [context.production.environment]
-CONTENTFUL_ENVIRONMENT = "master-2021-02-03"
+CONTENTFUL_ENVIRONMENT = "master"
 
 [context.campaign-launch.environment]
 CONTENTFUL_ENVIRONMENT = "launch"
