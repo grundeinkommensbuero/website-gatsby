@@ -37,7 +37,8 @@ import { Button } from '../../Forms/Button';
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
-const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
+// Note: Only needed for Pins as Markers:
+// const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
 const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
 
 // ---- Constants ------------------------------------------------------------------------
@@ -142,19 +143,23 @@ export const MunicipalityMap = ({
   const [dataSignups, setDataSignups] = useState([]);
   const [dataLabels, setDataLabels] = useState([]);
   const [dataEvents, setDataEvents] = useState([]);
+  // TODO: Change in backend!
   const [signupScale, setSignupScale] = useState([
     [1, 40000],
     [1000, 30000],
   ]);
   const [, setTimePassed] = useState();
-  const [, municipalityStats, getMunicipalityStats] = useGetMunicipalityStats();
-  // const [municipalityStats, setMunicipalityStats] = useState();
+  const [
+    municipalityStatsState,
+    municipalityStats,
+    getMunicipalityStats,
+  ] = useGetMunicipalityStats();
   const [focus, setFocus] = useState();
   const [mapDataReady, setMapDataReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
   const [zoomMin, setZoomMin] = useState(Infinity);
   const [fadeOpacities, setFadeOpacities] = useState({
-    fallback: 1,
+    empty: 1,
     map: 0,
     animatedMarkers: 0,
   });
@@ -172,9 +177,6 @@ export const MunicipalityMap = ({
   }, []);
 
   useEffect(() => {
-    // import('./data/response.json').then(({ default: stats }) => {
-    //   setMunicipalityStats(stats);
-    // });
     getMunicipalityStats();
   }, []);
 
@@ -192,6 +194,7 @@ export const MunicipalityMap = ({
             scale,
             timePassed,
           } = municipalityStats;
+
           const {
             dataSignups,
             dataEvents,
@@ -208,8 +211,8 @@ export const MunicipalityMap = ({
           setDataSignups(dataSignups);
           setDataEvents(dataEvents);
           setDataLabels(dataLabels);
-          // TODO: uncomment for production
-          // setSignupScale(scale);
+          // TODO: Backend update
+          setSignupScale(scale);
           setDataMunicipalities(dataMunicipalities);
           setTimePassed(timePassed);
           setMapDataReady(true);
@@ -222,7 +225,7 @@ export const MunicipalityMap = ({
     if (mapDataReady) {
       onDataReady();
     }
-  }, [mapDataReady]);
+  }, [mapDataReady, onDataReady]);
 
   // ---- Utils ----------------------------------------------------------------------------
   const getAgsData = useCallback(
@@ -242,14 +245,15 @@ export const MunicipalityMap = ({
         setFocus(focusData);
       }
     },
-    [agsToFlyTo, getAgsData, dataLabels]
+    [agsToFlyTo, getAgsData, dataLabels, getAgsData]
   );
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
-    // console.log(mapDataReady, shouldStartAnimation);
-
-    if (mapDataReady && shouldStartAnimation) {
+    if (
+      (mapDataReady && shouldStartAnimation) ||
+      municipalityStatsState === 'error'
+    ) {
       animate({
         fadeOpacities,
         setFadeOpacities,
@@ -259,9 +263,10 @@ export const MunicipalityMap = ({
         updateFocus,
         initialMapAnimation,
         setMunicipalityFadeProgress,
+        municipalityStatsState,
       });
     }
-  }, [shouldStartAnimation, mapDataReady, animate]);
+  }, [shouldStartAnimation, mapDataReady, animate, municipalityStatsState]);
 
   useEffect(() => {
     if (mapDataReady) {
@@ -288,7 +293,7 @@ export const MunicipalityMap = ({
     return (
       <div className={cN(s.defaultPositionRelative, className)}>
         <div className={s.interfaceContainer}>
-          <div className={s.mapFallback}></div>
+          <div className={cN(s.mapStatic, s.fallback)}></div>
         </div>
       </div>
     );
@@ -325,27 +330,37 @@ export const MunicipalityMap = ({
         </div>
 
         <div
-          className={s.mapFallback}
-          style={{ opacity: fadeOpacities.fallback }}
+          className={cN(s.mapStatic, s.empty)}
+          style={{ opacity: fadeOpacities.empty }}
         ></div>
-        <div className={s.mapContainer} style={{ opacity: fadeOpacities.map }}>
-          <Map
-            dataStates={dataStates}
-            dataSignups={dataSignups}
-            dataLabels={dataLabels}
-            dataEvents={dataEvents}
-            signupScale={signupScale}
-            focus={focus}
-            zoom={zoom}
-            setZoom={setZoom}
-            zoomMin={zoomMin}
-            setZoomMin={setZoomMin}
-            municipalityFadeProgress={municipalityFadeProgress}
-            setHoverInfo={setHoverInfo}
-            initialMapAnimation={initialMapAnimation}
-            fadeOpacities={fadeOpacities}
-          />
-        </div>
+        {municipalityStatsState === 'success' ? (
+          <div
+            className={s.mapContainer}
+            style={{ opacity: fadeOpacities.map }}
+          >
+            <Map
+              dataStates={dataStates}
+              dataSignups={dataSignups}
+              dataLabels={dataLabels}
+              dataEvents={dataEvents}
+              signupScale={signupScale}
+              focus={focus}
+              zoom={zoom}
+              setZoom={setZoom}
+              zoomMin={zoomMin}
+              setZoomMin={setZoomMin}
+              municipalityFadeProgress={municipalityFadeProgress}
+              setHoverInfo={setHoverInfo}
+              initialMapAnimation={initialMapAnimation}
+              fadeOpacities={fadeOpacities}
+            />
+          </div>
+        ) : (
+          <div
+            className={cN(s.mapStatic, s.fallback)}
+            style={{ opacity: fadeOpacities.map }}
+          ></div>
+        )}
       </div>
       {hoverInfo && hoverInfo.object && (
         <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
@@ -363,6 +378,30 @@ const getCorrectedPositionRadius = (position, radius) => {
     Math.max(0, radius / 1000),
     { units: 'kilometers' }
   ).geometry.coordinates;
+};
+
+const flyTo = ({
+  longitude,
+  latitude,
+  zoom = 6.9,
+  transitionDuration = 2000,
+  setInitialViewState,
+}) => {
+  // Note: setTimeout is necessary for initial focus switch
+  setTimeout(() => {
+    setInitialViewState({
+      longitude,
+      latitude,
+      zoom,
+      pitch: 0,
+      bearing: 0,
+      transitionDuration,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionEasing: function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      },
+    });
+  }, 150);
 };
 
 const Map = ({
@@ -389,24 +428,6 @@ const Map = ({
   const scaleSignupsToMeters = scaleSqrt()
     .domain(signupDomain)
     .range(signupRange);
-
-  const flyTo = useCallback(
-    ({ longitude, latitude, zoom = 6.9, transitionDuration = 2000 }) => {
-      setInitialViewState({
-        longitude,
-        latitude,
-        zoom,
-        pitch: 0,
-        bearing: 0,
-        transitionDuration,
-        transitionInterpolator: new FlyToInterpolator(),
-        transitionEasing: function easeInOutCubic(t) {
-          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        },
-      });
-    },
-    []
-  );
 
   // ---- Layers ---------------------------------------------------------------------------
   const layerStates = useMemo(() => {
@@ -590,10 +611,12 @@ const Map = ({
   useEffect(() => {
     if (focus) {
       const { longitude, latitude } = focus;
+
       flyTo({
         longitude,
         latitude,
         transitionDuration: initialMapAnimation ? 2000 : 1000,
+        setInitialViewState,
       });
     }
   }, [focus, initialMapAnimation]);
@@ -620,7 +643,6 @@ const Map = ({
   };
 
   const handleResize = dimensionsUpdate => {
-    // console.log('resized');
     setDimensions(dimensionsUpdate);
     zoomToBounds({
       initialViewState,

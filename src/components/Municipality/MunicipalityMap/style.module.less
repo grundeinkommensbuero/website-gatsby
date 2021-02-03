@@ -20,16 +20,23 @@
   height: 100%;
 }
 
-.mapFallback {
+.mapStatic {
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: 0;
-  background-image: url('./assets/map.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  &.empty {
+    background-image: url('./assets/map.png');
+  }
+  &.fallback{
+    background-image: url('./assets/map-full.png');
+  }
+
 }
+
 
 .buttonContainer {
   position: absolute;

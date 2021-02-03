@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -28,14 +28,7 @@ const ColumnQualifying = ({
     getMunicipalityStats,
   ] = useGetMunicipalityStats();
 
-  useEffect(() => {
-    if (municipality) {
-      console.log(municipality);
-
-      getMunicipalityStats(municipality.ags);
-    }
-  }, []);
-
+  // Note: Triggers Warning: Can't perform a React state update on an unmounted component.
   useEffect(() => {
     if (municipality) {
       getMunicipalityStats(municipality.ags);
@@ -270,10 +263,26 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
       );
     }
   };
+
+  // Note: Opportunity for further improvement for navigating back in the browser:
+  // Replace the history state, so it’s available
+  // Currently not possible since it stops the animation
+  // useEffect(() => {
+  //   if (typeof window !== `undefined`) {
+  //     if (window.history && window.history.replaceState) {
+  //       window.history.replaceState(municipality, '');
+  //     }
+  //     console.log(window.history.state);
+  //   }
+  // }, []);
+
   useEffect(() => {
     if (typeof window !== `undefined`) {
       window.onpopstate = event => {
-        console.log({ event });
+        console.log('***');
+
+        console.log('onpopstate', event);
+        console.log('***');
 
         if (event.state?.name) {
           setMunicipality(event.state);
@@ -293,7 +302,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
       if (selected) {
         setMunicipality(selected);
 
-        // TODO: Check if library for fallback for IE should be used here:
+        // Note: IE would need an additional fallback for window.history here:
         if (typeof window !== `undefined`) {
           if (window.history?.pushState) {
             window.history.pushState(
