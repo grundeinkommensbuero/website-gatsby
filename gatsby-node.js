@@ -5,6 +5,9 @@ const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const webpack = require('webpack');
 const gitRevisionPlugin = new GitRevisionPlugin();
 
+console.log('GATSBY_USE_DEV_BACKEND: ', process.env.GATSBY_USE_DEV_BACKEND);
+console.log('NODE_ENV: ', process.env.NODE_ENV);
+
 const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
 let municipalities = JSON.parse(raw);
 

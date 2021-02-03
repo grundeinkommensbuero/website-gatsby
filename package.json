@@ -25,7 +25,7 @@
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build",
-    "build-launch": "sed -i 's|COGNITO_APP_CLIENT_ID_PLACEHOLDER|${COGNITO_APP_CLIENT_ID}|g' netlify.toml && gatsby build",
+    "build-launch-local": "cross-env GATSBY_USE_DEV_BACKEND=override gatsby build",
     "start": "npm run develop",
     "serve": "gatsby serve"
   },
@@ -40,6 +40,7 @@
     "canvas-confetti": "^1.2.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
     "csv-parse": "^4.12.0",
     "d3-array": "^2.9.1",
     "d3-scale": "^3.2.3",
