@@ -80,6 +80,7 @@ function Template({ children, sections, pageContext, title, description }) {
               }
               callToActionLink
               callToActionText
+              colorScheme
               bodyTextSizeHuge
               signUpForm
               emailSignup
@@ -129,20 +130,15 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  let ogImage = globalStuff.ogimage.fixed.src;
-  // TODO og:image based on municipality ags
-  // const municipality = pageContext?.municipality;
-  // console.log(municipality);
-  // create img url based on ags
-  // ogImage = municipality ? getOgImageLink(municipality.ags) : ogImage
+  const checkUrlProtocolIdentifier = url => {
+    if (typeof url === 'string' && !url.includes('https://')) {
+      const updatedUrl = `https:${url}`;
+      return updatedUrl;
+    } else {
+      return url;
+    }
+  };
 
-  const ogTitle = title ? title : globalStuff.siteTitle;
-  const ogDescription = description
-    ? description
-    : globalStuff.siteDescription.siteDescription;
-
-  // console.log(ogImage, ogTitle, ogDescription);
-  // ---
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -155,10 +151,19 @@ function Template({ children, sections, pageContext, title, description }) {
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
       >
-        <meta name="description" content={ogDescription} />
-        <meta property="og:title" content={ogTitle} />
-        <meta property="og:description" content={ogDescription} />
-        <meta property="og:image" content={ogImage} />
+        <meta
+          name="description"
+          content={globalStuff.siteDescription.siteDescription}
+        />
+        <meta property="og:title" content={globalStuff.siteTitle} />
+        <meta
+          property="og:description"
+          content={globalStuff.siteDescription.siteDescription}
+        />
+        <meta
+          property="og:image"
+          content={checkUrlProtocolIdentifier(globalStuff.ogimage.fixed.src)}
+        />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>

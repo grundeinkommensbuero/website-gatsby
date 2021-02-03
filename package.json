@@ -24,7 +24,8 @@
     "develop": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
+    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build",
+    "build-launch": "sed -i 's|COGNITO_APP_CLIENT_ID_PLACEHOLDER|${COGNITO_APP_CLIENT_ID}|g' netlify.toml && gatsby build",
     "start": "npm run develop",
     "serve": "gatsby serve"
   },
@@ -75,6 +76,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-final-form": "^6.5.1",
+    "react-final-form-listeners": "^1.0.2",
     "react-helmet-async": "^1.0.6",
     "react-popper": "^1.3.7",
     "svg-inline-loader": "^0.8.2",

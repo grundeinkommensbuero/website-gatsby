@@ -25,6 +25,8 @@
   &:nth-child(3n + 2) {
     --bg-color: @red;
     --font-color: @greyBright;
+    --secondary-color: @pink;
+    --text-on-secondary-color: @grey;
     background-color: @red;
     color: @greyBright;
   }
@@ -33,8 +35,69 @@
   &:only-child {
     --bg-color: @grey;
     --font-color: @red;
+    --secondary-color: @yellow;
+    --text-on-secondary-color: @red;
     background-color: @grey;
     color: @red;
+  }
+
+  // COLOR SCHEMES
+  /* Allows editors in contentful to override the default colors.
+  /* We have to use !important to overwrite */
+  /* the rules set with nth-child */
+
+  &.sectionChristmas {
+    background-color: @red !important;
+    color: @greyBright !important;
+    --bg-color: @red!important;
+    --font-color: @greyBright !important;
+    --secondary-color: @yellow !important;
+    --text-on-secondary-color: @red !important;
+
+    .sectionBody:after {
+      background: url('./Weihnachten.svg') center/contain no-repeat;
+      content: '';
+      display: block;
+      width: 300px;
+      height: 400px;
+      position: absolute;
+      bottom: 1rem;
+      right: 10%;
+
+      @media (max-width: @breakPointL) {
+        width: 150px;
+        height: 150px;
+        bottom: -1rem;
+        right: 0;
+      }
+    }
+  }
+
+  &.sectionGrey {
+    background-color: @grey !important;
+    color: @red !important;
+    --bg-color: @grey !important;
+    --font-color: @red !important;
+    --secondary-color: @yellow !important;
+    --text-on-secondary-color: @red !important;
+  }
+
+  &.sectionRed {
+    background-color: @red !important;
+    color: @greyBright !important;
+    --bg-color: @red !important;
+    --font-color: @greyBright !important;
+    --secondary-color: @pink !important;
+    --text-on-secondary-color: @grey !important;
+  }
+
+  &.sectionYellow {
+    background-color: @yellow !important;
+    color: @red !important;
+    --bg-color: @yellow !important;
+    --font-color: @red !important;
+    --secondary-color: @blueBright !important;
+    --text-on-secondary-color: @yellow !important;
   }
 
   &:nth-child(3n + 1):not(:only-child),
@@ -82,8 +145,13 @@
     }
 
     @media (max-width: @breakPointM) {
-      padding-top: 10rem;
-      padding-bottom: 12rem;
+      //padding-top: 10rem;
+      //padding-bottom: 12rem;
+
+      h1 {
+        font-size: @fontSizeL;
+        margin-bottom: 2rem;
+      }
     }
   }
 
@@ -419,4 +487,43 @@
 .headerSubTitle {
   margin: 1rem 0 0;
   font-size: @fontSizeM;
+}
+
+.columnIntroText {
+  margin-bottom: 4rem;
+}
+
+.columnWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.column {
+  width: 44%;
+  font-weight: normal;
+  font-size: @fontSizeS;
+  margin-bottom: 2rem;
+
+  @media (max-width: @breakPointM) {
+    width: 100%;
+  }
+}
+.columnIconWrapper {
+  text-align: center;
+}
+
+.sectionChristmasDonation {
+  background-color: @grey !important;
+}
+
+.donationIntroText {
+  margin-bottom: 2rem;
+  font-size: @fontSizeS;
+  font-weight: normal;
+}
+
+.sectionVideo {
+  background-color: @red !important;
+  color: @greyBright !important;
 }

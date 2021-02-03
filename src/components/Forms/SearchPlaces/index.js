@@ -29,6 +29,7 @@ export const SearchPlaces = ({
   validateOnBlur,
   inputSize,
   buttonSize,
+  profileButtonStyle,
   handleButtonClick = handleButtonClickDefault,
 }) => {
   const [query, setQuery] = useState('');
@@ -180,7 +181,10 @@ export const SearchPlaces = ({
           <Button
             id="linkButton"
             size={buttonSize}
-            className={s.sideButton}
+            className={cN(
+              { [s.sideButton]: !profileButtonStyle },
+              { [s.profileSideButton]: profileButtonStyle }
+            )}
             onClick={event => handleButtonClick({ event, validate })}
           >
             {buttonLabel}
@@ -200,7 +204,7 @@ export function AutoCompleteList({
 }) {
   return (
     <div
-      role="listbox"
+      aria-hidden={true}
       className={cN(s.suggestions, { [s.active]: suggestionsActive })}
       onBlur={handleBlur}
     >
@@ -230,7 +234,7 @@ export function AutoCompleteList({
               {x.name},{' '}
               {x.zipCodes.length === 1
                 ? `${x.zipCodes[0]}`
-                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
+                : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
             </div>
           );
         })}

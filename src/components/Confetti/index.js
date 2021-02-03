@@ -7,17 +7,52 @@ if (!process.env.STATIC) {
   canvasConfetti = require('canvas-confetti');
 }
 
-const colors = [
-  '#fc484c',
-  '#22c8ee',
-  '#3423f6',
-  '#e5b5c8',
-  '#7d69f6',
-  '#fef377',
-  '#f5f5f5',
+const themes = [
+  {
+    name: 'default',
+    shapes: ['circle', 'square'],
+    gravity: 1,
+    ticks: 400,
+    spreads: [55, 55, 180],
+    colors: [
+      '#fc484c',
+      '#22c8ee',
+      '#3423f6',
+      '#e5b5c8',
+      '#7d69f6',
+      '#fef377',
+      '#f5f5f5',
+    ],
+    origins: [
+      { x: 0, y: 0.25 },
+      { x: 1, y: 0.25 },
+      { x: 0.5, y: 0 },
+    ],
+    angles: [60, 120, 270],
+    velocities: [45, 45, 20],
+  },
+  {
+    name: 'christmas',
+    shapes: ['circle'],
+    gravity: 0.4,
+    ticks: 800,
+    spreads: [160, 160, 160],
+    colors: ['#fefefe', '#ffffff', '#fafdff', '#fafeff'],
+    origins: [
+      { x: 0.2, y: -0.1 },
+      { x: 0.8, y: -0.1 },
+      { x: 0.5, y: -0.1 },
+    ],
+    angles: [120, 120, 120],
+    velocities: [20, 20, 20],
+  },
 ];
 
-export default ({ className }) => {
+export default ({ className, componentTheme = 'default' }) => {
+  let theme = themes.find(t => t.name === componentTheme);
+  if (!theme) {
+    theme = themes[0];
+  }
   const canvas = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [confetti, setConfetti] = useState({});
@@ -45,35 +80,53 @@ export default ({ className }) => {
         if (isInView && Math.random() < 0.2) {
           if (window.innerWidth > 600) {
             confetti.confetti({
+              disableForReducedMotion: true,
               particleCount: 1,
-              angle: 60,
-              spread: 55,
-              origin: { x: 0, y: 0.25 },
+              angle: theme.angles[0],
+              startVelocity: theme.velocities[0],
+              spread: theme.spreads[0],
+              origin: theme.origins[0],
+              gravity: theme.gravity,
+              shapes: theme.shapes,
               colors: [
-                ...colors[Math.round(Math.random() * (colors.length - 1))],
+                ...theme.colors[
+                  Math.round(Math.random() * (theme.colors.length - 1))
+                ],
               ],
-              ticks: 400,
+              ticks: theme.ticks,
             });
             confetti.confetti({
+              disableForReducedMotion: true,
               particleCount: 1,
-              angle: 120,
-              spread: 55,
-              origin: { x: 1, y: 0.25 },
+              angle: theme.angles[1],
+              startVelocity: theme.velocities[1],
+              spread: theme.spreads[1],
+              origin: theme.origins[1],
+              gravity: theme.gravity,
+              shapes: theme.shapes,
               colors: [
-                ...colors[Math.round(Math.random() * (colors.length - 1))],
+                ...theme.colors[
+                  Math.round(Math.random() * (theme.colors.length - 1))
+                ],
               ],
-              ticks: 400,
+              ticks: theme.ticks,
             });
           } else {
             confetti.confetti({
+              disableForReducedMotion: true,
               particleCount: 1,
-              angle: 270,
-              spread: 180,
-              origin: { x: 0.5, y: 0 },
-              startVelocity: 20,
+              angle: theme.angles[2],
+              startVelocity: theme.velocities[2],
+              spread: theme.spreads[2],
+              origin: theme.origins[2],
+              gravity: theme.gravity,
+              shapes: theme.shapes,
               colors: [
-                ...colors[Math.round(Math.random() * (colors.length - 1))],
+                ...theme.colors[
+                  Math.round(Math.random() * (theme.colors.length - 1))
+                ],
               ],
+              ticks: theme.ticks,
             });
           }
         }

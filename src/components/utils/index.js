@@ -190,6 +190,10 @@ export const getStringFromPlaceholderText = (string, object) => {
     // of the replacement.
     const splitByCondition = e.split('?');
 
+    if (typeof splitByCondition[1] !== 'string') {
+      return string;
+    }
+
     const options = splitByCondition[1].split(':');
     // Second option should be the generic one
     // based on the template
@@ -232,3 +236,14 @@ export const detectWebGLContext = () => {
   }
   return false;
 };
+const stateToAgs = {
+  berlin: '11000000',
+  bremen: '04011000',
+  hamburg: '02000000',
+};
+
+// Map campaign code to ags by extracting state out of campaign code
+// ad mapping that state to the ags
+export function mapCampaignCodeToAgs(campaignCode) {
+  return stateToAgs[campaignCode.split('-')[0]];
+}

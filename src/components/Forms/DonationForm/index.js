@@ -10,28 +10,46 @@ import {
 } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
-import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
+import { CTAButtonContainer, CTAButton, CTALink } from '../../Layout/CTAButton';
 
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
+import { useSignUp } from '../../../hooks/Authentication';
+
+import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
+import Link from 'gatsby-link';
 
 import s from './style.module.less';
+import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
+import { validateEmail } from '../../utils';
 
-export default () => {
+export default theme => {
+  var themeClass = theme[Object.keys(theme)[0]];
+  const isChristmas = themeClass === 'christmas';
+
+  const {
+    isAuthenticated,
+    tempEmail,
+    setTempEmail,
+    customUserData: userData,
+  } = useContext(AuthContext);
+  const [, , signUp] = useSignUp();
   const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
+  const [needsToLogin, setNeedsToLogin] = useState(false);
   const [waitingForApi, setWaitingForApi] = useState(false);
   const [hasDonated, setHasDonated] = useState(false);
   const [donationError, setDonationError] = useState(false);
-  const { userId } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
-  const [initialValues, setInitialValues] = useState({amount: '5'});
+  const [initialValues, setInitialValues] = useState(
+    !isChristmas ? { amount: '6' } : { amount: '50' }
+  );
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   let formData = {};
   let formErrors = {};
@@ -55,10 +73,23 @@ export default () => {
   const onAmountClick = recurring => {
     setIsRecurring(recurring);
 
+    if (formErrors.amount) {
+      return;
+    }
     if (formErrors.customAmount) {
       return;
     }
+    if (isChristmas && formErrors.certificateReceiver) {
+      return;
+    }
+    if (isChristmas && formErrors.certificateGiver) {
+      return;
+    }
     setEnteredAmount(true);
+  };
+
+  const onAnswerChallengeSuccess = () => {
+    updateUser(donationInfo);
   };
 
   const toggleOverlay = () => {
@@ -75,17 +106,40 @@ export default () => {
     return amount === 'custom' && customAmount ? +customAmount : +amount;
   };
 
-  const validate = values => {
+  const validate = (values, emailRequired) => {
     formData = { ...values };
-
     const errors = {};
 
-    if (values.amount === 'custom' && !values.customAmount) {
-      errors.customAmount = 'Muss ausgefüllt sein';
+    if (emailRequired && values.email && values.email.includes('+')) {
+      errors.email = 'Zurzeit unterstützen wir kein + in E-Mails';
     }
 
-    if (values.amount === 'custom' && values.customAmount < 0) {
-      errors.customAmount = 'Bitte gib eine positive Zahl ein.';
+    if (emailRequired && !validateEmail(values.email)) {
+      errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+    }
+
+    if (!values.amount) {
+      errors.customAmount = 'Bitte wähle einen Betrag aus.';
+    }
+
+    if (values.customAmount) {
+      const decimalPlacesRegex = /(,|\.)(.*$)/;
+      const decimalPlaces = values.customAmount.match(decimalPlacesRegex);
+      if (decimalPlaces && decimalPlaces[2].length > 2) {
+        errors.customAmount = 'Bitte nur zwei Nachkommastellen.';
+      }
+    }
+
+    if (values.amount === 'custom' && !values.customAmount) {
+      errors.customAmount = 'Muss eine Zahl sein';
+    }
+
+    if (!isChristmas && values.amount === 'custom' && values.customAmount < 2) {
+      errors.customAmount = 'Bitte gib einen Betrag von mindestens 2€ ein.';
+    }
+
+    if (isChristmas && values.amount === 'custom' && values.customAmount < 10) {
+      errors.customAmount = 'Bitte gib einen Betrag von mindestens 10€ ein.';
     }
 
     if (!values.firstName) {
@@ -94,6 +148,16 @@ export default () => {
 
     if (!values.lastName) {
       errors.lastName = 'Muss ausgefüllt sein';
+    }
+
+    if (isChristmas && !values.certificateReceiver) {
+      errors.certificateReceiver =
+        'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
+    }
+
+    if (isChristmas && !values.certificateGiver) {
+      errors.certificateGiver =
+        'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
     }
 
     if (!values.sepa) {
@@ -116,7 +180,11 @@ export default () => {
   };
 
   return (
-    <div className={s.donationForm}>
+    <div
+      className={cN(s.donationForm, {
+        [s.christmasTheme]: themeClass === 'christmas',
+      })}
+    >
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
@@ -130,57 +198,78 @@ export default () => {
               recurring: isRecurring,
               iban: formData.extractedIban,
             };
-            const donationInfo = { userId: userId, donation };
-
+            const donationInfo = { donation };
+            setTempEmail(data.email);
             setInitialValues(data);
             setDonationInfo(donationInfo);
             setEnteredPaymentInfo(true);
           }}
-          initialValues={
-            initialValues
-          }
-          validate={values => validate(values)}
+          initialValues={initialValues}
+          validate={values => validate(values, !isAuthenticated)}
           render={({ handleSubmit }) => {
             return (
               <FormWrapper>
                 <form onSubmit={handleSubmit}>
                   {enteredAmount === false && (
                     <div className={s.partialForm}>
-                      <h3>Unterstütze uns!</h3>
-                      <p>
-                        Wir finanzieren uns fast ausschließlich durch Spenden. Bitte hilf
-                        uns, die Expedition am Laufen zu halten!
-                      </p>
-                      <p>Unterstütze uns mit:</p>
-
                       <FormSection>
-                        <Field
-                          name="amount"
-                          label="1€"
-                          component={RadioButton}
-                          type="radio"
-                          value="1"
-                        />{' '}
-                        <Field
-                          name="amount"
-                          label="5€"
-                          component={RadioButton}
-                          type="radio"
-                          value="5"
-                        />{' '}
-                        <Field
-                          name="amount"
-                          label="10€"
-                          component={RadioButton}
-                          type="radio"
-                          value="10"
-                        />{' '}
+                        {!isChristmas && (
+                          <>
+                            <Field
+                              name="amount"
+                              label="3€"
+                              component={RadioButton}
+                              type="radio"
+                              value="3"
+                            />{' '}
+                            <Field
+                              name="amount"
+                              label="6€"
+                              component={RadioButton}
+                              type="radio"
+                              value="6"
+                            />{' '}
+                            <Field
+                              name="amount"
+                              label="12€"
+                              component={RadioButton}
+                              type="radio"
+                              value="12"
+                            />{' '}
+                          </>
+                        )}
+                        {isChristmas && (
+                          <>
+                            <Field
+                              name="amount"
+                              label="20€"
+                              component={RadioButton}
+                              type="radio"
+                              value="20"
+                            />{' '}
+                            <Field
+                              name="amount"
+                              label="50€"
+                              component={RadioButton}
+                              type="radio"
+                              value="50"
+                            />{' '}
+                            <Field
+                              name="amount"
+                              label="100€"
+                              component={RadioButton}
+                              type="radio"
+                              value="100"
+                            />{' '}
+                          </>
+                        )}
                         <Field
                           name="amount"
                           label="Eigenen Betrag eingeben"
                           component={RadioButton}
                           type="radio"
                           value="custom"
+                          theme="christmas"
                         />{' '}
                         <Condition when="amount" is="custom">
                           <div className={s.customAmount}>
@@ -189,37 +278,82 @@ export default () => {
                               placeholder="100"
                               type="number"
                               component={TextInputWrapped}
-                              min={2}
+                              min={isChristmas ? 10 : 2}
                               inputMode="numeric"
+                              step="1"
                               pattern="[0-9]*"
+                              theme="christmas"
                             />{' '}
                             <span className={s.currency}>€</span>
                           </div>
                         </Condition>
+                        {isChristmas && (
+                          <section className={s.certificateInfo}>
+                            <Field
+                              name="certificateReceiver"
+                              label="Wie heißt die Person, die du beschenken möchtest?"
+                              placeholder="Name"
+                              type="text"
+                              component={TextInputWrapped}
+                              theme="christmas"
+                            />
+                            <p className={s.hint}>
+                              Hinweis: Du erhältst eine personalisierte
+                              Weihnachtskarte mit dem Namen der beschenkten
+                              Person von uns.
+                            </p>
+                            <Field
+                              name="certificateGiver"
+                              label="Mit welchem Namen soll die Weihnachtskarte unterschrieben sein?"
+                              placeholder="Name"
+                              type="text"
+                              component={TextInputWrapped}
+                              theme="christmas"
+                            />
+                          </section>
+                        )}
                       </FormSection>
 
-                      <CTAButtonContainer>
-                        <CTAButton
-                          type="submit"
-                          onClick={() => {
-                            onAmountClick(false);
-                          }}
-                          size="MEDIUM"
-                        >
-                          Einmalig spenden
-                        </CTAButton>
+                      {!isChristmas && (<>
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(true);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Monatlich unterstützen
+                          </CTAButton>
 
-                        <CTAButton
-                          type="submit"
-                          onClick={() => {
-                            onAmountClick(true);
-                          }}
-                          size="MEDIUM"
-                          className={s.primaryButton}
-                        >
-                          Monatlich unterstützen
-                        </CTAButton>
-                      </CTAButtonContainer>
+                          <Link
+                            to="/spenden#bankverbindung"
+                            className={cN(s.link, s.secondaryLink)}
+                          >
+                            Lieber einmalig spenden
+                          </Link>
+                        </div>
+                        <p className={s.hint}>
+                          Hinweis: Du kannst deine monatliche Spende jederzeit
+                          wieder beenden.
+                        </p>
+                      </>)}
+
+                      {isChristmas && (
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(false);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Spende verschenken
+                          </CTAButton>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -248,6 +382,7 @@ export default () => {
                           placeholder="Vorname"
                           type="text"
                           component={TextInputWrapped}
+                          theme="christmas"
                         />
                         <Field
                           name="lastName"
@@ -255,13 +390,32 @@ export default () => {
                           placeholder="Nachname"
                           type="text"
                           component={TextInputWrapped}
+                          theme="christmas"
                         />
+                        {!isAuthenticated && (
+                          <Field
+                            name="email"
+                            label="E-Mail"
+                            placeholder="E-Mail-Adresse"
+                            type="text"
+                            component={TextInputWrapped}
+                            theme="christmas"
+                          />
+                        )}
+                        {isAuthenticated && (
+                          <p>E-Mail Adresse: {userData.email}</p>
+                        )}
+                        <p className={s.hint}>
+                          Hinweis: Wir schicken deine Spendenbestätigung an
+                          diese Adresse.
+                        </p>
                         <Field
                           name="iban"
                           label="IBAN"
                           placeholder="IBAN"
                           type="text"
                           component={TextInputWrapped}
+                          theme="christmas"
                         />
 
                         <Field
@@ -277,32 +431,34 @@ export default () => {
                           }
                           type="checkbox"
                           component={Checkbox}
+                          theme="christmas"
                         ></Field>
                         <Overlay
                           isOpen={isOverlayOpen}
                           toggleOverlay={toggleOverlay}
                           title="SEPA-Mandat"
+                          theme="christmas"
                         >
                           <p>
-                            Ich ermächtige Vertrauensgesellschaft e.V.,
-                            Zahlungen von meinem Konto mittels Lastschrift
-                            einzuziehen. Zugleich weise ich mein Kreditinstitut
-                            an, die von Vertrauensgesellschaft e.V. auf mein
-                            Konto gezogenen Lastschriften einzulösen.
+                            Ich ermächtige Vertrauensgesellschaft e.V.
+                            (Gläubiger-Identifikationsnummer:
+                            DE80ZZZ00002240199), Zahlungen von meinem Konto
+                            mittels Lastschrift einzuziehen. Zugleich weise ich
+                            mein Kreditinstitut an, die von
+                            Vertrauensgesellschaft e.V. auf mein Konto gezogenen
+                            Lastschriften einzulösen.
                           </p>
                           <p>
-                            Hinweis: Ich kann innerhalb von acht Wochen,
+                            Widerrufsrecht: Ich kann innerhalb von acht Wochen,
                             beginnend mit dem Belastungsdatum, die Erstattung
                             des belasteten Betrages verlangen. Es gelten dabei
                             die mit meinem Kreditinstitut vereinbarten
-                            Bedingungen. Die Frist für die Vorabinformation der
-                            SEPA-Lastschrift wird auf drei Tage verkürzt.
+                            Bedingungen.
                           </p>
                           <p>
                             Vertrauensgesellschaft e.V., Isarstrasse 11, 12053
                             Berlin <br />
-                            Gläubiger-Identifikationsnummer:
-                            DE74ZZZZ09671218105601
+                            Gläubiger-Identifikationsnummer: DE80ZZZ00002240199
                           </p>
                         </Overlay>
                         <Field
@@ -322,6 +478,7 @@ export default () => {
                           }
                           type="checkbox"
                           component={Checkbox}
+                          theme="christmas"
                         ></Field>
                       </FormSection>
 
@@ -347,50 +504,90 @@ export default () => {
         ></Form>
       )}
 
-      {!hasDonated && enteredPaymentInfo && !waitingForApi && !donationError && (
-        <div>
-          <h3>Bitte überprüfe deine Daten</h3>
+      {!hasDonated &&
+        enteredPaymentInfo &&
+        !waitingForApi &&
+        !donationError &&
+        !needsToLogin && (
+          <div>
+            <h3>Bitte überprüfe deine Daten</h3>
 
-          <p>
-            Name:{' '}
-            <span className={s.info}>
-              {donationInfo.donation.firstName} {donationInfo.donation.lastName}
-            </span>
-          </p>
-          <p>
-            IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
-          </p>
-          <p>
-            Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
-            <span className={s.info}>
-              {isRecurring ? 'monatlich' : 'einmalig'}{' '}
-              {donationInfo.donation.amount} €
-            </span>{' '}
-            an die Expedition spenden möchtest.
-          </p>
+            <p>
+              Name:{' '}
+              <span className={s.info}>
+                {donationInfo.donation.firstName}{' '}
+                {donationInfo.donation.lastName}
+              </span>
+            </p>
+            <p>
+              E-Mail:{' '}
+              <span className={s.info}>{donationInfo.donation.email}</span>
+              {isAuthenticated && <span>{userData.email}</span>}
+            </p>
+            <p>
+              IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
+            </p>
+            <p>
+              Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
+              <span className={s.info}>
+                {isRecurring ? 'monatlich' : 'einmalig'}{' '}
+                {donationInfo.donation.amount} €
+              </span>{' '}
+              an die Expedition spenden möchtest.
+            </p>
 
-          <PrimarySecondaryButtonContainer>
-            <InlineButton
-              onClick={() => {
-                setEnteredPaymentInfo(false);
-              }}
-            >
-              Zurück
-            </InlineButton>
-            <CTAButton
-              onClick={() => {
-                updateUser(donationInfo);
-              }}
-              size="MEDIUM"
-            >
-              Jetzt spenden
-            </CTAButton>
-          </PrimarySecondaryButtonContainer>
-        </div>
-      )}
+            <PrimarySecondaryButtonContainer>
+              <InlineButton
+                onClick={() => {
+                  setEnteredPaymentInfo(false);
+                }}
+              >
+                Zurück
+              </InlineButton>
+              <CTAButton
+                onClick={() => {
+                  if (isAuthenticated) {
+                    updateUser(donationInfo);
+                  } else {
+                    setNeedsToLogin(true);
+                    signUp({ email: tempEmail });
+                  }
+                }}
+                size="MEDIUM"
+              >
+                Jetzt spenden
+              </CTAButton>
+            </PrimarySecondaryButtonContainer>
+          </div>
+        )}
+
+      {!hasDonated &&
+        enteredPaymentInfo &&
+        !waitingForApi &&
+        !donationError &&
+        needsToLogin && (
+          <div>
+            <div className={s.adjustFinallyMessage}>
+              <EnterLoginCode
+                buttonText={'Spende bestätigen'}
+                preventSignIn={true}
+                onAnswerChallengeSuccess={onAnswerChallengeSuccess}
+              />
+            </div>
+            <p>
+              Mit dem Klick auf "Spende bestätigen" bestätigst du, dass du{' '}
+              <span className={s.info}>
+                {isRecurring ? 'monatlich' : 'einmalig'}{' '}
+                {donationInfo.donation.amount} €
+              </span>{' '}
+              an die Expedition spenden möchtest.
+            </p>
+          </div>
+        )}
+
       {waitingForApi && (
         <FinallyMessage
-          className={s.waitingHint}
+          className={s.adjustFinallyMessage}
           preventScrolling="true"
           state="progress"
         >
@@ -405,19 +602,15 @@ export default () => {
             Wir haben deine Daten erhalten und werden die Spende in Kürze von
             deinem Konto einziehen.
           </p>
+          {isChristmas && (
+            <p>
+              Deine Weihnachtskarte zum ausdrucken findest du in deinem
+              E-Mail-Postfach.
+            </p>
+          )}
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
-            <CTAButton
-              onClick={() => {
-                setIsRecurring(false);
-                setEnteredAmount(false);
-                setEnteredPaymentInfo(false);
-                setHasDonated(false);
-              }}
-              size="MEDIUM"
-            >
-              Zurück zum Formular
-            </CTAButton>
+            <CTALink to="/">Zur Startseite</CTALink>
           </CTAButtonContainer>
 
           <Confetti></Confetti>
@@ -432,7 +625,7 @@ export default () => {
           </p>
           <p>
             Bitte versuche es erneut, oder überweise den Betrag direkt auf unser
-            Konto: 
+            Konto:
           </p>
           <p className={s.info}>
             Vertrauensgesellschaft e.V.<br></br>IBAN: DE74 4306 0967 1218 1056

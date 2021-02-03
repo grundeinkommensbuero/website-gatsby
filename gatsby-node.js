@@ -83,14 +83,13 @@ municipalities = getAndStoreDataVariations(municipalities);
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  // NOTE this info should be moved out
-  // of this file in the future
+  // NOTE: these cases are handled more modular in the database in the future
   const agsStates = [
     { ags: '11000000', slug: 'berlin' },
     { ags: '04011000', slug: 'bremen' },
     { ags: '02000000', slug: 'hamburg' },
   ];
-  const agsQualified = ['08121000'];
+  // const agsQualified = ['08121000'];
 
   municipalities.forEach(municipality => {
     // Type 'qualifying';
@@ -99,10 +98,11 @@ exports.createPages = ({ graphql, actions }) => {
     if (stateCampaign) {
       // Type 'state';
       slug = stateCampaign.slug;
-    } else if (agsQualified.includes(municipality.ags)) {
-      // Type 'collecting';
-      slug = 'gemeinden-sammelphase';
     }
+    // else if (agsQualified.includes(municipality.ags)) {
+    //   // Type 'collecting';
+    //   slug = 'gemeinden-sammelphase';
+    // }
 
     createPage({
       path: `/gemeinden/${municipality.ags}`,

@@ -1,5 +1,6 @@
 import React from 'react';
 import cN from 'classnames';
+import { Link } from 'gatsby';
 
 import s from './style.module.less';
 import { MenuItemLink } from './MenuItem';
@@ -31,6 +32,9 @@ const Menu = ({ menu, menuOpen }) => {
         }
       })}
       <LoginMenuItem />
+      <Link to="/spenden" className={s.donationCTA}>
+        Spenden
+      </Link>
     </ul>
   );
 };

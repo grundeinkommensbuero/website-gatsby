@@ -1,5 +1,10 @@
 [context.production.environment]
-CONTENTFUL_ENVIRONMENT = "master-2021-02-03"
+CONTENTFUL_ENVIRONMENT = "master"
+
+[context.campaign-launch]
+command = "npm run build-launch"
 
 [context.campaign-launch.environment]
+COGNITO_APP_CLIENT_ID = "COGNITO_APP_CLIENT_ID_PLACEHOLDER"
 CONTENTFUL_ENVIRONMENT = "launch"
+NODE_ENV = "development"
