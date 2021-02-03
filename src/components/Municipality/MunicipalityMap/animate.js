@@ -11,8 +11,6 @@ export const animate = ({
   setMunicipalityFadeProgress,
   municipalityStatsState,
 }) => {
-  // console.log(initialMapAnimation);
-
   const localEvents = [...dataEvents];
   const localOpacities = { ...fadeOpacities };
   const tl = anime.timeline();

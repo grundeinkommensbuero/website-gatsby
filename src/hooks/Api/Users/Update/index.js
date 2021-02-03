@@ -27,8 +27,9 @@ export const useUpdateUser = () => {
 
 //Makes api call to update user in db, throws error if unsuccessful
 export const updateUser = async ({ userId, token, ...data }) => {
-  console.log({ userId });
-  console.log({ data });
+  // Note: commented out these logs
+  // console.log({ userId });
+  // console.log({ data });
 
   const url = `${CONFIG.API.INVOKE_URL}/users/${userId}`;
 

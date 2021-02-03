@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -279,11 +279,6 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   useEffect(() => {
     if (typeof window !== `undefined`) {
       window.onpopstate = event => {
-        console.log('***');
-
-        console.log('onpopstate', event);
-        console.log('***');
-
         if (event.state?.name) {
           setMunicipality(event.state);
           adjustDocumentTitle(municipality, event.state.name);

@@ -673,10 +673,6 @@ const Map = ({
     }
   };
 
-  const handleLoad = () => {
-    // console.log('map loaded');
-  };
-
   // ---- Template -------------------------------------------------------------------------
   return (
     <>
@@ -694,9 +690,6 @@ const Map = ({
         }}
         controller={controllerOptions}
         layers={layers}
-        onLoad={props => {
-          handleLoad();
-        }}
         onResize={dimensions => {
           handleResize(dimensions);
         }}

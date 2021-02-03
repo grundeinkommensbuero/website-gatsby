@@ -9,7 +9,7 @@ let API_INVOKE_URL = useDevBackend
 // Log to improve debugging in netlify deploy logs
 console.log(
   `Important: API_INVOKE_URL is set to: '${API_INVOKE_URL}' in aws-config.js. ` +
-    `useDevBackend is ${useDevBackend}, because NODE_ENV is '${process.env.NODE_ENV} ` +
+    `useDevBackend is ${useDevBackend}, because NODE_ENV is '${process.env.NODE_ENV}' ` +
     `and GATSBY_USE_DEV_BACKEND is '${process.env.GATSBY_USE_DEV_BACKEND}'`
 );
 

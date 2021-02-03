@@ -95,7 +95,6 @@ export function ContentfulSection({ section, pageContext }) {
   const isChristmasDonationTheme = theme === 'christmas';
 
   if (__typename === 'ContentfulPageSectionGemeindeIntro') {
-    // console.log(section);
     return (
       <MunicipalityIntro
         pageContext={pageContext}
