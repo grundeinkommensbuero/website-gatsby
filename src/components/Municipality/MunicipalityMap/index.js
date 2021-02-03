@@ -606,7 +606,13 @@ const Map = ({
         layerAnimatedLabels,
       ]);
     }
-  }, [dataLabels, dataEvents, municipalityFadeProgress, fadeOpacities]);
+  }, [
+    dataStates,
+    dataLabels,
+    dataEvents,
+    municipalityFadeProgress,
+    fadeOpacities,
+  ]);
 
   useEffect(() => {
     if (focus) {

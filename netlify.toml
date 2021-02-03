@@ -7,7 +7,7 @@ command = "npm run build-launch"
 [context.campaign-launch.environment]
 COGNITO_APP_CLIENT_ID = "COGNITO_APP_CLIENT_ID_PLACEHOLDER"
 CONTENTFUL_ENVIRONMENT = "launch"
-NODE_ENV = "development"
+USE_DEV_BACKEND = "override"
 
 # Tepmorary fix for preview deploy for PRs to the campaign-launch branch
 [context.deploy-preview]
@@ -16,4 +16,4 @@ command = "npm run build-launch"
 [context.deploy-preview.environment]
 COGNITO_APP_CLIENT_ID = "COGNITO_APP_CLIENT_ID_PLACEHOLDER"
 CONTENTFUL_ENVIRONMENT = "launch"
-NODE_ENV = "development"
+USE_DEV_BACKEND = "override"
