@@ -1,8 +1,3 @@
-console.log(
-  'GATSBY_USE_DEV_BACKEND, mode: ',
-  process.env.GATSBY_USE_DEV_BACKEND
-);
-
 const useDevBackend =
   process.env.NODE_ENV === 'development' ||
   process.env.GATSBY_USE_DEV_BACKEND === 'override';
@@ -11,7 +6,12 @@ let API_INVOKE_URL = useDevBackend
   ? 'https://2j0bcp5tr9.execute-api.eu-central-1.amazonaws.com/dev'
   : 'https://ag5gu1z06h.execute-api.eu-central-1.amazonaws.com/prod';
 
-console.log('API_INVOKE_URL: ', API_INVOKE_URL);
+// Log to improve debugging in netlify deploy logs
+console.log(
+  `Important: API_INVOKE_URL is set to: '${API_INVOKE_URL}' in aws-config.js. ` +
+    `useDevBackend is ${useDevBackend}, because NODE_ENV is '${process.env.NODE_ENV} ` +
+    `and GATSBY_USE_DEV_BACKEND is '${process.env.GATSBY_USE_DEV_BACKEND}'`
+);
 
 let COGNITO_APP_CLIENT_ID = useDevBackend
   ? 'eu-central-1_SYtDaO0qH'
