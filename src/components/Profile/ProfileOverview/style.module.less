@@ -1,0 +1,78 @@
+@import '../../../components/style/vars.less';
+
+.profilePageSection {
+  position: relative;
+  background-color: @red;
+  color: @white;
+  padding: 3.3rem 4rem;
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: @yellow;
+    color: @red;
+  }
+
+  @media (max-width: @breakPointS) {
+    padding: 3rem 3rem 5rem;
+  }
+}
+
+.profilePageSectionLarge {
+  grid-column: 1 / span 2;
+
+  @media (max-width: @breakPointM) {
+    grid-column: unset;
+  }
+}
+
+h1 {
+  line-height: normal;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.sectionLink {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1rem;
+
+  > span {
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+
+  &:after {
+    content: ' >';
+  }
+}
+
+.signaturesSection {
+  .link {
+    margin-top: 2rem;
+    font-size: @fontSizeM;
+  }
+
+  .signatureStats {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: @breakPointS) {
+      flex-direction: column;
+    }
+  }
+}
+
+.supportText {
+  margin-top: 3rem;
+
+  @media (max-width: @breakPointS) {
+    margin-top: 1rem;
+  }
+}

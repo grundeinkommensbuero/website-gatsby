@@ -156,3 +156,15 @@ export function getMailtoUrl(to, subject, body) {
   }
   return url;
 }
+
+const stateToAgs = {
+  berlin: '11000000',
+  bremen: '04011000',
+  hamburg: '02000000',
+};
+
+// Map campaign code to ags by extracting state out of campaign code
+// ad mapping that state to the ags
+export function mapCampaignCodeToAgs(campaignCode) {
+  return stateToAgs[campaignCode.split('-')[0]];
+}

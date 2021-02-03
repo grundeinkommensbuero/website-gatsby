@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router } from '@reach/router';
-import ProfilePage from './ProfilePage';
+import ProfileWrapper from '../../components/Profile/ProfileWrapper';
 
 /**
  * Single Page Application for user profile pages.
@@ -9,7 +9,7 @@ const App = () => {
   return (
     <>
       <Router basepath="/mensch">
-        <ProfilePage path="/:id" />
+        <ProfileWrapper path="/:id/*" />
       </Router>
     </>
   );

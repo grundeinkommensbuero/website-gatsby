@@ -47,7 +47,6 @@ const answerCustomChallenge = async (
 
       //use context to set user in global state
       setCognitoUser(tempUser);
-      setIsAuthenticated(true);
 
       // We also want to set that the user is confirmed now
       // if e.g. it was the first login (= double opt in)

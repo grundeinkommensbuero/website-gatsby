@@ -1,20 +1,24 @@
 @import '../../style/vars.less';
 @inputWidth: 25rem;
+@inputButtonMargin: 0.4rem;
 
 .container {
-  display: grid;
-  grid-template-columns: @inputWidth 1fr;
-  grid-gap: 2rem;
-  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: -@inputButtonMargin;
   @media (max-width: @breakPointM) {
-    grid-template-columns: @inputWidth;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
   }
 }
 .inputContainer {
   position: relative;
-
   width: @inputWidth;
+  margin-right: 2rem;
+  // TODO: Check if ok for profile
+  margin-top: @inputButtonMargin;
+  margin-bottom: @inputButtonMargin;
 }
 
 .suggestions {
@@ -49,5 +53,14 @@
 }
 
 .sideButton {
-  max-width: @inputWidth;
+  margin-top: @inputButtonMargin;
+  margin-bottom: @inputButtonMargin;
+}
+
+.profileSideButton {
+  // TODO Check if working on municipality page
+  margin-top: @inputButtonMargin;
+  margin-bottom: @inputButtonMargin;
+  color: @white;
+  border: @white solid 1px;
 }

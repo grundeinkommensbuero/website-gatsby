@@ -77,6 +77,7 @@ export const pageQuery = graphql`
             }
             callToActionLink
             callToActionText
+            colorScheme
             bodyTextSizeHuge
             signUpForm
             emailSignup
@@ -112,6 +113,7 @@ export const pageQuery = graphql`
           ... on ContentfulPageSectionVideo {
             __typename
             videoLink
+            title
           }
           ... on ContentfulPageSectionIllustration {
             __typename
@@ -127,6 +129,52 @@ export const pageQuery = graphql`
               fluid(maxWidth: 1500, quality: 80) {
                 ...GatsbyContentfulFluid
               }
+            }
+          }
+          ... on ContentfulPageSectionDonation {
+            __typename
+            title
+            introText
+            theme
+            colorScheme
+          }
+          ... on ContentfulPageSectionTwoColumns {
+            __typename
+            title
+            columnIntroText {
+              json
+            }
+            imageTopLeft {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnTopLeft {
+              json
+            }
+            imageTopRight {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnTopRight {
+              json
+            }
+            imageBottomLeft {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnBottomLeft {
+              json
+            }
+            imageBottomRight {
+              fixed(height: 150, quality: 80) {
+                ...GatsbyContentfulFixed
+              }
+            }
+            columnBottomRight {
+              json
             }
           }
         }

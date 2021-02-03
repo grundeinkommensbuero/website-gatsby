@@ -375,7 +375,7 @@ const WrapInLink = ({ link, children, className }) => {
         <a
           href={link}
           target="_blank"
-          without
+          without="true"
           rel="noreferrer"
           className={className}
         >
