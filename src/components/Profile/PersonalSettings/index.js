@@ -91,7 +91,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
       deleteUser({ userId });
       signOut();
     }, 3000);
-  }
+  };
 
   const DeleteAccountDialog = () => {
     return (
