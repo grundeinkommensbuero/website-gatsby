@@ -24,8 +24,8 @@
     "develop": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "sed -i 's|COGNITO_APP_CLIENT_ID_REPLACEMENT|${PROD_COGNITO_APP_CLIENT_ID}|g' netlify.toml && GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build",
-    "build-dev-backend": "sed -i 's|COGNITO_APP_CLIENT_ID_REPLACEMENT|${DEV_COGNITO_APP_CLIENT_ID}|g' netlify.toml && cross-env GATSBY_USE_DEV_BACKEND=override gatsby build",
+    "build": "cross-env GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build",
+    "build-dev-backend": "cross-env GATSBY_USE_DEV_BACKEND=override gatsby build",
     "start": "npm run develop",
     "serve": "gatsby serve"
   },
