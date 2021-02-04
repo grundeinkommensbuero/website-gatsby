@@ -8,9 +8,6 @@ import { Button } from '../../Forms/Button';
 import DonationForm from '../../Forms/DonationForm';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
-import { ReactComponent as Rocket } from './rocket-icon.min.svg';
-
-
 export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData }) => {
   const [showDonationForm, setShowDonationForm] = useState(false);
   const [showDeleteDonationDialog, setShowDeleteDonationDialog] = useState(false);

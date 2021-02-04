@@ -13,12 +13,14 @@ import { Button } from '../../Forms/Button';
 // import { MessengerButtonRow } from '../MessengerButtonRow.js';
 import ImageUpload from '../../Forms/ImageUpload';
 
+import { SnackbarMessageContext } from '../../../context/Snackbar';
+
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { useDeleteUser } from '../../../hooks/Api/Users/Delete';
 import { useSignOut } from '../../../hooks/Authentication';
 import { useSnackbar } from 'react-simple-snackbar';
 
-import snackbarTheme from './snackbarTheme.json';
+import snackbarTheme from '../../../context/Snackbar/snackbarTheme.json';
 
 export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
   const [updateUserState, updateUser] = useUpdateUser();
@@ -85,11 +87,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
     <b>Dein Account wird gelöscht!</b>
   </p>;
 
-  const deleteUserAccount = () => {
+  const accountDeletedMessage = <p className={gS.snackbarMsg}>
+    <b>Dein Account wurde gelöscht!</b>
+  </p>;
+
+  const deleteUserAccount = (updateSnackbarMessage) => {
     openSnackbar(deleteSnackbarMessage, [6000]);
     setTimeout(() => {
       deleteUser({ userId });
       signOut();
+      updateSnackbarMessage(accountDeletedMessage);
     }, 3000);
   };
 
@@ -112,13 +119,19 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
           >
             Abbrechen
           </Button>
-          <Button
-            className={s.revokeButton}
-            onClick={deleteUserAccount}
-            size="SMALL"
-          >
-            Account entgültig löschen
-          </Button>
+          <SnackbarMessageContext.Consumer>
+            {({ message, setMessage }) => (
+              <Button
+                size="SMALL"
+                className={s.revokeButton}
+                onClick={() => {
+                  deleteUserAccount(setMessage);
+                }}
+              >
+                Account entgültig löschen
+              </Button>
+            )}
+          </SnackbarMessageContext.Consumer>
         </div>
       </section>
     );
@@ -347,8 +360,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   ) : null}
                 </section>
               )}
-
-
 
             <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
 
