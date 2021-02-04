@@ -13,14 +13,14 @@ console.log(
     `and GATSBY_USE_DEV_BACKEND is '${process.env.GATSBY_USE_DEV_BACKEND}'`
 );
 
-let COGNITO_APP_CLIENT_ID = useDevBackend
+let USER_POOL_ID = useDevBackend
   ? 'eu-central-1_SYtDaO0qH'
   : 'eu-central-1_xx4VmPPdF';
 
 export default {
   COGNITO: {
     REGION: 'eu-central-1',
-    USER_POOL_ID: COGNITO_APP_CLIENT_ID,
+    USER_POOL_ID: USER_POOL_ID,
   },
   API: {
     INVOKE_URL: API_INVOKE_URL,

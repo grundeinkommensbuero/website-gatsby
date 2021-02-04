@@ -175,6 +175,8 @@ exports.createPages = ({ graphql, actions }) => {
 
 const clientId = process.env.COGNITO_APP_CLIENT_ID;
 
+console.log({ clientId });
+
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     plugins: [
