@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { TextInput } from '../TextInput';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import s from './style.module.less';
@@ -38,6 +38,7 @@ export const SearchPlaces = ({
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
   const [fuse, setFuse] = useState();
+  const [focusedResult, setFocusedResult] = useState(0);
 
   useEffect(() => {
     import('./municipalitiesForSearch.json').then(({ default: places }) => {
@@ -87,7 +88,8 @@ export const SearchPlaces = ({
         const fuseResults = fuse.search(searchProps);
         const results = fuseResults
           .map(x => ({ ...x.item, score: x.score }))
-          .slice(0, 10);
+          .slice(0, 10)
+          .sort((a, b) => b.population - a.population);
         setResults(results);
       }
     } else {
@@ -131,10 +133,48 @@ export const SearchPlaces = ({
     setFormState({ error, touched });
   };
 
-  const handleKeyDown = e => {
+  const handleEnterKey = e => {
     // Emulate click when enter or space are pressed
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === 'Enter') {
       handleSuggestionClick(results[0]);
+    }
+  };
+  const handleArrowListNavigation = e => {
+    if (
+      (e.key === 'Tab' ||
+        e.which === 9 ||
+        e.key === 'ArrowDown' ||
+        e.which === 40 ||
+        e.key === 'ArrowUp' ||
+        e.which === 38) &&
+      !e.shiftKey
+    ) {
+      e.preventDefault();
+    }
+    console.log('old focusedResult', focusedResult);
+    console.log('test', e.key === 'Tab' && e.shiftKey);
+
+    if (
+      e.key === 'ArrowDown' ||
+      e.which === 40 ||
+      e.key === 'Tab' ||
+      e.which === 9
+    ) {
+      if (
+        focusedResult < results.length - 1 &&
+        typeof focusedResult !== 'undefined'
+      ) {
+        setFocusedResult(prev => prev + 1);
+      } else {
+        setFocusedResult(0);
+      }
+    }
+    if (e.key === 'ArrowUp' || e.which === 38) {
+      if (focusedResult > 0 && focusedResult < results.length) {
+        setFocusedResult(prev => prev - 1);
+      } else {
+        setFocusedResult(results.length - 1);
+      }
     }
   };
 
@@ -142,6 +182,7 @@ export const SearchPlaces = ({
     const isAutoCompleteTarget =
       e.relatedTarget &&
       [...e.relatedTarget.classList].join('').includes('suggestionsItem');
+
     if (!isAutoCompleteTarget) {
       setTimeout(() => {
         setSuggestionsActive(false);
@@ -149,6 +190,7 @@ export const SearchPlaces = ({
           validate();
         }
       }, 300);
+      setFocusedResult(0);
     }
   };
 
@@ -164,15 +206,17 @@ export const SearchPlaces = ({
             label="Stadt"
             value={query}
             onChange={handleChange}
-            onKeyDown={handleKeyDown}
+            onKeyDown={handleEnterKey}
             onBlur={handleBlur}
           />
 
           <AutoCompleteList
             query={query}
             results={results}
+            focusedResult={focusedResult}
             suggestionsActive={suggestionsActive}
             handleSuggestionClick={handleSuggestionClick}
+            handleArrowListNavigation={handleArrowListNavigation}
             handleBlur={handleBlur}
           />
           <LabelInputErrorWrapper meta={formState} />
@@ -194,14 +238,32 @@ export const SearchPlaces = ({
     </>
   );
 };
-
 export function AutoCompleteList({
   query,
   results,
+  focusedResult,
   suggestionsActive,
   handleSuggestionClick,
   handleBlur,
+  handleArrowListNavigation,
 }) {
+  const resultsRef = useRef([]);
+
+  useEffect(() => {
+    resultsRef.current = resultsRef.current.slice(0, results.length);
+  }, [results]);
+
+  useLayoutEffect(() => {
+    console.log('new', focusedResult);
+    if (
+      typeof focusedResult !== 'undefined' &&
+      focusedResult < resultsRef.current.length
+    ) {
+      console.log(resultsRef.current[focusedResult]);
+      resultsRef.current[focusedResult].focus();
+    }
+  }, [focusedResult, resultsRef]);
+
   return (
     <div
       aria-hidden={true}
@@ -214,14 +276,16 @@ export function AutoCompleteList({
 
       {results.length > 0 &&
         query.length > 1 &&
-        results.map(x => {
+        results.map((x, i) => {
           return (
             <div
               key={x.ags}
+              id={`autocomplete-${x.name.toLowerCase()}`}
               className={s.suggestionsItem}
               role="button"
               aria-pressed="false"
               tabIndex={0}
+              ref={el => (resultsRef.current[i] = el)}
               onClick={e => handleSuggestionClick(x)}
               onKeyDown={e => {
                 // Emulate click when enter or space are pressed
@@ -229,6 +293,7 @@ export function AutoCompleteList({
                   e.preventDefault();
                   handleSuggestionClick(x);
                 }
+                handleArrowListNavigation(e);
               }}
             >
               {x.name},{' '}
