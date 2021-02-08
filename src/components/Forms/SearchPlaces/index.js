@@ -139,27 +139,24 @@ export const SearchPlaces = ({
       handleSuggestionClick(results[0]);
     }
   };
-  const handleArrowListNavigation = e => {
-    if (
-      (e.key === 'Tab' ||
-        e.which === 9 ||
-        e.key === 'ArrowDown' ||
-        e.which === 40 ||
-        e.key === 'ArrowUp' ||
-        e.which === 38) &&
-      !e.shiftKey
-    ) {
-      e.preventDefault();
-    }
-    console.log('old focusedResult', focusedResult);
-    console.log('test', e.key === 'Tab' && e.shiftKey);
 
-    if (
+  const handleArrowListNavigation = e => {
+    const upBehavior =
+      e.key === 'ArrowUp' ||
+      e.which === 38 ||
+      ((e.key === 'Tab' || e.which === 9) && e.shiftKey);
+    const downBehavior =
       e.key === 'ArrowDown' ||
       e.which === 40 ||
-      e.key === 'Tab' ||
-      e.which === 9
-    ) {
+      ((e.key === 'Tab' || e.which === 9) && !e.shiftKey);
+
+    if (upBehavior || downBehavior) {
+      e.preventDefault();
+    }
+
+    if (downBehavior) {
+      // At the end of a list jump back to the beginning
+      // and vice versa
       if (
         focusedResult < results.length - 1 &&
         typeof focusedResult !== 'undefined'
@@ -168,8 +165,7 @@ export const SearchPlaces = ({
       } else {
         setFocusedResult(0);
       }
-    }
-    if (e.key === 'ArrowUp' || e.which === 38) {
+    } else if (upBehavior) {
       if (focusedResult > 0 && focusedResult < results.length) {
         setFocusedResult(prev => prev - 1);
       } else {
