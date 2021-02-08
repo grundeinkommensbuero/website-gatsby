@@ -42,6 +42,9 @@ export const EnterLoginCode = ({
       isAuthenticated
     ) {
       onAnswerChallengeSuccess();
+    } else if (answerChallengeState === 'restartSignIn') {
+      // We want to send a new code by starting sign in again
+      startSignIn();
     }
   }, [answerChallengeState, isAuthenticated]);
 
@@ -112,7 +115,8 @@ export const EnterLoginCode = ({
         </p>
       )}
 
-      {answerChallengeState === 'resentCode' && (
+      {(answerChallengeState === 'resentCode' ||
+        answerChallengeState === 'restartSignIn') && (
         <p>
           Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
           geschickt.
