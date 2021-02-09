@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import cN from 'classnames';
 
 function Template({ children, sections }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -130,6 +131,16 @@ function Template({ children, sections }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
+  const donationBarVisible = true; // TODO: reactive from context, to adapt, when user clicks bar away
+
+  const variableMarginClass = () => {
+    if (donationBarVisible) {
+      return 'withDonationBar';
+    } else {
+      return 'withoutDonationBar';
+    }
+  }
+
   const checkUrlProtocolIdentifier = (url) => {
     if (typeof url === 'string' && !url.includes('https://')) {
       const updatedUrl = `https:${url}`;
@@ -146,7 +157,7 @@ function Template({ children, sections }) {
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
-      <Header menu={globalStuff.mainMenu} hasOverlay={!!globalStuff?.overlay} />
+      <Header menu={globalStuff.mainMenu} hasOverlay={!!globalStuff?.overlay} donationBarVisible={donationBarVisible} />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
@@ -164,7 +175,7 @@ function Template({ children, sections }) {
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>
-      <main className={s.main}>
+      <main className={cN(s[variableMarginClass()])}>
         {children}
         <Sections sections={sections} />
       </main>

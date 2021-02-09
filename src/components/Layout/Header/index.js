@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Link from 'gatsby-link';
 
-import { OverlayContext } from '../../../context/Overlay';
-import { Button } from '../../Forms/Button';
+// import { OverlayContext } from '../../../context/Overlay';
+// import { Button } from '../../Forms/Button';
 
 import s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
+import { StickyDonationBar } from './StickyDonationBar';
 
-const Header = ({ menu, hasOverlay }) => {
+const Header = ({ menu, hasOverlay, donationBarVisible }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -16,51 +17,43 @@ const Header = ({ menu, hasOverlay }) => {
   };
 
   return (
-    <header className={s.header}>
-      <div className={s.inner}>
-        <h1 className={s.title}>
-          <Link to="/">
-            <img
-              src={Logo}
-              className={s.logo}
-              alt="Expedition Grundeinkommen Home"
-            />
-          </Link>
-        </h1>
-        {hasOverlay && (
-          <OverlayContext.Consumer>
-            {({ toggleOverlay }) => (
-              <Button
-                className={s.ctaButton}
-                size="MEDIUM"
-                onClick={() => toggleOverlay()}
-              >
-                Spenden
-              </Button>
+    <>
+      <header className={s.header}>
+        <div className={s.headerItemContainer}>
+          <h1 className={s.title}>
+            <Link to="/">
+              <img
+                src={Logo}
+                className={s.logo}
+                alt="Expedition Grundeinkommen Home"
+              />
+            </Link>
+          </h1>
+          <>
+            {menu && (
+              <nav className={s.nav}>
+                <button
+                  className={s.menuButton}
+                  onClick={() => toggleMenu()}
+                  aria-label="Hauptmenü"
+                  aria-expanded={menuOpen}
+                  aria-controls="menuHeader"
+                >
+                  <div className={s.menuButtonBars}>
+                    <div className={s.menuButtonBar} />
+                    <div className={s.menuButtonBar} />
+                    <div className={s.menuButtonBar} />
+                  </div>
+                </button>
+                <Menu menu={menu} menuOpen={menuOpen} />
+              </nav>
             )}
-          </OverlayContext.Consumer>
-        )}
-        {/* </Tooltip> */}
-        {menu && (
-          <nav className={s.nav}>
-            <button
-              className={s.menuButton}
-              onClick={() => toggleMenu()}
-              aria-label="Hauptmenü"
-              aria-expanded={menuOpen}
-              aria-controls="menuHeader"
-            >
-              <div className={s.menuButtonBars}>
-                <div className={s.menuButtonBar} />
-                <div className={s.menuButtonBar} />
-                <div className={s.menuButtonBar} />
-              </div>
-            </button>
-            <Menu menu={menu} menuOpen={menuOpen} />
-          </nav>
-        )}
-      </div>
-    </header>
+          </>
+        </div>
+        {donationBarVisible && <StickyDonationBar />}
+      </header>
+
+    </>
   );
 };
 
