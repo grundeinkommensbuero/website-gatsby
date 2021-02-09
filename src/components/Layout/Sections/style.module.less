@@ -10,11 +10,11 @@
   }
 
   &:nth-child(3n + 1):not(:only-child) {
-    --bg-color: @yellow;
+    --bg-color: @white;
     --font-color: @red;
     --secondary-color: @blueBright;
-    --text-on-secondary-color: @yellow;
-    background-color: @yellow;
+    --text-on-secondary-color: @white;
+    background-color: @white;
     color: @red;
 
     &.sectionNewsletter {
@@ -35,7 +35,7 @@
   &:only-child {
     --bg-color: @grey;
     --font-color: @red;
-    --secondary-color: @yellow;
+    --secondary-color: @white;
     --text-on-secondary-color: @red;
     background-color: @grey;
     color: @red;
@@ -51,7 +51,7 @@
     color: @greyBright !important;
     --bg-color: @red!important;
     --font-color: @greyBright !important;
-    --secondary-color: @yellow !important;
+    --secondary-color: @white !important;
     --text-on-secondary-color: @red !important;
 
     .sectionBody:after {
@@ -78,7 +78,7 @@
     color: @red !important;
     --bg-color: @grey !important;
     --font-color: @red !important;
-    --secondary-color: @yellow !important;
+    --secondary-color: @white !important;
     --text-on-secondary-color: @red !important;
   }
 
@@ -92,12 +92,12 @@
   }
 
   &.sectionYellow {
-    background-color: @yellow !important;
+    background-color: @white !important;
     color: @red !important;
-    --bg-color: @yellow !important;
+    --bg-color: @white !important;
     --font-color: @red !important;
     --secondary-color: @blueBright !important;
-    --text-on-secondary-color: @yellow !important;
+    --text-on-secondary-color: @white !important;
   }
 
   &:nth-child(3n + 1):not(:only-child),
@@ -432,7 +432,7 @@
 }
 
 .heroImageOverlay {
-  background: @yellow;
+  background: @white;
   position: absolute;
   top: 0;
   left: 0;
@@ -442,7 +442,7 @@
 }
 
 .sectionWithHeroImage {
-  text-shadow: 0 0 0.8rem fade(@yellow, 90);
+  text-shadow: 0 0 0.8rem fade(@white, 90);
   min-height: 30vw;
   display: flex;
   align-items: flex-end;
