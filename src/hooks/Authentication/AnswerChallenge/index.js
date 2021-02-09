@@ -62,11 +62,18 @@ const answerCustomChallenge = async (
       console.log('Apparently the user did not enter the right code', error);
     }
   } catch (error) {
-    setState('wrongCode');
-    console.log(
-      'User entered wrong code three times or user was never set',
-      error
-    );
+    // If we wanted to resend the code after used waited more than 3 minutes
+    // this error will be thrown. In this case we should login again and therefore
+    // send a new code
+    if (answer === 'resendCode') {
+      setState('restartSignIn');
+    } else {
+      setState('wrongCode');
+      console.log(
+        'User entered wrong code three times or user was never set',
+        error
+      );
+    }
   }
 };
 
