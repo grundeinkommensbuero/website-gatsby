@@ -16,7 +16,6 @@ export const SnackbarMessageProvider = ({ children }) => {
 
   useEffect(() => {
     if (message !== '') {
-      console.log(message);
       openSnackbar(message, [6000]);
       setMessage('');
     }

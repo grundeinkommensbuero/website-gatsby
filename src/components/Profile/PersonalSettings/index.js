@@ -95,8 +95,8 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
     openSnackbar(deleteSnackbarMessage, [6000]);
     setTimeout(() => {
       deleteUser({ userId });
-      signOut();
       updateSnackbarMessage(accountDeletedMessage);
+      signOut();
     }, 3000);
   };
 
@@ -120,7 +120,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             Abbrechen
           </Button>
           <SnackbarMessageContext.Consumer>
-            {({ message, setMessage }) => (
+            {({ setMessage }) => (
               <Button
                 size="SMALL"
                 className={s.revokeButton}
