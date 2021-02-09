@@ -1,6 +1,7 @@
 import React from 'react';
 import CONFIG from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
+import { MunicipalityProvider } from './src/context/Municipality';
 import SurveySaver from './src/components/SurveySaver';
 import { OverlayProvider } from './src/context/Overlay';
 
@@ -27,9 +28,11 @@ export default ({ element }) => {
 
   return (
     <AuthProvider>
-      <SurveySaver>
-        <OverlayProvider>{element}</OverlayProvider>
-      </SurveySaver>
+      <MunicipalityProvider>
+        <SurveySaver>
+          <OverlayProvider>{element}</OverlayProvider>
+        </SurveySaver>
+      </MunicipalityProvider>
     </AuthProvider>
   );
 };

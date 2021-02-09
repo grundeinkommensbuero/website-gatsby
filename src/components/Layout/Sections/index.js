@@ -94,6 +94,13 @@ export function ContentfulSection({ section, pageContext }) {
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
 
+  if (
+    __typename === 'ContentfulPageSectionMunicipality' &&
+    section.elements?.includes('SignupsMap')
+  ) {
+    return <div>Karte</div>;
+  }
+
   if (__typename === 'ContentfulPageSectionGemeindeIntro') {
     return (
       <MunicipalityIntro

@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
 import { getStringFromPlaceholderText } from '../utils';
+import AuthContext from '../../context/Authentication';
+import { MunicipalityContext } from '../../context/Municipality';
 
 const URL = 'https://expedition-grundeinkommen.de';
+
+const getFilteredSections = ({ sections, isAuthenticated }) => {
+  return sections.filter(section => {
+    if (isAuthenticated) {
+      if (section.elements?.includes('SignupsMap')) {
+        return false;
+      }
+    }
+    return true;
+  });
+};
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
@@ -17,23 +30,44 @@ export default ({ data, location, pageContext }) => {
     municipality
   );
 
-  return (
-    <Layout
-      location={location}
-      title={title}
-      sections={page.sections}
-      pageContext={pageContext}
-      description={description}
-    >
-      <Helmet>
-        <title>{title}</title>
+  const { /*customUserData,*/ isAuthenticated } = useContext(AuthContext);
+  const municipalityContext = useContext(MunicipalityContext);
+  // console.log({ isAuthenticated });
+  console.log(municipalityContext.municipalityState);
 
-        {page.description && <meta name="description" content={description} />}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={URL + location.pathname} />
-        <script type="text/javascript">{MatomoTrackingStuff}</script>
-      </Helmet>
-    </Layout>
+  const [sections, setSections] = useState(
+    getFilteredSections({ sections: page.sections, isAuthenticated })
+  );
+
+  useEffect(() => {
+    setSections(
+      getFilteredSections({ sections: page.sections, isAuthenticated })
+    );
+  }, [isAuthenticated, pageContext]);
+
+  return (
+    <>
+      {typeof isAuthenticated !== 'undefined' && (
+        <Layout
+          location={location}
+          title={title}
+          sections={sections}
+          pageContext={pageContext}
+          description={description}
+        >
+          <Helmet>
+            <title>{title}</title>
+
+            {page.description && (
+              <meta name="description" content={description} />
+            )}
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={URL + location.pathname} />
+            <script type="text/javascript">{MatomoTrackingStuff}</script>
+          </Helmet>
+        </Layout>
+      )}
+    </>
   );
 };
 
@@ -146,6 +180,10 @@ export const pageQuery = graphql`
             body {
               body
             }
+          }
+          ... on ContentfulPageSectionMunicipality {
+            __typename
+            elements
           }
           ... on ContentfulPageSectionDonation {
             __typename
