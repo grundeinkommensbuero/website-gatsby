@@ -151,7 +151,7 @@ function Template({ children, sections }) {
   };
 
   const modifiedSections = (sections) => {
-    const colorSchemes = ['pink', 'white', 'red', 'green', 'white', 'pink', 'green', 'red', 'white', 'pink', 'green', 'red'];
+    const colorSchemes = ['pink', 'white', 'red', 'green', 'pink', 'white', 'red', 'green', 'pink', 'white', 'red', 'green'];
     const modSections = [...sections];
     for (let i = 0; i < modSections.length; i++) {
       modSections[i].colorScheme = colorSchemes[i]
