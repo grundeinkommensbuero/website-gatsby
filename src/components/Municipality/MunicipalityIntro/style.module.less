@@ -1,0 +1,75 @@
+@import '../../style/vars.less';
+
+.mapSection {
+  --bg-color: @pink;
+  --font-color: @greyBright;
+  --secondary-color: @red;
+  --text-on-secondary-color: @greyBright;
+  background-color: @pink;
+  color: @greyBright;
+  padding: 0rem var(--grid-gap) 10rem;
+}
+
+.headerContainer {
+  // grid-column: wide-start / wide-end;
+}
+
+.mapContainer {
+  // TODO: check vh
+  height: 80vh;
+  margin: 2rem 1rem 2rem 2rem;
+  @media (max-width: @breakPointL) {
+    height: 60vh;
+    margin: 1rem 0 0 0;
+  }
+}
+
+.rightColumnContainer {
+  padding: 2.15rem 2rem 1rem 2rem;
+  @media (max-width: @breakPointL) {
+    padding: 1rem 0 0;
+    .contentGrid();
+  }
+  
+
+  // grid-column: slim-start / slim-end;
+}
+
+.headline {
+  font-size: @fontSizeXXL;
+  line-height: 1.15;
+}
+
+.twoColumnContainer {
+  margin: 0 auto;
+  position: relative;
+  max-width: @contentWidthL;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.twoColumnItem {
+  width: 50%;
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+}
+
+.sectionBody {
+  margin: 0 auto;
+  .contentGrid();
+  max-width: 70rem;
+}
+
+
+
+.adjustFinallyMessage {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  --secondary-color: var(--bg-color);
+  --text-on-secondary-color: var(--font-color);
+}
+
+.adjustFinallyMessage > div > div:first-child {
+  padding: 0; // remove padding of original finally message
+}

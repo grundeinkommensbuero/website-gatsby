@@ -9,7 +9,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
-function Template({ children, sections }) {
+function Template({ children, sections, pageContext, title, description }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
     query SiteTitleQuery {
       contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
@@ -130,7 +130,7 @@ function Template({ children, sections }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const checkUrlProtocolIdentifier = (url) => {
+  const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
       const updatedUrl = `https:${url}`;
       return updatedUrl;
@@ -160,13 +160,16 @@ function Template({ children, sections }) {
           property="og:description"
           content={globalStuff.siteDescription.siteDescription}
         />
-        <meta property="og:image" content={checkUrlProtocolIdentifier(globalStuff.ogimage.fixed.src)} />
+        <meta
+          property="og:image"
+          content={checkUrlProtocolIdentifier(globalStuff.ogimage.fixed.src)}
+        />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>
       <main className={s.main}>
         {children}
-        <Sections sections={sections} />
+        <Sections sections={sections} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}

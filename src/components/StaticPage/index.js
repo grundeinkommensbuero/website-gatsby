@@ -3,23 +3,32 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
+import { getStringFromPlaceholderText } from '../utils';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-export default ({ data, location }) => {
+export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
+  const { municipality } = pageContext;
+
+  const title = getStringFromPlaceholderText(page.title, municipality);
+  const description = getStringFromPlaceholderText(
+    page.description?.internal?.content,
+    municipality
+  );
 
   return (
-    <Layout location={location} title={page.title} sections={page.sections}>
+    <Layout
+      location={location}
+      title={title}
+      sections={page.sections}
+      pageContext={pageContext}
+      description={description}
+    >
       <Helmet>
-        <title>{page.title}</title>
+        <title>{title}</title>
 
-        {page.description && (
-          <meta
-            name="description"
-            content={page.description.internal.content}
-          />
-        )}
+        {page.description && <meta name="description" content={description} />}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={URL + location.pathname} />
         <script type="text/javascript">{MatomoTrackingStuff}</script>
@@ -129,6 +138,13 @@ export const pageQuery = graphql`
               fluid(maxWidth: 1500, quality: 80) {
                 ...GatsbyContentfulFluid
               }
+            }
+          }
+          ... on ContentfulPageSectionGemeindeIntro {
+            __typename
+            title
+            body {
+              body
             }
           }
           ... on ContentfulPageSectionDonation {
