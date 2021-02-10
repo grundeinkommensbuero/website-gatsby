@@ -9,36 +9,8 @@
     padding: 3rem 1rem 5rem;
   }
 
-  &:nth-child(3n + 1):not(:only-child) {
-    --bg-color: @white;
-    --font-color: @red;
-    --secondary-color: @blueBright;
-    --text-on-secondary-color: @white;
-    background-color: @white;
-    color: @red;
-
-    &.sectionNewsletter {
-      background-image: url('./backgrounds/newsletter_red.svg');
-    }
-  }
-
-  &:nth-child(3n + 2) {
-    --bg-color: @red;
-    --font-color: @greyBright;
-    --secondary-color: @pink;
-    --text-on-secondary-color: @grey;
-    background-color: @red;
-    color: @greyBright;
-  }
-
-  &:nth-child(3n + 3),
-  &:only-child {
-    --bg-color: @grey;
-    --font-color: @red;
-    --secondary-color: @white;
-    --text-on-secondary-color: @red;
-    background-color: @grey;
-    color: @red;
+  &.sectionNewsletter {
+    background-image: url('./backgrounds/newsletter_red.svg');
   }
 
   // COLOR SCHEMES
@@ -73,31 +45,40 @@
     }
   }
 
-  &.sectionGrey {
-    background-color: @grey !important;
-    color: @red !important;
-    --bg-color: @grey !important;
-    --font-color: @red !important;
-    --secondary-color: @white !important;
-    --text-on-secondary-color: @red !important;
+  &.sectionWhite {
+    background-color: @white;
+    color: @pink;
+    --bg-color: @white;
+    --font-color: @pink;
+    --secondary-color: @blueBright;
+    --text-on-secondary-color: @red;
+  }
+
+  &.sectionPink {
+    background-color: @pink;
+    color: @greyBright;
+    --bg-color: @pink;
+    --font-color: @greyBright;
+    --secondary-color: @red;
+    --text-on-secondary-color: @grey;
+  }
+
+  &.sectionGreen {
+    background-color: @blueBright;
+    color: @greyBright;
+    --bg-color: @greyBright;
+    --font-color: @greyBright;
+    --secondary-color: @red;
+    --text-on-secondary-color: @white;
   }
 
   &.sectionRed {
-    background-color: @red !important;
-    color: @greyBright !important;
-    --bg-color: @red !important;
-    --font-color: @greyBright !important;
-    --secondary-color: @pink !important;
-    --text-on-secondary-color: @grey !important;
-  }
-
-  &.sectionYellow {
-    background-color: @white !important;
-    color: @red !important;
-    --bg-color: @white !important;
-    --font-color: @red !important;
-    --secondary-color: @blueBright !important;
-    --text-on-secondary-color: @white !important;
+    background-color: @red;
+    color: @greyBright;
+    --bg-color: @red;
+    --font-color: @greyBright;
+    --secondary-color: @pink;
+    --text-on-secondary-color: @white;
   }
 
   &:nth-child(3n + 1):not(:only-child),

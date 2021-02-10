@@ -53,7 +53,7 @@ export function ContentfulSection({ section }) {
     sloganLine2,
     __typename,
     teamMembers,
-    colorScheme,
+    colorScheme = 'white',
     bodyTextSizeHuge,
     pledgeId,
     signaturesId,
@@ -120,9 +120,10 @@ export function ContentfulSection({ section }) {
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
-        [s.sectionYellow]: colorScheme === 'yellow',
+        [s.sectionWhite]: colorScheme === 'white',
+        [s.sectionPink]: colorScheme === 'pink',
+        [s.sectionGreen]: colorScheme === 'green',
         [s.sectionRed]: colorScheme === 'red',
-        [s.sectionGrey]: colorScheme === 'grey',
         [s.sectionChristmas]: colorScheme === 'christmas',
         [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
@@ -317,8 +318,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,

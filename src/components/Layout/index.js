@@ -150,6 +150,15 @@ function Template({ children, sections }) {
     }
   };
 
+  const modifiedSections = (sections) => {
+    const colorSchemes = ['pink', 'white', 'red', 'green', 'white', 'pink', 'green', 'red', 'white', 'pink', 'green', 'red'];
+    const modSections = [...sections];
+    for (let i = 0; i < modSections.length; i++) {
+      modSections[i].colorScheme = colorSchemes[i]
+    }
+    return modSections;
+  };
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -177,7 +186,7 @@ function Template({ children, sections }) {
       </Helmet>
       <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={sections} />
+        <Sections sections={modifiedSections(sections)} />
       </main>
       <Footer
         footerText={globalStuff.footerText}
