@@ -10,12 +10,15 @@ export const useMunicipalityContext = pageContext => {
       isSpecificMunicipality,
       municipality,
     } = pageContext;
+
     if (isMunicipality) {
       municipalityContext.setIsMunicipality(true);
     }
     if (isSpecificMunicipality) {
       municipalityContext.setIsSpecific(true);
       municipalityContext.setMunicipality(municipality);
+    } else {
+      municipalityContext.setIsSpecific(false);
     }
   }, [pageContext]);
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -7,15 +7,10 @@ import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { SectionInner } from '../../Layout/Sections';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
-import {
-  getStringFromPlaceholderText,
-  setWindowLocationOriginForIE,
-} from '../../utils';
+import { getStringFromPlaceholderText } from '../../utils';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 import { MunicipalityContext } from '../../../context/Municipality';
-
-import { navigate } from 'gatsby';
 
 const ColumnQualifying = ({
   municipality,
@@ -75,13 +70,13 @@ const ColumnQualifying = ({
               {municipalityStats.signups === 1
                 ? 'eine Anmeldung '
                 : `${municipalityStats.signups?.toLocaleString(
-                  'de'
-                )} Anmeldungen `}
+                    'de'
+                  )} Anmeldungen `}
               in {municipality.name}!{' '}
             </p>
           ) : (
-              <p>Leider noch keine Anmeldungen in {municipality.name}! </p>
-            )}
+            <p>Leider noch keine Anmeldungen in {municipality.name}! </p>
+          )}
         </>
       )}
     </>
@@ -288,37 +283,43 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     }
     return () => {
       if (typeof window !== `undefined`) {
-        window.onpopstate = () => { };
+        window.onpopstate = () => {};
       }
     };
   }, [municipality]);
 
   const municipalityContext = useContext(MunicipalityContext);
 
-  const handlePlaceSelect = useCallback(
-    selected => {
-      if (selected) {
-        setMunicipality(selected);
-        municipalityContext.setMunicipality(selected);
+  const handlePlaceSelect = selected => {
+    if (selected) {
+      municipalityContext.setMunicipality(selected);
+      setMunicipality(selected);
+    }
+  };
+  // const handlePlaceSelect = useCallback(
+  //   selected => {
+  //     if (selected) {
+  //       setMunicipality(selected);
+  //       municipalityContext.setMunicipality(selected);
 
-        // Note: IE would need an additional fallback for window.history here:
-        if (typeof window !== `undefined`) {
-          if (window.history?.pushState) {
-            window.history.pushState(
-              selected,
-              null,
-              `${window.location.origin}/gemeinden/${selected.ags}`
-            );
-            adjustDocumentTitle(municipality, selected.name);
-            setWindowLocationOriginForIE();
-          } else {
-            navigate(municipality.ags);
-          }
-        }
-      }
-    },
-    [municipality]
-  );
+  //       // Note: IE would need an additional fallback for window.history here:
+  //       if (typeof window !== `undefined`) {
+  //         if (window.history?.pushState) {
+  //           window.history.pushState(
+  //             selected,
+  //             null,
+  //             `${window.location.origin}/gemeinden/${selected.ags}`
+  //           );
+  //           adjustDocumentTitle(municipality, selected.name);
+  //           setWindowLocationOriginForIE();
+  //         } else {
+  //           navigate(municipality.ags);
+  //         }
+  //       }
+  //     }
+  //   },
+  //   [municipality]
+  // );
 
   const columnProps = {
     municipality,

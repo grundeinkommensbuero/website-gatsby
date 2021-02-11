@@ -22,7 +22,10 @@ import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
-import { getFilteredElementsByContentfulState } from '../../utils';
+import {
+  getFilteredElementsByContentfulState,
+  getComponentFromContentful,
+} from '../../utils';
 import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
 
@@ -35,13 +38,15 @@ export default function Sections({ sections, pageContext }) {
   if (sections && sections.length) {
     return (
       <SectionWrapper>
-        {sections.map((section, index) => (
-          <ContentfulSection
-            section={section}
-            pageContext={pageContext}
-            key={index}
-          />
-        ))}
+        {sections.map((section, index) => {
+          return (
+            <ContentfulSection
+              section={section}
+              pageContext={pageContext}
+              key={index}
+            />
+          );
+        })}
       </SectionWrapper>
     );
   }
@@ -114,33 +119,18 @@ export function ContentfulSection({ section, pageContext }) {
       municipalityContentfulState,
       userContentfulState,
     });
-    const getComponentFromContentful = component => {
-      const componentSelector = component.__typename.replace(
-        'ContentfulSectionComponent',
-        ''
-      );
-      if (typeof Components[componentSelector] !== 'undefined') {
-        return React.createElement(Components[componentSelector], {
-          ...component,
-        });
-      } else {
-        return (
-          <div>The component {componentSelector} has not been created yet.</div>
-        );
-      }
-    };
-    // TODO: Better CSS Class names
+    // TODO: Better class names
     return (
       <>
         {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
         <Section className={s.componentWrapper}>
-          <SectionInner className={s.componentElementContainer}>
-            {filteredComponents.map(component => {
-              return (
-                <div className={s.componentElement}>
-                  {getComponentFromContentful(component)}
-                </div>
-              )
+          <SectionInner>
+            {filteredComponents.map((component, index) => {
+              return getComponentFromContentful({
+                Components,
+                component,
+                key: index,
+              });
             })}
           </SectionInner>
         </Section>
@@ -389,8 +379,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-            <HeaderBackgrounds />
-          )
+          <HeaderBackgrounds />
+        )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,

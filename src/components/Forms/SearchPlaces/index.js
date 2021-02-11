@@ -114,15 +114,17 @@ export const SearchPlaces = ({
   };
 
   const handleSuggestionClick = suggestion => {
-    setQuery(suggestion.name);
-    setSelectedPlace(suggestion);
+    if (suggestion) {
+      setQuery(suggestion.name);
+      setSelectedPlace(suggestion);
 
-    // If callback was passed let container component
-    // know that the selected place changed
-    if (onPlaceSelect) {
-      onPlaceSelect(suggestion);
+      // If callback was passed let container component
+      // know that the selected place changed
+      if (onPlaceSelect) {
+        onPlaceSelect(suggestion);
+      }
+      setSuggestionsActive(false);
     }
-    setSuggestionsActive(false);
   };
 
   const handleChange = e => {
