@@ -129,18 +129,18 @@ export function ContentfulSection({ section, pageContext }) {
         );
       }
     };
+    // TODO: Better CSS Class names
     return (
       <>
-        {section.keyVisual && <div className={cN(
-          s.keyVisual,
-          { [s.sectionWhite]: colorScheme === 'white' },
-          { [s.sectionPink]: colorScheme === 'pink' },
-          { [s.sectionGreen]: colorScheme === 'green' },
-          { [s.sectionRed]: colorScheme === 'red' })}>{''}</div>}
+        {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
         <Section className={s.componentWrapper}>
-          <SectionInner>
+          <SectionInner className={s.componentElementContainer}>
             {filteredComponents.map(component => {
-              return getComponentFromContentful(component);
+              return (
+                <div className={s.componentElement}>
+                  {getComponentFromContentful(component)}
+                </div>
+              )
             })}
           </SectionInner>
         </Section>

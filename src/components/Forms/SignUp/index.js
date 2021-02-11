@@ -126,6 +126,7 @@ export default ({
   postSignupAction,
   illustration = 'POINT_LEFT',
   forMunicipality,
+  showSignedInMessage
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
@@ -235,7 +236,11 @@ export default ({
         />
       );
     }
-    return <AuthenticatedDialogDefault />;
+    if (showSignedInMessage) {
+      return <AuthenticatedDialogDefault />;
+    } else {
+      return null;
+    }
   }
 
   const onPlaceSelect = municipality => {

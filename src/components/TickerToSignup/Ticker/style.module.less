@@ -3,10 +3,7 @@
 .contentContainer {
   background-color: @pink;
   color: @white;
-
   margin: auto;
-
-  width: @headerWidth;
 }
 
 .counterContainerReel {
@@ -33,16 +30,36 @@
 
 .counterLabelSlotMachine {
   font-size: 2.5rem;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
   margin-top: 2.75rem;
   margin-bottom: 0;
 
   @media (max-width: @breakPointS) {
-    margin-left: 1rem;
-    margin-right: 1rem;
     font-size: 1.5rem;
     margin-top: 1rem;
+  }
+}
+
+.counterLabelMarginRight {
+  margin-right: 1.5rem;
+
+  @media (max-width: @breakPointS) {
+    margin-right: 1rem;
+  }
+}
+
+.counterLabelMarginLeft {
+  margin-left: 1.5rem;
+
+  @media (max-width: @breakPointS) {
+    margin-left: 1rem;
+  }
+}
+
+.actionTextBig {
+  font-size: 2.25rem;
+  @media (max-width: @breakPointS) {
+    font-size: 2rem;
+    line-height: 1.5;
   }
 }
 

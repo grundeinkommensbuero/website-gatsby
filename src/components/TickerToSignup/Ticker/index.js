@@ -31,14 +31,14 @@ export const Ticker = ({ tickerDescription }) => {
       <div className={s.slotMachine}>
         <div className={s.counterContainer}>
           <Reel text={peopleCount.toString()} />
-          <h1 className={s.counterLabelSlotMachine}>Menschen</h1>
+          <h1 className={cN(s.counterLabelSlotMachine, s.counterLabelMarginLeft)}>Menschen</h1>
         </div>
         <div className={cN(s.counterContainer, s.alignRight)}>
-          <h1 className={s.counterLabelSlotMachine}>in</h1>
+          <h1 className={cN(s.counterLabelSlotMachine, s.counterLabelMarginRight)}>in</h1>
           <Reel text={municipalityCount.toString()} />
-          <h1 className={s.counterLabelSlotMachine}>Orten</h1>
+          <h1 className={cN(s.counterLabelSlotMachine, s.counterLabelMarginLeft)}>Orten</h1>
         </div>
-        <h1 className={s.actionText}>
+        <h1 className={s.actionTextBig}>
           lassen das Grundeinkommen in Deutschland Realität werden.
           </h1>
         <p className={s.actionText}>{tickerDescription}</p>

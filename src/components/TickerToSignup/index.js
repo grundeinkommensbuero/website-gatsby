@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Ticker } from './Ticker';
 import { MunicipalitySearch } from './MunicipalitySearch';
 import SignUp from '../Forms/SignUp';
 
+import { MunicipalityContext } from '../../context/Municipality';
+
 export const TickerToSignup = ({
   tickerDescription: { tickerDescription },
 }) => {
-  console.log('rendered');
+
+  const { isMunicipality } = useContext(MunicipalityContext);
+
   return (
     <>
       <Ticker tickerDescription={tickerDescription} />
-      <MunicipalitySearch />
-      <SignUp illustration={false} />
+      {isMunicipality ?
+        <SignUp illustration={false} showSignedInMessage={false} /> :
+        <MunicipalitySearch />
+      }
     </>
   );
 };
