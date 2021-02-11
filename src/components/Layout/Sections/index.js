@@ -28,6 +28,7 @@ import { TickerToSignup } from '../../TickerToSignup';
 
 const Components = {
   TickerToSignup,
+  MunicipalityMap,
 };
 
 export default function Sections({ sections, pageContext }) {

@@ -22,10 +22,12 @@ export const MunicipalityProvider = ({ children }) => {
       ) {
         ags.current = municipality.ags;
         getMunicipalityStats(ags.current);
+        setIsMunicipality(true);
       }
     } else {
       ags.current = undefined;
       setMunicipalityContentfulState('noMunicipality');
+      setIsMunicipality();
     }
   }, [municipality]);
 
