@@ -147,13 +147,6 @@ export const MunicipalityMap = ({
 }) => {
   const { municipality } = useContext(MunicipalityContext);
   const agsToFlyTo = municipality ? municipality.ags : undefined;
-  var date = new Date(); /* creating object of Date class */
-  var hour = date.getHours();
-  var min = date.getMinutes();
-  var sec = date.getSeconds();
-  const time = `${hour}:${min}:${sec}`;
-
-  console.log('map rendered', time);
 
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);

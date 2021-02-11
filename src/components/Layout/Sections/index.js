@@ -32,8 +32,6 @@ const Components = {
 };
 
 export default function Sections({ sections, pageContext }) {
-  console.log('section rendered');
-
   if (sections && sections.length) {
     return (
       <SectionWrapper>
