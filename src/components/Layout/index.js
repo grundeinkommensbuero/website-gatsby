@@ -150,14 +150,22 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   };
 
-  /* const modifiedSections = (sections) => {
-    const colorSchemes = ['pink', 'white', 'red', 'green', 'pink', 'white', 'red', 'green', 'pink', 'white', 'red', 'green'];
+  // Temporary modify section color scheme, when none is set from contentful
+  const modifiedSections = (sections) => {
+    const colorSchemes = ['white', 'pink', 'green'];
+    let counter = 0;
     const modSections = [...sections];
     for (let i = 0; i < modSections.length; i++) {
-      modSections[i].colorScheme = colorSchemes[i]
+      if (modSections[i] && !modSections[i].colorScheme) {
+        modSections[i].colorScheme = colorSchemes[counter];
+      }
+      counter++;
+      if (counter === 3) {
+        counter = 0;
+      }
     }
     return modSections;
-  }; */
+  };
 
   return (
     <>
@@ -189,7 +197,7 @@ function Template({ children, sections, pageContext, title, description }) {
       </Helmet>
       <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={sections} pageContext={pageContext} />
+        <Sections sections={modifiedSections(sections)} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}
