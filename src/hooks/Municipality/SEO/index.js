@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { getStringFromPlaceholderText } from '../../utils';
+import { getStringFromPlaceholderText } from '../../../components/utils';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 export const useSEO = page => {
@@ -13,6 +13,8 @@ export const useSEO = page => {
       setTitle(page.title);
       setDescription(page.description?.internal?.content);
     } else {
+      console.log(page.title, municipality);
+
       setTitle(getStringFromPlaceholderText(page.title, municipality));
       setDescription(
         getStringFromPlaceholderText(
