@@ -171,6 +171,9 @@ export const getStringFromPlaceholderText = (string, object) => {
   if (!string) {
     return '';
   }
+  if (!object) {
+    return string;
+  }
   let result = string;
   const regexSubInCurlyBrackets = /(?<=\{).+?(?=\})/g;
   const regexSubInSingleQuotes = /^'.*'$/;
@@ -247,3 +250,44 @@ const stateToAgs = {
 export function mapCampaignCodeToAgs(campaignCode) {
   return stateToAgs[campaignCode.split('-')[0]];
 }
+
+// Translate the list of strings of contentful in an Array of flags
+// that match the userContentfulState or municpalityContentful state
+// of the useUserMunicipalityContentfulState hook
+export const getShowForOptions = arrayOfStrings => {
+  const allShowForOptions = [
+    'showForNoMunicipality',
+    'showForQualifying',
+    'showForQualified',
+    'showForCollecting',
+    'showForBerlinHamburgBremen',
+    'showForLoggedOut',
+    'showForLoggedInNoMunicipalitySignup',
+    'showForLoggedInThisMunicipalitySignup',
+    'showForLoggedInOtherMunicipalitySignup',
+  ];
+  const showForOptions = {};
+  for (const x of allShowForOptions) {
+    let attr = x.replace('showFor', '');
+    attr = attr.charAt(0).toLowerCase() + attr.slice(1);
+    showForOptions[attr] = arrayOfStrings.includes(x);
+  }
+  return showForOptions;
+};
+
+export const getFilteredElementsByContentfulState = ({
+  elements,
+  municipalityContentfulState,
+  userContentfulState,
+}) => {
+  return elements.filter(el => {
+    if (el.showForOptions) {
+      const showForOptions = getShowForOptions(el.showForOptions);
+      const showState =
+        showForOptions[municipalityContentfulState] &&
+        showForOptions[userContentfulState];
+      return showState;
+    }
+    return false;
+  });
+};

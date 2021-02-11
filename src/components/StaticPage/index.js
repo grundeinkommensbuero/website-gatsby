@@ -1,49 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
-import { getStringFromPlaceholderText } from '../utils';
 import AuthContext from '../../context/Authentication';
-import { MunicipalityContext } from '../../context/Municipality';
+import { useMunicipalityContext } from '../../hooks/Municipality/useMunicipalityContext';
+import { useSEO } from '../../hooks/Municipality/SEO';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-const getFilteredSections = ({ sections, isAuthenticated }) => {
-  return sections.filter(section => {
-    if (isAuthenticated) {
-      if (section.elements?.includes('SignupsMap')) {
-        return false;
-      }
-    }
-    return true;
-  });
-};
-
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
-  const { municipality } = pageContext;
+  useMunicipalityContext(pageContext);
 
-  const title = getStringFromPlaceholderText(page.title, municipality);
-  const description = getStringFromPlaceholderText(
-    page.description?.internal?.content,
-    municipality
-  );
-
-  const { /*customUserData,*/ isAuthenticated } = useContext(AuthContext);
-  const municipalityContext = useContext(MunicipalityContext);
-  // console.log({ isAuthenticated });
-  console.log(municipalityContext.municipalityState);
-
-  const [sections, setSections] = useState(
-    getFilteredSections({ sections: page.sections, isAuthenticated })
-  );
-
-  useEffect(() => {
-    setSections(
-      getFilteredSections({ sections: page.sections, isAuthenticated })
-    );
-  }, [isAuthenticated, pageContext]);
+  const { isAuthenticated } = useContext(AuthContext);
+  const { title, description } = useSEO(page);
 
   return (
     <>
@@ -51,7 +22,7 @@ export default ({ data, location, pageContext }) => {
         <Layout
           location={location}
           title={title}
-          sections={sections}
+          sections={page.sections}
           pageContext={pageContext}
           description={description}
         >
@@ -181,9 +152,19 @@ export const pageQuery = graphql`
               body
             }
           }
-          ... on ContentfulPageSectionMunicipality {
+          ... on ContentfulPageSectionWithComponents {
             __typename
-            elements
+            keyVisual
+            components {
+              ... on ContentfulSectionComponentTickerToSignup {
+                __typename
+                title
+                showForOptions
+                tickerDescription {
+                  tickerDescription
+                }
+              }
+            }
           }
           ... on ContentfulPageSectionDonation {
             __typename

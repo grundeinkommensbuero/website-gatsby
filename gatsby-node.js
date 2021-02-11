@@ -91,7 +91,7 @@ exports.createPages = ({ graphql, actions }) => {
         municipality: { ...municipality },
         isMunicipality: true,
         isSpecificMunicipality: true,
-        slug: municipality.ags,
+        slug: 'gemeinden',
       },
     });
   });

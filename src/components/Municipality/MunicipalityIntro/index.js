@@ -299,7 +299,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     selected => {
       if (selected) {
         setMunicipality(selected);
-        municipalityContext.setMunicipalityState(selected);
+        municipalityContext.setMunicipality(selected);
 
         // Note: IE would need an additional fallback for window.history here:
         if (typeof window !== `undefined`) {
