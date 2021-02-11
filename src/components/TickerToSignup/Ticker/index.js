@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cN from 'classnames';
 import Reel from 'react-reel';
-import { Button } from '../../Forms/Button';
 import s from './style.module.less';
 
 import './reelstyle.css';

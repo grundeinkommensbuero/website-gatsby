@@ -131,8 +131,10 @@ const Legend = () => {
 
 export const MunicipalityMap = ({
   agsToFlyTo,
-  shouldStartAnimation,
-  onDataReady,
+  shouldStartAnimation = true,
+  onDataReady = () => {
+    console.log('data ready');
+  },
   initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,

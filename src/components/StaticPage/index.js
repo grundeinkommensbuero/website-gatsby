@@ -164,6 +164,11 @@ export const pageQuery = graphql`
                   tickerDescription
                 }
               }
+              ... on ContentfulSectionComponentMunicipalityMap {
+                __typename
+                title
+                showForOptions
+              }
             }
           }
           ... on ContentfulPageSectionDonation {

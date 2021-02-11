@@ -137,7 +137,7 @@ export default ({
   );
 
   const isForMunicipality = !!forMunicipality;
-  let fields = ['email', 'username', 'zipCode', 'city'];
+  let fields = ['email', 'username', 'zipCode'];
   if (isForMunicipality) {
     fields = ['username', 'email'];
   }
@@ -283,43 +283,46 @@ export default ({
   };
 
   return (
-    <Form
-      onSubmit={e => {
-        // TODO: Signup to specific municipality
-        // make sure the data has the right structure
-        // if (e.municipality) {
-        //   e.ags = municipality.ags;
-        // }
-        // ––
-        e.privacyConsent = true;
-        e.newsletterConsent = true;
-        setHasSubmitted(true);
-        if (!isAuthenticated) {
-          signUp(e);
-        }
-      }}
-      initialValues={initialValues}
-      validate={values => validate(values, isAuthenticated)}
-      render={({ handleSubmit }) => {
-        return (
-          <FormWrapper>
-            <form onSubmit={handleSubmit}>
-              <FormSection>
-                {fields.map((field, i) => {
-                  return (
-                    <Field key={`form-field-${i}`} {...fieldData[field]} />
-                  );
-                })}
-              </FormSection>
+    <>
+      <h2>Komm dazu.</h2>
+      <Form
+        onSubmit={e => {
+          // TODO: Signup to specific municipality
+          // make sure the data has the right structure
+          // if (e.municipality) {
+          //   e.ags = municipality.ags;
+          // }
+          // ––
+          e.privacyConsent = true;
+          e.newsletterConsent = true;
+          setHasSubmitted(true);
+          if (!isAuthenticated) {
+            signUp(e);
+          }
+        }}
+        initialValues={initialValues}
+        validate={values => validate(values, isAuthenticated)}
+        render={({ handleSubmit }) => {
+          return (
+            <FormWrapper>
+              <form onSubmit={handleSubmit}>
+                <FormSection>
+                  {fields.map((field, i) => {
+                    return (
+                      <Field key={`form-field-${i}`} {...fieldData[field]} />
+                    );
+                  })}
+                </FormSection>
 
-              <CTAButtonContainer illustration={illustration}>
-                <CTAButton type="submit">Ich bin dabei</CTAButton>
-              </CTAButtonContainer>
-            </form>
-          </FormWrapper>
-        );
-      }}
-    ></Form>
+                <CTAButtonContainer illustration={illustration}>
+                  <CTAButton type="submit">Ich bin dabei</CTAButton>
+                </CTAButtonContainer>
+              </form>
+            </FormWrapper>
+          );
+        }}
+      ></Form>
+    </>
   );
 };
 

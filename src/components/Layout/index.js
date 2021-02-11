@@ -139,7 +139,7 @@ function Template({ children, sections, pageContext, title, description }) {
     } else {
       return 'withoutDonationBar';
     }
-  }
+  };
 
   const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
@@ -151,7 +151,7 @@ function Template({ children, sections, pageContext, title, description }) {
   };
 
   // Temporary modify section color scheme, when none is set from contentful
-  const modifiedSections = (origSections) => {
+  const modifySections = origSections => {
     const colorSchemes = ['white', 'pink', 'green'];
     let counter = 0;
     const modSections = [...sections];
@@ -166,6 +166,9 @@ function Template({ children, sections, pageContext, title, description }) {
     }
     return modSections;
   };
+  const modifiedSections = modifySections(sections);
+  console.log(modifiedSections);
+  console.log(sections);
 
   return (
     <>
@@ -174,7 +177,11 @@ function Template({ children, sections, pageContext, title, description }) {
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
-      <Header menu={globalStuff.mainMenu} hasOverlay={!!globalStuff?.overlay} donationBarVisible={donationBarVisible} />
+      <Header
+        menu={globalStuff.mainMenu}
+        hasOverlay={!!globalStuff?.overlay}
+        donationBarVisible={donationBarVisible}
+      />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
