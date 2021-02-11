@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -13,6 +13,7 @@ import {
 } from '../../utils';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
+import { MunicipalityContext } from '../../../context/Municipality';
 
 import { navigate } from 'gatsby';
 
@@ -292,10 +293,13 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     };
   }, [municipality]);
 
+  const municipalityContext = useContext(MunicipalityContext);
+
   const handlePlaceSelect = useCallback(
     selected => {
       if (selected) {
         setMunicipality(selected);
+        municipalityContext.setMunicipality(selected);
 
         // Note: IE would need an additional fallback for window.history here:
         if (typeof window !== `undefined`) {

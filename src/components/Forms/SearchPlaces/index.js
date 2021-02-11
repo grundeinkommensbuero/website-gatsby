@@ -250,12 +250,10 @@ export function AutoCompleteList({
   }, [results]);
 
   useLayoutEffect(() => {
-    console.log('new', focusedResult);
     if (
       typeof focusedResult !== 'undefined' &&
       focusedResult < resultsRef.current.length
     ) {
-      console.log(resultsRef.current[focusedResult]);
       resultsRef.current[focusedResult].focus();
     }
   }, [focusedResult, resultsRef]);

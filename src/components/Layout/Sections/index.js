@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -21,6 +21,8 @@ import Confetti from '../../Confetti';
 import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
+import { getFilteredElementsByContentfulState } from '../../utils';
 
 export default function Sections({ sections, pageContext }) {
   if (sections && sections.length) {
@@ -93,6 +95,34 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
+
+  const {
+    municipalityContentfulState,
+    userContentfulState,
+  } = useUserMunicipalityContentfulState();
+
+  if (__typename === 'ContentfulPageSectionWithComponents') {
+    const filteredComponents = getFilteredElementsByContentfulState({
+      elements: section.components,
+      municipalityContentfulState,
+      userContentfulState,
+    });
+
+    return (
+      <>
+        {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
+        <Section>
+          {filteredComponents.map(el => {
+            return (
+              <SectionInner>
+                <div key={el.title}>{el.title}</div>
+              </SectionInner>
+            );
+          })}
+        </Section>
+      </>
+    );
+  }
 
   if (__typename === 'ContentfulPageSectionGemeindeIntro') {
     return (
@@ -335,8 +365,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-            <HeaderBackgrounds />
-          )
+          <HeaderBackgrounds />
+        )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
