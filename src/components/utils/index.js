@@ -157,6 +157,85 @@ export function getMailtoUrl(to, subject, body) {
   return url;
 }
 
+export const setWindowLocationOriginForIE = () => {
+  if (!window.location.origin) {
+    window.location.origin =
+      window.location.protocol +
+      '//' +
+      window.location.hostname +
+      (window.location.port ? ':' + window.location.port : '');
+  }
+};
+
+export const getStringFromPlaceholderText = (string, object) => {
+  if (!string) {
+    return '';
+  }
+  let result = string;
+  const regexSubInCurlyBrackets = /(?<=\{).+?(?=\})/g;
+  const regexSubInSingleQuotes = /^'.*'$/;
+  const matches = string.match(regexSubInCurlyBrackets);
+  // Without curly braces in the string
+  // no placeholder is defined and
+  // we can return
+  if (!matches) {
+    return result;
+  }
+
+  matches.forEach(e => {
+    let replacement = '';
+    // The condition is not evaluated!
+    // The ternary structure is only
+    // a reminder for the structure
+    // of the replacement.
+    const splitByCondition = e.split('?');
+
+    if (typeof splitByCondition[1] !== 'string') {
+      return string;
+    }
+
+    const options = splitByCondition[1].split(':');
+    // Second option should be the generic one
+    // based on the template
+    let selector = 1;
+    // If the object is defined
+    // the specific option is used
+    if (object) {
+      selector = 0;
+    }
+    // NOTE: check with . is a bit impractical,
+    // when a dot is needed in the string
+    const isInQuotes = regexSubInSingleQuotes.test(options[selector].trim());
+    if (isInQuotes) {
+      replacement = options[selector].replace(/'/g, ``).trim();
+    } else {
+      const objectKey = options[selector].split(`.`)[1].trim();
+      replacement = object[objectKey];
+    }
+    result = result.replace(e, replacement);
+  });
+  result = result.replace(/{/g, '').replace(/}/g, '');
+  return result;
+};
+
+export const detectWebGLContext = () => {
+  // Create canvas element. The canvas is not added to the
+  // document itself, so it is never displayed in the
+  // browser window.
+  if (typeof window !== `undefined`) {
+    var canvas = document.createElement('canvas');
+    // Get WebGLRenderingContext from canvas element.
+    var gl =
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    // Report the result.
+    if (gl && gl instanceof WebGLRenderingContext) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
+};
 const stateToAgs = {
   berlin: '11000000',
   bremen: '04011000',

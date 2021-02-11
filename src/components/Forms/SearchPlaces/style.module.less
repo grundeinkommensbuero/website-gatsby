@@ -8,10 +8,12 @@
   justify-content: flex-start;
   align-items: center;
   margin-top: -@inputButtonMargin;
+  --secondary-color: @red;
   @media (max-width: @breakPointM) {
     // margin-bottom: 1rem;
   }
 }
+
 .inputContainer {
   position: relative;
   width: @inputWidth;
@@ -19,6 +21,7 @@
   // TODO: Check if ok for profile
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
+  color: var(--secondary-color);
 }
 
 .suggestions {
@@ -41,10 +44,13 @@
 
 .suggestionsItem {
   padding: 0.5rem 1.25rem;
+  color: @red;
 
-  &:hover {
+  &:hover, &:focus, &.active {
     background-color: @greyBright;
+    outline: none;
   }
+
 }
 
 .noSuggestionsItem {
@@ -53,6 +59,9 @@
 }
 
 .sideButton {
+  // TODO: Check if ok for profile
+  margin-top: @inputButtonMargin;
+  margin-bottom: @inputButtonMargin;
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
 }

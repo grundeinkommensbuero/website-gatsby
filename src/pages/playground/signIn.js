@@ -14,7 +14,7 @@ export default () => {
   const [signInState, signIn] = useSignIn();
   const [, answerChallenge] = useAnswerChallenge();
 
-  console.log('sign in state', signInState);
+  // console.log('sign in state', signInState);
 
   return (
     <Layout>

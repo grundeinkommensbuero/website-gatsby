@@ -3,17 +3,15 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 import cN from 'classnames';
 import querystring from 'query-string';
-import { Link } from 'gatsby';
 
 import { useUpdateSignatureListByUser } from '../../../hooks/Api/Signatures/Update';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import AuthContext from '../../../context/Authentication';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
-import { SectionInner, Section } from '../../Layout/Sections';
+import { Section } from '../../Layout/Sections';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import SignatureStats from '../../SignatureStats';
-import AuthInfo from '../../AuthInfo';
 import SignUp from '../SignUp';
 import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
@@ -106,10 +104,7 @@ export default ({ successMessage, campaignCode }) => {
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
-        <Section>
-          <div className={s.backToProfile}>
-            <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
-          </div>
+        <Section className={s.signatureSection}>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}
@@ -125,27 +120,8 @@ export default ({ successMessage, campaignCode }) => {
             )}
           </div>
         </Section>
-      ) : (
-          <Section title="Unterschriften zählen">
-            <SectionInner hugeText={true}>
-              {!(
-                state === 'error' ||
-                state === 'userNotFound' ||
-                state === 'listNotFound' ||
-                state === 'listAndUserNotFound'
-              ) && (
-                  <p>
-                    Toll, dass du Unterschriften sammelst! Bitte sag uns, wie viele
-                    Unterschriften du neu gesammelt hast:
-                  </p>
-                )}
-              <CountSignaturesForm {...countSignaturesFormProps} />
-            </SectionInner>
-            <div className={s.backToProfile}>
-              <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
-            </div>
-          </Section>
-        )}
+      ) : null
+      }
     </>
   );
 };
@@ -297,11 +273,6 @@ const CountSignaturesForm = ({
 
   return (
     <>
-      {userId && (
-        <p>
-          <AuthInfo />
-        </p>
-      )}
       <Form
         onSubmit={data => {
           data.campaignCode = campaignCode;
@@ -352,31 +323,37 @@ const CountSignaturesForm = ({
                     className={s.formSection}
                     fieldContainerClassName={s.formSectionCombined}
                   >
-                    <Field
-                      name="count"
-                      label="Anzahl Unterschriften"
-                      placeholder="1"
-                      component={TextInputWrapped}
-                      type="number"
-                      min={1}
-                      className={s.label}
-                      inputClassName={s.countField}
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                    ></Field>
-                    {!listId && (
+                    <div className={s.fieldContainer}>
+                      <p className={s.fieldLabel}>Anzahl Unterschriften</p>
                       <Field
-                        name="listId"
-                        label="Barcode auf der Unterschriftenliste"
-                        placeholder=""
+                        name="count"
+                        label=""
+                        placeholder="1"
                         component={TextInputWrapped}
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
+                        type="number"
                         min={1}
                         className={s.label}
-                        inputClassName={s.listIdField}
+                        inputClassName={s.countField}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                       ></Field>
+                    </div>
+                    {!listId && (
+                      <div className={s.fieldContainer}>
+                        <p className={s.fieldLabel}>Barcode auf der Unterschriftenliste</p>
+                        <Field
+                          name="listId"
+                          label=""
+                          placeholder=""
+                          component={TextInputWrapped}
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          min={1}
+                          className={s.label}
+                          inputClassName={s.listIdField}
+                        ></Field>
+                      </div>
                     )}
                   </FormSection>
 

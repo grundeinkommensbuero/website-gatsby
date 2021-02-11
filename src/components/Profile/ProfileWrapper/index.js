@@ -66,8 +66,8 @@ const ProfilePage = ({ id: slugId }) => {
   }, previousAction);
 
   const triggerUpdateCustomUserData = () => {
-    updateCustomUserData()
-  }
+    updateCustomUserData();
+  };
 
   return (
     <Layout>
@@ -111,6 +111,7 @@ const ProfilePage = ({ id: slugId }) => {
             /> */}
             <ProfileDonationSettings
               userData={userData}
+              updateCustomUserData={triggerUpdateCustomUserData}
               path="spenden-einstellungen"
               userId={userId}
             />

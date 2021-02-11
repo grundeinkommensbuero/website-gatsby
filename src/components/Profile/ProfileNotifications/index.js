@@ -338,15 +338,6 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           </section>
         ) : null}
 
-        {!unsubscribeAllDialogActive ?
-          <p
-            aria-hidden="true"
-            className={gS.linkLikeFormated}
-            onClick={() => setShowUnsubscribeAllDialog(true)}
-            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
-          : <UnsubscribeAllDialog />
-        }
-
         <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
         <div className={s.searchPlaces}>
           <SearchPlaces
@@ -379,6 +370,15 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           aufnehmen:
         </p>
         <MessengerButtonRow iconSize="XL" /> */}
+
+        {!unsubscribeAllDialogActive ?
+          <p
+            aria-hidden="true"
+            className={cN(gS.linkLikeFormated, gS.bottomRightLink)}
+            onClick={() => setShowUnsubscribeAllDialog(true)}
+            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
+          : <UnsubscribeAllDialog />
+        }
       </section>
     </section>
   );
