@@ -152,23 +152,25 @@ function Template({ children, sections, pageContext, title, description }) {
 
   // Temporary modify section color scheme, when none is set from contentful
   const modifySections = origSections => {
-    const colorSchemes = ['white', 'pink', 'green'];
-    let counter = 0;
-    const modSections = [...sections];
-    for (let i = 0; i < modSections.length; i++) {
-      if (modSections[i] && !modSections[i].colorScheme) {
-        modSections[i].colorScheme = colorSchemes[counter];
+    if (origSections && origSections.length !== 0) {
+      const colorSchemes = ['white', 'pink', 'green'];
+      let counter = 0;
+      const modSections = [...sections];
+      for (let i = 0; i < modSections.length; i++) {
+        if (modSections[i] && !modSections[i].colorScheme) {
+          modSections[i].colorScheme = colorSchemes[counter];
+        }
+        counter++;
+        if (counter === 3) {
+          counter = 0;
+        }
       }
-      counter++;
-      if (counter === 3) {
-        counter = 0;
-      }
+      return modSections;
+    } else {
+      return undefined;
     }
-    return modSections;
   };
   const modifiedSections = modifySections(sections);
-  console.log(modifiedSections);
-  console.log(sections);
 
   return (
     <>
@@ -204,7 +206,7 @@ function Template({ children, sections, pageContext, title, description }) {
       </Helmet>
       <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={sections} pageContext={pageContext} />
+        <Sections sections={modifiedSections} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}
