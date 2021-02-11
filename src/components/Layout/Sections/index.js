@@ -28,9 +28,12 @@ import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
 
 const Components = {
   TickerToSignup,
+  MunicipalityMap,
 };
 
 export default function Sections({ sections, pageContext }) {
+  console.log('section rendered');
+
   if (sections && sections.length) {
     return (
       <SectionWrapper>

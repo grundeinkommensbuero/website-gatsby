@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useContext,
+} from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -35,6 +41,8 @@ import { MapTooltip } from './MapTooltip';
 import { Button } from '../../Forms/Button';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
+
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
 // Note: Only needed for Pins as Markers:
@@ -130,15 +138,23 @@ const Legend = () => {
 };
 
 export const MunicipalityMap = ({
-  agsToFlyTo,
+  // agsToFlyTo,
   shouldStartAnimation = true,
-  onDataReady = () => {
-    console.log('data ready');
-  },
+  onDataReady,
   initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
 }) => {
+  const { municipality } = useContext(MunicipalityContext);
+  const agsToFlyTo = municipality ? municipality.ags : undefined;
+  var date = new Date(); /* creating object of Date class */
+  var hour = date.getHours();
+  var min = date.getMinutes();
+  var sec = date.getSeconds();
+  const time = `${hour}:${min}:${sec}`;
+
+  console.log('map rendered', time);
+
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
   const [dataMunicipalities, setDataMunicipalities] = useState([]);
@@ -224,7 +240,7 @@ export const MunicipalityMap = ({
   }, [municipalityStats]);
 
   useEffect(() => {
-    if (mapDataReady) {
+    if (mapDataReady && onDataReady) {
       onDataReady();
     }
   }, [mapDataReady, onDataReady]);
