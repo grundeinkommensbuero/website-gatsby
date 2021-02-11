@@ -1,19 +1,23 @@
 @import '../../style/vars.less';
 
 .footer {
-  .headerFooterGrid();
-  .globeBackground();
-  background-attachment: fixed;
+  background: @red;
+  color: @greyBright;
   min-height: 15rem;
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   font-size: @fontSizeM;
-  align-content: start;
-  position: relative;
   --secondary-color: @blueBright;
 }
 
+.itemContainer {
+  width: @headerWidth;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
 .columnLeft {
-  grid-column: 2;
+  max-width: 45%;
 
   @media (max-width: @breakPointM) {
     grid-column-end: span 2;
@@ -21,7 +25,7 @@
 }
 
 .columnRight {
-  grid-column: 3;
+  max-width: 45%;
   text-align: right;
 
   @media (max-width: @breakPointM) {

@@ -172,6 +172,8 @@ function Template({ children, sections, pageContext, title, description }) {
   };
   const modifiedSections = modifySections(sections);
 
+  // console.log(modifiedSections);
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (

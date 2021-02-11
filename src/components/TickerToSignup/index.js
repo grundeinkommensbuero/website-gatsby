@@ -1,5 +1,4 @@
 import React from 'react';
-import s from './style.module.less';
 
 import { Ticker } from './Ticker';
 import { MunicipalitySearch } from './MunicipalitySearch';

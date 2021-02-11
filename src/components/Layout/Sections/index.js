@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -24,7 +24,7 @@ import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
 import { getFilteredElementsByContentfulState } from '../../utils';
 import { TickerToSignup } from '../../TickerToSignup';
-import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
+// import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
 
 const Components = {
   TickerToSignup,
@@ -130,7 +130,12 @@ export function ContentfulSection({ section, pageContext }) {
     };
     return (
       <>
-        {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
+        {section.keyVisual && <div className={cN(
+          s.keyVisual,
+          { [s.sectionWhite]: colorScheme === 'white' },
+          { [s.sectionPink]: colorScheme === 'pink' },
+          { [s.sectionGreen]: colorScheme === 'green' },
+          { [s.sectionRed]: colorScheme === 'red' })}>{''}</div>}
         <Section className={s.componentWrapper}>
           <SectionInner>
             {filteredComponents.map(component => {
@@ -383,8 +388,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
