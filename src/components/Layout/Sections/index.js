@@ -24,7 +24,7 @@ import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
 import { getFilteredElementsByContentfulState } from '../../utils';
 import { TickerToSignup } from '../../TickerToSignup';
-// import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
+import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
 
 const Components = {
   TickerToSignup,
