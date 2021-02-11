@@ -4,6 +4,8 @@ import { AuthProvider } from './src/context/Authentication';
 import { MunicipalityProvider } from './src/context/Municipality';
 import SurveySaver from './src/components/SurveySaver';
 import { OverlayProvider } from './src/context/Overlay';
+import { SnackbarMessageProvider } from './src/context/Snackbar/index.js';
+import SnackbarProvider from 'react-simple-snackbar';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
@@ -30,7 +32,11 @@ export default ({ element }) => {
     <AuthProvider>
       <MunicipalityProvider>
         <SurveySaver>
-          <OverlayProvider>{element}</OverlayProvider>
+          <OverlayProvider>
+            <SnackbarProvider>
+              <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
+            </SnackbarProvider>
+          </OverlayProvider>
         </SurveySaver>
       </MunicipalityProvider>
     </AuthProvider>

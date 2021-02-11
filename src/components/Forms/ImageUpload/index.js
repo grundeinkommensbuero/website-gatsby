@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
 import s from './style.module.less';
@@ -9,21 +9,39 @@ import AvatarImage from '../../AvatarImage';
 import { CTAButton } from '../../Layout/CTAButton';
 import { Spinner } from '../../Spinner';
 
-export default ({ userData, userId, onUploadDone, showUploadLabel, showEditLabel, size = 'default', buttonOnRedBackground = false }) => {
-  const [uploadImageState, uploadImage] = useUploadImage();
+import AuthContext from '../../../context/Authentication';
 
-  const [showUploadButton, setShowUploadButton] = useState(false);
+export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedBackground = false }) => {
+  const [uploadImageState, uploadImage] = useUploadImage();
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [imageUploadIsProcessing, setImageUploadIsProcessing] = useState(false);
   const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(false);
+  const [showUploadErrorMessage, setShowUploadErrorMessage] = useState(false);
+
+  const { updateCustomUserData } = useContext(AuthContext);
 
   useEffect(() => {
     if (uploadImageState === 'success') {
-      onUploadDone();
       setImageUploadIsProcessing(false);
       setShowUploadSuccessMessage(true);
       setTimeout(() => {
         setShowUploadSuccessMessage(false);
       }, 1500);
+      onUploadDone();
+      let counter = 0;
+      // Try to fetch new profile picture
+      const tryUpdateUserData = setInterval(() => {
+        if (counter < 3) {
+          updateCustomUserData();
+          counter++;
+        } else {
+          window.clearInterval(tryUpdateUserData);
+        }
+      }, 5000);
+    }
+    if (uploadImageState === 'error') {
+      setImageUploadIsProcessing(false);
+      setShowUploadErrorMessage(true);
     }
   }, [uploadImageState]);
 
@@ -32,12 +50,12 @@ export default ({ userData, userId, onUploadDone, showUploadLabel, showEditLabel
       onSubmit={({ image }) => {
         if (image && image.files && image.files[0]) {
           uploadImage(userId, image.files[0]);
-          setShowUploadButton(false);
+          setUnsavedChanges(false);
           setImageUploadIsProcessing(true);
         }
       }}
       render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={s.imageUploadContainer}>
           {userData.user && userData.user.profilePictures ? (
             <AvatarImage
               user={userData.user}
@@ -53,26 +71,26 @@ export default ({ userData, userId, onUploadDone, showUploadLabel, showEditLabel
                   name="image"
                   component={ImageInput}
                   user={userData}
-                  showUploadLabel={showUploadLabel}
-                  showEditLabel={showEditLabel}
                   size={size}
-                  onChange={(val, prevVal) => console.log(val, prevVal)}
+                  unsavedChanges={unsavedChanges}
+                  showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
+                  onChange={() => { }}
                 />
                 <OnChange name="image">
-                  {() => setShowUploadButton(true)}
+                  {() => setUnsavedChanges(true)}
                 </OnChange>
 
-                <CTAButton
-                  type="submit"
-                  className={cN(
-                    { [s.submitButton]: !showEditLabel },
-                    { [s.submitButtonEditing]: showEditLabel },
-                    { [s.submitButtonDirty]: showUploadButton },
-                    { [s.buttonOnRedBackground]: buttonOnRedBackground }
-                  )}
-                >
-                  Hochladen
-                </CTAButton>
+                {unsavedChanges ?
+                  <CTAButton
+                    type="submit"
+                    className={cN(
+                      s.submitButton,
+                      { [s.buttonOnRedBackground]: buttonOnRedBackground }
+                    )}
+                  >
+                    Hochladen
+                  </CTAButton> : null
+                }
 
                 <div className={s.uploadMessageContainer}>
                   {imageUploadIsProcessing ?
@@ -86,20 +104,24 @@ export default ({ userData, userId, onUploadDone, showUploadLabel, showEditLabel
                           Upload erfolgreich!
                       </span> : null
                       }
+                      {showUploadErrorMessage ?
+                        <span className={s.uploadStateMessage}>
+                          Fehler beim Upload! :(
+                          <br />Bitte versuche es später erneut!
+                      </span> : null
+                      }
                     </>
                   }
                 </div>
               </>
             )}
-
-
         </form>
       )}
     />
   );
 };
 
-export const ImageInput = ({ input: { value, onChange, ...input }, user, showUploadLabel = true, showEditLabel = false, size }) => {
+export const ImageInput = ({ input: { value, onChange, ...input }, user, size, unsavedChanges, showUploadLabel }) => {
   const [avatarImage, setAvatarImage] = useState(null);
   const handleChange = ({ target }) => {
     if (target.files && target.files[0]) {
@@ -125,8 +147,13 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, showUpl
         user={user}
         sizes="80px"
       />
-      {showUploadLabel ? (<div className={cN(s.avatarImageLabel, { [s.default]: !showEditLabel })}>Lad’ ein Bild hoch!</div>) : null}
-      {showEditLabel ? (<div className={cN(s.avatarImageLabel, { [s.editing]: showEditLabel })}>Bild ändern</div>) : null}
+      {showUploadLabel ?
+        <>
+          {(user && user.profilePictures) || unsavedChanges ?
+            <div className={cN(s.avatarImageLabel)}>Bild ändern</div>
+            : <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
+          }
+        </> : null}
       <input
         type="file"
         onChange={handleChange}

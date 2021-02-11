@@ -82,12 +82,31 @@
   }
 }
 
-.backToProfile {
-  grid-column: wide-start / 5;
-  left: 1rem;
-  margin-bottom: 3rem;
+.signatureSection {
+  background-color: @red !important;
+  color: @white !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
-  &:before {
-    content: '< ';
+.campaignVisualisations {
+  background-color: @yellow;
+  color: @red;
+  padding: 1.5rem;
+}
+
+.fieldContainer {
+  width: 75%;
+}
+
+.fieldLabel {
+  min-height: 3rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: 18px;
+  }
+
+  @media (max-width: @breakPointS) {
+    font-size: 15px;
   }
 }
