@@ -5,17 +5,18 @@ import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { ValidationError } from '../ValidationError';
 
 export function TextInput({ children, className, label, size, ...input }) {
-
   return (
     <input
       aria-label={label}
       className={cN(
         s.textInput,
         { [s.textInputSmall]: size === 'SMALL' },
-        className, {
-        [s.hideNumberArrows]:
-          input.name === 'zipCode' || input.name === 'listId',
-      })}
+        className,
+        {
+          [s.hideNumberArrows]:
+            input.name === 'zipCode' || input.name === 'listId',
+        }
+      )}
       {...input}
     />
   );
@@ -84,19 +85,19 @@ export const TextInputWrapped = ({
           autoComplete={autoComplete}
         />
       ) : (
-          <TextInput
-            {...input}
-            placeholder={placeholder}
-            className={inputClassName}
-            maxLength={maxLength}
-            min={min}
-            max={max}
-            label={outputLabel}
-            pattern={pattern}
-            inputMode={inputMode}
-            autoComplete={autoComplete}
-          />
-        )}
+        <TextInput
+          {...input}
+          placeholder={placeholder}
+          className={inputClassName}
+          maxLength={maxLength}
+          min={min}
+          max={max}
+          label={outputLabel}
+          pattern={pattern}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
+        />
+      )}
     </LabelInputErrorWrapper>
   );
 };
