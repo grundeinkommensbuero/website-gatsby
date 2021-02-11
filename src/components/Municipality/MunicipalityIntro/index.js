@@ -42,7 +42,7 @@ const ColumnQualifying = ({
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
         onPlaceSelect={handlePlaceSelect}
-        showButton={true}
+        showButton={false}
         inputSize="SMALL"
         buttonSize="MEDIUM"
       />
@@ -75,13 +75,13 @@ const ColumnQualifying = ({
               {municipalityStats.signups === 1
                 ? 'eine Anmeldung '
                 : `${municipalityStats.signups?.toLocaleString(
-                    'de'
-                  )} Anmeldungen `}
+                  'de'
+                )} Anmeldungen `}
               in {municipality.name}!{' '}
             </p>
           ) : (
-            <p>Leider noch keine Anmeldungen in {municipality.name}! </p>
-          )}
+              <p>Leider noch keine Anmeldungen in {municipality.name}! </p>
+            )}
         </>
       )}
     </>
@@ -288,7 +288,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     }
     return () => {
       if (typeof window !== `undefined`) {
-        window.onpopstate = () => {};
+        window.onpopstate = () => { };
       }
     };
   }, [municipality]);
