@@ -8,13 +8,13 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 
 // We need the following mappings for the link to the self scan page
-const SELF_SCAN_SLUGS = {
-  brandenburg: 'qr/bb',
-  berlin: 'qr/b',
-  'schlewsig-holstein': 'qr/sh',
-  hamburg: 'qr/hh',
-  bremen: 'qr/hb',
-};
+// const SELF_SCAN_SLUGS = {
+//   brandenburg: 'qr/bb',
+//   berlin: 'qr/b',
+//   'schlewsig-holstein': 'qr/sh',
+//   hamburg: 'qr/hh',
+//   bremen: 'qr/hb',
+// };
 
 export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
   /* list newsletters of current user as human readable string */
@@ -89,7 +89,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         </section>
       </Link>
 
-      {signatureCountOfUser && (
+      {/* {signatureCountOfUser && (
         <a className={cN(s.profilePageSection, s.profilePageSectionLarge)}
           href={`/${signatureCountOfUser.mostRecentCampaign
             ? SELF_SCAN_SLUGS[
@@ -117,9 +117,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             )}
           </section>
         </a>
-      )}
+      )} */}
 
-      {/* <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
+      <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
           {signatureCountOfUser && (
@@ -138,7 +138,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             </>
           )}
         </section>
-      </Link> */}
+      </Link>
 
       {/* <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
         <section>

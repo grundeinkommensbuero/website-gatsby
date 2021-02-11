@@ -9,6 +9,8 @@ import {
 import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
 
 export default () => {
+  const [state1, stats1, getMunicipalityStats1] = useGetMunicipalityStats();
+  const [state2, stats2, getMunicipalityStats2] = useGetMunicipalityStats();
   const [
     /*state1, stats1, */ getMunicipalityStats1,
   ] = useGetMunicipalityStats();
