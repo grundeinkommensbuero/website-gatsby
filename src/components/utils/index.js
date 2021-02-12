@@ -300,7 +300,9 @@ export const getComponentFromContentful = ({ Components, component, key }) => {
     });
   } else {
     return (
-      <div>The component {componentSelector} has not been created yet.</div>
+      <div key={key}>
+        The component {componentSelector} has not been created yet.
+      </div>
     );
   }
 };
