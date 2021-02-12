@@ -95,9 +95,6 @@ export const MunicipalityProvider = ({ children }) => {
       } else if (isQualifying) {
         setMunicipalityContentfulState('qualifying');
       }
-      return () => {
-        history.removeOnPopStateListener();
-      };
     }
   }, [municipalityStats]);
 

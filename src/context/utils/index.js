@@ -15,7 +15,7 @@ history.updateOnPopStateListener = (
       const pageContextState = state?.pageContext;
 
       // Use to debug window history event
-      // console.log('ONPOPSTATE EVENT\n', state, event);
+      console.log('ONPOPSTATE EVENT\n', state, event);
 
       if (municipalityState) {
         setMunicipality({ ...municipalityState });
