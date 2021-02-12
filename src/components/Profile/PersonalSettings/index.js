@@ -154,14 +154,14 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             onUploadDone={() => { }}
           />
           <div className={s.marginBottomOnMobile}>
-            <h1
+            <h2
               className={cN({
                 [gS.username]: userData.username,
                 [s.email]: !userData.username,
               })}
             >
               {userData.username || userData.email}
-            </h1>
+            </h2>
             <div className={gS.placeInfo}>{userData.city}</div>
             {/* Show profile edit button if own page */}
             <div className={s.details}>

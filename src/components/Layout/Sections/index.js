@@ -359,7 +359,7 @@ export function Section({
           [s.sectionBodyNoEvents]: sectionBodyNoEvents,
         })}
       >
-        {title && <h1 className={s.title}>{title}</h1>}
+        {title && <h2 className={s.title}>{title}</h2>}
         {children}
       </div>
       {afterBodyContent}
@@ -397,7 +397,7 @@ export function SectionHeader({
         <header className={s.header}>
           <div className={s.headerText}>
             {preTitle && <div className={s.headerPreTitle}>{preTitle}</div>}
-            <h1 className={s.headerTitle}>{title}</h1>
+            <h2 className={s.headerTitle}>{title}</h2>
             {subTitle && <div className={s.headerSubTitle}>{subTitle}</div>}
           </div>
         </header>
@@ -425,11 +425,11 @@ export function TwoColumns({ children, className }) {
 
 function Slogan({ sloganLine1, sloganLine2 }) {
   return (
-    <h1 className={s.slogan}>
+    <h2 className={s.slogan}>
       <span className={s.sloganLine1}>{sloganLine1}</span>
       <span className={s.sloganLine2}>{sloganLine2}</span>
       {/* <EmailListForm className={s.sloganLineSignup} /> */}
-    </h1>
+    </h2>
   );
 }
 
