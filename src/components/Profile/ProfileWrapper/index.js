@@ -75,7 +75,7 @@ const ProfilePage = ({ id: slugId }) => {
         {isLoading && (
           <Section>
             <div className={s.profilePageGrid}>
-              <h1>Lade...</h1>
+              <h2>Lade...</h2>
             </div>
           </Section>
         )}

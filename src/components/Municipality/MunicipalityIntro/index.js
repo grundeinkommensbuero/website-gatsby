@@ -41,7 +41,7 @@ const ColumnQualifying = ({
         inputSize="SMALL"
         buttonSize="MEDIUM"
       />
-      <h1 className={s.headline}>{displayTitle}</h1>
+      <h2 className={s.headline}>{displayTitle}</h2>
 
       {!!municipality && municipalityStatsState === 'success' && mapDataReady && (
         <>
@@ -106,7 +106,7 @@ const ColumnCollecting = ({
 }) => {
   return (
     <>
-      <h1 className={s.headline}>{displayTitle}</h1>
+      <h2 className={s.headline}>{displayTitle}</h2>
       <SearchPlaces
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
@@ -127,7 +127,7 @@ const ColumnState = ({
 }) => {
   return (
     <>
-      <h1 className={s.headline}>{displayTitle}</h1>
+      <h2 className={s.headline}>{displayTitle}</h2>
       <SearchPlaces
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}

@@ -1,6 +1,5 @@
 @import '../../../style/vars.less';
 
-
 .tooltipContainer {
   position: absolute;
   min-width: 240px;
@@ -14,37 +13,36 @@
   z-index: 3;
   border: 2px solid #fff;
   transform: translateX(-50%) translateY(5px);
-  -ms-user-select:none;
-  -moz-user-select:none;
-  -webkit-user-select:none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
   -webkit-touch-callout: none;
   -khtml-user-select: none;
-  user-select:none;
+  user-select: none;
 }
 
 .tooltipHeader {
   // margin-top: 0.75rem;
   margin-bottom: 0.75rem;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .tooltipMunicipality {
-  .linkUnderlined()
+  .linkUnderlined();
 }
 
 .tooltipInfo {
   margin-top: 0.4rem;
-  line-height: @fontSizeS;
+  line-height: @DesktopFontSizeS;
 }
 
 .tooltipNumber {
-  font-size: @fontSizeXS;
+  font-size: @DesktopFontSizeXS;
 }
 
 .tooltipLabel {
-  font-size: @fontSizeXS;
+  font-size: @DesktopFontSizeXS;
   font-weight: 400;
 }
-
