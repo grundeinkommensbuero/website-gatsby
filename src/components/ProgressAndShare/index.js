@@ -1,7 +1,12 @@
 import React from 'react';
+import { MunicipalityProgress } from './MunicipalityProgress';
+import { InviteFriends } from './InviteFriends';
 
 export const ProgressAndShare = ({ title }) => {
-  console.log(title);
-
-  return <div>{title}</div>;
+  return (
+    <>
+      <MunicipalityProgress />
+      <InviteFriends />
+    </>
+  );
 };

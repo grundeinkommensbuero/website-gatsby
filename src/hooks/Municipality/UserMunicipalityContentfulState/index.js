@@ -4,6 +4,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 
 export const useUserMunicipalityContentfulState = () => {
   const { customUserData, isAuthenticated } = useContext(AuthContext);
+
   const { municipality, municipalityContentfulState } = useContext(
     MunicipalityContext
   );
@@ -26,6 +27,11 @@ export const useUserMunicipalityContentfulState = () => {
       }
     }
   }, [isAuthenticated, customUserData, municipality]);
+
+  // Debug Contentful showForOptions with this log:
+  // console.log(
+  //   `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
+  // );
 
   return { municipalityContentfulState, userContentfulState };
 };

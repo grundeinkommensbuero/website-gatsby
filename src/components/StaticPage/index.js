@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
 import AuthContext from '../../context/Authentication';
-import { useMunicipalityContext } from '../../hooks/Municipality/useMunicipalityContext';
+import { MunicipalityContext } from '../../context/Municipality';
 import { useSEO } from '../../hooks/Municipality/SEO';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
-  useMunicipalityContext(pageContext);
+  const { setPageContext } = useContext(MunicipalityContext);
+  useEffect(() => {
+    setPageContext(pageContext);
+  }, []);
 
   const { isAuthenticated } = useContext(AuthContext);
+
   const { title, description } = useSEO(page);
 
   return (

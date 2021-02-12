@@ -2,28 +2,43 @@ import { navigate } from 'gatsby';
 
 // Functions related to the "history" functionality used by the MunicipalityContext
 export const history = {};
-history.updateOnPopStateListener = (municipality, setMunicipality) => {
+
+history.updateOnPopStateListener = (
+  municipality,
+  setMunicipality,
+  setPageContext
+) => {
   if (typeof window !== `undefined`) {
     window.onpopstate = event => {
-      console.log('ONPOPSTATE EVENT');
       const { state } = event;
-      if (state?.name) {
-        setMunicipality({ ...state, isFromHistoryEvent: true });
-        adjustDocumentTitle(municipality, state.name);
+      const municipalityState = state?.municipality;
+      const pageContextState = state?.pageContext;
+
+      // Use to debug window history event
+      // console.log('ONPOPSTATE EVENT\n', state, event);
+
+      if (municipalityState) {
+        setMunicipality({ ...municipalityState });
+        adjustDocumentTitle(municipality, municipalityState.name);
+      }
+      if (pageContextState) {
+        setPageContext({ ...pageContextState, isFromHistoryEvent: true });
       }
     };
   }
 };
+
 history.removeOnPopStateListener = () => {
   if (typeof window !== `undefined`) {
     window.onpopstate = undefined;
   }
 };
-history.pushToHistoryState = municipality => {
+
+history.pushToHistoryState = (municipality, pageContext) => {
   if (typeof window !== `undefined`) {
     if (window.history?.pushState) {
       window.history.pushState(
-        municipality,
+        { municipality, pageContext },
         null,
         `${window.location.origin}/gemeinden/${municipality.ags}`
       );
@@ -31,6 +46,18 @@ history.pushToHistoryState = municipality => {
       setWindowLocationOriginForIE();
     } else {
       navigate(municipality.ags);
+    }
+  }
+};
+
+history.replaceHistoryState = (municipality, pageContext) => {
+  if (typeof window !== `undefined`) {
+    if (window.history?.pushState) {
+      window.history.pushState(
+        { municipality, pageContext },
+        null,
+        `${window.location.origin}`
+      );
     }
   }
 };

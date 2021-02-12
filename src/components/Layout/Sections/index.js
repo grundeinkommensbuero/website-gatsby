@@ -115,10 +115,6 @@ export function ContentfulSection({ section, pageContext }) {
     userContentfulState,
   } = useUserMunicipalityContentfulState();
 
-  console.log(
-    `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
-  );
-
   if (__typename === 'ContentfulPageSectionWithComponents') {
     const filteredComponents = getFilteredElementsByContentfulState({
       elements: section.components,

@@ -14,6 +14,7 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 import s from './style.module.less';
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const AuthenticatedDialogDefault = () => {
   return (
@@ -39,7 +40,12 @@ export default ({
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId, customUserData } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
+  const [formData, setFormData] = useState();
+
+  const { municipality } = useContext(MunicipalityContext);
+  const prefilledZip =
+    municipality?.zipCodes.length === 1 ? municipality?.zipCodes[0] : '';
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -52,8 +58,9 @@ export default ({
 
   useEffect(() => {
     // If user signs in from form
-    if (isAuthenticated && hasSubmitted) {
+    if (isAuthenticated && hasSubmitted && formData && userId) {
       updateUser({
+        ...formData,
         updatedOnXbge: true,
       });
       setSignUpState('signedIn');
@@ -62,7 +69,7 @@ export default ({
     if (!isAuthenticated && signUpState === 'signedIn') {
       setSignUpState(undefined);
     }
-  }, [isAuthenticated, hasSubmitted]);
+  }, [isAuthenticated, hasSubmitted, formData, userId]);
 
   if (signUpState === 'success') {
     return <EnterLoginCode preventSignIn={true} />;
@@ -140,13 +147,17 @@ export default ({
       <Form
         onSubmit={e => {
           e.privacyConsent = true;
-          e.newsletterConsent = true;
+          if (!e.newsLetterConsent) {
+            e.newsLetterConsent = false;
+          }
+          e.ags = municipality?.ags;
           setHasSubmitted(true);
           if (!isAuthenticated) {
+            setFormData(e);
             signUp(e);
           }
         }}
-        initialValues={initialValues}
+        initialValues={{ ...initialValues, zipCode: prefilledZip }}
         validate={values => validate(values, isAuthenticated)}
         render={({ handleSubmit }) => {
           return (
@@ -186,6 +197,11 @@ const validate = values => {
   if (!values.email) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
+
+  // if (!values.zipCode) {
+  //   errors.zipCode =
+  //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
+  // }
 
   return errors;
 };

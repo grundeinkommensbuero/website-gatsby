@@ -8,7 +8,6 @@ import querystring from 'query-string';
 import { navigate } from '@reach/router';
 import AuthContext from '../../context/Authentication';
 import { createUser } from '../Api/Users/Create';
-
 export { useAnswerChallenge } from './AnswerChallenge';
 export { useVerification } from './Verification';
 export { useLocalStorageUser } from './LocalStorageUser';
