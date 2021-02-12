@@ -192,7 +192,7 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
         [s.sectionWhite]: colorScheme === 'white',
-        [s.sectionPink]: colorScheme === 'pink',
+        [s.sectionViolet]: colorScheme === 'violet',
         [s.sectionGreen]: colorScheme === 'green',
         [s.sectionRed]: colorScheme === 'red',
         [s.sectionChristmas]: colorScheme === 'christmas',
@@ -389,8 +389,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,

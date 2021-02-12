@@ -151,9 +151,10 @@ function Template({ children, sections, pageContext, title, description }) {
   };
 
   // Temporary modify section color scheme, when none is set from contentful
+  // keyVisual component excluded, because its already violet
   const modifySections = origSections => {
     if (origSections && origSections.length !== 0) {
-      const colorSchemes = ['white', 'pink', 'green'];
+      const colorSchemes = ['white', 'violet', 'green'];
       let counter = 0;
       const modSections = [...sections];
       for (let i = 0; i < modSections.length; i++) {
@@ -161,7 +162,7 @@ function Template({ children, sections, pageContext, title, description }) {
           modSections[i].colorScheme = colorSchemes[counter];
         }
         counter++;
-        if (counter === 3) {
+        if (counter === 3 || modSections[i].keyVisual) {
           counter = 0;
         }
       }
@@ -171,8 +172,6 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   };
   const modifiedSections = modifySections(sections);
-
-  // console.log(modifiedSections);
 
   return (
     <>

@@ -14,25 +14,19 @@
   display: flex;
   justify-content: space-between;
   margin: auto;
+
+  @media (max-width: @breakPointXL) {
+    width: 100%;
+  }
 }
 
 .columnLeft {
   max-width: 45%;
-
-  @media (max-width: @breakPointM) {
-    grid-column-end: span 2;
-  }
 }
 
 .columnRight {
   max-width: 45%;
   text-align: right;
-
-  @media (max-width: @breakPointM) {
-    grid-column: 2;
-    grid-column-end: span 2;
-    text-align: left;
-  }
 }
 
 .nav {
@@ -45,7 +39,7 @@
 
   @media (max-width: @breakPointM) {
     display: block;
-    margin: 1rem 0 2rem;
+    margin: 0rem 0 2rem;
   }
 }
 

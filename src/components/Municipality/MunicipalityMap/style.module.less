@@ -31,12 +31,10 @@
   &.empty {
     background-image: url('./assets/map.png');
   }
-  &.fallback{
+  &.fallback {
     background-image: url('./assets/map-full.png');
   }
-
 }
-
 
 .buttonContainer {
   position: absolute;
@@ -45,12 +43,12 @@
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   z-index: 1;
-  -ms-user-select:none;
-  -moz-user-select:none;
-  -webkit-user-select:none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
   -webkit-touch-callout: none;
   -khtml-user-select: none;
-  user-select:none;
+  user-select: none;
 }
 
 .mapButton {
@@ -124,7 +122,7 @@
   height: 100%;
   width: 100%;
   pointer-events: none;
-  
+
   & button {
     pointer-events: all;
   }
@@ -140,18 +138,16 @@
 
 .legendOverlay {
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   z-index: 2;
   pointer-events: all;
-  background-color: @pink;
+  background-color: @violet;
   overflow-y: scroll;
   border: 1px solid @greyBright;
 }
-
-
 
 .closeButton {
   position: sticky;
@@ -181,7 +177,7 @@
   height: 100%;
   width: 85%;
   max-width: 500px;
-  padding: 1.5rem
+  padding: 1.5rem;
 }
 
 .legendHeadline {
@@ -211,7 +207,6 @@
     & svg {
       height: 100%;
       width: 100%;
-
     }
   }
 }
@@ -224,14 +219,3 @@
 .legendSpacer {
   height: 0.1rem;
 }
-
-
-
-
-
-
-
-
-
-
-
