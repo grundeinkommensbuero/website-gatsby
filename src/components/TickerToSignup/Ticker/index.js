@@ -3,7 +3,7 @@ import cN from 'classnames';
 import Reel from 'react-reel';
 import s from './style.module.less';
 
-import './reelstyle.css';
+import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
   const [peopleCount, setPeopleCount] = useState(3592);

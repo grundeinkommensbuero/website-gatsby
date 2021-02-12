@@ -124,13 +124,17 @@ export function ContentfulSection({ section, pageContext }) {
       <>
         {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
         <Section className={s.componentWrapper}>
-          <SectionInner>
+          <SectionInner className={s.componentElementContainer}>
             {filteredComponents.map((component, index) => {
-              return getComponentFromContentful({
-                Components,
-                component,
-                key: index,
-              });
+              return (
+                <div className={s.componentElement}>
+                  {getComponentFromContentful({
+                    Components,
+                    component,
+                    key: index,
+                  })}
+                </div>
+              )
             })}
           </SectionInner>
         </Section>
@@ -379,8 +383,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
