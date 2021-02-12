@@ -28,10 +28,12 @@ import {
 } from '../../utils';
 import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
+import { ProgressAndShare } from '../../ProgressAndShare';
 
 const Components = {
   TickerToSignup,
   MunicipalityMap,
+  ProgressAndShare,
 };
 
 export default function Sections({ sections, pageContext }) {
@@ -112,6 +114,10 @@ export function ContentfulSection({ section, pageContext }) {
     municipalityContentfulState,
     userContentfulState,
   } = useUserMunicipalityContentfulState();
+
+  console.log(
+    `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
+  );
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
     const filteredComponents = getFilteredElementsByContentfulState({

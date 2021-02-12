@@ -27,8 +27,8 @@ export const MunicipalityProvider = ({ children }) => {
         getMunicipalityStats(ags.current);
         setIsMunicipality(true);
         setIsSpecific(true);
-        history.pushToHistoryState(municipality);
-        history.updateOnPopStateListener(municipality, setMunicipality);
+        // history.pushToHistoryState(municipality);
+        // history.updateOnPopStateListener(municipality, setMunicipality);
       }
     } else {
       ags.current = undefined;
@@ -63,7 +63,7 @@ export const MunicipalityProvider = ({ children }) => {
         setMunicipalityContentfulState('qualifying');
       }
       return () => {
-        history.removeOnPopStateListener();
+        // history.removeOnPopStateListener();
       };
     }
   }, [municipalityStats]);
