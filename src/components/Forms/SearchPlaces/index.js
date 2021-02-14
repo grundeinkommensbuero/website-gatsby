@@ -207,6 +207,7 @@ export const SearchPlaces = ({
             onChange={handleChange}
             onKeyDown={handleEnterKey}
             onBlur={handleBlur}
+            className={s.searchBar}
           />
 
           <AutoCompleteList
