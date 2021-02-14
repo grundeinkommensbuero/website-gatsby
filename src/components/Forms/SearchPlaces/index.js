@@ -196,6 +196,7 @@ export const SearchPlaces = ({
     <>
       {label && <label>{label}</label>}
       <div className={s.container}>
+        <h2 className={s.searchTitle}>Finde deinen Ort:</h2>
         <div className={s.inputContainer}>
           <TextInput
             size={inputSize}
