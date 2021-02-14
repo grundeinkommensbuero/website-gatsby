@@ -128,7 +128,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   deleteUserAccount(setMessage);
                 }}
               >
-                Account entgültig löschen
+                Account endgültig löschen
               </Button>
             )}
           </SnackbarMessageContext.Consumer>

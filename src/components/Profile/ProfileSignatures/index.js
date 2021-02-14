@@ -44,10 +44,11 @@ export const ProfileSignatures = ({ userId }) => {
           </Helmet>
 
           <SectionWrapper>
+            <h2>Eingegangene Unterschriften</h2>
             <SelfScan
               campaignCode="berlin-1"
               successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin"
-              className={s.customStyle}
+              className={s.signatureWrapper}
             />
           </SectionWrapper>
 

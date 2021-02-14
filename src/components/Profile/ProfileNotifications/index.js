@@ -323,10 +323,10 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
-        <h3 className={s.sectionHeadline}>Newsletter & Kontakt</h3>
-        <h4 className={gS.optionSectionHeading}>
+        <h2 className={s.sectionHeadline}>Newsletter & Kontakt</h2>
+        <h3 className={gS.optionSectionHeading}>
           Deine abonnierten Newsletter
-        </h4>
+        </h3>
 
         {/* wait for userData */}
         {userData && userData.newsletterConsent ? (
@@ -338,7 +338,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           </section>
         ) : null}
 
-        <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
+        <h3 className={gS.optionSectionHeading}>Newsletter hinzufügen</h3>
         <div className={s.searchPlaces}>
           <SearchPlaces
             showButton={municipality !== undefined && !waitingForApi}

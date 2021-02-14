@@ -19,7 +19,7 @@ import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
 import s from './style.module.less';
 
-export default ({ successMessage, campaignCode }) => {
+export default ({ successMessage, campaignCode, className }) => {
   const [
     state,
     updateSignatureList,
@@ -104,7 +104,7 @@ export default ({ successMessage, campaignCode }) => {
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
-        <Section className={s.signatureSection}>
+        <Section className={cN(s.signatureSection, className)}>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}
