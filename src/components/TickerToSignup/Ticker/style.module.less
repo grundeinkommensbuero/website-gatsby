@@ -15,7 +15,7 @@
   display: flex;
 
   @media (max-width: @breakPointS) {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -30,11 +30,12 @@
 
 .counterLabelSlotMachine {
   font-size: 2.5rem;
+  letter-spacing: 0.04px;
   margin-top: 2.75rem;
   margin-bottom: 0;
 
   @media (max-width: @breakPointS) {
-    font-size: 1.5rem;
+    font-size: @MobileFontSizeXL;
     margin-top: 1rem;
   }
 }
@@ -58,16 +59,20 @@
 .actionTextBig {
   font-size: 2.25rem;
   letter-spacing: 0.04px;
+
   @media (max-width: @breakPointS) {
-    font-size: 2rem;
-    line-height: 1.5;
+    font-size: @MobileFontSizeXL;
+    line-height: 2.25rem;
+    margin-bottom: 2rem;
   }
 }
 
 .actionText {
   font-size: @DesktopFontSizeM;
+
   @media (max-width: @breakPointS) {
-    font-size: 1.5rem;
-    line-height: 1.5;
+    font-size: @MobileFontSizeL;
+    line-height: 1.625rem;
+    margin-bottom: 4rem;
   }
 }

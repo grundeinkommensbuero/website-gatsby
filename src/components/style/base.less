@@ -10,7 +10,7 @@ body {
   font-weight: 500;
   background: @grey;
   margin: 0;
-  color: @red;
+  color: @white;
   --bg-color: @grey;
   --font-color: @red;
   --font-color-secondary: @blueBright;
@@ -28,11 +28,20 @@ h1 {
 }
 
 h1,
-h2,
+h2 {
+  font-size: @DesktopFontSizeXL;
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeXL;
+    hyphens: auto;
+  }
+}
+
 h3 {
   font-size: @DesktopFontSizeL;
 
   @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeL;
     hyphens: auto;
   }
 }
@@ -41,6 +50,7 @@ h4 {
   font-size: @DesktopFontSizeM;
 
   @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeM;
     hyphens: auto;
   }
 }
@@ -51,6 +61,11 @@ a {
 
 p {
   line-height: 1.5;
+  font-size: @DesktopFontSizeM;
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeM;
+  }
 
   a {
     text-decoration: none;

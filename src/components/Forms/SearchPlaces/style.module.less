@@ -8,7 +8,7 @@
   justify-content: flex-start;
   align-items: center;
   margin-top: -@inputButtonMargin;
-  --secondary-color: @red;
+  --secondary-color: @white;
   @media (max-width: @breakPointM) {
     // margin-bottom: 1rem;
   }
@@ -22,6 +22,10 @@
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
   color: var(--secondary-color);
+}
+
+.searchTitle {
+  margin: 0;
 }
 
 .suggestions {
@@ -46,11 +50,12 @@
   padding: 0.5rem 1.25rem;
   color: @red;
 
-  &:hover, &:focus, &.active {
+  &:hover,
+  &:focus,
+  &.active {
     background-color: @greyBright;
     outline: none;
   }
-
 }
 
 .noSuggestionsItem {
