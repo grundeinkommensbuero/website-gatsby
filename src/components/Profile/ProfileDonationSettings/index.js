@@ -80,11 +80,12 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
-        <h4>
+        <h2>Spenden-Einstellungen</h2>
+        <p>
           Die Expedition ist gemeinnützig und finanziert sich ausschließlich aus den{' '}
           Spenden vieler, vieler Expeditionsmitglieder und einiger Stiftungen.{' '}
           Deine Spende macht die Expedition also erst möglich!
-        </h4>
+        </p>
         {userData &&
           userData.donations &&
           userData.donations.recurringDonation &&
@@ -93,9 +94,11 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
           <>
             <div className={cN(s.flexContainerSimple, s.donationStatusMessage)}>
               <img aria-hidden="true" alt="" className={s.icon} src={rocketIcon} />
-              <h2>Du bist Dauerspender:in! <br />Vielen Dank!</h2>
-            </div>
-            <h4>Du spendest aktuell monatlich {userData.donations.recurringDonation.amount}€</h4>
+              <div>
+                <h3>Du bist Dauerspender:in! <br />Vielen Dank!</h3>
+                <p>Du spendest aktuell monatlich <span className={s.donationAmountRecurring}>{userData.donations.recurringDonation.amount}€</span></p>
+              </div>
+            </div>            
             {!showDeleteDonationDialog ?
               <div className={s.flexContainer}>
                 <p
