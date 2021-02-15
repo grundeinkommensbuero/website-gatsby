@@ -32,7 +32,13 @@ export const MunicipalityProgress = () => {
             currency="Anmeldungen"
             startDate={new Date()}
           />
-          <p>{getSignupsLabel(municipality.signups, municipality.goal)}</p>
+          <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3>
+          <p>
+            Wenn wir ingesamt {municipality.goal} Menschen sind, dann trauen wir
+            uns zu, gemeinsam den offiziellen Bürgerbegehrens-prozess für
+            unseren Modellversuch zu starten. Hierfür müssen wir möglichst viele
+            sein. Hol also noch Menschen dazu!
+          </p>
         </div>
       )}
     </>

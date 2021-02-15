@@ -136,6 +136,7 @@ export const pageQuery = graphql`
               json
             }
             showForOptions
+            colorScheme
           }
           ... on ContentfulPageSectionIllustration {
             __typename
@@ -164,6 +165,8 @@ export const pageQuery = graphql`
             __typename
             keyVisual
             titleShort
+            colorScheme
+            showForOptions
             components {
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename
@@ -178,10 +181,36 @@ export const pageQuery = graphql`
                 title
                 showForOptions
               }
-              ... on ContentfulSectionComponentProgressAndShare {
+              ... on ContentfulSectionComponentMunicipalityProgress {
                 __typename
                 title
                 showForOptions
+              }
+              ... on ContentfulSectionComponentInviteFriends {
+                __typename
+                title
+                showForOptions
+                headline
+                body {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentBecomeActive {
+                __typename
+                title
+                showForOptions
+                headline
+                body {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentProfileTile {
+                __typename
+                title
+                showForOptions
+                body {
+                  json
+                }
               }
             }
           }
