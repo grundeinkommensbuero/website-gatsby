@@ -189,7 +189,7 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
         [s.sectionWhite]: colorScheme === 'white',
         [s.sectionViolet]: colorScheme === 'violet',
-        [s.sectionGreen]: colorScheme === 'green',
+        [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',
         [s.sectionChristmas]: colorScheme === 'christmas',
         [s.sectionChristmasDonation]: isChristmasDonationTheme,

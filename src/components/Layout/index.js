@@ -154,7 +154,7 @@ function Template({ children, sections, pageContext, title, description }) {
   // keyVisual component excluded, because its already violet
   const modifySections = origSections => {
     if (origSections && origSections.length !== 0) {
-      const colorSchemes = ['white', 'violet', 'green'];
+      const colorSchemes = ['white', 'violet', 'aqua'];
       let counter = 0;
       const modSections = [...sections];
       for (let i = 0; i < modSections.length; i++) {
