@@ -37,10 +37,20 @@ const Components = {
 };
 
 export default function Sections({ sections, pageContext }) {
-  if (sections && sections.length) {
+  const {
+    municipalityContentfulState,
+    userContentfulState,
+  } = useUserMunicipalityContentfulState();
+  const displayedSections = getFilteredElementsByContentfulState({
+    elements: sections,
+    municipalityContentfulState,
+    userContentfulState,
+    showByDefault: true,
+  });
+  if (displayedSections && displayedSections.length) {
     return (
       <SectionWrapper>
-        {sections.map((section, index) => {
+        {displayedSections.map((section, index) => {
           return (
             <ContentfulSection
               section={section}
@@ -116,11 +126,11 @@ export function ContentfulSection({ section, pageContext }) {
   } = useUserMunicipalityContentfulState();
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
-    console.log(id, titleShort, title);
     const filteredComponents = getFilteredElementsByContentfulState({
       elements: section.components,
       municipalityContentfulState,
       userContentfulState,
+      showByDefault: false,
     });
 
     return (

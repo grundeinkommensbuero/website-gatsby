@@ -275,7 +275,11 @@ export const getFilteredElementsByContentfulState = ({
   elements,
   municipalityContentfulState,
   userContentfulState,
+  showByDefault,
 }) => {
+  if (!elements) {
+    return elements;
+  }
   return elements.filter(el => {
     if (el.showForOptions) {
       const showForOptions = getShowForOptions(el.showForOptions);
@@ -284,7 +288,7 @@ export const getFilteredElementsByContentfulState = ({
         showForOptions[userContentfulState];
       return showState;
     }
-    return false;
+    return showByDefault;
   });
 };
 

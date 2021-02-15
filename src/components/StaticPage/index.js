@@ -135,6 +135,7 @@ export const pageQuery = graphql`
             bodyAtTheEnd {
               json
             }
+            showForOptions
           }
           ... on ContentfulPageSectionIllustration {
             __typename
