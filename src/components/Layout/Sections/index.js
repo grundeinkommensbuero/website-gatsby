@@ -116,16 +116,17 @@ export function ContentfulSection({ section, pageContext }) {
   } = useUserMunicipalityContentfulState();
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
+    console.log(id, titleShort, title);
     const filteredComponents = getFilteredElementsByContentfulState({
       elements: section.components,
       municipalityContentfulState,
       userContentfulState,
     });
-    // TODO: Better class names
+
     return (
       <>
         {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
-        <Section className={s.componentWrapper}>
+        <Section jumpToId={id} className={s.componentWrapper}>
           <SectionInner className={s.componentElementContainer}>
             {filteredComponents.map((component, index) => {
               return (
@@ -194,7 +195,11 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionChristmas]: colorScheme === 'christmas',
         [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
-      sectionBodyNoEvents={isIllustration || isVideoSection}
+      // NOTE (felix): isVideoSection was in this before, not sure why
+      // Breaks the possibility to add a CTA Button to the video section
+      // so I removed it.
+      // sectionBodyNoEvents={isIllustration || isVideoSection}
+      sectionBodyNoEvents={isIllustration}
     >
       {/* {theme === 'christmas' && <Confetti componentTheme="christmas" />}
       {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
@@ -385,8 +390,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-            <HeaderBackgrounds />
-          )
+          <HeaderBackgrounds />
+        )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,

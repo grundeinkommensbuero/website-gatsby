@@ -95,6 +95,7 @@ export function contentfulJsonToHtml(json) {
               ? `#${fieldsMapped.jumpTo}`
               : '';
 
+            console.log(referenseFieldsMapped.slug);
             return (
               <p>
                 <LinkButtonLocal
