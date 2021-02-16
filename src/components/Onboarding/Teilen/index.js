@@ -1,8 +1,6 @@
 import React from 'react';
 import gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
-import s from './style.module.less';
-import { Button } from '../../Forms/Button';
 
 export const Teilen = ({ compIndex, setCurrentElementByIndex }) => {
   return (
