@@ -11,29 +11,37 @@ export const ProfileTile = ({ body }) => {
   const { municipality } = useContext(MunicipalityContext);
 
   return (
-    <div>
-      <div>
-        <AvatarImage user={userData} className={s.avatar} />
-      </div>
-      <div>
-        <h3>{userData.username}</h3>
-        <p>{userData.city}</p>
-        <p>
-          Dabei seit dem{' '}
-          {userData.createdAt && formatDate(new Date(userData.createdAt))}
-        </p>
-      </div>
-      <div>
-        <LinkButtonLocal to={`/mensch/${userId}`}>Zum Profil</LinkButtonLocal>
-      </div>
-      <div>
-        <h3>Hallo {userData.username}!</h3>
-        <p>
-          Du hast dich für {municipality.name} angemeldet. Schön, dass du dabei
-          bist!
-        </p>
-        <p>Besuche dein Profil, um deine Einstellungen zu ändern.</p>
-      </div>
-    </div>
+    <>
+      {userId && (
+        <div>
+          <div>
+            <AvatarImage user={userData} className={s.avatar} />
+          </div>
+          <div>
+            <h3>{userData.username}</h3>
+            <p>{userData.city}</p>
+            <p>
+              Dabei seit dem{' '}
+              {userData.createdAt && formatDate(new Date(userData.createdAt))}
+            </p>
+          </div>
+          <div>
+            <LinkButtonLocal to={`/mensch/${userId}`}>
+              Zum Profil
+            </LinkButtonLocal>
+          </div>
+          <div>
+            <h3>Hallo {userData.username}!</h3>
+            {municipality && (
+              <p>
+                Du hast dich für {municipality.name} angemeldet. Schön, dass du
+                dabei bist!
+              </p>
+            )}
+            <p>Besuche dein Profil, um deine Einstellungen zu ändern.</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 };

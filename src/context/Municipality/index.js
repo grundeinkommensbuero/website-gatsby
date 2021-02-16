@@ -19,6 +19,8 @@ export const MunicipalityProvider = ({ children }) => {
   const ags = useRef();
 
   useEffect(() => {
+    console.log(pageContext);
+
     if (pageContext) {
       const {
         isMunicipality,

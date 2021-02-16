@@ -11,6 +11,8 @@ const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
+  console.log(page);
+
   const { setPageContext } = useContext(MunicipalityContext);
   useEffect(() => {
     setPageContext(pageContext);

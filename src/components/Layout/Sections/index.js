@@ -33,8 +33,6 @@ import { InviteFriends } from '../../InviteFriends';
 import { BecomeActive } from '../../BecomeActive';
 import { ProfileTile } from '../../Profile/ProfileTile';
 
-console.log(BecomeActive, ProfileTile);
-
 const Components = {
   TickerToSignup,
   MunicipalityMap,
@@ -49,12 +47,17 @@ export default function Sections({ sections, pageContext }) {
     municipalityContentfulState,
     userContentfulState,
   } = useUserMunicipalityContentfulState();
+
   const displayedSections = getFilteredElementsByContentfulState({
     elements: sections,
     municipalityContentfulState,
     userContentfulState,
     showByDefault: true,
   });
+  // console.log('sections', sections);
+
+  // console.log('display', displayedSections);
+
   if (displayedSections && displayedSections.length) {
     return (
       <SectionWrapper>
@@ -120,7 +123,6 @@ export function ContentfulSection({ section, pageContext }) {
     introText,
     theme,
   } = section;
-  console.log(title, titleShort, colorScheme);
 
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';

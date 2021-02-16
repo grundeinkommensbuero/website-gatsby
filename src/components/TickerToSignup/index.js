@@ -8,9 +8,10 @@ import SignUp from '../Forms/SignUp';
 import { MunicipalityContext } from '../../context/Municipality';
 
 export const TickerToSignup = ({
-  tickerDescription: { tickerDescription },
+  tickerDescription: tickerDescriptionObject,
 }) => {
   const { isMunicipality } = useContext(MunicipalityContext);
+  const tickerDescription = tickerDescriptionObject?.tickerDescription;
 
   return (
     <>
