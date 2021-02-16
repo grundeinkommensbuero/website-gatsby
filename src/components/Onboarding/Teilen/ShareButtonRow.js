@@ -4,8 +4,6 @@ import s from './style.module.less';
 import {
   EmailShareButton,
   FacebookShareButton,
-  LinkedinShareButton,
-  RedditShareButton,
   TelegramShareButton,
   TwitterShareButton,
   WhatsappShareButton,
@@ -13,8 +11,6 @@ import {
 import {
   EmailIcon,
   FacebookIcon,
-  LinkedinIcon,
-  RedditIcon,
   TelegramIcon,
   TwitterIcon,
   WhatsappIcon
@@ -26,59 +22,59 @@ export const ShareButtonRow = () => {
       <section className={s.shareButtonRow}>
         <div className={s.shareButtonContainer}>
           <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <TwitterIcon size={45} round={true} />
+            <TwitterIcon size={70} round={true} bgStyle={{fillOpacity: 0}} />
           </TwitterShareButton>
           <p>Twitter</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <FacebookIcon size={45} round={true} />
+            <FacebookIcon size={70} round={true} bgStyle={{fillOpacity: 0}} />
           </FacebookShareButton>
           <p>Facebook</p>
         </div>
 
         <div className={s.shareButtonContainer}>
-          <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <LinkedinIcon size={45} round={true} />
-          </LinkedinShareButton>
-          <p>Facebook</p>
+          <div>Icon</div>
+          <p>Instagram</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <TelegramIcon size={45} round={true} />
+            <TelegramIcon size={60} round={true} bgStyle={{fillOpacity: 0}} />
           </TelegramShareButton>
-          <p>Facebook</p>
+          <p>Telegram</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <WhatsappIcon size={45} round={true} />
+            <WhatsappIcon size={60} round={true} bgStyle={{fillOpacity: 0}} />
           </WhatsappShareButton>
-          <p>Facebook</p>
+          <p>Whats App</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <EmailIcon size={45} round={true} />
+            <EmailIcon size={70} round={true} bgStyle={{fillOpacity: 0}} />
           </EmailShareButton>
-          <p>Facebook</p>
+          <p>E-Mail</p>
         </div>
 
+        {/* <div className={s.shareButtonContainer}>
+          <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <LinkedinIcon size={45} round={true} />
+          </LinkedinShareButton>
+          <p>LinkedIn</p>
+        </div>
+
+        <div className={s.shareButtonContainer}>
+          <RedditShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <RedditIcon size={45} round={true} />
+          </RedditShareButton>
+          <p>Reddit</p>
+        </div> */}
 
       </section>
-
-
-
-      <RedditShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <RedditIcon size={45} round={true} />
-      </RedditShareButton>
-
-
-
-
-
 
     </>
   )

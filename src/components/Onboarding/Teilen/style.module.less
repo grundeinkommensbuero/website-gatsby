@@ -6,16 +6,33 @@
   margin-bottom: 1rem;
   padding: 1rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+
+  @media (min-width: @breakPointM) {
+    padding: 1rem 3rem;
+  }
 }
 
 .shareButtonContainer {
+  background-color: @aqua;
+  color: @white;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  color: @white;
-  background-color: @aqua;
-  width: 47.5%;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex: 1 1 180px;
+  padding: 0 0.5rem;
+  margin-right: 1rem;
+
+  > p {
+    align-self: center;
+  }
+
+  @media (max-width: @breakPointM) {
+    flex: 1 1 150px;
+    margin-right: 0.5rem;
+  }
 }
 
 .previewContainer {
