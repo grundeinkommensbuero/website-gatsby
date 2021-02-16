@@ -130,8 +130,12 @@ export const pageQuery = graphql`
           }
           ... on ContentfulPageSectionVideo {
             __typename
-            videoLink
             title
+            videoLink
+            bodyAtTheEnd {
+              json
+            }
+            showForOptions
           }
           ... on ContentfulPageSectionIllustration {
             __typename
@@ -149,16 +153,17 @@ export const pageQuery = graphql`
               }
             }
           }
-          ... on ContentfulPageSectionGemeindeIntro {
-            __typename
-            title
-            body {
-              body
-            }
-          }
+          # ... on ContentfulPageSectionGemeindeIntro {
+          #   __typename
+          #   title
+          #   body {
+          #     body
+          #   }
+          # }
           ... on ContentfulPageSectionWithComponents {
             __typename
             keyVisual
+            titleShort
             components {
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename

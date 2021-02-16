@@ -37,10 +37,20 @@ const Components = {
 };
 
 export default function Sections({ sections, pageContext }) {
-  if (sections && sections.length) {
+  const {
+    municipalityContentfulState,
+    userContentfulState,
+  } = useUserMunicipalityContentfulState();
+  const displayedSections = getFilteredElementsByContentfulState({
+    elements: sections,
+    municipalityContentfulState,
+    userContentfulState,
+    showByDefault: true,
+  });
+  if (displayedSections && displayedSections.length) {
     return (
       <SectionWrapper>
-        {sections.map((section, index) => {
+        {displayedSections.map((section, index) => {
           return (
             <ContentfulSection
               section={section}
@@ -120,12 +130,13 @@ export function ContentfulSection({ section, pageContext }) {
       elements: section.components,
       municipalityContentfulState,
       userContentfulState,
+      showByDefault: false,
     });
-    // TODO: Better class names
+
     return (
       <>
         {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
-        <Section className={s.componentWrapper}>
+        <Section jumpToId={id} className={s.componentWrapper}>
           <SectionInner className={s.componentElementContainer}>
             {filteredComponents.map((component, index) => {
               return (
@@ -194,7 +205,11 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionChristmas]: colorScheme === 'christmas',
         [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
-      sectionBodyNoEvents={isIllustration || isVideoSection}
+      // NOTE (felix): isVideoSection was in this before, not sure why
+      // Breaks the possibility to add a CTA Button to the video section
+      // so I removed it.
+      // sectionBodyNoEvents={isIllustration || isVideoSection}
+      sectionBodyNoEvents={isIllustration}
     >
       {/* {theme === 'christmas' && <Confetti componentTheme="christmas" />}
       {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
@@ -385,8 +400,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-            <HeaderBackgrounds />
-          )
+          <HeaderBackgrounds />
+        )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
