@@ -11,6 +11,7 @@ const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
+
   const { setPageContext } = useContext(MunicipalityContext);
   useEffect(() => {
     setPageContext(pageContext);
@@ -136,6 +137,7 @@ export const pageQuery = graphql`
               json
             }
             showForOptions
+            colorScheme
           }
           ... on ContentfulPageSectionIllustration {
             __typename
@@ -164,6 +166,8 @@ export const pageQuery = graphql`
             __typename
             keyVisual
             titleShort
+            colorScheme
+            showForOptions
             components {
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename
@@ -177,6 +181,39 @@ export const pageQuery = graphql`
                 __typename
                 title
                 showForOptions
+              }
+              ... on ContentfulSectionComponentMunicipalityProgress {
+                __typename
+                title
+                showForOptions
+              }
+              ... on ContentfulSectionComponentInviteFriends {
+                __typename
+                title
+                showForOptions
+                headline
+                body {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentBecomeActive {
+                __typename
+                title
+                showForOptions
+                headline
+                body {
+                  json
+                }
+                fullWidthOnDesktop
+              }
+              ... on ContentfulSectionComponentProfileTile {
+                __typename
+                title
+                showForOptions
+                body {
+                  json
+                }
+                fullWidthOnDesktop
               }
             }
           }

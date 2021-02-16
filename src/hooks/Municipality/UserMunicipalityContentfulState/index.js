@@ -3,7 +3,7 @@ import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 export const useUserMunicipalityContentfulState = () => {
-  const { customUserData, isAuthenticated } = useContext(AuthContext);
+  const { customUserData, isAuthenticated, userId } = useContext(AuthContext);
 
   const { municipality, municipalityContentfulState } = useContext(
     MunicipalityContext
@@ -11,20 +11,19 @@ export const useUserMunicipalityContentfulState = () => {
   const [userContentfulState, setUserContentfulState] = useState();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      setUserContentfulState('loggedOut');
-    } else if (
-      !customUserData?.municipalities ||
-      customUserData?.municipalities.length === 0
-    ) {
-      setUserContentfulState('loggedInNoMunicipalitySignup');
-    } else if (customUserData?.municipalities.length > 0) {
-      const userAgs = customUserData.municipalities.map(m => m.ags);
-      if (municipality?.ags && userAgs.includes(municipality.ags)) {
-        setUserContentfulState('loggedInThisMunicipalitySignup');
+    if (userId) {
+      if (customUserData?.municipalities?.length) {
+        const userAgs = customUserData.municipalities.map(m => m.ags);
+        if (municipality?.ags && userAgs.includes(municipality.ags)) {
+          setUserContentfulState('loggedInThisMunicipalitySignup');
+        } else {
+          setUserContentfulState('loggedInOtherMunicipalitySignup');
+        }
       } else {
-        setUserContentfulState('loggedInOtherMunicipalitySignup');
+        setUserContentfulState('loggedInNoMunicipalitySignup');
       }
+    } else {
+      setUserContentfulState('loggedOut');
     }
   }, [isAuthenticated, customUserData, municipality]);
 
