@@ -17,6 +17,8 @@ import {
 } from "react-share";
 
 export const ShareButtonRow = () => {
+  const iconInstagram = require('./icons/instagram.svg');
+
   return (
     <>
       <section className={s.shareButtonRow}>
@@ -35,7 +37,12 @@ export const ShareButtonRow = () => {
         </div>
 
         <div className={s.shareButtonContainer}>
-          <div>Icon</div>
+        <img
+            aria-hidden="true"
+            alt="Instagram Logo"
+            src={iconInstagram}
+            className={s.icon}
+          />
           <p>Instagram</p>
         </div>
 
