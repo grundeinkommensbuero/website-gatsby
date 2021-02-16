@@ -22,34 +22,64 @@ import {
 
 export const ShareButtonRow = () => {
   return (
-    <section className={s.shareButtonRow}>
-      <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <FacebookIcon size={45} round={true} />
-      </FacebookShareButton>
+    <>
+      <section className={s.shareButtonRow}>
+        <div className={s.shareButtonContainer}>
+          <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <TwitterIcon size={45} round={true} />
+          </TwitterShareButton>
+          <p>Twitter</p>
+        </div>
 
-      <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <TwitterIcon size={45} round={true} />
-      </TwitterShareButton>
+        <div className={s.shareButtonContainer}>
+          <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <FacebookIcon size={45} round={true} />
+          </FacebookShareButton>
+          <p>Facebook</p>
+        </div>
 
-      <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <LinkedinIcon size={45} round={true} />
-      </LinkedinShareButton>
+        <div className={s.shareButtonContainer}>
+          <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <LinkedinIcon size={45} round={true} />
+          </LinkedinShareButton>
+          <p>Facebook</p>
+        </div>
+
+        <div className={s.shareButtonContainer}>
+          <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <TelegramIcon size={45} round={true} />
+          </TelegramShareButton>
+          <p>Facebook</p>
+        </div>
+
+        <div className={s.shareButtonContainer}>
+          <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <WhatsappIcon size={45} round={true} />
+          </WhatsappShareButton>
+          <p>Facebook</p>
+        </div>
+
+        <div className={s.shareButtonContainer}>
+          <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <EmailIcon size={45} round={true} />
+          </EmailShareButton>
+          <p>Facebook</p>
+        </div>
+
+
+      </section>
+
+
 
       <RedditShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
         <RedditIcon size={45} round={true} />
       </RedditShareButton>
 
-      <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <TelegramIcon size={45} round={true} />
-      </TelegramShareButton>
 
-      <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <WhatsappIcon size={45} round={true} />
-      </WhatsappShareButton>
 
-      <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-        <EmailIcon size={45} round={true} />
-      </EmailShareButton>
-    </section>
+
+
+
+    </>
   )
 }

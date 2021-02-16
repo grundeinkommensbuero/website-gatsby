@@ -11,9 +11,9 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverl
 
   const closeIcon = require('./close-icon.svg');
 
-  return menuElements.map(element =>
-    <>
-      {element.name !== 'close' ?
+  return menuElements.map(element => {
+    if (element.name !== 'close') {
+      return (
         <div
           aria-hidden={true}
           onClick={() => setCurrentElement(element.name)}
@@ -25,7 +25,10 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverl
             )}
         >
           {element.title}
-        </div> :
+        </div>
+      )
+    } else {
+      return (
         <div
           aria-hidden={true}
           onClick={() => toggleOverlay()}
@@ -42,7 +45,8 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverl
             className={s.closeButton}
             src={closeIcon}
           />
-        </div>}
-    </>
-  )
+        </div>
+      )
+    }
+  })
 }

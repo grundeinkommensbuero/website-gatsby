@@ -98,18 +98,18 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
                 <h3>Du bist Dauerspender:in! <br />Vielen Dank!</h3>
                 <p>Du spendest aktuell monatlich <span className={s.donationAmountRecurring}>{userData.donations.recurringDonation.amount}€</span></p>
               </div>
-            </div>            
+            </div>
             {!showDeleteDonationDialog ?
               <div className={s.flexContainer}>
                 <p
                   aria-hidden="true"
-                  className={gS.linkLikeFormated}
+                  className={gS.linkLikeFormatted}
                   onClick={() => setShowDonationForm(true)}>
                   Meine Spende bearbeiten
                 </p>
                 <p
                   aria-hidden="true"
-                  className={gS.linkLikeFormated}
+                  className={gS.linkLikeFormatted}
                   onClick={() => setShowDeleteDonationDialog(true)}>
                   Meine Spende löschen
                   </p>

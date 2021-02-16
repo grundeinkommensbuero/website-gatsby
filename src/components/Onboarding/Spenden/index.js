@@ -1,20 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gS from '../style.module.less';
+import s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
+import { Button } from '../../Forms/Button';
 
-export const Spenden = ({ userData, userId }) => {
+export const Spenden = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
+  const [showDonationForm, setShowDonationForm] = useState(false);
+
   return (
     <section className={gS.pageContainer}>
-      <h2 className={gS.moduleTitle}>Unterstütze uns!</h2>
-      <p className={gS.descriptionTextLarge}>
-        Um Städte und Gemeinden in ganz Deutschland erreichen zu können, sind{' '}
-        wir auf eine gesicherte Finanzierung angewiesen. Ein kleiner monatlicher{' '}
-        Beitrag von dir hilft uns enorm!
-      </p>
-      <p className={gS.descriptionTextLarge}>
-        Unterstütze uns mit
-      </p>
-      <DonationForm theme={{}} />
+      {showDonationForm ?
+        <>
+          <h3 className={gS.moduleTitle}>Wie möchtest du spenden?</h3>
+          <DonationForm theme={{}} />
+          <p className={gS.descriptionTextLarge}>
+            Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag.
+          </p>
+        </>
+        : <>
+          <h3 className={gS.moduleTitle}>Mach die Expedition mit deiner Spende möglich</h3>
+          <p className={gS.descriptionTextLarge}>
+            Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es nur, wenn alle{' '}
+            etwas in die Reisekasse legen. Spende jetzt, damit wir gemeinsam das Grundeinkommen{' '}
+            in GEMEINDE und ganz Deutschland Wirklichkeit werden lassen!
+          </p>
+
+          <div className={s.donationButtonRow}>
+            <Button
+              className={gS.nextButton}
+              onClick={() => setShowDonationForm(true)}>
+              Jetzt spenden
+          </Button><br />
+
+            <Button
+              className={gS.nextButton}>
+              Später erinnern
+          </Button>
+          </div>
+
+
+          <div className={gS.fullWidthFlex}>
+            <span
+              aria-hidden="true"
+              className={gS.linkLikeFormatted}
+              onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+              Überspringen
+            </span>
+          </div>
+
+        </>}
     </section>
   );
 };

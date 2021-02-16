@@ -20,6 +20,15 @@ export const Onboarding = ({ toggleOverlay }) => {
 
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
 
+  const setCurrentElementByIndex = index => {
+    if (index === (menuElements.length - 1)) {
+      toggleOverlay();
+    } else {
+      setCurrentElement(menuElements[index].name);
+    }
+
+  };
+
   const Components = {
     Mitmachen,
     Frage,
@@ -31,6 +40,8 @@ export const Onboarding = ({ toggleOverlay }) => {
   const CurrentComponent = () => {
     const Comp = Components[currentElement];
     return <Comp
+      compIndex={menuElements.findIndex(el => el.name === currentElement)}
+      setCurrentElementByIndex={setCurrentElementByIndex}
       userData={userData}
       userId={userId}
     />
