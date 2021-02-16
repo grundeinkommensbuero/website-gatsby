@@ -57,22 +57,22 @@
   height: 2.4rem;
   padding: 0;
 
-  border: var(--bg-color) solid @borderWidth;
+  border: var(--font-color) solid @borderWidth;
   border-radius: 10%;
 
   text-decoration: none;
   font-size: @DesktopFontSizeM;
   line-height: 1;
   font-weight: bold;
-  color: var(--bg-color);
-  background: var(--font-color);
+  color: var(--font-color);
+  background: @black;
 
   cursor: pointer;
 
   &:hover {
-    color: var(--font-color);
-    background: var(--bg-color);
-    border: 1px solid var(--font-color);
+    color: @black;
+    background: var(--font-color);
+    border: 1px solid @black;
   }
 
   &:focus {
@@ -132,8 +132,16 @@
   position: absolute;
   bottom: 0.5rem;
   left: 0;
-  background-color: var(--bg-color);
   margin-left: 0.5rem !important;
+  color: @black;
+  background: var(--font-color);
+  border: 1px solid @black;
+
+  &:hover {
+    color: var(--font-color);
+    background: @black;
+    border: 1px solid @black;
+  }
 }
 
 .legendOverlay {

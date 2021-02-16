@@ -28,12 +28,18 @@ import {
 } from '../../utils';
 import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
-import { ProgressAndShare } from '../../ProgressAndShare';
+import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
+import { InviteFriends } from '../../InviteFriends';
+import { BecomeActive } from '../../BecomeActive';
+import { ProfileTile } from '../../Profile/ProfileTile';
 
 const Components = {
   TickerToSignup,
   MunicipalityMap,
-  ProgressAndShare,
+  MunicipalityProgress,
+  InviteFriends,
+  BecomeActive,
+  ProfileTile,
 };
 
 export default function Sections({ sections, pageContext }) {
@@ -41,6 +47,7 @@ export default function Sections({ sections, pageContext }) {
     municipalityContentfulState,
     userContentfulState,
   } = useUserMunicipalityContentfulState();
+
   const displayedSections = getFilteredElementsByContentfulState({
     elements: sections,
     municipalityContentfulState,
@@ -136,11 +143,32 @@ export function ContentfulSection({ section, pageContext }) {
     return (
       <>
         {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
-        <Section jumpToId={id} className={s.componentWrapper}>
+        <Section
+          jumpToId={id}
+          className={cN({
+            // [s.sectionTwoColumns]: isTwoColumns,
+            // [s.sectionConfetti]: backgroundIllustration === 'confetti',
+            [s.sectionWhite]: colorScheme === 'white',
+            [s.sectionViolet]: colorScheme === 'violet',
+            [s.sectionAqua]: colorScheme === 'aqua',
+            [s.sectionRed]: colorScheme === 'red',
+            [s.sectionChristmas]: colorScheme === 'christmas',
+            // [s.sectionChristmasDonation]: isChristmasDonationTheme,
+          })}
+        >
           <SectionInner className={s.componentElementContainer}>
             {filteredComponents.map((component, index) => {
               return (
-                <div key={index} className={s.componentElement}>
+                <div
+                  key={index}
+                  className={cN({
+                    [s.componentElementFullWidth]:
+                      filteredComponents.length === 1,
+                    [s.componentElementOneColumn]:
+                      filteredComponents.length > 1 &&
+                      !component.fullWidthOnDesktop,
+                  })}
+                >
                   {getComponentFromContentful({
                     Components,
                     component,

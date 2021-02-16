@@ -283,6 +283,12 @@ export const getFilteredElementsByContentfulState = ({
   return elements.filter(el => {
     if (el.showForOptions) {
       const showForOptions = getShowForOptions(el.showForOptions);
+      // console.log(
+      //   showForOptions,
+      //   municipalityContentfulState,
+      //   userContentfulState
+      // );
+
       const showState =
         showForOptions[municipalityContentfulState] &&
         showForOptions[userContentfulState];

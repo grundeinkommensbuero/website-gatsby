@@ -1,21 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import cN from 'classnames';
 
 import s from './style.module.less';
 import { MenuItemLink } from './MenuItem';
 import MenuItemParent from './MenuItemParent';
 import LoginMenuItem from './LoginMenuItem';
+import {MunicipalityContext} from "../../../../context/Municipality"
 
 const Menu = ({ menu, menuOpen }) => {
+  const {setPageContext} = useContext(MunicipalityContext)
   return (
     <ul className={cN(s.navList, { [s.isOpen]: menuOpen })} id="menuHeader">
       {menu.map((item, index) => {
         if (item.__typename === 'ContentfulStaticContent') {
-          return (
-            <MenuItemLink slug={item.slug} key={index}>
-              {item.shortTitle || item.title}
-            </MenuItemLink>
-          );
+            return (
+              <MenuItemLink slug={item.slug} key={index} onClick={item.slug === "/" ? () => {setPageContext({slug: "/", isMunicipality: false, isSpecificMunicipality: false})} : undefined
+              }>
+                {item.shortTitle || item.title}
+              </MenuItemLink>
+            );
+
+
         } else {
           return (
             <MenuItemParent title={item.title} key={index} {...item}>
