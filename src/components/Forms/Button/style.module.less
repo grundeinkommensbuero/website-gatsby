@@ -3,10 +3,10 @@
 .linkButton,
 .button {
   padding: @buttonPadding;
-  border: var(--font-color) solid @borderWidth;
+  border: var(--button-font-color) solid @borderWidthThick;
   border-radius: @borderRadius;
   text-decoration: none;
-  font-size: @DesktopFontSizeL;
+  font-size: @DesktopFontSizeM;
   font-weight: bold;
 
   &.medium {
@@ -39,10 +39,10 @@
 }
 
 .button {
-  background: transparent;
+  background: var(--button-bg-color);
   font-family: inherit;
   line-height: inherit;
-  color: var(--font-color);
+  color: var(--button-font-color);
   cursor: pointer;
 }
 
