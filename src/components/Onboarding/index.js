@@ -4,6 +4,7 @@ import s from './style.module.less';
 
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
+import { Anmeldung } from './Anmeldung';
 import { Mitmachen } from './Mitmachen';
 import { Frage } from './Frage';
 import { Teilen } from './Teilen';
@@ -30,6 +31,7 @@ export const Onboarding = ({ toggleOverlay }) => {
   };
 
   const Components = {
+    Anmeldung,
     Mitmachen,
     Frage,
     Teilen,
