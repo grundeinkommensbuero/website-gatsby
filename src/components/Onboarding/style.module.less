@@ -1,0 +1,98 @@
+@import '../../components/style/vars.less';
+.onboardingOverlayContainer {
+  background-color: @white;
+  border-radius: 25px;
+}
+.pageContainer {
+  max-width: 74rem;
+  padding: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+
+  @media (max-width: @breakPointM) {
+    max-width: 72rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    max-width: 72rem;
+    padding: 1rem;
+  }
+}
+
+.descriptionTextLarge {
+  font-size: @DesktopFontSizeM;
+  font-weight: 100;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: normal;
+}
+
+.loggedOutHint {
+  text-align: center;
+  margin-top: 6rem;
+}
+
+.breadcrumbContainer {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 74rem;
+  padding: 2rem 4rem 2rem 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
+  @media (max-width: @breakPointM) {
+    margin-top: 6rem;
+    max-width: 72rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-top: 4.75rem;
+    max-width: 71rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.breadcrumbElement {
+  padding-top: 0.75em;
+  padding-bottom: 0.6em;
+  width: 100%;
+  background: #00c8f0;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+
+  clip-path: polygon(95% 0, 100% 50%, 95% 100%, 0% 100%, 5% 50%, 0% 0%);
+
+  &:first-child {
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px 0 0 4px;
+    clip-path: polygon(95% 0, 100% 50%, 95% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+
+  &:last-child {
+    -moz-border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 0;
+    border-radius: 0 4px 4px 0;
+    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 5% 50%, 0% 0%);
+  }
+
+  &:nth-child(even) {
+    background-color: darken(#00c8f0, 10%);
+  }
+
+  &.breadcrumbElementActive {
+    background-color: #ff4646;
+  }
+
+  &:hover {
+    background: lighten(#ff4646, 5%);
+  }
+}
