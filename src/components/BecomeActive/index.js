@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
 import { CTAButton } from '../Layout/CTAButton';
 // import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
+import s from './style.module.less';
 
 export const BecomeActive = ({ headline, body }) => {
   const { municipality } = useContext(MunicipalityContext);
@@ -11,8 +12,8 @@ export const BecomeActive = ({ headline, body }) => {
   // console.log(text);
 
   return (
-    <div>
-      <div>
+    <div className={s.flexContainer}>
+      <div className={s.flexElement}>
         <h2>{headline}</h2>
         <p>
           Damit die Kampagne {municipality ? `in ${municipality.name}` : ''}{' '}
@@ -24,7 +25,9 @@ export const BecomeActive = ({ headline, body }) => {
           Aktiv werden
         </CTAButton>
       </div>
-      {/* <div>*illustration*</div> */}
+      <div className={s.flexElement}>
+        <div className={s.illustration}></div>
+      </div>
     </div>
   );
 };
