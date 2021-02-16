@@ -3,9 +3,12 @@ import React, { useContext } from 'react';
 
 import { Ticker } from './Ticker';
 import { MunicipalitySearch } from './MunicipalitySearch';
-import SignUp from '../Forms/SignUp';
+import { Button } from '../Forms/Button';
 
 import { MunicipalityContext } from '../../context/Municipality';
+import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
+
+import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 
 export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,
@@ -13,14 +16,19 @@ export const TickerToSignup = ({
   const { isMunicipality } = useContext(MunicipalityContext);
   const tickerDescription = tickerDescriptionObject?.tickerDescription;
 
+  // State of onboarding overlay
+  const { setOverlayOpen } = useContext(OnboardingOverlayContext);
+
   return (
     <>
+      <OnboardingOverlay />
+
       <Ticker tickerDescription={tickerDescription} />
       {isMunicipality ? (
-        <SignUp illustration={false} showSignedInMessage={false} />
+        <Button onClick={() => setOverlayOpen(true)}>Ich bin dabei</Button>
       ) : (
-        <MunicipalitySearch />
-      )}
+          <MunicipalitySearch />
+        )}
     </>
   );
 };

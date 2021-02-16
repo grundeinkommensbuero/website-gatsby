@@ -17,27 +17,27 @@ import {
 } from "react-share";
 
 export const ShareButtonRow = () => {
-  const iconInstagram = require('./icons/instagram.svg');
+  const iconInstagram = require('./icons/Instagram.svg');
 
   return (
     <>
       <section className={s.shareButtonRow}>
         <div className={s.shareButtonContainer}>
           <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <TwitterIcon size={70} round={true} bgStyle={{fillOpacity: 0}} />
+            <TwitterIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
           </TwitterShareButton>
           <p>Twitter</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <FacebookIcon size={70} round={true} bgStyle={{fillOpacity: 0}} />
+            <FacebookIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
           </FacebookShareButton>
           <p>Facebook</p>
         </div>
 
         <div className={s.shareButtonContainer}>
-        <img
+          <img
             aria-hidden="true"
             alt="Instagram Logo"
             src={iconInstagram}
@@ -48,21 +48,21 @@ export const ShareButtonRow = () => {
 
         <div className={s.shareButtonContainer}>
           <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <TelegramIcon size={60} round={true} bgStyle={{fillOpacity: 0}} />
+            <TelegramIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
           </TelegramShareButton>
           <p>Telegram</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <WhatsappIcon size={60} round={true} bgStyle={{fillOpacity: 0}} />
+            <WhatsappIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
           </WhatsappShareButton>
           <p>Whats App</p>
         </div>
 
         <div className={s.shareButtonContainer}>
           <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <EmailIcon size={70} round={true} bgStyle={{fillOpacity: 0}} />
+            <EmailIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
           </EmailShareButton>
           <p>E-Mail</p>
         </div>

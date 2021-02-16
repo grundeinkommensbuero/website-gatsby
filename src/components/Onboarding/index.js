@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import AuthContext from '../../context/Authentication';
 import s from './style.module.less';
 
-
 import { BreadcrumbLinks } from './BreadcrumbLinks';
 import { Anmeldung } from './Anmeldung';
 import { Mitmachen } from './Mitmachen';
@@ -13,7 +12,7 @@ import { ProfilEinrichten } from './ProfilEinrichten';
 
 import menuElements from './BreadcrumbMenu.json';
 
-export const Onboarding = ({ toggleOverlay }) => {
+export const Onboarding = ({ setOverlayOpen }) => {
   const {
     userId,
     customUserData: userData,
@@ -23,12 +22,12 @@ export const Onboarding = ({ toggleOverlay }) => {
 
   const setCurrentElementByIndex = index => {
     if (index === (menuElements.length - 1)) {
-      toggleOverlay();
+      setOverlayOpen(false);
     } else {
       setCurrentElement(menuElements[index].name);
     }
-
   };
+  const closeIcon = require('./close-icon.svg');
 
   const Components = {
     Anmeldung,
@@ -51,14 +50,32 @@ export const Onboarding = ({ toggleOverlay }) => {
 
   return (
     <div className={s.onboardingOverlayContainer}>
-      <div className={s.breadcrumbContainer}>
-        <BreadcrumbLinks
-          setCurrentElement={setCurrentElement}
-          currentElement={currentElement}
-          toggleOverlay={toggleOverlay}
-        />
-      </div>
-      <CurrentComponent />
+      {!userId ?
+        <>
+          <span
+            aria-hidden="true"
+            className={s.lonelyCloseButton}
+            onClick={() => setOverlayOpen(false)}
+            onKeyPress={() => setOverlayOpen(false)}>
+            <img
+              aria-hidden="true"
+              alt=""
+              className={s.closeButton}
+              src={closeIcon}
+            />
+          </span>
+          <Anmeldung />
+        </> :
+        <>
+          <div className={s.breadcrumbContainer}>
+            <BreadcrumbLinks
+              setCurrentElement={setCurrentElement}
+              currentElement={currentElement}
+              setOverlayOpen={setOverlayOpen}
+            />
+          </div>
+          <CurrentComponent />
+        </>}
     </div>
   );
 };

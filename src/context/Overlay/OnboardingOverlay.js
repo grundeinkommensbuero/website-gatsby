@@ -14,13 +14,7 @@ export const OnboardingOverlayProvider = ({ children }) => {
     <OnboardingOverlayContext.Provider
       value={{
         overlayOpen,
-        toggleOverlay: sholdBeOpen => {
-          if (sholdBeOpen !== undefined) {
-            setOverlayOpen(sholdBeOpen);
-          } else {
-            setOverlayOpen(!overlayOpen);
-          }
-        }
+        setOverlayOpen
       }}
     >
       {children}
