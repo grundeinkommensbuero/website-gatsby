@@ -5,13 +5,14 @@ import s from './style.module.less';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
 import { Mitmachen } from './Mitmachen';
+import { Frage } from './Frage';
 import { Teilen } from './Teilen';
 import { Spenden } from './Spenden';
 import { ProfilEinrichten } from './ProfilEinrichten';
 
 import menuElements from './BreadcrumbMenu.json';
 
-export const Onboarding = () => {
+export const Onboarding = ({ toggleOverlay }) => {
   const {
     userId,
     customUserData: userData,
@@ -21,10 +22,11 @@ export const Onboarding = () => {
 
   const Components = {
     Mitmachen,
+    Frage,
     Teilen,
     Spenden,
     ProfilEinrichten,
-  }
+  };
 
   const CurrentComponent = () => {
     const Comp = Components[currentElement];
@@ -40,6 +42,7 @@ export const Onboarding = () => {
         <BreadcrumbLinks
           setCurrentElement={setCurrentElement}
           currentElement={currentElement}
+          toggleOverlay={toggleOverlay}
         />
       </div>
       <CurrentComponent />

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import s from './style.module.less';
 import { OverlayContext } from '../../context/Overlay';
+import { Onboarding } from '../Onboarding'
 
-export const Overlay = ({ isOpenInitially = true, ...props }) => {
+export const OnboardingOverlay = ({ isOpenInitially = true, ...props }) => {
   return (
     <OverlayContext.Consumer>
       {({ overlayOpen, toggleOverlay, setAutomaticOpenDelay }) => (
-        <OverlayWithContext
+        <Overlay
           isOpen={overlayOpen}
           toggleOverlay={toggleOverlay}
           setAutomaticOpenDelay={setAutomaticOpenDelay}
@@ -17,10 +18,8 @@ export const Overlay = ({ isOpenInitially = true, ...props }) => {
   );
 };
 
-const OverlayWithContext = ({
+const Overlay = ({
   isOpen,
-  children,
-  title,
   toggleOverlay,
   delay,
   setAutomaticOpenDelay,
@@ -31,21 +30,15 @@ const OverlayWithContext = ({
     }
   }, [delay]);
 
+  useEffect(() => {
+    document.body.classList.toggle(s.bodyOverlayOpen, isOpen);
+  }, [isOpen]);
+
   if (isOpen) {
     return (
-      <div className={s.container} role="dialog" aria-describedby="dialogTitle">
-        <button
-          className={s.closeButton}
-          onClick={() => toggleOverlay()}
-          aria-label="Overlay Schließen"
-        ></button>
+      <div className={s.onboardingContainer} role="dialog" aria-describedby="dialogTitle">
         <div className={s.body}>
-          {title && (
-            <h2 className={s.title} id="dialogTitle">
-              {title}
-            </h2>
-          )}
-          {children}
+          <Onboarding toggleOverlay={toggleOverlay} />
         </div>
       </div>
     );

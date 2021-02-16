@@ -11,7 +11,7 @@ export const Mitmachen = ({ userData }) => {
   return (
     <section className={gS.pageContainer}>
 
-      <h1>Willkommen bei der Expedition Grundeinkommen!</h1>
+      <h2 className={gS.moduleTitle}>Willkommen bei der Expedition Grundeinkommen!</h2>
       <p className={gS.descriptionTextLarge}>Hallo {userData.username}!</p>
       <p className={gS.descriptionTextLarge}>
         Unser Ziel ist es, das Grundeinkommen in die Städte und Gemeinden{' '}

@@ -1,18 +1,22 @@
 [
   {
-    "title": "Mitmachen",
-    "name": "Mitmachen"
+    "title": "Frage",
+    "name": "Frage"
   },
   {
-    "title": "Teilen",
-    "name": "Teilen"
+    "title": "Profil",
+    "name": "ProfilEinrichten"
   },
   {
     "title": "Spenden",
     "name": "Spenden"
   },
   {
-    "title": "Profil",
-    "name": "ProfilEinrichten"
+    "title": "Teilen",
+    "name": "Teilen"
+  },
+  {
+    "title": "X",
+    "name": "close"
   }
 ]

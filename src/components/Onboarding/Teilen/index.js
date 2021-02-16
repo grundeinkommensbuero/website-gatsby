@@ -6,7 +6,7 @@ import s from './style.module.less';
 export const Teilen = () => {
   return (
     <section className={gS.pageContainer}>
-      <h1>Vielen Dank für deinen Einsatz!</h1>
+      <h2 className={gS.moduleTitle}>Vielen Dank für deinen Einsatz!</h2>
       <p className={gS.descriptionTextLarge}>
         Erzähl auch anderen Menschen in DEINER GEMEINDE von der Expedition.{' '}
           Je mehr Menschen wir erreichen, desto besser stehen die Chancen auf{' '}

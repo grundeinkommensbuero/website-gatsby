@@ -5,7 +5,7 @@ import DonationForm from '../../Forms/DonationForm';
 export const Spenden = ({ userData, userId }) => {
   return (
     <section className={gS.pageContainer}>
-      <h1>Unterstütze uns!</h1>
+      <h2 className={gS.moduleTitle}>Unterstütze uns!</h2>
       <p className={gS.descriptionTextLarge}>
         Um Städte und Gemeinden in ganz Deutschland erreichen zu können, sind{' '}
         wir auf eine gesicherte Finanzierung angewiesen. Ein kleiner monatlicher{' '}
