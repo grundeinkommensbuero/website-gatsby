@@ -173,15 +173,18 @@ export const getStringFromPlaceholderText = (string, object) => {
     return '';
   }
   let result = string;
-  const regexSubInCurlyBrackets = /(?<=\{).+?(?=\})/g;
-  const regexSubInSingleQuotes = /^'.*'$/;
-  const matches = string.match(regexSubInCurlyBrackets);
+  // Find strings in curly braces
+  let matches = string.match(/{([^}]+)}/g);
   // Without curly braces in the string
   // no placeholder is defined and
   // we can return
   if (!matches) {
-    return result;
+    return string;
   }
+  // Remove curly braces
+  matches = matches.map(s => s.replace(/({|})/g, ''));
+
+  const regexSubInSingleQuotes = /^'.*'$/;
 
   matches.forEach(e => {
     let replacement = '';
@@ -214,6 +217,7 @@ export const getStringFromPlaceholderText = (string, object) => {
     result = result.replace(e, replacement);
   });
   result = result.replace(/{/g, '').replace(/}/g, '');
+
   return result;
 };
 
@@ -283,6 +287,12 @@ export const getFilteredElementsByContentfulState = ({
   return elements.filter(el => {
     if (el.showForOptions) {
       const showForOptions = getShowForOptions(el.showForOptions);
+      // console.log(
+      //   showForOptions,
+      //   municipalityContentfulState,
+      //   userContentfulState
+      // );
+
       const showState =
         showForOptions[municipalityContentfulState] &&
         showForOptions[userContentfulState];
