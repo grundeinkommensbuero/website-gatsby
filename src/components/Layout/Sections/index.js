@@ -54,10 +54,6 @@ export default function Sections({ sections, pageContext }) {
     userContentfulState,
     showByDefault: true,
   });
-  // console.log('sections', sections);
-
-  // console.log('display', displayedSections);
-
   if (displayedSections && displayedSections.length) {
     return (
       <SectionWrapper>
@@ -163,7 +159,16 @@ export function ContentfulSection({ section, pageContext }) {
           <SectionInner className={s.componentElementContainer}>
             {filteredComponents.map((component, index) => {
               return (
-                <div key={index} className={s.componentElement}>
+                <div
+                  key={index}
+                  className={cN({
+                    [s.componentElementFullWidth]:
+                      filteredComponents.length === 1,
+                    [s.componentElementOneColumn]:
+                      filteredComponents.length > 1 &&
+                      !component.fullWidthOnDesktop,
+                  })}
+                >
                   {getComponentFromContentful({
                     Components,
                     component,

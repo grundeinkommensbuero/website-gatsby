@@ -11,8 +11,6 @@ export const useUserMunicipalityContentfulState = () => {
   const [userContentfulState, setUserContentfulState] = useState();
 
   useEffect(() => {
-    console.log(customUserData?.municipalities);
-
     if (userId) {
       if (customUserData?.municipalities?.length) {
         const userAgs = customUserData.municipalities.map(m => m.ags);
@@ -30,9 +28,9 @@ export const useUserMunicipalityContentfulState = () => {
   }, [isAuthenticated, customUserData, municipality]);
 
   // Debug Contentful showForOptions with this log:
-  console.log(
-    `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
-  );
+  // console.log(
+  //   `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
+  // );
 
   return { municipalityContentfulState, userContentfulState };
 };
