@@ -173,11 +173,6 @@ export const pageQuery = graphql`
                 title
                 showForOptions
               }
-              ... on ContentfulSectionComponentProgressAndShare {
-                __typename
-                title
-                showForOptions
-              }
             }
           }
           ... on ContentfulPageSectionDonation {
