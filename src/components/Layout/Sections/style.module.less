@@ -26,6 +26,8 @@
     --font-color: @black;
     --secondary-color: @aqua;
     --text-on-secondary-color: @white;
+    --button-font-color: @violet;
+    --button-bg-color: @violetTransparent;
 
     h1,
     h2,
@@ -41,6 +43,8 @@
     --font-color: @white;
     --secondary-color: @aqua;
     --text-on-secondary-color: @white;
+    --button-font-color: @white;
+    --button-bg-color: @whiteTransparent;
   }
 
   &.sectionAqua {
@@ -50,6 +54,8 @@
     --font-color: @white;
     --secondary-color: @violet;
     --text-on-secondary-color: @white;
+    --button-font-color: @white;
+    --button-bg-color: @whiteTransparent;
   }
 
   &.sectionRed {
@@ -59,6 +65,8 @@
     --font-color: @white;
     --secondary-color: @white;
     --text-on-secondary-color: @black;
+    --button-font-color: @white;
+    --button-bg-color: @whiteTransparent;
   }
 
   &:nth-child(3n + 1):not(:only-child),
@@ -479,11 +487,6 @@
   font-weight: normal;
 }
 
-.sectionVideo {
-  background-color: @red !important;
-  color: @greyBright !important;
-}
-
 .keyVisual {
   // TODO: Position and size
   position: relative;
@@ -531,6 +534,13 @@
 
 .componentWrapper {
   background-color: @violet;
+  color: @white;
+  --bg-color: @violet;
+  --font-color: @white;
+  --secondary-color: @aqua;
+  --text-on-secondary-color: @white;
+  --button-font-color: @white;
+  --button-bg-color: @whiteTransparent;
 }
 
 .componentElementContainer {

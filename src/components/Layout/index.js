@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
@@ -7,6 +7,7 @@ import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
+import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
 
@@ -120,6 +121,9 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   `);
 
+  // State of onboarding overlay
+  const [showOnboardingOverlay, setShowOnboardingOverlay] = useState(false);
+
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
     globalStuff?.overlay?.campainVisualisations
@@ -180,6 +184,12 @@ function Template({ children, sections, pageContext, title, description }) {
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
+
+      <OnboardingOverlay
+        isOpen={showOnboardingOverlay}
+        toggleOverlay={setShowOnboardingOverlay}
+      />
+
       <Header
         menu={globalStuff.mainMenu}
         hasOverlay={!!globalStuff?.overlay}
