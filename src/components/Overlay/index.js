@@ -41,9 +41,9 @@ const OverlayWithContext = ({
         ></button>
         <div className={s.body}>
           {title && (
-            <h1 className={s.title} id="dialogTitle">
+            <h2 className={s.title} id="dialogTitle">
               {title}
-            </h1>
+            </h2>
           )}
           {children}
         </div>

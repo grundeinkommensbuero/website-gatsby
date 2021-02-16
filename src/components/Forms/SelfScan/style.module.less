@@ -11,7 +11,7 @@
 .countField,
 .listIdField {
   @media (max-width: @breakPointS) {
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
     width: 100%;
   }
 }
@@ -41,17 +41,14 @@
 
 .label {
   @media (max-width: @breakPointS) {
-    font-size: @fontSizeXS;
+    font-size: @DesktopFontSizeXS;
     hyphens: auto;
   }
 }
 
 .statisticsOverall {
-  grid-column: wide-start / 5;
-  line-height: 1;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 1rem;
+  display: flex;
+  justify-content: space-between;
 
   @media (max-width: @breakPointM) {
     grid-column: wide-start / wide-end;
@@ -71,7 +68,7 @@
 
 .headingSelfScan {
   margin: 0 0 1rem;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeL;
 }
 
 .campaignVisualisations {
@@ -82,16 +79,7 @@
   }
 }
 
-.signatureSection {
-  background-color: @red !important;
-  color: @white !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
 .campaignVisualisations {
-  background-color: @yellow;
-  color: @red;
   padding: 1.5rem;
 }
 
@@ -100,7 +88,7 @@
 }
 
 .fieldLabel {
-  min-height: 3rem;
+  //min-height: 3rem;
 
   @media (max-width: @breakPointM) {
     font-size: 18px;

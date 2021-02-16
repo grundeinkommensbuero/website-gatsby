@@ -227,7 +227,7 @@ export const Visualisation = ({
       wide={true}
       className={cN({ [s.sectionInnerHasEyeCatcher]: !!EyeCatcherContent })}
     >
-      {title && <h2 className={s.title}>{title}</h2>}
+      {title && <h3 className={s.title}>{title}</h3>}
       {hintWithVariables && <div className={s.hint}>{hintWithVariables}</div>}
 
       <div

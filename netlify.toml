@@ -7,7 +7,6 @@ command = "npm run build-dev-backend"
 [context.campaign-launch.environment]
 CONTENTFUL_ENVIRONMENT = "launch"
 GATSBY_USE_DEV_BACKEND = "override"
-COGNITO_APP_CLIENT_ID = "COGNITO_APP_CLIENT_ID_REPLACEMENT"
 
 [context.deploy-preview]
 command = "npm run build-dev-backend"
@@ -15,4 +14,3 @@ command = "npm run build-dev-backend"
 [context.deploy-preview.environment]
 CONTENTFUL_ENVIRONMENT = "launch"
 GATSBY_USE_DEV_BACKEND = "override"
-COGNITO_APP_CLIENT_ID = "COGNITO_APP_CLIENT_ID_REPLACEMENT"

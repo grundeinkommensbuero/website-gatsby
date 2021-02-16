@@ -1,3 +1,4 @@
+import React from 'react';
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
   return string && string.toString().replace(/^[^a-z]+|[^\w:.-]+/gi, '');
@@ -195,13 +196,11 @@ export const getStringFromPlaceholderText = (string, object) => {
     }
 
     const options = splitByCondition[1].split(':');
-    // Second option should be the generic one
+    // Second option should be the default one
     // based on the template
-    let selector = 1;
-    // If the object is defined
-    // the specific option is used
-    if (object) {
-      selector = 0;
+    let selector = 0;
+    if (typeof object === 'undefined') {
+      selector = 1;
     }
     // NOTE: check with . is a bit impractical,
     // when a dot is needed in the string
@@ -247,3 +246,63 @@ const stateToAgs = {
 export function mapCampaignCodeToAgs(campaignCode) {
   return stateToAgs[campaignCode.split('-')[0]];
 }
+
+// Translate the list of strings of contentful in an Array of flags
+// that match the userContentfulState or municpalityContentful state
+// of the useUserMunicipalityContentfulState hook
+export const getShowForOptions = arrayOfStrings => {
+  const allShowForOptions = [
+    'showForNoMunicipality',
+    'showForQualifying',
+    'showForQualified',
+    'showForCollecting',
+    'showForBerlinHamburgBremen',
+    'showForLoggedOut',
+    'showForLoggedInNoMunicipalitySignup',
+    'showForLoggedInThisMunicipalitySignup',
+    'showForLoggedInOtherMunicipalitySignup',
+  ];
+  const showForOptions = {};
+  for (const x of allShowForOptions) {
+    let attr = x.replace('showFor', '');
+    attr = attr.charAt(0).toLowerCase() + attr.slice(1);
+    showForOptions[attr] = arrayOfStrings.includes(x);
+  }
+  return showForOptions;
+};
+
+export const getFilteredElementsByContentfulState = ({
+  elements,
+  municipalityContentfulState,
+  userContentfulState,
+}) => {
+  return elements.filter(el => {
+    if (el.showForOptions) {
+      const showForOptions = getShowForOptions(el.showForOptions);
+      const showState =
+        showForOptions[municipalityContentfulState] &&
+        showForOptions[userContentfulState];
+      return showState;
+    }
+    return false;
+  });
+};
+
+export const getComponentFromContentful = ({ Components, component, key }) => {
+  const componentSelector = component.__typename.replace(
+    'ContentfulSectionComponent',
+    ''
+  );
+  if (typeof Components[componentSelector] !== 'undefined') {
+    return React.createElement(Components[componentSelector], {
+      ...component,
+      key,
+    });
+  } else {
+    return (
+      <div key={key}>
+        The component {componentSelector} has not been created yet.
+      </div>
+    );
+  }
+};

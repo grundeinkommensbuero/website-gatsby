@@ -39,14 +39,14 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         <section className={gS.userInfo}>
           <AvatarImage user={userData} className={gS.avatar} />
           <div>
-            <h1
+            <h2
               className={cN({
                 [gS.username]: userData.username,
                 [s.email]: !userData.username,
               })}
             >
               {userData.username || userData.email}
-            </h1>
+            </h2>
             <div className={gS.placeInfo}>{userData.city}</div>
             {/* Show profile edit button if own page */}
             <div className={gS.details}>
@@ -62,7 +62,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
 
       <Link to="spenden-einstellungen" className={s.profilePageSection}>
         <section>
-          <h2>Spenden Einstellungen</h2>
+          <h2>Spenden-Einstellungen</h2>
           {userData && userData.donations && userData.donations.recurringDonation && userData.donations.recurringDonation.amount > 0 ?
             <h4>Du bist Dauerspender:in.<br />Vielen Dank!</h4> :
             <p>Hier kannst du deine Spende verwalten.</p>}

@@ -1,0 +1,31 @@
+@import '../../style/vars.less';
+
+.shareButtonRow {
+  background-color: white;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.previewContainer {
+  background-color: white;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  @media (max-width: @breakPointM) {
+    flex-wrap: wrap;
+  }
+}
+
+.imagePlaceholder {
+  width: 100%;
+}
+
+.imageDescription {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+}

@@ -1,34 +1,32 @@
 @import '../../style/vars.less';
 
 .footer {
-  .headerFooterGrid();
-  .globeBackground();
-  background-attachment: fixed;
+  background: @red;
+  color: @greyBright;
   min-height: 15rem;
-  padding: 2rem 0;
-  font-size: @fontSizeM;
-  align-content: start;
-  position: relative;
-  --secondary-color: @blueBright;
+  padding: 2rem 1rem;
+  font-size: @DesktopFontSizeM;
+  --secondary-color: @aqua;
+}
+
+.itemContainer {
+  width: @headerWidth;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+
+  @media (max-width: @breakPointXL) {
+    width: 100%;
+  }
 }
 
 .columnLeft {
-  grid-column: 2;
-
-  @media (max-width: @breakPointM) {
-    grid-column-end: span 2;
-  }
+  max-width: 45%;
 }
 
 .columnRight {
-  grid-column: 3;
+  max-width: 45%;
   text-align: right;
-
-  @media (max-width: @breakPointM) {
-    grid-column: 2;
-    grid-column-end: span 2;
-    text-align: left;
-  }
 }
 
 .nav {
@@ -41,7 +39,7 @@
 
   @media (max-width: @breakPointM) {
     display: block;
-    margin: 1rem 0 2rem;
+    margin: 0rem 0 2rem;
   }
 }
 

@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useContext,
+} from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -35,6 +41,8 @@ import { MapTooltip } from './MapTooltip';
 import { Button } from '../../Forms/Button';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
+
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
 // Note: Only needed for Pins as Markers:
@@ -130,13 +138,16 @@ const Legend = () => {
 };
 
 export const MunicipalityMap = ({
-  agsToFlyTo,
-  shouldStartAnimation,
+  // agsToFlyTo,
+  shouldStartAnimation = true,
   onDataReady,
   initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
 }) => {
+  const { municipality } = useContext(MunicipalityContext);
+  const agsToFlyTo = municipality ? municipality.ags : undefined;
+
   // ---- useState -------------------------------------------------------------------------
   const [dataStates, setDataStates] = useState([]);
   const [dataMunicipalities, setDataMunicipalities] = useState([]);
@@ -222,7 +233,7 @@ export const MunicipalityMap = ({
   }, [municipalityStats]);
 
   useEffect(() => {
-    if (mapDataReady) {
+    if (mapDataReady && onDataReady) {
       onDataReady();
     }
   }, [mapDataReady, onDataReady]);

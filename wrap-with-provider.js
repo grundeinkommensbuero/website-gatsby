@@ -1,6 +1,7 @@
 import React from 'react';
 import CONFIG from './aws-config';
 import { AuthProvider } from './src/context/Authentication';
+import { MunicipalityProvider } from './src/context/Municipality';
 import SurveySaver from './src/components/SurveySaver';
 import { OverlayProvider } from './src/context/Overlay';
 import { SnackbarMessageProvider } from './src/context/Snackbar/index.js';
@@ -29,15 +30,15 @@ export default ({ element }) => {
 
   return (
     <AuthProvider>
-      <SurveySaver>
-        <OverlayProvider>
-          <SnackbarProvider>
-            <SnackbarMessageProvider>
-              {element}
-            </SnackbarMessageProvider>
-          </SnackbarProvider>
-        </OverlayProvider>
-      </SurveySaver>
+      <MunicipalityProvider>
+        <SurveySaver>
+          <OverlayProvider>
+            <SnackbarProvider>
+              <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
+            </SnackbarProvider>
+          </OverlayProvider>
+        </SurveySaver>
+      </MunicipalityProvider>
     </AuthProvider>
   );
 };

@@ -114,15 +114,17 @@ export const SearchPlaces = ({
   };
 
   const handleSuggestionClick = suggestion => {
-    setQuery(suggestion.name);
-    setSelectedPlace(suggestion);
+    if (suggestion) {
+      setQuery(suggestion.name);
+      setSelectedPlace(suggestion);
 
-    // If callback was passed let container component
-    // know that the selected place changed
-    if (onPlaceSelect) {
-      onPlaceSelect(suggestion);
+      // If callback was passed let container component
+      // know that the selected place changed
+      if (onPlaceSelect) {
+        onPlaceSelect(suggestion);
+      }
+      setSuggestionsActive(false);
     }
-    setSuggestionsActive(false);
   };
 
   const handleChange = e => {
@@ -194,6 +196,7 @@ export const SearchPlaces = ({
     <>
       {label && <label>{label}</label>}
       <div className={s.container}>
+        <h2 className={s.searchTitle}>Finde deinen Ort:</h2>
         <div className={s.inputContainer}>
           <TextInput
             size={inputSize}
@@ -204,6 +207,7 @@ export const SearchPlaces = ({
             onChange={handleChange}
             onKeyDown={handleEnterKey}
             onBlur={handleBlur}
+            className={s.searchBar}
           />
 
           <AutoCompleteList
@@ -250,12 +254,10 @@ export function AutoCompleteList({
   }, [results]);
 
   useLayoutEffect(() => {
-    console.log('new', focusedResult);
     if (
       typeof focusedResult !== 'undefined' &&
       focusedResult < resultsRef.current.length
     ) {
-      console.log(resultsRef.current[focusedResult]);
       resultsRef.current[focusedResult].focus();
     }
   }, [focusedResult, resultsRef]);

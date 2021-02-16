@@ -3,12 +3,13 @@
 @inputButtonMargin: 0.4rem;
 
 .container {
+  color: @white;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
   margin-top: -@inputButtonMargin;
-  --secondary-color: @red;
+  --secondary-color: @white;
   @media (max-width: @breakPointM) {
     // margin-bottom: 1rem;
   }
@@ -22,6 +23,21 @@
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
   color: var(--secondary-color);
+}
+
+.searchTitle {
+  font-size: @DesktopFontSizeL;
+  margin: 0;
+}
+
+.searchBar {
+  border-radius: 25px;
+  border-color: @aqua;
+
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 @borderWidthThick @aqua;
+  }
 }
 
 .suggestions {
@@ -46,11 +62,12 @@
   padding: 0.5rem 1.25rem;
   color: @red;
 
-  &:hover, &:focus, &.active {
+  &:hover,
+  &:focus,
+  &.active {
     background-color: @greyBright;
     outline: none;
   }
-
 }
 
 .noSuggestionsItem {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
@@ -7,7 +7,9 @@ import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
+import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import cN from 'classnames';
 
 function Template({ children, sections, pageContext, title, description }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -119,6 +121,9 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   `);
 
+  // State of onboarding overlay
+  const [showOnboardingOverlay, setShowOnboardingOverlay] = useState(false);
+
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
     globalStuff?.overlay?.campainVisualisations
@@ -130,6 +135,16 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
+  const donationBarVisible = false; // TODO: reactive from context, to adapt, when user clicks bar away
+
+  const variableMarginClass = () => {
+    if (donationBarVisible) {
+      return 'withDonationBar';
+    } else {
+      return 'withoutDonationBar';
+    }
+  };
+
   const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
       const updatedUrl = `https:${url}`;
@@ -139,6 +154,29 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   };
 
+  // Temporary modify section color scheme, when none is set from contentful
+  // keyVisual component excluded, because its already violet
+  const modifySections = origSections => {
+    if (origSections && origSections.length !== 0) {
+      const colorSchemes = ['white', 'violet', 'aqua'];
+      let counter = 0;
+      const modSections = [...sections];
+      for (let i = 0; i < modSections.length; i++) {
+        if (modSections[i] && !modSections[i].colorScheme) {
+          modSections[i].colorScheme = colorSchemes[counter];
+        }
+        counter++;
+        if (counter === 3 || modSections[i].keyVisual) {
+          counter = 0;
+        }
+      }
+      return modSections;
+    } else {
+      return undefined;
+    }
+  };
+  const modifiedSections = modifySections(sections);
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -146,7 +184,17 @@ function Template({ children, sections, pageContext, title, description }) {
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
-      <Header menu={globalStuff.mainMenu} hasOverlay={!!globalStuff?.overlay} />
+
+      <OnboardingOverlay
+        isOpen={showOnboardingOverlay}
+        toggleOverlay={setShowOnboardingOverlay}
+      />
+
+      <Header
+        menu={globalStuff.mainMenu}
+        hasOverlay={!!globalStuff?.overlay}
+        donationBarVisible={donationBarVisible}
+      />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
         titleTemplate={`${globalStuff.siteTitle} - %s`}
@@ -167,9 +215,9 @@ function Template({ children, sections, pageContext, title, description }) {
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>
-      <main className={s.main}>
+      <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={sections} pageContext={pageContext} />
+        <Sections sections={modifiedSections} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}

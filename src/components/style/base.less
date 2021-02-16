@@ -7,15 +7,15 @@
 
 body {
   font-family: 'Ideal', Tahoma, Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  background: @grey;
+  font-weight: 500;
+  background: @white;
   margin: 0;
-  color: @red;
+  color: @black;
   --bg-color: @grey;
-  --font-color: @red;
-  --font-color-secondary: @blueBright;
-  --secondary-color: @yellow;
-  --text-on-secondary-color: @red;
+  --font-color: @black;
+  --font-color-secondary: @violet;
+  --secondary-color: @violet;
+  --text-on-secondary-color: @white;
   --grid-gap: 1rem;
 
   @media (min-width: @breakPointL) {
@@ -28,19 +28,30 @@ h1 {
 }
 
 h1,
-h2,
-h3 {
-  font-size: @fontSizeL;
+h2 {
+  font-size: @DesktopFontSizeXL;
+  letter-spacing: 0.15px;
 
   @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeXL;
+    hyphens: auto;
+  }
+}
+
+h3 {
+  font-size: @DesktopFontSizeL;
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeL;
     hyphens: auto;
   }
 }
 
 h4 {
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
 
   @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeM;
     hyphens: auto;
   }
 }
@@ -51,6 +62,11 @@ a {
 
 p {
   line-height: 1.5;
+  font-size: @DesktopFontSizeM;
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeM;
+  }
 
   a {
     text-decoration: none;

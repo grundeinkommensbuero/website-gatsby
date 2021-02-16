@@ -1,0 +1,35 @@
+@import '../../../components/style/vars.less';
+
+.react-reel__group {
+  transition-delay: 0ms;
+  transition-timing-function: ease-in-out;
+  transform: translate(0, 0);
+}
+
+.react-reel__group .react-reel__number {
+  height: 1em;
+}
+
+.react-reel__reel {
+  height: 1em;
+  display: flex;
+  align-items: flex-end;
+  overflow-y: hidden;
+
+  /** CUSTOMISE BELOW */
+  font-size: @DesktopFontSizeXXL;
+  font-weight: 600;
+  color: @white;
+  border-bottom: 0px solid @white;
+  line-height: 0.95em; /* adjusted for Lato font */
+}
+
+@media (max-width: 500px) {
+  .react-reel__reel {
+    font-size: @MobileFontSizeXXL;
+    font-weight: 600;
+    color: @white;
+    border-bottom: 0px solid @white;
+    line-height: 0.9em; /* adjusted for Lato font */
+  }
+}

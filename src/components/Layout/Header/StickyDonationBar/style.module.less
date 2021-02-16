@@ -1,0 +1,82 @@
+@import '../../../style/vars.less';
+
+.donationBar {
+  height: @donationBarHeight;
+  background: @aqua;
+
+  @media (max-width: @breakPointS) {
+    height: @donationBarHeightS;
+  }
+}
+
+.donationBarItemContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: @headerWidth;
+  height: @headerHeight;
+  margin: auto;
+  padding: 0.5rem;
+
+  @media (max-width: @breakPointXL) {
+    width: 100%;
+  }
+
+  @media (max-width: @breakPointS) {
+    height: @headerHeightS;
+  }
+}
+
+.donationBarItem {
+  margin: auto 1rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: @DesktopFontSizeS;
+  padding-top: 0.25rem;
+  color: @white;
+
+  @media (max-width: @breakPointS) {
+    margin: auto 0.5rem;
+  }
+}
+
+.donationBarCTA {
+  font-size: @DesktopFontSizeS;
+  font-weight: 600;
+  color: @white;
+  border: 3px solid @white;
+  border-radius: 30px;
+  padding: 0 4rem;
+  padding-top: 0.15rem;
+  background-color: rgba(239, 239, 239, 0.37);
+
+  &:hover {
+    cursor: pointer;
+    border: 3px solid @red;
+  }
+
+  @media (max-width: @breakPointS) {
+    padding: 0 1rem;
+  }
+}
+
+.closeButton {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  margin: auto 1rem;
+  fill: @white;
+
+  &:hover {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  @media (max-width: @breakPointM) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin: auto 0.5rem;
+  }
+}

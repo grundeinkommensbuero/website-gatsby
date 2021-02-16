@@ -13,10 +13,8 @@ import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
-import { SearchPlaces } from '../SearchPlaces';
-import cN from 'classnames';
 import s from './style.module.less';
-// import { navigate } from 'gatsby';
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const AuthenticatedDialogDefault = () => {
   return (
@@ -32,121 +30,23 @@ const AuthenticatedDialogDefault = () => {
   );
 };
 
-const AuthenticatedDialogMunicipality = ({
-  customUserData,
-  municipality,
-  setMunicipality,
-  updateUser,
-  setHasSubmittedMunicipality,
-}) => {
-  const isSpecificMunicipality = municipality && municipality.ags;
-  // const { username } = customUserData;
-  return (
-    <FinallyMessage preventScrolling={true}>
-      <div>
-        {/* {username && <p>Du bist angemeldet als {username}.</p>} */}
-        {isSpecificMunicipality && (
-          <p>Möchtest du die Expedtion in {municipality.name} unterstützen?</p>
-        )}
-        {!isSpecificMunicipality && (
-          <p>
-            Möchtest du die Expedtion in deiner Stadt oder Gemeinde
-            unterstützen?
-          </p>
-        )}
-        <Form
-          onSubmit={e => {
-            // let ags = municipality.ags;
-            // if (e.municipality) {
-            //   ags = municipality.ags;
-            // }
-            // const { isEngaged } = e;
-            // const engagement = { ags, isEngaged };
-            // const user = { ...customUserData, engagement };
-
-            // TODO: Once implemented
-            // Update User
-            // updateUser(user);
-
-            // if (isEngaged) {
-            //   navigate('onboarding')
-            // }
-
-            // Feedback
-            setHasSubmittedMunicipality(true);
-          }}
-          // initialValues={}
-          render={({ handleSubmit }) => {
-            return (
-              <FormWrapper>
-                <form onSubmit={handleSubmit}>
-                  <FormSection>
-                    {' '}
-                    {isSpecificMunicipality && (
-                      <Field
-                        name="isEngaged"
-                        label={
-                          <>
-                            Ja, und ich möchte zusätzliche beim Organizing
-                            helfen!
-                          </>
-                        }
-                        type="checkbox"
-                        component={Checkbox}
-                      ></Field>
-                    )}
-                    {!isSpecificMunicipality && (
-                      <SearchPlaces
-                        validateOnBlur={true}
-                        onPlaceSelect={municipality => {
-                          if (municipality) {
-                            setMunicipality(municipality);
-                          }
-                        }}
-                      />
-                    )}
-                  </FormSection>
-
-                  <CTAButtonContainer>
-                    <CTAButton type="submit">Ich bin dabei</CTAButton>
-                  </CTAButtonContainer>
-                </form>
-              </FormWrapper>
-            );
-          }}
-        ></Form>
-      </div>
-    </FinallyMessage>
-  );
-};
-
 export default ({
   initialValues,
-  fieldsToRender,
   postSignupAction,
   illustration = 'POINT_LEFT',
-  forMunicipality,
+  showSignedInMessage,
+  fieldsToRender,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId, customUserData } = useContext(AuthContext);
-  const [municipality, setMunicipality] = useState(forMunicipality);
-  const [hasSubmittedMunicipality, setHasSubmittedMunicipality] = useState(
-    false
-  );
+  const { isAuthenticated, userId } = useContext(AuthContext);
+  const [formData, setFormData] = useState();
 
-  const isForMunicipality = !!forMunicipality;
-  let fields = ['email', 'username', 'zipCode', 'city'];
-  if (isForMunicipality) {
-    fields = ['username', 'email'];
-  }
-  if (isForMunicipality && !municipality.ags) {
-    fields = ['username', 'email', 'municipality'];
-  }
-  if (fieldsToRender) {
-    fields = fieldsToRender;
-  }
+  const { municipality } = useContext(MunicipalityContext);
+  const prefilledZip =
+    municipality?.zipCodes.length === 1 ? municipality?.zipCodes[0] : '';
+
   // After signup process is successful, do post signup
   useEffect(() => {
     if (hasSubmitted && isAuthenticated && userId) {
@@ -158,8 +58,9 @@ export default ({
 
   useEffect(() => {
     // If user signs in from form
-    if (isAuthenticated && hasSubmitted) {
+    if (isAuthenticated && hasSubmitted && formData && userId) {
       updateUser({
+        ...formData,
         updatedOnXbge: true,
       });
       setSignUpState('signedIn');
@@ -168,80 +69,39 @@ export default ({
     if (!isAuthenticated && signUpState === 'signedIn') {
       setSignUpState(undefined);
     }
-  }, [isAuthenticated, hasSubmitted]);
-
-  // TODO: Once implemented:
-  // const userEngagement = customUserData.engagement.find(
-  //   e => e.ags === municipality.ags
-  // );
-  // if (userEngagement) {
-  //   return (
-  //     <FinallyMessage>
-  //       Du bist schon angemeldet für {municipality.name}.{' '}
-  //       {userEngagement.isEngaged && (
-  //         <span>Danke, dass du uns hier auch als Organizerin unterstützt!</span>
-  //       )}
-  //     </FinallyMessage>
-  //   );
-  // }
-
-  if (hasSubmittedMunicipality) {
-    return (
-      <FinallyMessage>
-        Danke, dass du mit uns die Expedition in {municipality.name}{' '}
-        voranbringst!
-      </FinallyMessage>
-    );
-  }
+  }, [isAuthenticated, hasSubmitted, formData, userId]);
 
   if (signUpState === 'success') {
     return <EnterLoginCode preventSignIn={true} />;
   }
 
-  if (signUpState) {
+  if (signUpState && showSignedInMessage) {
     return (
       <>
         <SignUpFeedbackMessage
-          className={cN({ [s.adjustFinallyMessage]: isForMunicipality })}
+          className={s.adjustFinallyMessage}
           state={
             signUpState === 'signedIn' && !userExists ? 'success' : signUpState
           }
           trackingId={'sign-up'}
           trackingCategory="SignUp"
         />
-
-        {isForMunicipality && customUserData && (
-          <AuthenticatedDialogMunicipality
-            customUserData={customUserData}
-            municipality={municipality}
-            setMunicipality={setMunicipality}
-            updateUser={updateUser}
-            setHasSubmittedMunicipality={setHasSubmittedMunicipality}
-          />
-        )}
       </>
     );
   }
 
   if (isAuthenticated || userId) {
-    if (isForMunicipality && customUserData) {
-      return (
-        <AuthenticatedDialogMunicipality
-          customUserData={customUserData}
-          municipality={municipality}
-          setMunicipality={setMunicipality}
-          updateUser={updateUser}
-          setHasSubmittedMunicipality={setHasSubmittedMunicipality}
-        />
-      );
+    if (showSignedInMessage) {
+      return <AuthenticatedDialogDefault />;
+    } else {
+      return null;
     }
-    return <AuthenticatedDialogDefault />;
   }
 
-  const onPlaceSelect = municipality => {
-    setMunicipality(municipality);
-  };
-
+  let fields = ['email', 'username', 'zipCode', 'newsLetterConsent'];
+  if (fieldsToRender) {
+    fields = fieldsToRender;
+  }
   const fieldData = {
     email: {
       name: 'email',
@@ -268,58 +128,58 @@ export default ({
     city: {
       name: 'city',
       label: 'Ort',
-      placeholder: 'Stadt / Dorf',
+      placeholder: 'Stadt / Gemeinde',
       type: 'text',
       component: TextInputWrapped,
     },
-    municipality: {
-      name: 'municipality',
-      label: 'Gemeinde',
-      placeholder: 'Stadt / Dorf',
-      type: 'text',
-      component: () => <SearchPlaces validateOnBlur={true} />,
-      onPlaceSelect: onPlaceSelect,
+    newsLetterConsent: {
+      name: 'newsletterConsent',
+      label:
+        'Ja, ich möchte über die Kampagne auf dem Laufenden gehalten werden!',
+      type: 'checkbox',
+      component: Checkbox,
     },
   };
 
   return (
-    <Form
-      onSubmit={e => {
-        // TODO: Signup to specific municipality
-        // make sure the data has the right structure
-        // if (e.municipality) {
-        //   e.ags = municipality.ags;
-        // }
-        // ––
-        e.privacyConsent = true;
-        e.newsletterConsent = true;
-        setHasSubmitted(true);
-        if (!isAuthenticated) {
-          signUp(e);
-        }
-      }}
-      initialValues={initialValues}
-      validate={values => validate(values, isAuthenticated)}
-      render={({ handleSubmit }) => {
-        return (
-          <FormWrapper>
-            <form onSubmit={handleSubmit}>
-              <FormSection>
-                {fields.map((field, i) => {
-                  return (
-                    <Field key={`form-field-${i}`} {...fieldData[field]} />
-                  );
-                })}
-              </FormSection>
+    <>
+      <h2>Komm dazu.</h2>
+      <Form
+        onSubmit={e => {
+          e.privacyConsent = true;
+          if (!e.newsLetterConsent) {
+            e.newsLetterConsent = false;
+          }
+          e.ags = municipality?.ags;
+          setHasSubmitted(true);
+          if (!isAuthenticated) {
+            setFormData(e);
+            signUp(e);
+          }
+        }}
+        initialValues={{ ...initialValues, zipCode: prefilledZip }}
+        validate={values => validate(values, isAuthenticated)}
+        render={({ handleSubmit }) => {
+          return (
+            <FormWrapper>
+              <form onSubmit={handleSubmit}>
+                <FormSection>
+                  {fields.map((field, i) => {
+                    return (
+                      <Field key={`form-field-${i}`} {...fieldData[field]} />
+                    );
+                  })}
+                </FormSection>
 
-              <CTAButtonContainer illustration={illustration}>
-                <CTAButton type="submit">Ich bin dabei</CTAButton>
-              </CTAButtonContainer>
-            </form>
-          </FormWrapper>
-        );
-      }}
-    ></Form>
+                <CTAButtonContainer illustration={illustration}>
+                  <CTAButton type="submit">Ich bin dabei</CTAButton>
+                </CTAButtonContainer>
+              </form>
+            </FormWrapper>
+          );
+        }}
+      ></Form>
+    </>
   );
 };
 
@@ -337,6 +197,11 @@ const validate = values => {
   if (!values.email) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
+
+  // if (!values.zipCode) {
+  //   errors.zipCode =
+  //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
+  // }
 
   return errors;
 };

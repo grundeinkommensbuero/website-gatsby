@@ -83,33 +83,15 @@ municipalities = getAndStoreDataVariations(municipalities);
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  // NOTE: these cases are handled more modular in the database in the future
-  const agsStates = [
-    { ags: '11000000', slug: 'berlin' },
-    { ags: '04011000', slug: 'bremen' },
-    { ags: '02000000', slug: 'hamburg' },
-  ];
-  // const agsQualified = ['08121000'];
-
   municipalities.forEach(municipality => {
-    // Type 'qualifying';
-    let slug = 'gemeinden';
-    const stateCampaign = agsStates.find(s => s.ags === municipality.ags);
-    if (stateCampaign) {
-      // Type 'state';
-      slug = stateCampaign.slug;
-    }
-    // else if (agsQualified.includes(municipality.ags)) {
-    //   // Type 'collecting';
-    //   slug = 'gemeinden-sammelphase';
-    // }
-
     createPage({
       path: `/gemeinden/${municipality.ags}`,
       component: require.resolve('./src/components/StaticPage/index.js'),
       context: {
         municipality: { ...municipality },
-        slug,
+        isMunicipality: true,
+        isSpecificMunicipality: true,
+        slug: 'gemeinden',
       },
     });
   });
@@ -148,11 +130,14 @@ exports.createPages = ({ graphql, actions }) => {
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
           const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
+          const isMunicipality = page.node.slug === 'gemeinden';
           createPage({
             path: path,
             component: staticPage,
             context: {
               slug: page.node.slug,
+              isMunicipality,
+              isSpecificMunicipality: false,
             },
           });
         });
@@ -165,6 +150,8 @@ exports.createPages = ({ graphql, actions }) => {
             component: blogPost,
             context: {
               slug: post.node.path,
+              isMunicipality: false,
+              isSpecificMunicipality: true,
             },
           });
         });

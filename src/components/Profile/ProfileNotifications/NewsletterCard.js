@@ -61,7 +61,7 @@ export const NewsletterCard = ({
         <section>
           <p className={s.newsletterCardHeading}>{newsletterSettings.name}</p>
           <p className={s.newsletterCardDescription}>
-            Du erhälst die wichtigsten Infos für {newsletterSettings.name}
+            Du erhältst die wichtigsten Infos für {newsletterSettings.name}
             {newsletterSettings.extraInfo ? (
               <span>, sowie zusätzliche Sammelinfos.</span>
             ) : (

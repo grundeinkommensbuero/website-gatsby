@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
@@ -7,14 +7,10 @@ import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { SectionInner } from '../../Layout/Sections';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
-import {
-  getStringFromPlaceholderText,
-  setWindowLocationOriginForIE,
-} from '../../utils';
+import { getStringFromPlaceholderText } from '../../utils';
 
 import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
-
-import { navigate } from 'gatsby';
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const ColumnQualifying = ({
   municipality,
@@ -41,11 +37,11 @@ const ColumnQualifying = ({
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
         onPlaceSelect={handlePlaceSelect}
-        showButton={true}
+        showButton={false}
         inputSize="SMALL"
         buttonSize="MEDIUM"
       />
-      <h1 className={s.headline}>{displayTitle}</h1>
+      <h2 className={s.headline}>{displayTitle}</h2>
 
       {!!municipality && municipalityStatsState === 'success' && mapDataReady && (
         <>
@@ -110,7 +106,7 @@ const ColumnCollecting = ({
 }) => {
   return (
     <>
-      <h1 className={s.headline}>{displayTitle}</h1>
+      <h2 className={s.headline}>{displayTitle}</h2>
       <SearchPlaces
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
@@ -131,7 +127,7 @@ const ColumnState = ({
 }) => {
   return (
     <>
-      <h1 className={s.headline}>{displayTitle}</h1>
+      <h2 className={s.headline}>{displayTitle}</h2>
       <SearchPlaces
         placeholder={!!municipality ? municipality.name : 'Gemeinde'}
         label={false}
@@ -292,29 +288,38 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     };
   }, [municipality]);
 
-  const handlePlaceSelect = useCallback(
-    selected => {
-      if (selected) {
-        setMunicipality(selected);
+  const municipalityContext = useContext(MunicipalityContext);
 
-        // Note: IE would need an additional fallback for window.history here:
-        if (typeof window !== `undefined`) {
-          if (window.history?.pushState) {
-            window.history.pushState(
-              selected,
-              null,
-              `${window.location.origin}/gemeinden/${selected.ags}`
-            );
-            adjustDocumentTitle(municipality, selected.name);
-            setWindowLocationOriginForIE();
-          } else {
-            navigate(municipality.ags);
-          }
-        }
-      }
-    },
-    [municipality]
-  );
+  const handlePlaceSelect = selected => {
+    if (selected) {
+      municipalityContext.setMunicipality(selected);
+      setMunicipality(selected);
+    }
+  };
+  // const handlePlaceSelect = useCallback(
+  //   selected => {
+  //     if (selected) {
+  //       setMunicipality(selected);
+  //       municipalityContext.setMunicipality(selected);
+
+  //       // Note: IE would need an additional fallback for window.history here:
+  //       if (typeof window !== `undefined`) {
+  //         if (window.history?.pushState) {
+  //           window.history.pushState(
+  //             selected,
+  //             null,
+  //             `${window.location.origin}/gemeinden/${selected.ags}`
+  //           );
+  //           adjustDocumentTitle(municipality, selected.name);
+  //           setWindowLocationOriginForIE();
+  //         } else {
+  //           navigate(municipality.ags);
+  //         }
+  //       }
+  //     }
+  //   },
+  //   [municipality]
+  // );
 
   const columnProps = {
     municipality,

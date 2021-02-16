@@ -6,13 +6,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
   grid-gap: 4rem;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
   font-weight: bold;
 
   @media (max-width: @breakPointM) {
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
     grid-gap: 2rem;
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
     margin-top: 1rem;
   }
 }
@@ -116,7 +116,7 @@
 }
 
 .socialMediaButton {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
 
   &:hover {
     color: var(--font-color-secondary);
@@ -133,10 +133,10 @@
 }
 
 .label {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
   hyphens: auto;
 
   @media (max-width: @breakPointS) {
-    font-size: @fontSizeXS;
+    font-size: @DesktopFontSizeXS;
   }
 }

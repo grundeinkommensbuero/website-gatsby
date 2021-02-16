@@ -21,18 +21,34 @@ import Confetti from '../../Confetti';
 import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
+import {
+  getFilteredElementsByContentfulState,
+  getComponentFromContentful,
+} from '../../utils';
+import { TickerToSignup } from '../../TickerToSignup';
+import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
+import { ProgressAndShare } from '../../ProgressAndShare';
+
+const Components = {
+  TickerToSignup,
+  MunicipalityMap,
+  ProgressAndShare,
+};
 
 export default function Sections({ sections, pageContext }) {
   if (sections && sections.length) {
     return (
       <SectionWrapper>
-        {sections.map((section, index) => (
-          <ContentfulSection
-            section={section}
-            pageContext={pageContext}
-            key={index}
-          />
-        ))}
+        {sections.map((section, index) => {
+          return (
+            <ContentfulSection
+              section={section}
+              pageContext={pageContext}
+              key={index}
+            />
+          );
+        })}
       </SectionWrapper>
     );
   }
@@ -58,7 +74,7 @@ export function ContentfulSection({ section, pageContext }) {
     sloganLine2,
     __typename,
     teamMembers,
-    colorScheme,
+    colorScheme = 'white',
     bodyTextSizeHuge,
     pledgeId,
     signaturesId,
@@ -93,6 +109,40 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
+
+  const {
+    municipalityContentfulState,
+    userContentfulState,
+  } = useUserMunicipalityContentfulState();
+
+  if (__typename === 'ContentfulPageSectionWithComponents') {
+    const filteredComponents = getFilteredElementsByContentfulState({
+      elements: section.components,
+      municipalityContentfulState,
+      userContentfulState,
+    });
+    // TODO: Better class names
+    return (
+      <>
+        {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
+        <Section className={s.componentWrapper}>
+          <SectionInner className={s.componentElementContainer}>
+            {filteredComponents.map((component, index) => {
+              return (
+                <div key={index} className={s.componentElement}>
+                  {getComponentFromContentful({
+                    Components,
+                    component,
+                    key: index,
+                  })}
+                </div>
+              );
+            })}
+          </SectionInner>
+        </Section>
+      </>
+    );
+  }
 
   if (__typename === 'ContentfulPageSectionGemeindeIntro') {
     return (
@@ -137,9 +187,10 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
-        [s.sectionYellow]: colorScheme === 'yellow',
+        [s.sectionWhite]: colorScheme === 'white',
+        [s.sectionViolet]: colorScheme === 'violet',
+        [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',
-        [s.sectionGrey]: colorScheme === 'grey',
         [s.sectionChristmas]: colorScheme === 'christmas',
         [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
@@ -308,7 +359,7 @@ export function Section({
           [s.sectionBodyNoEvents]: sectionBodyNoEvents,
         })}
       >
-        {title && <h1 className={s.title}>{title}</h1>}
+        {title && <h2 className={s.title}>{title}</h2>}
         {children}
       </div>
       {afterBodyContent}
@@ -346,7 +397,7 @@ export function SectionHeader({
         <header className={s.header}>
           <div className={s.headerText}>
             {preTitle && <div className={s.headerPreTitle}>{preTitle}</div>}
-            <h1 className={s.headerTitle}>{title}</h1>
+            <h2 className={s.headerTitle}>{title}</h2>
             {subTitle && <div className={s.headerSubTitle}>{subTitle}</div>}
           </div>
         </header>
@@ -374,11 +425,11 @@ export function TwoColumns({ children, className }) {
 
 function Slogan({ sloganLine1, sloganLine2 }) {
   return (
-    <h1 className={s.slogan}>
+    <h2 className={s.slogan}>
       <span className={s.sloganLine1}>{sloganLine1}</span>
       <span className={s.sloganLine2}>{sloganLine2}</span>
       {/* <EmailListForm className={s.sloganLineSignup} /> */}
-    </h1>
+    </h2>
   );
 }
 

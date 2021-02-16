@@ -1,39 +1,48 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
-import { getStringFromPlaceholderText } from '../utils';
+import AuthContext from '../../context/Authentication';
+import { MunicipalityContext } from '../../context/Municipality';
+import { useSEO } from '../../hooks/Municipality/SEO';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
 export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
-  const { municipality } = pageContext;
+  const { setPageContext } = useContext(MunicipalityContext);
+  useEffect(() => {
+    setPageContext(pageContext);
+  }, []);
 
-  const title = getStringFromPlaceholderText(page.title, municipality);
-  const description = getStringFromPlaceholderText(
-    page.description?.internal?.content,
-    municipality
-  );
+  const { isAuthenticated } = useContext(AuthContext);
+
+  const { title, description } = useSEO(page);
 
   return (
-    <Layout
-      location={location}
-      title={title}
-      sections={page.sections}
-      pageContext={pageContext}
-      description={description}
-    >
-      <Helmet>
-        <title>{title}</title>
+    <>
+      {typeof isAuthenticated !== 'undefined' && (
+        <Layout
+          location={location}
+          title={title}
+          sections={page.sections}
+          pageContext={pageContext}
+          description={description}
+        >
+          <Helmet>
+            <title>{title}</title>
 
-        {page.description && <meta name="description" content={description} />}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={URL + location.pathname} />
-        <script type="text/javascript">{MatomoTrackingStuff}</script>
-      </Helmet>
-    </Layout>
+            {page.description && (
+              <meta name="description" content={description} />
+            )}
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={URL + location.pathname} />
+            <script type="text/javascript">{MatomoTrackingStuff}</script>
+          </Helmet>
+        </Layout>
+      )}
+    </>
   );
 };
 
@@ -145,6 +154,25 @@ export const pageQuery = graphql`
             title
             body {
               body
+            }
+          }
+          ... on ContentfulPageSectionWithComponents {
+            __typename
+            keyVisual
+            components {
+              ... on ContentfulSectionComponentTickerToSignup {
+                __typename
+                title
+                showForOptions
+                tickerDescription {
+                  tickerDescription
+                }
+              }
+              ... on ContentfulSectionComponentMunicipalityMap {
+                __typename
+                title
+                showForOptions
+              }
             }
           }
           ... on ContentfulPageSectionDonation {

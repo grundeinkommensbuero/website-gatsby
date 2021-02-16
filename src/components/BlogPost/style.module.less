@@ -1,15 +1,15 @@
 @import '../style/vars.less';
 
 .body {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
   font-weight: normal;
 
   :global .intro {
     font-weight: bold;
-    font-size: @fontSizeL;
+    font-size: @DesktopFontSizeL;
 
     @media (max-width: @breakPointS) {
-      font-size: @fontSizeM;
+      font-size: @DesktopFontSizeM;
     }
   }
 
@@ -49,7 +49,7 @@
 
   h3 {
     margin: 2rem 0 1rem;
-    font-size: @fontSizeM;
+    font-size: @DesktopFontSizeM;
   }
 
   :global .wp-block-image {
@@ -63,7 +63,7 @@
   :global .wp-block-pullquote {
     position: relative;
     margin: 4rem (100/-8%) 4rem 4rem;
-    font-size: @fontSizeL;
+    font-size: @DesktopFontSizeL;
     font-weight: bold;
 
     &:before {
@@ -90,7 +90,7 @@
     }
 
     @media (max-width: @breakPointS) {
-      font-size: @fontSizeM;
+      font-size: @DesktopFontSizeM;
       margin: 2rem 0 2rem 4rem;
     }
 

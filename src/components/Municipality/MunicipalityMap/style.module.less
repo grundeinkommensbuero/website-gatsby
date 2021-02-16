@@ -31,12 +31,10 @@
   &.empty {
     background-image: url('./assets/map.png');
   }
-  &.fallback{
+  &.fallback {
     background-image: url('./assets/map-full.png');
   }
-
 }
-
 
 .buttonContainer {
   position: absolute;
@@ -45,12 +43,12 @@
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   z-index: 1;
-  -ms-user-select:none;
-  -moz-user-select:none;
-  -webkit-user-select:none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
   -webkit-touch-callout: none;
   -khtml-user-select: none;
-  user-select:none;
+  user-select: none;
 }
 
 .mapButton {
@@ -63,7 +61,7 @@
   border-radius: 10%;
 
   text-decoration: none;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
   line-height: 1;
   font-weight: bold;
   color: var(--bg-color);
@@ -124,7 +122,7 @@
   height: 100%;
   width: 100%;
   pointer-events: none;
-  
+
   & button {
     pointer-events: all;
   }
@@ -140,18 +138,17 @@
 
 .legendOverlay {
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   z-index: 2;
   pointer-events: all;
-  background-color: @pink;
+  background-color: @white;
+  color: @black;
   overflow-y: scroll;
-  border: 1px solid @greyBright;
+  border: 1px solid @white;
 }
-
-
 
 .closeButton {
   position: sticky;
@@ -174,21 +171,21 @@
 }
 
 .legendLabel {
-  font-size: @fontSizeXS;
+  font-size: @DesktopFontSizeXS;
 }
 
 .legendContent {
   height: 100%;
   width: 85%;
   max-width: 500px;
-  padding: 1.5rem
+  padding: 1.5rem;
 }
 
 .legendHeadline {
   margin-bottom: 2rem;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
   @media (max-width: @breakPointM) {
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
   }
 }
 
@@ -197,7 +194,7 @@
   width: 100%;
   margin-bottom: 2.5rem;
   & span {
-    font-size: @fontSizeXS;
+    font-size: @DesktopFontSizeXS;
   }
   & div {
     display: inline-block;
@@ -211,27 +208,15 @@
     & svg {
       height: 100%;
       width: 100%;
-
     }
   }
 }
 
 .legendIconLabel {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
   margin-bottom: 0.75rem;
 }
 
 .legendSpacer {
   height: 0.1rem;
 }
-
-
-
-
-
-
-
-
-
-
-

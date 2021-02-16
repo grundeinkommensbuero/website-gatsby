@@ -18,7 +18,7 @@
 }
 
 .title {
-  font-size: @fontSizeM;
+  margin-bottom: 0.5rem;
 }
 
 .cta {
@@ -37,7 +37,7 @@
   color: var(--bg-color);
   height: 5rem;
   width: 100%;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
   display: flex;
   justify-content: flex-end;
 
@@ -63,7 +63,7 @@
   text-align: right;
 
   @media (max-width: @breakPointS) {
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
   }
 }
 
@@ -84,7 +84,7 @@
   height: 100%;
   width: 100%;
   z-index: 0;
-  transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
+  //transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
 
   .hasNotStarted & {
     border: 1px solid var(--font-color);
@@ -94,11 +94,12 @@
 .barGoalInbetween {
   position: absolute;
   height: 100%;
-  background: var(--font-color);
+  background: var(--bg-color);
+  border: 1px solid @white;
 }
 
 .starts {
-  font-size: @fontSizeXXXL;
+  font-size: @DesktopFontSizeXL;
   position: absolute;
   width: 100%;
   bottom: -0.3rem;
@@ -113,18 +114,18 @@
   position: absolute;
   bottom: 0;
   height: 5rem;
-  font-size: @fontSizeXXXL;
-  color: var(--text-on-secondary-color);
+  font-size: @DesktopFontSizeXL;
+  color: var(--bg-color);
   display: flex;
   transition: width 1s ease;
   z-index: 3;
 
   @media (max-width: @breakPointS) {
-    font-size: @fontSizeXXL;
+    font-size: @DesktopFontSizeXL;
   }
 
   @media (max-width: 360px) {
-    font-size: @fontSizeXL;
+    font-size: @DesktopFontSizeXL;
   }
 
   &::before {
@@ -134,7 +135,7 @@
     height: 100%;
     width: 100%;
     z-index: 0;
-    transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
+    // transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
   }
 
   .barCurrentLabel {
@@ -159,7 +160,8 @@
     color: var(--bg-color);
 
     &::before {
-      background: @blueBright;
+      background: @white;
+      color: @aqua;
     }
   }
 }
@@ -179,13 +181,13 @@
   margin-left: 1rem;
 
   @media (max-width: 1350px) {
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
     height: 10rem;
     width: 10rem;
   }
 
   @media (max-width: 1270px) {
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
     height: 10rem;
     width: 10rem;
     top: 6rem;
@@ -233,7 +235,7 @@
   }
 
   @media (max-width: @breakPointS) {
-    font-size: @fontSizeXS;
+    font-size: @DesktopFontSizeXS;
   }
 }
 
@@ -259,7 +261,7 @@
 .hint {
   margin-bottom: 1rem;
   font-weight: normal;
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
 
   @media (max-width: @breakPointM) {
     .sectionInnerHasEyeCatcher & {
