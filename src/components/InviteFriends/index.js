@@ -1,16 +1,24 @@
 import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
+import { ShareButtonRow } from '../Onboarding/Teilen/ShareButtonRow';
+import s from './style.module.less';
 
 export const InviteFriends = () => {
   const { municipality } = useContext(MunicipalityContext);
   const sharingFactorAnnouncement = getSharingFactorAnnouncement(municipality);
   const sharingCTA = getSharingCTA(municipality);
+
   return (
-    <div>
-      <h2>Jetzt Freunde einladen</h2>
-      {sharingCTA && <p>{sharingCTA}</p>}
-      <div>Share Buttons</div>
-      {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
+    <div className={s.componentContainer}>
+      <div className={s.componentElement}>
+        <h2>Jetzt Freunde einladen</h2>
+        {sharingCTA && <p>{sharingCTA}</p>}
+        {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
+        <ShareButtonRow />
+      </div>
+      <div className={s.componentElement}>
+        <div></div>
+      </div>
     </div>
   );
 };
