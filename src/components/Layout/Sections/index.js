@@ -163,7 +163,8 @@ export function ContentfulSection({ section, pageContext }) {
                   key={index}
                   className={cN({
                     [s.componentElementFullWidth]:
-                      filteredComponents.length === 1,
+                      filteredComponents.length === 1 ||
+                      component.fullWidthOnDesktop,
                     [s.componentElementOneColumn]:
                       filteredComponents.length > 1 &&
                       !component.fullWidthOnDesktop,

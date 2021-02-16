@@ -52,11 +52,11 @@ history.pushToHistoryState = (municipality, pageContext) => {
 
 history.replaceHistoryState = (municipality, pageContext) => {
   if (typeof window !== `undefined`) {
-    if (window.history?.pushState) {
-      window.history.pushState(
+    if (window.history?.replaceState) {
+      window.history.replaceState(
         { municipality, pageContext },
         null,
-        `${window.location.origin}`
+        `${window.location.href}`
       );
     }
   }
