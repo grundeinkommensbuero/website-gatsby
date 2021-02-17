@@ -13,6 +13,8 @@ export const ProfileTile = ({ body }) => {
   const { municipality } = useContext(MunicipalityContext);
   const tileData = { userId, userData, municipality };
 
+  console.log(userData);
+
   const {
     municipalityContentfulState,
     userContentfulState,
@@ -28,6 +30,12 @@ export const ProfileTile = ({ body }) => {
   ) {
     return <TileLoggedInOtherMunicipality {...tileData} />;
   }
+  // if (
+  //   municipalityContentfulState === 'noMunicipality' &&
+  //   userContentfulState === 'loggedInNoMunicipalitySignup'
+  // ) {
+  //   return <WelcomeBack {...tileData} />;
+  // }
   return <></>;
 };
 
@@ -77,8 +85,6 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
 };
 
 const TileLoggedInOtherMunicipality = ({ userId, userData, municipality }) => {
-  console.log(userData);
-
   return (
     <>
       {userId && (
@@ -87,16 +93,17 @@ const TileLoggedInOtherMunicipality = ({ userId, userData, municipality }) => {
             <h3 className={s.headline}>Hallo {userData.username}! </h3>
 
             <p>Du bist bereits in folgenden Orten angemeldet:</p>
-
-            {userData.municipalities.map(municipality => {
-              return <div>{municipality.name}</div>;
-            })}
-
-            <p>Besuche dein Profil, um deine Einstellungen zu ändern.</p>
-            <div>
-              <LinkButtonLocal to={`/mensch/${userId}`}>
-                Zum Profil
-              </LinkButtonLocal>
+            <div className={s.municipalityButtonGroup}>
+              {userData.municipalities.map(municipality => {
+                return (
+                  <div key={municipality.ags}>
+                    <p className={s.municipalityLabel}>{municipality.name}</p>
+                    <LinkButtonLocal to={`/gemeinden/${municipality.ags}`}>
+                      Zur Seite von {municipality.name}
+                    </LinkButtonLocal>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className={s.avatarAndInfo}>
@@ -117,9 +124,19 @@ const TileLoggedInOtherMunicipality = ({ userId, userData, municipality }) => {
                 </li>
               </ul>
             </div>
+            <div>
+              <p>Besuche dein Profil, um deine Einstellungen zu ändern.</p>
+              <LinkButtonLocal to={`/mensch/${userId}`}>
+                Zum Profil
+              </LinkButtonLocal>
+            </div>
           </div>
         </div>
       )}
     </>
   );
 };
+
+// const WelcomeBack = () => {
+//   return <div>Test</div>;
+// };
