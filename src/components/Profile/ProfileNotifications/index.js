@@ -341,6 +341,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         <h3 className={gS.optionSectionHeading}>Newsletter hinzufügen</h3>
         <div className={s.searchPlaces}>
           <SearchPlaces
+            label={''}
             showButton={municipality !== undefined && !waitingForApi}
             profileButtonStyle={true}
             onPlaceSelect={handlePlaceSelect}

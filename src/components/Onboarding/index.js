@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import AuthContext from '../../context/Authentication';
-import s from './style.module.less';
 
+import AuthContext from '../../context/Authentication';
 import { MunicipalityContext } from '../../context/Municipality';
+import { useUpdateUser } from '../../hooks/Api/Users/Update';
+
+import s from './style.module.less';
+import menuElements from './BreadcrumbMenu.json';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
 import { Anmeldung } from './Anmeldung';
@@ -12,40 +15,20 @@ import { Frage } from './Frage';
 import { Teilen } from './Teilen';
 import { Spenden } from './Spenden';
 import { ProfilEinrichten } from './ProfilEinrichten';
-
-import menuElements from './BreadcrumbMenu.json';
+import { LoadingAnimation } from './LoadingAnimation';
 
 export const Onboarding = ({ setOverlayOpen }) => {
   const {
+    isAuthenticated,
     userId,
     customUserData: userData,
     updateCustomUserData
   } = useContext(AuthContext);
-
   const { municipality } = useContext(MunicipalityContext);
-
   const [engagementOption, setEngagementOption] = useState();
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
-
   const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] = useState(false);
-
-  useEffect(() => {
-    if (userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
-      // console.log('Set it true');
-      setIsForMunicipalityAuthenticated(true);
-    } else if (userData && userId) {
-      // console.log('update userData');
-      updateCustomUserData();
-    }
-  }, [userData, municipality]);
-
-  const setCurrentElementByIndex = index => {
-    if (index === (menuElements.length - 1)) {
-      setOverlayOpen(false);
-    } else {
-      setCurrentElement(menuElements[index].name);
-    }
-  };
+  const [, updateUser] = useUpdateUser();
 
   const closeIcon = require('./close-icon.svg');
 
@@ -57,6 +40,30 @@ export const Onboarding = ({ setOverlayOpen }) => {
     Teilen,
     Spenden,
     ProfilEinrichten,
+  };
+
+  // TODO: use state of updateUser for improvement
+  useEffect(() => {
+    if (userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
+      setIsForMunicipalityAuthenticated(true);
+    } else if (userData && userId && !userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
+      setTimeout(() => {
+        updateCustomUserData();
+        if (!userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
+          updateUser({
+            ags: municipality?.ags
+          });
+        }
+      }, 500);
+    }
+  }, [userData, municipality]);
+
+  const setCurrentElementByIndex = index => {
+    if (index === (menuElements.length - 1)) {
+      setOverlayOpen(false);
+    } else {
+      setCurrentElement(menuElements[index].name);
+    }
   };
 
   const CurrentComponent = () => {
@@ -73,7 +80,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
 
   return (
     <div className={s.onboardingOverlayContainer}>
-      {!isForMunicipalityAuthenticated ?
+      {!isForMunicipalityAuthenticated && !isAuthenticated ?
         <>
           <span
             aria-hidden="true"
@@ -90,14 +97,22 @@ export const Onboarding = ({ setOverlayOpen }) => {
           <Anmeldung />
         </> :
         <>
-          <div className={s.breadcrumbContainer}>
-            <BreadcrumbLinks
-              setCurrentElement={setCurrentElement}
-              currentElement={currentElement}
-              setOverlayOpen={setOverlayOpen}
-            />
-          </div>
-          <CurrentComponent />
+          {/* Show onboarding content or currently Signin Up info message */}
+          {userData?.municipalities?.map(el => el.ags).includes(municipality.ags) ?
+            <>
+              <div className={s.breadcrumbContainer}>
+                <BreadcrumbLinks
+                  setCurrentElement={setCurrentElement}
+                  currentElement={currentElement}
+                  setOverlayOpen={setOverlayOpen}
+                />
+              </div>
+              <CurrentComponent />
+            </> :
+            <div className={s.signYouUpMessageContainer}>
+              <h2 className={s.signYouUpMessage}>Du wirst für {municipality.name} angemeldet</h2>
+              <LoadingAnimation />
+            </div>}
         </>}
     </div>
   );
