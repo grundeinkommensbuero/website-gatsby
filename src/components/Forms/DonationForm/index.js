@@ -47,9 +47,7 @@ export default theme => {
   const [donationError, setDonationError] = useState(false);
   const [updateUserState, updateUser] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
-  const [initialValues, setInitialValues] = useState(
-    !isChristmas ? { amount: '6' } : { amount: '50' }
-  );
+  const [initialValues, setInitialValues] = useState({ customAmount: '15' });
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   const [donationInterval, setDonationInverval] = useState({});
@@ -74,8 +72,14 @@ export default theme => {
     }
   }, [updateUserState]);
 
+  // Does not work yet
+  useEffect(() => {
+    if (donationInterval === 'yearly') {
+      setInitialValues({customAmount: '120'});
+    }
+  }, [setDonationInverval]);
+
   const onAmountClick = recurring => {
-    setIsRecurring(recurring);
 
     if (formErrors.amount) {
       return;
@@ -122,7 +126,7 @@ export default theme => {
       errors.email = 'Wir benötigen eine valide E-Mail Adresse';
     }
 
-    if (!values.amount) {
+    if (!values.customAmount) {
       errors.customAmount = 'Bitte wähle einen Betrag aus.';
     }
 
@@ -193,17 +197,17 @@ export default theme => {
       <div className={s.donationIntervalSelection}>
         <h3>Wie möchtest du spenden?</h3>
         <div className={s.selectionContainer}>
-          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'yearly'})}
+          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'jährlich'})}
           onClick={() => {
-                  setDonationInverval('yearly');
+                  setDonationInverval('jährlich');
                 }}>Jährlich</div>
-          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'monthly'})}
+          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'monatlich'})}
           onClick={() => {
-            setDonationInverval('monthly');
+            setDonationInverval('monatlich');
           }}>Monatlich</div>
-          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'once'})}
+          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'einmalig'})}
           onClick={() => {
-            setDonationInverval('once');
+            setDonationInverval('einmalig');
           }}>Einmalig</div>
         </div>
       </div>
@@ -235,67 +239,9 @@ export default theme => {
                 <form onSubmit={handleSubmit}>
                   {enteredAmount === false && (
                     <div className={s.partialForm}>
+                      <h3>Betrag eingeben</h3>
                       <FormSection>
-                        {!isChristmas && (
-                          <>
-                            <Field
-                              name="amount"
-                              label="3€"
-                              component={RadioButton}
-                              type="radio"
-                              value="3"
-                            />{' '}
-                            <Field
-                              name="amount"
-                              label="6€"
-                              component={RadioButton}
-                              type="radio"
-                              value="6"
-                            />{' '}
-                            <Field
-                              name="amount"
-                              label="12€"
-                              component={RadioButton}
-                              type="radio"
-                              value="12"
-                            />{' '}
-                          </>
-                        )}
-                        {isChristmas && (
-                          <>
-                            <Field
-                              name="amount"
-                              label="20€"
-                              component={RadioButton}
-                              type="radio"
-                              value="20"
-                            />{' '}
-                            <Field
-                              name="amount"
-                              label="50€"
-                              component={RadioButton}
-                              type="radio"
-                              value="50"
-                            />{' '}
-                            <Field
-                              name="amount"
-                              label="100€"
-                              component={RadioButton}
-                              type="radio"
-                              value="100"
-                            />{' '}
-                          </>
-                        )}
-                        <Field
-                          name="amount"
-                          label="Eigenen Betrag eingeben"
-                          component={RadioButton}
-                          type="radio"
-                          value="custom"
-                          theme="christmas"
-                        />{' '}
-                        <Condition when="amount" is="custom">
-                          <div className={s.customAmount}>
+                        <div className={s.customAmount}>
                             <Field
                               name="customAmount"
                               placeholder="100"
@@ -309,7 +255,7 @@ export default theme => {
                             />{' '}
                             <span className={s.currency}>€</span>
                           </div>
-                        </Condition>
+
                         {isChristmas && (
                           <section className={s.certificateInfo}>
                             <Field
@@ -347,15 +293,9 @@ export default theme => {
                             size="MEDIUM"
                             className={s.primaryButton}
                           >
-                            Monatlich unterstützen
+                            Spenden
                           </CTAButton>
 
-                          <Link
-                            to="/spenden#bankverbindung"
-                            className={cN(s.link, s.secondaryLink)}
-                          >
-                            Lieber einmalig spenden
-                          </Link>
                         </div>
                         <p className={s.hint}>
                           Hinweis: Du kannst deine monatliche Spende jederzeit
@@ -388,9 +328,8 @@ export default theme => {
                       <p>
                         Du möchtest{' '}
                         <span className={s.info}>
-                          {isRecurring ? 'monatlich' : 'einmalig'}{' '}
+                          {donationInterval}{' '}
                           {getFormDataAmount(
-                            formData.amount,
                             formData.customAmount
                           )}{' '}
                           €
