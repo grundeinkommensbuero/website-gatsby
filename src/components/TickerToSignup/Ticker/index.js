@@ -10,9 +10,10 @@ export const Ticker = ({ tickerDescription }) => {
   const { isMunicipality, municipality } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
+  console.log(municipality);
 
   useEffect(() => {
-    if (municipality && municipality.signups) {
+    if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else {
       setPeopleCount(3592);
