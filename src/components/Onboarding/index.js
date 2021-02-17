@@ -1,6 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../../context/Authentication';
 import s from './style.module.less';
+
+import { MunicipalityContext } from '../../context/Municipality';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
 import { Anmeldung } from './Anmeldung';
@@ -17,10 +19,25 @@ export const Onboarding = ({ setOverlayOpen }) => {
   const {
     userId,
     customUserData: userData,
+    updateCustomUserData
   } = useContext(AuthContext);
+
+  const { municipality } = useContext(MunicipalityContext);
 
   const [engagementOption, setEngagementOption] = useState();
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
+
+  const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
+      // console.log('Set it true');
+      setIsForMunicipalityAuthenticated(true);
+    } else if (userData && userId) {
+      // console.log('update userData');
+      updateCustomUserData();
+    }
+  }, [userData, municipality]);
 
   const setCurrentElementByIndex = index => {
     if (index === (menuElements.length - 1)) {
@@ -56,7 +73,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
 
   return (
     <div className={s.onboardingOverlayContainer}>
-      {!userId ?
+      {!isForMunicipalityAuthenticated ?
         <>
           <span
             aria-hidden="true"
