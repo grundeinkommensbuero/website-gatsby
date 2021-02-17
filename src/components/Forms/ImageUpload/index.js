@@ -11,7 +11,7 @@ import { Spinner } from '../../Spinner';
 
 import AuthContext from '../../../context/Authentication';
 
-export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedBackground = false }) => {
+export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAquaBackground = false }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [imageUploadIsProcessing, setImageUploadIsProcessing] = useState(false);
@@ -31,13 +31,13 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
       let counter = 0;
       // Try to fetch new profile picture
       const tryUpdateUserData = setInterval(() => {
-        if (counter < 3) {
+        if (counter < 2) {
           updateCustomUserData();
           counter++;
         } else {
           window.clearInterval(tryUpdateUserData);
         }
-      }, 5000);
+      }, 7500);
     }
     if (uploadImageState === 'error') {
       setImageUploadIsProcessing(false);
@@ -67,25 +67,27 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
             />
           ) : (
               <>
-                <Field
-                  name="image"
-                  component={ImageInput}
-                  user={userData}
-                  size={size}
-                  unsavedChanges={unsavedChanges}
-                  showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
-                  onChange={() => { }}
-                />
-                <OnChange name="image">
-                  {() => setUnsavedChanges(true)}
-                </OnChange>
+                <div className={s.avatarImageContainer}>
+                  <Field
+                    name="image"
+                    component={ImageInput}
+                    user={userData}
+                    size={size}
+                    unsavedChanges={unsavedChanges}
+                    showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
+                    onChange={() => { }}
+                  />
+                  <OnChange name="image">
+                    {() => setUnsavedChanges(true)}
+                  </OnChange>
+                </div>
 
                 {unsavedChanges ?
                   <CTAButton
                     type="submit"
                     className={cN(
                       s.submitButton,
-                      { [s.buttonOnRedBackground]: buttonOnRedBackground }
+                      { [s.buttonOnAquaBackground]: buttonOnAquaBackground }
                     )}
                   >
                     Hochladen

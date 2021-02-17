@@ -122,7 +122,7 @@ function Template({ children, sections, pageContext, title, description }) {
   `);
 
   // State of onboarding overlay
-  const [showOnboardingOverlay, setShowOnboardingOverlay] = useState(false);
+  const [showOnboardingOverlay, setShowOnboardingOverlay] = useState(true);
 
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(

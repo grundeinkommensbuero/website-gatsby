@@ -2,21 +2,20 @@ import React from 'react';
 import s from './style.module.less';
 import gS from '../style.module.less';
 import ImageUpload from '../../Forms/ImageUpload';
+import { Button } from '../../Forms/Button';
 
-export const ProfilEinrichten = ({ userData, userId }) => {
+export const ProfilEinrichten = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
   return (
     <>
       <section className={gS.pageContainer}>
-        <h2 className={gS.moduleTitle}>Du hast es geschafft!</h2>
-        <p className={gS.descriptionTextLarge}>Schön, dass du an Board bist!</p>
+        <h3 className={gS.moduleTitle}>Zeig Gesicht fürs Grundeinkommen</h3>
         <p className={gS.descriptionTextLarge}>
-          Lade jetzt ein Profilbild hoch, um dich mit anderen Expeditionsmitgliedern{' '}
-          zu verknüpfen.
+          Lade dein Profilfoto hoch, und zeige der Welt, dass du Grundeinkommen{' '}
+          ausprobieren willst.
         </p>
 
         <div className={s.imageUploadContainer}>
           <ImageUpload
-            className={gS.avatar}
             userData={userData}
             userId={userId}
             showUploadLabel={false}
@@ -24,6 +23,23 @@ export const ProfilEinrichten = ({ userData, userId }) => {
             size={'large'}
             onUploadDone={() => { }}
           />
+        </div>
+
+        <div className={gS.fullWidthFlex}>
+          <Button
+            className={gS.nextButton}
+            onClick={() => setCurrentElementByIndex(compIndex + 1)}
+          >
+            Weiter
+        </Button>
+        </div>
+        <div className={gS.fullWidthFlex}>
+          <span
+            aria-hidden="true"
+            className={gS.linkLikeFormatted}
+            onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+            Jetzt nicht
+        </span>
         </div>
       </section>
     </>
