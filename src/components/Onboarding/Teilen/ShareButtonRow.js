@@ -7,14 +7,14 @@ import {
   TelegramShareButton,
   TwitterShareButton,
   WhatsappShareButton,
-} from "react-share";
+} from 'react-share';
 import {
   EmailIcon,
   FacebookIcon,
   TelegramIcon,
   TwitterIcon,
-  WhatsappIcon
-} from "react-share";
+  WhatsappIcon,
+} from 'react-share';
 
 export const ShareButtonRow = () => {
   const iconInstagram = require('./icons/Instagram.svg');

@@ -163,7 +163,8 @@ export function ContentfulSection({ section, pageContext }) {
                   key={index}
                   className={cN({
                     [s.componentElementFullWidth]:
-                      filteredComponents.length === 1,
+                      filteredComponents.length === 1 ||
+                      component.fullWidthOnDesktop,
                     [s.componentElementOneColumn]:
                       filteredComponents.length > 1 &&
                       !component.fullWidthOnDesktop,
@@ -258,9 +259,7 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
                 </div>
               )}
-              <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnTopLeft.json)}
-              </div>
+              {columnTopLeft && (<div>{contentfulJsonToHtml(columnTopLeft.json)}</div>) }
             </section>
             <section className={s.column}>
               {imageTopRight && (
@@ -268,7 +267,7 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
                 </div>
               )}
-              <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+              {columnTopRight && (<div>{contentfulJsonToHtml(columnTopRight.json)}</div>) }
             </section>
             <section className={s.column}>
               {imageBottomLeft && (
@@ -276,9 +275,7 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
                 </div>
               )}
-              <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnBottomLeft.json)}
-              </div>
+              {columnBottomLeft && (<div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>)}
             </section>
             <section className={s.column}>
               {imageBottomRight && (
@@ -289,7 +286,7 @@ export function ContentfulSection({ section, pageContext }) {
                   />
                 </div>
               )}
-              <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+              {columnBottomRight && (<div>{contentfulJsonToHtml(columnBottomRight.json)}</div>)}
             </section>
           </TwoColumns>
         </SectionInner>

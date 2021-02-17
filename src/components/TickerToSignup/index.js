@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { Ticker } from './Ticker';
 import { MunicipalitySearch } from './MunicipalitySearch';
 import { Button } from '../Forms/Button';
+// import { ProfileTile } from '../Profile/ProfileTile';
 
 import { MunicipalityContext } from '../../context/Municipality';
 import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
