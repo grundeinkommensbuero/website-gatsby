@@ -13,7 +13,7 @@ export const ProfileTile = ({ body }) => {
   const { municipality } = useContext(MunicipalityContext);
   const tileData = { userId, userData, municipality };
 
-  console.log(userData);
+  // console.log(userData);
 
   const {
     municipalityContentfulState,

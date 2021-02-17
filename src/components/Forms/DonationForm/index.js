@@ -9,7 +9,6 @@ import {
   PrimarySecondaryButtonContainer,
 } from '../Button';
 import { Checkbox } from '../Checkbox';
-import { RadioButton } from '../RadioButton';
 import { CTAButtonContainer, CTAButton, CTALink } from '../../Layout/CTAButton';
 
 import { TextInputWrapped } from '../TextInput';
@@ -19,7 +18,6 @@ import { useSignUp } from '../../../hooks/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
-import Link from 'gatsby-link';
 
 import s from './style.module.less';
 import cN from 'classnames';
@@ -75,11 +73,11 @@ export default theme => {
   // Does not work yet
   useEffect(() => {
     if (donationInterval === 'yearly') {
-      setInitialValues({customAmount: '120'});
+      setInitialValues({ customAmount: '120' });
     }
   }, [setDonationInverval]);
 
-  const onAmountClick = recurring => {
+  const onAmountClick = () => {
 
     if (formErrors.amount) {
       return;
@@ -197,18 +195,18 @@ export default theme => {
       <div className={s.donationIntervalSelection}>
         <h3>Wie möchtest du spenden?</h3>
         <div className={s.selectionContainer}>
-          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'jährlich'})}
-          onClick={() => {
-                  setDonationInverval('jährlich');
-                }}>Jährlich</div>
-          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'monatlich'})}
-          onClick={() => {
-            setDonationInverval('monatlich');
-          }}>Monatlich</div>
-          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'einmalig'})}
-          onClick={() => {
-            setDonationInverval('einmalig');
-          }}>Einmalig</div>
+          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'jährlich' })}
+            onClick={() => {
+              setDonationInverval('jährlich');
+            }}>Jährlich</div>
+          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'monatlich' })}
+            onClick={() => {
+              setDonationInverval('monatlich');
+            }}>Monatlich</div>
+          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'einmalig' })}
+            onClick={() => {
+              setDonationInverval('einmalig');
+            }}>Einmalig</div>
         </div>
       </div>
 
@@ -242,19 +240,19 @@ export default theme => {
                       <h3>Betrag eingeben</h3>
                       <FormSection>
                         <div className={s.customAmount}>
-                            <Field
-                              name="customAmount"
-                              placeholder="100"
-                              type="number"
-                              component={TextInputWrapped}
-                              min={isChristmas ? 10 : 2}
-                              inputMode="numeric"
-                              step="1"
-                              pattern="[0-9]*"
-                              theme="christmas"
-                            />{' '}
-                            <span className={s.currency}>€</span>
-                          </div>
+                          <Field
+                            name="customAmount"
+                            placeholder="100"
+                            type="number"
+                            component={TextInputWrapped}
+                            min={isChristmas ? 10 : 2}
+                            inputMode="numeric"
+                            step="1"
+                            pattern="[0-9]*"
+                            theme="christmas"
+                          />{' '}
+                          <span className={s.currency}>€</span>
+                        </div>
 
                         {isChristmas && (
                           <section className={s.certificateInfo}>
@@ -613,8 +611,8 @@ export default theme => {
   );
 };
 
-const Condition = ({ when, is, children }) => (
-  <Field name={when} subscription={{ value: true }}>
-    {({ input: { value } }) => (value === is ? children : null)}
-  </Field>
-);
+// const Condition = ({ when, is, children }) => (
+//   <Field name={when} subscription={{ value: true }}>
+//     {({ input: { value } }) => (value === is ? children : null)}
+//   </Field>
+// );

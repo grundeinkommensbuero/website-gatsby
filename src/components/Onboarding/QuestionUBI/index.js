@@ -4,7 +4,7 @@ import gS from '../style.module.less';
 import { Textarea } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
 
-export const Frage = ({ userData, compIndex, setCurrentElementByIndex }) => {
+export const QuestionUBI = ({ userData, compIndex, setCurrentElementByIndex }) => {
 
   return (
     <section className={gS.pageContainer}>
