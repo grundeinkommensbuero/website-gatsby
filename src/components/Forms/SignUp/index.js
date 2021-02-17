@@ -98,7 +98,7 @@ export default ({
     }
   }
 
-  let fields = ['email', 'username', 'zipCode', 'newsLetterConsent'];
+  let fields = ['email', 'username', 'zipCode', 'nudgeBox', 'newsLetterConsent'];
   if (fieldsToRender) {
     fields = fieldsToRender;
   }
@@ -132,10 +132,17 @@ export default ({
       type: 'text',
       component: TextInputWrapped,
     },
+    nudgeBox: {
+      name: 'nudgeBox',
+      label:
+        'Ja, ich will, dass das Bürgerbegehren startet.',
+      type: 'checkbox',
+      component: Checkbox,
+    },
     newsLetterConsent: {
       name: 'newsletterConsent',
       label:
-        'Ja, ich möchte über die Kampagne auf dem Laufenden gehalten werden!',
+        'Haltet mich über die nächsten Schritte auf dem Laufenden.',
       type: 'checkbox',
       component: Checkbox,
     },
@@ -171,7 +178,7 @@ export default ({
                   })}
                 </FormSection>
 
-                <CTAButtonContainer illustration={illustration}>
+                <CTAButtonContainer>
                   <CTAButton type="submit">Ich bin dabei</CTAButton>
                 </CTAButtonContainer>
               </form>
@@ -196,6 +203,10 @@ const validate = values => {
 
   if (!values.email) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+  }
+
+  if ((!values.nudgeBox) && (!values.newsletterConsent)) {
+    errors.newsletterConsent = 'Bitte bestätige, dass du dabei sein willst';
   }
 
   // if (!values.zipCode) {
