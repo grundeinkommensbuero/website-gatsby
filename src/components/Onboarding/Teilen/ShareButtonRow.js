@@ -4,8 +4,6 @@ import s from './style.module.less';
 import {
   EmailShareButton,
   FacebookShareButton,
-  LinkedinShareButton,
-  RedditShareButton,
   TelegramShareButton,
   TwitterShareButton,
   WhatsappShareButton,
@@ -13,71 +11,78 @@ import {
 import {
   EmailIcon,
   FacebookIcon,
-  LinkedinIcon,
-  RedditIcon,
   TelegramIcon,
   TwitterIcon,
   WhatsappIcon,
 } from 'react-share';
 
 export const ShareButtonRow = () => {
+  const iconInstagram = require('./icons/Instagram.svg');
+
   return (
-    <section className={s.shareButtonRow}>
-      <FacebookShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <FacebookIcon size={45} round={true} />
-      </FacebookShareButton>
+    <>
+      <section className={s.shareButtonRow}>
+        <div className={s.shareButtonContainer}>
+          <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <TwitterIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
+          </TwitterShareButton>
+          <p>Twitter</p>
+        </div>
 
-      <TwitterShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <TwitterIcon size={45} round={true} />
-      </TwitterShareButton>
+        <div className={s.shareButtonContainer}>
+          <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <FacebookIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
+          </FacebookShareButton>
+          <p>Facebook</p>
+        </div>
 
-      <LinkedinShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <LinkedinIcon size={45} round={true} />
-      </LinkedinShareButton>
+        <div className={s.shareButtonContainer}>
+          <img
+            aria-hidden="true"
+            alt="Instagram Logo"
+            src={iconInstagram}
+            className={s.icon}
+          />
+          <p>Instagram</p>
+        </div>
 
-      <RedditShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <RedditIcon size={45} round={true} />
-      </RedditShareButton>
+        <div className={s.shareButtonContainer}>
+          <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <TelegramIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
+          </TelegramShareButton>
+          <p>Telegram</p>
+        </div>
 
-      <TelegramShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <TelegramIcon size={45} round={true} />
-      </TelegramShareButton>
+        <div className={s.shareButtonContainer}>
+          <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <WhatsappIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
+          </WhatsappShareButton>
+          <p>Whats App</p>
+        </div>
 
-      <WhatsappShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <WhatsappIcon size={45} round={true} />
-      </WhatsappShareButton>
+        <div className={s.shareButtonContainer}>
+          <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <EmailIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
+          </EmailShareButton>
+          <p>E-Mail</p>
+        </div>
 
-      <EmailShareButton
-        url={
-          'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'
-        }
-      >
-        <EmailIcon size={45} round={true} />
-      </EmailShareButton>
-    </section>
-  );
-};
+        {/* <div className={s.shareButtonContainer}>
+          <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <LinkedinIcon size={45} round={true} />
+          </LinkedinShareButton>
+          <p>LinkedIn</p>
+        </div>
+
+        <div className={s.shareButtonContainer}>
+          <RedditShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
+            <RedditIcon size={45} round={true} />
+          </RedditShareButton>
+          <p>Reddit</p>
+        </div> */}
+
+      </section>
+
+    </>
+  )
+}
