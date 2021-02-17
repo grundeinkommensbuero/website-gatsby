@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
-import { ShareButtonRow } from '../Onboarding/Teilen/ShareButtonRow';
+import { ShareButtonRow } from '../Onboarding/Share/ShareButtonRow';
 import s from './style.module.less';
 
 export const InviteFriends = () => {

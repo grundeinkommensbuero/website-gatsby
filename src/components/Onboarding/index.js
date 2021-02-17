@@ -8,13 +8,13 @@ import s from './style.module.less';
 import menuElements from './BreadcrumbMenu.json';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
-import { Anmeldung } from './Anmeldung';
-import { Mitmachen } from './Mitmachen';
+import { SignUpFlow } from './SignUpFlow';
+import { Engage } from './Engage';
 import { EngagementLevel } from './EngagementLevel';
-import { Frage } from './Frage';
-import { Teilen } from './Teilen';
-import { Spenden } from './Spenden';
-import { ProfilEinrichten } from './ProfilEinrichten';
+import { QuestionUBI } from './QuestionUBI';
+import { Share } from './Share';
+import { Donate } from './Donate';
+import { SetupProfile } from './SetupProfile';
 import { LoadingAnimation } from './LoadingAnimation';
 
 export const Onboarding = ({ setOverlayOpen }) => {
@@ -33,13 +33,13 @@ export const Onboarding = ({ setOverlayOpen }) => {
   const closeIcon = require('./close-icon.svg');
 
   const Components = {
-    Anmeldung,
-    Mitmachen,
+    SignUpFlow,
+    Engage,
     EngagementLevel,
-    Frage,
-    Teilen,
-    Spenden,
-    ProfilEinrichten,
+    QuestionUBI,
+    Share,
+    Donate,
+    SetupProfile,
   };
 
   // TODO: use state of updateUser for improvement
@@ -94,7 +94,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
               src={closeIcon}
             />
           </span>
-          <Anmeldung />
+          <SignUpFlow />
         </> :
         <>
           {/* Show onboarding content or currently Signin Up info message */}

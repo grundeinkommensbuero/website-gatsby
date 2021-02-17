@@ -4,7 +4,7 @@ import s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
 // import { Button } from '../../Forms/Button';
 
-export const Spenden = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
+export const Donate = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
   const [showDonationForm, setShowDonationForm] = useState(false);
 
   return (
