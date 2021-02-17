@@ -14,16 +14,22 @@
   }
 }
 
+.shareItem {
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  flex-grow: 1;
+  flex-basis: 45%;
+}
+
 .shareButtonContainer {
   background-color: @aqua;
   color: @white;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 1rem;
   flex: 1 1 180px;
-  padding: 0 0.5rem;
-  margin-right: 1rem;
+  padding: 0 1.5rem 0 1rem;
+  height: 100%;
 
   > p {
     align-self: center;
@@ -33,6 +39,10 @@
     flex: 1 1 150px;
     margin-right: 0.5rem;
   }
+}
+
+.shareElementTitle {
+  // width: 5rem;
 }
 
 .previewContainer {
@@ -58,4 +68,11 @@
 
 .icon {
   margin-right: 1rem;
+  margin-left: 1rem;
+  height: 2rem;
+  margin-top: 1rem;
+}
+
+.iconCorrection {
+  margin-top: 0.5rem;
 }
