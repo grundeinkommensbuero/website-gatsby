@@ -21,6 +21,14 @@ export const Ticker = ({ tickerDescription }) => {
   }, [municipality]);
 
   useEffect(() => {
+    if (municipality && municipality.signups) {
+      setPeopleCount(municipality.signups);
+    } else {
+      setPeopleCount(3592);
+    }
+  }, [municipality]);
+
+  useEffect(() => {
     const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
     const firePeopleCounter = setTimeout(() => {
       setPeopleCount(peopleCount + 1);
