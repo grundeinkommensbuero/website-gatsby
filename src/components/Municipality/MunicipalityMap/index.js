@@ -212,8 +212,6 @@ export const MunicipalityMap = ({
             initialMapAnimation,
           });
 
-          console.log({ signups });
-
           setDataSignups(dataSignups);
           setDataEvents(dataEvents);
           setDataLabels(dataLabels);
