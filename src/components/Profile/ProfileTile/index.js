@@ -3,22 +3,29 @@ import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
 import AvatarImage from '../../AvatarImage';
-import { LinkButtonLocal } from '../../Forms/Button';
+import { LinkButtonLocal, Button } from '../../Forms/Button';
 import { formatDate } from '../../utils';
 import s from './style.module.less';
 import cN from 'classnames';
 
-export const ProfileTile = ({ body }) => {
+export const ProfileTile = ({ body, children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);
-  const { municipality } = useContext(MunicipalityContext);
-  const tileData = { userId, userData, municipality };
-
-  console.log(userData);
+  const { municipality, setMunicipality } = useContext(MunicipalityContext);
+  const tileData = {
+    userId,
+    userData,
+    municipality,
+    children,
+    setMunicipality,
+  };
 
   const {
     municipalityContentfulState,
     userContentfulState,
   } = useUserMunicipalityContentfulState();
+
+  // console.log(userData);
+  // console.log(userContentfulState, municipalityContentfulState);
 
   if (userContentfulState === 'loggedInThisMunicipalitySignup') {
     return <TileLoggedInThisMunicipality {...tileData} />;
@@ -29,19 +36,19 @@ export const ProfileTile = ({ body }) => {
   ) {
     return <TileLoggedInOtherMunicipality {...tileData} />;
   }
-  // if (
-  //   municipalityContentfulState === 'noMunicipality' &&
-  //   userContentfulState === 'loggedInNoMunicipalitySignup'
-  // ) {
-  //   return <WelcomeBack {...tileData} />;
-  // }
+  if (
+    userContentfulState === 'loggedInNoMunicipalitySignup' &&
+    municipalityContentfulState === 'noMunicipality'
+  ) {
+    return <WelcomeBack {...tileData} />;
+  }
   return <></>;
 };
 
 const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
   return (
     <>
-      {userId && (
+      {userData && (
         <div className={cN(s.tileContainer, s.sectionAqua)}>
           <div className={s.avatarAndInfo}>
             <div className={s.avatarContainer}>
@@ -83,26 +90,35 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
   );
 };
 
-const TileLoggedInOtherMunicipality = ({ userId, userData, municipality }) => {
+const TileLoggedInOtherMunicipality = ({
+  userId,
+  userData,
+  setMunicipality,
+}) => {
   return (
     <>
-      {userId && (
+      {userData && (
         <div className={cN(s.tileContainer, s.sectionWhite)}>
           <div className={s.flexElement}>
             <h3 className={s.headline}>Hallo {userData.username}! </h3>
 
             <p>Du bist bereits in folgenden Orten angemeldet:</p>
             <div className={s.municipalityButtonGroup}>
-              {userData.municipalities.map(municipality => {
-                return (
-                  <div key={municipality.ags}>
-                    <p className={s.municipalityLabel}>{municipality.name}</p>
-                    <LinkButtonLocal to={`/gemeinden/${municipality.ags}`}>
-                      Zur Seite von {municipality.name}
-                    </LinkButtonLocal>
-                  </div>
-                );
-              })}
+              {userData.municipalities &&
+                userData.municipalities.map(municipality => {
+                  return (
+                    <div key={municipality.ags}>
+                      <p className={s.municipalityLabel}>{municipality.name}</p>
+                      <Button
+                        onClick={() => {
+                          setMunicipality(municipality);
+                        }}
+                      >
+                        Zur Seite von {municipality.name}
+                      </Button>
+                    </div>
+                  );
+                })}
             </div>
           </div>
           <div className={s.avatarAndInfo}>
@@ -136,6 +152,17 @@ const TileLoggedInOtherMunicipality = ({ userId, userData, municipality }) => {
   );
 };
 
-// const WelcomeBack = () => {
-//   return <div>Test</div>;
-// };
+const WelcomeBack = () => {
+  return (
+    <div className={cN(s.tileContainer, s.sectionWhite)}>
+      <div>
+        <h3>Willkommen zurück!</h3>
+        <p>
+          Schön, dass du wieder da bist! Wie du siehst, hat sich bei uns einiges
+          verändert! Bitte gib deinen Wohnort im Suchfeld oben ein, um
+          mitzuhelfen, das Grundeinkommen bei dir vor Ort voran zu bringen.
+        </p>
+      </div>
+    </div>
+  );
+};

@@ -199,8 +199,12 @@ export const Visualisation = ({
     }
   }, []);
 
-  const dateString = formatDateMonthYear(new Date(startDate));
-  const hasStarted = new Date().getTime() > new Date(startDate);
+  const dateString = startDate
+    ? formatDateMonthYear(new Date(startDate))
+    : undefined;
+  const hasStarted = startDate
+    ? new Date().getTime() > new Date(startDate)
+    : true;
 
   const hintWithVariables = replaceVariablesHintText({
     hint: hint && hint.hint,
@@ -220,7 +224,9 @@ export const Visualisation = ({
 
   const barGoalWidth = Math.min(100, ((goalInbetween || goal) / count) * 100);
 
-  const eyeCatcherLinkToDisplay = eyeCatcherLink ? eyeCatcherLink : (showCTA && ctaLink);
+  const eyeCatcherLinkToDisplay = eyeCatcherLink
+    ? eyeCatcherLink
+    : showCTA && ctaLink;
 
   return (
     <SectionInner
@@ -288,7 +294,7 @@ export const Visualisation = ({
                 </span>
               </>
             )}
-            {!hasStarted && (
+            {startDate && !hasStarted && (
               <span
                 aria-label={`Noch nicht gestartet. Ziel: ${goal}${currency}. Startet ${dateString}.`}
                 className={s.starts}
@@ -319,7 +325,10 @@ export const Visualisation = ({
               [s.eyeCatcherWithCta]: showCTA && ctaLink,
             })}
           >
-            <WrapInLink link={eyeCatcherLinkToDisplay} className={s.eyeCatcherLink}>
+            <WrapInLink
+              link={eyeCatcherLinkToDisplay}
+              className={s.eyeCatcherLink}
+            >
               <div
                 className={s.eyeCatcherBackground}
                 dangerouslySetInnerHTML={{ __html: eyeCatcherBackground }}
