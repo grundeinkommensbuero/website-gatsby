@@ -51,6 +51,10 @@ export default theme => {
     !isChristmas ? { amount: '6' } : { amount: '50' }
   );
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+
+  const [donationInterval, setDonationInverval] = useState({});
+
+
   let formData = {};
   let formErrors = {};
 
@@ -186,14 +190,23 @@ export default theme => {
       })}
     >
 
-{/*       <div>
+      <div className={s.donationIntervalSelection}>
         <h3>Wie möchtest du spenden?</h3>
-        <div>
-          <div>Jährlich</div>
-          <div>Monatlich</div>
-          <div>Einmalig</div>
+        <div className={s.selectionContainer}>
+          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'yearly'})}
+          onClick={() => {
+                  setDonationInverval('yearly');
+                }}>Jährlich</div>
+          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'monthly'})}
+          onClick={() => {
+            setDonationInverval('monthly');
+          }}>Monatlich</div>
+          <div className={cN(s.selectionElement, {[s.selectionElementActive]: donationInterval === 'once'})}
+          onClick={() => {
+            setDonationInverval('once');
+          }}>Einmalig</div>
         </div>
-      </div> */}
+      </div>
 
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form

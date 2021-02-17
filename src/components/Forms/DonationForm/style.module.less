@@ -21,6 +21,32 @@
     padding: 2.5rem 1.5rem;
   }
 
+  .selectionContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .selectionElement {
+    border: @borderWidthThick solid @violet;
+    color: @violet;
+    padding: 1.2rem 2rem 1rem;
+    margin-right: 1rem;
+    min-width: 10rem;
+    text-align: center;
+  }
+
+  .selectionElement:hover {
+    cursor: pointer;
+    background-color: @violet;
+    color: @white;
+  }
+
+  .selectionElementActive {
+    background-color: @violet;
+    color: @white;
+  }
+
   h3 {
     hyphens: unset;
   }
