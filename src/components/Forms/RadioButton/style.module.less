@@ -34,23 +34,8 @@
   height: 24px;
   width: 24px;
   background-color: @white;
+  border: 1px solid @violet;
   border-radius: 50%;
-}
-
-/* On mouse-over, add a background color */
-.container:hover input ~ .radio {
-  border: 1px solid var(--font-color);
-}
-
-/* Make sure the dot does not move around on hover */
-.container:hover .radio:after {
-  top: 6px;
-  left: 6px;
-}
-
-/* When the radio button is checked, add a background */
-.container input:checked ~ .radio {
-  background-color: var(--font-color);
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -65,12 +50,17 @@
   display: block;
 }
 
+/* Show dot on hover - does not work yet */
+.container:hover .radio:after {
+  //display: block;
+}
+
 /* Style the indicator (dot/circle) */
 .container .radio:after {
-  top: 7px;
-  left: 7px;
-  width: 10px;
-  height: 10px;
+  top: 4px;
+  left: 4px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: white;
+  background: @violet;
 }

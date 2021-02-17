@@ -3,7 +3,7 @@ import menuElements from './BreadcrumbMenu.json';
 import cN from 'classnames';
 import s from './style.module.less';
 
-export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverlay }) => {
+export const BreadcrumbLinks = ({ setCurrentElement, currentElement, setOverlayOpen }) => {
 
   const pathMatchesMenuElement = (element) => {
     return currentElement === element;
@@ -11,9 +11,9 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverl
 
   const closeIcon = require('./close-icon.svg');
 
-  return menuElements.map(element =>
-    <>
-      {element.name !== 'close' ?
+  return menuElements.map(element => {
+    if (element.name !== 'close') {
+      return (
         <div
           aria-hidden={true}
           onClick={() => setCurrentElement(element.name)}
@@ -25,11 +25,14 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverl
             )}
         >
           {element.title}
-        </div> :
+        </div>
+      )
+    } else {
+      return (
         <div
           aria-hidden={true}
-          onClick={() => toggleOverlay()}
-          onKeyUp={() => toggleOverlay()}
+          onClick={() => setOverlayOpen(false)}
+          onKeyUp={() => setOverlayOpen(false)}
           key={element.name}
           className={
             cN(s.breadcrumbElement,
@@ -42,7 +45,8 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, toggleOverl
             className={s.closeButton}
             src={closeIcon}
           />
-        </div>}
-    </>
-  )
+        </div>
+      )
+    }
+  })
 }

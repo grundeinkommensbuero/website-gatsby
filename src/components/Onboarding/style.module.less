@@ -1,11 +1,15 @@
 @import '../../components/style/vars.less';
 .onboardingOverlayContainer {
   background-color: @white;
+  border: 1px solid @violet;
   border-radius: 25px;
+  max-width: 50rem;
+  margin: 0 auto;
 }
+
 .pageContainer {
   max-width: 74rem;
-  padding: 2rem;
+  padding: 2rem 2rem;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
@@ -48,15 +52,14 @@
   justify-content: space-between;
 
   @media (max-width: @breakPointM) {
-    margin-top: 6rem;
-    max-width: 72rem;
+    //max-width: 72rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
   @media (max-width: @breakPointS) {
-    margin-top: 4.75rem;
-    max-width: 71rem;
+    margin-top: 0;
+    //max-width: 71rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -88,6 +91,11 @@
     -webkit-border-radius: 0;
     border-radius: 0 4px 4px 0;
     clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 20% 50%, 0% 0%);
+
+    @media (max-width: @breakPointM) {
+      width: 50%;
+      clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 10% 50%, 0% 0%);
+    }
   }
 
   // &:nth-child(even) {
@@ -109,4 +117,44 @@
   margin-left: 0.3rem;
   cursor: pointer;
   fill: @white;
+}
+
+.nextButton {
+  color: @violet;
+  border: solid 1px @violet;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background-color: @violet;
+    color: white;
+  }
+}
+
+.textArea {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.linkLikeFormatted {
+  font-size: @MobileFontSizeM;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0;
+}
+
+.fullWidthFlex {
+  width: 100%;
+  padding: 0.5rem 0 0 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.lonelyCloseButton {
+  background-color: @red;
+  width: 2.4rem;
+  border-radius: 5px;
+  padding: 0.5rem 0.4rem 0.4rem 0.5rem;
+  margin: 1rem;
+  float: right;
+  cursor: pointer;
 }

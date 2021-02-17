@@ -1,48 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import s from './style.module.less';
-import { OverlayContext } from '../../context/Overlay';
+import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
 import { Onboarding } from '../Onboarding'
 
-export const OnboardingOverlay = ({ isOpenInitially = true, ...props }) => {
+export const OnboardingOverlay = ({ ...props }) => {
   return (
-    <OverlayContext.Consumer>
-      {({ overlayOpen, toggleOverlay, setAutomaticOpenDelay }) => (
-        <Overlay
-          isOpen={overlayOpen}
-          toggleOverlay={toggleOverlay}
-          setAutomaticOpenDelay={setAutomaticOpenDelay}
-          {...props}
-        />
+    <OnboardingOverlayContext.Consumer>
+      {({ overlayOpen, setOverlayOpen }) => (
+        <>
+          {overlayOpen ?
+            <div className={s.onboardingContainer} role="dialog" aria-describedby="dialogTitle">
+              <div className={s.body}>
+                <Onboarding setOverlayOpen={setOverlayOpen} />
+              </div>
+            </div> : null}
+        </>
       )}
-    </OverlayContext.Consumer>
+    </OnboardingOverlayContext.Consumer>
   );
-};
-
-const Overlay = ({
-  isOpen,
-  toggleOverlay,
-  delay,
-  setAutomaticOpenDelay,
-}) => {
-  useEffect(() => {
-    if (delay) {
-      setAutomaticOpenDelay(delay);
-    }
-  }, [delay]);
-
-  useEffect(() => {
-    document.body.classList.toggle(s.bodyOverlayOpen, isOpen);
-  }, [isOpen]);
-
-  if (isOpen) {
-    return (
-      <div className={s.onboardingContainer} role="dialog" aria-describedby="dialogTitle">
-        <div className={s.body}>
-          <Onboarding toggleOverlay={toggleOverlay} />
-        </div>
-      </div>
-    );
-  } else {
-    return null;
-  }
 };

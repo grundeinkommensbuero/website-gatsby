@@ -7,6 +7,14 @@
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
+  --bg-color: @white;
+  --font-color: @black;
+  --secondary-color: @aqua;
+  --text-on-secondary-color: @white;
+  --button-font-color: @violet;
+  --button-bg-color: @violetTransparent;
+  --button-hover-bg-color: @violet;
+  --button-hover-font-color: @white;
 
   @media (max-width: @breakPointS) {
     margin-top: 0;
@@ -82,21 +90,6 @@
   font-size: @DesktopFontSizeXS;
 }
 
-.christmasTheme {
-  --bg-color: @grey;
-  background-color: @red;
-  color: @grey;
-  & input:checked {
-    color: @red;
-  }
-}
-
-// Put all the following styles back into christmas theme when christmas is over
-.adjustFinallyMessage {
-  --secondary-color: @red;
-  --text-on-secondary-color: @grey;
-}
-
 .buttonContainer a {
   border-color: @grey;
   &:hover {
@@ -115,64 +108,20 @@ button {
   }
 }
 
-.primaryButton {
-  background-color: @grey;
-  color: @red !important;
-  border: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: darken(@grey, 10%);
-    border: none;
-  }
-}
-
-// Radio Buttons
-input:checked ~ span {
-  background-color: @grey !important;
-
-  &:after {
-    background-color: @red !important;
-  }
-}
-
-// Checkboxes
-label > input {
-  background-color: @grey;
-  border: none;
-}
-
-label > input:checked {
-  background-color: @grey;
-  border: none;
-  color: @red;
-}
-
 .certificateInfo {
   margin-top: 3rem;
 }
 
-/* Leftover styles in case we want to 
-switch back from christmas theme */
-.standardColors {
-  background-color: var(--bg-color);
-  border: 1px solid var(--font-color);
-
-  .primaryButton {
-    background: var(--font-color);
-    color: var(--bg-color);
-    border: none;
-
-    &:hover,
-    &:focus {
-      background: darken(@red, 10%);
-      box-shadow: none;
-    }
+.christmasTheme {
+  --bg-color: @grey;
+  background-color: @red;
+  color: @grey;
+  & input:checked {
+    color: @red;
   }
 
   .adjustFinallyMessage {
-    --secondary-color: var(--bg-color);
-    --text-on-secondary-color: var(--font-color);
+    --secondary-color: @red;
+    --text-on-secondary-color: @grey;
   }
 }

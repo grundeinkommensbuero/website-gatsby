@@ -211,7 +211,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
               {mainNewsletterConsent && mainNewsletterConsent.value ? (
                 <span
                   aria-hidden="true"
-                  className={gS.linkLikeFormated}
+                  className={gS.linkLikeFormatted}
                   onClick={toggleUnsubscribeDialog}
                   onKeyDown={toggleUnsubscribeDialog}
                 >
@@ -220,7 +220,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
               ) : (
                   <span
                     aria-hidden="true"
-                    className={gS.linkLikeFormated}
+                    className={gS.linkLikeFormatted}
                     onClick={toggleMainNewsletterConsent}
                     onKeyDown={toggleMainNewsletterConsent}
                   >
@@ -254,7 +254,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <div className={s.cancelRevokeProcess}>
             <span
               aria-hidden="true"
-              className={gS.linkLikeFormated}
+              className={gS.linkLikeFormatted}
               onClick={toggleUnsubscribeDialog}
               onKeyUp={toggleUnsubscribeDialog}
             >
@@ -287,7 +287,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <div className={s.cancelRevokeProcess}>
             <span
               aria-hidden="true"
-              className={gS.linkLikeFormated}
+              className={gS.linkLikeFormatted}
               onClick={() => setShowUnsubscribeAllDialog(false)}
               onKeyUp={() => setShowUnsubscribeAllDialog(false)}
             >
@@ -374,7 +374,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         {!unsubscribeAllDialogActive ?
           <p
             aria-hidden="true"
-            className={cN(gS.linkLikeFormated, gS.bottomRightLink)}
+            className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
             onClick={() => setShowUnsubscribeAllDialog(true)}
             onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
           : <UnsubscribeAllDialog />

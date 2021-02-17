@@ -145,14 +145,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
         </div>
 
         <section className={s.userInfo}>
-          <ImageUpload
-            className={gS.avatar}
-            userData={userData}
-            userId={userId}
-            buttonOnRedBackground={true}
-            size={'large'}
-            onUploadDone={() => { }}
-          />
+          <div className={gS.avatarContainer}>
+            <ImageUpload
+              className={gS.avatar}
+              userData={userData}
+              userId={userId}
+              buttonOnAquaBackground={true}
+              size={'large'}
+              onUploadDone={() => { }}
+            />
+          </div>
           <div className={s.marginBottomOnMobile}>
             <h2
               className={cN({
@@ -375,7 +377,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             {!showDeleteAccountDialog ?
               <span
                 aria-hidden="true"
-                className={cN(gS.linkLikeFormated, gS.bottomRightLink)}
+                className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
                 onClick={() => setShowDeleteAccountDialog(true)}>
                 Profil löschen
               </span> :

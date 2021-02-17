@@ -97,7 +97,7 @@ export const NewsletterCard = ({
           <p className={cN(gS.alignRight, gS.noMargin)}>
             <span
               aria-hidden="true"
-              className={gS.linkLikeFormated}
+              className={gS.linkLikeFormatted}
               onClick={toggleNewsletterRevokeProcess}
               onKeyDown={toggleNewsletterRevokeProcess}
             >
@@ -124,7 +124,7 @@ export const NewsletterCard = ({
               <div className={s.cancelRevokeProcess}>
                 <span
                   aria-hidden="true"
-                  className={gS.linkLikeFormated}
+                  className={gS.linkLikeFormatted}
                   onClick={toggleNewsletterRevokeProcess}
                   onKeyUp={toggleNewsletterRevokeProcess}
                 >
