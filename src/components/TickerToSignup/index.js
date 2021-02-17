@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { Ticker } from './Ticker';
 import { MunicipalitySearch } from './MunicipalitySearch';
 import SignUp from '../Forms/SignUp';
+import { ProfileTile } from '../Profile/ProfileTile';
 
 import { MunicipalityContext } from '../../context/Municipality';
 
@@ -17,7 +18,9 @@ export const TickerToSignup = ({
     <>
       <Ticker tickerDescription={tickerDescription} />
       {isMunicipality ? (
-        <SignUp illustration={false} showSignedInMessage={false} />
+        <>
+          <SignUp illustration={false} showSignedInMessage={false} />
+        </>
       ) : (
         <MunicipalitySearch />
       )}

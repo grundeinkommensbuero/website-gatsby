@@ -1,10 +1,142 @@
 @import '../../../components/style/vars.less';
 
+
+.tileContainer {
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding: 3rem;
+  background: @aqua;
+  color: @white;
+
+  p {
+    font-size: @DesktopFontSizeM;
+    @media (max-width: @breakPointM) {
+      font-size: @MobileFontSizeM;
+    margin-bottom: 1.5rem;
+    }
+    @media (max-width: @breakPointS) {
+      font-size: @MobileFontSizeM;
+      line-height: 1.625rem;
+    }
+  }
+}
+
+&.sectionAqua {
+  background-color: @aqua;
+  color: @white;
+  --bg-color: @aqua;
+  --font-color: @white;
+  --secondary-color: @white;
+  --text-on-secondary-color: @white;
+  --button-font-color: @white;
+  --button-bg-color: @whiteTransparent;
+}
+
+&.sectionWhite {
+  background-color: @white;
+  color: @black;
+  --bg-color: @white;
+  --font-color: @black;
+  --secondary-color: @violet;
+  --text-on-secondary-color: @white;
+  --button-font-color: @violet;
+  --button-bg-color: @violetTransparent;
+
+  h1,
+  h2,
+  h3 {
+    // Note: is that ok ?
+    // color: @violet;
+    color: var(--secondary-color);
+  }
+}
+
+.flexElement {
+  width: 47.5%;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+}
+
+.headline {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  @media (max-width: @breakPointM) {
+    margin-top: 1.5rem;
+  }
+}
+
+.avatarAndInfo {
+  margin: 0 auto;
+  width: 47.5%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media (max-width: @breakPointL) {
+    width: 100%;
+    margin-bottom: 4rem;
+    justify-content:center;
+  }
+}
+
 .avatar {
   width: 7em;
   height: 7em;
+  margin-right: 0.75rem;
 
   @media (max-width: @breakPointS) {
     margin-bottom: 1.5rem;
+    margin-right: 0;
+  }
+}
+
+.info {
+  min-width: 270px;
+  width: 70%;
+  margin-left:0.75rem;
+  @media (max-width: @breakPointL) {
+    width: 50%;
+  }
+  @media (max-width: @breakPointS) {
+    width: 100%;
+    margin-left:0;
+
+  }
+}
+
+.infoText {
+  font-size: @DesktopFontSizeM;
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+  li:last-child{
+    margin-bottom: 0;
+  }
+  margin-bottom: 2rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeM;
+  margin-bottom: 1.5rem;
+
+  }
+
+  @media (max-width: @breakPointS) {
+    font-size: @MobileFontSizeM;
+    line-height: 1.625rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.centerMobile {
+  @media (max-width: @breakPointS) {
+    text-align: center;
   }
 }
