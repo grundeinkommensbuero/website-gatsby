@@ -227,6 +227,7 @@ export const pageQuery = graphql`
           ... on ContentfulPageSectionTwoColumns {
             __typename
             title
+            colorScheme
             columnIntroText {
               json
             }

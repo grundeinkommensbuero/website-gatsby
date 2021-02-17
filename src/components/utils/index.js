@@ -173,16 +173,18 @@ export const getStringFromPlaceholderText = (string, object) => {
     return '';
   }
   let result = string;
-  const regexSubInSingleQuotes = /^'.*'$/;
+  // Find strings in curly braces
   let matches = string.match(/{([^}]+)}/g);
-
   // Without curly braces in the string
   // no placeholder is defined and
   // we can return
   if (!matches) {
-    return result;
+    return string;
   }
+  // Remove curly braces
   matches = matches.map(s => s.replace(/({|})/g, ''));
+
+  const regexSubInSingleQuotes = /^'.*'$/;
 
   matches.forEach(e => {
     let replacement = '';
@@ -215,6 +217,7 @@ export const getStringFromPlaceholderText = (string, object) => {
     result = result.replace(e, replacement);
   });
   result = result.replace(/{/g, '').replace(/}/g, '');
+
   return result;
 };
 
