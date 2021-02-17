@@ -40,8 +40,6 @@ import { animate } from './animate';
 import { MapTooltip } from './MapTooltip';
 import { Button } from '../../Forms/Button';
 
-import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
-
 import { MunicipalityContext } from '../../../context/Municipality';
 
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
@@ -145,7 +143,11 @@ export const MunicipalityMap = ({
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
 }) => {
-  const { municipality } = useContext(MunicipalityContext);
+  const {
+    municipality,
+    allMunicipalityStats,
+    allMunicipalityStatsState,
+  } = useContext(MunicipalityContext);
   const agsToFlyTo = municipality ? municipality.ags : undefined;
 
   // ---- useState -------------------------------------------------------------------------
@@ -160,11 +162,6 @@ export const MunicipalityMap = ({
     [1000, 30000],
   ]);
   const [, setTimePassed] = useState();
-  const [
-    municipalityStatsState,
-    municipalityStats,
-    getMunicipalityStats,
-  ] = useGetMunicipalityStats();
   const [focus, setFocus] = useState();
   const [mapDataReady, setMapDataReady] = useState(false);
   const [zoom, setZoom] = useState(4.56);
@@ -188,11 +185,7 @@ export const MunicipalityMap = ({
   }, []);
 
   useEffect(() => {
-    getMunicipalityStats();
-  }, []);
-
-  useEffect(() => {
-    if (municipalityStats?.municipalities) {
+    if (allMunicipalityStats?.municipalities) {
       import('./data/states-geo.json').then(({ default: states }) => {
         setDataStates(states);
       });
@@ -204,7 +197,7 @@ export const MunicipalityMap = ({
             events,
             scale,
             timePassed,
-          } = municipalityStats;
+          } = allMunicipalityStats;
 
           const {
             dataSignups,
@@ -219,6 +212,8 @@ export const MunicipalityMap = ({
             initialMapAnimation,
           });
 
+          console.log({ signups });
+
           setDataSignups(dataSignups);
           setDataEvents(dataEvents);
           setDataLabels(dataLabels);
@@ -230,7 +225,7 @@ export const MunicipalityMap = ({
         }
       );
     }
-  }, [municipalityStats]);
+  }, [allMunicipalityStats]);
 
   useEffect(() => {
     if (mapDataReady && onDataReady) {
@@ -263,7 +258,7 @@ export const MunicipalityMap = ({
   useEffect(() => {
     if (
       (mapDataReady && shouldStartAnimation) ||
-      municipalityStatsState === 'error'
+      allMunicipalityStatsState === 'error'
     ) {
       animate({
         fadeOpacities,
@@ -274,10 +269,10 @@ export const MunicipalityMap = ({
         updateFocus,
         initialMapAnimation,
         setMunicipalityFadeProgress,
-        municipalityStatsState,
+        municipalityStatsState: allMunicipalityStatsState,
       });
     }
-  }, [shouldStartAnimation, mapDataReady, animate, municipalityStatsState]);
+  }, [shouldStartAnimation, mapDataReady, animate, allMunicipalityStatsState]);
 
   useEffect(() => {
     if (mapDataReady) {
@@ -344,7 +339,7 @@ export const MunicipalityMap = ({
           className={cN(s.mapStatic, s.empty)}
           style={{ opacity: fadeOpacities.empty }}
         ></div>
-        {municipalityStatsState === 'success' ? (
+        {allMunicipalityStatsState === 'success' ? (
           <div
             className={s.mapContainer}
             style={{ opacity: fadeOpacities.map }}
