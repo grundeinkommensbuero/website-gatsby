@@ -297,10 +297,11 @@ export default theme => {
                           </CTAButton>
 
                         </div>
-                        <p className={s.hint}>
-                          Hinweis: Du kannst deine monatliche Spende jederzeit
+                        <p>
+                          Hinweis: Du kannst deine Spende jederzeit
                           wieder beenden.
                         </p>
+                        <p>Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag.</p>
                       </>)}
 
                       {isChristmas && (
