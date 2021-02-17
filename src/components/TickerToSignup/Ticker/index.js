@@ -12,6 +12,14 @@ export const Ticker = ({ tickerDescription }) => {
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
   useEffect(() => {
+    if (municipality && typeof municipality.signups === 'number') {
+      setPeopleCount(municipality.signups);
+    } else {
+      setPeopleCount(3592);
+    }
+  }, [municipality]);
+
+  useEffect(() => {
     if (municipality && municipality.signups) {
       setPeopleCount(municipality.signups);
     } else {

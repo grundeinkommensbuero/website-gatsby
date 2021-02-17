@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Link from 'gatsby-link';
 
 // import { OverlayContext } from '../../../context/Overlay';
@@ -8,8 +8,10 @@ import s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
 import { StickyDonationBar } from './StickyDonationBar';
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const Header = ({ menu, hasOverlay, donationBarVisible }) => {
+  const { setPageContext } = useContext(MunicipalityContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -21,7 +23,16 @@ const Header = ({ menu, hasOverlay, donationBarVisible }) => {
       <header className={s.header}>
         <div className={s.headerItemContainer}>
           <h1 className={s.title}>
-            <Link to="/">
+            <Link
+              to="/"
+              onClick={() => {
+                setPageContext({
+                  slug: '/',
+                  isMunicipality: false,
+                  isSpecificMunicipality: false,
+                });
+              }}
+            >
               <img
                 src={Logo}
                 className={s.logo}
@@ -52,7 +63,6 @@ const Header = ({ menu, hasOverlay, donationBarVisible }) => {
         </div>
         {donationBarVisible && <StickyDonationBar />}
       </header>
-
     </>
   );
 };

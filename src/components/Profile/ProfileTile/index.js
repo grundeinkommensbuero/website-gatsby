@@ -19,7 +19,6 @@ export const ProfileTile = ({ body }) => {
     municipalityContentfulState,
     userContentfulState,
   } = useUserMunicipalityContentfulState();
-  console.log(userContentfulState, municipalityContentfulState);
 
   if (userContentfulState === 'loggedInThisMunicipalitySignup') {
     return <TileLoggedInThisMunicipality {...tileData} />;
