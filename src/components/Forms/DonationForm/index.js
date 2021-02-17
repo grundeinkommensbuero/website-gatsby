@@ -185,6 +185,16 @@ export default theme => {
         [s.christmasTheme]: themeClass === 'christmas',
       })}
     >
+
+{/*       <div>
+        <h3>Wie möchtest du spenden?</h3>
+        <div>
+          <div>Jährlich</div>
+          <div>Monatlich</div>
+          <div>Einmalig</div>
+        </div>
+      </div> */}
+
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
