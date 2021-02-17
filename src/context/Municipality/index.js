@@ -12,11 +12,14 @@ export const MunicipalityProvider = ({ children }) => {
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
 
+  // Stats for all municipalities
   const [
     allMunicipalityStatsState,
     allMunicipalityStats,
     getAllMunicipalityStats,
   ] = useGetMunicipalityStats();
+
+  // Stats for juse on municipality, will be set if a municipality is set
   const [
     singleMunicipalityStatsState,
     singleMunicipalityStats,
