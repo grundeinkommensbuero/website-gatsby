@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import gS from '../style.module.less';
 import s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
-import { Button } from '../../Forms/Button';
+// import { Button } from '../../Forms/Button';
 
 export const Spenden = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
   const [showDonationForm, setShowDonationForm] = useState(false);
@@ -25,7 +25,7 @@ export const Spenden = ({ userData, userId, compIndex, setCurrentElementByIndex 
             in GEMEINDE und ganz Deutschland Wirklichkeit werden lassen!
           </p>
 
-          <div className={s.donationButtonRow}>
+          {/* <div className={s.donationButtonRow}>
             <Button
               className={gS.nextButton}
               onClick={() => setShowDonationForm(true)}>
@@ -36,8 +36,23 @@ export const Spenden = ({ userData, userId, compIndex, setCurrentElementByIndex 
               className={gS.nextButton}>
               Später erinnern
           </Button>
-          </div>
+          </div> */}
 
+          <div className={gS.buttonRow}>
+            <div
+              aria-hidden="true"
+              className={s.engagementOption}
+              onClick={() => setShowDonationForm(true)}>
+              Jetzt spenden
+            </div>
+
+            <div
+              aria-hidden="true"
+              className={s.engagementOption}
+              onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+              Später erinnern
+            </div>
+          </div>
 
           <div className={gS.fullWidthFlex}>
             <span

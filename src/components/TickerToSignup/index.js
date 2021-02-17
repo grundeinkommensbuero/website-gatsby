@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-// import s from './style.module.less';
+import s from './style.module.less';
 
 import { Ticker } from './Ticker';
 import { MunicipalitySearch } from './MunicipalitySearch';
@@ -10,11 +10,12 @@ import { MunicipalityContext } from '../../context/Municipality';
 import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
 
 import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
+import { getCountrySpecifications } from 'ibantools';
 
 export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,
 }) => {
-  const { isMunicipality } = useContext(MunicipalityContext);
+  const { isMunicipality, municipality } = useContext(MunicipalityContext);
   const tickerDescription = tickerDescriptionObject?.tickerDescription;
 
   // State of onboarding overlay
@@ -26,7 +27,9 @@ export const TickerToSignup = ({
 
       <Ticker tickerDescription={tickerDescription} />
       {isMunicipality ? (
-        <Button onClick={() => setOverlayOpen(true)}>Ich bin dabei</Button>
+        <Button className={s.signUpCTA} onClick={() => setOverlayOpen(true)}>
+          Jetzt in {municipality.name} anmelden!
+        </Button>
       ) : (
           <MunicipalitySearch />
         )}

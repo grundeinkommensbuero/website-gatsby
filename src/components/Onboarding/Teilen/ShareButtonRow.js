@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './style.module.less';
+import cN from 'classnames';
 
 import {
   EmailShareButton,
@@ -22,50 +23,62 @@ export const ShareButtonRow = () => {
   return (
     <>
       <section className={s.shareButtonRow}>
-        <div className={s.shareButtonContainer}>
-          <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <TwitterIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
-          </TwitterShareButton>
-          <p>Twitter</p>
+
+        <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+          <div className={s.shareButtonContainer}>
+            <TwitterIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
+            <p className={s.shareElementTitle}>Twitter</p>
+          </div>
+        </TwitterShareButton>
+
+
+
+        <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+          <div className={s.shareButtonContainer}>
+            <FacebookIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
+            <p className={s.shareElementTitle}>Facebook</p>
+          </div>
+        </FacebookShareButton>
+
+
+        <div className={s.shareItem}>
+          <div className={s.shareButtonContainer}>
+            <img
+              aria-hidden="true"
+              alt="Instagram Logo"
+              src={iconInstagram}
+              className={(s.icon)}
+            />
+            <p className={s.shareElementTitle}>Instagram</p>
+          </div>
         </div>
 
-        <div className={s.shareButtonContainer}>
-          <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <FacebookIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
-          </FacebookShareButton>
-          <p>Facebook</p>
-        </div>
 
-        <div className={s.shareButtonContainer}>
-          <img
-            aria-hidden="true"
-            alt="Instagram Logo"
-            src={iconInstagram}
-            className={s.icon}
-          />
-          <p>Instagram</p>
-        </div>
+        <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+          <div className={s.shareButtonContainer}>
+            <TelegramIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
+            <p className={s.shareElementTitle}>Telegram</p>
+          </div>
+        </TelegramShareButton>
 
-        <div className={s.shareButtonContainer}>
-          <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <TelegramIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
-          </TelegramShareButton>
-          <p>Telegram</p>
-        </div>
 
-        <div className={s.shareButtonContainer}>
-          <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <WhatsappIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
-          </WhatsappShareButton>
-          <p>Whats App</p>
-        </div>
 
-        <div className={s.shareButtonContainer}>
-          <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <EmailIcon size={70} round={true} bgStyle={{ fillOpacity: 0 }} />
-          </EmailShareButton>
-          <p>E-Mail</p>
-        </div>
+        <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+          <div className={s.shareButtonContainer}>
+            <WhatsappIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
+            <p className={s.shareElementTitle}>Whats App</p>
+          </div>
+        </WhatsappShareButton>
+
+
+
+        <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+          <div className={s.shareButtonContainer}>
+            <EmailIcon size={65} round={true} bgStyle={{ fillOpacity: 0 }} />
+            <p className={s.shareElementTitle}>E-Mail</p>
+          </div>
+        </EmailShareButton>
+
 
         {/* <div className={s.shareButtonContainer}>
           <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>

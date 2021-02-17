@@ -5,6 +5,7 @@ import s from './style.module.less';
 import { BreadcrumbLinks } from './BreadcrumbLinks';
 import { Anmeldung } from './Anmeldung';
 import { Mitmachen } from './Mitmachen';
+import { EngagementLevel } from './EngagementLevel';
 import { Frage } from './Frage';
 import { Teilen } from './Teilen';
 import { Spenden } from './Spenden';
@@ -18,6 +19,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
     customUserData: userData,
   } = useContext(AuthContext);
 
+  const [engagementOption, setEngagementOption] = useState();
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
 
   const setCurrentElementByIndex = index => {
@@ -27,11 +29,13 @@ export const Onboarding = ({ setOverlayOpen }) => {
       setCurrentElement(menuElements[index].name);
     }
   };
+
   const closeIcon = require('./close-icon.svg');
 
   const Components = {
     Anmeldung,
     Mitmachen,
+    EngagementLevel,
     Frage,
     Teilen,
     Spenden,
@@ -45,6 +49,8 @@ export const Onboarding = ({ setOverlayOpen }) => {
       setCurrentElementByIndex={setCurrentElementByIndex}
       userData={userData}
       userId={userId}
+      engagementOption={engagementOption}
+      setEngagementOption={setEngagementOption}
     />
   };
 
