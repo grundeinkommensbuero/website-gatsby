@@ -4,7 +4,7 @@ import gS from '../style.module.less';
 import ImageUpload from '../../Forms/ImageUpload';
 import { Button } from '../../Forms/Button';
 
-export const ProfilEinrichten = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
+export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
   return (
     <>
       <section className={gS.pageContainer}>

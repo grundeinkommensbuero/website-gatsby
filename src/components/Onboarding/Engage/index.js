@@ -6,7 +6,7 @@ import cN from 'classnames';
 
 import { MunicipalityInfo } from './MunicipalityInfo';
 
-export const Mitmachen = ({ userData, compIndex, setCurrentElementByIndex }) => {
+export const Engage = ({ userData, compIndex, setCurrentElementByIndex }) => {
 
   return (
     <section className={gS.pageContainer}>

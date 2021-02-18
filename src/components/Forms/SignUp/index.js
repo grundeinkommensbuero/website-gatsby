@@ -62,6 +62,7 @@ export default ({
       updateUser({
         ...formData,
         updatedOnXbge: true,
+        ags: municipality?.ags
       });
       setSignUpState('signedIn');
     }
@@ -157,7 +158,6 @@ export default ({
           if (!e.newsLetterConsent) {
             e.newsLetterConsent = false;
           }
-          e.ags = municipality?.ags;
           setHasSubmitted(true);
           if (!isAuthenticated) {
             setFormData(e);
