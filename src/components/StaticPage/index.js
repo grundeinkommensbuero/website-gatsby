@@ -196,6 +196,15 @@ export const pageQuery = graphql`
                   json
                 }
               }
+              ... on ContentfulSectionComponentInviteFriends {
+                __typename
+                title
+                showForOptions
+                headline
+                body {
+                  json
+                }
+              }
               ... on ContentfulSectionComponentBecomeActive {
                 __typename
                 title
@@ -204,6 +213,12 @@ export const pageQuery = graphql`
                 body {
                   json
                 }
+                fullWidthOnDesktop
+              }
+              ... on ContentfulSectionComponentInfoText {
+                __typename
+                title
+                showForOptions
                 fullWidthOnDesktop
               }
               ... on ContentfulSectionComponentProfileTile {

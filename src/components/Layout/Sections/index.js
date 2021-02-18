@@ -27,7 +27,8 @@ import {
   getComponentFromContentful,
 } from '../../utils';
 import { TickerToSignup } from '../../TickerToSignup';
-import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
+import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
+import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
 import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
 import { InviteFriends } from '../../InviteFriends';
 import { BecomeActive } from '../../BecomeActive';
@@ -35,7 +36,8 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 
 const Components = {
   TickerToSignup,
-  MunicipalityMap,
+  MunicipalityMap: MunicipalityMapAndSearch,
+  InfoText: MunicipalityInfoText,
   MunicipalityProgress,
   InviteFriends,
   BecomeActive,
@@ -259,7 +261,9 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
                 </div>
               )}
-              {columnTopLeft && (<div>{contentfulJsonToHtml(columnTopLeft.json)}</div>) }
+              {columnTopLeft && (
+                <div>{contentfulJsonToHtml(columnTopLeft.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageTopRight && (
@@ -267,7 +271,9 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
                 </div>
               )}
-              {columnTopRight && (<div>{contentfulJsonToHtml(columnTopRight.json)}</div>) }
+              {columnTopRight && (
+                <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageBottomLeft && (
@@ -275,7 +281,9 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
                 </div>
               )}
-              {columnBottomLeft && (<div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>)}
+              {columnBottomLeft && (
+                <div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageBottomRight && (
@@ -286,7 +294,9 @@ export function ContentfulSection({ section, pageContext }) {
                   />
                 </div>
               )}
-              {columnBottomRight && (<div>{contentfulJsonToHtml(columnBottomRight.json)}</div>)}
+              {columnBottomRight && (
+                <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+              )}
             </section>
           </TwoColumns>
         </SectionInner>

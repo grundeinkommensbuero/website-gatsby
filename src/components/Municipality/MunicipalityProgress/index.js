@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-export const MunicipalityProgress = () => {
+export const MunicipalityProgress = ({
+  showHeadline = true,
+  showDescription = true,
+}) => {
   const { municipality } = useContext(MunicipalityContext);
   const statsReady = municipality?.goal > 0;
   let signups = municipality?.signups || 0;
@@ -13,9 +16,11 @@ export const MunicipalityProgress = () => {
   if (statsReady) {
     return (
       <div>
-        <h2>
-          Gemeinsam bringen wir das Grundeinkommen nach {municipality.name}!
-        </h2>
+        {showHeadline && (
+          <h2>
+            Gemeinsam bringen wir das Grundeinkommen nach {municipality.name}!
+          </h2>
+        )}
         <CampainVisualisation
           goal={municipality.goal}
           count={signups}
@@ -37,12 +42,14 @@ export const MunicipalityProgress = () => {
           startDate={false}
         />
         <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3>
-        <p>
-          Wenn wir ingesamt {municipality.goal} Menschen sind, dann trauen wir
-          uns zu, gemeinsam den offiziellen Bürgerbegehrens-prozess für unseren
-          Modellversuch zu starten. Hierfür müssen wir möglichst viele sein. Hol
-          also noch Menschen dazu!
-        </p>
+        {showDescription && (
+          <p>
+            Wenn wir ingesamt {municipality.goal} Menschen sind, dann trauen wir
+            uns zu, gemeinsam den offiziellen Bürgerbegehrens-prozess für
+            unseren Modellversuch zu starten. Hierfür müssen wir möglichst viele
+            sein. Hol also noch Menschen dazu!
+          </p>
+        )}
       </div>
     );
   } else {

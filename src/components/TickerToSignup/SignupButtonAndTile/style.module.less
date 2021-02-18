@@ -10,3 +10,47 @@
     width: 100%;
   }
 }
+
+.tileContainer {
+  margin: auto;
+  // display: flex;
+  // justify-content: space-around;
+  // flex-wrap: wrap;
+  margin-top: 2rem;
+  padding: 3rem;
+
+  p {
+    font-size: @DesktopFontSizeM;
+    @media (max-width: @breakPointM) {
+      font-size: @MobileFontSizeM;
+    margin-bottom: 1.5rem;
+    }
+    @media (max-width: @breakPointS) {
+      font-size: @MobileFontSizeM;
+      line-height: 1.625rem;
+    }
+  }
+
+}
+
+&.sectionWhite {
+  background-color: @white;
+  color: @black;
+  --bg-color: @white;
+  --font-color: @black;
+  --secondary-color: @violet;
+  --text-on-secondary-color: @white;
+  --button-font-color: @violet;
+  --button-bg-color: @violetTransparent;
+
+  h1,
+  h2,
+  h3 {
+    // Note: is that ok ?
+    // color: @violet;
+    color: var(--secondary-color);
+  }
+}
+.inviteHeadline {
+  margin-top: -1.5rem;
+}

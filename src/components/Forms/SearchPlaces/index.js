@@ -26,6 +26,7 @@ export const SearchPlaces = ({
   placeholder = 'Stadt oder Gemeinde',
   onPlaceSelect,
   label = 'Stadt oder Gemeinde:',
+  searchTitle,
   validateOnBlur,
   inputSize,
   buttonSize,
@@ -196,7 +197,7 @@ export const SearchPlaces = ({
     <>
       {label && <label>{label}</label>}
       <div className={s.container}>
-        <h2 className={s.searchTitle}>Finde deinen Ort:</h2>
+        {searchTitle && <h2 className={s.searchTitle}>{searchTitle}</h2>}
         <div className={s.inputContainer}>
           <TextInput
             size={inputSize}
