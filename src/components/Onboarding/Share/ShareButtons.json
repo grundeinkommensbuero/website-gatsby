@@ -1,0 +1,22 @@
+[
+  {
+    "name": "FacebookShareButton",
+    "label": "Facebook"
+  },
+  {
+    "name": "EmailShareButton",
+    "label": "E-Mail"
+  },
+  {
+    "name": "TelegramShareButton",
+    "label": "Telegram"
+  },
+  {
+    "name": "TwitterShareButton",
+    "label": "Twitter"
+  },
+  {
+    "name": "WhatsappShareButton",
+    "label": "What\\'s App"
+  }
+]

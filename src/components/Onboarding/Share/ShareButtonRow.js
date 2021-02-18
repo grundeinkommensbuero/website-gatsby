@@ -2,13 +2,6 @@ import React from 'react';
 import s from './style.module.less';
 
 import {
-  EmailShareButton,
-  FacebookShareButton,
-  TelegramShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from 'react-share';
-import {
   EmailIcon,
   FacebookIcon,
   TelegramIcon,
@@ -16,31 +9,45 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-export const ShareButtonRow = () => {
+export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive }) => {
   const iconInstagram = require('./icons/Instagram.svg');
+
+  const activatePreview = channel => {
+    setShareChannel(channel);
+    setSharePreviewActive(true);
+  };
 
   return (
     <>
       <section className={s.shareButtonRow}>
 
-        <TwitterShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+        <div
+          aria-hidden="true"
+          className={s.shareItem}
+          onClick={() => activatePreview('Twitter')}
+        >
           <div className={s.shareButtonContainer}>
             <TwitterIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
             <p className={s.shareElementTitle}>Twitter</p>
           </div>
-        </TwitterShareButton>
+        </div>
 
-
-
-        <FacebookShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+        <div
+          aria-hidden="true"
+          className={s.shareItem}
+          onClick={() => activatePreview('Facebook')}
+        >
           <div className={s.shareButtonContainer}>
             <FacebookIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
             <p className={s.shareElementTitle}>Facebook</p>
           </div>
-        </FacebookShareButton>
+        </div>
 
-
-        <div className={s.shareItem}>
+        <div
+          aria-hidden="true"
+          className={s.shareItem}
+          onClick={() => activatePreview('Instagram')}
+        >
           <div className={s.shareButtonContainer}>
             <img
               aria-hidden="true"
@@ -52,47 +59,38 @@ export const ShareButtonRow = () => {
           </div>
         </div>
 
-
-        <TelegramShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+        <div
+          aria-hidden="true"
+          className={s.shareItem}
+          onClick={() => activatePreview('Telegram')}
+        >
           <div className={s.shareButtonContainer}>
             <TelegramIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
             <p className={s.shareElementTitle}>Telegram</p>
           </div>
-        </TelegramShareButton>
+        </div>
 
-
-
-        <WhatsappShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+        <div
+          aria-hidden="true"
+          className={s.shareItem}
+          onClick={() => activatePreview('What\'s App')}
+        >
           <div className={s.shareButtonContainer}>
             <WhatsappIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
-            <p className={s.shareElementTitle}>Whats App</p>
+            <p className={s.shareElementTitle}>What's App</p>
           </div>
-        </WhatsappShareButton>
+        </div>
 
-
-
-        <EmailShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'} className={s.shareItem}>
+        <div
+          aria-hidden="true"
+          className={s.shareItem}
+          onClick={() => activatePreview('E-Mail')}
+        >
           <div className={s.shareButtonContainer}>
             <EmailIcon size={65} round={true} bgStyle={{ fillOpacity: 0 }} />
             <p className={s.shareElementTitle}>E-Mail</p>
           </div>
-        </EmailShareButton>
-
-
-        {/* <div className={s.shareButtonContainer}>
-          <LinkedinShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <LinkedinIcon size={45} round={true} />
-          </LinkedinShareButton>
-          <p>LinkedIn</p>
         </div>
-
-        <div className={s.shareButtonContainer}>
-          <RedditShareButton url={'https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png'}>
-            <RedditIcon size={45} round={true} />
-          </RedditShareButton>
-          <p>Reddit</p>
-        </div> */}
-
       </section>
 
     </>

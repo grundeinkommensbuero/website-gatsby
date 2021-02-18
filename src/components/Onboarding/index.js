@@ -75,6 +75,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
       userId={userId}
       engagementOption={engagementOption}
       setEngagementOption={setEngagementOption}
+      municipality={municipality}
     />
   };
 

@@ -4,7 +4,7 @@ import s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
 // import { Button } from '../../Forms/Button';
 
-export const Donate = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
+export const Donate = ({ userData, userId, compIndex, setCurrentElementByIndex, municipality }) => {
   const [showDonationForm, setShowDonationForm] = useState(false);
 
   return (
@@ -22,7 +22,7 @@ export const Donate = ({ userData, userId, compIndex, setCurrentElementByIndex }
           <p className={gS.descriptionTextLarge}>
             Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es nur, wenn alle{' '}
             etwas in die Reisekasse legen. Spende jetzt, damit wir gemeinsam das Grundeinkommen{' '}
-            in GEMEINDE und ganz Deutschland Wirklichkeit werden lassen!
+            in {municipality.name} und ganz Deutschland Wirklichkeit werden lassen!
           </p>
 
           {/* <div className={s.donationButtonRow}>

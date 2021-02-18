@@ -1,38 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
+import { SharePreview } from './SharePreview';
+import { Button } from '../../Forms/Button';
 
-export const Share = ({ compIndex, setCurrentElementByIndex }) => {
+export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userData, userId }) => {
+  const [sharePreviewActive, setSharePreviewActive] = useState(false);
+  const [shareChannel, setShareChannel] = useState();
+
   return (
     <section className={gS.pageContainer}>
-      <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
-      <p className={gS.descriptionTextLarge}>
-        Je mehr Menschen du zur Expedition einlädst, desto besser stehen die Chancen, dass{' '}
-        GEMEINDE bald Grundeinkommen erforscht. Wir müssen insgesammt XXX Menschen werden!
-      </p>
+      {!sharePreviewActive ?
+        <>
+          <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
+          <p className={gS.descriptionTextLarge}>
+            Je mehr Menschen du zur Expedition einlädst, desto besser stehen die Chancen, dass{' '}
+            {municipality.name} bald Grundeinkommen erforscht. Wir müssen insgesamt {municipality.goal}{' '}
+            Menschen werden!
+          </p>
 
-      <ShareButtonRow />
+          <ShareButtonRow
+            setShareChannel={setShareChannel}
+            setSharePreviewActive={setSharePreviewActive}
+          />
 
-      <p className={gS.descriptionTextLarge}>
-        Klicke auf einen der Buttons, um eine Vorschau deiner persönlichen Kachel zum Teilen{' '}
-        zu sehen!
-      </p>
-      {/* <div className={s.previewContainer}>
-        <img
-          className={s.imagePlaceholder}
-          src={"https://xbge-municipalities-images.s3.eu-central-1.amazonaws.com/01061001.png"}
-          alt="PlaceholderImage"
-        />
-      </div> */}
+          <p className={gS.descriptionTextLarge}>
+            Klicke auf einen der Buttons, um eine Vorschau deiner persönlichen Kachel zum Teilen{' '}
+            zu sehen!
+          </p>
 
-      <div className={gS.fullWidthFlex}>
-        <span
-          aria-hidden="true"
-          className={gS.linkLikeFormatted}
-          onClick={() => setCurrentElementByIndex(compIndex + 1)}>
-          Überspringen
+          <div className={gS.fullWidthFlex}>
+            <Button
+              className={gS.nextButton}
+              onClick={() => setCurrentElementByIndex(compIndex + 1)}
+            >
+              Weiter
+            </Button>
+          </div>
+        </> :
+        <>
+          <SharePreview
+            shareChannel={shareChannel}
+            userData={userData}
+            userId={userId}
+            municipality={municipality}
+          />
+          <div className={gS.fullWidthFlex}>
+            <span
+              className={gS.linkLikeFormatted}
+              onClick={() => setSharePreviewActive(false)}
+              aria-hidden="true">
+              {'< Zurück zur Übersicht'}
             </span>
-      </div>
+          </div>
+        </>}
+
     </section>
   );
 };
