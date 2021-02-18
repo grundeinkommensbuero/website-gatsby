@@ -9,7 +9,7 @@ import { formatDate } from '../../utils';
 import s from './style.module.less';
 import cN from 'classnames';
 
-export const ProfileTile = ({ body, children }) => {
+export const ProfileTile = ({ children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);
   const { municipality, setMunicipality } = useContext(MunicipalityContext);
   const tileData = {

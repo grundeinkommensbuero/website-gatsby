@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './style.module.less';
 import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
-import { Onboarding } from '../Onboarding'
+import { Onboarding } from '../Onboarding';
+import cN from 'classnames';
 
 export const OnboardingOverlay = ({ ...props }) => {
   return (
@@ -9,9 +10,11 @@ export const OnboardingOverlay = ({ ...props }) => {
       {({ overlayOpen, setOverlayOpen }) => (
         <>
           {overlayOpen ?
-            <div className={s.onboardingContainer} role="dialog" aria-describedby="dialogTitle">
-              <div className={s.body}>
-                <Onboarding setOverlayOpen={setOverlayOpen} />
+            <div className={s.blurryBackground}>
+              <div className={cN(s.onboardingContainer, s.backdropBlur)} role="dialog" aria-describedby="dialogTitle">
+                <div className={s.body}>
+                  <Onboarding setOverlayOpen={setOverlayOpen} />
+                </div>
               </div>
             </div> : null}
         </>

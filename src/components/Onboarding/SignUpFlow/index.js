@@ -4,7 +4,7 @@ import s from './style.module.less';
 import SignUp from '../../Forms/SignUp';
 
 
-export const Anmeldung = ({ userData, compIndex, setCurrentElementByIndex }) => {
+export const SignUpFlow = ({ userData, compIndex, setCurrentElementByIndex }) => {
 
   return (
     <section className={gS.pageContainer}>

@@ -2,7 +2,7 @@ import React from 'react';
 import gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 
-export const Teilen = ({ compIndex, setCurrentElementByIndex }) => {
+export const Share = ({ compIndex, setCurrentElementByIndex }) => {
   return (
     <section className={gS.pageContainer}>
       <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
