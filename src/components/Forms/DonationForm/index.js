@@ -27,7 +27,6 @@ import { validateEmail } from '../../utils';
 
 export default theme => {
   var themeClass = theme[Object.keys(theme)[0]];
-  const isChristmas = themeClass === 'christmas';
 
   const {
     isAuthenticated,
@@ -85,12 +84,6 @@ export default theme => {
     if (formErrors.customAmount) {
       return;
     }
-    if (isChristmas && formErrors.certificateReceiver) {
-      return;
-    }
-    if (isChristmas && formErrors.certificateGiver) {
-      return;
-    }
     setEnteredAmount(true);
   };
 
@@ -140,12 +133,8 @@ export default theme => {
       errors.customAmount = 'Muss eine Zahl sein';
     }
 
-    if (!isChristmas && values.amount === 'custom' && values.customAmount < 2) {
+    if (values.amount === 'custom' && values.customAmount < 2) {
       errors.customAmount = 'Bitte gib einen Betrag von mindestens 2€ ein.';
-    }
-
-    if (isChristmas && values.amount === 'custom' && values.customAmount < 10) {
-      errors.customAmount = 'Bitte gib einen Betrag von mindestens 10€ ein.';
     }
 
     if (!values.firstName) {
@@ -154,16 +143,6 @@ export default theme => {
 
     if (!values.lastName) {
       errors.lastName = 'Muss ausgefüllt sein';
-    }
-
-    if (isChristmas && !values.certificateReceiver) {
-      errors.certificateReceiver =
-        'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
-    }
-
-    if (isChristmas && !values.certificateGiver) {
-      errors.certificateGiver =
-        'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
     }
 
     if (!values.sepa) {
@@ -187,11 +166,10 @@ export default theme => {
 
   return (
     <div
-      className={cN(s.donationForm, {
-        [s.christmasTheme]: themeClass === 'christmas',
-      })}
+      className={s.donationForm}
     >
 
+      {/* Spendenturnus */}
       <div className={s.donationIntervalSelection}>
         <h3>Wie möchtest du spenden?</h3>
         <div className={s.selectionContainer}>
@@ -210,6 +188,7 @@ export default theme => {
         </div>
       </div>
 
+      {/* Lastschrift */}
       {!hasDonated && !enteredPaymentInfo && !donationError && (
         <Form
           onSubmit={data => {
@@ -245,7 +224,7 @@ export default theme => {
                             placeholder="100"
                             type="number"
                             component={TextInputWrapped}
-                            min={isChristmas ? 10 : 2}
+                            min={2}
                             inputMode="numeric"
                             step="1"
                             pattern="[0-9]*"
@@ -253,35 +232,8 @@ export default theme => {
                           />{' '}
                           <span className={s.currency}>€</span>
                         </div>
-
-                        {isChristmas && (
-                          <section className={s.certificateInfo}>
-                            <Field
-                              name="certificateReceiver"
-                              label="Wie heißt die Person, die du beschenken möchtest?"
-                              placeholder="Name"
-                              type="text"
-                              component={TextInputWrapped}
-                              theme="christmas"
-                            />
-                            <p className={s.hint}>
-                              Hinweis: Du erhältst eine personalisierte
-                              Weihnachtskarte mit dem Namen der beschenkten
-                              Person von uns.
-                            </p>
-                            <Field
-                              name="certificateGiver"
-                              label="Mit welchem Namen soll die Weihnachtskarte unterschrieben sein?"
-                              placeholder="Name"
-                              type="text"
-                              component={TextInputWrapped}
-                              theme="christmas"
-                            />
-                          </section>
-                        )}
                       </FormSection>
 
-                      {!isChristmas && (<>
                         <div className={s.donationButtons}>
                           <CTAButton
                             type="submit"
@@ -300,22 +252,6 @@ export default theme => {
                           wieder beenden.
                         </p>
                         <p>Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag.</p>
-                      </>)}
-
-                      {isChristmas && (
-                        <div className={s.donationButtons}>
-                          <CTAButton
-                            type="submit"
-                            onClick={() => {
-                              onAmountClick(false);
-                            }}
-                            size="MEDIUM"
-                            className={s.primaryButton}
-                          >
-                            Spende verschenken
-                          </CTAButton>
-                        </div>
-                      )}
                     </div>
                   )}
 
@@ -563,12 +499,6 @@ export default theme => {
             Wir haben deine Daten erhalten und werden die Spende in Kürze von
             deinem Konto einziehen.
           </p>
-          {isChristmas && (
-            <p>
-              Deine Weihnachtskarte zum ausdrucken findest du in deinem
-              E-Mail-Postfach.
-            </p>
-          )}
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
             <CTALink to="/">Zur Startseite</CTALink>
