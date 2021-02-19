@@ -51,6 +51,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
         updateCustomUserData();
         if (!userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
           updateUser({
+            userId: userId,
             ags: municipality?.ags
           });
         }
@@ -73,6 +74,8 @@ export const Onboarding = ({ setOverlayOpen }) => {
       setCurrentElementByIndex={setCurrentElementByIndex}
       userData={userData}
       userId={userId}
+      updateUser={updateUser}
+      updateCustomUserData={updateCustomUserData}
       engagementOption={engagementOption}
       setEngagementOption={setEngagementOption}
       municipality={municipality}
