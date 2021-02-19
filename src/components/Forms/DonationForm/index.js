@@ -26,12 +26,13 @@ import Confetti from '../../Confetti';
 import { validateEmail } from '../../utils';
 
 export default theme => {
-  var themeClass = theme[Object.keys(theme)[0]];
+  // var themeClass = theme[Object.keys(theme)[0]];
 
   const {
     isAuthenticated,
     tempEmail,
     setTempEmail,
+    userId,
     customUserData: userData,
   } = useContext(AuthContext);
   const [, , signUp] = useSignUp();
@@ -49,7 +50,6 @@ export default theme => {
 
   const [donationInterval, setDonationInverval] = useState();
   const [paymentType, setPaymentType] = useState('Lastschrift');
-
 
   let formData = {};
   let formErrors = {};
@@ -81,7 +81,6 @@ export default theme => {
   }, [donationInterval]);
 
   const onAmountClick = () => {
-
     if (formErrors.amount) {
       return;
     }
@@ -89,6 +88,19 @@ export default theme => {
       return;
     }
     setEnteredAmount(true);
+  };
+
+  const saveDonationPledge = () => {
+    console.log('Saving: ', +initialValues.customAmount, paymentType)
+    updateUser({
+      userId: userId,
+      store: {
+        donationPledge: {
+          amount: +initialValues.customAmount,
+          type: paymentType
+        }
+      }
+    });
   };
 
   const onAnswerChallengeSuccess = () => {
@@ -173,8 +185,9 @@ export default theme => {
       className={s.donationForm}
     >
 
-      {/* Spendenturnus */}
-      <div className={s.donationIntervalSelection}>
+    {/* Spendenturnus */}
+    {!hasDonated && !donationError && 
+      (<div className={s.donationIntervalSelection}>
         <p className={s.hint}> 
           Hinweis: Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag. Du kannst deine Spende jederzeit
           wieder beenden.
@@ -194,13 +207,12 @@ export default theme => {
               setDonationInverval('einmalig');
             }}>Einmalig</div>         
         </div>
-      </div>
+      </div>)}
 
       {!hasDonated && !enteredPaymentInfo && !donationError && donationInterval && (
         <Form
           onSubmit={data => {
             const { customAmount, amount, privacy, sepa, ...inputData } = data;
-            // const finalAmount =amount === 'custom' && customAmount ? +customAmount : +amount;
 
             const donation = {
               ...inputData,
@@ -247,18 +259,22 @@ export default theme => {
                           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Lastschrift' })}
                             onClick={() => {
                               setPaymentType('Lastschrift');
+                              // saveDonationPledge();
                             }}>Lastschrift</div>
                           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Überweisung' })}
                             onClick={() => {
                               setPaymentType('Überweisung');
+                              // saveDonationPledge();
                             }}>Überweisung</div>
                           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'PayPal' })}
                             onClick={() => {
                               setPaymentType('PayPal');
+                              // saveDonationPledge();
                             }}>PayPal</div>
                             <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Kreditkarte' })}
                             onClick={() => {
                               setPaymentType('Kreditkarte');
+                              // saveDonationPledge();
                             }}>Kreditkarte</div>
                         </div>
                       </div>
@@ -402,27 +418,23 @@ export default theme => {
                           </CTAButton>
                         </div>
                       </FormSection>
-
-                    {/* <PrimarySecondaryButtonContainer>
-                        <InlineButton
-                          onClick={() => {
-                            setIsRecurring(false);
-                            setEnteredAmount(false);
-                          }}
-                        >
-                          Zurück
-                        </InlineButton>
-                        <Button type="submit" size="MEDIUM">
-                          Weiter
-                        </Button>
-                      </PrimarySecondaryButtonContainer> */}
                     </div>
                   )}
 
                   {/* Überweisung */}
                   {paymentType === 'Überweisung' && (
                     <div>
-                      Infos zur Bankverbindung
+                      <h3>Per Überweisung spenden</h3>
+                      <p>Bitte überweise deine Spende direkt auf folgendes Konto:</p>
+
+                      <p className={s.emphasis}>Vertrauensgesellschaft e.V. <br></br>
+                        IBAN: DE74 4306 0967 1218 1056 01</p>
+
+                      <p>Danke für deine Spende!</p>
+                      <h3>Charity-SMS</h3>
+                      <p>Du kannst unsere Arbeit auch mit 5€ oder 10€ per SMS unterstützen.</p>
+                      <p>Sende dazu das Kennwort <span className={s.emphasis}>expedition5</span> oder <span className={s.emphasis}>expedition10</span> an die <span className={s.emphasis}>81190</span>.</p>
+                      <p>Expedition Grundeinkommen erhält davon 4,83 € bzw. 9,83 €.</p>
                     </div>
                   )}
 
@@ -533,7 +545,7 @@ export default theme => {
 
       {hasDonated && !donationError && (
         <div>
-          <h3>Vielen Dank!</h3>
+          <h2>Vielen Dank!</h2>
           <p>
             Wir haben deine Daten erhalten und werden die Spende in Kürze von
             deinem Konto einziehen.
