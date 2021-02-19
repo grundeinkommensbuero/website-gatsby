@@ -47,7 +47,8 @@ export default theme => {
   const [initialValues, setInitialValues] = useState({ customAmount: '15' });
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
-  const [donationInterval, setDonationInverval] = useState({});
+  const [donationInterval, setDonationInverval] = useState();
+  const [paymentType, setPaymentType] = useState('Lastschrift');
 
 
   let formData = {};
@@ -69,12 +70,15 @@ export default theme => {
     }
   }, [updateUserState]);
 
-  // Does not work yet
   useEffect(() => {
-    if (donationInterval === 'yearly') {
+    if (donationInterval === 'einmalig') {
+      setInitialValues({ customAmount: '100' });
+    } else if (donationInterval === 'monatlich') {
+      setInitialValues({ customAmount: '15' });
+    } else if (donationInterval === 'jährlich') {
       setInitialValues({ customAmount: '120' });
     }
-  }, [setDonationInverval]);
+  }, [donationInterval]);
 
   const onAmountClick = () => {
 
@@ -171,6 +175,10 @@ export default theme => {
 
       {/* Spendenturnus */}
       <div className={s.donationIntervalSelection}>
+        <p className={s.hint}> 
+          Hinweis: Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag. Du kannst deine Spende jederzeit
+          wieder beenden.
+        </p>
         <h3>Wie möchtest du spenden?</h3>
         <div className={s.selectionContainer}>
           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'jährlich' })}
@@ -184,23 +192,21 @@ export default theme => {
           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'einmalig' })}
             onClick={() => {
               setDonationInverval('einmalig');
-            }}>Einmalig</div>
+            }}>Einmalig</div>         
         </div>
       </div>
 
-      {/* Lastschrift */}
-      {!hasDonated && !enteredPaymentInfo && !donationError && (
+      {!hasDonated && !enteredPaymentInfo && !donationError && donationInterval && (
         <Form
           onSubmit={data => {
             const { customAmount, amount, privacy, sepa, ...inputData } = data;
-            const finalAmount =
-              amount === 'custom' && customAmount ? +customAmount : +amount;
+            // const finalAmount =amount === 'custom' && customAmount ? +customAmount : +amount;
 
             const donation = {
               ...inputData,
-              amount: finalAmount,
+              amount: +customAmount,
               recurring: isRecurring,
-              iban: formData.extractedIban,
+              iban: formData.extractedIban
             };
             const donationInfo = { donation };
             setTempEmail(data.email);
@@ -234,28 +240,33 @@ export default theme => {
                         </div>
                       </FormSection>
 
-                        <div className={s.donationButtons}>
-                          <CTAButton
-                            type="submit"
+                      {/* Zahlungsart auswählen */}
+                      <div className={s.donationIntervalSelection}>
+                        <h3>Zahlungsart wählen</h3>
+                        <div className={s.selectionContainer}>
+                          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Lastschrift' })}
                             onClick={() => {
-                              onAmountClick(true);
-                            }}
-                            size="MEDIUM"
-                            className={s.primaryButton}
-                          >
-                            Spenden
-                          </CTAButton>
-
+                              setPaymentType('Lastschrift');
+                            }}>Lastschrift</div>
+                          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Überweisung' })}
+                            onClick={() => {
+                              setPaymentType('Überweisung');
+                            }}>Überweisung</div>
+                          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'PayPal' })}
+                            onClick={() => {
+                              setPaymentType('PayPal');
+                            }}>PayPal</div>
+                            <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Kreditkarte' })}
+                            onClick={() => {
+                              setPaymentType('Kreditkarte');
+                            }}>Kreditkarte</div>
                         </div>
-                        <p>
-                          Hinweis: Du kannst deine Spende jederzeit
-                          wieder beenden.
-                        </p>
-                        <p>Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag.</p>
+                      </div>
                     </div>
                   )}
 
-                  {enteredAmount === true && (
+                  {/* Lastschrift */}
+                  {paymentType === 'Lastschrift' && (
                     <div>
                       <h3>
                         Bitte gib deine &#8203;Zahlungs&shy;informationen ein
@@ -377,9 +388,22 @@ export default theme => {
                           component={Checkbox}
                           theme="christmas"
                         ></Field>
+
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(true);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Spenden
+                          </CTAButton>
+                        </div>
                       </FormSection>
 
-                      <PrimarySecondaryButtonContainer>
+                    {/* <PrimarySecondaryButtonContainer>
                         <InlineButton
                           onClick={() => {
                             setIsRecurring(false);
@@ -391,7 +415,22 @@ export default theme => {
                         <Button type="submit" size="MEDIUM">
                           Weiter
                         </Button>
-                      </PrimarySecondaryButtonContainer>
+                      </PrimarySecondaryButtonContainer> */}
+                    </div>
+                  )}
+
+                  {/* Überweisung */}
+                  {paymentType === 'Überweisung' && (
+                    <div>
+                      Infos zur Bankverbindung
+                    </div>
+                  )}
+
+                  {/* Paypal & Kreditkarte */}
+                  {(paymentType === 'PayPal' || paymentType === 'Kreditkarte') && (
+                    <div>
+                      Info: Deine Zahlung wird über PayPal abgewickelt. Für uns fällt dabei eine kleine Gebühr an.
+                      Link zu PayPal.
                     </div>
                   )}
                 </form>
@@ -475,7 +514,7 @@ export default theme => {
               Mit dem Klick auf "Spende bestätigen" bestätigst du, dass du{' '}
               <span className={s.info}>
                 {isRecurring ? 'monatlich' : 'einmalig'}{' '}
-                {donationInfo.donation.amount} €
+                {donationInfo.donation.customAmount} €
               </span>{' '}
               an die Expedition spenden möchtest.
             </p>
