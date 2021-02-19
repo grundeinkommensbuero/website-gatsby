@@ -123,7 +123,7 @@ export function ContentfulSection({ section, pageContext }) {
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
-  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
+  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually 4 columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
 
@@ -222,7 +222,7 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionNewsletter]: !!emailSignup,
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
-        [s.sectionTwoColumns]: isTwoColumns,
+        [s.sectionTwoColumns]: isTwoColumns,// Actually four columns
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
@@ -459,6 +459,7 @@ export function SectionInner({ children, hugeText, wide, className }) {
   );
 }
 
+// Misnomer: Actually 4 columns, but can't be changed now
 export function TwoColumns({ children, className }) {
   return <div className={cN(s.inner, className)}>{children}</div>;
 }

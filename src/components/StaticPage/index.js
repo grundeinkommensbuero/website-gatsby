@@ -224,6 +224,18 @@ export const pageQuery = graphql`
             theme
             colorScheme
           }
+          ... on ContentfulPageSectionTwoColumnsWide {
+            __typename
+            title
+            titleShort
+            colorScheme
+            wideColumnLeft {
+              json
+            }
+            wideColumnRight {
+              json
+            }
+          }
           ... on ContentfulPageSectionTwoColumns {
             __typename
             title
