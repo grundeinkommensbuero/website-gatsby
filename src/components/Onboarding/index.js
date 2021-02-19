@@ -15,6 +15,7 @@ import { QuestionUBI } from './QuestionUBI';
 import { Share } from './Share';
 import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
+import { FinalNote } from './FinalNote';
 import { LoadingAnimation } from './LoadingAnimation';
 
 export const Onboarding = ({ setOverlayOpen }) => {
@@ -40,6 +41,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
     Share,
     Donate,
     SetupProfile,
+    FinalNote
   };
 
   // TODO: use state of updateUser for improvement
