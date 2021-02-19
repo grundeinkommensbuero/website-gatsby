@@ -44,6 +44,7 @@ export default theme => {
   const [hasDonated, setHasDonated] = useState(false);
   const [donationError, setDonationError] = useState(false);
   const [updateUserState, updateUser] = useUpdateUser();
+  const [, updateUserStore] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
   const [initialValues, setInitialValues] = useState({ customAmount: '15' });
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -92,7 +93,7 @@ export default theme => {
 
   const saveDonationPledge = () => {
     console.log('Saving: ', +initialValues.customAmount, paymentType)
-    updateUser({
+    updateUserStore({
       userId: userId,
       store: {
         donationPledge: {
@@ -259,22 +260,22 @@ export default theme => {
                           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Lastschrift' })}
                             onClick={() => {
                               setPaymentType('Lastschrift');
-                              // saveDonationPledge();
+                              saveDonationPledge();
                             }}>Lastschrift</div>
                           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Überweisung' })}
                             onClick={() => {
                               setPaymentType('Überweisung');
-                              // saveDonationPledge();
+                              saveDonationPledge();
                             }}>Überweisung</div>
                           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'PayPal' })}
                             onClick={() => {
                               setPaymentType('PayPal');
-                              // saveDonationPledge();
+                              saveDonationPledge();
                             }}>PayPal</div>
                             <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Kreditkarte' })}
                             onClick={() => {
                               setPaymentType('Kreditkarte');
-                              // saveDonationPledge();
+                              saveDonationPledge();
                             }}>Kreditkarte</div>
                         </div>
                       </div>
