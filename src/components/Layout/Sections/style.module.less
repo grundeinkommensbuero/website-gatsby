@@ -3,7 +3,7 @@
 .sections .section {
   position: relative;
   overflow: hidden;
-  padding: 5rem 3rem 8rem 3rem;
+  padding: 10rem 3rem 8rem 3rem;
 
   @media (max-width: @breakPointM) {
     padding: 3rem 2rem 5rem 2rem;
@@ -615,19 +615,26 @@
 
   @media (max-width: @breakPointM) {
     grid-template-columns: none;
+    margin-top: 0;
   }
 }
 
 .componentLeft {
   grid-column-start: 1;
   grid-column-end: 3;
-  padding-right: 1.5rem;
+
+  @media (mmin-width: @breakPointM) {
+    padding-right: 1.5rem;
+  }
 }
 
 .componentRight {
   grid-column-start: 3;
   grid-column-end: last-line;
-  padding-left: 1.5rem;
+
+  @media (mmin-width: @breakPointM) {
+    padding-left: 1.5rem;
+  }
 }
 
 .componentCenterWide {
