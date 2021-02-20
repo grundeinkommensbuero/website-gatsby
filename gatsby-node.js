@@ -85,7 +85,7 @@ exports.createPages = ({ graphql, actions }) => {
 
   municipalities.forEach(municipality => {
     createPage({
-      path: `/gemeinden/${municipality.ags}`,
+      path: `/gemeinden/${municipality.slug}`,
       component: require.resolve('./src/components/StaticPage/index.js'),
       context: {
         municipality: { ...municipality },
