@@ -118,8 +118,11 @@ export default theme => {
     toggleOverlay();
   };
 
-  const getFormDataAmount = (amount, customAmount) => {
-    return amount === 'custom' && customAmount ? +customAmount : +amount;
+  const getFormDataAmount = (amount) => {
+    console.log('amount: ' + amount);
+    //console.log('customAmount' + customAmount);
+    //return amount === 'custom' && customAmount ? +customAmount : +amount;
+    return +amount;
   };
 
   const validate = (values, emailRequired) => {
@@ -218,7 +221,8 @@ export default theme => {
             const donation = {
               ...inputData,
               amount: +customAmount,
-              recurring: isRecurring,
+              recurring: donationInterval !== 'einmalig',
+              yearly: donationInterval === 'jährlich',
               iban: formData.extractedIban
             };
             const donationInfo = { donation };
