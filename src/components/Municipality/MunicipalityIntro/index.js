@@ -9,7 +9,6 @@ import { CampainVisualisation } from '../../CampaignVisualisations';
 import SignUp from '../../Forms/SignUp';
 import { getStringFromPlaceholderText } from '../../utils';
 
-import { useGetMunicipalityStats } from '../../../hooks/Api/Municipalities';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 const ColumnQualifying = ({
@@ -18,18 +17,10 @@ const ColumnQualifying = ({
   displayTitle,
   mapDataReady,
 }) => {
-  const [
-    municipalityStatsState,
-    municipalityStats,
-    getMunicipalityStats,
-  ] = useGetMunicipalityStats();
-
-  // Note: Triggers Warning: Can't perform a React state update on an unmounted component.
-  useEffect(() => {
-    if (municipality) {
-      getMunicipalityStats(municipality.ags);
-    }
-  }, [municipality]);
+  const {
+    singleMunicipalityStats: municipalityStats,
+    singleMunicipalityStatsState: municipalityStatsState,
+  } = useContext(MunicipalityContext);
 
   return (
     <>
