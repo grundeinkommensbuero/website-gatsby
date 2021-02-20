@@ -74,11 +74,11 @@ const zoomPadding = { padding: 10 };
 //   },
 // };
 
-const Legend = () => {
-  const [isActive, setIsActive] = useState(false);
+export const Legend = () => {
+  const [isActive, setIsActive] = useState(true);
   return (
     <div className={s.legendContainer}>
-      <Button
+      {/* <Button
         size={'SMALL'}
         className={s.legendButton}
         aria-label="Legende öffnen"
@@ -87,19 +87,15 @@ const Legend = () => {
         }}
       >
         Legende
-      </Button>
+      </Button> */}
 
       {isActive && (
-        <div
-          className={s.legendOverlay}
-          role="dialog"
-          aria-describedby="dialogTitle"
-        >
-          <button
+        <>
+          {/* <button
             className={s.closeButton}
             onClick={() => setIsActive(false)}
             aria-label="Legende schließen"
-          ></button>
+          ></button> */}
           <div className={s.legendContent}>
             {/* <div className={s.legendLabel}>Legende</div> */}
             <div className={s.legendHeadline}>
@@ -131,7 +127,7 @@ const Legend = () => {
             </div>
             <div className={s.legendSpacer}></div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
@@ -376,7 +372,6 @@ export const MunicipalityMap = ({
       {hoverInfo && hoverInfo.object && (
         <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
       )}
-      <Legend />
     </div>
   );
 };

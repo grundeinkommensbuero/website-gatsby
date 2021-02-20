@@ -1,4 +1,30 @@
+.mapSectionContainer {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+  height: 90vh;
+  margin-bottom: 2rem;
+}
+
+.map {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: last-line;
+}
+
+.legend {
+  grid-column-start: 2;
+  grid-column-end: last-line;
+  grid-row-start: 2;
+  grid-row-end: 6;
+}
+
 .searchWrapper {
+  grid-column-start: 2;
+  grid-column-end: last-line;
+  grid-row-start: 1;
+  grid-row-end: 2;
   display: flex;
   justify-content: center;
   padding: 1.5rem 0;
