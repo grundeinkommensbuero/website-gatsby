@@ -9,12 +9,7 @@ import {
   PrimarySecondaryButtonContainer,
 } from '../Button';
 import { Checkbox } from '../Checkbox';
-import {
-  CTAButtonContainer,
-  CTAButton,
-  CTALink,
-  CTALinkExternal,
-} from '../../Layout/CTAButton';
+import { CTAButtonContainer, CTAButton, CTALink } from '../../Layout/CTAButton';
 
 import { TextInputWrapped } from '../TextInput';
 import AuthContext from '../../../context/Authentication';
@@ -544,11 +539,15 @@ export default theme => {
                 >
                   <input
                     type="hidden"
+                    aria-hidden="true"
+                    aria-label="button-ID"
                     name="hosted_button_id"
                     value="M9PSVU6E4RUJ8"
                   />
                   <input
                     type="hidden"
+                    aria-hidden="true"
+                    aria-label="amount"
                     name="amount"
                     value={+initialValues.customAmount}
                   />
