@@ -53,7 +53,7 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive }) => {
               aria-hidden="true"
               alt="Instagram Logo"
               src={iconInstagram}
-              className={(s.icon)}
+              className={s.icon}
             />
             <p className={s.shareElementTitle}>Instagram</p>
           </div>
@@ -65,7 +65,12 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive }) => {
           onClick={() => activatePreview('Telegram')}
         >
           <div className={s.shareButtonContainer}>
-            <TelegramIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
+            <TelegramIcon
+              size={50}
+              round={true}
+              bgStyle={{ fillOpacity: 0 }}
+              className={s.iconCorrection}
+            />
             <p className={s.shareElementTitle}>Telegram</p>
           </div>
         </div>
@@ -92,7 +97,6 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive }) => {
           </div>
         </div>
       </section>
-
     </>
-  )
-}
+  );
+};

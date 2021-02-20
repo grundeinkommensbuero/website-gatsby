@@ -62,8 +62,14 @@ export const MunicipalityProvider = ({ children }) => {
           setMunicipality,
           setPageContext
         );
+        // TODO: We cannot know what state the municipality is in
+        // but in case the municipality stats endpoint is down we should
+        // set it to qualifying for now?
+        setMunicipalityContentfulState('qualifying');
       }
     } else {
+      console.log('happened');
+
       ags.current = undefined;
       setMunicipalityContentfulState('noMunicipality');
       setIsSpecific(false);
