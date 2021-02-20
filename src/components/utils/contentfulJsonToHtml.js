@@ -42,7 +42,7 @@ export function contentfulJsonToHtml(json) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        console.log(node);
+        // console.log(node);
         const isPage = node.data.target.fields.slug;
         const uri = isPage
           ? `/${node.data.target.fields.slug['en-US']}`

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -26,20 +26,30 @@ import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
+
+import { MunicipalityContext } from '../../../context/Municipality';
 import { TickerToSignup } from '../../TickerToSignup';
-import { MunicipalityMap } from '../../Municipality/MunicipalityMap';
+import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
+import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
 import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
 import { InviteFriends } from '../../InviteFriends';
+import { IntroText } from '../../IntroText';
 import { BecomeActive } from '../../BecomeActive';
 import { ProfileTile } from '../../Profile/ProfileTile';
+import { StandardSectionComponent } from './StandardSectionComponent';
+
+import { LinkButton } from '../../Forms/Button';
 
 const Components = {
   TickerToSignup,
-  MunicipalityMap,
+  MunicipalityMap: MunicipalityMapAndSearch,
+  InfoText: MunicipalityInfoText,
   MunicipalityProgress,
   InviteFriends,
+  IntroText,
   BecomeActive,
   ProfileTile,
+  Standard: StandardSectionComponent,
 };
 
 export default function Sections({ sections, pageContext }) {
@@ -118,12 +128,13 @@ export function ContentfulSection({ section, pageContext }) {
     columnBottomRight,
     introText,
     theme,
+    headline,
   } = section;
 
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
-  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
+  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
 
@@ -131,6 +142,8 @@ export function ContentfulSection({ section, pageContext }) {
     municipalityContentfulState,
     userContentfulState,
   } = useUserMunicipalityContentfulState();
+
+  const { municipality } = useContext(MunicipalityContext);
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
     const filteredComponents = getFilteredElementsByContentfulState({
@@ -142,7 +155,24 @@ export function ContentfulSection({ section, pageContext }) {
 
     return (
       <>
-        {section.keyVisual && <div className={s.keyVisual}>{''}</div>}
+        {section.keyVisual && (
+          <Section className={cN(s.sectionWhite, s.keyVisualSection)}>
+            <div className={s.keyVisualWrapper}>
+              <div className={s.keyVisual}>{''}</div>
+              <div className={s.keyClaim}>
+                <h1>
+                  Hol das Grundeinkommen jetzt{' '}
+                  {municipality
+                    ? `nach ${municipality.name}`
+                    : 'in deinen Wohnort'}
+                  .
+                </h1>
+                <LinkButton href="#ticker">Mehr erfahren</LinkButton>
+              </div>
+            </div>
+          </Section>
+        )}
+
         <Section
           jumpToId={id}
           className={cN({
@@ -156,28 +186,31 @@ export function ContentfulSection({ section, pageContext }) {
             // [s.sectionChristmasDonation]: isChristmasDonationTheme,
           })}
         >
-          <SectionInner className={s.componentElementContainer}>
-            {filteredComponents.map((component, index) => {
-              return (
-                <div
-                  key={index}
-                  className={cN({
-                    [s.componentElementFullWidth]:
-                      filteredComponents.length === 1 ||
-                      component.fullWidthOnDesktop,
-                    [s.componentElementOneColumn]:
-                      filteredComponents.length > 1 &&
-                      !component.fullWidthOnDesktop,
-                  })}
-                >
-                  {getComponentFromContentful({
-                    Components,
-                    component,
-                    key: index,
-                  })}
-                </div>
-              );
-            })}
+          <SectionInner>
+            {headline && <h2>{headline.headline}</h2>}
+            <div className={s.componentElementContainer}>
+              {filteredComponents.map((component, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={cN({
+                      [s.componentLeft]: component.column === 'left',
+                      [s.componentRight]: component.column === 'right',
+                      [s.componentCenterWide]:
+                        component.column === 'centerWide',
+                      [s.componentCenterNarrow]:
+                        component.column === 'centerNarrow',
+                    })}
+                  >
+                    {getComponentFromContentful({
+                      Components,
+                      component,
+                      key: index,
+                    })}
+                  </div>
+                );
+              })}
+            </div>
           </SectionInner>
         </Section>
       </>
@@ -222,7 +255,7 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionNewsletter]: !!emailSignup,
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
-        [s.sectionTwoColumns]: isTwoColumns,
+        [s.sectionTwoColumns]: isTwoColumns, // Actually four columns
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
@@ -259,7 +292,9 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
                 </div>
               )}
-              {columnTopLeft && (<div>{contentfulJsonToHtml(columnTopLeft.json)}</div>) }
+              {columnTopLeft && (
+                <div>{contentfulJsonToHtml(columnTopLeft.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageTopRight && (
@@ -267,7 +302,9 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
                 </div>
               )}
-              {columnTopRight && (<div>{contentfulJsonToHtml(columnTopRight.json)}</div>) }
+              {columnTopRight && (
+                <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageBottomLeft && (
@@ -275,7 +312,9 @@ export function ContentfulSection({ section, pageContext }) {
                   <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
                 </div>
               )}
-              {columnBottomLeft && (<div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>)}
+              {columnBottomLeft && (
+                <div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageBottomRight && (
@@ -286,7 +325,9 @@ export function ContentfulSection({ section, pageContext }) {
                   />
                 </div>
               )}
-              {columnBottomRight && (<div>{contentfulJsonToHtml(columnBottomRight.json)}</div>)}
+              {columnBottomRight && (
+                <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+              )}
             </section>
           </TwoColumns>
         </SectionInner>
@@ -459,6 +500,7 @@ export function SectionInner({ children, hugeText, wide, className }) {
   );
 }
 
+// Misnomer: Actually 4 columns, but can't be changed now
 export function TwoColumns({ children, className }) {
   return <div className={cN(s.inner, className)}>{children}</div>;
 }
@@ -473,7 +515,7 @@ function Slogan({ sloganLine1, sloganLine2 }) {
   );
 }
 
-function YoutubeEmbed({ url }) {
+export function YoutubeEmbed({ url }) {
   return (
     <div className={s.youtubeContainer}>
       <iframe
