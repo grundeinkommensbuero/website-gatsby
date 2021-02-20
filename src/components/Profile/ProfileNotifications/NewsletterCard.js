@@ -118,9 +118,11 @@ export const NewsletterCard = ({
             in deiner Nähe geplant werden.
           </p>
             <div className={s.revokeButtonRow}>
-              <Button className={gS.floatRight} onClick={toggleNewsletterConsent}>
+              <Button
+                className={s.revokeButton}
+                onClick={toggleNewsletterConsent}>
                 Abbestellen
-            </Button>
+              </Button>
               <div className={s.cancelRevokeProcess}>
                 <span
                   aria-hidden="true"

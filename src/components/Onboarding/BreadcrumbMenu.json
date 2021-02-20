@@ -1,9 +1,5 @@
 [
   {
-    "title": "Mitmachen",
-    "name": "EngagementLevel"
-  },
-  {
     "title": "Profilbild",
     "name": "SetupProfile"
   },
@@ -14,6 +10,10 @@
   {
     "title": "Teilen",
     "name": "Share"
+  },
+  {
+    "title": "Danke",
+    "name": "FinalNote"
   },
   {
     "title": "X",
