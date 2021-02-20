@@ -2,6 +2,7 @@ import React from 'react';
 import gS from '../style.module.less';
 import s from './style.module.less';
 import { Button } from '../../Forms/Button';
+import { HurrayCrowd } from '../../HurrayCrowd';
 
 export const FinalNote = ({ compIndex, setCurrentElementByIndex, municipality }) => {
 
@@ -33,6 +34,8 @@ export const FinalNote = ({ compIndex, setCurrentElementByIndex, municipality })
       >
         Zur Unterseite
       </Button>
+
+      <HurrayCrowd color="RED" />
 
     </section>
   );

@@ -4,7 +4,7 @@ import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
 import { Button } from '../../Forms/Button';
 
-export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userData, userId }) => {
+export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userData, userId, isInOnboarding = true }) => {
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
 
@@ -12,31 +12,38 @@ export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userD
     <section className={gS.pageContainer}>
       {!sharePreviewActive ?
         <>
-          <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
-          <p className={gS.descriptionTextLarge}>
-            Je mehr Menschen du zur Expedition einlädst, desto besser stehen die Chancen, dass{' '}
-            {municipality.name} bald Grundeinkommen erforscht. Wir müssen insgesamt {municipality.goal}{' '}
-            Menschen werden!
-          </p>
+          {isInOnboarding && <>
+            <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
+            <p className={gS.descriptionTextLarge}>
+              Je mehr Menschen du zur Expedition einlädst, desto besser stehen die Chancen, dass{' '}
+              {municipality.name} bald Grundeinkommen erforscht. Wir müssen insgesamt {municipality.goal}{' '}
+              Menschen werden!
+            </p>
+          </>}
 
           <ShareButtonRow
             setShareChannel={setShareChannel}
             setSharePreviewActive={setSharePreviewActive}
+            isInOnboarding={isInOnboarding}
           />
 
-          <p className={gS.descriptionTextLarge}>
-            Klicke auf einen der Buttons, um eine Vorschau deiner persönlichen Kachel zum Teilen{' '}
-            zu sehen!
-          </p>
 
-          <div className={gS.fullWidthFlex}>
-            <Button
-              className={gS.nextButton}
-              onClick={() => setCurrentElementByIndex(compIndex + 1)}
-            >
-              Weiter
-            </Button>
-          </div>
+
+          {isInOnboarding &&
+            <>
+              <p className={gS.descriptionTextLarge}>
+                Klicke auf einen der Buttons, um eine Vorschau deiner persönlichen Kachel zum Teilen{' '}
+                zu sehen!
+              </p>
+              <div className={gS.fullWidthFlex}>
+                <Button
+                  className={gS.nextButton}
+                  onClick={() => setCurrentElementByIndex(compIndex + 1)}
+                >
+                  Weiter
+                </Button>
+              </div>
+            </>}
         </> :
         <>
           <SharePreview
