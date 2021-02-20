@@ -15,6 +15,7 @@ import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
 import s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
+import { SearchPlaces } from '../SearchPlaces';
 
 const AuthenticatedDialogDefault = () => {
   return (
@@ -44,8 +45,14 @@ export default ({
   const [formData, setFormData] = useState();
 
   const { municipality } = useContext(MunicipalityContext);
+  const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
+
+  console.log({ municipalityInForm, municipalityInContext: municipality });
+
   const prefilledZip =
-    municipality?.zipCodes.length === 1 ? municipality?.zipCodes[0] : '';
+    municipalityInForm?.zipCodes.length === 1
+      ? municipalityInForm?.zipCodes[0]
+      : '';
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -62,7 +69,7 @@ export default ({
       updateUser({
         ...formData,
         updatedOnXbge: true,
-        ags: municipality?.ags
+        ags: municipality?.ags,
       });
       setSignUpState('signedIn');
     }
@@ -99,7 +106,18 @@ export default ({
     }
   }
 
-  let fields = ['email', 'username', 'zipCode', 'nudgeBox', 'newsLetterConsent'];
+  const handlePlaceSelect = newMunicipality => {
+    setMunicipalityInForm(newMunicipality);
+  };
+
+  let fields = [
+    'email',
+    'username',
+    'municipality',
+    'zipCode',
+    'nudgeBox',
+    'newsLetterConsent',
+  ];
   if (fieldsToRender) {
     fields = fieldsToRender;
   }
@@ -119,6 +137,16 @@ export default ({
       type: 'text',
       component: TextInputWrapped,
     },
+    municipality: {
+      name: 'ags',
+      label: 'Ort',
+      placeholder: 'Stadt / Gemeinde',
+      type: 'text',
+      component: SearchPlaces,
+      onPlaceSelect: handlePlaceSelect,
+      initialPlace: municipality || {},
+      isInsideForm: true,
+    },
     zipCode: {
       name: 'zipCode',
       label: 'Postleitzahl',
@@ -126,24 +154,15 @@ export default ({
       type: 'number',
       component: TextInputWrapped,
     },
-    city: {
-      name: 'city',
-      label: 'Ort',
-      placeholder: 'Stadt / Gemeinde',
-      type: 'text',
-      component: TextInputWrapped,
-    },
     nudgeBox: {
       name: 'nudgeBox',
-      label:
-        'Ja, ich will, dass das Bürgerbegehren startet.',
+      label: 'Ja, ich will, dass das Bürgerbegehren startet.',
       type: 'checkbox',
       component: Checkbox,
     },
     newsLetterConsent: {
       name: 'newsletterConsent',
-      label:
-        'Haltet mich über die nächsten Schritte auf dem Laufenden.',
+      label: 'Haltet mich über die nächsten Schritte auf dem Laufenden.',
       type: 'checkbox',
       component: Checkbox,
     },
@@ -205,7 +224,7 @@ const validate = values => {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
-  if ((!values.nudgeBox) && (!values.newsletterConsent)) {
+  if (!values.nudgeBox && !values.newsletterConsent) {
     errors.newsletterConsent = 'Bitte bestätige, dass du dabei sein willst';
   }
 
