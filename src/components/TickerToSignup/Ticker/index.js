@@ -55,7 +55,6 @@ export const Ticker = ({ tickerDescription }) => {
         inBetween2="in"
         highlight2={municipalityCount}
         suffixHighlight2="Orten"
-        explanation="lassen das Grundeinkommen in Deutschland Realität werden."
         tickerDescription={tickerDescription}
       />
     );
@@ -80,7 +79,6 @@ const TickerDisplay = ({
   inBetween2,
   highlight2,
   suffixHighlight2,
-  explanation,
   tickerDescription,
 }) => {
   return (
@@ -155,7 +153,6 @@ const TickerDisplay = ({
             </>
           )}
         </div>
-        {explanation && <h2 className={s.actionTextBig}>{explanation}</h2>}
         {tickerDescription && (
           <p className={s.actionText}>{tickerDescription}</p>
         )}

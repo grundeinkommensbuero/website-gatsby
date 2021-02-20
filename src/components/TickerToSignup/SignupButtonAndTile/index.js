@@ -47,13 +47,13 @@ export const SignupButtonAndTile = () => {
       </>
     );
   } else {
-    return <></>;
+    return <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>;
   }
 };
 
-const getButtonText = (municipality, userContentfulState) => {
+export const getButtonText = (municipality, userContentfulState) => {
   if (!municipality) {
-    return '';
+    return 'Ich will dabei sein.';
   }
 
   // Berlin
