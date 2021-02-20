@@ -59,7 +59,7 @@
   margin-left: auto;
   margin-right: auto;
   max-width: 74rem;
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -174,6 +174,14 @@
 
 .buttonRow {
   margin: 3rem 0;
+  width: 100%;
+}
+
+.buttonRowSingle {
+  width: 100%;
+  margin: 0.5rem 0;
+  border: none;
+  outline: none;
 }
 
 .signYouUpMessageContainer {
@@ -183,4 +191,26 @@
 
 .signYouUpMessage {
   color: @violet;
+}
+
+.optionSelectionContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.selectableOption {
+  padding: 1rem;
+  margin: 1rem 0;
+  color: @violet;
+  text-align: center;
+  font-size: @MobileFontSizeXL;
+  border: 1px solid @violet;
+  cursor: pointer;
+
+  &:hover {
+    background-color: @violet;
+    color: white;
+    text-decoration: underline;
+  }
 }
