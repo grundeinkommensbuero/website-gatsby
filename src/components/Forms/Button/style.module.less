@@ -2,12 +2,14 @@
 
 .linkButton,
 .button {
-  padding: @buttonPadding;
+  background: var(--button-bg-color);
   border: var(--button-font-color) solid @borderWidthThick;
   border-radius: @borderRadius;
-  text-decoration: none;
+  color: var(--button-font-color);
   font-size: @DesktopFontSizeM;
   font-weight: bold;
+  padding: @buttonPadding;
+  text-decoration: none;
 
   &.medium {
     font-size: @DesktopFontSizeM;
@@ -39,10 +41,8 @@
 }
 
 .button {
-  background: var(--button-bg-color);
   font-family: inherit;
   line-height: inherit;
-  color: var(--button-font-color);
   cursor: pointer;
 }
 

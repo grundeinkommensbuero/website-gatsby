@@ -58,7 +58,7 @@ export const pageQuery = graphql`
       }
       sections {
         ... on Node {
-          ... on ContentfulPageSection {
+          ... on ContentfulPageSectionOneColumn {
             __typename
             title
             titleShort
@@ -224,7 +224,7 @@ export const pageQuery = graphql`
             theme
             colorScheme
           }
-          ... on ContentfulPageSectionTwoColumns {
+          ... on ContentfulPageSectionFourColumns {
             __typename
             title
             colorScheme

@@ -26,13 +26,13 @@ import Confetti from '../../Confetti';
 import { validateEmail } from '../../utils';
 
 export default theme => {
-  var themeClass = theme[Object.keys(theme)[0]];
-  const isChristmas = themeClass === 'christmas';
+  // var themeClass = theme[Object.keys(theme)[0]];
 
   const {
     isAuthenticated,
     tempEmail,
     setTempEmail,
+    userId,
     customUserData: userData,
   } = useContext(AuthContext);
   const [, , signUp] = useSignUp();
@@ -44,12 +44,13 @@ export default theme => {
   const [hasDonated, setHasDonated] = useState(false);
   const [donationError, setDonationError] = useState(false);
   const [updateUserState, updateUser] = useUpdateUser();
+  const [, updateUserStore] = useUpdateUser();
   const [donationInfo, setDonationInfo] = useState({});
   const [initialValues, setInitialValues] = useState({ customAmount: '15' });
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
-  const [donationInterval, setDonationInverval] = useState({});
-
+  const [donationInterval, setDonationInverval] = useState();
+  const [paymentType, setPaymentType] = useState('Lastschrift');
 
   let formData = {};
   let formErrors = {};
@@ -70,28 +71,37 @@ export default theme => {
     }
   }, [updateUserState]);
 
-  // Does not work yet
   useEffect(() => {
-    if (donationInterval === 'yearly') {
+    if (donationInterval === 'einmalig') {
+      setInitialValues({ customAmount: '100' });
+    } else if (donationInterval === 'monatlich') {
+      setInitialValues({ customAmount: '15' });
+    } else if (donationInterval === 'jährlich') {
       setInitialValues({ customAmount: '120' });
     }
-  }, [setDonationInverval]);
+  }, [donationInterval]);
 
   const onAmountClick = () => {
-
     if (formErrors.amount) {
       return;
     }
     if (formErrors.customAmount) {
       return;
     }
-    if (isChristmas && formErrors.certificateReceiver) {
-      return;
-    }
-    if (isChristmas && formErrors.certificateGiver) {
-      return;
-    }
     setEnteredAmount(true);
+  };
+
+  const saveDonationPledge = () => {
+    console.log('Saving: ', +initialValues.customAmount, paymentType)
+    updateUserStore({
+      userId: userId,
+      store: {
+        donationPledge: {
+          amount: +initialValues.customAmount,
+          type: paymentType
+        }
+      }
+    });
   };
 
   const onAnswerChallengeSuccess = () => {
@@ -108,8 +118,11 @@ export default theme => {
     toggleOverlay();
   };
 
-  const getFormDataAmount = (amount, customAmount) => {
-    return amount === 'custom' && customAmount ? +customAmount : +amount;
+  const getFormDataAmount = (amount) => {
+    console.log('amount: ' + amount);
+    //console.log('customAmount' + customAmount);
+    //return amount === 'custom' && customAmount ? +customAmount : +amount;
+    return +amount;
   };
 
   const validate = (values, emailRequired) => {
@@ -140,12 +153,8 @@ export default theme => {
       errors.customAmount = 'Muss eine Zahl sein';
     }
 
-    if (!isChristmas && values.amount === 'custom' && values.customAmount < 2) {
+    if (values.amount === 'custom' && values.customAmount < 2) {
       errors.customAmount = 'Bitte gib einen Betrag von mindestens 2€ ein.';
-    }
-
-    if (isChristmas && values.amount === 'custom' && values.customAmount < 10) {
-      errors.customAmount = 'Bitte gib einen Betrag von mindestens 10€ ein.';
     }
 
     if (!values.firstName) {
@@ -154,16 +163,6 @@ export default theme => {
 
     if (!values.lastName) {
       errors.lastName = 'Muss ausgefüllt sein';
-    }
-
-    if (isChristmas && !values.certificateReceiver) {
-      errors.certificateReceiver =
-        'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
-    }
-
-    if (isChristmas && !values.certificateGiver) {
-      errors.certificateGiver =
-        'Bitte such einen Namen aus, der auf der Urkunde stehen soll.';
     }
 
     if (!values.sepa) {
@@ -187,12 +186,16 @@ export default theme => {
 
   return (
     <div
-      className={cN(s.donationForm, {
-        [s.christmasTheme]: themeClass === 'christmas',
-      })}
+      className={s.donationForm}
     >
 
-      <div className={s.donationIntervalSelection}>
+    {/* Spendenturnus */}
+    {!hasDonated && !donationError && 
+      (<div className={s.donationIntervalSelection}>
+        <p className={s.hint}> 
+          Hinweis: Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag. Du kannst deine Spende jederzeit
+          wieder beenden.
+        </p>
         <h3>Wie möchtest du spenden?</h3>
         <div className={s.selectionContainer}>
           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'jährlich' })}
@@ -206,22 +209,21 @@ export default theme => {
           <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: donationInterval === 'einmalig' })}
             onClick={() => {
               setDonationInverval('einmalig');
-            }}>Einmalig</div>
+            }}>Einmalig</div>         
         </div>
-      </div>
+      </div>)}
 
-      {!hasDonated && !enteredPaymentInfo && !donationError && (
+      {!hasDonated && !enteredPaymentInfo && !donationError && donationInterval && (
         <Form
           onSubmit={data => {
             const { customAmount, amount, privacy, sepa, ...inputData } = data;
-            const finalAmount =
-              amount === 'custom' && customAmount ? +customAmount : +amount;
 
             const donation = {
               ...inputData,
-              amount: finalAmount,
-              recurring: isRecurring,
-              iban: formData.extractedIban,
+              amount: +customAmount,
+              recurring: donationInterval !== 'einmalig',
+              yearly: donationInterval === 'jährlich',
+              iban: formData.extractedIban
             };
             const donationInfo = { donation };
             setTempEmail(data.email);
@@ -245,7 +247,7 @@ export default theme => {
                             placeholder="100"
                             type="number"
                             component={TextInputWrapped}
-                            min={isChristmas ? 10 : 2}
+                            min={2}
                             inputMode="numeric"
                             step="1"
                             pattern="[0-9]*"
@@ -253,72 +255,39 @@ export default theme => {
                           />{' '}
                           <span className={s.currency}>€</span>
                         </div>
-
-                        {isChristmas && (
-                          <section className={s.certificateInfo}>
-                            <Field
-                              name="certificateReceiver"
-                              label="Wie heißt die Person, die du beschenken möchtest?"
-                              placeholder="Name"
-                              type="text"
-                              component={TextInputWrapped}
-                              theme="christmas"
-                            />
-                            <p className={s.hint}>
-                              Hinweis: Du erhältst eine personalisierte
-                              Weihnachtskarte mit dem Namen der beschenkten
-                              Person von uns.
-                            </p>
-                            <Field
-                              name="certificateGiver"
-                              label="Mit welchem Namen soll die Weihnachtskarte unterschrieben sein?"
-                              placeholder="Name"
-                              type="text"
-                              component={TextInputWrapped}
-                              theme="christmas"
-                            />
-                          </section>
-                        )}
                       </FormSection>
 
-                      {!isChristmas && (<>
-                        <div className={s.donationButtons}>
-                          <CTAButton
-                            type="submit"
+                      {/* Zahlungsart auswählen */}
+                      <div className={s.donationIntervalSelection}>
+                        <h3>Zahlungsart wählen</h3>
+                        <div className={s.selectionContainer}>
+                          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Lastschrift' })}
                             onClick={() => {
-                              onAmountClick(true);
-                            }}
-                            size="MEDIUM"
-                            className={s.primaryButton}
-                          >
-                            Spenden
-                          </CTAButton>
-
-                        </div>
-                        <p className={s.hint}>
-                          Hinweis: Du kannst deine monatliche Spende jederzeit
-                          wieder beenden.
-                        </p>
-                      </>)}
-
-                      {isChristmas && (
-                        <div className={s.donationButtons}>
-                          <CTAButton
-                            type="submit"
+                              setPaymentType('Lastschrift');
+                              saveDonationPledge();
+                            }}>Lastschrift</div>
+                          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Überweisung' })}
                             onClick={() => {
-                              onAmountClick(false);
-                            }}
-                            size="MEDIUM"
-                            className={s.primaryButton}
-                          >
-                            Spende verschenken
-                          </CTAButton>
+                              setPaymentType('Überweisung');
+                              saveDonationPledge();
+                            }}>Überweisung</div>
+                          <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'PayPal' })}
+                            onClick={() => {
+                              setPaymentType('PayPal');
+                              saveDonationPledge();
+                            }}>PayPal</div>
+                            <div aria-hidden="true" className={cN(s.selectionElement, { [s.selectionElementActive]: paymentType === 'Kreditkarte' })}
+                            onClick={() => {
+                              setPaymentType('Kreditkarte');
+                              saveDonationPledge();
+                            }}>Kreditkarte</div>
                         </div>
-                      )}
+                      </div>
                     </div>
                   )}
 
-                  {enteredAmount === true && (
+                  {/* Lastschrift */}
+                  {paymentType === 'Lastschrift' && (
                     <div>
                       <h3>
                         Bitte gib deine &#8203;Zahlungs&shy;informationen ein
@@ -440,21 +409,45 @@ export default theme => {
                           component={Checkbox}
                           theme="christmas"
                         ></Field>
-                      </FormSection>
 
-                      <PrimarySecondaryButtonContainer>
-                        <InlineButton
-                          onClick={() => {
-                            setIsRecurring(false);
-                            setEnteredAmount(false);
-                          }}
-                        >
-                          Zurück
-                        </InlineButton>
-                        <Button type="submit" size="MEDIUM">
-                          Weiter
-                        </Button>
-                      </PrimarySecondaryButtonContainer>
+                        <div className={s.donationButtons}>
+                          <CTAButton
+                            type="submit"
+                            onClick={() => {
+                              onAmountClick(true);
+                            }}
+                            size="MEDIUM"
+                            className={s.primaryButton}
+                          >
+                            Spenden
+                          </CTAButton>
+                        </div>
+                      </FormSection>
+                    </div>
+                  )}
+
+                  {/* Überweisung */}
+                  {paymentType === 'Überweisung' && (
+                    <div>
+                      <h3>Per Überweisung spenden</h3>
+                      <p>Bitte überweise deine Spende direkt auf folgendes Konto:</p>
+
+                      <p className={s.emphasis}>Vertrauensgesellschaft e.V. <br></br>
+                        IBAN: DE74 4306 0967 1218 1056 01</p>
+
+                      <p>Danke für deine Spende!</p>
+                      <h3>Charity-SMS</h3>
+                      <p>Du kannst unsere Arbeit auch mit 5€ oder 10€ per SMS unterstützen.</p>
+                      <p>Sende dazu das Kennwort <span className={s.emphasis}>expedition5</span> oder <span className={s.emphasis}>expedition10</span> an die <span className={s.emphasis}>81190</span>.</p>
+                      <p>Expedition Grundeinkommen erhält davon 4,83 € bzw. 9,83 €.</p>
+                    </div>
+                  )}
+
+                  {/* Paypal & Kreditkarte */}
+                  {(paymentType === 'PayPal' || paymentType === 'Kreditkarte') && (
+                    <div>
+                      Info: Deine Zahlung wird über PayPal abgewickelt. Für uns fällt dabei eine kleine Gebühr an.
+                      Link zu PayPal.
                     </div>
                   )}
                 </form>
@@ -538,7 +531,7 @@ export default theme => {
               Mit dem Klick auf "Spende bestätigen" bestätigst du, dass du{' '}
               <span className={s.info}>
                 {isRecurring ? 'monatlich' : 'einmalig'}{' '}
-                {donationInfo.donation.amount} €
+                {donationInfo.donation.customAmount} €
               </span>{' '}
               an die Expedition spenden möchtest.
             </p>
@@ -557,17 +550,11 @@ export default theme => {
 
       {hasDonated && !donationError && (
         <div>
-          <h3>Vielen Dank!</h3>
+          <h2>Vielen Dank!</h2>
           <p>
             Wir haben deine Daten erhalten und werden die Spende in Kürze von
             deinem Konto einziehen.
           </p>
-          {isChristmas && (
-            <p>
-              Deine Weihnachtskarte zum ausdrucken findest du in deinem
-              E-Mail-Postfach.
-            </p>
-          )}
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           <CTAButtonContainer className={s.buttonContainer}>
             <CTALink to="/">Zur Startseite</CTALink>

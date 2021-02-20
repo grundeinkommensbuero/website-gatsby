@@ -38,11 +38,7 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
     <section className={gS.pageContainer}>
       {showDonationForm ?
         <>
-          <h3 className={gS.moduleTitle}>Wie möchtest du spenden?</h3>
           <DonationForm theme={{}} />
-          <p className={gS.descriptionTextLarge}>
-            Du bekommst eine Spendenbescheinigung über den gesamten Jahresbetrag.
-          </p>
         </>
         : <>
           <h3 className={gS.moduleTitle}>Mach die Expedition mit deiner Spende möglich</h3>
