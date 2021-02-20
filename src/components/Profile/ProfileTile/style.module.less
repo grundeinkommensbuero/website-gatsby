@@ -1,12 +1,11 @@
 @import '../../../components/style/vars.less';
 
-
 .tileContainer {
   margin: auto;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 7rem;
   padding: 3rem;
   background: @aqua;
   color: @white;
@@ -15,7 +14,7 @@
     font-size: @DesktopFontSizeM;
     @media (max-width: @breakPointM) {
       font-size: @MobileFontSizeM;
-    margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
     }
     @media (max-width: @breakPointS) {
       font-size: @MobileFontSizeM;
@@ -26,6 +25,8 @@
   .municipalityLabel {
     color: var(--secondary-color);
     margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: @DesktopFontSizeL;
   }
 }
 
@@ -85,7 +86,7 @@
   @media (max-width: @breakPointL) {
     width: 100%;
     margin-bottom: 4rem;
-    justify-content:center;
+    justify-content: center;
   }
 }
 
@@ -103,14 +104,13 @@
 .info {
   min-width: 270px;
   width: 70%;
-  margin-left:0.75rem;
+  margin-left: 0.75rem;
   @media (max-width: @breakPointL) {
     width: 50%;
   }
   @media (max-width: @breakPointS) {
     width: 100%;
-    margin-left:0;
-
+    margin-left: 0;
   }
 }
 
@@ -119,10 +119,6 @@
     margin-bottom: 3rem;
   }
 }
-
-
-
-
 
 .infoText {
   font-size: @DesktopFontSizeM;
@@ -133,15 +129,14 @@
   li {
     margin-bottom: 0.25rem;
   }
-  li:last-child{
+  li:last-child {
     margin-bottom: 0;
   }
   margin-bottom: 2rem;
 
   @media (max-width: @breakPointM) {
     font-size: @MobileFontSizeM;
-  margin-bottom: 1.5rem;
-
+    margin-bottom: 1.5rem;
   }
 
   @media (max-width: @breakPointS) {
