@@ -7,11 +7,13 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { isMunicipality, municipality } = useContext(MunicipalityContext);
+  const { municipality } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
   useEffect(() => {
+    // console.log(municipality);
+
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else {
@@ -44,7 +46,7 @@ export const Ticker = ({ tickerDescription }) => {
     };
   });
 
-  if (!isMunicipality) {
+  if (!municipality) {
     return (
       <TickerDisplay
         prefixText=""
@@ -53,7 +55,6 @@ export const Ticker = ({ tickerDescription }) => {
         inBetween2="in"
         highlight2={municipalityCount}
         suffixHighlight2="Orten"
-        explanation="lassen das Grundeinkommen in Deutschland Realität werden."
         tickerDescription={tickerDescription}
       />
     );
@@ -64,7 +65,7 @@ export const Ticker = ({ tickerDescription }) => {
         highlight1={peopleCount}
         inBetween1=""
         inBetween2="Menschen holen Grundeinkommen nach"
-        highlight2={municipality.name}
+        highlight2={municipality?.name}
         suffixHighlight2=""
       />
     );
@@ -78,7 +79,6 @@ const TickerDisplay = ({
   inBetween2,
   highlight2,
   suffixHighlight2,
-  explanation,
   tickerDescription,
 }) => {
   return (
@@ -146,14 +146,13 @@ const TickerDisplay = ({
                 )}
               >
                 {inBetween2 && <span>{inBetween2} </span>}
-                <span className="react-reel__reel">{highlight2}</span>
+                <span className={s.highlightHeadline}>{highlight2}</span>
                 {/* TODO: implement point */}
                 {/* {suffixHighlight2 && <span>{suffixHighlight2}</span>} */}
               </h2>
             </>
           )}
         </div>
-        {explanation && <h2 className={s.actionTextBig}>{explanation}</h2>}
         {tickerDescription && (
           <p className={s.actionText}>{tickerDescription}</p>
         )}

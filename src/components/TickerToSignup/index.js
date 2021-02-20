@@ -1,38 +1,22 @@
-import React, { useContext } from 'react';
-import s from './style.module.less';
+import React from 'react';
 
 import { Ticker } from './Ticker';
-import { MunicipalitySearch } from './MunicipalitySearch';
-import { Button } from '../Forms/Button';
-// import { ProfileTile } from '../Profile/ProfileTile';
+import { SignupButtonAndTile } from './SignupButtonAndTile';
+import { InlineLinkButton } from '../Forms/Button';
 
-import { MunicipalityContext } from '../../context/Municipality';
-import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
-
-import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
-import { getCountrySpecifications } from 'ibantools';
+import s from './style.module.less';
 
 export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,
 }) => {
-  const { isMunicipality, municipality } = useContext(MunicipalityContext);
   const tickerDescription = tickerDescriptionObject?.tickerDescription;
-
-  // State of onboarding overlay
-  const { setOverlayOpen } = useContext(OnboardingOverlayContext);
-
   return (
     <>
-      <OnboardingOverlay />
-
       <Ticker tickerDescription={tickerDescription} />
-      {isMunicipality ? (
-        <Button className={s.signUpCTA} onClick={() => setOverlayOpen(true)}>
-          Jetzt in {municipality.name} anmelden!
-        </Button>
-      ) : (
-          <MunicipalitySearch />
-        )}
+      <SignupButtonAndTile />
+      <div className={s.moreInfo}>
+        <InlineLinkButton href="#info">Mehr erfahren</InlineLinkButton>
+      </div>
     </>
   );
 };

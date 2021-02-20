@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-export const MunicipalitySearch = () => {
+export const MunicipalitySearch = ({ searchTitle }) => {
   const { municipality, setMunicipality } = useContext(MunicipalityContext);
   const handlePlaceSelect = selected => {
     if (selected) {
@@ -18,6 +18,7 @@ export const MunicipalitySearch = () => {
       showButton={false}
       inputSize="SMALL"
       buttonSize="MEDIUM"
+      searchTitle={searchTitle}
     />
   );
 };
