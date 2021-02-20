@@ -2,15 +2,16 @@ import React from 'react';
 import gS from '../style.module.less';
 import s from './style.module.less';
 import cN from 'classnames';
+import { MunicipalityContext } from '../../../context/Municipality';
 
-export const EngagementLevel = ({ userData, compIndex, setCurrentElementByIndex, engagementOption, setEngagementOption }) => {
+export const EngagementLevel = ({ userData, compIndex, setCurrentElementByIndex, engagementOption, setEngagementOption, municipality }) => {
 
   return (
     <section className={gS.pageContainer}>
 
       <h3 className={gS.moduleTitle}>Werde vor Ort aktiv!</h3>
       <p className={gS.descriptionTextLarge}>
-        Um die Kampagne in GEMEINDE starten zu können, werden wir viele Unterschriften brauchen - aber auch Freiwillige, die helfen,{' '}
+        Um die Kampagne in {municipality.name} starten zu können, werden wir viele Unterschriften brauchen - aber auch Freiwillige, die helfen,{' '}
         die Kampagne vor Ort zu organisieren. Hättest du darauf Lust?
       </p>
 

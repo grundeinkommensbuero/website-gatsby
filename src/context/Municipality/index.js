@@ -11,12 +11,31 @@ export const MunicipalityProvider = ({ children }) => {
   const [municipality, setMunicipality] = useState();
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
-  const [, municipalityStats, getMunicipalityStats] = useGetMunicipalityStats();
+
+  // Stats for all municipalities
+  const [
+    allMunicipalityStatsState,
+    allMunicipalityStats,
+    getAllMunicipalityStats,
+  ] = useGetMunicipalityStats();
+
+  // Stats for juse on municipality, will be set if a municipality is set
+  const [
+    singleMunicipalityStatsState,
+    singleMunicipalityStats,
+    getSingleMunicipalityStats,
+  ] = useGetMunicipalityStats();
+
   const [
     municipalityContentfulState,
     setMunicipalityContentfulState,
   ] = useState('noMunicipality');
   const ags = useRef();
+
+  // Get general municipality stats (of all munics)
+  useEffect(() => {
+    getAllMunicipalityStats();
+  }, []);
 
   useEffect(() => {
     if (pageContext) {
@@ -53,7 +72,7 @@ export const MunicipalityProvider = ({ children }) => {
         municipality.ags !== ags.current
       ) {
         ags.current = municipality.ags;
-        getMunicipalityStats(ags.current);
+        getSingleMunicipalityStats(ags.current);
         setIsMunicipality(true);
         setIsSpecific(true);
         history.pushToHistoryState(municipality, pageContext);
@@ -81,14 +100,16 @@ export const MunicipalityProvider = ({ children }) => {
 
   useEffect(() => {
     if (municipality && municipality.ags === ags.current) {
-      const isQualifying = municipalityStats.signups < municipalityStats.goal;
-      const isQualified = municipalityStats.signups >= municipalityStats.goal;
+      const isQualifying =
+        singleMunicipalityStats.signups < singleMunicipalityStats.goal;
+      const isQualified =
+        singleMunicipalityStats.signups >= singleMunicipalityStats.goal;
       // TODO: API Call
       const isCollecting = false;
 
       setMunicipality({
         ...municipality,
-        ...municipalityStats,
+        ...singleMunicipalityStats,
         isQualifying,
         isQualified,
         isCollecting,
@@ -102,7 +123,7 @@ export const MunicipalityProvider = ({ children }) => {
         setMunicipalityContentfulState('qualifying');
       }
     }
-  }, [municipalityStats]);
+  }, [singleMunicipalityStats]);
 
   return (
     <MunicipalityContext.Provider
@@ -115,6 +136,10 @@ export const MunicipalityProvider = ({ children }) => {
         setIsSpecific,
         municipalityContentfulState,
         setPageContext,
+        allMunicipalityStats,
+        allMunicipalityStatsState,
+        singleMunicipalityStats,
+        singleMunicipalityStatsState,
       }}
     >
       {children}
