@@ -28,7 +28,12 @@ export function LinkButtonLocal({ children, className, size, ...other }) {
 export function Button({ children, className, size, ...other }) {
   return (
     <button
-      className={cN(s.button, className, { [s.medium]: size === 'MEDIUM' }, { [s.small]: size === 'SMALL' })}
+      className={cN(
+        s.button,
+        className,
+        { [s.medium]: size === 'MEDIUM' },
+        { [s.small]: size === 'SMALL' }
+      )}
       {...other}
     >
       {children}
@@ -51,6 +56,19 @@ export function InlineButton({ children, onClick, className, ...other }) {
     >
       {children}
     </span>
+  );
+}
+
+export function InlineLinkButton({ children, className, ...other }) {
+  return (
+    <a
+      tabIndex="0"
+      role="button"
+      className={cN(s.inlineButton, className)}
+      {...other}
+    >
+      {children}
+    </a>
   );
 }
 

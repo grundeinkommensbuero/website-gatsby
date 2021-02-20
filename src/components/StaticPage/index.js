@@ -58,7 +58,7 @@ export const pageQuery = graphql`
       }
       sections {
         ... on Node {
-          ... on ContentfulPageSection {
+          ... on ContentfulPageSectionOneColumn {
             __typename
             title
             titleShort
@@ -155,24 +155,37 @@ export const pageQuery = graphql`
               }
             }
           }
-          # ... on ContentfulPageSectionGemeindeIntro {
-          #   __typename
-          #   title
-          #   body {
-          #     body
-          #   }
-          # }
           ... on ContentfulPageSectionWithComponents {
             __typename
+            headline {
+              headline
+            }
             keyVisual
             titleShort
             colorScheme
             showForOptions
             components {
+              ... on ContentfulSectionComponentStandard {
+                __typename
+                title
+                showForOptions
+                column
+                videoLink
+                signUpButton
+                image {
+                  fluid(maxWidth: 200, quality: 80) {
+                    ...GatsbyContentfulFluid
+                  }
+                }
+                text {
+                  json
+                }
+              }
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename
                 title
                 showForOptions
+                column
                 tickerDescription {
                   tickerDescription
                 }
@@ -181,17 +194,30 @@ export const pageQuery = graphql`
                 __typename
                 title
                 showForOptions
+                column
               }
               ... on ContentfulSectionComponentMunicipalityProgress {
                 __typename
                 title
                 showForOptions
+                column
               }
               ... on ContentfulSectionComponentInviteFriends {
                 __typename
                 title
                 showForOptions
                 headline
+                column
+                body {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentInviteFriends {
+                __typename
+                title
+                showForOptions
+                headline
+                column
                 body {
                   json
                 }
@@ -201,15 +227,37 @@ export const pageQuery = graphql`
                 title
                 showForOptions
                 headline
+                column
                 body {
                   json
                 }
                 fullWidthOnDesktop
               }
+              ... on ContentfulSectionComponentInfoText {
+                __typename
+                title
+                showForOptions
+                fullWidthOnDesktop
+                column
+              }
+              ... on ContentfulSectionComponentIntroText {
+                __typename
+                title
+                showForOptions
+                fullWidthOnDesktop
+                column
+                highlightText {
+                  highlightText
+                }
+                note {
+                  note
+                }
+              }
               ... on ContentfulSectionComponentProfileTile {
                 __typename
                 title
                 showForOptions
+                column
                 body {
                   json
                 }
@@ -223,58 +271,6 @@ export const pageQuery = graphql`
             introText
             theme
             colorScheme
-          }
-          ... on ContentfulPageSectionTwoColumnsWide {
-            __typename
-            title
-            titleShort
-            colorScheme
-            wideColumnLeft {
-              json
-            }
-            wideColumnRight {
-              json
-            }
-          }
-          ... on ContentfulPageSectionTwoColumns {
-            __typename
-            title
-            colorScheme
-            columnIntroText {
-              json
-            }
-            imageTopLeft {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnTopLeft {
-              json
-            }
-            imageTopRight {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnTopRight {
-              json
-            }
-            imageBottomLeft {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnBottomLeft {
-              json
-            }
-            imageBottomRight {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnBottomRight {
-              json
-            }
           }
         }
       }

@@ -54,7 +54,7 @@ function Template({ children, sections, pageContext, title, description }) {
         overlayDelay
         overlay {
           ... on Node {
-            ... on ContentfulPageSection {
+            ... on ContentfulPageSectionOneColumn {
               __typename
               title
               titleShort

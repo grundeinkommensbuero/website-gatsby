@@ -501,12 +501,27 @@
   font-weight: normal;
 }
 
+.sections .keyVisualSection {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 0rem;
+}
+
+.keyVisualWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.keyClaim {
+  width: 37%;
+}
+
 .keyVisual {
   // TODO: Position and size
   position: relative;
-  margin-bottom: -3.5rem;
-  margin-top: 8rem;
-  width: 67.5%;
+  top: 2.5rem;
+  width: 60%;
   height: 400px;
   z-index: 1;
   background-size: contain;
@@ -560,24 +575,45 @@
 .componentElementContainer {
   max-width: @headerWidth;
   margin: auto;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: auto;
 }
 
-.componentElementFullWidth {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  width: 100%;
+.componentLeft {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding-right: 1.5rem;
 }
 
-.componentElementOneColumn {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  width: 47.5%;
-
-  @media (max-width: @breakPointL) {
-    width: 100%;
-  }
+.componentRight {
+  grid-column-start: 3;
+  grid-column-end: last-line;
+  padding-left: 1.5rem;
 }
+
+.componentCenterWide {
+  grid-column-start: 1;
+  grid-column-end: last-line;
+}
+
+.componentCenterNarrow {
+  grid-column-start: 2;
+  grid-column-end: last-line;
+}
+// .componentElementFullWidth {
+//   margin-top: 1.5rem;
+//   margin-bottom: 1.5rem;
+//   width: 100%;
+// }
+
+// .componentElementOneColumn {
+//   margin-top: 1.5rem;
+//   margin-bottom: 1.5rem;
+//   width: 47.5%;
+
+//   @media (max-width: @breakPointL) {
+//     width: 100%;
+//   }
+// }

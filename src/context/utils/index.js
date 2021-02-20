@@ -51,6 +51,8 @@ history.pushToHistoryState = (municipality, pageContext) => {
 };
 
 history.replaceHistoryState = (municipality, pageContext) => {
+  // console.log('replaced history state');
+
   if (typeof window !== `undefined`) {
     if (window.history?.replaceState) {
       window.history.replaceState(
