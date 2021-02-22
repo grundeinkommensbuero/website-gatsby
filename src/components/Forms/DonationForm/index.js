@@ -584,8 +584,7 @@ export default theme => {
             <p>
               Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
               <span className={s.info}>
-                {isRecurring ? 'monatlich' : 'einmalig'}{' '}
-                {donationInfo.donation.amount} €
+                {donationInterval} {donationInfo.donation.amount} €
               </span>{' '}
               an die Expedition spenden möchtest.
             </p>
@@ -594,6 +593,7 @@ export default theme => {
               <InlineButton
                 onClick={() => {
                   setEnteredPaymentInfo(false);
+                  setEnteredAmount(false);
                 }}
               >
                 Zurück
