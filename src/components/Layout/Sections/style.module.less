@@ -516,7 +516,6 @@
   align-items: center;
   max-width: 1500px;
   margin: 0 auto 3rem;
-  //flex-direction: row;
 
   @media (max-width: @breakPointM) {
     flex-wrap: wrap;
@@ -537,15 +536,16 @@
   width: 50%;
   max-width: 700px;
   padding-left: 2.5rem;
-  //position: relative;
-  //right: 4rem;
-  //flex-shrink: 4;
 
   h1 {
     font-size: 3rem;
 
     @media (max-width: @breakPointL) {
       font-size: 2rem;
+    }
+
+    @media (max-width: @breakPointM) {
+      font-size: 3rem;
     }
 
     @media (max-width: @breakPointS) {
@@ -557,7 +557,6 @@
     padding: 5rem 1rem 1rem;
     margin: 0 auto;
     width: 100%;
-    max-width: 450px;
   }
 
   @media (max-width: @breakPointS) {
