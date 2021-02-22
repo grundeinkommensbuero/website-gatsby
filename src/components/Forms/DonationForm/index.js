@@ -354,14 +354,14 @@ export default theme => {
                             Bitte gib deine &#8203;Zahlungs&shy;informationen
                             ein
                           </h3>
-                          <p>
+                          {/* <p>
                             Du möchtest{' '}
                             <span className={s.info}>
                               {donationInterval}{' '}
                               {getFormDataAmount(formData.customAmount)} €
                             </span>{' '}
                             an die Expedition spenden.
-                          </p>
+                          </p> */}
 
                           <FormSection className={s.partialForm}>
                             <Field
