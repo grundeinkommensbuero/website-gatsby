@@ -39,7 +39,11 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
 
   const constructShareURL = () => {
     const addProfileImage = () => useProfilePicture ? '&addProfilePicture=true' : '';
-    return `https://expedition-grundeinkommen.de/gemeinde-teilen/${userId}?ags=${municipality.ags}&version=1${addProfileImage()}`;
+    let baseUrl = 'https://expedition-grundeinkommen.de/';
+    if (process.env.NODE_ENV === 'development' || process.env.GATSBY_USE_DEV_BACKEND === 'override') {
+      baseUrl = 'https://campaign-launch--expedition-grundeinkommen.netlify.app/';
+    };
+    return `${baseUrl}gemeinde-teilen/${userId}?ags=${municipality.ags}&version=1${addProfileImage()}`;
   };
 
   const ShareButton = () => {

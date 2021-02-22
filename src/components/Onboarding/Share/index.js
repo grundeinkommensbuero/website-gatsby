@@ -27,8 +27,6 @@ export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userD
             isInOnboarding={isInOnboarding}
           />
 
-
-
           {isInOnboarding &&
             <>
               <p className={gS.descriptionTextLarge}>
