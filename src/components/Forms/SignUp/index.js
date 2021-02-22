@@ -35,16 +35,19 @@ export default ({
   initialValues,
   postSignupAction,
   illustration = 'POINT_LEFT',
-  showSignedInMessage,
   fieldsToRender,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId, customUserData: userData } = useContext(
-    AuthContext
-  );
+  const {
+    isAuthenticated,
+    userId,
+    customUserData: userData,
+    updateCustomUserData,
+  } = useContext(AuthContext);
   const [formData, setFormData] = useState();
+  const [showFeedbackMessage, setShowFeedbackMessage] = useState(true);
 
   const { municipality, setMunicipality } = useContext(MunicipalityContext);
   const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
@@ -68,6 +71,9 @@ export default ({
 
       // Now set municipality in context
       if (municipalityInForm) {
+        // So we don't show the finnaly message before the onboarding overlay is shown
+        setShowFeedbackMessage(false);
+        updateCustomUserData();
         setMunicipality(municipalityInForm);
       }
     }
@@ -99,7 +105,7 @@ export default ({
     return <EnterLoginCode preventSignIn={true} />;
   }
 
-  if (signUpState && showSignedInMessage) {
+  if (signUpState && showFeedbackMessage) {
     return (
       <>
         <SignUpFeedbackMessage
