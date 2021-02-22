@@ -14,7 +14,7 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
       timestamp: new Date()
     }
     // Find and update reaction for ags or add a new one
-    const reactionIndex = existingReactions.findIndex(el => el.ags === municipality.ags);
+    const reactionIndex = existingReactions.findIndex(el => el?.ags === municipality.ags);
     if (reactionIndex !== -1) {
       existingReactions[reactionIndex] = reactionForMunicipality;
     } else {
@@ -47,19 +47,6 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
             etwas in die Reisekasse legen. Spende jetzt, damit wir gemeinsam das Grundeinkommen{' '}
             in {municipality.name} und ganz Deutschland Wirklichkeit werden lassen!
           </p>
-
-          {/* <div className={s.donationButtonRow}>
-            <Button
-              className={gS.nextButton}
-              onClick={() => setShowDonationForm(true)}>
-              Jetzt spenden
-          </Button><br />
-
-            <Button
-              className={gS.nextButton}>
-              Später erinnern
-          </Button>
-          </div> */}
 
           <div className={gS.buttonRow}>
             <div

@@ -7,7 +7,13 @@ import { ValidationError } from '../ValidationError';
 export function TextInput({ children, className, label, size, ...input }) {
   return (
     <input
+      onFocus={e => {
+        if (e.target.autocomplete) {
+          e.target.autocomplete = "none";
+        }
+      }}
       aria-label={label}
+      type={'search'}
       className={cN(
         s.textInput,
         { [s.textInputSmall]: size === 'SMALL' },
@@ -85,19 +91,19 @@ export const TextInputWrapped = ({
           autoComplete={autoComplete}
         />
       ) : (
-        <TextInput
-          {...input}
-          placeholder={placeholder}
-          className={inputClassName}
-          maxLength={maxLength}
-          min={min}
-          max={max}
-          label={outputLabel}
-          pattern={pattern}
-          inputMode={inputMode}
-          autoComplete={autoComplete}
-        />
-      )}
+          <TextInput
+            {...input}
+            placeholder={placeholder}
+            className={inputClassName}
+            maxLength={maxLength}
+            min={min}
+            max={max}
+            label={outputLabel}
+            pattern={pattern}
+            inputMode={inputMode}
+            autoComplete={autoComplete}
+          />
+        )}
     </LabelInputErrorWrapper>
   );
 };
