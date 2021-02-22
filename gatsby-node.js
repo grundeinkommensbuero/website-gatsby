@@ -166,8 +166,6 @@ const clientId =
     ? process.env.DEV_COGNITO_APP_CLIENT_ID
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
 
-console.log({ clientId });
-
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     plugins: [
