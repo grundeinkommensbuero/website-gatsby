@@ -1,6 +1,13 @@
+@import '../../style/vars.less';
+
 .signUpButton {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 1rem;
   width: 100%;
+
+  @media (min-width: @breakPointM) {
+    justify-content: flex-start;
+  }
 }
