@@ -46,7 +46,7 @@ const LoginMenuItem = () => {
       <MenuItemLink
         slug={`login${
           location.pathname !== '/'
-            ? `/?nextPage=${location.pathname.slice(-1) === '/' ? location.pathname.slice(1, -1) : location.pathname}`
+            ? `/?nextPage=${location.pathname.slice(-1) === '/' ? location.pathname.slice(1, -1) : location.pathname.slice(1)}`
             : ''
         }`}
       >
