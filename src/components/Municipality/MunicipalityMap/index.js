@@ -135,7 +135,7 @@ export const MunicipalityMap = ({
   // agsToFlyTo,
   shouldStartAnimation = true,
   onDataReady,
-  initialMapAnimation = false,
+  initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
 }) => {
