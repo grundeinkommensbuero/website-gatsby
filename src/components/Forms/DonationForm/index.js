@@ -187,7 +187,7 @@ export default theme => {
   return (
     <div className={s.donationForm}>
       {/* Spendenturnus */}
-      {!hasDonated && !donationError && (
+      {!hasDonated && !donationError && !enteredPaymentInfo && !needsToLogin && (
         <div className={s.donationIntervalSelection}>
           <p className={s.hint}>
             Hinweis: Du bekommst eine Spendenbescheinigung über den gesamten
@@ -584,8 +584,7 @@ export default theme => {
             <p>
               Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
               <span className={s.info}>
-                {isRecurring ? 'monatlich' : 'einmalig'}{' '}
-                {donationInfo.donation.amount} €
+                {donationInterval} {donationInfo.donation.amount} €
               </span>{' '}
               an die Expedition spenden möchtest.
             </p>
@@ -594,6 +593,7 @@ export default theme => {
               <InlineButton
                 onClick={() => {
                   setEnteredPaymentInfo(false);
+                  setEnteredAmount(false);
                 }}
               >
                 Zurück
@@ -628,14 +628,6 @@ export default theme => {
                 onAnswerChallengeSuccess={onAnswerChallengeSuccess}
               />
             </div>
-            <p>
-              Mit dem Klick auf "Spende bestätigen" bestätigst du, dass du{' '}
-              <span className={s.info}>
-                {isRecurring ? 'monatlich' : 'einmalig'}{' '}
-                {donationInfo.donation.customAmount} €
-              </span>{' '}
-              an die Expedition spenden möchtest.
-            </p>
           </div>
         )}
 
