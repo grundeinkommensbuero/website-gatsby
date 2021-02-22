@@ -80,6 +80,12 @@
       transform: rotate(-10deg);
     }
   }
+
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      top: 1rem;
+    }
+  }
 }
 
 .submitButton {
