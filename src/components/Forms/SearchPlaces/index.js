@@ -16,7 +16,7 @@ const handleButtonClickDefault = ({ validate }) => {
   // --> validate function
   const validation = validate();
   if (validation.status === 'success') {
-    navigate(validation.ags);
+    navigate(validation.slug);
   }
 };
 
@@ -31,11 +31,13 @@ export const SearchPlaces = ({
   inputSize,
   buttonSize,
   profileButtonStyle,
+  isInsideForm,
   handleButtonClick = handleButtonClickDefault,
+  initialPlace = {},
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialPlace.name || '');
   const [results, setResults] = useState([]);
-  const [selectedPlace, setSelectedPlace] = useState({});
+  const [selectedPlace, setSelectedPlace] = useState(initialPlace);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
   const [fuse, setFuse] = useState();
@@ -99,14 +101,14 @@ export const SearchPlaces = ({
   }, [query, fuse]);
 
   const validate = () => {
-    let ags;
+    let slug;
     if (selectedPlace.ags) {
-      ags = `/gemeinden/${selectedPlace.ags}`;
-      return { status: 'success', ags };
+      slug = `/gemeinden/${selectedPlace.slug}`;
+      return { status: 'success', slug };
     }
     if (results.length > 0 && results[0].score < 0.001) {
-      ags = `/gemeinden/${results[0].ags}`;
-      return { status: 'success', ags };
+      slug = `/gemeinden/${results[0].slug}`;
+      return { status: 'success', slug };
     }
     const touched = true;
     const error = 'Bitte wähle eine Stadt aus';
@@ -208,7 +210,7 @@ export const SearchPlaces = ({
             onChange={handleChange}
             onKeyDown={handleEnterKey}
             onBlur={handleBlur}
-            className={s.searchBar}
+            className={cN(s.searchBar, { [s.isNotInsideForm]: !isInsideForm })}
           />
 
           <AutoCompleteList

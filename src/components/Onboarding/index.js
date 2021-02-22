@@ -23,12 +23,15 @@ export const Onboarding = ({ setOverlayOpen }) => {
     isAuthenticated,
     userId,
     customUserData: userData,
-    updateCustomUserData
+    updateCustomUserData,
   } = useContext(AuthContext);
   const { municipality } = useContext(MunicipalityContext);
   const [engagementOption, setEngagementOption] = useState();
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
-  const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] = useState(false);
+  const [
+    isForMunicipalityAuthenticated,
+    setIsForMunicipalityAuthenticated,
+  ] = useState(false);
   const [, updateUser] = useUpdateUser();
 
   const closeIcon = require('./close-icon.svg');
@@ -41,28 +44,29 @@ export const Onboarding = ({ setOverlayOpen }) => {
     Share,
     Donate,
     SetupProfile,
-    FinalNote
+    FinalNote,
   };
 
-  // TODO: use state of updateUser for improvement
+  // Fetch new user data in the beginning
   useEffect(() => {
-    if (userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
-      setIsForMunicipalityAuthenticated(true);
-    } else if (userData && userId && !userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
-      setTimeout(() => {
-        updateCustomUserData();
-        if (!userData?.municipalities?.map(el => el.ags).includes(municipality.ags)) {
-          updateUser({
-            userId: userId,
-            ags: municipality?.ags
-          });
-        }
-      }, 500);
+    if (isAuthenticated) {
+      updateCustomUserData();
+    }
+  }, [isAuthenticated]);
+
+  // TODO: use state of updateUser for improvement (Vali: comment still relevant? I removed some stuff)
+  useEffect(() => {
+    if (municipality) {
+      if (
+        userData?.municipalities?.map(el => el.ags).includes(municipality.ags)
+      ) {
+        setIsForMunicipalityAuthenticated(true);
+      }
     }
   }, [userData, municipality]);
 
   const setCurrentElementByIndex = index => {
-    if (index === (menuElements.length - 1)) {
+    if (index === menuElements.length - 1) {
       setOverlayOpen(false);
     } else {
       setCurrentElement(menuElements[index].name);
@@ -71,28 +75,31 @@ export const Onboarding = ({ setOverlayOpen }) => {
 
   const CurrentComponent = () => {
     const Comp = Components[currentElement];
-    return <Comp
-      compIndex={menuElements.findIndex(el => el.name === currentElement)}
-      setCurrentElementByIndex={setCurrentElementByIndex}
-      userData={userData}
-      userId={userId}
-      updateUser={updateUser}
-      updateCustomUserData={updateCustomUserData}
-      engagementOption={engagementOption}
-      setEngagementOption={setEngagementOption}
-      municipality={municipality}
-    />
+    return (
+      <Comp
+        compIndex={menuElements.findIndex(el => el.name === currentElement)}
+        setCurrentElementByIndex={setCurrentElementByIndex}
+        userData={userData}
+        userId={userId}
+        updateUser={updateUser}
+        updateCustomUserData={updateCustomUserData}
+        engagementOption={engagementOption}
+        setEngagementOption={setEngagementOption}
+        municipality={municipality}
+      />
+    );
   };
 
   return (
     <div className={s.onboardingOverlayContainer}>
-      {!isForMunicipalityAuthenticated && !isAuthenticated ?
+      {!isForMunicipalityAuthenticated ? (
         <>
           <span
             aria-hidden="true"
             className={s.lonelyCloseButton}
             onClick={() => setOverlayOpen(false)}
-            onKeyPress={() => setOverlayOpen(false)}>
+            onKeyPress={() => setOverlayOpen(false)}
+          >
             <img
               aria-hidden="true"
               alt=""
@@ -101,10 +108,13 @@ export const Onboarding = ({ setOverlayOpen }) => {
             />
           </span>
           <SignUpFlow />
-        </> :
+        </>
+      ) : (
         <>
           {/* Show onboarding content or currently Signin Up info message */}
-          {userData?.municipalities?.map(el => el.ags).includes(municipality.ags) ?
+          {userData?.municipalities
+            ?.map(el => el.ags)
+            .includes(municipality.ags) ? (
             <>
               <div className={s.breadcrumbContainer}>
                 <BreadcrumbLinks
@@ -114,12 +124,17 @@ export const Onboarding = ({ setOverlayOpen }) => {
                 />
               </div>
               <CurrentComponent />
-            </> :
+            </>
+          ) : (
             <div className={s.signYouUpMessageContainer}>
-              <h2 className={s.signYouUpMessage}>Du wirst für {municipality.name} angemeldet</h2>
+              <h2 className={s.signYouUpMessage}>
+                Du wirst für {municipality.name} angemeldet
+              </h2>
               <LoadingAnimation />
-            </div>}
-        </>}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -47,6 +47,7 @@ const getAndStoreDataVariations = municipalities => {
   for (const municipality of municipalities) {
     const {
       ags,
+      slug,
       name,
       longitude,
       latitude,
@@ -54,7 +55,7 @@ const getAndStoreDataVariations = municipalities => {
       population,
     } = municipality;
     const goal = getGoal(population);
-    municipalitiesForSearch.push({ ags, name, zipCodes, population });
+    municipalitiesForSearch.push({ ags, name, zipCodes, population, slug });
     municipalitiesForMap.push({
       ags,
       name,
@@ -85,7 +86,7 @@ exports.createPages = ({ graphql, actions }) => {
 
   municipalities.forEach(municipality => {
     createPage({
-      path: `/gemeinden/${municipality.ags}`,
+      path: `/gemeinden/${municipality.slug}`,
       component: require.resolve('./src/components/StaticPage/index.js'),
       context: {
         municipality: { ...municipality },
@@ -165,8 +166,6 @@ const clientId =
   process.env.GATSBY_USE_DEV_BACKEND === 'override'
     ? process.env.DEV_COGNITO_APP_CLIENT_ID
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
-
-console.log({ clientId });
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
