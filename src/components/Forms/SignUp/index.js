@@ -217,7 +217,7 @@ export default ({
         initialValues={{
           ...initialValues,
           zipCode: prefilledZip,
-          email: userData?.email || '',
+          email: (isAuthenticated && userData?.email) || '',
           username: userData?.username || '',
         }}
         validate={values => validate(values, municipalityInForm)}
