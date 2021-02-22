@@ -46,6 +46,7 @@
 .suggestions {
   background-color: @white;
   font-weight: normal;
+  font-size: @DesktopFontSizeM;
   list-style: none;
   margin-top: 0;
   max-height: 15rem;
@@ -55,21 +56,32 @@
   visibility: hidden;
   width: @inputWidth;
   z-index: 1;
+  cursor: pointer;
+  border: 1px solid @black;
 
   &.active {
     visibility: visible;
   }
+
+  @media (max-width: @breakPointS) {
+    width: 100%;
+  }
 }
 
 .suggestionsItem {
-  padding: 0.5rem 1.25rem;
-  color: @red;
+  padding: 0.9rem 1.25rem;
+  color: @black;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid @greyMedium;
+  }
 
   &:hover,
   &:focus,
   &.active {
     background-color: @greyBright;
     outline: none;
+    color: @violet;
   }
 }
 
