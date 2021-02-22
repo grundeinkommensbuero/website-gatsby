@@ -50,7 +50,6 @@ const ProfilePage = ({ id: slugId }) => {
       setUserId(slugId);
     } else if (isAuthenticated) {
       if (userId !== slugId) {
-        console.log('bouncing');
         // We want to tell the user that they are trying to view the page
         // of a different user. Furthermore we want to bounce the user back
         // to the identified state.
