@@ -31,11 +31,13 @@ export const SearchPlaces = ({
   inputSize,
   buttonSize,
   profileButtonStyle,
+  isInsideForm,
   handleButtonClick = handleButtonClickDefault,
+  initialPlace = {},
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialPlace.name || '');
   const [results, setResults] = useState([]);
-  const [selectedPlace, setSelectedPlace] = useState({});
+  const [selectedPlace, setSelectedPlace] = useState(initialPlace);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
   const [fuse, setFuse] = useState();
@@ -208,7 +210,7 @@ export const SearchPlaces = ({
             onChange={handleChange}
             onKeyDown={handleEnterKey}
             onBlur={handleBlur}
-            className={s.searchBar}
+            className={cN(s.searchBar, { [s.isNotInsideForm]: !isInsideForm })}
           />
 
           <AutoCompleteList

@@ -11,6 +11,10 @@
   padding: @buttonPadding;
   text-decoration: none;
 
+  @media (max-width: @breakPointXS) {
+    padding: @buttonPaddingSmall;
+  }
+
   &.medium {
     font-size: @DesktopFontSizeM;
   }
@@ -32,7 +36,10 @@
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
+    background-color: darken(@violet, 10%);
+    color: @white;
+    border-color: darken(@violet, 10%);
+    //box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
   }
 }
 

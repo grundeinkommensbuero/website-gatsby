@@ -49,12 +49,12 @@ export const Ticker = ({ tickerDescription }) => {
   if (!municipality) {
     return (
       <TickerDisplay
-        prefixText=""
+        prefixText="Schon"
         highlight1={peopleCount}
         inBetween1="Menschen"
         inBetween2="in"
         highlight2={municipalityCount}
-        suffixHighlight2="Orten"
+        suffixHighlight2="Orten sind dabei."
         tickerDescription={tickerDescription}
       />
     );

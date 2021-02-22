@@ -158,7 +158,9 @@ export function ContentfulSection({ section, pageContext }) {
         {section.keyVisual && (
           <Section className={cN(s.sectionWhite, s.keyVisualSection)}>
             <div className={s.keyVisualWrapper}>
-              <div className={s.keyVisual}>{''}</div>
+              <div className={s.keyVisualContainer}>
+                <div className={s.keyVisual}>{''}</div>
+              </div>
               <div className={s.keyClaim}>
                 <h1>
                   Hol das Grundeinkommen jetzt{' '}
@@ -167,6 +169,10 @@ export function ContentfulSection({ section, pageContext }) {
                     : 'in deinen Wohnort'}
                   .
                 </h1>
+                {/* <p>
+                  Gemeinsam starten wir den ersten staatlichen Modellversuch, um
+                  das Grundeinkommen nach ganz Deutschland zu holen.
+                </p> */}
                 <LinkButton href="#ticker">Mehr erfahren</LinkButton>
               </div>
             </div>
@@ -176,7 +182,7 @@ export function ContentfulSection({ section, pageContext }) {
         <Section
           jumpToId={id}
           className={cN({
-            // [s.sectionTwoColumns]: isTwoColumns,
+            [s.sectionTwoColumns]: isTwoColumns,
             // [s.sectionConfetti]: backgroundIllustration === 'confetti',
             [s.sectionWhite]: colorScheme === 'white',
             [s.sectionViolet]: colorScheme === 'violet',
