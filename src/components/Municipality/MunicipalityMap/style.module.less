@@ -93,9 +93,15 @@
     'top  top top'
     'left empty right'
     'bottom bottom bottom';
-  grid-template-rows: 15% 70% 15%;
-  grid-template-columns: 30% 40% 30%;
+    grid-template-rows: 0% 100% 0%;
+    grid-template-columns: 10% 80% 10%;
+
   pointer-events: none;
+
+  @media (max-width: @breakPointL) {
+    grid-template-rows: 15% 70% 15%;
+    grid-template-columns: 30% 40% 30%;
+  }
 
   & div {
     pointer-events: all;
@@ -121,7 +127,7 @@
   background-color: @white;
   color: @black;
   border: 1px solid @white;
-
+  padding: 1rem;
   & button {
     pointer-events: all;
   }

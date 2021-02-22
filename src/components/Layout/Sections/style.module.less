@@ -3,14 +3,14 @@
 .sections .section {
   position: relative;
   overflow: hidden;
-  padding: 10rem 3rem 8rem 3rem;
+  padding: 5rem 3rem 5rem 3rem;
 
   @media (max-width: @breakPointM) {
-    padding: 3rem 2rem 5rem 2rem;
+    padding: 3rem 2rem 3rem 2rem;
   }
 
   @media (max-width: @breakPointS) {
-    padding: 3rem 1rem 5rem 1rem;
+    padding: 3rem 1rem 2rem 1rem;
   }
 
   &.sectionNewsletter {
@@ -633,12 +633,16 @@
 
   @media (max-width: @breakPointM) {
     grid-template-columns: none;
+    // Works for map section
+    grid-template-columns: 1fr;
     margin-top: 0;
   }
 }
 
 .componentLeft {
   margin-bottom: 3rem;
+  grid-column-start: 1;
+  grid-column-end: last-line;
 
   @media (min-width: @breakPointM) {
     padding-right: 2.5rem;
@@ -649,6 +653,8 @@
 }
 
 .componentRight {
+  grid-column-start: 1;
+  grid-column-end: last-line;
   @media (min-width: @breakPointM) {
     padding-left: 2.5rem;
     grid-column-start: 3;
@@ -662,8 +668,12 @@
 }
 
 .componentCenterNarrow {
-  grid-column-start: 2;
+  grid-column-start: 1;
   grid-column-end: last-line;
+  @media (min-width: @breakPointM) {
+    grid-column-start: 2;
+    grid-column-end: last-line;
+  }
 }
 // .componentElementFullWidth {
 //   margin-top: 1.5rem;

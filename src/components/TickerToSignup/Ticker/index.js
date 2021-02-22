@@ -25,7 +25,7 @@ export const Ticker = ({ tickerDescription }) => {
     if (municipality && municipality.signups) {
       setPeopleCount(municipality.signups);
     } else {
-      setPeopleCount(3592);
+      setPeopleCount(300592);
     }
   }, [municipality]);
 
@@ -96,7 +96,10 @@ const TickerDisplay = ({
               {prefixText}{' '}
             </span>
           )}
-          <Reel text={highlight1.toString()} />
+
+          <div className={s.numbersContainer}>
+            <Reel text={highlight1.toString()} />
+          </div>
 
           {inBetween1 && (
             <h2
@@ -123,7 +126,10 @@ const TickerDisplay = ({
                   {inBetween2}
                 </h2>
               )}
-              <Reel text={highlight2.toString()} />
+              <div className={s.numbersContainer}>
+                <Reel text={highlight2.toString()} />
+              </div>
+
               {suffixHighlight2 && (
                 <h2
                   className={cN(
