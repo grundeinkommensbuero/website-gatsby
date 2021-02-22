@@ -181,7 +181,7 @@ export const MunicipalityMap = ({
   const mapEl = useRef(null);
 
   useEffect(() => {
-    console.log('mapEl effect', mapEl.current);
+    // console.log('mapEl effect', mapEl.current);
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(
@@ -284,11 +284,6 @@ export const MunicipalityMap = ({
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
-    console.log(
-      (mapDataReady && shouldStartAnimation) ||
-        allMunicipalityStatsState === 'error'
-    );
-
     if (
       (mapDataReady && shouldStartAnimation) ||
       allMunicipalityStatsState === 'error'
