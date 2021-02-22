@@ -16,7 +16,7 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive, isInOnb
 
   const activatePreview = channel => {
     const i = ShareButtons.findIndex(el => el.channelIdentifier === channel);
-    console.log(ShareButtons[i]);
+    // console.log(ShareButtons[i]);
     setShareChannel(ShareButtons[i]);
     setSharePreviewActive(true);
   };

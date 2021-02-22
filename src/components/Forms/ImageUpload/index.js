@@ -31,7 +31,7 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
       let counter = 0;
       // Try to fetch new profile picture
       const tryUpdateUserData = setInterval(() => {
-        if (counter < 2) {
+        if (counter < 3) {
           updateCustomUserData();
           counter++;
         } else {
@@ -56,7 +56,7 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
       }}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className={s.imageUploadContainer}>
-          {userData.user && userData.user.profilePictures ? (
+          {userData?.user?.profilePictures ? (
             <AvatarImage
               user={userData.user}
               className={cN(s.avatarImage,
@@ -125,6 +125,7 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
 
 export const ImageInput = ({ input: { value, onChange, ...input }, user, size, unsavedChanges, showUploadLabel }) => {
   const [avatarImage, setAvatarImage] = useState(null);
+
   const handleChange = ({ target }) => {
     if (target.files && target.files[0]) {
       const reader = new FileReader();

@@ -388,11 +388,11 @@ export const MunicipalityMap = ({
             />
           </div>
         ) : (
-          <div
-            className={cN(s.mapStatic, s.fallback)}
-            style={{ opacity: fadeOpacities.map }}
-          ></div>
-        )}
+            <div
+              className={cN(s.mapStatic, s.fallback)}
+              style={{ opacity: fadeOpacities.map }}
+            ></div>
+          )}
       </div>
       {hoverInfo && hoverInfo.object && (
         <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
