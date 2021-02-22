@@ -9,14 +9,19 @@ export const OnboardingOverlay = ({ ...props }) => {
     <OnboardingOverlayContext.Consumer>
       {({ overlayOpen, setOverlayOpen }) => (
         <>
-          {overlayOpen ?
+          {overlayOpen ? (
             <div className={s.blurryBackground}>
-              <div className={cN(s.onboardingContainer, s.backdropBlur)} role="dialog" aria-describedby="dialogTitle">
+              <div
+                className={cN(s.onboardingContainer, s.backdropBlur)}
+                role="dialog"
+                aria-describedby="dialogTitle"
+              >
                 <div className={s.body}>
                   <Onboarding setOverlayOpen={setOverlayOpen} />
                 </div>
               </div>
-            </div> : null}
+            </div>
+          ) : null}
         </>
       )}
     </OnboardingOverlayContext.Consumer>
