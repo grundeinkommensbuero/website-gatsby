@@ -63,7 +63,7 @@ export const SignupButtonAndTile = ({ className }) => {
 
 export const getButtonText = (municipality, userContentfulState) => {
   if (!municipality) {
-    return 'Ich will dabei sein.';
+    return 'Ich will dabei sein';
   }
 
   // Berlin
