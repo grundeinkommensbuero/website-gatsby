@@ -41,18 +41,19 @@ const LoginMenuItem = () => {
 
   // If user is not identified, show "login" button`, next page after login
   // should be the current page
-  if (!userId)
+  if (!userId){
     return (
       <MenuItemLink
         slug={`login${
           location.pathname !== '/'
-            ? `/?nextPage=${location.pathname.slice(1, -1)}`
+            ? `/?nextPage=${location.pathname.slice(-1) === '/' ? location.pathname.slice(1, -1) : location.pathname.slice(1)}`
             : ''
         }`}
       >
         Einloggen
       </MenuItemLink>
     );
+  }
 
   // Where to send user when clicking "to profile" link
   const toProfileLinkLocation = isAuthenticated
