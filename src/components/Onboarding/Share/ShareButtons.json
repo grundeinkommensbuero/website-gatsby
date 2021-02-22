@@ -1,22 +1,32 @@
 [
   {
     "name": "FacebookShareButton",
-    "label": "Facebook"
+    "label": "Facebook",
+    "channelIdentifier": "facebook"
   },
   {
     "name": "EmailShareButton",
-    "label": "E-Mail"
+    "label": "E-Mail",
+    "channelIdentifier": "email"
   },
   {
     "name": "TelegramShareButton",
-    "label": "Telegram"
+    "label": "Telegram",
+    "channelIdentifier": "telegram"
   },
   {
     "name": "TwitterShareButton",
-    "label": "Twitter"
+    "label": "Twitter",
+    "channelIdentifier": "twitter"
   },
   {
     "name": "WhatsappShareButton",
-    "label": "What\\'s App"
+    "label": "What\\'s App",
+    "channelIdentifier": "whatsapp"
+  },
+  {
+    "name": "InstagramHowTo",
+    "label": "Instagram",
+    "channelIdentifier": "instagram"
   }
 ]

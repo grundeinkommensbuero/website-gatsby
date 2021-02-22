@@ -1,9 +1,15 @@
 import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
-import { ShareButtonRow } from '../Onboarding/Share/ShareButtonRow';
+import { Share } from '../Onboarding/Share';
 import s from './style.module.less';
+import AuthContext from '../../context/Authentication';
 
 export const InviteFriends = () => {
+  const {
+    userId,
+    customUserData: userData,
+  } = useContext(AuthContext);
+
   const { municipality } = useContext(MunicipalityContext);
   const sharingFactorAnnouncement = getSharingFactorAnnouncement(municipality);
   const sharingCTA = getSharingCTA(municipality);
@@ -14,7 +20,7 @@ export const InviteFriends = () => {
         <h2>Jetzt Freunde einladen</h2>
         {sharingCTA && <p>{sharingCTA}</p>}
         {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
-        <ShareButtonRow />
+        <Share userData={userData} userId={userId} municipality={municipality} isInOnboarding={false} />
       </div>
       <div className={s.componentElement}>
         <div></div>
