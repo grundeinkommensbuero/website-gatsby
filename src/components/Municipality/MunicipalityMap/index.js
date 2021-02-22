@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
   useContext,
+  useRef,
 } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
@@ -38,7 +39,6 @@ import { detectWebGLContext } from '../../utils';
 import { animate } from './animate';
 
 import { MapTooltip } from './MapTooltip';
-import { Button } from '../../Forms/Button';
 
 import { MunicipalityContext } from '../../../context/Municipality';
 
@@ -73,7 +73,7 @@ const zoomPadding = { padding: 10 };
 // };
 
 export const Legend = () => {
-  const [isActive, setIsActive] = useState(true);
+  const [isActive] = useState(true);
   return (
     <div className={s.legendContainer}>
       {/* <Button
@@ -133,7 +133,7 @@ export const Legend = () => {
 
 export const MunicipalityMap = ({
   // agsToFlyTo,
-  shouldStartAnimation = true,
+  // shouldStartAnimation = true,
   onDataReady,
   initialMapAnimation = true,
   flyToAgsOnLoad = true,
@@ -175,6 +175,39 @@ export const MunicipalityMap = ({
   );
 
   const [hoverInfo, setHoverInfo] = useState();
+
+  const [isInView, setIsInView] = useState(false);
+  const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
+  const mapEl = useRef(null);
+
+  useEffect(() => {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setIsInView(true);
+            }
+          });
+        },
+        {
+          threshold: 1.0,
+        }
+      );
+      if (mapEl.current) {
+        observer.observe(mapEl.current);
+      }
+    } else {
+      setIsInView(true);
+    }
+  }, [mapEl]);
+
+  useEffect(() => {
+    console.log('ISINVIEW');
+    if (isInView) {
+      setShouldStartAnimation(true);
+    }
+  }, [isInView]);
 
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
@@ -250,6 +283,11 @@ export const MunicipalityMap = ({
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
+    console.log(
+      (mapDataReady && shouldStartAnimation) ||
+        allMunicipalityStatsState === 'error'
+    );
+
     if (
       (mapDataReady && shouldStartAnimation) ||
       allMunicipalityStatsState === 'error'
@@ -335,6 +373,7 @@ export const MunicipalityMap = ({
         ></div>
         {allMunicipalityStatsState === 'success' ? (
           <div
+            ref={mapEl}
             className={s.mapContainer}
             style={{ opacity: fadeOpacities.map }}
           >
