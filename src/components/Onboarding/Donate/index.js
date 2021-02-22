@@ -3,7 +3,15 @@ import gS from '../style.module.less';
 import s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
 
-export const Donate = ({ userData, userId, updateUser, updateCustomUserData, compIndex, setCurrentElementByIndex, municipality }) => {
+export const Donate = ({
+  userData,
+  userId,
+  updateUser,
+  updateCustomUserData,
+  compIndex,
+  setCurrentElementByIndex,
+  municipality,
+}) => {
   const [showDonationForm, setShowDonationForm] = useState(false);
 
   const saveDonationReaction = type => {
@@ -11,21 +19,23 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
     const reactionForMunicipality = {
       ags: municipality.ags,
       reaction: type,
-      timestamp: new Date()
-    }
+      timestamp: new Date(),
+    };
     // Find and update reaction for ags or add a new one
-    const reactionIndex = existingReactions.findIndex(el => el?.ags === municipality.ags);
+    const reactionIndex = existingReactions.findIndex(
+      el => el?.ags === municipality.ags
+    );
     if (reactionIndex !== -1) {
       existingReactions[reactionIndex] = reactionForMunicipality;
     } else {
       existingReactions.push(reactionForMunicipality);
-    };
+    }
     // Save updated Reaction Array
     updateUser({
       userId: userId,
       store: {
-        donationOnboardingReaction: existingReactions
-      }
+        donationOnboardingReaction: existingReactions,
+      },
     });
     // Refresh local userData Object
     setTimeout(() => {
@@ -33,26 +43,32 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
     }, 500);
   };
 
+  console.log({ showDonationForm });
 
   return (
     <section className={gS.pageContainer}>
-      {showDonationForm ?
+      {showDonationForm ? (
         <>
           <DonationForm theme={{}} />
         </>
-        : <>
-          <h3 className={gS.moduleTitle}>Mach die Expedition mit deiner Spende möglich</h3>
+      ) : (
+        <>
+          <h3 className={gS.moduleTitle}>
+            Mach die Expedition mit deiner Spende möglich
+          </h3>
           <p className={gS.descriptionTextLarge}>
-            Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es nur, wenn alle{' '}
-            etwas in die Reisekasse legen. Spende jetzt, damit wir gemeinsam das Grundeinkommen{' '}
-            in {municipality.name} und ganz Deutschland Wirklichkeit werden lassen!
+            Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es
+            nur, wenn alle etwas in die Reisekasse legen. Spende jetzt, damit
+            wir gemeinsam das Grundeinkommen in {municipality.name} und ganz
+            Deutschland Wirklichkeit werden lassen!
           </p>
 
           <div className={gS.buttonRow}>
             <div
               aria-hidden="true"
               className={s.engagementOption}
-              onClick={() => setShowDonationForm(true)}>
+              onClick={() => setShowDonationForm(true)}
+            >
               Jetzt spenden
             </div>
 
@@ -61,8 +77,9 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
               className={s.engagementOption}
               onClick={() => {
                 saveDonationReaction('remindMeLater');
-                setCurrentElementByIndex(compIndex + 1)
-              }}>
+                setCurrentElementByIndex(compIndex + 1);
+              }}
+            >
               Später erinnern
             </div>
           </div>
@@ -73,13 +90,14 @@ export const Donate = ({ userData, userId, updateUser, updateCustomUserData, com
               className={gS.linkLikeFormatted}
               onClick={() => {
                 saveDonationReaction('skipedDonation');
-                setCurrentElementByIndex(compIndex + 1)
-              }}>
+                setCurrentElementByIndex(compIndex + 1);
+              }}
+            >
               Überspringen
             </span>
           </div>
-
-        </>}
+        </>
+      )}
     </section>
   );
 };

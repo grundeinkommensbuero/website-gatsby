@@ -11,7 +11,7 @@ export const SignUpFlow = ({
   return (
     <section className={gS.pageContainer}>
       <div className={s.signupContainer}>
-        <SignUp illustration={false} showSignedInMessage={true} />
+        <SignUp illustration={false} />
       </div>
     </section>
   );

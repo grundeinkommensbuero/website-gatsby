@@ -7,7 +7,7 @@ export const useUpdateUser = () => {
   const [state, setState] = useState();
 
   //get auth token from global context
-  const { token, userId, updateCustomUserData } = useContext(AuthContext);
+  const { token, userId } = useContext(AuthContext);
 
   return [
     state,
@@ -16,9 +16,6 @@ export const useUpdateUser = () => {
         setState('loading');
         await updateUser({ token, userId, ...data });
 
-        // Update user data here, so we don't have to do it
-        // in components all the time
-        updateCustomUserData();
         setState('updated');
       } catch (error) {
         setState('error');
