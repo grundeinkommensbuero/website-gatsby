@@ -157,23 +157,25 @@ export function ContentfulSection({ section, pageContext }) {
       <>
         {section.keyVisual && (
           <Section className={cN(s.sectionWhite, s.keyVisualSection)}>
-            <div className={s.keyVisualWrapper}>
-              <div className={s.keyVisualContainer}>
-                <div className={s.keyVisual}>{''}</div>
-              </div>
-              <div className={s.keyClaim}>
-                <h1>
-                  Hol das Grundeinkommen jetzt{' '}
-                  {municipality
-                    ? `nach ${municipality.name}`
-                    : 'in deinen Wohnort'}
+            <div className={s.keyVisuallowerBorder}>
+              <div className={s.keyVisualWrapper}>
+                <div className={s.keyVisualContainer}>
+                  <div className={s.keyVisual}>{''}</div>
+                </div>
+                <div className={s.keyClaim}>
+                  <h1>
+                    Hol das Grundeinkommen jetzt{' '}
+                    {municipality
+                      ? `nach ${municipality.name}`
+                      : 'in deinen Wohnort'}
                   .
                 </h1>
-                {/* <p>
+                  {/* <p>
                   Gemeinsam starten wir den ersten staatlichen Modellversuch, um
                   das Grundeinkommen nach ganz Deutschland zu holen.
                 </p> */}
-                <LinkButton href="#ticker">Mehr erfahren</LinkButton>
+                  <LinkButton href="#ticker">Mehr erfahren</LinkButton>
+                </div>
               </div>
             </div>
           </Section>
@@ -472,8 +474,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
