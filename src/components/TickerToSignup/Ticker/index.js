@@ -7,11 +7,20 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { municipality, statsSummary } = useContext(MunicipalityContext);
+  const { municipality } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
-  console.log(statsSummary);
+  const statsSummary = {
+    municipalities: 4388,
+    previous: {
+      municipalities: 4383,
+      timestamp: "2021-02-22T16:10:30.020Z",
+      users: 219824
+    },
+    timestamp: "2021-02-22T16:25:32.733Z",
+    users: 219830
+  }
 
   useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
@@ -28,6 +37,8 @@ export const Ticker = ({ tickerDescription }) => {
     let firePeopleCounter;
     let fireMunicipalityCounter;
 
+    console.log('firePeopleCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
+
     if (statsSummary && statsSummary.users > statsSummary.previous.users) {
       const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
       firePeopleCounter = setTimeout(() => {
@@ -36,6 +47,8 @@ export const Ticker = ({ tickerDescription }) => {
     } else {
       clearTimeout(firePeopleCounter);
     }
+
+    console.log('fireMunicipalityCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
 
     if (statsSummary && statsSummary.municipalities > statsSummary.previous.municipalities) {
       const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
@@ -50,7 +63,7 @@ export const Ticker = ({ tickerDescription }) => {
       clearTimeout(firePeopleCounter);
       clearTimeout(fireMunicipalityCounter);
     };
-  });
+  }, [peopleCount, municipalityCount]);
 
   if (!municipality) {
     return (
