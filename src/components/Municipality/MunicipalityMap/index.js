@@ -181,6 +181,8 @@ export const MunicipalityMap = ({
   const mapEl = useRef(null);
 
   useEffect(() => {
+    console.log('mapEl effect', mapEl.current);
+
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(
         entries => {
@@ -200,10 +202,9 @@ export const MunicipalityMap = ({
     } else {
       setIsInView(true);
     }
-  }, [mapEl]);
+  }, [mapEl.current]);
 
   useEffect(() => {
-    console.log('ISINVIEW');
     if (isInView) {
       setShouldStartAnimation(true);
     }
@@ -329,7 +330,7 @@ export const MunicipalityMap = ({
 
   if (!hasWebGl) {
     return (
-      <div className={cN(s.defaultPositionRelative, className)}>
+      <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
         <div className={s.interfaceContainer}>
           <div className={cN(s.mapStatic, s.fallback)}></div>
         </div>
@@ -338,7 +339,7 @@ export const MunicipalityMap = ({
   }
 
   return (
-    <div className={cN(s.defaultPositionRelative, className)}>
+    <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
       <div className={s.interfaceContainer}>
         <div className={s.blockTouchOverlay}>
           <div className={s.top}></div>
@@ -373,7 +374,6 @@ export const MunicipalityMap = ({
         ></div>
         {allMunicipalityStatsState === 'success' ? (
           <div
-            ref={mapEl}
             className={s.mapContainer}
             style={{ opacity: fadeOpacities.map }}
           >
