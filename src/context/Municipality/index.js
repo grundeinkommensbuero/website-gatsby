@@ -11,6 +11,7 @@ export const MunicipalityProvider = ({ children }) => {
   const [municipality, setMunicipality] = useState();
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
+  const [statsSummary, setStatsSummary] = useState();
 
   // Stats for all municipalities
   const [
@@ -125,6 +126,10 @@ export const MunicipalityProvider = ({ children }) => {
     }
   }, [singleMunicipalityStats]);
 
+  useEffect(() => {
+    setStatsSummary(allMunicipalityStats.summary);
+  }, [allMunicipalityStats])
+
   return (
     <MunicipalityContext.Provider
       value={{
@@ -140,6 +145,7 @@ export const MunicipalityProvider = ({ children }) => {
         allMunicipalityStatsState,
         singleMunicipalityStats,
         singleMunicipalityStatsState,
+        statsSummary
       }}
     >
       {children}

@@ -7,38 +7,44 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { municipality } = useContext(MunicipalityContext);
+  const { municipality, statsSummary } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
-  useEffect(() => {
-    // console.log(municipality);
+  console.log(statsSummary);
 
+  useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else {
-      setPeopleCount(3592);
+      let numOfUsers = statsSummary?.previous?.users || 0;
+      let numOfMunicipalities = statsSummary?.previous?.municipalities || 0;
+      setPeopleCount(numOfUsers);
+      setMunicipalityCount(numOfMunicipalities);
     }
-  }, [municipality]);
+  }, [municipality, statsSummary]);
 
   useEffect(() => {
-    if (municipality && municipality.signups) {
-      setPeopleCount(municipality.signups);
+    let firePeopleCounter;
+    let fireMunicipalityCounter;
+
+    if (statsSummary && statsSummary.users > statsSummary.previous.users) {
+      const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
+      firePeopleCounter = setTimeout(() => {
+        setPeopleCount(peopleCount + 1);
+      }, peopleRandom);
     } else {
-      setPeopleCount(3592);
+      clearTimeout(firePeopleCounter);
     }
-  }, [municipality]);
 
-  useEffect(() => {
-    const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
-    const firePeopleCounter = setTimeout(() => {
-      setPeopleCount(peopleCount + 1);
-    }, peopleRandom);
-
-    const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
-    const fireMunicipalityCounter = setTimeout(() => {
-      setMunicipalityCount(municipalityCount + 1);
-    }, municipalityRandom);
+    if (statsSummary && statsSummary.municipalities > statsSummary.previous.municipalities) {
+      const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
+      fireMunicipalityCounter = setTimeout(() => {
+        setMunicipalityCount(municipalityCount + 1);
+      }, municipalityRandom);
+    } else {
+      clearTimeout(fireMunicipalityCounter);
+    }
 
     return () => {
       clearTimeout(firePeopleCounter);
