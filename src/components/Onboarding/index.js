@@ -60,7 +60,6 @@ export const Onboarding = ({ setOverlayOpen }) => {
       if (
         userData?.municipalities?.map(el => el.ags).includes(municipality.ags)
       ) {
-        console.log('setisformunicipality');
         setIsForMunicipalityAuthenticated(true);
       }
     }

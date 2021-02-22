@@ -43,8 +43,6 @@ export const Donate = ({
     }, 500);
   };
 
-  console.log({ showDonationForm });
-
   return (
     <section className={gS.pageContainer}>
       {showDonationForm ? (
