@@ -12,14 +12,14 @@ export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userD
     <section className={gS.pageContainer}>
       {!sharePreviewActive ?
         <>
-          {isInOnboarding && <>
+          {isInOnboarding ? <>
             <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
             <p className={gS.descriptionTextLarge}>
               Je mehr Menschen du zur Expedition einlädst, desto besser stehen die Chancen, dass{' '}
               {municipality.name} bald Grundeinkommen erforscht. Wir müssen insgesamt {municipality.goal}{' '}
               Menschen werden!
             </p>
-          </>}
+          </> : <br />}
 
           <ShareButtonRow
             setShareChannel={setShareChannel}

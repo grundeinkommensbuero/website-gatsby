@@ -23,5 +23,10 @@
     "name": "WhatsappShareButton",
     "label": "What\\'s App",
     "channelIdentifier": "whatsapp"
+  },
+  {
+    "name": "InstagramHowTo",
+    "label": "Instagram",
+    "channelIdentifier": "instagram"
   }
 ]

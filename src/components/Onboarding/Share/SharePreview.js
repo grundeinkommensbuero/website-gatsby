@@ -17,13 +17,25 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
   const [showProfileImageUpload, setShowProfileImageUpload] = useState(false);
   const [useProfilePicture, setUseProfilePicture] = useState(userData?.profilePictures?.original);
 
+  const InstagramHowTo = () => {
+    return (
+      <>
+        <h3 className={gS.moduleTitle}>So teilst du über Instagram:</h3>
+        <p>Füge folgenden Link ein: {constructShareURL()}</p>
+      </>
+    )
+  }
+
   const Components = {
     EmailShareButton,
     FacebookShareButton,
     TelegramShareButton,
     TwitterShareButton,
     WhatsappShareButton,
+    InstagramHowTo
   };
+
+
 
   const constructShareURL = () => {
     const addProfileImage = () => useProfilePicture ? '&addProfilePicture=true' : '';
@@ -31,7 +43,7 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
   };
 
   const ShareButton = () => {
-    let CaseButton = Components[ShareButtons.find(el => el.channelIdentifier === shareChannel.channelIdentifier)?.name];
+    let CaseButton = Components[ShareButtons.find(el => el.channelIdentifier === shareChannel?.channelIdentifier)?.name];
     const title = `Bring das Grundeinkommen nach ${municipality.name}`;
     const hashtags = ["Grundeinkommen", "ExpeditionGrundeinkommen"];
     const subject = `Gemeinsam bringen wir das Grundeinkommen nach ${municipality.name}`;
@@ -52,7 +64,7 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
             <div
               aria-hidden="true"
               className={gS.selectableOption}>
-              Über {shareChannel?.label} teilen
+              Über {shareChannel?.label.replace(/\\/g, "")} teilen
         </div>
           </CaseButton> : null}
       </>
@@ -65,7 +77,7 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
 
   return (
     <>
-      <h3 className={gS.moduleTitle}>Über {shareChannel?.label} teilen</h3>
+      <h3 className={gS.moduleTitle}>Über {shareChannel?.label.replace(/\\/g, "")} teilen</h3>
       <div className={s.sharePreviewContainer}>
         {useProfilePicture ?
           <>
