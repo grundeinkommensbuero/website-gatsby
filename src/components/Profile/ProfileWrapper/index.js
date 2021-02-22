@@ -23,6 +23,7 @@ const ProfilePage = ({ id: slugId }) => {
   const {
     userId,
     isAuthenticated,
+    setUserId,
     customUserData: userData,
     previousAction,
     setPreviousAction,
@@ -43,6 +44,10 @@ const ProfilePage = ({ id: slugId }) => {
     // If user isn't authenticated
     if (isAuthenticated === false) {
       setIsLoading(false);
+
+      // Set user id to slug id, so people get immediately sent the login code.
+      // This is relevant if people click a link in a newsletter to update contact settings.
+      setUserId(slugId);
     } else if (isAuthenticated) {
       if (userId !== slugId) {
         // We want to tell the user that they are trying to view the page
