@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
   useContext,
+  useRef,
 } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
@@ -38,7 +39,6 @@ import { detectWebGLContext } from '../../utils';
 import { animate } from './animate';
 
 import { MapTooltip } from './MapTooltip';
-import { Button } from '../../Forms/Button';
 
 import { MunicipalityContext } from '../../../context/Municipality';
 
@@ -73,7 +73,7 @@ const zoomPadding = { padding: 10 };
 // };
 
 export const Legend = () => {
-  const [isActive, setIsActive] = useState(true);
+  const [isActive] = useState(true);
   return (
     <div className={s.legendContainer}>
       {/* <Button
@@ -133,9 +133,9 @@ export const Legend = () => {
 
 export const MunicipalityMap = ({
   // agsToFlyTo,
-  shouldStartAnimation = true,
+  // shouldStartAnimation = true,
   onDataReady,
-  initialMapAnimation = false,
+  initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
 }) => {
@@ -175,6 +175,40 @@ export const MunicipalityMap = ({
   );
 
   const [hoverInfo, setHoverInfo] = useState();
+
+  const [isInView, setIsInView] = useState(false);
+  const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
+  const mapEl = useRef(null);
+
+  useEffect(() => {
+    console.log('mapEl effect', mapEl.current);
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setIsInView(true);
+            }
+          });
+        },
+        {
+          threshold: 1.0,
+        }
+      );
+      if (mapEl.current) {
+        observer.observe(mapEl.current);
+      }
+    } else {
+      setIsInView(true);
+    }
+  }, [mapEl.current]);
+
+  useEffect(() => {
+    if (isInView) {
+      setShouldStartAnimation(true);
+    }
+  }, [isInView]);
 
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
@@ -250,6 +284,11 @@ export const MunicipalityMap = ({
 
   // ---- useEffects -----------------------------------------------------------------------
   useEffect(() => {
+    console.log(
+      (mapDataReady && shouldStartAnimation) ||
+        allMunicipalityStatsState === 'error'
+    );
+
     if (
       (mapDataReady && shouldStartAnimation) ||
       allMunicipalityStatsState === 'error'
@@ -291,7 +330,7 @@ export const MunicipalityMap = ({
 
   if (!hasWebGl) {
     return (
-      <div className={cN(s.defaultPositionRelative, className)}>
+      <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
         <div className={s.interfaceContainer}>
           <div className={cN(s.mapStatic, s.fallback)}></div>
         </div>
@@ -300,7 +339,7 @@ export const MunicipalityMap = ({
   }
 
   return (
-    <div className={cN(s.defaultPositionRelative, className)}>
+    <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
       <div className={s.interfaceContainer}>
         <div className={s.blockTouchOverlay}>
           <div className={s.top}></div>

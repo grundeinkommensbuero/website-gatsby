@@ -19,7 +19,7 @@ export const animate = ({
     targets: localOpacities,
     empty: [1, 0],
     map: [0, 1],
-    delay: initialMapAnimation ? 1200 : 0,
+    delay: initialMapAnimation ? 500 : 0,
     duration: initialMapAnimation ? 500 : 120,
     easing: 'easeOutQuad',
     update() {

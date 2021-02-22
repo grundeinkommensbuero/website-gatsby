@@ -110,31 +110,31 @@ export const Onboarding = ({ setOverlayOpen }) => {
           <SignUpFlow />
         </>
       ) : (
-        <>
-          {/* Show onboarding content or currently Signin Up info message */}
-          {userData?.municipalities
-            ?.map(el => el.ags)
-            .includes(municipality.ags) ? (
-            <>
-              <div className={s.breadcrumbContainer}>
-                <BreadcrumbLinks
-                  setCurrentElement={setCurrentElement}
-                  currentElement={currentElement}
-                  setOverlayOpen={setOverlayOpen}
-                />
-              </div>
-              <CurrentComponent />
-            </>
-          ) : (
-            <div className={s.signYouUpMessageContainer}>
-              <h2 className={s.signYouUpMessage}>
-                Du wirst für {municipality.name} angemeldet
+          <>
+            {/* Show onboarding content or currently Signin Up info message */}
+            {userData?.municipalities
+              ?.map(el => el.ags)
+              .includes(municipality.ags) ? (
+                <>
+                  <div className={s.breadcrumbContainer}>
+                    <BreadcrumbLinks
+                      setCurrentElement={setCurrentElement}
+                      currentElement={currentElement}
+                      setOverlayOpen={setOverlayOpen}
+                    />
+                  </div>
+                  <CurrentComponent />
+                </>
+              ) : (
+                <div className={s.signYouUpMessageContainer}>
+                  <h2 className={s.signYouUpMessage}>
+                    Du wirst für {municipality.name} angemeldet
               </h2>
-              <LoadingAnimation />
-            </div>
-          )}
-        </>
-      )}
+                  <LoadingAnimation />
+                </div>
+              )}
+          </>
+        )}
     </div>
   );
 };

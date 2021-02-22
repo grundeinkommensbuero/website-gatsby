@@ -173,7 +173,7 @@ export const pageQuery = graphql`
                 videoLink
                 signUpButton
                 image {
-                  fluid(maxWidth: 200, quality: 80) {
+                  fluid(maxWidth: 500, quality: 90) {
                     ...GatsbyContentfulFluid
                   }
                 }

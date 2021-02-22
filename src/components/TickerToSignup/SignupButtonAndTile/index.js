@@ -8,7 +8,7 @@ import cN from 'classnames';
 
 import { SignUpButton } from '../SignupButton';
 
-export const SignupButtonAndTile = () => {
+export const SignupButtonAndTile = ({ className }) => {
   // const { userId, customUserData: userData } = useContext(AuthContext);
   const { municipality } = useContext(MunicipalityContext);
   const { userContentfulState } = useUserMunicipalityContentfulState();
@@ -20,7 +20,9 @@ export const SignupButtonAndTile = () => {
     return (
       <>
         <h2 className={s.inviteHeadline}>Komm dazu.</h2>
-        <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>
+        <SignUpButton className={cN(className, s.signUpCTA)}>
+          {buttonText}
+        </SignUpButton>
       </>
     );
   } else if (
@@ -33,7 +35,9 @@ export const SignupButtonAndTile = () => {
         <div className={cN(s.tileContainer, s.sectionWhite)}>
           <h3>Willkommen zurück!</h3>
           <p>{welcomeExistingMessage}</p>
-          <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>
+          <SignUpButton className={cN(className, s.signUpCTA)}>
+            {buttonText}
+          </SignUpButton>
         </div>
       </>
     );
@@ -43,11 +47,17 @@ export const SignupButtonAndTile = () => {
   ) {
     return (
       <>
-        <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>
+        <SignUpButton className={cN(className, s.signUpCTA)}>
+          {buttonText}
+        </SignUpButton>
       </>
     );
   } else {
-    return <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>;
+    return (
+      <SignUpButton className={cN(className, s.signUpCTA)}>
+        {buttonText}
+      </SignUpButton>
+    );
   }
 };
 

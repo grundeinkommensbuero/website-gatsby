@@ -21,7 +21,7 @@ export const StandardSectionComponent = ({
   return (
     <>
       {videoLink && <YoutubeEmbed url={videoLink} />}
-      {image && <Img fluid={image.fluid} />}
+      {image && image.fluid && <Img fluid={image.fluid} />}
       {text && <div>{contentfulJsonToHtml(text.json)}</div>}
       {signUpButton && (
         <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>

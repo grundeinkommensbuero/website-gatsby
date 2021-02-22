@@ -101,11 +101,15 @@
 .mainCaption {
   position: absolute;
   left: 45%;
-  top: 17.5%;
+  top: 15%;
   z-index: 10;
-  color: white;
-  font-size: 1.75rem;
+  color: white !important;
+  font-size: 2.25rem;
   max-width: 50%;
+
+  @media (max-width: @breakPointL) {
+    font-size: 2rem;
+  }
 
   @media (max-width: @breakPointM) {
     font-size: 1.5rem;
@@ -125,9 +129,13 @@
   left: 45%;
   top: 57.5%;
   z-index: 10;
-  color: white;
-  font-size: 1.5rem;
+  color: white !important;
+  font-size: 2rem;
   max-width: 50%;
+
+  @media (max-width: @breakPointL) {
+    font-size: 1.5rem;
+  }
 
   @media (max-width: @breakPointM) {
     font-size: 1.25rem;
