@@ -10,10 +10,11 @@ export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,
 }) => {
   const tickerDescription = tickerDescriptionObject?.tickerDescription;
+
   return (
     <>
       <Ticker tickerDescription={tickerDescription} />
-      <SignupButtonAndTile />
+      <SignupButtonAndTile className={s.centerButton} />
       <div className={s.moreInfo}>
         <InlineLinkButton href="#info">Mehr erfahren</InlineLinkButton>
       </div>
