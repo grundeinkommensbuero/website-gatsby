@@ -181,7 +181,7 @@ export const MunicipalityMap = ({
   const mapEl = useRef(null);
 
   useEffect(() => {
-    console.log('mapEl effect', mapEl.current);
+    // console.log('mapEl effect', mapEl.current);
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(
@@ -286,7 +286,7 @@ export const MunicipalityMap = ({
   useEffect(() => {
     console.log(
       (mapDataReady && shouldStartAnimation) ||
-        allMunicipalityStatsState === 'error'
+      allMunicipalityStatsState === 'error'
     );
 
     if (
@@ -395,11 +395,11 @@ export const MunicipalityMap = ({
             />
           </div>
         ) : (
-          <div
-            className={cN(s.mapStatic, s.fallback)}
-            style={{ opacity: fadeOpacities.map }}
-          ></div>
-        )}
+            <div
+              className={cN(s.mapStatic, s.fallback)}
+              style={{ opacity: fadeOpacities.map }}
+            ></div>
+          )}
       </div>
       {hoverInfo && hoverInfo.object && (
         <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />

@@ -2,7 +2,6 @@ import React from 'react';
 import gS from '../style.module.less';
 import s from './style.module.less';
 import cN from 'classnames';
-import { MunicipalityContext } from '../../../context/Municipality';
 
 export const EngagementLevel = ({ userData, compIndex, setCurrentElementByIndex, engagementOption, setEngagementOption, municipality }) => {
 
