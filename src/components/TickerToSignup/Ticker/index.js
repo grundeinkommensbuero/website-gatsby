@@ -39,8 +39,15 @@ export const Ticker = ({ tickerDescription }) => {
 
     console.log('firePeopleCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
 
+    const prevTime = new Date(statsSummary?.previous?.timestamp);
+    const currTime = new Date();
+
+    console.log('PrevMinute: ', prevTime.getMinutes());
+    console.log('CurrMinute: ', currTime.getMinutes());
+
     if (statsSummary && statsSummary.users > statsSummary.previous.users) {
       const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
+      console.log(peopleRandom);
       firePeopleCounter = setTimeout(() => {
         setPeopleCount(peopleCount + 1);
       }, peopleRandom);
@@ -60,6 +67,7 @@ export const Ticker = ({ tickerDescription }) => {
     }
 
     return () => {
+      console.log('Cleanup');
       clearTimeout(firePeopleCounter);
       clearTimeout(fireMunicipalityCounter);
     };
