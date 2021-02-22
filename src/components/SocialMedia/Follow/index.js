@@ -7,7 +7,7 @@ export default ({ className }) => (
   <div className={cN(s.followButtons, className)}>
     <SocialMediaButton
       icon="Facebook"
-      link="https://www.facebook.com/expeditionbge/"
+      link="https://www.facebook.com/expedition.grundeinkommen"
       label="Folge auf Facebook"
       className={s.button}
     />
@@ -19,7 +19,7 @@ export default ({ className }) => (
     />
     <SocialMediaButton
       icon="Instagram"
-      link="https://www.instagram.com/expedition.bge/"
+      link="https://www.instagram.com/expedition.grundeinkommen/"
       label="Folge auf Instagram"
       className={s.button}
     />

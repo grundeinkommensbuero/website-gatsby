@@ -88,8 +88,6 @@ export const MunicipalityProvider = ({ children }) => {
         setMunicipalityContentfulState('qualifying');
       }
     } else {
-      console.log('happened');
-
       ags.current = undefined;
       setMunicipalityContentfulState('noMunicipality');
       setIsSpecific(false);

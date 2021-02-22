@@ -40,12 +40,12 @@ history.pushToHistoryState = (municipality, pageContext) => {
       window.history.pushState(
         { municipality, pageContext },
         null,
-        `${window.location.origin}/gemeinden/${municipality.ags}`
+        `${window.location.origin}/gemeinden/${municipality.slug}`
       );
       adjustDocumentTitle(municipality, municipality.name);
       setWindowLocationOriginForIE();
     } else {
-      navigate(municipality.ags);
+      navigate(municipality.slug);
     }
   }
 };

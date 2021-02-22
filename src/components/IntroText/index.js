@@ -11,8 +11,8 @@ export const IntroText = ({
 }) => {
   return (
     <div>
-      <p>{highlightText}</p>
-      <p>{note}</p>
+      <p className={s.introText}>{highlightText}</p>
+      <p className={s.introText}>{note}</p>
       <div className={s.logoContainer}>
         <img
           src={diw}

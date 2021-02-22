@@ -2,11 +2,11 @@
   xml:space="preserve">
   <style>
     .prefix__st1 {
-      fill: #f0f0f0
+      fill: #777
     }
   </style>
-  <path fill="none" stroke="#f0f0f0" stroke-width="2.83" stroke-miterlimit="10" d="M0 130.3h260" />
-  <path class="prefix__st1" d="M268.8 130.3l-17-9.8v19.6z" />
+  <path fill="none" stroke="#000" stroke-width="2.83" stroke-miterlimit="10" d="M0 130.3h260" />
+  <path fill="#000" d="M268.8 130.3l-17-9.8v19.6z" />
   <g>
     <circle class="prefix__st1" cx="29" cy="98.4" r="18.3" />
     <circle class="prefix__st1" cx="97.1" cy="80.3" r="38.5" />

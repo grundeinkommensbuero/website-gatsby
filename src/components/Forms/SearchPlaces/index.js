@@ -16,7 +16,7 @@ const handleButtonClickDefault = ({ validate }) => {
   // --> validate function
   const validation = validate();
   if (validation.status === 'success') {
-    navigate(validation.ags);
+    navigate(validation.slug);
   }
 };
 
@@ -101,14 +101,14 @@ export const SearchPlaces = ({
   }, [query, fuse]);
 
   const validate = () => {
-    let ags;
+    let slug;
     if (selectedPlace.ags) {
-      ags = `/gemeinden/${selectedPlace.ags}`;
-      return { status: 'success', ags };
+      slug = `/gemeinden/${selectedPlace.slug}`;
+      return { status: 'success', slug };
     }
     if (results.length > 0 && results[0].score < 0.001) {
-      ags = `/gemeinden/${results[0].ags}`;
-      return { status: 'success', ags };
+      slug = `/gemeinden/${results[0].slug}`;
+      return { status: 'success', slug };
     }
     const touched = true;
     const error = 'Bitte wähle eine Stadt aus';
