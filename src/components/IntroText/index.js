@@ -14,17 +14,18 @@ export const IntroText = ({
       <p className={s.introText}>{highlightText}</p>
       <p className={s.introText}>{note}</p>
       <div className={s.logoContainer}>
-        <img
-          src={diw}
-          alt="Logo Deutsches Institut für Wirtschaftsforschung"
-          className={s.diwLogo}
-        />
-        <img src={change} alt="Logo Change.org" className={s.changeLogo} />
-        <img
-          src={xbge}
-          alt="Logo Expedition Grundeinkommen"
-          className={s.xbgeLogo}
-        />
+        <div className={s.diwLogo}>
+          <img
+            src={diw}
+            alt="Logo Deutsches Institut für Wirtschaftsforschung"
+          />
+        </div>
+        <div className={s.changeLogo}>
+          <img src={change} alt="Logo Change.org" />
+        </div>
+        <div className={s.xbgeLogo}>
+          <img src={xbge} alt="Logo Expedition Grundeinkommen" />
+        </div>
       </div>{' '}
     </div>
   );
