@@ -41,18 +41,23 @@ export default ({
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId } = useContext(AuthContext);
+  const { isAuthenticated, userId, customUserData: userData } = useContext(
+    AuthContext
+  );
   const [formData, setFormData] = useState();
 
-  const { municipality } = useContext(MunicipalityContext);
+  const { municipality, setMunicipality } = useContext(MunicipalityContext);
   const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
 
-  console.log({ municipalityInForm, municipalityInContext: municipality });
+  let prefilledZip;
 
-  const prefilledZip =
-    municipalityInForm?.zipCodes.length === 1
-      ? municipalityInForm?.zipCodes[0]
-      : '';
+  if (municipalityInForm?.zipCodes.length === 1) {
+    prefilledZip = municipalityInForm?.zipCodes[0];
+  } else if (userData?.zipCode) {
+    prefilledZip = userData.zipCode;
+  } else {
+    prefilledZip = '';
+  }
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -60,16 +65,27 @@ export default ({
       if (postSignupAction) {
         postSignupAction();
       }
+
+      // Now set municipality in context
+      if (municipalityInForm) {
+        setMunicipality(municipalityInForm);
+      }
     }
   }, [hasSubmitted, isAuthenticated, userId]);
 
   useEffect(() => {
-    // If user signs in from form
-    if (isAuthenticated && hasSubmitted && formData && userId) {
+    // If user signs in from form and already existed
+    if (
+      isAuthenticated &&
+      hasSubmitted &&
+      formData &&
+      userId &&
+      userExists !== false
+    ) {
       updateUser({
         ...formData,
         updatedOnXbge: true,
-        ags: municipality?.ags,
+        ags: municipalityInForm?.ags,
       });
       setSignUpState('signedIn');
     }
@@ -98,13 +114,15 @@ export default ({
     );
   }
 
-  if (isAuthenticated || userId) {
-    if (showSignedInMessage) {
-      return <AuthenticatedDialogDefault />;
-    } else {
-      return null;
-    }
-  }
+  // Not needed for now since we want to just the sign up form
+  // even for signed in users
+  // if (isAuthenticated || userId) {
+  //   if (showSignedInMessage) {
+  //     return <AuthenticatedDialogDefault />;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   const handlePlaceSelect = newMunicipality => {
     setMunicipalityInForm(newMunicipality);
@@ -116,7 +134,7 @@ export default ({
     'municipality',
     'zipCode',
     'nudgeBox',
-    'newsLetterConsent',
+    'newsletterConsent',
   ];
   if (fieldsToRender) {
     fields = fieldsToRender;
@@ -129,6 +147,7 @@ export default ({
       placeholder: 'E-Mail',
       type: 'email',
       component: TextInputWrapped,
+      value: userData?.email,
     },
     username: {
       name: 'username',
@@ -136,9 +155,10 @@ export default ({
       placeholder: 'Vorname',
       type: 'text',
       component: TextInputWrapped,
+      value: userData?.username,
     },
     municipality: {
-      name: 'ags',
+      name: 'municipality',
       label: 'Ort',
       placeholder: 'Stadt / Gemeinde',
       type: 'text',
@@ -160,7 +180,7 @@ export default ({
       type: 'checkbox',
       component: Checkbox,
     },
-    newsLetterConsent: {
+    newsletterConsent: {
       name: 'newsletterConsent',
       label: 'Haltet mich über die nächsten Schritte auf dem Laufenden.',
       type: 'checkbox',
@@ -173,18 +193,34 @@ export default ({
       <h2>Komm dazu.</h2>
       <Form
         onSubmit={e => {
-          e.privacyConsent = true;
-          if (!e.newsLetterConsent) {
-            e.newsLetterConsent = false;
+          e.ags = municipalityInForm?.ags;
+          if (!e.newsletterConsent) {
+            e.newsletterConsent = false;
           }
+
+          // We don't want to send empty strings
+          if (e.username === '') {
+            delete e.username;
+          }
+
+          if (e.zipCode === '') {
+            delete e.zipCode;
+          }
+
           setHasSubmitted(true);
+          setFormData(e);
+
           if (!isAuthenticated) {
-            setFormData(e);
             signUp(e);
           }
         }}
-        initialValues={{ ...initialValues, zipCode: prefilledZip }}
-        validate={values => validate(values, isAuthenticated)}
+        initialValues={{
+          ...initialValues,
+          zipCode: prefilledZip,
+          email: userData?.email || '',
+          username: userData?.username || '',
+        }}
+        validate={values => validate(values, municipalityInForm)}
         render={({ handleSubmit }) => {
           return (
             <FormWrapper>
@@ -209,7 +245,7 @@ export default ({
   );
 };
 
-const validate = values => {
+const validate = (values, municipalityInForm) => {
   const errors = {};
 
   if (values.email && values.email.includes('+')) {
@@ -226,6 +262,10 @@ const validate = values => {
 
   if (!values.nudgeBox && !values.newsletterConsent) {
     errors.newsletterConsent = 'Bitte bestätige, dass du dabei sein willst';
+  }
+
+  if (!municipalityInForm) {
+    errors.newsletterConsent = 'Bitte wähle einen Ort aus.';
   }
 
   // if (!values.zipCode) {

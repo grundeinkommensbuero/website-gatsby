@@ -9,7 +9,6 @@ import s from './style.module.less';
 export const MunicipalityMapAndSearch = () => {
   const { municipality } = useContext(MunicipalityContext);
   const { userContentfulState } = useUserMunicipalityContentfulState();
-  console.log({ municipality, userContentfulState });
   return (
     <div className={s.mapSectionContainer}>
       <div className={s.map}>
