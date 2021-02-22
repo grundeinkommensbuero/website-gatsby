@@ -14,11 +14,10 @@ export const OnboardingOverlayProvider = ({ children }) => {
     <OnboardingOverlayContext.Provider
       value={{
         overlayOpen,
-        setOverlayOpen
+        setOverlayOpen,
       }}
     >
       {children}
     </OnboardingOverlayContext.Provider>
   );
 };
-

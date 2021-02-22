@@ -17,6 +17,13 @@ export const getReferral = () => {
   return urlParams.pk_source;
 };
 
+export const getSocialMediaReferral = () => {
+  // check url params, if current user came from referral (e.g newsletter)
+  const urlParams = querystring.parse(window.location.search);
+  // the pk_source param was generated in matomo
+  return urlParams.referredByUser;
+};
+
 export const usePrevious = value => {
   const ref = useRef();
 

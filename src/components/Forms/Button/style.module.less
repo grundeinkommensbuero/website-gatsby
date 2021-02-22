@@ -11,6 +11,10 @@
   padding: @buttonPadding;
   text-decoration: none;
 
+  @media (max-width: @breakPointXS) {
+    padding: @buttonPaddingSmall;
+  }
+
   &.medium {
     font-size: @DesktopFontSizeM;
   }
