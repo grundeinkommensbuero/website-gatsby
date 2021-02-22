@@ -2,6 +2,8 @@ import React from 'react';
 import gS from '../style.module.less';
 import s from './style.module.less';
 import { Button } from '../../Forms/Button';
+import Confetti from '../../Confetti';
+import { navigate } from 'gatsby';
 
 export const FinalNote = ({ compIndex, setCurrentElementByIndex, municipality }) => {
 
@@ -16,15 +18,18 @@ export const FinalNote = ({ compIndex, setCurrentElementByIndex, municipality })
 
       <Button
         className={s.redirectButton}
-        onClick={() => setCurrentElementByIndex(compIndex + 1)}
+        onClick={() => {
+          setCurrentElementByIndex(compIndex + 1);
+          navigate('/aktiv-werden', { replace: true })
+        }}
       >
         Zur Mitmachen-Seite
       </Button>
 
       <p>
         Auf deiner Ortsseite findest du alle aktuellen Informationen für deine Kampagne{' '}
-      in {municipality.name}. Dort siehst du auch, ob sich dein Ort schon qualifiziert hat.{' '}
-      Ebenso findest du auf der Webseite deine persönliche Profilseite und viele spannende Informationen.
+        in {municipality.name}. Dort siehst du auch, ob sich dein Ort schon qualifiziert hat.{' '}
+        Ebenso findest du auf der Webseite deine persönliche Profilseite und viele spannende Informationen.
       </p>
 
       <Button
@@ -33,6 +38,8 @@ export const FinalNote = ({ compIndex, setCurrentElementByIndex, municipality })
       >
         Zur Unterseite
       </Button>
+
+      <Confetti></Confetti>
 
     </section>
   );
