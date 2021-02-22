@@ -524,12 +524,13 @@ export default theme => {
               }}
             ></Form>
 
-            {/* Paypal & Kreditkarte */}
-            {(paymentType === 'PayPal' || paymentType === 'Kreditkarte') && (
+            {/* Paypal */}
+            {paymentType === 'PayPal' && (
               <div>
+                <h3>Über Paypal spenden</h3>
                 <p>
-                  Info: Deine Zahlung wird über PayPal abgewickelt. Bitte gib
-                  den Betrag dort erneut an.
+                  Deine Zahlung wird über PayPal abgewickelt. Bitte gib den
+                  Betrag dort erneut an.
                 </p>
                 <p>Für uns fällt dabei eine kleine Gebühr an.</p>
                 <form
@@ -552,6 +553,40 @@ export default theme => {
                     value={+initialValues.customAmount}
                   />
                   <Button name="submit">Weiter zu Papyal</Button>
+                </form>
+              </div>
+            )}
+
+            {/* Paypal & Kreditkarte */}
+            {paymentType === 'Kreditkarte' && (
+              <div>
+                <h3>Mit Kreditkarte spenden</h3>
+                <p>
+                  Info: Deine Zahlung wird über PayPal abgewickelt. Bitte gib
+                  den Betrag dort erneut an.
+                </p>
+                <p>Für uns fällt dabei eine kleine Gebühr an.</p>
+                <p>Du benötigst kein Paypal-Konto.</p>
+                <form
+                  action="https://www.paypal.com/donate"
+                  method="post"
+                  target="_blank"
+                >
+                  <input
+                    type="hidden"
+                    aria-hidden="true"
+                    aria-label="button-ID"
+                    name="hosted_button_id"
+                    value="M9PSVU6E4RUJ8"
+                  />
+                  <input
+                    type="hidden"
+                    aria-hidden="true"
+                    aria-label="amount"
+                    name="amount"
+                    value={+initialValues.customAmount}
+                  />
+                  <Button name="submit">Jetzt spenden</Button>
                 </form>
               </div>
             )}
