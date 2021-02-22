@@ -304,7 +304,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   //           adjustDocumentTitle(municipality, selected.name);
   //           setWindowLocationOriginForIE();
   //         } else {
-  //           navigate(municipality.ags);
+  //           navigate(municipality.slug);
   //         }
   //       }
   //     }
