@@ -102,6 +102,19 @@ export const animate = ({
       );
     }
 
+    if (initialMapAnimation) {
+      // Fadein animatedmarkers
+      tl.add({
+        targets: localOpacities,
+        animatedMarkers: [0, 1],
+        duration: 100,
+        delay: 500,
+        update() {
+          setFadeOpacities({ ...localOpacities });
+        },
+      });
+    }
+
     tl.add({
       duration: 1,
       complete() {
