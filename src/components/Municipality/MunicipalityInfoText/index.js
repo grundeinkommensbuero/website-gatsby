@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import s from './style.module.less';
+import cN from 'classNames';
 import { MunicipalityProgress } from '../MunicipalityProgress';
 import { MunicipalityContext } from '../../../context/Municipality';
 
@@ -7,8 +9,8 @@ export const MunicipalityInfoText = () => {
 
   if (municipality) {
     return (
-      <div>
-        <p>
+      <div className={s.municipalityText}>
+        <p className={s.municipalityTextIntro}>
           Gemeinsam starten wir an deinem Wohnort den ersten staatlichen
           Modellversuch zum Grundeinkommen in Deutschland.
         </p>
@@ -117,7 +119,11 @@ const MunicipalityCTA = ({ municipality }) => {
   if (municipality.ags === '02000000') {
     return (
       <>
-        <p>Hamburg</p>
+        <p>
+          Melde dich an, um Teil der Community zu werden und das Grundeinkommen
+          in Hamburg voran zu bringen! Melde dich auch für den Newsletter an, um
+          benachrichtigt zu werden, wie es in Hamburg weitergeht!
+        </p>
       </>
     );
   }
@@ -125,7 +131,11 @@ const MunicipalityCTA = ({ municipality }) => {
   if (municipality.ags === '04011000') {
     return (
       <>
-        <p>Bremen</p>
+        <p>
+          Melde dich an, um Teil der Community zu werden und das Grundeinkommen
+          in Bremen voran zu bringen! Melde dich auch für den Newsletter an, um
+          benachrichtigt zu werden, wie es in Bremen weitergeht!
+        </p>
       </>
     );
   }
