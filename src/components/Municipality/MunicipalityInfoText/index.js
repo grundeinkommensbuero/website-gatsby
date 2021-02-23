@@ -144,7 +144,7 @@ const MunicipalityCTA = ({ municipality }) => {
     <p>
       Melde dich an, um Teil der Community zu werden und das Grundeinkommen nach{' '}
       {municipality ? `${municipality.name} ` : ''} zu bringen! Melde dich auch
-      für den Newsletter an, um benachrichtigt zu werden, wenn es in
+      für den Newsletter an, um benachrichtigt zu werden, wenn es in{' '}
       {municipality ? `${municipality.name} ` : ''} losgeht!
     </p>
   );
