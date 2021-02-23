@@ -628,15 +628,15 @@ const Map = ({
   // ---- useEffects -----------------------------------------------------------------------
 
   useEffect(() => {
-    if (dataEvents.length > 0) {
-      setLayers([
-        layerStates,
-        layerAnimatedMarker,
-        layerPermanentMarker,
-        layerPermanentLabels,
-        layerAnimatedLabels,
-      ]);
-    }
+    // if (dataEvents.length > 0) {
+    setLayers([
+      layerStates,
+      layerAnimatedMarker,
+      layerPermanentMarker,
+      layerPermanentLabels,
+      layerAnimatedLabels,
+    ]);
+    // }
   }, [
     dataStates,
     dataLabels,
