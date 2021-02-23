@@ -105,7 +105,7 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
 
   const ShareButton = () => {
     let CaseButton = Components[ShareButtons.find(el => el.channelIdentifier === shareChannel?.channelIdentifier)?.name];
-    const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei!`;
+    const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = ["ModellversuchJetzt", "Grundeinkommen", "ExpeditionGrundeinkommen"];
     const subject = `Gemeinsam bringen wir das Grundeinkommen nach ${municipality.name}`;
     const body = `Hallo,
@@ -119,7 +119,7 @@ export const SharePreview = ({ shareChannel, userData, userId, municipality }) =
     Bist du dabei?
     
     Dann hole jetzt das Grundeinkommen nach ${municipality.name}:\t\n\t\n`
-    const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei!`;
+    const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     return (
       <>
         {CaseButton ?
