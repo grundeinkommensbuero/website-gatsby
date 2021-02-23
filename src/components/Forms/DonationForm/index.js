@@ -190,8 +190,9 @@ export default theme => {
       {!hasDonated && !donationError && !enteredPaymentInfo && !needsToLogin && (
         <div className={s.donationIntervalSelection}>
           <p className={s.hint}>
-            Hinweis: Du bekommst eine Spendenbescheinigung über den gesamten
-            Jahresbetrag. Du kannst deine Spende jederzeit wieder beenden.
+            Hinweis: Falls du eine Spendenbescheinigung möchtest, schreibe eine E-Mail an{' '}
+            support@expedition-grundeinkommen.de. Du bekommst die Spendenbescheinigung dann{' '}
+            über den gesamten Jahresbetrag. Du kannst deine Spende jederzeit wieder beenden.
           </p>
           <h3>Wie möchtest du spenden?</h3>
           <div className={s.selectionContainer}>

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import s from './style.module.less';
 import { MunicipalityProgress } from '../MunicipalityProgress';
 import { MunicipalityContext } from '../../../context/Municipality';
 
@@ -7,8 +8,8 @@ export const MunicipalityInfoText = () => {
 
   if (municipality) {
     return (
-      <div>
-        <p>
+      <div className={s.municipalityText}>
+        <p className={s.municipalityTextIntro}>
           Gemeinsam starten wir an deinem Wohnort den ersten staatlichen
           Modellversuch zum Grundeinkommen in Deutschland.
         </p>
@@ -34,16 +35,16 @@ const MunicipalityDescription = ({ municipality }) => {
     return (
       <>
         <p>
-          Seit Oktober 2019 läuft deshalb unsere Kampagne in Berlin bereits auf
-          Bundeslandsebene.
+          Seit September 2019 läuft dafür in Berlin bereits das Volksbegehren.
         </p>
         <p>
           Im November 2020 haben wir die Sammelphase 1 erfolgreich beendet und
-          34.468 Unterschriften bei der Senatsverwaltung eingereicht!
+          34.468 Unterschriften bei der Senatsverwaltung eingereicht. Wenn das
+          Land Berlin die Forderung nicht umsetzt, geht es in die nächste Phase.
         </p>
         <p>
-          Sobald Phase 2 beginnt, brauchen wir noch mehr Unterschriften - melde
-          dich jetzt an, um zu unterschreiben, sobald es los geht!
+          Sobald Phase 2 beginnt, brauchen wir noch mehr Unterschriften – melde
+          dich jetzt an, um zu unterschreiben, sobald es weitergeht!
         </p>
       </>
     );
@@ -52,7 +53,18 @@ const MunicipalityDescription = ({ municipality }) => {
   if (municipality.ags === '02000000') {
     return (
       <>
-        <p>Hamburg</p>
+        <p>
+          Seit Februar 2020 läuft deshalb in Hamburg bereits das Volksbegehren.
+        </p>
+        <p>
+          Im März 2020 haben wir die Sammelphase 1 erfolgreich beendet und
+          13.421 Unterschriften bei der Senatsverwaltung eingereicht. Wenn das
+          Land Berlin die Forderung nicht umsetzt, geht es in die nächste Phase.
+        </p>
+        <p>
+          Sobald Phase 2 beginnt, brauchen wir noch mehr Unterschriften – melde
+          dich jetzt an, um zu unterschreiben, sobald es weitergeht!
+        </p>
       </>
     );
   }
@@ -60,7 +72,19 @@ const MunicipalityDescription = ({ municipality }) => {
   if (municipality.ags === '04011000') {
     return (
       <>
-        <p>Bremen</p>
+        <p>
+          Seit August 2020 läuft dazu bereits unsere Unterschriftensammlung in
+          Bremen.
+        </p>
+        <p>
+          Wir brauchen insgesamt 25.000 Unterschriften, damit es zum
+          Volksentscheid kommt.
+        </p>
+
+        <p>
+          Melde dich jetzt an, um den Modellversuch auch in Bremen an den Staat
+          zu bringen!
+        </p>
       </>
     );
   }
@@ -95,7 +119,11 @@ const MunicipalityCTA = ({ municipality }) => {
   if (municipality.ags === '02000000') {
     return (
       <>
-        <p>Hamburg</p>
+        <p>
+          Melde dich an, um Teil der Community zu werden und das Grundeinkommen
+          in Hamburg voran zu bringen! Melde dich auch für den Newsletter an, um
+          benachrichtigt zu werden, wie es in Hamburg weitergeht!
+        </p>
       </>
     );
   }
@@ -103,7 +131,11 @@ const MunicipalityCTA = ({ municipality }) => {
   if (municipality.ags === '04011000') {
     return (
       <>
-        <p>Bremen</p>
+        <p>
+          Melde dich an, um Teil der Community zu werden und das Grundeinkommen
+          in Bremen voran zu bringen! Melde dich auch für den Newsletter an, um
+          benachrichtigt zu werden, wie es in Bremen weitergeht!
+        </p>
       </>
     );
   }
@@ -111,9 +143,9 @@ const MunicipalityCTA = ({ municipality }) => {
   return (
     <p>
       Melde dich an, um Teil der Community zu werden und das Grundeinkommen nach{' '}
-      {municipality ? `${municipality.name}` : ''} zu bringen! Melde dich auch
+      {municipality ? `${municipality.name} ` : ''} zu bringen! Melde dich auch
       für den Newsletter an, um benachrichtigt zu werden, wenn es in
-      {municipality ? `${municipality.name}` : ''} losgeht!
+      {municipality ? `${municipality.name} ` : ''} losgeht!
     </p>
   );
 };

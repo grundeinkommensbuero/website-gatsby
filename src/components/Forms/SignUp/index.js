@@ -153,7 +153,6 @@ export default ({
       placeholder: 'E-Mail',
       type: 'email',
       component: TextInputWrapped,
-      value: userData?.email,
     },
     username: {
       name: 'username',
@@ -161,7 +160,6 @@ export default ({
       placeholder: 'Vorname',
       type: 'text',
       component: TextInputWrapped,
-      value: userData?.username,
     },
     municipality: {
       name: 'municipality',
@@ -182,7 +180,7 @@ export default ({
     },
     nudgeBox: {
       name: 'nudgeBox',
-      label: 'Ja, ich will, dass das Bürgerbegehren startet.',
+      label: getNudgeBoxLabel(municipalityInForm),
       type: 'checkbox',
       component: Checkbox,
     },
@@ -227,6 +225,7 @@ export default ({
           username: userData?.username || '',
         }}
         validate={values => validate(values, municipalityInForm)}
+        keepDirtyOnReinitialize={true}
         render={({ handleSubmit }) => {
           return (
             <FormWrapper>
@@ -280,4 +279,24 @@ const validate = (values, municipalityInForm) => {
   // }
 
   return errors;
+};
+
+// For the existing campaigns we want different labels
+const getNudgeBoxLabel = municipality => {
+  // Berlin
+  if (municipality?.ags === '11000000') {
+    return 'Ja, ich will, dass Berlin an dem Modellversuch teilnimmt.';
+  }
+
+  // Hamburg
+  if (municipality?.ags === '02000000') {
+    return 'Ja, ich will, dass Hamburg an dem Modellversuch teilnimmt.';
+  }
+
+  // Bremen
+  if (municipality?.ags === '04011000') {
+    return 'Ja, ich will, dass Bremen an dem Modellversuch teilnimmt.';
+  }
+
+  return 'Ja, ich will, dass das Bürgerbegehren startet.';
 };

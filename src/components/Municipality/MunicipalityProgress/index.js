@@ -14,7 +14,7 @@ export const MunicipalityProgress = ({
 
   if (statsReady && typeof signups === 'number') {
     return (
-      <div>
+      <div className={s.municipalityProgressBar}>
         {showHeadline && (
           <h2>
             Gemeinsam bringen wir das Grundeinkommen nach{' '}
