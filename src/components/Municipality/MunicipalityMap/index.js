@@ -388,11 +388,11 @@ export const MunicipalityMap = ({
             />
           </div>
         ) : (
-            <div
-              className={cN(s.mapStatic, s.fallback)}
-              style={{ opacity: fadeOpacities.map }}
-            ></div>
-          )}
+          <div
+            className={cN(s.mapStatic, s.fallback)}
+            style={{ opacity: fadeOpacities.map }}
+          ></div>
+        )}
       </div>
       {hoverInfo && hoverInfo.object && (
         <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
@@ -628,15 +628,13 @@ const Map = ({
   // ---- useEffects -----------------------------------------------------------------------
 
   useEffect(() => {
-    if (dataEvents.length > 0) {
-      setLayers([
-        layerStates,
-        layerAnimatedMarker,
-        layerPermanentMarker,
-        layerPermanentLabels,
-        layerAnimatedLabels,
-      ]);
-    }
+    setLayers([
+      layerStates,
+      layerAnimatedMarker,
+      layerPermanentMarker,
+      layerPermanentLabels,
+      layerAnimatedLabels,
+    ]);
   }, [
     dataStates,
     dataLabels,
