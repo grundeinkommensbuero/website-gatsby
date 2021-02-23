@@ -168,12 +168,12 @@ export function ContentfulSection({ section, pageContext }) {
                     {municipality
                       ? `nach ${municipality.name}`
                       : 'in deinen Wohnort'}
-                .
-              </h1>
+                  .
+                </h1>
                   {/* <p>
-                Gemeinsam starten wir den ersten staatlichen Modellversuch, um
-                das Grundeinkommen nach ganz Deutschland zu holen.
-              </p> */}
+                  Gemeinsam starten wir den ersten staatlichen Modellversuch, um
+                  das Grundeinkommen nach ganz Deutschland zu holen.
+                </p> */}
                   <LinkButton href="#ticker">Mehr erfahren</LinkButton>
                 </div>
               </div>

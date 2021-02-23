@@ -7,44 +7,71 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { municipality } = useContext(MunicipalityContext);
+  const { municipality, statsSummary } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
-  useEffect(() => {
-    // console.log(municipality);
+  // const statsSummary = {
+  //   municipalities: 4388,
+  //   previous: {
+  //     municipalities: 4383,
+  //     timestamp: "2021-02-22T16:10:30.020Z",
+  //     users: 219824
+  //   },
+  //   timestamp: "2021-02-22T16:25:32.733Z",
+  //   users: 219830
+  // }
 
+  useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else {
-      setPeopleCount(3592);
+      let numOfUsers = statsSummary?.previous?.users || 0;
+      let numOfMunicipalities = statsSummary?.previous?.municipalities || 0;
+      setPeopleCount(numOfUsers);
+      setMunicipalityCount(numOfMunicipalities);
     }
-  }, [municipality]);
+  }, [municipality, statsSummary]);
 
-  useEffect(() => {
-    if (municipality && municipality.signups) {
-      setPeopleCount(municipality.signups);
-    } else {
-      setPeopleCount(300592);
-    }
-  }, [municipality]);
+  // useEffect(() => {
+  //   let firePeopleCounter;
+  //   let fireMunicipalityCounter;
 
-  useEffect(() => {
-    const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
-    const firePeopleCounter = setTimeout(() => {
-      setPeopleCount(peopleCount + 1);
-    }, peopleRandom);
+  //   console.log('firePeopleCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
 
-    const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
-    const fireMunicipalityCounter = setTimeout(() => {
-      setMunicipalityCount(municipalityCount + 1);
-    }, municipalityRandom);
+  //   const prevTime = new Date(statsSummary?.previous?.timestamp);
+  //   const currTime = new Date();
 
-    return () => {
-      clearTimeout(firePeopleCounter);
-      clearTimeout(fireMunicipalityCounter);
-    };
-  });
+  //   console.log('PrevMinute: ', prevTime.getMinutes());
+  //   console.log('CurrMinute: ', currTime.getMinutes());
+
+  //   if (statsSummary && statsSummary.users > statsSummary.previous.users) {
+  //     const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
+  //     console.log(peopleRandom);
+  //     firePeopleCounter = setTimeout(() => {
+  //       setPeopleCount(peopleCount + 1);
+  //     }, peopleRandom);
+  //   } else {
+  //     clearTimeout(firePeopleCounter);
+  //   }
+
+  //   console.log('fireMunicipalityCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
+
+  //   if (statsSummary && statsSummary.municipalities > statsSummary.previous.municipalities) {
+  //     const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
+  //     fireMunicipalityCounter = setTimeout(() => {
+  //       setMunicipalityCount(municipalityCount + 1);
+  //     }, municipalityRandom);
+  //   } else {
+  //     clearTimeout(fireMunicipalityCounter);
+  //   }
+
+  //   return () => {
+  //     console.log('Cleanup');
+  //     clearTimeout(firePeopleCounter);
+  //     clearTimeout(fireMunicipalityCounter);
+  //   };
+  // }, [peopleCount, municipalityCount]);
 
   if (!municipality) {
     return (
