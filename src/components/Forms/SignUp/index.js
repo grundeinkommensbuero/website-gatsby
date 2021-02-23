@@ -153,7 +153,6 @@ export default ({
       placeholder: 'E-Mail',
       type: 'email',
       component: TextInputWrapped,
-      value: userData?.email,
     },
     username: {
       name: 'username',
@@ -161,7 +160,6 @@ export default ({
       placeholder: 'Vorname',
       type: 'text',
       component: TextInputWrapped,
-      value: userData?.username,
     },
     municipality: {
       name: 'municipality',
@@ -227,6 +225,7 @@ export default ({
           username: userData?.username || '',
         }}
         validate={values => validate(values, municipalityInForm)}
+        keepDirtyOnReinitialize={true}
         render={({ handleSubmit }) => {
           return (
             <FormWrapper>
