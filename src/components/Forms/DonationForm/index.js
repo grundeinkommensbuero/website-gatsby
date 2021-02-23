@@ -25,9 +25,7 @@ import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
 import { validateEmail } from '../../utils';
 
-export default theme => {
-  // var themeClass = theme[Object.keys(theme)[0]];
-
+export default ({ onboardingNextPage }) => {
   const {
     isAuthenticated,
     tempEmail,
@@ -517,6 +515,19 @@ export default theme => {
                             Expedition Grundeinkommen erhält davon 4,83 € bzw.
                             9,83 €.
                           </p>
+
+                          <div className={s.donationButtons}>
+                            <CTAButton
+                              type="submit"
+                              onClick={() => {
+                                onboardingNextPage();
+                              }}
+                              size="MEDIUM"
+                              className={s.primaryButton}
+                            >
+                              Weiter
+                              </CTAButton>
+                          </div>
                         </div>
                       )}
                     </form>
@@ -685,9 +696,23 @@ export default theme => {
             deinem Konto einziehen.
           </p>
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
-          <CTAButtonContainer className={s.buttonContainer}>
-            <CTALink to="/">Zur Startseite</CTALink>
-          </CTAButtonContainer>
+          {!onboardingNextPage ?
+            <CTAButtonContainer className={s.buttonContainer}>
+              <CTALink to="/">Zur Startseite</CTALink>
+            </CTAButtonContainer> :
+            <div className={s.donationButtons}>
+              <CTAButton
+                type="submit"
+                onClick={() => {
+                  onboardingNextPage();
+                }}
+                size="MEDIUM"
+                className={s.primaryButton}
+              >
+                Weiter
+            </CTAButton>
+            </div>
+          }
 
           <Confetti></Confetti>
         </div>
