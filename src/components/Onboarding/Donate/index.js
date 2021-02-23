@@ -57,8 +57,9 @@ export const Donate = ({
           <p className={gS.descriptionTextLarge}>
             Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es
             nur, wenn alle etwas in die Reisekasse legen. Spende jetzt, damit
-            wir gemeinsam das Grundeinkommen in {municipality.name} und ganz
-            Deutschland Wirklichkeit werden lassen!
+            wir gemeinsam das Grundeinkommen{' '}
+            {municipality ? `in ${municipality.name} und ` : ''}ganz Deutschland
+            Wirklichkeit werden lassen!
           </p>
 
           <div className={gS.buttonRow}>
