@@ -7,20 +7,32 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { municipality, statsSummary } = useContext(MunicipalityContext);
+  const { municipality } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(3592);
   const [municipalityCount, setMunicipalityCount] = useState(43);
 
-  // const statsSummary = {
-  //   municipalities: 4388,
-  //   previous: {
-  //     municipalities: 4383,
-  //     timestamp: "2021-02-22T16:10:30.020Z",
-  //     users: 219824
-  //   },
-  //   timestamp: "2021-02-22T16:25:32.733Z",
-  //   users: 219830
-  // }
+  const getTestDateMinusMiutes = (date, min) => {
+    let dt = new Date(date);
+    dt.setMinutes(dt.getMinutes() - min);
+    return dt.toISOString();
+  }
+
+  const mockStatsSummary = {
+    municipalities: 4488,
+    previous: {
+      municipalities: 4388,
+      timestamp: getTestDateMinusMiutes(new Date(), 17),
+      users: 219430
+    },
+    timestamp: getTestDateMinusMiutes(new Date(), 2),
+    users: 219830
+  };
+
+  const [statsSummary, setStatsSummary] = useState();
+
+  useEffect(() => {
+    setStatsSummary(mockStatsSummary)
+  }, []);
 
   useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
@@ -31,7 +43,40 @@ export const Ticker = ({ tickerDescription }) => {
       setPeopleCount(numOfUsers);
       setMunicipalityCount(numOfMunicipalities);
     }
-  }, [municipality, statsSummary]);
+  }, []);
+
+  useEffect(() => {
+    let fireCounter;
+    const randomTimer = (Math.floor(Math.random() * 9) + 1) * 500;
+    console.log(randomTimer);
+
+    const prevTimestamp = new Date(statsSummary?.previous?.timestamp);
+    const currTimestamp = new Date(statsSummary?.timestamp);
+    const currTime = new Date();
+
+    const intervalLength = diffSeconds(prevTimestamp, currTimestamp);
+    const timePassed = diffSeconds(currTimestamp, currTime);
+
+    const timePassedInIntervalInPercent = 1 - ((intervalLength - timePassed) / intervalLength);
+
+    console.log('Percent of Interval passed: ', timePassedInIntervalInPercent);
+
+    const prevCountUsers = statsSummary?.previous?.users;
+    const currCountUsers = statsSummary?.users;
+    const usersWonInInterval = diffCount(prevCountUsers, currCountUsers)
+    const usersToAdd = Math.round(usersWonInInterval * timePassedInIntervalInPercent);
+
+    console.log('Users to add to count: ', usersToAdd);
+
+    fireCounter = setTimeout(() => {
+      console.log('Fire!');
+      setPeopleCount(prevCountUsers + usersToAdd);
+    }, randomTimer);
+    return () => {
+      console.log('Cleanup');
+      clearTimeout(fireCounter);
+    };
+  })
 
   // useEffect(() => {
   //   let firePeopleCounter;
@@ -40,10 +85,14 @@ export const Ticker = ({ tickerDescription }) => {
   //   console.log('firePeopleCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
 
   //   const prevTime = new Date(statsSummary?.previous?.timestamp);
-  //   const currTime = new Date();
+  //   const currTime = new Date('2021-02-23T14:26:58.068Z');
 
-  //   console.log('PrevMinute: ', prevTime.getMinutes());
-  //   console.log('CurrMinute: ', currTime.getMinutes());
+  //   console.log(currTime.toISOString());
+
+  //   console.log('diffPeople: ', diffCount(statsSummary?.users, statsSummary?.previous?.users));
+  //   console.log('diffMunicipalities: ', diffCount(statsSummary?.municipalities, statsSummary?.previous?.municipalities));
+
+  //   console.log('TimeDiff: ', diffSeconds(prevTime, currTime));
 
   //   if (statsSummary && statsSummary.users > statsSummary.previous.users) {
   //     const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
@@ -72,6 +121,16 @@ export const Ticker = ({ tickerDescription }) => {
   //     clearTimeout(fireMunicipalityCounter);
   //   };
   // }, [peopleCount, municipalityCount]);
+
+  const diffSeconds = (dt2, dt1) => {
+    let diff = (dt2.getTime() - dt1.getTime()) / 1000;
+    return Math.abs(Math.round(diff));
+  };
+
+  const diffCount = (c2, c1) => {
+    let diff = c1 - c2;
+    return diff;
+  };
 
   if (!municipality) {
     return (
