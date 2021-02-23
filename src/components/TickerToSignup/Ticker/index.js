@@ -8,15 +8,15 @@ import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
   const { municipality } = useContext(MunicipalityContext);
-  const [peopleCount, setPeopleCount] = useState(3592);
-  const [municipalityCount, setMunicipalityCount] = useState(43);
+  const [peopleCount, setPeopleCount] = useState(0);
+  const [municipalityCount, setMunicipalityCount] = useState(0);
 
+  // MOCKUP data for Ticker testing
   const getTestDateMinusMiutes = (date, min) => {
     let dt = new Date(date);
     dt.setMinutes(dt.getMinutes() - min);
     return dt.toISOString();
-  }
-
+  };
   const mockStatsSummary = {
     municipalities: 4488,
     previous: {
@@ -27,100 +27,50 @@ export const Ticker = ({ tickerDescription }) => {
     timestamp: getTestDateMinusMiutes(new Date(), 2),
     users: 219830
   };
-
   const [statsSummary, setStatsSummary] = useState();
-
   useEffect(() => {
-    setStatsSummary(mockStatsSummary)
+    setStatsSummary(mockStatsSummary);
   }, []);
 
   useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else {
-      let numOfUsers = statsSummary?.previous?.users || 0;
-      let numOfMunicipalities = statsSummary?.previous?.municipalities || 0;
+      const numOfUsers = statsSummary?.previous?.users || 0;
+      const numOfMunicipalities = statsSummary?.previous?.municipalities || 0;
       setPeopleCount(numOfUsers);
       setMunicipalityCount(numOfMunicipalities);
     }
-  }, []);
+  }, [statsSummary]);
 
   useEffect(() => {
-    let fireCounter;
-    const randomTimer = (Math.floor(Math.random() * 9) + 1) * 500;
-    console.log(randomTimer);
-
+    // Set timer in a range of 3 to 9 seconds
+    const randomTimer = (Math.floor(Math.random() * 3) + 1) * 3000;
+    // prepare variables for calulation of time passed in percent
     const prevTimestamp = new Date(statsSummary?.previous?.timestamp);
     const currTimestamp = new Date(statsSummary?.timestamp);
     const currTime = new Date();
-
     const intervalLength = diffSeconds(prevTimestamp, currTimestamp);
     const timePassed = diffSeconds(currTimestamp, currTime);
-
     const timePassedInIntervalInPercent = 1 - ((intervalLength - timePassed) / intervalLength);
-
-    console.log('Percent of Interval passed: ', timePassedInIntervalInPercent);
-
+    console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
+    // Get userdata and calculate users won in the last 15 minutes
     const prevCountUsers = statsSummary?.previous?.users;
     const currCountUsers = statsSummary?.users;
-    const usersWonInInterval = diffCount(prevCountUsers, currCountUsers)
+    const usersWonInInterval = diffCount(prevCountUsers, currCountUsers);
     const usersToAdd = Math.round(usersWonInInterval * timePassedInIntervalInPercent);
-
-    console.log('Users to add to count: ', usersToAdd);
-
-    fireCounter = setTimeout(() => {
-      console.log('Fire!');
+    console.log('Users to add to count:', usersToAdd);
+    console.log('Timer set to:', randomTimer, 'ms');
+    // Set timeout to display data in the Ticker Comp
+    const fireCounter = setTimeout(() => {
+      console.log('Fire! Set Users to:', prevCountUsers + usersToAdd);
       setPeopleCount(prevCountUsers + usersToAdd);
     }, randomTimer);
+    // Clear Timeout when done
     return () => {
-      console.log('Cleanup');
       clearTimeout(fireCounter);
-    };
-  })
-
-  // useEffect(() => {
-  //   let firePeopleCounter;
-  //   let fireMunicipalityCounter;
-
-  //   console.log('firePeopleCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
-
-  //   const prevTime = new Date(statsSummary?.previous?.timestamp);
-  //   const currTime = new Date('2021-02-23T14:26:58.068Z');
-
-  //   console.log(currTime.toISOString());
-
-  //   console.log('diffPeople: ', diffCount(statsSummary?.users, statsSummary?.previous?.users));
-  //   console.log('diffMunicipalities: ', diffCount(statsSummary?.municipalities, statsSummary?.previous?.municipalities));
-
-  //   console.log('TimeDiff: ', diffSeconds(prevTime, currTime));
-
-  //   if (statsSummary && statsSummary.users > statsSummary.previous.users) {
-  //     const peopleRandom = (Math.floor(Math.random() * 9) + 1) * 500;
-  //     console.log(peopleRandom);
-  //     firePeopleCounter = setTimeout(() => {
-  //       setPeopleCount(peopleCount + 1);
-  //     }, peopleRandom);
-  //   } else {
-  //     clearTimeout(firePeopleCounter);
-  //   }
-
-  //   console.log('fireMunicipalityCounter: ', statsSummary && statsSummary.users > statsSummary.previous.users);
-
-  //   if (statsSummary && statsSummary.municipalities > statsSummary.previous.municipalities) {
-  //     const municipalityRandom = (Math.floor(Math.random() * 2) + 1) * 2500;
-  //     fireMunicipalityCounter = setTimeout(() => {
-  //       setMunicipalityCount(municipalityCount + 1);
-  //     }, municipalityRandom);
-  //   } else {
-  //     clearTimeout(fireMunicipalityCounter);
-  //   }
-
-  //   return () => {
-  //     console.log('Cleanup');
-  //     clearTimeout(firePeopleCounter);
-  //     clearTimeout(fireMunicipalityCounter);
-  //   };
-  // }, [peopleCount, municipalityCount]);
+    }
+  });
 
   const diffSeconds = (dt2, dt1) => {
     let diff = (dt2.getTime() - dt1.getTime()) / 1000;
