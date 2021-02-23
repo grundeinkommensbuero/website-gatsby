@@ -69,9 +69,12 @@ export default ({
       }
 
       // Now set municipality in context
-      if (municipalityInForm && updateUserState === 'updated') {
-        updateCustomUserData();
+      if (municipalityInForm) {
         setMunicipality(municipalityInForm);
+      }
+
+      if (updateUserState === 'updated') {
+        updateCustomUserData();
       }
     }
   }, [hasSubmitted, isAuthenticated, userId, updateUserState]);
