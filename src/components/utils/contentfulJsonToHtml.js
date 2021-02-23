@@ -8,6 +8,7 @@ import { validateEmail } from './index';
 import s from './contentfulJsonToHtml.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
+import { usePrevious } from '../../hooks/utils';
 
 const website_url = 'https://expedition-grundeinkommen.de/';
 
@@ -41,7 +42,7 @@ export function contentfulJsonToHtml(json) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        console.log(node);
+        // console.log(node);
         const isPage = node.data.target.fields.slug;
         const uri = isPage
           ? `/${node.data.target.fields.slug['en-US']}`
@@ -233,16 +234,6 @@ function QuestionAnswer({ question, answer, openInitially = false }) {
       </div>
     );
   }
-}
-
-function usePrevious(value) {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
 }
 
 function CopyToClipboardButton({ children, toCopy }) {

@@ -1,0 +1,14 @@
+{
+  "position": "bottom-right",
+  "style": {
+    "borderBottom": "solid 4px #22c8ee",
+    "borderTop": "solid 4px #fef377",
+    "borderTopWidth": "25%",
+    "backgroundColor": " #fc484c",
+    "color": "white",
+    "fontSize": "20px"
+  },
+  "closeStyle": {
+    "display": "none"
+  }
+}

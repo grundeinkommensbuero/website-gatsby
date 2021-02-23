@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 72rem;
   margin: 0 auto;
-  padding: 5rem 2rem 10rem;
+  padding: 2rem 2rem 7rem;
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: 50% 50%;
@@ -31,6 +31,10 @@
   }
 }
 
+.avatarContainer {
+  margin-right: 4rem;
+}
+
 .userInfo {
   display: grid;
   grid-template-columns: 200px auto;
@@ -45,19 +49,19 @@
 }
 
 .username {
-  font-size: @fontSizeXXL;
+  font-size: @DesktopFontSizeXL;
   margin: 0;
   padding: 0;
 
   @media (max-width: @breakPointM) {
-    font-size: @fontSizeXL;
+    font-size: @DesktopFontSizeXL;
   }
 }
 
 // Details section
 .placeInfo {
   margin-bottom: 0.3rem;
-  font-size: @fontSizeM;
+  font-size: @DesktopFontSizeM;
 }
 
 .details {
@@ -65,7 +69,7 @@
 
   @media (max-width: @breakPointS) {
     margin-top: 1em;
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
   }
 }
 
@@ -86,7 +90,7 @@
 
 .editSettings {
   grid-column: 1 / span 2;
-  background-color: @red;
+  background-color: @aqua;
   color: @white;
 
   @media (max-width: @breakPointS) {
@@ -109,7 +113,7 @@
   right: 1rem;
 }
 
-.linkLikeFormated {
+.linkLikeFormatted {
   text-decoration: underline;
   cursor: pointer;
   margin: 0;
@@ -153,6 +157,10 @@
 .loadingMsg {
   margin-left: 0.5em;
   font-size: 18px;
+}
+
+.snackbarMsg {
+  margin: 0;
 }
 
 @keyframes spin {

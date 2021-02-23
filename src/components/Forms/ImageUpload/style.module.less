@@ -1,6 +1,5 @@
 @import '../../style/vars.less';
 .imageUploadContainer {
-  margin-right: 4rem;
   margin-bottom: 2rem;
 }
 
@@ -49,18 +48,19 @@
   pointer-events: all;
   top: 8.5rem;
   left: 1rem;
-  font-size: @fontSizeXS;
+  font-size: @DesktopFontSizeM;
+
 
   @media (max-width: @breakPointM) {
     transform: rotate(10deg);
     transform-origin: 0 0;
     top: 8rem;
     left: 2rem;
-    font-size: @fontSizeXS;
+    font-size: @DesktopFontSizeS;
   }
 
   &:hover {
-    color: @blueBright;
+    color: @violet;
   }
 
   &:before {
@@ -81,19 +81,35 @@
       transform: rotate(-10deg);
     }
   }
+
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      top: 1rem;
+    }
+  }
 }
 
 .submitButton {
   position: relative;
+  color: @aqua;
+  border: @aqua solid 1px;
   top: 4rem;
-}
-
-.buttonOnRedBackground {
-  color: @white;
-  border: @white solid 1px;
+  padding: 0.5rem 1.5rem 0.25rem 1.5rem;
 
   &:hover {
-    color: @red;
+    color: @white;
+    background-color: @aqua;
+  }
+
+}
+
+.buttonOnAquaBackground {
+  color: @white;
+  border: @white solid 1px;
+  padding: 0.5rem 1.5rem 0.25rem 1.5rem;
+
+  &:hover {
+    color: @aqua;
     background-color: @white;
   }
 }
@@ -105,10 +121,10 @@
 .uploadStateMessage {
   position: absolute;
   top: 1rem;
-  font-size: 18px;
+  font-size: @DesktopFontSizeS;
 }
 
 .loadingMsg {
   margin-left: 0.5em;
-  font-size: 18px;
+  font-size: @DesktopFontSizeS;
 }

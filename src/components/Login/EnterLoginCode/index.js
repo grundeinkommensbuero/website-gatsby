@@ -142,7 +142,7 @@ export const EnterLoginCode = ({
         }}
         validate={values => {
           if (!values.code)
-            return { code: 'Bitte gib den Code aus aus der E-Mail an' };
+            return { code: 'Bitte gib den Code aus der E-Mail an' };
           return {};
         }}
         render={({ handleSubmit }) => {

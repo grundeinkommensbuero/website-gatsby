@@ -2,19 +2,25 @@
 
 .linkButton,
 .button {
-  padding: @buttonPadding;
-  border: var(--font-color) solid @borderWidth;
+  background: var(--button-bg-color);
+  border: var(--button-font-color) solid @borderWidthThick;
   border-radius: @borderRadius;
-  text-decoration: none;
-  font-size: @fontSizeL;
+  color: var(--button-font-color);
+  font-size: @DesktopFontSizeM;
   font-weight: bold;
+  padding: @buttonPadding;
+  text-decoration: none;
+
+  @media (max-width: @breakPointXS) {
+    padding: @buttonPaddingSmall;
+  }
 
   &.medium {
-    font-size: @fontSizeM;
+    font-size: @DesktopFontSizeM;
   }
 
   &.small {
-    font-size: @fontSizeXS;
+    font-size: @DesktopFontSizeXS;
     border-radius: 5px;
     padding-top: 5px;
     padding-bottom: 1px;
@@ -24,13 +30,16 @@
   }
 
   &:hover {
-    color: var(--bg-color);
-    background: var(--font-color);
+    color: var(--button-hover-font-color);
+    background: var(--button-hover-bg-color);
   }
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 @borderWidthThick var(--font-color);
+    background-color: darken(@violet, 10%);
+    color: @white;
+    border-color: darken(@violet, 10%);
+    //box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
   }
 }
 
@@ -39,10 +48,8 @@
 }
 
 .button {
-  background: transparent;
   font-family: inherit;
   line-height: inherit;
-  color: var(--font-color);
   cursor: pointer;
 }
 
@@ -64,6 +71,9 @@
     box-shadow: none;
   }
 }
+a.inlineButton {
+  text-decoration: none;
+}
 
 p a.linkButton {
   box-shadow: none;
@@ -77,7 +87,7 @@ p a.linkButton {
   align-items: center;
 
   .inlineButton {
-    font-size: @fontSizeM;
+    font-size: @DesktopFontSizeM;
     font-weight: bold;
   }
 

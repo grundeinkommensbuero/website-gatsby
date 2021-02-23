@@ -1,33 +1,26 @@
 @import '../../style/vars.less';
 
 .footer {
-  .headerFooterGrid();
-  .globeBackground();
-  background-attachment: fixed;
+  background: @red;
+  color: @greyBright;
   min-height: 15rem;
-  padding: 2rem 0;
-  font-size: @fontSizeM;
-  align-content: start;
-  position: relative;
-  --secondary-color: @blueBright;
-}
+  padding: 3rem 0 6rem;
+  font-size: @DesktopFontSizeM;
+  --secondary-color: @white;
+  text-align: center;
 
-.columnLeft {
-  grid-column: 2;
-
-  @media (max-width: @breakPointM) {
-    grid-column-end: span 2;
+  @media (max-width: @breakPointS) {
+    padding: 3rem;
   }
 }
 
-.columnRight {
-  grid-column: 3;
-  text-align: right;
+.itemContainer {
+  width: @headerWidth;
+  justify-content: space-between;
+  margin: auto;
 
-  @media (max-width: @breakPointM) {
-    grid-column: 2;
-    grid-column-end: span 2;
-    text-align: left;
+  @media (max-width: @breakPointXL) {
+    width: 100%;
   }
 }
 
@@ -37,11 +30,13 @@
   margin: -0.5rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
 
   @media (max-width: @breakPointM) {
+    width: 100%;
     display: block;
-    margin: 1rem 0 2rem;
+    margin: 0rem 0 2rem;
+    line-height: 3rem;
   }
 }
 
@@ -65,7 +60,7 @@
 }
 
 .socialMedia {
-  margin-top: 1rem;
+  margin: 2rem 0;
 }
 
 .partnerLogos {

@@ -1,3 +1,4 @@
+import React from 'react';
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
   return string && string.toString().replace(/^[^a-z]+|[^\w:.-]+/gi, '');
@@ -157,6 +158,87 @@ export function getMailtoUrl(to, subject, body) {
   return url;
 }
 
+export const setWindowLocationOriginForIE = () => {
+  if (!window.location.origin) {
+    window.location.origin =
+      window.location.protocol +
+      '//' +
+      window.location.hostname +
+      (window.location.port ? ':' + window.location.port : '');
+  }
+};
+
+export const getStringFromPlaceholderText = (string, object) => {
+  if (!string) {
+    return '';
+  }
+  let result = string;
+  // Find strings in curly braces
+  let matches = string.match(/{([^}]+)}/g);
+  // Without curly braces in the string
+  // no placeholder is defined and
+  // we can return
+  if (!matches) {
+    return string;
+  }
+  // Remove curly braces
+  matches = matches.map(s => s.replace(/({|})/g, ''));
+
+  const regexSubInSingleQuotes = /^'.*'$/;
+
+  matches.forEach(e => {
+    let replacement = '';
+    // The condition is not evaluated!
+    // The ternary structure is only
+    // a reminder for the structure
+    // of the replacement.
+    const splitByCondition = e.split('?');
+
+    if (typeof splitByCondition[1] !== 'string') {
+      return string;
+    }
+
+    const options = splitByCondition[1].split(':');
+    // Second option should be the default one
+    // based on the template
+    let selector = 0;
+    if (typeof object === 'undefined') {
+      selector = 1;
+    }
+    // NOTE: check with . is a bit impractical,
+    // when a dot is needed in the string
+    const isInQuotes = regexSubInSingleQuotes.test(options[selector].trim());
+    if (isInQuotes) {
+      replacement = options[selector].replace(/'/g, ``).trim();
+    } else {
+      const objectKey = options[selector].split(`.`)[1].trim();
+      replacement = object[objectKey];
+    }
+    result = result.replace(e, replacement);
+  });
+  result = result.replace(/{/g, '').replace(/}/g, '');
+
+  return result;
+};
+
+export const detectWebGLContext = () => {
+  // Create canvas element. The canvas is not added to the
+  // document itself, so it is never displayed in the
+  // browser window.
+  if (typeof window !== `undefined`) {
+    var canvas = document.createElement('canvas');
+    // Get WebGLRenderingContext from canvas element.
+    var gl =
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    // Report the result.
+    if (gl && gl instanceof WebGLRenderingContext) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
+};
 const stateToAgs = {
   berlin: '11000000',
   bremen: '04011000',
@@ -168,3 +250,73 @@ const stateToAgs = {
 export function mapCampaignCodeToAgs(campaignCode) {
   return stateToAgs[campaignCode.split('-')[0]];
 }
+
+// Translate the list of strings of contentful in an Array of flags
+// that match the userContentfulState or municpalityContentful state
+// of the useUserMunicipalityContentfulState hook
+export const getShowForOptions = arrayOfStrings => {
+  const allShowForOptions = [
+    'showForNoMunicipality',
+    'showForQualifying',
+    'showForQualified',
+    'showForCollecting',
+    'showForBerlinHamburgBremen',
+    'showForLoggedOut',
+    'showForLoggedInNoMunicipalitySignup',
+    'showForLoggedInThisMunicipalitySignup',
+    'showForLoggedInOtherMunicipalitySignup',
+  ];
+  const showForOptions = {};
+  for (const x of allShowForOptions) {
+    let attr = x.replace('showFor', '');
+    attr = attr.charAt(0).toLowerCase() + attr.slice(1);
+    showForOptions[attr] = arrayOfStrings.includes(x);
+  }
+  return showForOptions;
+};
+
+export const getFilteredElementsByContentfulState = ({
+  elements,
+  municipalityContentfulState,
+  userContentfulState,
+  showByDefault,
+}) => {
+  if (!elements) {
+    return elements;
+  }
+  return elements.filter(el => {
+    if (el.showForOptions) {
+      const showForOptions = getShowForOptions(el.showForOptions);
+      // console.log(
+      //   showForOptions,
+      //   municipalityContentfulState,
+      //   userContentfulState
+      // );
+
+      const showState =
+        showForOptions[municipalityContentfulState] &&
+        showForOptions[userContentfulState];
+      return showState;
+    }
+    return showByDefault;
+  });
+};
+
+export const getComponentFromContentful = ({ Components, component, key }) => {
+  const componentSelector = component.__typename.replace(
+    'ContentfulSectionComponent',
+    ''
+  );
+  if (typeof Components[componentSelector] !== 'undefined') {
+    return React.createElement(Components[componentSelector], {
+      ...component,
+      key,
+    });
+  } else {
+    return (
+      <div key={key}>
+        The component {componentSelector} has not been created yet.
+      </div>
+    );
+  }
+};

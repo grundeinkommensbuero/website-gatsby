@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { TextInput } from '../TextInput';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import s from './style.module.less';
@@ -16,7 +16,7 @@ const handleButtonClickDefault = ({ validate }) => {
   // --> validate function
   const validation = validate();
   if (validation.status === 'success') {
-    navigate(validation.ags);
+    navigate(validation.slug);
   }
 };
 
@@ -26,21 +26,25 @@ export const SearchPlaces = ({
   placeholder = 'Stadt oder Gemeinde',
   onPlaceSelect,
   label = 'Stadt oder Gemeinde:',
+  searchTitle,
   validateOnBlur,
   inputSize,
   buttonSize,
   profileButtonStyle,
+  isInsideForm,
   handleButtonClick = handleButtonClickDefault,
+  initialPlace = {},
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialPlace.name || '');
   const [results, setResults] = useState([]);
-  const [selectedPlace, setSelectedPlace] = useState({});
+  const [selectedPlace, setSelectedPlace] = useState(initialPlace);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
   const [fuse, setFuse] = useState();
+  const [focusedResult, setFocusedResult] = useState(0);
 
   useEffect(() => {
-    import('./places.json').then(({ default: places }) => {
+    import('./municipalitiesForSearch.json').then(({ default: places }) => {
       setFuse(
         new Fuse(places, {
           keys: ['name', 'zipCodes'],
@@ -87,7 +91,8 @@ export const SearchPlaces = ({
         const fuseResults = fuse.search(searchProps);
         const results = fuseResults
           .map(x => ({ ...x.item, score: x.score }))
-          .slice(0, 10);
+          .slice(0, 10)
+          .sort((a, b) => b.population - a.population);
         setResults(results);
       }
     } else {
@@ -96,14 +101,14 @@ export const SearchPlaces = ({
   }, [query, fuse]);
 
   const validate = () => {
-    let ags;
+    let slug;
     if (selectedPlace.ags) {
-      ags = `/gemeinden/${selectedPlace.ags}`;
-      return { status: 'success', ags };
+      slug = `/gemeinden/${selectedPlace.slug}`;
+      return { status: 'success', slug };
     }
     if (results.length > 0 && results[0].score < 0.001) {
-      ags = `/gemeinden/${results[0].ags}`;
-      return { status: 'success', ags };
+      slug = `/gemeinden/${results[0].slug}`;
+      return { status: 'success', slug };
     }
     const touched = true;
     const error = 'Bitte wähle eine Stadt aus';
@@ -112,15 +117,17 @@ export const SearchPlaces = ({
   };
 
   const handleSuggestionClick = suggestion => {
-    setQuery(suggestion.name);
-    setSelectedPlace(suggestion);
+    if (suggestion) {
+      setQuery(suggestion.name);
+      setSelectedPlace(suggestion);
 
-    // If callback was passed let container component
-    // know that the selected place changed
-    if (onPlaceSelect) {
-      onPlaceSelect(suggestion);
+      // If callback was passed let container component
+      // know that the selected place changed
+      if (onPlaceSelect) {
+        onPlaceSelect(suggestion);
+      }
+      setSuggestionsActive(false);
     }
-    setSuggestionsActive(false);
   };
 
   const handleChange = e => {
@@ -131,10 +138,44 @@ export const SearchPlaces = ({
     setFormState({ error, touched });
   };
 
-  const handleKeyDown = e => {
+  const handleEnterKey = e => {
     // Emulate click when enter or space are pressed
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === 'Enter') {
       handleSuggestionClick(results[0]);
+    }
+  };
+
+  const handleArrowListNavigation = e => {
+    const upBehavior =
+      e.key === 'ArrowUp' ||
+      e.which === 38 ||
+      ((e.key === 'Tab' || e.which === 9) && e.shiftKey);
+    const downBehavior =
+      e.key === 'ArrowDown' ||
+      e.which === 40 ||
+      ((e.key === 'Tab' || e.which === 9) && !e.shiftKey);
+
+    if (upBehavior || downBehavior) {
+      e.preventDefault();
+    }
+
+    if (downBehavior) {
+      // At the end of a list jump back to the beginning
+      // and vice versa
+      if (
+        focusedResult < results.length - 1 &&
+        typeof focusedResult !== 'undefined'
+      ) {
+        setFocusedResult(prev => prev + 1);
+      } else {
+        setFocusedResult(0);
+      }
+    } else if (upBehavior) {
+      if (focusedResult > 0 && focusedResult < results.length) {
+        setFocusedResult(prev => prev - 1);
+      } else {
+        setFocusedResult(results.length - 1);
+      }
     }
   };
 
@@ -142,6 +183,7 @@ export const SearchPlaces = ({
     const isAutoCompleteTarget =
       e.relatedTarget &&
       [...e.relatedTarget.classList].join('').includes('suggestionsItem');
+
     if (!isAutoCompleteTarget) {
       setTimeout(() => {
         setSuggestionsActive(false);
@@ -149,6 +191,7 @@ export const SearchPlaces = ({
           validate();
         }
       }, 300);
+      setFocusedResult(0);
     }
   };
 
@@ -156,6 +199,7 @@ export const SearchPlaces = ({
     <>
       {label && <label>{label}</label>}
       <div className={s.container}>
+        {searchTitle && <h2 className={s.searchTitle}>{searchTitle}</h2>}
         <div className={s.inputContainer}>
           <TextInput
             size={inputSize}
@@ -164,15 +208,18 @@ export const SearchPlaces = ({
             label="Stadt"
             value={query}
             onChange={handleChange}
-            onKeyDown={handleKeyDown}
+            onKeyDown={handleEnterKey}
             onBlur={handleBlur}
+            className={cN(s.searchBar, { [s.isNotInsideForm]: !isInsideForm })}
           />
 
           <AutoCompleteList
             query={query}
             results={results}
+            focusedResult={focusedResult}
             suggestionsActive={suggestionsActive}
             handleSuggestionClick={handleSuggestionClick}
+            handleArrowListNavigation={handleArrowListNavigation}
             handleBlur={handleBlur}
           />
           <LabelInputErrorWrapper meta={formState} />
@@ -194,14 +241,30 @@ export const SearchPlaces = ({
     </>
   );
 };
-
 export function AutoCompleteList({
   query,
   results,
+  focusedResult,
   suggestionsActive,
   handleSuggestionClick,
   handleBlur,
+  handleArrowListNavigation,
 }) {
+  const resultsRef = useRef([]);
+
+  useEffect(() => {
+    resultsRef.current = resultsRef.current.slice(0, results.length);
+  }, [results]);
+
+  useLayoutEffect(() => {
+    if (
+      typeof focusedResult !== 'undefined' &&
+      focusedResult < resultsRef.current.length
+    ) {
+      resultsRef.current[focusedResult].focus();
+    }
+  }, [focusedResult, resultsRef]);
+
   return (
     <div
       aria-hidden={true}
@@ -214,14 +277,16 @@ export function AutoCompleteList({
 
       {results.length > 0 &&
         query.length > 1 &&
-        results.map(x => {
+        results.map((x, i) => {
           return (
             <div
               key={x.ags}
+              id={`autocomplete-${x.name.toLowerCase()}`}
               className={s.suggestionsItem}
               role="button"
               aria-pressed="false"
               tabIndex={0}
+              ref={el => (resultsRef.current[i] = el)}
               onClick={e => handleSuggestionClick(x)}
               onKeyDown={e => {
                 // Emulate click when enter or space are pressed
@@ -229,6 +294,7 @@ export function AutoCompleteList({
                   e.preventDefault();
                   handleSuggestionClick(x);
                 }
+                handleArrowListNavigation(e);
               }}
             >
               {x.name},{' '}

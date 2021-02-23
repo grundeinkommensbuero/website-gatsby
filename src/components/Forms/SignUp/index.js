@@ -3,6 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { validateEmail } from '../../utils';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
+import { Checkbox } from '../Checkbox';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
@@ -12,16 +13,54 @@ import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthInfo from '../../AuthInfo';
 import { FinallyMessage } from '../FinallyMessage';
+import s from './style.module.less';
+import { MunicipalityContext } from '../../../context/Municipality';
+import { SearchPlaces } from '../SearchPlaces';
+
+const AuthenticatedDialogDefault = () => {
+  return (
+    <FinallyMessage preventScrolling={true}>
+      <p>
+        Klasse, du hast dich bereits angemeldet. Wir informieren dich über alles
+        Weitere.
+      </p>
+      <p>
+        <AuthInfo />
+      </p>
+    </FinallyMessage>
+  );
+};
 
 export default ({
   initialValues,
   postSignupAction,
   illustration = 'POINT_LEFT',
+  fieldsToRender,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId } = useContext(AuthContext);
+  const {
+    isAuthenticated,
+    userId,
+    customUserData: userData,
+    updateCustomUserData,
+  } = useContext(AuthContext);
+  const [formData, setFormData] = useState();
+  const [showFeedbackMessage, setShowFeedbackMessage] = useState(true);
+
+  const { municipality, setMunicipality } = useContext(MunicipalityContext);
+  const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
+
+  let prefilledZip;
+
+  if (municipalityInForm?.zipCodes.length === 1) {
+    prefilledZip = municipalityInForm?.zipCodes[0];
+  } else if (userData?.zipCode) {
+    prefilledZip = userData.zipCode;
+  } else {
+    prefilledZip = '';
+  }
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -29,14 +68,30 @@ export default ({
       if (postSignupAction) {
         postSignupAction();
       }
+
+      // Now set municipality in context
+      if (municipalityInForm) {
+        // So we don't show the finnaly message before the onboarding overlay is shown
+        setShowFeedbackMessage(false);
+        updateCustomUserData();
+        setMunicipality(municipalityInForm);
+      }
     }
   }, [hasSubmitted, isAuthenticated, userId]);
 
   useEffect(() => {
-    // If user signs in from form
-    if (isAuthenticated && hasSubmitted) {
+    // If user signs in from form and already existed
+    if (
+      isAuthenticated &&
+      hasSubmitted &&
+      formData &&
+      userId &&
+      userExists !== false
+    ) {
       updateUser({
+        ...formData,
         updatedOnXbge: true,
+        ags: municipalityInForm?.ags,
       });
       setSignUpState('signedIn');
     }
@@ -44,98 +99,159 @@ export default ({
     if (!isAuthenticated && signUpState === 'signedIn') {
       setSignUpState(undefined);
     }
-  }, [isAuthenticated, hasSubmitted]);
+  }, [isAuthenticated, hasSubmitted, formData, userId]);
 
   if (signUpState === 'success') {
     return <EnterLoginCode preventSignIn={true} />;
   }
 
-  if (signUpState) {
+  if (signUpState && showFeedbackMessage) {
     return (
-      <SignUpFeedbackMessage
-        state={
-          signUpState === 'signedIn' && !userExists ? 'success' : signUpState
-        }
-        trackingId={'sign-up'}
-        trackingCategory="SignUp"
-      />
+      <>
+        <SignUpFeedbackMessage
+          className={s.adjustFinallyMessage}
+          state={
+            signUpState === 'signedIn' && !userExists ? 'success' : signUpState
+          }
+          trackingId={'sign-up'}
+          trackingCategory="SignUp"
+        />
+      </>
     );
   }
 
-  if (isAuthenticated || userId) {
-    return (
-      <FinallyMessage preventScrolling={true}>
-        <p>
-          Klasse, du hast dich bereits angemeldet. Wir informieren dich über
-          alles Weitere.
-        </p>
-        <p>
-          <AuthInfo />
-        </p>
-      </FinallyMessage>
-    );
+  // Not needed for now since we want to just the sign up form
+  // even for signed in users
+  // if (isAuthenticated || userId) {
+  //   if (showSignedInMessage) {
+  //     return <AuthenticatedDialogDefault />;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  const handlePlaceSelect = newMunicipality => {
+    setMunicipalityInForm(newMunicipality);
+  };
+
+  let fields = [
+    'email',
+    'username',
+    'municipality',
+    'zipCode',
+    'nudgeBox',
+    'newsletterConsent',
+  ];
+  if (fieldsToRender) {
+    fields = fieldsToRender;
   }
+  const fieldData = {
+    email: {
+      name: 'email',
+      label: 'E-mail',
+      description: 'Pflichtfeld',
+      placeholder: 'E-Mail',
+      type: 'email',
+      component: TextInputWrapped,
+      value: userData?.email,
+    },
+    username: {
+      name: 'username',
+      label: 'Vorname',
+      placeholder: 'Vorname',
+      type: 'text',
+      component: TextInputWrapped,
+      value: userData?.username,
+    },
+    municipality: {
+      name: 'municipality',
+      label: 'Ort',
+      placeholder: 'Stadt / Gemeinde',
+      type: 'text',
+      component: SearchPlaces,
+      onPlaceSelect: handlePlaceSelect,
+      initialPlace: municipality || {},
+      isInsideForm: true,
+    },
+    zipCode: {
+      name: 'zipCode',
+      label: 'Postleitzahl',
+      placeholder: '12345',
+      type: 'number',
+      component: TextInputWrapped,
+    },
+    nudgeBox: {
+      name: 'nudgeBox',
+      label: 'Ja, ich will, dass das Bürgerbegehren startet.',
+      type: 'checkbox',
+      component: Checkbox,
+    },
+    newsletterConsent: {
+      name: 'newsletterConsent',
+      label: 'Haltet mich über die nächsten Schritte auf dem Laufenden.',
+      type: 'checkbox',
+      component: Checkbox,
+    },
+  };
 
   return (
-    <Form
-      onSubmit={e => {
-        e.privacyConsent = true;
-        e.newsletterConsent = true;
-        setHasSubmitted(true);
-        if (!isAuthenticated) {
-          signUp(e);
-        }
-      }}
-      initialValues={initialValues}
-      validate={values => validate(values, isAuthenticated)}
-      render={({ handleSubmit }) => {
-        return (
-          <FormWrapper>
-            <form onSubmit={handleSubmit}>
-              <FormSection>
-                <Field
-                  name="email"
-                  label="E-Mail"
-                  description="Pflichtfeld"
-                  placeholder="E-Mail"
-                  type="email"
-                  component={TextInputWrapped}
-                />
-                <Field
-                  name="username"
-                  label="Vorname"
-                  placeholder="Vorname"
-                  type="text"
-                  component={TextInputWrapped}
-                />
-                <Field
-                  name="zipCode"
-                  label="Postleitzahl"
-                  placeholder="12345"
-                  type="number"
-                  component={TextInputWrapped}
-                />
-                <Field
-                  name="city"
-                  label="Ort"
-                  placeholder="Stadt / Dorf"
-                  type="text"
-                  component={TextInputWrapped}
-                />
-              </FormSection>
+    <>
+      <h2>Komm dazu.</h2>
+      <Form
+        onSubmit={e => {
+          e.ags = municipalityInForm?.ags;
+          if (!e.newsletterConsent) {
+            e.newsletterConsent = false;
+          }
 
-              <CTAButtonContainer illustration={illustration}>
-                <CTAButton type="submit">Ich bin dabei</CTAButton>
-              </CTAButtonContainer>
-            </form>
-          </FormWrapper>
-        );
-      }}
-    ></Form>
+          // We don't want to send empty strings
+          if (e.username === '') {
+            delete e.username;
+          }
+
+          if (e.zipCode === '') {
+            delete e.zipCode;
+          }
+
+          setHasSubmitted(true);
+          setFormData(e);
+
+          if (!isAuthenticated) {
+            signUp(e);
+          }
+        }}
+        initialValues={{
+          ...initialValues,
+          zipCode: prefilledZip,
+          email: (isAuthenticated && userData?.email) || '',
+          username: userData?.username || '',
+        }}
+        validate={values => validate(values, municipalityInForm)}
+        render={({ handleSubmit }) => {
+          return (
+            <FormWrapper>
+              <form onSubmit={handleSubmit}>
+                <FormSection>
+                  {fields.map((field, i) => {
+                    return (
+                      <Field key={`form-field-${i}`} {...fieldData[field]} />
+                    );
+                  })}
+                </FormSection>
+
+                <CTAButtonContainer>
+                  <CTAButton type="submit">Ich bin dabei</CTAButton>
+                </CTAButtonContainer>
+              </form>
+            </FormWrapper>
+          );
+        }}
+      ></Form>
+    </>
   );
 };
 
-const validate = values => {
+const validate = (values, municipalityInForm) => {
   const errors = {};
 
   if (values.email && values.email.includes('+')) {
@@ -145,6 +261,23 @@ const validate = values => {
   if (values.email && !validateEmail(values.email)) {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
+
+  if (!values.email) {
+    errors.email = 'Wir benötigen eine valide E-Mail Adresse';
+  }
+
+  if (!values.nudgeBox && !values.newsletterConsent) {
+    errors.newsletterConsent = 'Bitte bestätige, dass du dabei sein willst';
+  }
+
+  if (!municipalityInForm) {
+    errors.newsletterConsent = 'Bitte wähle einen Ort aus.';
+  }
+
+  // if (!values.zipCode) {
+  //   errors.zipCode =
+  //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
+  // }
 
   return errors;
 };

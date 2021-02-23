@@ -1,30 +1,49 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
+import AuthContext from '../../context/Authentication';
+import { MunicipalityContext } from '../../context/Municipality';
+import { useSEO } from '../../hooks/Municipality/SEO';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-export default ({ data, location }) => {
+export default ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
 
-  return (
-    <Layout location={location} title={page.title} sections={page.sections}>
-      <Helmet>
-        <title>{page.title}</title>
+  const { setPageContext } = useContext(MunicipalityContext);
+  useEffect(() => {
+    setPageContext(pageContext);
+  }, []);
 
-        {page.description && (
-          <meta
-            name="description"
-            content={page.description.internal.content}
-          />
-        )}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={URL + location.pathname} />
-        <script type="text/javascript">{MatomoTrackingStuff}</script>
-      </Helmet>
-    </Layout>
+  const { isAuthenticated } = useContext(AuthContext);
+
+  const { title, description } = useSEO(page);
+
+  return (
+    <>
+      {typeof isAuthenticated !== 'undefined' && (
+        <Layout
+          location={location}
+          title={title}
+          sections={page.sections}
+          pageContext={pageContext}
+          description={description}
+        >
+          <Helmet>
+            <title>{title}</title>
+
+            {page.description && (
+              <meta name="description" content={description} />
+            )}
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={URL + location.pathname} />
+            <script type="text/javascript">{MatomoTrackingStuff}</script>
+          </Helmet>
+        </Layout>
+      )}
+    </>
   );
 };
 
@@ -39,7 +58,7 @@ export const pageQuery = graphql`
       }
       sections {
         ... on Node {
-          ... on ContentfulPageSection {
+          ... on ContentfulPageSectionOneColumn {
             __typename
             title
             titleShort
@@ -112,8 +131,13 @@ export const pageQuery = graphql`
           }
           ... on ContentfulPageSectionVideo {
             __typename
-            videoLink
             title
+            videoLink
+            bodyAtTheEnd {
+              json
+            }
+            showForOptions
+            colorScheme
           }
           ... on ContentfulPageSectionIllustration {
             __typename
@@ -131,51 +155,122 @@ export const pageQuery = graphql`
               }
             }
           }
+          ... on ContentfulPageSectionWithComponents {
+            __typename
+            headline {
+              headline
+            }
+            keyVisual
+            titleShort
+            colorScheme
+            showForOptions
+            components {
+              ... on ContentfulSectionComponentStandard {
+                __typename
+                title
+                showForOptions
+                column
+                videoLink
+                signUpButton
+                image {
+                  fluid(maxWidth: 500, quality: 90) {
+                    ...GatsbyContentfulFluid
+                  }
+                }
+                text {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentTickerToSignup {
+                __typename
+                title
+                showForOptions
+                column
+                tickerDescription {
+                  tickerDescription
+                }
+              }
+              ... on ContentfulSectionComponentMunicipalityMap {
+                __typename
+                title
+                showForOptions
+                column
+              }
+              ... on ContentfulSectionComponentMunicipalityProgress {
+                __typename
+                title
+                showForOptions
+                column
+              }
+              ... on ContentfulSectionComponentInviteFriends {
+                __typename
+                title
+                showForOptions
+                headline
+                column
+                body {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentInviteFriends {
+                __typename
+                title
+                showForOptions
+                headline
+                column
+                body {
+                  json
+                }
+              }
+              ... on ContentfulSectionComponentBecomeActive {
+                __typename
+                title
+                showForOptions
+                headline
+                column
+                body {
+                  json
+                }
+                fullWidthOnDesktop
+              }
+              ... on ContentfulSectionComponentInfoText {
+                __typename
+                title
+                showForOptions
+                fullWidthOnDesktop
+                column
+              }
+              ... on ContentfulSectionComponentIntroText {
+                __typename
+                title
+                showForOptions
+                fullWidthOnDesktop
+                column
+                highlightText {
+                  highlightText
+                }
+                note {
+                  note
+                }
+              }
+              ... on ContentfulSectionComponentProfileTile {
+                __typename
+                title
+                showForOptions
+                column
+                body {
+                  json
+                }
+                fullWidthOnDesktop
+              }
+            }
+          }
           ... on ContentfulPageSectionDonation {
             __typename
             title
             introText
             theme
             colorScheme
-          }
-          ... on ContentfulPageSectionTwoColumns {
-            __typename
-            title
-            columnIntroText {
-              json
-            }
-            imageTopLeft {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnTopLeft {
-              json
-            }
-            imageTopRight {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnTopRight {
-              json
-            }
-            imageBottomLeft {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnBottomLeft {
-              json
-            }
-            imageBottomRight {
-              fixed(height: 150, quality: 80) {
-                ...GatsbyContentfulFixed
-              }
-            }
-            columnBottomRight {
-              json
-            }
           }
         }
       }

@@ -1,21 +1,53 @@
 @import '../../style/vars.less';
 
 .donationForm {
-  --bg-color: @red;
-  --font-color: @grey;
-  --text-on-secondary-color: @grey;
-  background-color: @red;
-  color: @grey;
   font-weight: normal;
-  margin-top: 2em;
-  padding: 3rem;
+  padding-top: 1rem;
   // Only for HurrayCrowd component:
   // position: relative;
   // z-index: 1;
+  --bg-color: @white;
+  --font-color: @black;
+  --secondary-color: @aqua;
+  --text-on-secondary-color: @white;
+  --button-font-color: @violet;
+  --button-bg-color: @violetTransparent;
+  --button-hover-bg-color: @violet;
+  --button-hover-font-color: @white;
 
   @media (max-width: @breakPointS) {
     margin-top: 0;
     padding: 2.5rem 1.5rem;
+  }
+
+  .donationIntervalSelection {
+    margin-bottom: 5rem;
+  }
+
+  .selectionContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .selectionElement {
+    border: @borderWidthThick solid @violet;
+    color: @violet;
+    padding: 1.2rem 2rem 1rem;
+    margin-right: 1rem;
+    min-width: 10rem;
+    text-align: center;
+  }
+
+  .selectionElement:hover {
+    cursor: pointer;
+    background-color: @violet;
+    color: @white;
+  }
+
+  .selectionElementActive {
+    background-color: @violet;
+    color: @white;
   }
 
   h3 {
@@ -23,11 +55,11 @@
   }
 
   div {
-    font-size: @fontSizeM;
+    font-size: @DesktopFontSizeM;
     margin-bottom: 0; // Overwrites unneeded field container margins
 
     @media (max-width: @breakPointM) {
-      font-size: @fontSizeS;
+      font-size: @DesktopFontSizeS;
     }
   }
 
@@ -37,7 +69,7 @@
 
   // Error message
   label div {
-    font-size: @fontSizeS;
+    font-size: @DesktopFontSizeS;
     font-weight: bold;
   }
 }
@@ -46,7 +78,6 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
-  width: 20rem;
 }
 
 .link {
@@ -58,7 +89,7 @@
 }
 
 .secondaryLink {
-  font-size: @fontSizeXS;
+  font-size: @DesktopFontSizeXS;
   margin: 1.5rem 0.5rem;
 }
 
@@ -75,7 +106,7 @@
 }
 
 .currency {
-  font-size: @fontSizeXL;
+  font-size: @DesktopFontSizeXL;
   margin-top: 16px;
 }
 
@@ -84,30 +115,11 @@
 }
 
 .hint {
-  font-size: @fontSizeXS;
+  font-size: @DesktopFontSizeS;
 }
 
-.christmasTheme {
-  --bg-color: @grey;
-  background-color: @red;
-  color: @grey;
-  & input:checked {
-    color: @red;
-  }
-}
-
-// Put all the following styles back into christmas theme when christmas is over
-.adjustFinallyMessage {
-  --secondary-color: @red;
-  --text-on-secondary-color: @grey;
-}
-
-.buttonContainer a {
-  border-color: @grey;
-  &:hover {
-    color: var(--font-color);
-    background: var(--bg-color);
-  }
+.emphasis {
+  font-weight: bold;
 }
 
 button {
@@ -120,64 +132,20 @@ button {
   }
 }
 
-.primaryButton {
-  background-color: @grey;
-  color: @red !important;
-  border: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: darken(@grey, 10%);
-    border: none;
-  }
-}
-
-// Radio Buttons
-input:checked ~ span {
-  background-color: @grey !important;
-
-  &:after {
-    background-color: @red !important;
-  }
-}
-
-// Checkboxes
-label > input {
-  background-color: @grey;
-  border: none;
-}
-
-label > input:checked {
-  background-color: @grey;
-  border: none;
-  color: @red;
-}
-
 .certificateInfo {
   margin-top: 3rem;
 }
 
-/* Leftover styles in case we want to 
-switch back from christmas theme */
-.standardColors {
-  background-color: var(--bg-color);
-  border: 1px solid var(--font-color);
-
-  .primaryButton {
-    background: var(--font-color);
-    color: var(--bg-color);
-    border: none;
-
-    &:hover,
-    &:focus {
-      background: darken(@red, 10%);
-      box-shadow: none;
-    }
+.christmasTheme {
+  --bg-color: @grey;
+  background-color: @red;
+  color: @grey;
+  & input:checked {
+    color: @red;
   }
 
   .adjustFinallyMessage {
-    --secondary-color: var(--bg-color);
-    --text-on-secondary-color: var(--font-color);
+    --secondary-color: @red;
+    --text-on-secondary-color: @grey;
   }
 }

@@ -5,17 +5,24 @@ import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { ValidationError } from '../ValidationError';
 
 export function TextInput({ children, className, label, size, ...input }) {
-
   return (
     <input
+      onFocus={e => {
+        if (e.target.autocomplete) {
+          e.target.autocomplete = "none";
+        }
+      }}
       aria-label={label}
+      type={'search'}
       className={cN(
         s.textInput,
         { [s.textInputSmall]: size === 'SMALL' },
-        className, {
-        [s.hideNumberArrows]:
-          input.name === 'zipCode' || input.name === 'listId',
-      })}
+        className,
+        {
+          [s.hideNumberArrows]:
+            input.name === 'zipCode' || input.name === 'listId',
+        }
+      )}
       {...input}
     />
   );

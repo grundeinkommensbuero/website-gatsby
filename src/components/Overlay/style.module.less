@@ -1,10 +1,10 @@
 @import '../style/vars.less';
 
 .container {
-  --bg-color: @yellow;
-  --font-color: @red;
-  --secondary-color: @blueBright;
-  --text-on-secondary-color: @yellow;
+  --bg-color: @white;
+  --font-color: @black;
+  --secondary-color: @aqua;
+  --text-on-secondary-color: @white;
   position: fixed;
   top: 0;
   left: 0;
@@ -50,4 +50,64 @@
 
 .body {
   max-width: @contentWidthL;
+  margin: 0 auto;
+}
+
+.onboardingContainer {
+  --font-color: @black;
+  --secondary-color: @aqua;
+  --text-on-secondary-color: @white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  color: var(--font-color);
+  padding: 3rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  @media (max-width: @breakPointM) {
+    padding: 2rem 1rem;
+  }
+}
+
+/* slightly transparent fallback */
+.backdropBlur {
+  background-color: white;
+}
+
+/* if backdrop support: very transparent and blurred */
+@supports (
+  (-webkit-backdrop-filter: blur(35px)) or (backdrop-filter: blur(35px))
+) {
+  .backdropBlur {
+    background-color: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(35px);
+    backdrop-filter: blur(35px);
+  }
+}
+
+.closeButtonOnboarding {
+  position: fixed;
+  top: 5rem;
+  right: 4rem;
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  font-size: 0;
+  background-image: url('./close-icon.svg');
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+
+  @media (max-width: @breakPointM) {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.bodyOverlayOpen {
+  overflow: hidden;
 }

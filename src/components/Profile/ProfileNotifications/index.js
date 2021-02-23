@@ -5,9 +5,7 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 import { NewsletterCard } from './NewsletterCard';
 import { SearchPlaces } from '../../Forms/SearchPlaces';
-// import { TextInput } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
-// import { MessengerButtonRow } from '../MessengerButtonRow.js';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
@@ -15,12 +13,14 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   const [componentToBeUpdated, setComponentToBeUpdated] = useState();
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
-  const [mainNewsletterConsent, updateMainNewsletterConsent] = useState();
-  const [customNewsletterSettings, updateCustomNewsletterSettings] = useState(
+  const [mainNewsletterConsent, setMainNewsletterConsent] = useState();
+  const [reminderMailConsent, setReminderMailConsent] = useState();
+  const [customNewsletterSettings, setCustomNewsletterSettings] = useState(
     []
   );
   const [municipality, setMunicipality] = useState();
-  const [unsubscribeDialogActive, setShowUnsubscribeDialog] = useState();
+  const [unsubscribeMainNewsletterDialogActive, setUnsubscribeMainNewsletterDialog] = useState(false);
+  const [unsubscribeReminderMailsDialogActive, setUnsubscribeReminderMailsDialog] = useState(false);
   const [unsubscribeAllDialogActive, setShowUnsubscribeAllDialog] = useState();
 
   useEffect(() => {
@@ -42,11 +42,15 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   useEffect(() => {
     if (userData &&
       userData.newsletterConsent) {
-      updateMainNewsletterConsent(userData.newsletterConsent);
+      setMainNewsletterConsent(userData.newsletterConsent);
+    }
+    if (userData &&
+      userData.reminderMails) {
+      setReminderMailConsent(userData.reminderMails);
     }
     if (userData &&
       userData.customNewsletters) {
-      updateCustomNewsletterSettings(userData.customNewsletters);
+      setCustomNewsletterSettings(userData.customNewsletters);
     }
   }, [userData]);
 
@@ -56,9 +60,9 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   };
 
   // show unsubscribe dialog, set target to show loading animation
-  const toggleUnsubscribeDialog = () => {
+  const toggleUnsubscribeMainNewsletterDialog = () => {
     setComponentToBeUpdated('Main');
-    setShowUnsubscribeDialog(!unsubscribeDialogActive);
+    setUnsubscribeMainNewsletterDialog(!unsubscribeMainNewsletterDialogActive);
   };
 
   // unsubscribe from Main newsletter
@@ -72,11 +76,35 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         userId: userId,
         newsletterConsent: updatedMainNewsletterConsent,
       });
-      updateMainNewsletterConsent({ value: updatedMainNewsletterConsent });
-      setShowUnsubscribeDialog(false);
+      setMainNewsletterConsent({ value: updatedMainNewsletterConsent });
+      setUnsubscribeMainNewsletterDialog(false);
     } catch (e) {
       console.log(e);
     }
+  };
+
+  // unsubscribe from Reminder Mails
+  const toggleReminderMailConsent = async () => {
+    try {
+      setComponentToBeUpdated('MailSettings');
+
+      let updatedReminderMailConsent = !reminderMailConsent.value;
+
+      updateUser({
+        userId: userId,
+        reminderMails: updatedReminderMailConsent,
+      });
+      setReminderMailConsent({ value: updatedReminderMailConsent });
+      setUnsubscribeReminderMailsDialog(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // show unsubscribe dialog, set target to show loading animation
+  const toggleUnsubscribeReminderMailsDialog = () => {
+    setComponentToBeUpdated('MailSettings');
+    setUnsubscribeReminderMailsDialog(!unsubscribeReminderMailsDialogActive);
   };
 
   // decide how to proceed with a user created custom newsletter
@@ -126,7 +154,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         userId: userId,
         customNewsletters: updatedNewsletters,
       });
-      updateCustomNewsletterSettings(updatedNewsletters);
+      setCustomNewsletterSettings(updatedNewsletters);
     } catch (e) {
       console.log(e);
     }
@@ -138,7 +166,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
       const updatedNewsletters = [...customNewsletterSettings];
       updatedNewsletters.push(newsletter);
       updateUser({ userId: userId, customNewsletters: updatedNewsletters });
-      updateCustomNewsletterSettings(updatedNewsletters);
+      setCustomNewsletterSettings(updatedNewsletters);
     } catch (e) {
       console.log(e);
     }
@@ -155,7 +183,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         }
       }
       updateUser({ userId: userId, customNewsletters: updatedNewsletters });
-      updateCustomNewsletterSettings(updatedNewsletters);
+      setCustomNewsletterSettings(updatedNewsletters);
     } catch (e) {
       console.log(e);
     }
@@ -171,8 +199,8 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
       newsletterConsent: false,
       customNewsletters: updatedNewsletters
     });
-    updateCustomNewsletterSettings(updatedNewsletters);
-    updateMainNewsletterConsent({ value: false });
+    setCustomNewsletterSettings(updatedNewsletters);
+    setMainNewsletterConsent({ value: false });
     setShowUnsubscribeAllDialog(false);
   }
 
@@ -211,16 +239,16 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
               {mainNewsletterConsent && mainNewsletterConsent.value ? (
                 <span
                   aria-hidden="true"
-                  className={gS.linkLikeFormated}
-                  onClick={toggleUnsubscribeDialog}
-                  onKeyDown={toggleUnsubscribeDialog}
+                  className={gS.linkLikeFormatted}
+                  onClick={toggleUnsubscribeMainNewsletterDialog}
+                  onKeyDown={toggleUnsubscribeMainNewsletterDialog}
                 >
                   abbestellen
                 </span>
               ) : (
                   <span
                     aria-hidden="true"
-                    className={gS.linkLikeFormated}
+                    className={gS.linkLikeFormatted}
                     onClick={toggleMainNewsletterConsent}
                     onKeyDown={toggleMainNewsletterConsent}
                   >
@@ -233,7 +261,56 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     );
   };
 
-  const UnsubscribeDialog = () => {
+  const MailSettingCard = () => {
+    return (
+      <div className={s.newsletterCard}>
+        <p className={s.newsletterCardHeading}>
+          Erinnerungsmails
+        </p>
+        {/* remindermail info claim */}
+        {reminderMailConsent && reminderMailConsent.value ? (
+          <p className={s.newsletterCardDescription}>
+            Du erhältst verschiedene Erinnerungsmails von uns.
+          </p>
+        ) : (
+            <p className={s.newsletterCardDescription}>
+              Du erhältst keine Erinnerungsmails von uns.
+            </p>
+          )}
+        {/* toggle remindermail consent */}
+        {waitingForApi && componentToBeUpdated === 'MailSettings' ? (
+          <p className={cN(gS.alignRight, gS.noMargin)}>
+            <span className={gS.loading}></span>
+            <b className={gS.loadingMsg}>Speichern</b>
+          </p>
+        ) : (
+            <p className={cN(gS.alignRight, gS.noMargin)}>
+              {reminderMailConsent && reminderMailConsent.value ? (
+                <span
+                  aria-hidden="true"
+                  className={gS.linkLikeFormatted}
+                  onClick={toggleUnsubscribeReminderMailsDialog}
+                  onKeyDown={toggleUnsubscribeReminderMailsDialog}
+                >
+                  abbestellen
+                </span>
+              ) : (
+                  <span
+                    aria-hidden="true"
+                    className={gS.linkLikeFormatted}
+                    onClick={toggleReminderMailConsent}
+                    onKeyDown={toggleReminderMailConsent}
+                  >
+                    Erinnerungsmails erhalten
+                  </span>
+                )}
+            </p>
+          )}
+      </div>
+    );
+  };
+
+  const UnsubscribeNewsletterDialog = () => {
     return (
       <section className={s.newsletterCard}>
         <p className={s.newsletterCardHeading}>
@@ -246,7 +323,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         </p>
         <div className={s.revokeButtonRow}>
           <Button
-            className={gS.floatRight}
+            className={s.revokeButton}
             onClick={toggleMainNewsletterConsent}
           >
             Abbestellen
@@ -254,11 +331,44 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <div className={s.cancelRevokeProcess}>
             <span
               aria-hidden="true"
-              className={gS.linkLikeFormated}
-              onClick={toggleUnsubscribeDialog}
-              onKeyUp={toggleUnsubscribeDialog}
+              className={gS.linkLikeFormatted}
+              onClick={toggleUnsubscribeMainNewsletterDialog}
+              onKeyUp={toggleUnsubscribeMainNewsletterDialog}
             >
               Newsletter weiter erhalten
+            </span>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const UnsubscribeReminderMailsDialog = () => {
+    return (
+      <section className={s.newsletterCard}>
+        <p className={s.newsletterCardHeading}>
+          Bist du sicher, dass du keine Erinnerungsmails mehr bekommen
+          möchtest?
+        </p>
+        <br />
+        <p className={s.newsletterCardDescription}>
+          Wir können dich dann nur noch eingeschränkt informieren.
+        </p>
+        <div className={s.revokeButtonRow}>
+          <Button
+            className={s.revokeButton}
+            onClick={toggleReminderMailConsent}
+          >
+            Abbestellen
+          </Button>
+          <div className={s.cancelRevokeProcess}>
+            <span
+              aria-hidden="true"
+              className={gS.linkLikeFormatted}
+              onClick={toggleUnsubscribeReminderMailsDialog}
+              onKeyUp={toggleUnsubscribeReminderMailsDialog}
+            >
+              Erinnerungsmails weiter erhalten
             </span>
           </div>
         </div>
@@ -279,7 +389,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         </p>
         <div className={s.revokeButtonRow}>
           <Button
-            className={gS.floatRight}
+            className={s.revokeButton}
             onClick={unsubscribeAllNewsletters}
           >
             Abbestellen
@@ -287,7 +397,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <div className={s.cancelRevokeProcess}>
             <span
               aria-hidden="true"
-              className={gS.linkLikeFormated}
+              className={gS.linkLikeFormatted}
               onClick={() => setShowUnsubscribeAllDialog(false)}
               onKeyUp={() => setShowUnsubscribeAllDialog(false)}
             >
@@ -323,33 +433,35 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
-        <h3 className={s.sectionHeadline}>Newsletter & Kontakt</h3>
-        <h4 className={gS.optionSectionHeading}>
-          Deine abonnierten Newsletter
-        </h4>
+        <h2 className={s.sectionHeadline}>Newsletter & Kontakt</h2>
+        <h3 className={gS.optionSectionHeading}>
+          E-Mail Einstellungen
+        </h3>
 
-        {/* wait for userData */}
         {userData && userData.newsletterConsent ? (
           <section>
             {/* Main Card is always visible */}
-            {!unsubscribeDialogActive ? <MainCard /> : <UnsubscribeDialog />}
+            {!unsubscribeReminderMailsDialogActive ? <MailSettingCard /> : <UnsubscribeReminderMailsDialog />}
+          </section>
+        ) : null}
+
+        <h3 className={gS.optionSectionHeading}>
+          Deine abonnierten Newsletter
+        </h3>
+
+        {userData && userData.newsletterConsent ? (
+          <section>
+            {/* Main Card is always visible */}
+            {!unsubscribeMainNewsletterDialogActive ? <MainCard /> : <UnsubscribeNewsletterDialog />}
             {/* Conditionally render custom newsletter Cards */}
             <div>{activeNewsletterCards}</div>
           </section>
         ) : null}
 
-        {!unsubscribeAllDialogActive ?
-          <p
-            aria-hidden="true"
-            className={gS.linkLikeFormated}
-            onClick={() => setShowUnsubscribeAllDialog(true)}
-            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
-          : <UnsubscribeAllDialog />
-        }
-
-        <h4 className={gS.optionSectionHeading}>Newsletter hinzufügen</h4>
+        <h3 className={gS.optionSectionHeading}>Newsletter hinzufügen</h3>
         <div className={s.searchPlaces}>
           <SearchPlaces
+            label={''}
             showButton={municipality !== undefined && !waitingForApi}
             profileButtonStyle={true}
             onPlaceSelect={handlePlaceSelect}
@@ -379,6 +491,15 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           aufnehmen:
         </p>
         <MessengerButtonRow iconSize="XL" /> */}
+
+        {!unsubscribeAllDialogActive ?
+          <p
+            aria-hidden="true"
+            className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
+            onClick={() => setShowUnsubscribeAllDialog(true)}
+            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
+          : <UnsubscribeAllDialog />
+        }
       </section>
     </section>
   );

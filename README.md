@@ -28,6 +28,8 @@ npm i
 npm start
 ```
 
+_For tests on local LAN: `gatsby develop -H $HOSTNAME -p 8000`_
+
 ### Dev best practices
 
 #### Git

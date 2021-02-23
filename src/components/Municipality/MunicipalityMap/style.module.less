@@ -1,0 +1,221 @@
+@import '../../style/vars.less';
+
+@mapHeight: 90vh;
+
+.defaultPositionRelative {
+  position: relative;
+}
+
+.defaultHeightContainer {
+  height: @mapHeight;
+}
+
+.interfaceContainer {
+  position: relative;
+  z-index: 0;
+  height: 100%;
+}
+
+.mapContainer {
+  height: 100%;
+}
+
+.mapStatic {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  &.empty {
+    background-image: url('./assets/map.png');
+  }
+  &.fallback {
+    background-image: url('./assets/map-full.png');
+  }
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  z-index: 1;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+.mapButton {
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+
+  border: var(--font-color) solid @borderWidth;
+  border-radius: 10%;
+
+  text-decoration: none;
+  font-size: @DesktopFontSizeM;
+  line-height: 1;
+  font-weight: bold;
+  color: var(--font-color);
+  background: @black;
+
+  cursor: pointer;
+
+  &:hover {
+    color: @black;
+    background: var(--font-color);
+    border: 1px solid @black;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 @borderWidthThick var(--font-color);
+  }
+}
+
+.blockTouchOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: grid;
+  grid-template-areas:
+    'top  top top'
+    'left empty right'
+    'bottom bottom bottom';
+    grid-template-rows: 0% 100% 0%;
+    grid-template-columns: 10% 80% 10%;
+
+  pointer-events: none;
+
+  @media (max-width: @breakPointL) {
+    grid-template-rows: 15% 70% 15%;
+    grid-template-columns: 30% 40% 30%;
+  }
+
+  & div {
+    pointer-events: all;
+    // background: rgba(255, 0, 0, 0.2);
+  }
+  .top {
+    grid-area: top;
+  }
+  .left {
+    grid-area: left;
+  }
+  .right {
+    grid-area: right;
+  }
+  .bottom {
+    grid-area: bottom;
+  }
+}
+
+.legendContainer {
+  height: 100%;
+  pointer-events: none;
+  background-color: @white;
+  color: @black;
+  border: 1px solid @white;
+  padding: 1rem;
+  & button {
+    pointer-events: all;
+  }
+}
+
+.legendButton {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  margin-left: 0.5rem !important;
+  color: @black;
+  background: var(--font-color);
+  border: 1px solid @black;
+
+  &:hover {
+    color: var(--font-color);
+    background: @black;
+    border: 1px solid @black;
+  }
+}
+
+.closeButton {
+  position: sticky;
+  top: 1.2rem;
+  float: right;
+  margin-right: 1.2rem;
+  height: 3.2rem;
+  width: 3.2rem;
+  cursor: pointer;
+  font-size: 0;
+  background-image: url('./assets/close-icon.svg');
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+
+  @media (max-width: @breakPointM) {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.legendLabel {
+  font-size: @DesktopFontSizeXS;
+}
+
+.legendContent {
+  height: 100%;
+  width: 85%;
+  max-width: 500px;
+  padding: 1.5rem;
+}
+
+.legendHeadline {
+  margin-bottom: 2rem;
+  font-size: @DesktopFontSizeM;
+  @media (max-width: @breakPointM) {
+    font-size: @DesktopFontSizeS;
+  }
+}
+
+.legendIcon {
+  height: 20%;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  & span {
+    font-size: @DesktopFontSizeXS;
+  }
+  & div {
+    display: inline-block;
+    height: 100%;
+    & svg {
+      height: 100%;
+    }
+  }
+  & .legendGradient {
+    width: 100%;
+    & svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.legendIconLabel {
+  font-size: @DesktopFontSizeS;
+  margin-bottom: 0.75rem;
+}
+
+.legendSpacer {
+  height: 0.1rem;
+}

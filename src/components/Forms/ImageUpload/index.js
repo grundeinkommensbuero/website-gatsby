@@ -11,7 +11,7 @@ import { Spinner } from '../../Spinner';
 
 import AuthContext from '../../../context/Authentication';
 
-export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedBackground = false }) => {
+export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAquaBackground = false }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [imageUploadIsProcessing, setImageUploadIsProcessing] = useState(false);
@@ -37,7 +37,7 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
         } else {
           window.clearInterval(tryUpdateUserData);
         }
-      }, 5000);
+      }, 7500);
     }
     if (uploadImageState === 'error') {
       setImageUploadIsProcessing(false);
@@ -56,7 +56,7 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
       }}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className={s.imageUploadContainer}>
-          {userData.user && userData.user.profilePictures ? (
+          {userData?.user?.profilePictures ? (
             <AvatarImage
               user={userData.user}
               className={cN(s.avatarImage,
@@ -67,25 +67,27 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
             />
           ) : (
               <>
-                <Field
-                  name="image"
-                  component={ImageInput}
-                  user={userData}
-                  size={size}
-                  unsavedChanges={unsavedChanges}
-                  showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
-                  onChange={() => { }}
-                />
-                <OnChange name="image">
-                  {() => setUnsavedChanges(true)}
-                </OnChange>
+                <div className={s.avatarImageContainer}>
+                  <Field
+                    name="image"
+                    component={ImageInput}
+                    user={userData}
+                    size={size}
+                    unsavedChanges={unsavedChanges}
+                    showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
+                    onChange={() => { }}
+                  />
+                  <OnChange name="image">
+                    {() => setUnsavedChanges(true)}
+                  </OnChange>
+                </div>
 
                 {unsavedChanges ?
                   <CTAButton
                     type="submit"
                     className={cN(
                       s.submitButton,
-                      { [s.buttonOnRedBackground]: buttonOnRedBackground }
+                      { [s.buttonOnAquaBackground]: buttonOnAquaBackground }
                     )}
                   >
                     Hochladen
@@ -123,6 +125,7 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnRedB
 
 export const ImageInput = ({ input: { value, onChange, ...input }, user, size, unsavedChanges, showUploadLabel }) => {
   const [avatarImage, setAvatarImage] = useState(null);
+
   const handleChange = ({ target }) => {
     if (target.files && target.files[0]) {
       const reader = new FileReader();

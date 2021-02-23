@@ -1,9 +1,17 @@
 @import '../style/vars.less';
 
-.main {
+.withoutDonationBar {
   margin-top: @headerHeight;
 
   @media (max-width: @breakPointS) {
     margin-top: @headerHeightS;
+  }
+}
+
+.withDonationBar {
+  margin-top: calc(@headerHeight + @donationBarHeight);
+
+  @media (max-width: @breakPointS) {
+    margin-top: calc(@headerHeightS + @donationBarHeightS);
   }
 }

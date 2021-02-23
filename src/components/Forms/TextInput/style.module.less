@@ -5,40 +5,40 @@
 .textInputInline,
 .textarea {
   background: @white;
-  border: none;
-  color: @red;
+  border: 2px solid @violet;
+  color: @violet;
   font-family: inherit;
   border-radius: 0;
-  padding: @buttonPadding;
+  padding: @inputPadding;
   line-height: inherit;
   max-width: 100%;
   width: @inputWidth;
-  font-size: @fontSizeL;
+  font-size: @DesktopFontSizeL;
 
   @media (max-width: @breakPointS) {
     width: 100%;
   }
 
   &::placeholder {
-    color: @grey;
+    color: @greyMedium;
   }
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 @borderWidthThick @red;
+    box-shadow: inset 0 0 0 @borderWidthThick @violet;
   }
 }
 
 .textInputSmall {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
 }
 
 .textInputInline {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
 }
 
 .textarea {
-  font-size: @fontSizeS;
+  font-size: @DesktopFontSizeS;
   resize: vertical;
   min-height: 6rem;
 }

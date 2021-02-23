@@ -8,13 +8,13 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 
 // We need the following mappings for the link to the self scan page
-const SELF_SCAN_SLUGS = {
-  brandenburg: 'qr/bb',
-  berlin: 'qr/b',
-  'schlewsig-holstein': 'qr/sh',
-  hamburg: 'qr/hh',
-  bremen: 'qr/hb',
-};
+// const SELF_SCAN_SLUGS = {
+//   brandenburg: 'qr/bb',
+//   berlin: 'qr/b',
+//   'schlewsig-holstein': 'qr/sh',
+//   hamburg: 'qr/hh',
+//   bremen: 'qr/hb',
+// };
 
 export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
   /* list newsletters of current user as human readable string */
@@ -39,14 +39,14 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         <section className={gS.userInfo}>
           <AvatarImage user={userData} className={gS.avatar} />
           <div>
-            <h1
+            <h2
               className={cN({
                 [gS.username]: userData.username,
                 [s.email]: !userData.username,
               })}
             >
               {userData.username || userData.email}
-            </h1>
+            </h2>
             <div className={gS.placeInfo}>{userData.city}</div>
             {/* Show profile edit button if own page */}
             <div className={gS.details}>
@@ -62,7 +62,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
 
       <Link to="spenden-einstellungen" className={s.profilePageSection}>
         <section>
-          <h2>Spenden Einstellungen</h2>
+          <h2>Spenden-Einstellungen</h2>
           {userData && userData.donations && userData.donations.recurringDonation && userData.donations.recurringDonation.amount > 0 ?
             <h4>Du bist Dauerspender:in.<br />Vielen Dank!</h4> :
             <p>Hier kannst du deine Spende verwalten.</p>}
@@ -89,7 +89,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
         </section>
       </Link>
 
-      {signatureCountOfUser && (
+      {/* {signatureCountOfUser && (
         <a className={cN(s.profilePageSection, s.profilePageSectionLarge)}
           href={`/${signatureCountOfUser.mostRecentCampaign
             ? SELF_SCAN_SLUGS[
@@ -117,9 +117,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             )}
           </section>
         </a>
-      )}
+      )} */}
 
-      {/* <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
+      <Link to="unterschriften-eintragen" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
           {signatureCountOfUser && (
@@ -138,7 +138,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             </>
           )}
         </section>
-      </Link> */}
+      </Link>
 
       {/* <Link to="frage-an-das-grundeinkommen" className={s.profilePageSection}>
         <section>

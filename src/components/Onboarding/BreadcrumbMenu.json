@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Profilbild",
+    "name": "SetupProfile"
+  },
+  {
+    "title": "Spenden",
+    "name": "Donate"
+  },
+  {
+    "title": "Teilen",
+    "name": "Share"
+  },
+  {
+    "title": "Danke",
+    "name": "FinalNote"
+  },
+  {
+    "title": "X",
+    "name": "close"
+  }
+]

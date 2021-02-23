@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -20,14 +20,62 @@ import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
 import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
+import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
+import {
+  getFilteredElementsByContentfulState,
+  getComponentFromContentful,
+} from '../../utils';
 
-export default function Sections({ sections }) {
-  if (sections && sections.length) {
+import { MunicipalityContext } from '../../../context/Municipality';
+import { TickerToSignup } from '../../TickerToSignup';
+import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
+import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
+import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
+import { InviteFriends } from '../../InviteFriends';
+import { IntroText } from '../../IntroText';
+import { BecomeActive } from '../../BecomeActive';
+import { ProfileTile } from '../../Profile/ProfileTile';
+import { StandardSectionComponent } from './StandardSectionComponent';
+
+import { LinkButton } from '../../Forms/Button';
+
+const Components = {
+  TickerToSignup,
+  MunicipalityMap: MunicipalityMapAndSearch,
+  InfoText: MunicipalityInfoText,
+  MunicipalityProgress,
+  InviteFriends,
+  IntroText,
+  BecomeActive,
+  ProfileTile,
+  Standard: StandardSectionComponent,
+};
+
+export default function Sections({ sections, pageContext }) {
+  const {
+    municipalityContentfulState,
+    userContentfulState,
+  } = useUserMunicipalityContentfulState();
+
+  const displayedSections = getFilteredElementsByContentfulState({
+    elements: sections,
+    municipalityContentfulState,
+    userContentfulState,
+    showByDefault: true,
+  });
+  if (displayedSections && displayedSections.length) {
     return (
       <SectionWrapper>
-        {sections.map((section, index) => (
-          <ContentfulSection section={section} key={index} />
-        ))}
+        {displayedSections.map((section, index) => {
+          return (
+            <ContentfulSection
+              section={section}
+              pageContext={pageContext}
+              key={index}
+            />
+          );
+        })}
       </SectionWrapper>
     );
   }
@@ -38,7 +86,7 @@ export function SectionWrapper({ children, className }) {
   return <div className={cN(s.sections, className)}>{children}</div>;
 }
 
-export function ContentfulSection({ section }) {
+export function ContentfulSection({ section, pageContext }) {
   const {
     title,
     titleShort,
@@ -53,7 +101,7 @@ export function ContentfulSection({ section }) {
     sloganLine2,
     __typename,
     teamMembers,
-    colorScheme,
+    colorScheme = 'white',
     bodyTextSizeHuge,
     pledgeId,
     signaturesId,
@@ -80,13 +128,113 @@ export function ContentfulSection({ section }) {
     columnBottomRight,
     introText,
     theme,
+    headline,
   } = section;
+
   const id = stringToId(titleShort);
   const isVideoSection = __typename === 'ContentfulPageSectionVideo';
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
-  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns';
+  const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
+
+  const {
+    municipalityContentfulState,
+    userContentfulState,
+  } = useUserMunicipalityContentfulState();
+
+  const { municipality } = useContext(MunicipalityContext);
+
+  if (__typename === 'ContentfulPageSectionWithComponents') {
+    const filteredComponents = getFilteredElementsByContentfulState({
+      elements: section.components,
+      municipalityContentfulState,
+      userContentfulState,
+      showByDefault: false,
+    });
+
+    return (
+      <>
+        {section.keyVisual && (
+          <Section className={cN(s.sectionWhite, s.keyVisualSection)}>
+            <div className={s.keyVisuallowerBorder}>
+              <div className={s.keyVisualWrapper}>
+                <div className={s.keyVisualContainer}>
+                  <div className={s.keyVisual}>{''}</div>
+                </div>
+                <div className={s.keyClaim}>
+                  <h1>
+                    Hol das Grundeinkommen jetzt{' '}
+                    {municipality
+                      ? `nach ${municipality.name}`
+                      : 'in deinen Wohnort'}
+                  .
+                </h1>
+                  {/* <p>
+                  Gemeinsam starten wir den ersten staatlichen Modellversuch, um
+                  das Grundeinkommen nach ganz Deutschland zu holen.
+                </p> */}
+                  <LinkButton href="#ticker">Mehr erfahren</LinkButton>
+                </div>
+              </div>
+            </div>
+          </Section>
+        )}
+
+        <Section
+          jumpToId={id}
+          className={cN({
+            [s.sectionTwoColumns]: isTwoColumns,
+            // [s.sectionConfetti]: backgroundIllustration === 'confetti',
+            [s.sectionWhite]: colorScheme === 'white',
+            [s.sectionViolet]: colorScheme === 'violet',
+            [s.sectionAqua]: colorScheme === 'aqua',
+            [s.sectionRed]: colorScheme === 'red',
+            [s.sectionChristmas]: colorScheme === 'christmas',
+            // [s.sectionChristmasDonation]: isChristmasDonationTheme,
+          })}
+        >
+          <SectionInner>
+            {headline && <h2>{headline.headline}</h2>}
+            <div className={s.componentElementContainer}>
+              {filteredComponents.map((component, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={cN({
+                      [s.componentLeft]: component.column === 'left',
+                      [s.componentRight]: component.column === 'right',
+                      [s.componentCenterWide]:
+                        component.column === 'centerWide',
+                      [s.componentCenterNarrow]:
+                        component.column === 'centerNarrow',
+                    })}
+                  >
+                    {getComponentFromContentful({
+                      Components,
+                      component,
+                      key: index,
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </SectionInner>
+        </Section>
+      </>
+    );
+  }
+
+  if (__typename === 'ContentfulPageSectionGemeindeIntro') {
+    return (
+      <MunicipalityIntro
+        pageContext={pageContext}
+        className={s.sectionGemeindeIntro}
+        title={title}
+        body={body?.body}
+      />
+    );
+  }
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
@@ -115,18 +263,23 @@ export function ContentfulSection({ section }) {
         [s.sectionNewsletter]: !!emailSignup,
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
-        [s.sectionTwoColumns]: isTwoColumns,
+        [s.sectionTwoColumns]: isTwoColumns, // Actually four columns
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
-        [s.sectionYellow]: colorScheme === 'yellow',
+        [s.sectionWhite]: colorScheme === 'white',
+        [s.sectionViolet]: colorScheme === 'violet',
+        [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',
-        [s.sectionGrey]: colorScheme === 'grey',
         [s.sectionChristmas]: colorScheme === 'christmas',
         [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
-      sectionBodyNoEvents={isIllustration || isVideoSection}
+      // NOTE (felix): isVideoSection was in this before, not sure why
+      // Breaks the possibility to add a CTA Button to the video section
+      // so I removed it.
+      // sectionBodyNoEvents={isIllustration || isVideoSection}
+      sectionBodyNoEvents={isIllustration}
     >
       {/* {theme === 'christmas' && <Confetti componentTheme="christmas" />}
       {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
@@ -147,9 +300,9 @@ export function ContentfulSection({ section }) {
                   <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
                 </div>
               )}
-              <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnTopLeft.json)}
-              </div>
+              {columnTopLeft && (
+                <div>{contentfulJsonToHtml(columnTopLeft.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageTopRight && (
@@ -157,7 +310,9 @@ export function ContentfulSection({ section }) {
                   <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
                 </div>
               )}
-              <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+              {columnTopRight && (
+                <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageBottomLeft && (
@@ -165,9 +320,9 @@ export function ContentfulSection({ section }) {
                   <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
                 </div>
               )}
-              <div className={s.columnIcon}>
-                {contentfulJsonToHtml(columnBottomLeft.json)}
-              </div>
+              {columnBottomLeft && (
+                <div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>
+              )}
             </section>
             <section className={s.column}>
               {imageBottomRight && (
@@ -178,7 +333,9 @@ export function ContentfulSection({ section }) {
                   />
                 </div>
               )}
-              <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+              {columnBottomRight && (
+                <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+              )}
             </section>
           </TwoColumns>
         </SectionInner>
@@ -291,7 +448,7 @@ export function Section({
           [s.sectionBodyNoEvents]: sectionBodyNoEvents,
         })}
       >
-        {title && <h1 className={s.title}>{title}</h1>}
+        {title && <h2 className={s.title}>{title}</h2>}
         {children}
       </div>
       {afterBodyContent}
@@ -317,8 +474,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
-        )
+            <HeaderBackgrounds />
+          )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,
@@ -329,7 +486,7 @@ export function SectionHeader({
         <header className={s.header}>
           <div className={s.headerText}>
             {preTitle && <div className={s.headerPreTitle}>{preTitle}</div>}
-            <h1 className={s.headerTitle}>{title}</h1>
+            <h2 className={s.headerTitle}>{title}</h2>
             {subTitle && <div className={s.headerSubTitle}>{subTitle}</div>}
           </div>
         </header>
@@ -351,21 +508,22 @@ export function SectionInner({ children, hugeText, wide, className }) {
   );
 }
 
+// Misnomer: Actually 4 columns, but can't be changed now
 export function TwoColumns({ children, className }) {
   return <div className={cN(s.inner, className)}>{children}</div>;
 }
 
 function Slogan({ sloganLine1, sloganLine2 }) {
   return (
-    <h1 className={s.slogan}>
+    <h2 className={s.slogan}>
       <span className={s.sloganLine1}>{sloganLine1}</span>
       <span className={s.sloganLine2}>{sloganLine2}</span>
       {/* <EmailListForm className={s.sloganLineSignup} /> */}
-    </h1>
+    </h2>
   );
 }
 
-function YoutubeEmbed({ url }) {
+export function YoutubeEmbed({ url }) {
   return (
     <div className={s.youtubeContainer}>
       <iframe

@@ -1,0 +1,15 @@
+<svg version="1.1" id="prefix__Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 268.8 140.1"
+  xml:space="preserve">
+  <style>
+    .prefix__st1 {
+      fill: #777
+    }
+  </style>
+  <path fill="none" stroke="#000" stroke-width="2.83" stroke-miterlimit="10" d="M0 130.3h260" />
+  <path fill="#000" d="M268.8 130.3l-17-9.8v19.6z" />
+  <g>
+    <circle class="prefix__st1" cx="29" cy="98.4" r="18.3" />
+    <circle class="prefix__st1" cx="97.1" cy="80.3" r="38.5" />
+    <circle class="prefix__st1" cx="202.5" cy="63.2" r="55.6" />
+  </g>
+</svg>

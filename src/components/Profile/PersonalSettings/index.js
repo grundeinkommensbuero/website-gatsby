@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
+
 import s from './style.module.less';
 import gS from '../style.module.less';
+// Borrow style from Newsletter-Settings
+import nS from '../ProfileNotifications/style.module.less';
+
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
 // import { MessengerButtonRow } from '../MessengerButtonRow.js';
 import ImageUpload from '../../Forms/ImageUpload';
 
+import { SnackbarMessageContext } from '../../../context/Snackbar';
+
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+import { useDeleteUser } from '../../../hooks/Api/Users/Delete';
+import { useSignOut } from '../../../hooks/Authentication';
+import { useSnackbar } from 'react-simple-snackbar';
+
+import snackbarTheme from '../../../context/Snackbar/snackbarTheme.json';
 
 export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
   const [updateUserState, updateUser] = useUpdateUser();
+  const deleteUser = useDeleteUser();
+  const signOut = useSignOut();
+  const [openSnackbar] = useSnackbar(snackbarTheme);
+
   const [waitingForApi, setWaitingForApi] = useState(false);
   // const [editMailAddress, setEditMailAddress] = useState(false);
   // const [editPhoneNumber, setEditPhoneNumber] = useState(false);
@@ -22,9 +37,9 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   const [tempName, setTempName] = useState();
   const [tempZIP, setTempZIP] = useState();
   const [tempCity, setTempCity] = useState();
+  // const phonenumber = '';
 
-  // until phonenumber is included in userData
-  // const fakePhone = '';
+  const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -42,7 +57,11 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   }, [updateUserState]);
 
   useEffect(() => {
-    if (userData && tempName === undefined) {
+    if (userData && (
+      tempName === undefined ||
+      tempZIP === undefined ||
+      tempCity === undefined
+    )) {
       setTempName(userData.username);
       setTempZIP(userData.zipCode);
       setTempCity(userData.city);
@@ -63,6 +82,61 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
     }
   };
 
+  const deleteSnackbarMessage = <p className={gS.snackbarMsg}>
+    <span className={gS.loading}></span>{' '}
+    <b>Dein Account wird gelöscht!</b>
+  </p>;
+
+  const accountDeletedMessage = <p className={gS.snackbarMsg}>
+    <b>Dein Account wurde gelöscht!</b>
+  </p>;
+
+  const deleteUserAccount = (updateSnackbarMessage) => {
+    openSnackbar(deleteSnackbarMessage, [6000]);
+    setTimeout(() => {
+      deleteUser({ userId });
+      updateSnackbarMessage(accountDeletedMessage);
+      signOut();
+    }, 3000);
+  };
+
+  const DeleteAccountDialog = () => {
+    return (
+      <section className={nS.newsletterCard}>
+        <p className={nS.newsletterCardHeading}>
+          Bist du sicher, dass du deinen Account löschen möchtest?
+        </p>
+        <br />
+        <p className={nS.newsletterCardDescription}>
+          Diese Aktion kann nicht rückgängig gemacht werden!
+        </p>
+        <div className={s.revokeButtonRow}>
+
+          <Button
+            className={s.revokeButton}
+            onClick={() => setShowDeleteAccountDialog(false)}
+            size="SMALL"
+          >
+            Abbrechen
+          </Button>
+          <SnackbarMessageContext.Consumer>
+            {({ setMessage }) => (
+              <Button
+                size="SMALL"
+                className={s.revokeButton}
+                onClick={() => {
+                  deleteUserAccount(setMessage);
+                }}
+              >
+                Account endgültig löschen
+              </Button>
+            )}
+          </SnackbarMessageContext.Consumer>
+        </div>
+      </section>
+    );
+  };
+
   return (
     <section className={gS.profilePageGrid}>
       <section className={cN(gS.editPageSection, gS.editSettings)}>
@@ -71,25 +145,25 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
         </div>
 
         <section className={s.userInfo}>
-          <ImageUpload
-            className={gS.avatar}
-            userData={userData}
-            userId={userId}
-            showUploadLabel={false}
-            showEditLabel={true}
-            buttonOnRedBackground={true}
-            size={'large'}
-            onUploadDone={() => { }}
-          />
+          <div className={gS.avatarContainer}>
+            <ImageUpload
+              className={gS.avatar}
+              userData={userData}
+              userId={userId}
+              buttonOnAquaBackground={true}
+              size={'large'}
+              onUploadDone={() => { }}
+            />
+          </div>
           <div className={s.marginBottomOnMobile}>
-            <h1
+            <h2
               className={cN({
                 [gS.username]: userData.username,
                 [s.email]: !userData.username,
               })}
             >
               {userData.username || userData.email}
-            </h1>
+            </h2>
             <div className={gS.placeInfo}>{userData.city}</div>
             {/* Show profile edit button if own page */}
             <div className={s.details}>
@@ -158,8 +232,8 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
             {!editPhoneNumber ? (
               <div className={s.editableRow}>
-                {fakePhone ? (
-                  <span>{fakePhone}</span>
+                {phonenumber ? (
+                  <span>{phonenumber}</span>
                 ) : (
                     <span>Noch keine Telefonnummer angegeben</span>
                   )}
@@ -167,11 +241,11 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   size="SMALL"
                   className={s.mobileBtn}
                   onClick={() => {
-                    setTempPhone(fakePhone);
+                    setTempPhone(phonenumber);
                     setEditPhoneNumber(true);
                   }}
                 >
-                  {fakePhone ? (
+                  {phonenumber ? (
                     <span>ändern</span>
                   ) : (
                       <span>eintragen</span>
@@ -186,7 +260,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                     value={tempPhone || ''}
                     size="SMALL"
                     className={cN(
-                      tempPhone !== fakePhone ? s.inputHighlighted : null
+                      tempPhone !== phonenumber ? s.inputHighlighted : null
                     )}
                   />
                   <Button
@@ -196,7 +270,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   >
                     abbrechen
                   </Button>
-                  {tempPhone !== fakePhone ? (
+                  {tempPhone !== phonenumber ? (
                     <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
                   ) : null}
                 </div>
@@ -289,12 +363,10 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 </section>
               )}
 
-
-
             <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
 
             <div className={s.optionSectionDescription}>
-              Falls du deine E-Mail Adresse ändern oder deinen Account löschen
+              Falls du deine E-Mail Adresse ändern{' '}
               möchtest, schick uns eine E-Mail an{' '}
               <a href="mailto:support@expedition-grundeinkommen.de">
                 support@expedition-grundeinkommen.de
@@ -302,9 +374,18 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               .
             </div>
 
-            {/* <Link to={`/mensch/${userId}/`} className={gS.bottomRightLink}>
-              Profil löschen
-            </Link> */}
+            {!showDeleteAccountDialog ?
+              <span
+                aria-hidden="true"
+                className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
+                onClick={() => setShowDeleteAccountDialog(true)}>
+                Profil löschen
+              </span> :
+              <div>
+                <br></br>
+                <DeleteAccountDialog />
+              </div>
+            }
 
 
           </div>

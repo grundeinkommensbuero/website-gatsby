@@ -61,7 +61,7 @@ export const NewsletterCard = ({
         <section>
           <p className={s.newsletterCardHeading}>{newsletterSettings.name}</p>
           <p className={s.newsletterCardDescription}>
-            Du erhälst die wichtigsten Infos für {newsletterSettings.name}
+            Du erhältst die wichtigsten Infos für {newsletterSettings.name}
             {newsletterSettings.extraInfo ? (
               <span>, sowie zusätzliche Sammelinfos.</span>
             ) : (
@@ -97,7 +97,7 @@ export const NewsletterCard = ({
           <p className={cN(gS.alignRight, gS.noMargin)}>
             <span
               aria-hidden="true"
-              className={gS.linkLikeFormated}
+              className={gS.linkLikeFormatted}
               onClick={toggleNewsletterRevokeProcess}
               onKeyDown={toggleNewsletterRevokeProcess}
             >
@@ -118,13 +118,15 @@ export const NewsletterCard = ({
             in deiner Nähe geplant werden.
           </p>
             <div className={s.revokeButtonRow}>
-              <Button className={gS.floatRight} onClick={toggleNewsletterConsent}>
+              <Button
+                className={s.revokeButton}
+                onClick={toggleNewsletterConsent}>
                 Abbestellen
-            </Button>
+              </Button>
               <div className={s.cancelRevokeProcess}>
                 <span
                   aria-hidden="true"
-                  className={gS.linkLikeFormated}
+                  className={gS.linkLikeFormatted}
                   onClick={toggleNewsletterRevokeProcess}
                   onKeyUp={toggleNewsletterRevokeProcess}
                 >

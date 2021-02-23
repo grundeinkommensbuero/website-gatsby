@@ -1,5 +1,16 @@
 [context.production.environment]
 CONTENTFUL_ENVIRONMENT = "master"
 
+[context.campaign-launch]
+command = "npm run build-dev-backend"
+
 [context.campaign-launch.environment]
 CONTENTFUL_ENVIRONMENT = "launch"
+GATSBY_USE_DEV_BACKEND = "override"
+
+[context.deploy-preview]
+command = "npm run build-dev-backend"
+
+[context.deploy-preview.environment]
+CONTENTFUL_ENVIRONMENT = "launch"
+GATSBY_USE_DEV_BACKEND = "override"
