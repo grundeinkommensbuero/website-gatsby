@@ -187,6 +187,15 @@ export const SearchPlaces = ({
     if (!isAutoCompleteTarget) {
       setTimeout(() => {
         setSuggestionsActive(false);
+
+        // If search places input is inside form,
+        // we want to choose first element of suggestions as place
+        if (!selectedPlace.ags && isInsideForm) {
+          if (results.length > 0 && results[0].score < 0.001) {
+            // Should have same behaviour as click on suggestion
+            handleSuggestionClick(results[0]);
+          }
+        }
         if (validateOnBlur) {
           validate();
         }
