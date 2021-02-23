@@ -78,8 +78,8 @@ export const Ticker = ({ tickerDescription }) => {
       <TickerDisplay
         prefixText="Schon"
         highlight1={peopleCount}
-        inBetween1="Menschen"
-        inBetween2="in"
+        inBetween1="Menschen in"
+        // inBetween2="in"
         highlight2={municipalityCount}
         suffixHighlight2="Orten sind dabei."
         tickerDescription={tickerDescription}
