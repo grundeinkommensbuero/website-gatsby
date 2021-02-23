@@ -34,7 +34,7 @@ const MunicipalityDescription = ({ municipality }) => {
     return (
       <>
         <p>
-          Seit dem x.x.2019 läuft deshalb unsere Kampagne in Berlin bereits auf
+          Seit Oktober 2019 läuft deshalb unsere Kampagne in Berlin bereits auf
           Bundeslandsebene.
         </p>
         <p>
