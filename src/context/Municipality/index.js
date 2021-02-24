@@ -125,8 +125,10 @@ export const MunicipalityProvider = ({ children }) => {
   }, [singleMunicipalityStats]);
 
   useEffect(() => {
-    setStatsSummary(allMunicipalityStats.summary);
-  }, [allMunicipalityStats])
+    if (allMunicipalityStats?.summary?.timestamp) {
+      setStatsSummary(allMunicipalityStats.summary);
+    }
+  }, [allMunicipalityStats]);
 
   return (
     <MunicipalityContext.Provider
@@ -143,7 +145,8 @@ export const MunicipalityProvider = ({ children }) => {
         allMunicipalityStatsState,
         singleMunicipalityStats,
         singleMunicipalityStatsState,
-        statsSummary
+        statsSummary,
+        refreshContextStats: () => getAllMunicipalityStats()
       }}
     >
       {children}

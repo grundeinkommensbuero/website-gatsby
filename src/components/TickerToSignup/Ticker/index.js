@@ -7,70 +7,46 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { municipality } = useContext(MunicipalityContext);
+  const { municipality, statsSummary, refreshContextStats } = useContext(MunicipalityContext);
+
+  const [timerIsReady, setTimerIsReady] = useState(false);
   const [peopleCount, setPeopleCount] = useState(0);
   const [municipalityCount, setMunicipalityCount] = useState(0);
+  const [updatedTimes, setUpdatedTimes] = useState(0);
+  const [timePassedInIntervalInPercent, setTimePassedInIntervalInPercent] = useState(0);
 
-  // MOCKUP data for Ticker testing
-  const getTestDateMinusMiutes = (date, min) => {
-    let dt = new Date(date);
-    dt.setMinutes(dt.getMinutes() - min);
-    return dt.toISOString();
+  const timerConf = {
+    numberBetweenOneAndThree: Math.floor(Math.random() * 3) + 1,
+    interval: 3000
   };
-  const mockStatsSummary = {
-    municipalities: 4488,
-    previous: {
-      municipalities: 4388,
-      timestamp: getTestDateMinusMiutes(new Date(), 17),
-      users: 219430
-    },
-    timestamp: getTestDateMinusMiutes(new Date(), 2),
-    users: 219830
-  };
-  const [statsSummary, setStatsSummary] = useState();
-  useEffect(() => {
-    setStatsSummary(mockStatsSummary);
-  }, []);
+
+  const prevTimestamp = new Date(statsSummary?.previous.timestamp);
+  const currTimestamp = new Date(statsSummary?.timestamp);
 
   useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
-    } else {
-      const numOfUsers = statsSummary?.previous?.users || 0;
-      const numOfMunicipalities = statsSummary?.previous?.municipalities || 0;
-      setPeopleCount(numOfUsers);
-      setMunicipalityCount(numOfMunicipalities);
+    } else if (statsSummary && statsSummary.previous) {
+      initializeTicker();
     }
   }, [statsSummary]);
 
   useEffect(() => {
+    let updateTickerTimeout;
     // Set timer in a range of 3 to 9 seconds
-    const randomTimer = (Math.floor(Math.random() * 3) + 1) * 3000;
-    // prepare variables for calulation of time passed in percent
-    const prevTimestamp = new Date(statsSummary?.previous?.timestamp);
-    const currTimestamp = new Date(statsSummary?.timestamp);
-    const currTime = new Date();
-    const intervalLength = diffSeconds(prevTimestamp, currTimestamp);
-    const timePassed = diffSeconds(currTimestamp, currTime);
-    const timePassedInIntervalInPercent = 1 - ((intervalLength - timePassed) / intervalLength);
-    console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
-    // Get userdata and calculate users won in the last 15 minutes
-    const prevCountUsers = statsSummary?.previous?.users;
-    const currCountUsers = statsSummary?.users;
-    const usersWonInInterval = diffCount(prevCountUsers, currCountUsers);
-    const usersToAdd = Math.round(usersWonInInterval * timePassedInIntervalInPercent);
-    console.log('Users to add to count:', usersToAdd);
-    console.log('Timer set to:', randomTimer, 'ms');
-    // Set timeout to display data in the Ticker Comp
-    const fireCounter = setTimeout(() => {
-      console.log('Fire! Set Users to:', prevCountUsers + usersToAdd);
-      setPeopleCount(prevCountUsers + usersToAdd);
-    }, randomTimer);
+    const randomTimer = timerConf.numberBetweenOneAndThree * timerConf.interval;
+    if (timerIsReady && timePassedInIntervalInPercent <= 1) {
+      // Set timeout to display data in the Ticker Comp
+      console.log('Timer set to:', randomTimer, 'ms');
+      updateTickerTimeout = setTimeout(() => {
+        updateTicker();
+      }, randomTimer);
+    }
     // Clear Timeout when done
     return () => {
-      clearTimeout(fireCounter);
+      clearTimeout(updateTickerTimeout);
     }
-  });
+  }, [updatedTimes]);
 
   const diffSeconds = (dt2, dt1) => {
     let diff = (dt2.getTime() - dt1.getTime()) / 1000;
@@ -81,6 +57,77 @@ export const Ticker = ({ tickerDescription }) => {
     let diff = c1 - c2;
     return diff;
   };
+
+  const initializeTicker = () => {
+    setPeopleCount(statsSummary.previous.users);
+    setMunicipalityCount(statsSummary.previous.municipalities);
+    updateTicker();
+    console.log('##### -> TICKER INITIALIZED -> TIMESTAMP', statsSummary.timestamp);
+    setTimeout(() => {
+      setTimerIsReady(true);
+      setUpdatedTimes(updatedTimes + 1);
+      console.log('Updated', updatedTimes, 'times');
+    }, 500);
+  };
+
+  const updateTicker = () => {
+    // prepare variables for calulation of time passed in percent
+    const currTime = new Date();
+    const intervalLength = diffSeconds(prevTimestamp, currTimestamp);
+    const timePassed = diffSeconds(currTimestamp, currTime);
+    const calcTimePassed = 1 - ((intervalLength - timePassed) / intervalLength);
+    console.log(intervalLength, timePassed, calcTimePassed);
+    setTimePassedInIntervalInPercent(calcTimePassed);
+    console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
+    // Get users and calculate users won in the last 15 minutes
+    const prevCountUsers = statsSummary?.previous?.users;
+    const currCountUsers = statsSummary?.users;
+    const usersWonInInterval = diffCount(prevCountUsers, currCountUsers);
+    const usersToAdd = Math.floor(usersWonInInterval * timePassedInIntervalInPercent);
+    console.log('Users to add:', usersToAdd);
+    // Get municiplaities and calculate users won in the last 15 minutes
+    const prevCountMunicipalities = statsSummary?.previous?.municipalities;
+    const currCountMunicipalities = statsSummary?.municipalities;
+    const municipalitiesWonInInterval = diffCount(prevCountMunicipalities, currCountMunicipalities);
+    const municipalitiesToAdd = Math.floor(municipalitiesWonInInterval * timePassedInIntervalInPercent);
+    console.log('Municipalities to add:', municipalitiesToAdd);
+
+    if (timePassedInIntervalInPercent <= 1) {
+      console.log('Setting Users to:', prevCountUsers + usersToAdd);
+      setPeopleCount(prevCountUsers + usersToAdd);
+      console.log('Setting Municipalities to:', prevCountUsers + usersToAdd);
+      setMunicipalityCount(prevCountMunicipalities + municipalitiesToAdd);
+      setTimeout(() => {
+        setUpdatedTimes(updatedTimes + 1);
+      }, 1000);
+    } else {
+      refreshContextStats();
+      setTimeout(() => {
+        initializeTicker();
+      }, 2000);
+    }
+  };
+
+  // // MOCKUP data for Ticker testing
+  // const getTestDateMinusMiutes = (date, min) => {
+  //   let dt = new Date(date);
+  //   dt.setMinutes(dt.getMinutes() - min);
+  //   return dt.toISOString();
+  // };
+  // const mockStatsSummary = {
+  //   municipalities: 4488,
+  //   previous: {
+  //     municipalities: 4388,
+  //     timestamp: getTestDateMinusMiutes(new Date(), 17),
+  //     users: 219430
+  //   },
+  //   timestamp: getTestDateMinusMiutes(new Date(), 2),
+  //   users: 219830
+  // };
+  // const [statsSummary, setStatsSummary] = useState();
+  // useEffect(() => {
+  //   setStatsSummary(mockStatsSummary);
+  // }, []);
 
   if (!municipality) {
     return (
