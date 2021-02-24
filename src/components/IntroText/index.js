@@ -2,7 +2,7 @@ import React from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 
-import change from './logo-changeverein.jpeg';
+import change from './logo-changeverein.png';
 import diw from './logo-diw.svg';
 import fribis from './logo-fribis.png';
 import xbge from './logo-xbge-white.svg';
