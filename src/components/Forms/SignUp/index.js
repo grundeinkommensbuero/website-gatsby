@@ -38,7 +38,7 @@ export default ({
   fieldsToRender,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
-  const [, updateUser] = useUpdateUser();
+  const [updateUserState, updateUser] = useUpdateUser();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const {
     isAuthenticated,
@@ -47,7 +47,6 @@ export default ({
     updateCustomUserData,
   } = useContext(AuthContext);
   const [formData, setFormData] = useState();
-  const [showFeedbackMessage, setShowFeedbackMessage] = useState(true);
 
   const { municipality, setMunicipality } = useContext(MunicipalityContext);
   const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
@@ -71,13 +70,14 @@ export default ({
 
       // Now set municipality in context
       if (municipalityInForm) {
-        // So we don't show the finnaly message before the onboarding overlay is shown
-        setShowFeedbackMessage(false);
-        updateCustomUserData();
         setMunicipality(municipalityInForm);
       }
+
+      if (updateUserState === 'updated') {
+        updateCustomUserData();
+      }
     }
-  }, [hasSubmitted, isAuthenticated, userId]);
+  }, [hasSubmitted, isAuthenticated, userId, updateUserState]);
 
   useEffect(() => {
     // If user signs in from form and already existed
@@ -105,14 +105,20 @@ export default ({
     return <EnterLoginCode preventSignIn={true} />;
   }
 
-  if (signUpState && showFeedbackMessage) {
+  // TODO: clean up, most of the stuff is not used here anymore
+  // It is also not ideal to show the loading state even though
+  // updateUserState is saved, but otherwise the form would be shown
+  // again before unmounting
+  if (
+    signUpState === 'loading' ||
+    updateUserState === 'loading' ||
+    updateUserState === 'updated'
+  ) {
     return (
       <>
         <SignUpFeedbackMessage
           className={s.adjustFinallyMessage}
-          state={
-            signUpState === 'signedIn' && !userExists ? 'success' : signUpState
-          }
+          state={'loading'}
           trackingId={'sign-up'}
           trackingCategory="SignUp"
         />
