@@ -5,9 +5,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 export const useUserMunicipalityContentfulState = () => {
   const { customUserData, isAuthenticated, userId } = useContext(AuthContext);
 
-  const { municipality, municipalityContentfulState } = useContext(
-    MunicipalityContext
-  );
+  const { municipality } = useContext(MunicipalityContext);
   const [userContentfulState, setUserContentfulState] = useState();
 
   useEffect(() => {
@@ -32,5 +30,5 @@ export const useUserMunicipalityContentfulState = () => {
   //   `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
   // );
 
-  return { municipalityContentfulState, userContentfulState };
+  return userContentfulState;
 };

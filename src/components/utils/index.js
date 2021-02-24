@@ -260,11 +260,14 @@ export const getShowForOptions = arrayOfStrings => {
     'showForQualifying',
     'showForQualified',
     'showForCollecting',
-    'showForBerlinHamburgBremen',
     'showForLoggedOut',
     'showForLoggedInNoMunicipalitySignup',
     'showForLoggedInThisMunicipalitySignup',
     'showForLoggedInOtherMunicipalitySignup',
+    'showForBerlin',
+    'showForHamburg',
+    'showForBremen',
+    'showForAllExceptBerlinHamburgBremen',
   ];
   const showForOptions = {};
   for (const x of allShowForOptions) {
@@ -279,6 +282,7 @@ export const getFilteredElementsByContentfulState = ({
   elements,
   municipalityContentfulState,
   userContentfulState,
+  berlinHamburgBremenState,
   showByDefault,
 }) => {
   if (!elements) {
@@ -293,9 +297,14 @@ export const getFilteredElementsByContentfulState = ({
       //   userContentfulState
       // );
 
-      const showState =
+      let showState =
         showForOptions[municipalityContentfulState] &&
         showForOptions[userContentfulState];
+
+      // BerlinHamburgBremen state might be undefined (on component level)
+      if (berlinHamburgBremenState) {
+        showState = showState && showForOptions[berlinHamburgBremenState];
+      }
       return showState;
     }
     return showByDefault;
