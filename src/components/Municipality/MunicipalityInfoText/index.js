@@ -91,8 +91,9 @@ const MunicipalityDescription = ({ municipality }) => {
 
   return (
     <p>
-      Wenn sich genug Menschen in {municipality.name} anmelden, kann der
-      Modellversuch losgehen. Melde dich an, um eine:r davon zu werden.
+      Wenn sich genug Menschen {municipality ? `in ${municipality.name}` : ''}{' '}
+      anmelden, kann der Modellversuch losgehen. Melde dich an, um eine:r davon
+      zu werden.
     </p>
   );
 };
@@ -142,8 +143,9 @@ const MunicipalityCTA = ({ municipality }) => {
   return (
     <p>
       Melde dich an, um Teil der Community zu werden und das Grundeinkommen nach{' '}
-      {municipality.name} zu bringen! Melde dich auch für den Newsletter an, um
-      benachrichtigt zu werden, wenn es in {municipality.name} losgeht!
+      {municipality ? `${municipality.name} ` : ''} zu bringen! Melde dich auch
+      für den Newsletter an, um benachrichtigt zu werden, wenn es in{' '}
+      {municipality ? `${municipality.name} ` : ''} losgeht!
     </p>
   );
 };

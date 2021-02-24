@@ -17,7 +17,8 @@ export const MunicipalityProgress = ({
       <div className={s.municipalityProgressBar}>
         {showHeadline && (
           <h2>
-            Gemeinsam bringen wir das Grundeinkommen nach {municipality.name}!
+            Gemeinsam bringen wir das Grundeinkommen nach{' '}
+            {municipality ? `${municipality.name}` : 'Deutschland'}!
           </h2>
         )}
         <CampainVisualisation
@@ -56,7 +57,8 @@ export const MunicipalityProgress = ({
       <div>
         {showHeadline && (
           <h2>
-            Gemeinsam bringen wir das Grundeinkommen nach {municipality.name}!
+            Gemeinsam bringen wir das Grundeinkommen nach{' '}
+            {municipality ? `in ${municipality.name}` : 'Deutschland'}!
           </h2>
         )}
         {/* <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3> */}
@@ -70,9 +72,10 @@ export const MunicipalityProgress = ({
             </p>
             <p className={s.returnHint}>
               Derzeit scheint unsere Datenbank etwas überlastet und wir können
-              dir momentan leider nicht sagen, wieviele Menschen sich schon in{' '}
-              {municipality.name} angemeldet haben. In einigen Minuten solltest
-              du hier wieder die aktuellsten Infos zu {municipality.name} sehen.
+              dir momentan leider nicht sagen, wieviele Menschen sich schon
+              {municipality ? `in ${municipality.name}` : ''} angemeldet haben.
+              In einigen Minuten solltest du hier wieder die aktuellsten Infos{' '}
+              {municipality ? `zu ${municipality.name}` : ''} sehen.
             </p>
           </>
         )}
