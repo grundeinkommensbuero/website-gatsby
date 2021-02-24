@@ -47,7 +47,9 @@ export const Donate = ({
     <section className={gS.pageContainer}>
       {showDonationForm ? (
         <>
-          <DonationForm theme={{}} />
+          <DonationForm
+            onboardingNextPage={() => setCurrentElementByIndex(compIndex + 1)}
+          />
         </>
       ) : (
         <>
