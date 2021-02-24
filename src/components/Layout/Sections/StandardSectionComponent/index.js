@@ -15,7 +15,7 @@ export const StandardSectionComponent = ({
   image,
 }) => {
   const { municipality } = useContext(MunicipalityContext);
-  const { userContentfulState } = useUserMunicipalityContentfulState();
+  const userContentfulState = useUserMunicipalityContentfulState();
   const buttonText = getButtonText(municipality, userContentfulState);
 
   return (

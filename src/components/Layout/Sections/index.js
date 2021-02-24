@@ -53,15 +53,17 @@ const Components = {
 };
 
 export default function Sections({ sections, pageContext }) {
-  const {
-    municipalityContentfulState,
-    userContentfulState,
-  } = useUserMunicipalityContentfulState();
+  const userContentfulState = useUserMunicipalityContentfulState();
+
+  const { municipalityContentfulState, berlinHamburgBremenState } = useContext(
+    MunicipalityContext
+  );
 
   const displayedSections = getFilteredElementsByContentfulState({
     elements: sections,
     municipalityContentfulState,
     userContentfulState,
+    berlinHamburgBremenState,
     showByDefault: true,
   });
   if (displayedSections && displayedSections.length) {
@@ -138,12 +140,11 @@ export function ContentfulSection({ section, pageContext }) {
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
 
-  const {
-    municipalityContentfulState,
-    userContentfulState,
-  } = useUserMunicipalityContentfulState();
+  const userContentfulState = useUserMunicipalityContentfulState();
 
-  const { municipality } = useContext(MunicipalityContext);
+  const { municipality, municipalityContentfulState } = useContext(
+    MunicipalityContext
+  );
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
     const filteredComponents = getFilteredElementsByContentfulState({
@@ -168,8 +169,8 @@ export function ContentfulSection({ section, pageContext }) {
                     {municipality
                       ? `nach ${municipality.name}`
                       : 'in deinen Wohnort'}
-                  .
-                </h1>
+                    .
+                  </h1>
                   {/* <p>
                   Gemeinsam starten wir den ersten staatlichen Modellversuch, um
                   das Grundeinkommen nach ganz Deutschland zu holen.
@@ -474,8 +475,8 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-            <HeaderBackgrounds />
-          )
+          <HeaderBackgrounds />
+        )
       }
       className={cN(className, {
         [s.sectionWithHeroImage]: backgroundImageSet,

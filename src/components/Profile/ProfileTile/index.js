@@ -11,7 +11,11 @@ import cN from 'classnames';
 
 export const ProfileTile = ({ children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);
-  const { municipality, setMunicipality } = useContext(MunicipalityContext);
+  const {
+    municipality,
+    setMunicipality,
+    municipalityContentfulState,
+  } = useContext(MunicipalityContext);
   const tileData = {
     userId,
     userData,
@@ -20,10 +24,7 @@ export const ProfileTile = ({ children }) => {
     setMunicipality,
   };
 
-  const {
-    municipalityContentfulState,
-    userContentfulState,
-  } = useUserMunicipalityContentfulState();
+  const userContentfulState = useUserMunicipalityContentfulState();
 
   // console.log(userData);
   // console.log(userContentfulState, municipalityContentfulState);
