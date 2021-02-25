@@ -3,6 +3,7 @@ import { MunicipalityContext } from '../../context/Municipality';
 import { CTAButton } from '../Layout/CTAButton';
 // import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 import s from './style.module.less';
+import { navigate } from 'gatsby';
 
 export const BecomeActive = ({ headline, body }) => {
   const { municipality } = useContext(MunicipalityContext);
