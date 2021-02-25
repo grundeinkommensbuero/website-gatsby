@@ -12,6 +12,7 @@ import { TextInputWrapped } from '../../Forms/TextInput';
 import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
+import cN from 'classnames';
 
 import { SignUpButton } from '../../TickerToSignup/SignupButton';
 
