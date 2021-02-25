@@ -29,6 +29,10 @@ export const TickerMunicipality = () => {
   );
 };
 
+const numberWithDots = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
+
 const TickerDisplay = ({
   prefixText,
   highlight1,
@@ -55,7 +59,7 @@ const TickerDisplay = ({
           )}
 
           <div className={s.numbersContainer}>
-            <Reel text={highlight1.toString()} />
+            <Reel text={numberWithDots(highlight1)} />
           </div>
 
           {inBetween1 && (
@@ -84,7 +88,7 @@ const TickerDisplay = ({
                 </h2>
               )}
               <div className={s.numbersContainer}>
-                <Reel text={highlight2.toString()} />
+                <Reel text={numberWithDots(highlight2)} />
               </div>
 
               {suffixHighlight2 && (
@@ -109,8 +113,8 @@ const TickerDisplay = ({
                 )}
               >
                 {inBetween2 && <span>{inBetween2} </span>}
+                <br />
                 <span className={s.highlightHeadline}>{highlight2}</span>
-                {/* TODO: implement point */}
                 {/* {suffixHighlight2 && <span>{suffixHighlight2}</span>} */}
               </h2>
             </>

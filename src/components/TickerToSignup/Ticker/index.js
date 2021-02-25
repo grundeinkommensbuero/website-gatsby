@@ -128,6 +128,10 @@ export const Ticker = ({ tickerDescription }) => {
   }
 };
 
+const numberWithDots = (num = 0) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
+
 const TickerDisplay = ({
   prefixText,
   highlight1,
@@ -154,7 +158,7 @@ const TickerDisplay = ({
           )}
 
           <div className={s.numbersContainer}>
-            <Reel text={highlight1.toString()} />
+            <Reel text={numberWithDots(highlight1)} />
           </div>
 
           {inBetween1 && (
@@ -183,7 +187,7 @@ const TickerDisplay = ({
                 </h2>
               )}
               <div className={s.numbersContainer}>
-                <Reel text={highlight2.toString()} />
+                <Reel text={numberWithDots(highlight2)} />
               </div>
 
               {suffixHighlight2 && (
