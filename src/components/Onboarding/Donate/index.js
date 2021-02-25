@@ -47,55 +47,58 @@ export const Donate = ({
     <section className={gS.pageContainer}>
       {showDonationForm ? (
         <>
-          <DonationForm onboardingNextPage={() => setCurrentElementByIndex(compIndex + 1)} />
+          <DonationForm
+            onboardingNextPage={() => setCurrentElementByIndex(compIndex + 1)}
+          />
         </>
       ) : (
-          <>
-            <h3 className={gS.moduleTitle}>
-              Mach die Expedition mit deiner Spende möglich
-            </h3>
-            <p className={gS.descriptionTextLarge}>
-              Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es
-              nur, wenn alle etwas in die Reisekasse legen. Spende jetzt, damit
-              wir gemeinsam das Grundeinkommen in {municipality.name} und ganz
-              Deutschland Wirklichkeit werden lassen!
-            </p>
+        <>
+          <h3 className={gS.moduleTitle}>
+            Mach die Expedition mit deiner Spende möglich
+          </h3>
+          <p className={gS.descriptionTextLarge}>
+            Die Expedition ist gemeinnützig und spendenfinanziert. Sie gibt es
+            nur, wenn alle etwas in die Reisekasse legen. Spende jetzt, damit
+            wir gemeinsam das Grundeinkommen{' '}
+            {municipality ? `in ${municipality.name} und ` : ''}ganz Deutschland
+            Wirklichkeit werden lassen!
+          </p>
 
-            <div className={gS.buttonRow}>
-              <div
-                aria-hidden="true"
-                className={s.engagementOption}
-                onClick={() => setShowDonationForm(true)}
-              >
-                Jetzt spenden
+          <div className={gS.buttonRow}>
+            <div
+              aria-hidden="true"
+              className={s.engagementOption}
+              onClick={() => setShowDonationForm(true)}
+            >
+              Jetzt spenden
             </div>
 
-              <div
-                aria-hidden="true"
-                className={s.engagementOption}
-                onClick={() => {
-                  saveDonationReaction('remindMeLater');
-                  setCurrentElementByIndex(compIndex + 1);
-                }}
-              >
-                Später erinnern
-              </div>
+            <div
+              aria-hidden="true"
+              className={s.engagementOption}
+              onClick={() => {
+                saveDonationReaction('remindMeLater');
+                setCurrentElementByIndex(compIndex + 1);
+              }}
+            >
+              Später erinnern
             </div>
+          </div>
 
-            <div className={gS.fullWidthFlex}>
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
-                onClick={() => {
-                  saveDonationReaction('skipedDonation');
-                  setCurrentElementByIndex(compIndex + 1);
-                }}
-              >
-                Überspringen
-              </span>
-            </div>
-          </>
-        )}
+          <div className={gS.fullWidthFlex}>
+            <span
+              aria-hidden="true"
+              className={gS.linkLikeFormatted}
+              onClick={() => {
+                saveDonationReaction('skipedDonation');
+                setCurrentElementByIndex(compIndex + 1);
+              }}
+            >
+              Überspringen
+            </span>
+          </div>
+        </>
+      )}
     </section>
   );
 };

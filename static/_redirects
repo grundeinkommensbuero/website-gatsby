@@ -6,3 +6,6 @@ https://expedition-grundeinkommen.de/gemeinde-teilen/*  https://ag5gu1z06h.execu
 /gemeinde-teilen/*  https://2j0bcp5tr9.execute-api.eu-central-1.amazonaws.com/dev/share-municipality/:splat 200
 /downloads                                      /material
 /Briefkasten                                    /briefkasten
+/berlin                                         /gemeinden/berlin
+/hamburg                                        /gemeinden/hamburg
+/bremen                                         /gemeinden/bremen

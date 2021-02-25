@@ -11,7 +11,7 @@ import { SignUpButton } from '../SignupButton';
 export const SignupButtonAndTile = ({ className }) => {
   // const { userId, customUserData: userData } = useContext(AuthContext);
   const { municipality } = useContext(MunicipalityContext);
-  const { userContentfulState } = useUserMunicipalityContentfulState();
+  const userContentfulState = useUserMunicipalityContentfulState();
 
   const welcomeExistingMessage = getWelcomeExistingMessage(municipality);
   const buttonText = getButtonText(municipality, userContentfulState);

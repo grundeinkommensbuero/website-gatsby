@@ -63,10 +63,13 @@ const ColumnQualifying = ({
                 : `${municipalityStats.signups?.toLocaleString(
                     'de'
                   )} Anmeldungen `}
-              in {municipality.name}!{' '}
+              {municipality ? `in ${municipality.name}` : ''}!{' '}
             </p>
           ) : (
-            <p>Leider noch keine Anmeldungen in {municipality.name}! </p>
+            <p>
+              Leider noch keine Anmeldungen{' '}
+              {municipality ? `in ${municipality.name}` : ''}!{' '}
+            </p>
           )}
         </>
       )}

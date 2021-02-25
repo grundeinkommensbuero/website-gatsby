@@ -23,7 +23,7 @@ export const MunicipalityProvider = ({ children }) => {
     getAllMunicipalityStats,
   ] = useGetMunicipalityStats();
 
-  // Stats for juse on municipality, will be set if a municipality is set
+  // Stats for just one municipality, will be set if a municipality is set
   const [
     singleMunicipalityStatsState,
     singleMunicipalityStats,
@@ -34,6 +34,13 @@ export const MunicipalityProvider = ({ children }) => {
     municipalityContentfulState,
     setMunicipalityContentfulState,
   ] = useState('noMunicipality');
+
+  // State to check whether this municipality is bremen,
+  // hamburg, berlin or other municipality
+  const [berlinHamburgBremenState, setBerlinHamburgBremenState] = useState(
+    'noMunicipality'
+  );
+
   const ags = useRef();
 
   // Get general municipality stats (of all munics)
@@ -89,10 +96,24 @@ export const MunicipalityProvider = ({ children }) => {
         // but in case the municipality stats endpoint is down we should
         // set it to qualifying for now?
         setMunicipalityContentfulState('qualifying');
+
+        if (municipality.ags === '11000000') {
+          // Berlin
+          setBerlinHamburgBremenState('berlin');
+        } else if (municipality.ags === '02000000') {
+          // Hamburg
+          setBerlinHamburgBremenState('hamburg');
+        } else if (municipality.ags === '04011000') {
+          // Bremen
+          setBerlinHamburgBremenState('bremen');
+        } else {
+          setBerlinHamburgBremenState('allExceptBerlinHamburgBremen');
+        }
       }
     } else {
       ags.current = undefined;
       setMunicipalityContentfulState('noMunicipality');
+      setBerlinHamburgBremenState('noMunicipality');
       setIsSpecific(false);
       // ! IMPORTANT:
       // TODO: is it possible to set isMunicipality here?
@@ -196,6 +217,7 @@ export const MunicipalityProvider = ({ children }) => {
         isSpecific,
         setIsSpecific,
         municipalityContentfulState,
+        berlinHamburgBremenState,
         setPageContext,
         allMunicipalityStats,
         allMunicipalityStatsState,
