@@ -77,10 +77,10 @@ export const Ticker = ({ tickerDescription }) => {
     return (
       <TickerDisplay
         prefixText="Schon"
-        highlight1={peopleCount}
+        highlight1={peopleCount.toLocaleString('de')}
         inBetween1="Menschen in"
         // inBetween2="in"
-        highlight2={municipalityCount}
+        highlight2={municipalityCount.toLocaleString('de')}
         suffixHighlight2="Orten sind dabei."
         tickerDescription={tickerDescription}
       />
@@ -89,7 +89,7 @@ export const Ticker = ({ tickerDescription }) => {
     return (
       <TickerDisplay
         prefixText="Schon"
-        highlight1={peopleCount}
+        highlight1={peopleCount.toLocaleString('de')}
         inBetween1=""
         inBetween2="Menschen holen Grundeinkommen nach"
         highlight2={municipality?.name}
