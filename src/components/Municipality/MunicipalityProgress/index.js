@@ -45,7 +45,7 @@ export const MunicipalityProgress = ({
         {showDescription && (
           <p>
             Wenn wir ingesamt {municipality.goal} Menschen sind, dann trauen wir
-            uns zu, gemeinsam den offiziellen Bürgerbegehrens-prozess für
+            uns zu, gemeinsam den offiziellen Bürgerbegehrensprozess für
             unseren Modellversuch zu starten. Hierfür müssen wir möglichst viele
             sein. Hol also noch Menschen dazu!
           </p>
