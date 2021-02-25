@@ -86,7 +86,7 @@ export const EnterLoginCode = ({
           Oh! Es scheint, diese Email-Addresse ist noch nicht bei uns
           registriert. Klicke hier, um dich neu zu registrieren:
         </p>
-        <SignUpButton className={cN(className, s.signUpCTA)}>
+        <SignUpButton className={cN(s.signUpCTA)}>
           Registrieren
         </SignUpButton>
 
