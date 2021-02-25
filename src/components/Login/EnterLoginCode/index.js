@@ -13,6 +13,8 @@ import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import s from './style.module.less';
 
+import { SignUpButton } from '../../TickerToSignup/SignupButton';
+
 export const EnterLoginCode = ({
   children,
   preventSignIn,
@@ -81,15 +83,11 @@ export const EnterLoginCode = ({
       <FinallyMessage state="error">
         <p>
           Oh! Es scheint, diese Email-Addresse ist noch nicht bei uns
-          registriert.{' '}
-          <InlineButton
-            onClick={() => {
-              navigate('/expedition/#generalpledge');
-            }}
-          >
-            Klicke hier, um dich neu zu registrieren.
-          </InlineButton>
+          registriert. Klicke hier, um dich neu zu registrieren:
         </p>
+        <SignUpButton className={cN(className, s.signUpCTA)}>
+          Registrieren
+        </SignUpButton>
 
         <p>Oder hast du deine Email-Adresse falsch eingegeben?</p>
 
