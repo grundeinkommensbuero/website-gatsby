@@ -12,6 +12,9 @@ export const MunicipalityProvider = ({ children }) => {
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
+  const [prevModifyBy, setPrevModifyBy] = useState(0);
+  const [currModifyBy, setCurrModifyBy] = useState(575);
+
 
   // Stats for all municipalities
   const [
@@ -124,11 +127,64 @@ export const MunicipalityProvider = ({ children }) => {
     }
   }, [singleMunicipalityStats]);
 
+  // Choose ONE of the following useEffects for testing :)
+  // Demo-Data with timestamps from backend to test pagereload persistance
+
   useEffect(() => {
     if (allMunicipalityStats?.summary?.timestamp) {
-      setStatsSummary(allMunicipalityStats.summary);
+      const modifiedSummary = { ...allMunicipalityStats.summary }
+      if (prevModifyBy !== 0) {
+        modifiedSummary.previous.users = modifiedSummary.users + prevModifyBy;
+        modifiedSummary.previous.municipalities = modifiedSummary.municipalities + (Math.floor(prevModifyBy / 10));
+      }
+      modifiedSummary.users = modifiedSummary.users + currModifyBy;
+      modifiedSummary.municipalities = modifiedSummary.municipalities + (Math.floor(currModifyBy / 10));
+      setStatsSummary(modifiedSummary);
+      console.log('##### SUMMARY ->', modifiedSummary);
+      setPrevModifyBy(currModifyBy);
+      setCurrModifyBy(currModifyBy + currModifyBy);
     }
   }, [allMunicipalityStats]);
+
+  // Demo-Data one minute before interval switch to test data update
+
+  // const getTestDateMinusMiutes = (date, min) => {
+  //   let dt = new Date(date);
+  //   dt.setMinutes(dt.getMinutes() - min);
+  //   return dt.toISOString();
+  // };
+
+  // useEffect(() => {
+  //   if (allMunicipalityStats?.summary?.timestamp) {
+  //     const modifiedSummary = { ...allMunicipalityStats.summary }
+  //     if (prevModifyBy !== 0) {
+  //       modifiedSummary.previous.users = modifiedSummary.users + prevModifyBy;
+  //       modifiedSummary.previous.municipalities = modifiedSummary.municipalities + (Math.floor(prevModifyBy / 10));
+  //     }
+  //     modifiedSummary.users = modifiedSummary.users + currModifyBy;
+  //     modifiedSummary.municipalities = modifiedSummary.municipalities + (Math.floor(currModifyBy / 10));
+  //     if (currModifyBy === 575) {
+  //       modifiedSummary.previous.timestamp = getTestDateMinusMiutes(new Date(), 29);
+  //       modifiedSummary.timestamp = getTestDateMinusMiutes(new Date(), 14);
+  //     } else {
+  //       modifiedSummary.previous.timestamp = getTestDateMinusMiutes(new Date(), 15);
+  //       modifiedSummary.timestamp = getTestDateMinusMiutes(new Date(), 0);
+  //     }
+  //     setStatsSummary(modifiedSummary);
+  //     console.log('##### SUMMARY ->', modifiedSummary);
+  //     setPrevModifyBy(currModifyBy);
+  //     setCurrModifyBy(currModifyBy + currModifyBy);
+  //   }
+  // }, [allMunicipalityStats]);
+
+
+  // // Correct Version for MERGE:
+
+  // useEffect(() => {
+  //   if (allMunicipalityStats?.summary?.timestamp) {
+  //     setStatsSummary(allMunicipalityStats.summary);
+  //   }
+  // }, [allMunicipalityStats]);
 
   return (
     <MunicipalityContext.Provider

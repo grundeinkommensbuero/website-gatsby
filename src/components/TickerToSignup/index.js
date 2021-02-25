@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Ticker } from './Ticker';
+import { TickerMunicipality } from './Ticker/TickerMunicipality';
 import { SignupButtonAndTile } from './SignupButtonAndTile';
 import { InlineLinkButton } from '../Forms/Button';
 
@@ -11,9 +12,15 @@ export const TickerToSignup = ({
 }) => {
   const tickerDescription = tickerDescriptionObject?.tickerDescription;
 
+  console.log();
+
   return (
     <>
-      <Ticker tickerDescription={tickerDescription} />
+      {document.location.pathname.split('/')[1] === 'gemeinden' ?
+        <TickerMunicipality tickerDescription={tickerDescription} /> :
+        <Ticker tickerDescription={tickerDescription} />
+      }
+
       <SignupButtonAndTile className={s.centerButton} />
       <div className={s.moreInfo}>
         <InlineLinkButton href="#info">Mehr erfahren</InlineLinkButton>

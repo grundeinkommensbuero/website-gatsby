@@ -8,17 +8,11 @@ import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
   const { municipality, statsSummary, refreshContextStats } = useContext(MunicipalityContext);
-
   const [timerIsReady, setTimerIsReady] = useState(false);
   const [peopleCount, setPeopleCount] = useState(0);
   const [municipalityCount, setMunicipalityCount] = useState(0);
   const [updatedTimes, setUpdatedTimes] = useState(0);
   const [timePassedInIntervalInPercent, setTimePassedInIntervalInPercent] = useState(0);
-
-  const timerConf = {
-    numberBetweenOneAndThree: Math.floor(Math.random() * 3) + 1,
-    interval: 3000
-  };
 
   const prevTimestamp = new Date(statsSummary?.previous.timestamp);
   const currTimestamp = new Date(statsSummary?.timestamp);
@@ -27,19 +21,26 @@ export const Ticker = ({ tickerDescription }) => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else if (statsSummary && statsSummary.previous) {
-      initializeTicker();
+      calcTickerValues();
+      setTimerIsReady(true);
+      setUpdatedTimes(updatedTimes + 1);
+      console.log('Updated', updatedTimes, 'times');
     }
   }, [statsSummary]);
 
   useEffect(() => {
     let updateTickerTimeout;
+    const timerConf = {
+      numberBetweenOneAndThree: Math.floor(Math.random() * 3) + 1,
+      interval: 3000
+    };
     // Set timer in a range of 3 to 9 seconds
     const randomTimer = timerConf.numberBetweenOneAndThree * timerConf.interval;
     if (timerIsReady && timePassedInIntervalInPercent <= 1) {
       // Set timeout to display data in the Ticker Comp
       console.log('Timer set to:', randomTimer, 'ms');
       updateTickerTimeout = setTimeout(() => {
-        updateTicker();
+        calcTickerValues();
       }, randomTimer);
     }
     // Clear Timeout when done
@@ -58,26 +59,22 @@ export const Ticker = ({ tickerDescription }) => {
     return diff;
   };
 
-  const initializeTicker = () => {
-    setPeopleCount(statsSummary.previous.users);
-    setMunicipalityCount(statsSummary.previous.municipalities);
-    updateTicker();
-    console.log('##### -> TICKER INITIALIZED -> TIMESTAMP', statsSummary.timestamp);
-    setTimeout(() => {
-      setTimerIsReady(true);
-      setUpdatedTimes(updatedTimes + 1);
-      console.log('Updated', updatedTimes, 'times');
-    }, 500);
-  };
-
-  const updateTicker = () => {
+  const calcTickerValues = () => {
     // prepare variables for calulation of time passed in percent
     const currTime = new Date();
     const intervalLength = diffSeconds(prevTimestamp, currTimestamp);
     const timePassed = diffSeconds(currTimestamp, currTime);
-    const calcTimePassed = 1 - ((intervalLength - timePassed) / intervalLength);
-    console.log(intervalLength, timePassed, calcTimePassed);
+    const calcTimePassed = timePassed / intervalLength;
     setTimePassedInIntervalInPercent(calcTimePassed);
+  };
+
+  useEffect(() => {
+    if (statsSummary && statsSummary.previous) {
+      updateTicker();
+    }
+  }, [timePassedInIntervalInPercent]);
+
+  const updateTicker = () => {
     console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
     // Get users and calculate users won in the last 15 minutes
     const prevCountUsers = statsSummary?.previous?.users;
@@ -102,32 +99,8 @@ export const Ticker = ({ tickerDescription }) => {
       }, 1000);
     } else {
       refreshContextStats();
-      setTimeout(() => {
-        initializeTicker();
-      }, 2000);
     }
   };
-
-  // // MOCKUP data for Ticker testing
-  // const getTestDateMinusMiutes = (date, min) => {
-  //   let dt = new Date(date);
-  //   dt.setMinutes(dt.getMinutes() - min);
-  //   return dt.toISOString();
-  // };
-  // const mockStatsSummary = {
-  //   municipalities: 4488,
-  //   previous: {
-  //     municipalities: 4388,
-  //     timestamp: getTestDateMinusMiutes(new Date(), 17),
-  //     users: 219430
-  //   },
-  //   timestamp: getTestDateMinusMiutes(new Date(), 2),
-  //   users: 219830
-  // };
-  // const [statsSummary, setStatsSummary] = useState();
-  // useEffect(() => {
-  //   setStatsSummary(mockStatsSummary);
-  // }, []);
 
   if (!municipality) {
     return (
