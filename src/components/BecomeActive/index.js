@@ -21,7 +21,10 @@ export const BecomeActive = ({ headline, body }) => {
           Organisation helfen können. Wenn du Lust hast, dann finde jetzt
           heraus, wie du aktiv werden kannst!
         </p>
-        <CTAButton type="submit" size="MEDIUM">
+        <CTAButton type="submit" size="MEDIUM" 
+          onClick={() => {
+          navigate('/aktiv-werden', { replace: true });
+        }}>
           Aktiv werden
         </CTAButton>
       </div>
