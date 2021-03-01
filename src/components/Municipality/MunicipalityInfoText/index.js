@@ -59,7 +59,7 @@ const MunicipalityDescription = ({ municipality }) => {
         <p>
           Im März 2020 haben wir die Sammelphase 1 erfolgreich beendet und
           13.421 Unterschriften bei der Senatsverwaltung eingereicht. Wenn das
-          Land Berlin die Forderung nicht umsetzt, geht es in die nächste Phase.
+          Land Hamburg die Forderung nicht umsetzt, geht es in die nächste Phase.
         </p>
         <p>
           Sobald Phase 2 beginnt, brauchen wir noch mehr Unterschriften – melde
@@ -92,8 +92,8 @@ const MunicipalityDescription = ({ municipality }) => {
   return (
     <p>
       Wenn sich genug Menschen {municipality ? `in ${municipality.name}` : ''}{' '}
-      anmelden, kann der Modellversuch losgehen. Melde dich an, um eine:r davon
-      zu werden.
+      anmelden, kann der Modellversuch losgehen. Melde dich an, und lade noch weitere
+      Menschen ein!
     </p>
   );
 };
@@ -109,8 +109,7 @@ const MunicipalityCTA = ({ municipality }) => {
       <>
         <p>
           Melde dich an, um Teil der Community zu werden und das Grundeinkommen
-          in Berlin voran zu bringen! Melde dich auch für den Newsletter an, um
-          benachrichtigt zu werden, wie es in Berlin weitergeht!
+          in Berlin voranzubringen!
         </p>
       </>
     );
@@ -121,8 +120,7 @@ const MunicipalityCTA = ({ municipality }) => {
       <>
         <p>
           Melde dich an, um Teil der Community zu werden und das Grundeinkommen
-          in Hamburg voran zu bringen! Melde dich auch für den Newsletter an, um
-          benachrichtigt zu werden, wie es in Hamburg weitergeht!
+          in Hamburg voranzubringen!
         </p>
       </>
     );
@@ -133,8 +131,7 @@ const MunicipalityCTA = ({ municipality }) => {
       <>
         <p>
           Melde dich an, um Teil der Community zu werden und das Grundeinkommen
-          in Bremen voran zu bringen! Melde dich auch für den Newsletter an, um
-          benachrichtigt zu werden, wie es in Bremen weitergeht!
+          in Bremen voranzubringen!
         </p>
       </>
     );
@@ -143,9 +140,7 @@ const MunicipalityCTA = ({ municipality }) => {
   return (
     <p>
       Melde dich an, um Teil der Community zu werden und das Grundeinkommen nach{' '}
-      {municipality ? `${municipality.name} ` : ''} zu bringen! Melde dich auch
-      für den Newsletter an, um benachrichtigt zu werden, wenn es in{' '}
-      {municipality ? `${municipality.name} ` : ''} losgeht!
+      {municipality ? `${municipality.name} ` : ''} zu bringen!
     </p>
   );
 };
