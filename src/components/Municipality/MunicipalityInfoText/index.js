@@ -59,7 +59,7 @@ const MunicipalityDescription = ({ municipality }) => {
         <p>
           Im März 2020 haben wir die Sammelphase 1 erfolgreich beendet und
           13.421 Unterschriften bei der Senatsverwaltung eingereicht. Wenn das
-          Land Berlin die Forderung nicht umsetzt, geht es in die nächste Phase.
+          Land Hamburg die Forderung nicht umsetzt, geht es in die nächste Phase.
         </p>
         <p>
           Sobald Phase 2 beginnt, brauchen wir noch mehr Unterschriften – melde
