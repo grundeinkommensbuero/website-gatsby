@@ -385,6 +385,7 @@ export const MunicipalityMap = ({
               setHoverInfo={setHoverInfo}
               initialMapAnimation={initialMapAnimation}
               fadeOpacities={fadeOpacities}
+              setHasWebGL={setHasWebGL}
             />
           </div>
         ) : (
@@ -450,6 +451,7 @@ const Map = ({
   setHoverInfo,
   initialMapAnimation,
   fadeOpacities,
+  setHasWebGL,
 }) => {
   const signupAnimationDelayScale = scaleLinear()
     .domain(extent(dataSignups, d => d.population))
@@ -702,10 +704,15 @@ const Map = ({
     }
   };
 
+  const handleErrors = () => {
+    setHasWebGL(false);
+  };
+
   // ---- Template -------------------------------------------------------------------------
   return (
     <>
       <DeckGL
+        onError={handleErrors}
         initialViewState={initialViewState}
         // viewState={viewState}
         onViewStateChange={event => {
