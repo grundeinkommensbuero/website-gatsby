@@ -46,7 +46,7 @@ export const MunicipalityProgress = ({
         {showDescription && (municipality.ags === '11000000' || municipality.ags === '02000000' || municipality.ags === '04011000') && (
           <p>
             Um den offiziellen Volksbegehrensprozess in die zweite, entscheidende Runde zu bringen,
-            brauchen wir mindestens {municipality.goal} Menschen aus {municipality.name}. 
+            brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen aus {municipality.name}. 
             Hol also noch Menschen dazu!
           </p>
         )}
@@ -54,7 +54,7 @@ export const MunicipalityProgress = ({
         {showDescription && !(municipality.ags === '11000000' || municipality.ags === '02000000' || municipality.ags === '04011000') && (
           <p>
             Um den offiziellen Bürgerbegehrensprozess zu starten,
-            brauchen wir mindestens {municipality.goal} Menschen aus {municipality.name}. 
+            brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen aus {municipality.name}. 
             Hol also noch Menschen dazu!
           </p>
         )}
@@ -74,7 +74,7 @@ export const MunicipalityProgress = ({
           <>
             <p>
               Um den offiziellen Volksbegehrensprozess in die zweite, entscheidende Runde zu bringen,
-              brauchen wir mindestens {municipality.goal} Menschen aus {municipality.name}. 
+              brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen aus {municipality.name}. 
               Hol also noch Menschen dazu!
             </p>
             <p className={s.returnHint}>
@@ -90,7 +90,7 @@ export const MunicipalityProgress = ({
           <>
             <p>
               Um den offiziellen Bürgerbegehrensprozess zu starten,
-              brauchen wir mindestens {municipality.goal} Menschen aus {municipality.name}. 
+              brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen aus {municipality.name}. 
               Hol also noch Menschen dazu!
             </p>
             <p className={s.returnHint}>
@@ -121,12 +121,12 @@ const getSignupsLabel = (signups, goal) => {
   //     goal} mehr als die benötigten ${goal} Anmeldungen`;
   // }
   if (signups >= goal) {
-    return `${signups} / ${goal} Anmeldungen. Juhu!`;
+    return `${signups.toLocaleString('de-DE')} / ${goal.toLocaleString('de-DE')} Anmeldungen. Juhu!`;
   }
   if (signups > 1) {
-    return `${signups} / ${goal} Anmeldungen`;
+    return `${signups.toLocaleString('de-DE')} / ${goal.toLocaleString('de-DE')} Anmeldungen`;
   }
   if (signups === 0) {
-    return 'Leider noch keine Anmeldungen';
+    return 'Noch keine Anmeldungen. Melde dich jetzt an und bring das Grundeinkommen auf den Weg!';
   }
 };
