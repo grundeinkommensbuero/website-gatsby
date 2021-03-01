@@ -42,7 +42,7 @@ export const MunicipalityProgress = ({
           startDate={false}
         />
         <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3>
-        <!-- Berlin Hamburg Bremen -->
+        {/* Berlin Hamburg Bremen */}
         {showDescription && (municipality.ags === '11000000' || municipality.ags === '02000000' || municipality.ags === '04011000') && (
           <p>
             Um den offiziellen Volksbegehrensprozess in die zweite, entscheidende Runde zu bringen,
@@ -50,7 +50,7 @@ export const MunicipalityProgress = ({
             Hol also noch Menschen dazu!
           </p>
         )}
-        <!-- all other municipalities -->
+        {/* all other municipalities */}
         {showDescription && !(municipality.ags === '11000000' || municipality.ags === '02000000' || municipality.ags === '04011000') && (
           <p>
             Um den offiziellen Bürgerbegehrensprozess zu starten,
