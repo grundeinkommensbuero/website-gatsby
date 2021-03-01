@@ -109,8 +109,7 @@ const MunicipalityCTA = ({ municipality }) => {
       <>
         <p>
           Melde dich an, um Teil der Community zu werden und das Grundeinkommen
-          in Berlin voran zu bringen! Melde dich auch für den Newsletter an, um
-          benachrichtigt zu werden, wie es in Berlin weitergeht!
+          in Berlin voranzubringen!
         </p>
       </>
     );
@@ -121,8 +120,7 @@ const MunicipalityCTA = ({ municipality }) => {
       <>
         <p>
           Melde dich an, um Teil der Community zu werden und das Grundeinkommen
-          in Hamburg voran zu bringen! Melde dich auch für den Newsletter an, um
-          benachrichtigt zu werden, wie es in Hamburg weitergeht!
+          in Hamburg voranzubringen!
         </p>
       </>
     );
@@ -133,8 +131,7 @@ const MunicipalityCTA = ({ municipality }) => {
       <>
         <p>
           Melde dich an, um Teil der Community zu werden und das Grundeinkommen
-          in Bremen voran zu bringen! Melde dich auch für den Newsletter an, um
-          benachrichtigt zu werden, wie es in Bremen weitergeht!
+          in Bremen voranzubringen!
         </p>
       </>
     );
