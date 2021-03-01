@@ -44,7 +44,7 @@ export const MunicipalityProgress = ({
         <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3>
         {showDescription && (
           <p>
-            Um den offiziellen {municipality.ags === '11000000' ? 'Volksbegenrensprozess' : 'Bürgerbegehrensprozess'} zu starten,
+            Um den offiziellen {municipality.ags === '11000000' ? 'Volksbegehrensprozess in die zweite, entscheidende Runde zu bringen' : 'Bürgerbegehrensprozess zu starten'},
             brauchen wir mindestens {municipality.goal} Menschen aus {municipality.name}. 
             Hol also noch Menschen dazu!
           </p>
