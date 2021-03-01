@@ -18,7 +18,7 @@ export const BecomeActive = ({ headline, body }) => {
         <h2>{headline}</h2>
         <p>
           Damit die Kampagne {municipality ? `in ${municipality.name}` : ''}{' '}
-          losgehen kann, brauchen wir Freiwillige vor Ort, die bei der
+          erfolgreich ist, brauchen wir Freiwillige vor Ort, die bei der
           Organisation helfen können. Wenn du Lust hast, dann finde jetzt
           heraus, wie du aktiv werden kannst!
         </p>
