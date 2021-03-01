@@ -138,6 +138,7 @@ export const MunicipalityMap = ({
   initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
+  animateOnScroll = true,
 }) => {
   const {
     municipality,
@@ -165,7 +166,7 @@ export const MunicipalityMap = ({
   const [fadeOpacities, setFadeOpacities] = useState({
     empty: 1,
     map: 0,
-    animatedMarkers: 0,
+    animatedMarkers: initialMapAnimation ? 0 : 1,
   });
   // WebGL
   const [hasWebGl, setHasWebGL] = useState(null);
@@ -176,7 +177,7 @@ export const MunicipalityMap = ({
 
   const [hoverInfo, setHoverInfo] = useState();
 
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(animateOnScroll ? false : true);
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
   const mapEl = useRef(null);
 
