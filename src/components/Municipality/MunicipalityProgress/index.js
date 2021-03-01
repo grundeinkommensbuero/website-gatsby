@@ -46,8 +46,8 @@ export const MunicipalityProgress = ({
         {showDescription && (municipality.ags === '11000000' || municipality.ags === '02000000' || municipality.ags === '04011000') && (
           <p>
             Um den offiziellen Volksbegehrensprozess in die zweite, entscheidende Runde zu bringen,
-            brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen aus
-            {municipality.name} – und am besten so viele wie möglich! Hol also noch Menschen dazu.
+            brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen 
+            aus {municipality.name} – und am besten so viele wie möglich! Hol also noch Menschen dazu.
           </p>
         )}
         {/* all other municipalities */}
@@ -55,7 +55,7 @@ export const MunicipalityProgress = ({
           <p>
             Um den offiziellen Bürgerbegehrensprozess zu starten,
             brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen 
-            aus {municipality.name} – am besten sind wir so viele wie möglich! Hol also noch Menschen dazu.
+            aus {municipality.name} – und am besten so viele wie möglich! Hol also noch Menschen dazu.
           </p>
         )}
       </div>
@@ -75,7 +75,7 @@ export const MunicipalityProgress = ({
             <p>
               Um den offiziellen Volksbegehrensprozess in die zweite, entscheidende Runde zu bringen,
               brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen 
-              aus {municipality.name} – am besten sind wir so viele wie möglich! Hol also noch Menschen dazu.
+              aus {municipality.name} – und am besten so viele wie möglich! Hol also noch Menschen dazu.
             </p>
             <p className={s.returnHint}>
               Derzeit scheint unsere Datenbank etwas überlastet und wir können
@@ -91,7 +91,7 @@ export const MunicipalityProgress = ({
             <p>
               Um den offiziellen Bürgerbegehrensprozess zu starten,
               brauchen wir mindestens {municipality.goal.toLocaleString('de-DE')} Menschen 
-              aus {municipality.name} – am besten sind wir so viele wie möglich! Hol also noch Menschen dazu.
+              aus {municipality.name} – und am besten so viele wie möglich! Hol also noch Menschen dazu.
             </p>
             <p className={s.returnHint}>
               Derzeit scheint unsere Datenbank etwas überlastet und wir können
