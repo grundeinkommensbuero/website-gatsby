@@ -58,7 +58,7 @@ export const MunicipalityProgress = ({
         {showHeadline && (
           <h2>
             Gemeinsam bringen wir das Grundeinkommen nach{' '}
-            {municipality ? `in ${municipality.name}` : 'Deutschland'}!
+            {municipality ? `${municipality.name}` : 'Deutschland'}!
           </h2>
         )}
         {/* <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3> */}
