@@ -125,7 +125,7 @@ const TickerDisplay = ({
           )}
 
           <div className={s.numbersContainer}>
-            <Reel text={highlight1.toString()} />
+            <Reel text={highlight1.toLocaleString('de-DE')} />
           </div>
 
           {inBetween1 && (
@@ -154,7 +154,7 @@ const TickerDisplay = ({
                 </h2>
               )}
               <div className={s.numbersContainer}>
-                <Reel text={highlight2.toString()} />
+                <Reel text={highlight2.toLocaleString('de-DE')} />
               </div>
 
               {suffixHighlight2 && (
