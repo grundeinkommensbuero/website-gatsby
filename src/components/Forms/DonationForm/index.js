@@ -516,18 +516,20 @@ export default ({ onboardingNextPage }) => {
                             9,83 €.
                           </p>
 
-                          <div className={s.donationButtons}>
-                            <CTAButton
-                              type="submit"
-                              onClick={() => {
-                                onboardingNextPage();
-                              }}
-                              size="MEDIUM"
-                              className={s.primaryButton}
-                            >
-                              Weiter
+                          {onboardingNextPage !== undefined &&
+                            <div className={s.donationButtons}>
+                              <CTAButton
+                                type="submit"
+                                onClick={() => {
+                                  onboardingNextPage();
+                                }}
+                                size="MEDIUM"
+                                className={s.primaryButton}
+                              >
+                                Weiter
                               </CTAButton>
-                          </div>
+                            </div>
+                          }
                         </div>
                       )}
                     </form>
