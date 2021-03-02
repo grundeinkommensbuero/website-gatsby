@@ -1,3 +1,5 @@
+const debugLog = false;
+
 export const diffSeconds = (dt2, dt1) => {
   let diff = (dt2.getTime() - dt1.getTime()) / 1000;
   return Math.abs(Math.round(diff));
@@ -26,31 +28,31 @@ export const updateTicker = ({
   timePassedInIntervalInPercent,
   setPeopleCount,
   setMunicipalityCount,
-  updatedTimes,
-  setUpdatedTimes,
+  updatedSummary,
+  setUpdatedSummary,
   refreshContextStats
 }) => {
-  console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
+  debugLog && console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
   // Get users and calculate users won in the last 15 minutes
   const prevCountUsers = statsSummary?.previous?.users;
   const currCountUsers = statsSummary?.users;
   const usersWonInInterval = diffCount(prevCountUsers, currCountUsers);
   const usersToAdd = Math.floor(usersWonInInterval * timePassedInIntervalInPercent);
-  console.log('Users to add:', usersToAdd);
+  debugLog && console.log('Users to add:', usersToAdd);
   // Get municiplaities and calculate users won in the last 15 minutes
   const prevCountMunicipalities = statsSummary?.previous?.municipalities;
   const currCountMunicipalities = statsSummary?.municipalities;
   const municipalitiesWonInInterval = diffCount(prevCountMunicipalities, currCountMunicipalities);
   const municipalitiesToAdd = Math.floor(municipalitiesWonInInterval * timePassedInIntervalInPercent);
-  console.log('Municipalities to add:', municipalitiesToAdd);
+  debugLog && console.log('Municipalities to add:', municipalitiesToAdd);
 
   if (timePassedInIntervalInPercent <= 1) {
-    console.log('Setting Users to:', prevCountUsers + usersToAdd);
+    debugLog && console.log('Setting Users to:', prevCountUsers + usersToAdd);
     setPeopleCount(prevCountUsers + usersToAdd);
-    console.log('Setting Municipalities to:', prevCountUsers + usersToAdd);
+    debugLog && console.log('Setting Municipalities to:', prevCountMunicipalities + municipalitiesToAdd);
     setMunicipalityCount(prevCountMunicipalities + municipalitiesToAdd);
     setTimeout(() => {
-      setUpdatedTimes(updatedTimes + 1);
+      setUpdatedSummary(updatedSummary + 1);
     }, 1000);
   } else {
     refreshContextStats();

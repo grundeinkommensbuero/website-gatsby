@@ -8,24 +8,21 @@ import * as u from './utils';
 import './reelstyle.less';
 
 export const Ticker = ({ tickerDescription }) => {
-  const { municipality, statsSummary, refreshContextStats } = useContext(MunicipalityContext);
+  const { statsSummary, refreshContextStats } = useContext(MunicipalityContext);
   const [timerIsReady, setTimerIsReady] = useState(false);
   const [peopleCount, setPeopleCount] = useState(0);
   const [municipalityCount, setMunicipalityCount] = useState(0);
-  const [updatedTimes, setUpdatedTimes] = useState(0);
+  const [updatedSummary, setUpdatedSummary] = useState(0);
   const [timePassedInIntervalInPercent, setTimePassedInIntervalInPercent] = useState(0);
 
   const prevTimestamp = new Date(statsSummary?.previous.timestamp);
   const currTimestamp = new Date(statsSummary?.timestamp);
 
   useEffect(() => {
-    if (municipality && typeof municipality.signups === 'number') {
-      setPeopleCount(municipality.signups);
-    } else if (statsSummary && statsSummary.previous) {
+    if (statsSummary && statsSummary.previous) {
       u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
       setTimerIsReady(true);
-      setUpdatedTimes(updatedTimes + 1);
-      console.log('Updated', updatedTimes, 'times');
+      setUpdatedSummary(updatedSummary + 1);
     }
   }, [statsSummary]);
 
@@ -39,7 +36,7 @@ export const Ticker = ({ tickerDescription }) => {
     const randomTimer = timerConf.numberBetweenOneAndThree * timerConf.interval;
     if (timerIsReady && timePassedInIntervalInPercent <= 1) {
       // Set timeout to display data in the Ticker Comp
-      console.log('Timer set to:', randomTimer, 'ms');
+      // console.log('Timer set to:', randomTimer, 'ms');
       updateTickerTimeout = setTimeout(() => {
         u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
       }, randomTimer);
@@ -48,7 +45,7 @@ export const Ticker = ({ tickerDescription }) => {
     return () => {
       clearTimeout(updateTickerTimeout);
     }
-  }, [updatedTimes]);
+  }, [updatedSummary]);
 
   useEffect(() => {
     if (statsSummary && statsSummary.previous) {
@@ -57,37 +54,24 @@ export const Ticker = ({ tickerDescription }) => {
         timePassedInIntervalInPercent,
         setPeopleCount,
         setMunicipalityCount,
-        updatedTimes,
-        setUpdatedTimes,
+        updatedSummary,
+        setUpdatedSummary,
         refreshContextStats
       });
     }
   }, [timePassedInIntervalInPercent]);
 
-  if (!municipality) {
-    return (
-      <TickerDisplay
-        prefixText="Schon"
-        highlight1={peopleCount}
-        inBetween1="Menschen in"
-        // inBetween2="in"
-        highlight2={municipalityCount}
-        suffixHighlight2="Orten sind dabei."
-        tickerDescription={tickerDescription}
-      />
-    );
-  } else {
-    return (
-      <TickerDisplay
-        prefixText="Schon"
-        highlight1={peopleCount}
-        inBetween1=""
-        inBetween2="Menschen holen Grundeinkommen nach"
-        highlight2={municipality?.name}
-        suffixHighlight2=""
-      />
-    );
-  }
+  return (
+    <TickerDisplay
+      prefixText="Schon"
+      highlight1={peopleCount}
+      inBetween1="Menschen in"
+      // inBetween2="in"
+      highlight2={municipalityCount}
+      suffixHighlight2="Orten sind dabei."
+      tickerDescription={tickerDescription}
+    />
+  );
 };
 
 const TickerDisplay = ({
