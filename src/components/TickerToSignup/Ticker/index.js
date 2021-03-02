@@ -3,6 +3,7 @@ import cN from 'classnames';
 import Reel from 'react-reel';
 import s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
+import * as u from './utils';
 
 import './reelstyle.less';
 
@@ -21,7 +22,7 @@ export const Ticker = ({ tickerDescription }) => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
     } else if (statsSummary && statsSummary.previous) {
-      calcTickerValues();
+      u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
       setTimerIsReady(true);
       setUpdatedTimes(updatedTimes + 1);
       console.log('Updated', updatedTimes, 'times');
@@ -40,7 +41,7 @@ export const Ticker = ({ tickerDescription }) => {
       // Set timeout to display data in the Ticker Comp
       console.log('Timer set to:', randomTimer, 'ms');
       updateTickerTimeout = setTimeout(() => {
-        calcTickerValues();
+        u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
       }, randomTimer);
     }
     // Clear Timeout when done
@@ -49,58 +50,19 @@ export const Ticker = ({ tickerDescription }) => {
     }
   }, [updatedTimes]);
 
-  const diffSeconds = (dt2, dt1) => {
-    let diff = (dt2.getTime() - dt1.getTime()) / 1000;
-    return Math.abs(Math.round(diff));
-  };
-
-  const diffCount = (c2, c1) => {
-    let diff = c1 - c2;
-    return diff;
-  };
-
-  const calcTickerValues = () => {
-    // prepare variables for calulation of time passed in percent
-    const currTime = new Date();
-    const intervalLength = diffSeconds(prevTimestamp, currTimestamp);
-    const timePassed = diffSeconds(currTimestamp, currTime);
-    const calcTimePassed = timePassed / intervalLength;
-    setTimePassedInIntervalInPercent(calcTimePassed);
-  };
-
   useEffect(() => {
     if (statsSummary && statsSummary.previous) {
-      updateTicker();
+      u.updateTicker({
+        statsSummary,
+        timePassedInIntervalInPercent,
+        setPeopleCount,
+        setMunicipalityCount,
+        updatedTimes,
+        setUpdatedTimes,
+        refreshContextStats
+      });
     }
   }, [timePassedInIntervalInPercent]);
-
-  const updateTicker = () => {
-    console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
-    // Get users and calculate users won in the last 15 minutes
-    const prevCountUsers = statsSummary?.previous?.users;
-    const currCountUsers = statsSummary?.users;
-    const usersWonInInterval = diffCount(prevCountUsers, currCountUsers);
-    const usersToAdd = Math.floor(usersWonInInterval * timePassedInIntervalInPercent);
-    console.log('Users to add:', usersToAdd);
-    // Get municiplaities and calculate users won in the last 15 minutes
-    const prevCountMunicipalities = statsSummary?.previous?.municipalities;
-    const currCountMunicipalities = statsSummary?.municipalities;
-    const municipalitiesWonInInterval = diffCount(prevCountMunicipalities, currCountMunicipalities);
-    const municipalitiesToAdd = Math.floor(municipalitiesWonInInterval * timePassedInIntervalInPercent);
-    console.log('Municipalities to add:', municipalitiesToAdd);
-
-    if (timePassedInIntervalInPercent <= 1) {
-      console.log('Setting Users to:', prevCountUsers + usersToAdd);
-      setPeopleCount(prevCountUsers + usersToAdd);
-      console.log('Setting Municipalities to:', prevCountUsers + usersToAdd);
-      setMunicipalityCount(prevCountMunicipalities + municipalitiesToAdd);
-      setTimeout(() => {
-        setUpdatedTimes(updatedTimes + 1);
-      }, 1000);
-    } else {
-      refreshContextStats();
-    }
-  };
 
   if (!municipality) {
     return (
@@ -126,10 +88,6 @@ export const Ticker = ({ tickerDescription }) => {
       />
     );
   }
-};
-
-const numberWithDots = (num = 0) => {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 
 const TickerDisplay = ({
@@ -158,7 +116,7 @@ const TickerDisplay = ({
           )}
 
           <div className={s.numbersContainer}>
-            <Reel text={numberWithDots(highlight1)} />
+            <Reel text={u.numberWithDots(highlight1)} />
           </div>
 
           {inBetween1 && (
@@ -187,7 +145,7 @@ const TickerDisplay = ({
                 </h2>
               )}
               <div className={s.numbersContainer}>
-                <Reel text={numberWithDots(highlight2)} />
+                <Reel text={u.numberWithDots(highlight2)} />
               </div>
 
               {suffixHighlight2 && (
