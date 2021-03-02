@@ -84,10 +84,10 @@ export const EnterLoginCode = ({
           registriert.{' '}
           <InlineButton
             onClick={() => {
-              navigate('/expedition/#generalpledge');
+              navigate('/registrieren/');
             }}
           >
-            Klicke hier, um dich neu zu registrieren.
+            Hier kannst du dich neu registrieren.
           </InlineButton>
         </p>
 

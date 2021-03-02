@@ -86,7 +86,7 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive, isInOnb
         >
           <div className={s.shareButtonContainer}>
             <WhatsappIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
-            <p className={s.shareElementTitle}>What's App</p>
+            <p className={s.shareElementTitle}>WhatsApp</p>
           </div>
         </div>
 
