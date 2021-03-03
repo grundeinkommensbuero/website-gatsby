@@ -42,43 +42,90 @@ export const MunicipalityProgress = ({
           startDate={false}
         />
         <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3>
-        {showDescription && (
-          <p>
-            Wenn wir ingesamt {municipality.goal} Menschen sind, dann trauen wir
-            uns zu, gemeinsam den offiziellen Bürgerbegehrensprozess für
-            unseren Modellversuch zu starten. Hierfür müssen wir möglichst viele
-            sein. Hol also noch Menschen dazu!
-          </p>
-        )}
+        {/* Berlin Hamburg Bremen */}
+        {showDescription &&
+          (municipality.ags === '11000000' ||
+            municipality.ags === '02000000' ||
+            municipality.ags === '04011000') && (
+            <p>
+              Um den offiziellen Volksbegehrensprozess in die zweite,
+              entscheidende Runde zu bringen, brauchen wir mindestens{' '}
+              {municipality.goal.toLocaleString('de-DE')} Menschen aus{' '}
+              {municipality.name} – und am besten so viele wie möglich! Hol also
+              noch Menschen dazu.
+            </p>
+          )}
+        {/* all other municipalities */}
+        {showDescription &&
+          !(
+            municipality.ags === '11000000' ||
+            municipality.ags === '02000000' ||
+            municipality.ags === '04011000'
+          ) && (
+            <p>
+              Um den offiziellen Bürgerbegehrensprozess zu starten, brauchen wir
+              mindestens {municipality.goal.toLocaleString('de-DE')} Menschen
+              aus {municipality.name} – und am besten so viele wie möglich! Hol
+              also noch Menschen dazu.
+            </p>
+          )}
       </div>
     );
-  } else if (municipality) {
+  } else if (statsReady) {
     return (
       <div>
         {showHeadline && (
           <h2>
             Gemeinsam bringen wir das Grundeinkommen nach{' '}
-            {municipality ? `in ${municipality.name}` : 'Deutschland'}!
+            {municipality ? `${municipality.name}` : 'Deutschland'}!
           </h2>
         )}
         {/* <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3> */}
-        {showDescription && (
-          <>
-            <p>
-              Wenn wir ingesamt {municipality.goal} Menschen sind, dann trauen
-              wir uns zu, gemeinsam den offiziellen Bürgerbegehrensprozess für
-              unseren Modellversuch zu starten. Hierfür müssen wir möglichst
-              viele sein. Hol also noch Menschen dazu!
-            </p>
-            <p className={s.returnHint}>
-              Derzeit scheint unsere Datenbank etwas überlastet und wir können
-              dir momentan leider nicht sagen, wieviele Menschen sich schon
-              {municipality ? `in ${municipality.name}` : ''} angemeldet haben.
-              In einigen Minuten solltest du hier wieder die aktuellsten Infos{' '}
-              {municipality ? `zu ${municipality.name}` : ''} sehen.
-            </p>
-          </>
-        )}
+        {showDescription &&
+          (municipality.ags === '11000000' ||
+            municipality.ags === '02000000' ||
+            municipality.ags === '04011000') && (
+            <>
+              <p>
+                Um den offiziellen Volksbegehrensprozess in die zweite,
+                entscheidende Runde zu bringen, brauchen wir mindestens{' '}
+                {municipality.goal.toLocaleString('de-DE')} Menschen aus{' '}
+                {municipality.name} – und am besten so viele wie möglich! Hol
+                also noch Menschen dazu.
+              </p>
+              <p className={s.returnHint}>
+                Derzeit scheint unsere Datenbank etwas überlastet und wir können
+                dir momentan leider nicht sagen, wieviele Menschen sich schon
+                {municipality ? `in ${municipality.name}` : ''} angemeldet
+                haben. In einigen Minuten solltest du hier wieder die
+                aktuellsten Infos{' '}
+                {municipality ? `zu ${municipality.name}` : ''} sehen.
+              </p>
+            </>
+          )}
+        {showDescription &&
+          !(
+            municipality.ags === '11000000' ||
+            municipality.ags === '02000000' ||
+            municipality.ags === '04011000'
+          ) && (
+            <>
+              <p>
+                Um den offiziellen Bürgerbegehrensprozess zu starten, brauchen
+                wir mindestens {municipality.goal.toLocaleString('de-DE')}{' '}
+                Menschen aus {municipality.name} – und am besten so viele wie
+                möglich! Hol also noch Menschen dazu.
+              </p>
+              <p className={s.returnHint}>
+                Derzeit scheint unsere Datenbank etwas überlastet und wir können
+                dir momentan leider nicht sagen, wieviele Menschen sich schon
+                {municipality ? `in ${municipality.name}` : ''} angemeldet
+                haben. In einigen Minuten solltest du hier wieder die
+                aktuellsten Infos{' '}
+                {municipality ? `zu ${municipality.name}` : ''} sehen.
+              </p>
+            </>
+          )}
       </div>
     );
   } else {
@@ -98,12 +145,16 @@ const getSignupsLabel = (signups, goal) => {
   //     goal} mehr als die benötigten ${goal} Anmeldungen`;
   // }
   if (signups >= goal) {
-    return `${signups} / ${goal} Anmeldungen. Juhu!`;
+    return `${signups.toLocaleString('de-DE')} / ${goal.toLocaleString(
+      'de-DE'
+    )} Anmeldungen. Juhu!`;
   }
   if (signups > 1) {
-    return `${signups} / ${goal} Anmeldungen`;
+    return `${signups.toLocaleString('de-DE')} / ${goal.toLocaleString(
+      'de-DE'
+    )} Anmeldungen`;
   }
   if (signups === 0) {
-    return 'Leider noch keine Anmeldungen';
+    return 'Noch keine Anmeldungen. Melde dich jetzt an und bring das Grundeinkommen auf den Weg!';
   }
 };
