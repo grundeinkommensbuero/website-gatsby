@@ -53,7 +53,7 @@ export default ({
 
   let prefilledZip;
 
-  if (municipalityInForm?.zipCodes.length === 1) {
+  if (municipalityInForm?.zipCodes?.length === 1) {
     prefilledZip = municipalityInForm?.zipCodes[0];
   } else if (userData?.zipCode) {
     prefilledZip = userData.zipCode;
