@@ -100,7 +100,8 @@ export const Legend = () => {
               Jede Stadt oder Gemeinde mit Anmeldungen hat einen Kreis.
             </div>
             <p className={s.legendIconLabel}>
-              Die Größe der Kreise entspricht der Anzahl der Anmeldungen:
+              Je mehr Menschen sich in einem Ort anmelden, um so größer ist der
+              Kreis
             </p>
             <div className={s.legendIcon}>
               <div dangerouslySetInnerHTML={{ __html: legendSize }}></div>
@@ -114,8 +115,7 @@ export const Legend = () => {
               <span> geschafft!</span>
             </div> */}
             <p className={s.legendIconLabel}>
-              Die Farbe der Kreise zeigt, wie viel Prozent des Anmeldeziels
-              erreicht wurden:
+              Die Farbe der Kreise zeigt, wie nah der Ort am Anmeldeziel ist
             </p>
             <div className={s.legendIcon}>
               <div
