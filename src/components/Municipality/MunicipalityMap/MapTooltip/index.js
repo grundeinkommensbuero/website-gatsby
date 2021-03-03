@@ -9,7 +9,7 @@ export const MapTooltip = ({ hoverInfo, getColor }) => {
     !hoverInfo.object.name ||
     typeof hoverInfo.object.percentToGoal !== 'number'
   ) {
-    return <></>;
+    return null;
   }
 
   const {
@@ -93,7 +93,7 @@ const TooltipInfo = ({ name, signups, goal, percentToGoal }) => {
     );
   }
   // Safety: return nothing
-  return <></>;
+  return null;
 };
 
 const display = number => {

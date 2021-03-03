@@ -417,6 +417,7 @@ const flyTo = ({
   longitude,
   latitude,
   zoom = 6.9,
+  setZoom,
   transitionDuration = 2000,
   setInitialViewState,
 }) => {
@@ -434,6 +435,9 @@ const flyTo = ({
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       },
     });
+    setTimeout(() => {
+      setZoom(zoom);
+    }, transitionDuration);
   }, 150);
 };
 
@@ -655,6 +659,7 @@ const Map = ({
         latitude,
         transitionDuration: initialMapAnimation ? 2000 : 1000,
         setInitialViewState,
+        setZoom,
       });
     }
   }, [focus, initialMapAnimation]);
