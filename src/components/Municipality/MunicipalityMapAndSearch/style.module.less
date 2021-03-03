@@ -3,7 +3,7 @@
 .mapSectionContainer {
   display: grid;
   grid-template-columns: 60% 40%;
-  grid-template-rows: 20% 20% 20% 20% 20%;
+  grid-template-rows: 22% 20% 20% 20% 18%;
   height: 90vh;
   margin-bottom: 2rem;
   @media (max-width: @breakPointL) {
@@ -37,7 +37,7 @@
     order: 2;
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start:3;
+    grid-row-start: 3;
     padding-left: 0rem;
   }
   padding-left: 1.5rem;
@@ -49,7 +49,9 @@
   grid-row-start: 1;
   grid-row-end: 2;
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  //justify-content: center;
   padding: 1.5rem 0;
   @media (max-width: @breakPointL) {
     order: 0;
@@ -59,4 +61,8 @@
     padding-left: 0rem;
   }
   padding-left: 1.5rem;
+}
+
+.searchInfoText {
+  margin: 0 0 1rem 0;
 }
