@@ -493,21 +493,6 @@ export default ({ onboardingNextPage }) => {
                           </p>
 
                           <p>Danke für deine Spende!</p>
-                          <h3>Charity-SMS</h3>
-                          <p>
-                            Du kannst unsere Arbeit auch mit 5€ oder 10€ per SMS
-                            unterstützen.
-                          </p>
-                          <p>
-                            Sende dazu das Kennwort{' '}
-                            <span className={s.emphasis}>expedition5</span> oder{' '}
-                            <span className={s.emphasis}>expedition10</span> an
-                            die <span className={s.emphasis}>81190</span>.
-                          </p>
-                          <p>
-                            Expedition Grundeinkommen erhält davon 4,83 € bzw.
-                            9,83 €.
-                          </p>
 
                           <div className={s.donationButtons}>
                             <CTAButton
