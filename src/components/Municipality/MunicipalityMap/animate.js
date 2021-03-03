@@ -114,7 +114,6 @@ export const animate = ({
         },
       });
     }
-    console.log(localOpacities);
 
     tl.add({
       duration: 1,
