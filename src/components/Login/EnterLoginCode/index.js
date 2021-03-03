@@ -26,7 +26,7 @@ export const EnterLoginCode = ({
     setAnswerChallengeState,
   ] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
-  const [oneMinuteTimer, setOneMinuteTimer] = useState(false);
+  const [triggerMinuteTimer, setTriggerOneMinuteTimer] = useState(0);
   const [timerCounter, setTimerCounter] = useState(0);
 
   useEffect(() => {
@@ -52,10 +52,9 @@ export const EnterLoginCode = ({
 
   useEffect(() => {
     countdown();
-  }, [oneMinuteTimer]);
+  }, [triggerMinuteTimer]);
 
   const countdown = () => {
-    setOneMinuteTimer(false);
     let seconds = 60;
     function tick() {
       seconds--;
@@ -188,7 +187,7 @@ export const EnterLoginCode = ({
                     onClick={() => {
                       setAnswerChallengeState(undefined);
                       setCode('resendCode');
-                      setOneMinuteTimer(true);
+                      setTriggerOneMinuteTimer(triggerMinuteTimer + 1);
                     }}
                   >
                     Code erneut senden
