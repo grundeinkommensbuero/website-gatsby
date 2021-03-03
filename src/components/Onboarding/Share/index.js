@@ -4,22 +4,40 @@ import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
 import { Button } from '../../Forms/Button';
 
-export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userData, userId, isInOnboarding = true }) => {
+export const Share = ({
+  compIndex,
+  setCurrentElementByIndex,
+  municipality,
+  userData,
+  userId,
+  isInOnboarding = true,
+}) => {
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
 
   return (
     <section className={gS.pageContainer}>
-      {!sharePreviewActive ?
+      {!sharePreviewActive ? (
         <>
-          {isInOnboarding ? <>
-            <h3 className={gS.moduleTitle}>Hol so viele Menschen dazu, wie du kannst</h3>
-            <p className={gS.descriptionTextLarge}>
-              Je mehr Menschen du zur Expedition einlädst, desto besser stehen die Chancen, dass{' '}
-              {municipality.name} bald Grundeinkommen erforscht. Wir müssen insgesamt {municipality.goal}{' '}
-              Menschen werden!
-            </p>
-          </> : <br />}
+          {isInOnboarding ? (
+            <>
+              <h3 className={gS.moduleTitle}>
+                Hol so viele Menschen dazu, wie du kannst
+              </h3>
+              <p className={gS.descriptionTextLarge}>
+                Je mehr Menschen du zur Expedition einlädst, desto besser stehen
+                die Chancen, dass{' '}
+                {municipality ? `${municipality.name}` : 'deine Gemeinde'} bald
+                Grundeinkommen erforscht.{' '}
+                {municipality
+                  ? `Wir müssen insgesamt{' '}
+                ${municipality.goal} Menschen werden!`
+                  : ''}
+              </p>
+            </>
+          ) : (
+            <br />
+          )}
 
           <ShareButtonRow
             setShareChannel={setShareChannel}
@@ -27,11 +45,11 @@ export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userD
             isInOnboarding={isInOnboarding}
           />
 
-          {isInOnboarding &&
+          {isInOnboarding && (
             <>
               <p className={gS.descriptionTextLarge}>
-                Klicke auf einen der Buttons, um eine Vorschau deiner persönlichen Kachel zum Teilen{' '}
-                zu sehen!
+                Klicke auf einen der Buttons, um eine Vorschau deiner
+                persönlichen Kachel zum Teilen zu sehen!
               </p>
               <div className={gS.fullWidthFlex}>
                 <Button
@@ -41,8 +59,10 @@ export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userD
                   Weiter
                 </Button>
               </div>
-            </>}
-        </> :
+            </>
+          )}
+        </>
+      ) : (
         <>
           <SharePreview
             shareChannel={shareChannel}
@@ -54,12 +74,13 @@ export const Share = ({ compIndex, setCurrentElementByIndex, municipality, userD
             <span
               className={gS.linkLikeFormatted}
               onClick={() => setSharePreviewActive(false)}
-              aria-hidden="true">
+              aria-hidden="true"
+            >
               {'< Zurück zur Übersicht'}
             </span>
           </div>
-        </>}
-
+        </>
+      )}
     </section>
   );
 };
