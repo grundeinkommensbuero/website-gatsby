@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { MunicipalityContext } from '../../context/Municipality';
 
 import { Ticker } from './Ticker';
 import { TickerMunicipality } from './Ticker/TickerMunicipality';
@@ -10,13 +12,12 @@ import s from './style.module.less';
 export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,
 }) => {
+  const { municipality } = useContext(MunicipalityContext);
   const tickerDescription = tickerDescriptionObject?.tickerDescription;
-
-  console.log();
 
   return (
     <>
-      {document.location.pathname.split('/')[1] === 'gemeinden' ?
+      {municipality?.ags ?
         <TickerMunicipality tickerDescription={tickerDescription} /> :
         <Ticker tickerDescription={tickerDescription} />
       }
