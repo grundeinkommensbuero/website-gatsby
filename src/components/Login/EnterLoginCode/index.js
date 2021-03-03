@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { navigate } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 
@@ -26,6 +26,8 @@ export const EnterLoginCode = ({
     setAnswerChallengeState,
   ] = useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
+  const [triggerMinuteTimer, setTriggerOneMinuteTimer] = useState(0);
+  const [timerCounter, setTimerCounter] = useState(0);
 
   useEffect(() => {
     // We don't want to start sign in again, if flag is set
@@ -47,6 +49,22 @@ export const EnterLoginCode = ({
       startSignIn();
     }
   }, [answerChallengeState, isAuthenticated]);
+
+  useEffect(() => {
+    countdown();
+  }, [triggerMinuteTimer]);
+
+  const countdown = () => {
+    let seconds = 60;
+    function tick() {
+      seconds--;
+      setTimerCounter(seconds);
+      if (seconds > 0) {
+        setTimeout(tick, 1000);
+      }
+    }
+    tick();
+  };
 
   if (answerChallengeState === 'loading' || signInState === 'loading') {
     return (
@@ -164,15 +182,22 @@ export const EnterLoginCode = ({
                   <CTAButton type="submit">
                     {buttonText ? buttonText : 'Abschicken'}
                   </CTAButton>
-                  <InlineButton
+                  {timerCounter === 0 ? <InlineButton
                     type="button"
                     onClick={() => {
                       setAnswerChallengeState(undefined);
                       setCode('resendCode');
+                      setTriggerOneMinuteTimer(triggerMinuteTimer + 1);
                     }}
                   >
                     Code erneut senden
-                  </InlineButton>
+                  </InlineButton> :
+                    <div className={s.counterDescriptionContainer}>
+                      <p className={s.counterDescription}>
+                        In {timerCounter} {timerCounter !== 1 ? 'Sekunden' : 'Sekunde'} kannst du{' '}
+                        den Code erneut anfordern
+                      </p>
+                    </div>}
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
