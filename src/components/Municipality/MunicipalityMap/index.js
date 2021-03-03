@@ -467,6 +467,14 @@ const Map = ({
     .domain(signupDomain)
     .range(signupRange);
 
+  const scaleEmphSmallQualifiedMunicipalities = (signups, goal) => {
+    const regularScale = scaleSignupsToMeters(signups);
+    if (goal < 100 && signups >= goal) {
+      return Math.sqrt(2.5) * regularScale;
+    } else {
+      return regularScale;
+    }
+  };
   // ---- Layers ---------------------------------------------------------------------------
   const layerStates = useMemo(() => {
     return new GeoJsonLayer({
@@ -491,7 +499,7 @@ const Map = ({
       getPosition: d => d.coordinates,
       radiusUnits: 'meters',
       radiusScale: 2,
-      getRadius: d => scaleSignupsToMeters(d.signups),
+      getRadius: d => scaleEmphSmallQualifiedMunicipalities(d.signups, d.goal),
       getFillColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
       animationProgress: municipalityFadeProgress,
