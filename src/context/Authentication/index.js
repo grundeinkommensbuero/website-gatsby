@@ -97,6 +97,10 @@ const AuthProvider = ({ children }) => {
         setCustomUserData,
         signUserOut,
       });
+    } else if (!userId && !isAuthenticated) {
+      // If userId is not set and is Authenticated is not true,
+      // we want to reset userData (this would happen after a signout)
+      setCustomUserData({});
     }
   }, [userId, isAuthenticated]);
 
