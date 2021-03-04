@@ -100,7 +100,8 @@ export const Legend = () => {
               Jede Stadt oder Gemeinde mit Anmeldungen hat einen Kreis.
             </div>
             <p className={s.legendIconLabel}>
-              Die Größe der Kreise entspricht der Anzahl der Anmeldungen:
+              Je mehr Menschen sich in einem Ort anmelden, um so größer ist der
+              Kreis
             </p>
             <div className={s.legendIcon}>
               <div dangerouslySetInnerHTML={{ __html: legendSize }}></div>
@@ -114,8 +115,7 @@ export const Legend = () => {
               <span> geschafft!</span>
             </div> */}
             <p className={s.legendIconLabel}>
-              Die Farbe der Kreise zeigt, wie viel Prozent des Anmeldeziels
-              erreicht wurden:
+              Die Farbe der Kreise zeigt, wie nah der Ort am Anmeldeziel ist
             </p>
             <div className={s.legendIcon}>
               <div
@@ -138,6 +138,7 @@ export const MunicipalityMap = ({
   initialMapAnimation = true,
   flyToAgsOnLoad = true,
   className = s.defaultHeightContainer,
+  animateOnScroll = true,
 }) => {
   const {
     municipality,
@@ -165,7 +166,7 @@ export const MunicipalityMap = ({
   const [fadeOpacities, setFadeOpacities] = useState({
     empty: 1,
     map: 0,
-    animatedMarkers: 0,
+    animatedMarkers: initialMapAnimation ? 0 : 1,
   });
   // WebGL
   const [hasWebGl, setHasWebGL] = useState(null);
@@ -176,7 +177,7 @@ export const MunicipalityMap = ({
 
   const [hoverInfo, setHoverInfo] = useState();
 
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(animateOnScroll ? false : true);
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false);
   const mapEl = useRef(null);
 
@@ -385,6 +386,7 @@ export const MunicipalityMap = ({
               setHoverInfo={setHoverInfo}
               initialMapAnimation={initialMapAnimation}
               fadeOpacities={fadeOpacities}
+              setHasWebGL={setHasWebGL}
             />
           </div>
         ) : (
@@ -415,6 +417,7 @@ const flyTo = ({
   longitude,
   latitude,
   zoom = 6.9,
+  setZoom,
   transitionDuration = 2000,
   setInitialViewState,
 }) => {
@@ -432,6 +435,9 @@ const flyTo = ({
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       },
     });
+    setTimeout(() => {
+      setZoom(zoom);
+    }, transitionDuration);
   }, 150);
 };
 
@@ -450,6 +456,7 @@ const Map = ({
   setHoverInfo,
   initialMapAnimation,
   fadeOpacities,
+  setHasWebGL,
 }) => {
   const signupAnimationDelayScale = scaleLinear()
     .domain(extent(dataSignups, d => d.population))
@@ -460,6 +467,14 @@ const Map = ({
     .domain(signupDomain)
     .range(signupRange);
 
+  const scaleEmphSmallQualifiedMunicipalities = (signups, goal) => {
+    const regularScale = scaleSignupsToMeters(signups);
+    if (goal < 100 && signups >= goal) {
+      return Math.sqrt(2.5) * regularScale;
+    } else {
+      return regularScale;
+    }
+  };
   // ---- Layers ---------------------------------------------------------------------------
   const layerStates = useMemo(() => {
     return new GeoJsonLayer({
@@ -484,7 +499,7 @@ const Map = ({
       getPosition: d => d.coordinates,
       radiusUnits: 'meters',
       radiusScale: 2,
-      getRadius: d => scaleSignupsToMeters(d.signups),
+      getRadius: d => scaleEmphSmallQualifiedMunicipalities(d.signups, d.goal),
       getFillColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
       animationProgress: municipalityFadeProgress,
@@ -652,6 +667,7 @@ const Map = ({
         latitude,
         transitionDuration: initialMapAnimation ? 2000 : 1000,
         setInitialViewState,
+        setZoom,
       });
     }
   }, [focus, initialMapAnimation]);
@@ -702,10 +718,15 @@ const Map = ({
     }
   };
 
+  const handleErrors = () => {
+    setHasWebGL(false);
+  };
+
   // ---- Template -------------------------------------------------------------------------
   return (
     <>
       <DeckGL
+        onError={handleErrors}
         initialViewState={initialViewState}
         // viewState={viewState}
         onViewStateChange={event => {

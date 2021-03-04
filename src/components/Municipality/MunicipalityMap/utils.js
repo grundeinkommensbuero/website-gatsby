@@ -290,7 +290,11 @@ export const zoomToBounds = ({
 
 const fs = `
 #define SHADER_NAME delayed-point-layer-fragment-shader
+#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
+#else
+precision mediump float;
+#endif
 uniform bool filled;
 uniform float animationProgress;
 varying vec4 vFillColor;
