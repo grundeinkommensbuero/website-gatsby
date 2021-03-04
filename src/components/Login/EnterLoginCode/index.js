@@ -146,12 +146,15 @@ export const EnterLoginCode = ({
           {children ? (
             children
           ) : (
-            <p>
-              Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-              {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen
-              ein:
-            </p>
-          )}{' '}
+              <>
+                <h3>Schön, dass du an Bord bist.</h3>
+                <p>
+                  Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+                  {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen
+                  ein:
+                </p>
+              </>
+            )}{' '}
         </>
       )}
       <Form
@@ -194,8 +197,8 @@ export const EnterLoginCode = ({
                   </InlineButton> :
                     <div className={s.counterDescriptionContainer}>
                       <p className={s.counterDescription}>
-                        In {timerCounter} {timerCounter !== 1 ? 'Sekunden' : 'Sekunde'} kannst du{' '}
-                        den Code erneut anfordern
+                        Wenn du den Code nicht erhalten hast, kannst du in {timerCounter} {timerCounter !== 1 ? 'Sekunden' : 'Sekunde'}{' '}
+                        den Code erneut anfordern.
                       </p>
                     </div>}
                 </CTAButtonContainer>
