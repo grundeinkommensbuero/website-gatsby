@@ -200,7 +200,8 @@ export default ({
 
   return (
     <>
-      <h2>Komm dazu.</h2>
+      <h3>Willkommen bei der Expedition!</h3>
+      <br />
       <Form
         onSubmit={e => {
           e.ags = municipalityInForm?.ags;
