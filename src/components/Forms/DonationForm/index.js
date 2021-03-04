@@ -46,6 +46,7 @@ export default ({ onboardingNextPage }) => {
   const [donationInfo, setDonationInfo] = useState({});
   const [initialValues, setInitialValues] = useState({ customAmount: '15' });
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [paypalButtonClicked, setPaypalButtonClicked] = useState(false);
 
   const [donationInterval, setDonationInverval] = useState();
   const [paymentType, setPaymentType] = useState('Lastschrift');
@@ -544,7 +545,22 @@ export default ({ onboardingNextPage }) => {
                     name="amount"
                     value={+initialValues.customAmount}
                   />
-                  <Button name="submit">Weiter zu Papyal</Button>
+                  <Button name="submit" onClick={() => setPaypalButtonClicked(true)}>Weiter zu Papyal</Button>
+
+                  {onboardingNextPage !== undefined && paypalButtonClicked &&
+                    <div className={s.donationButtons}>
+                      <CTAButton
+                        type="submit"
+                        onClick={() => {
+                          onboardingNextPage();
+                        }}
+                        size="MEDIUM"
+                        className={s.primaryButton}
+                      >
+                        Weiter
+                      </CTAButton>
+                    </div>
+                  }
                 </form>
               </div>
             )}
@@ -578,7 +594,22 @@ export default ({ onboardingNextPage }) => {
                     name="amount"
                     value={+initialValues.customAmount}
                   />
-                  <Button name="submit">Jetzt spenden</Button>
+                  <Button name="submit" onClick={() => setPaypalButtonClicked(true)}>Jetzt spenden</Button>
+
+                  {onboardingNextPage !== undefined && paypalButtonClicked &&
+                    <div className={s.donationButtons}>
+                      <CTAButton
+                        type="submit"
+                        onClick={() => {
+                          onboardingNextPage();
+                        }}
+                        size="MEDIUM"
+                        className={s.primaryButton}
+                      >
+                        Weiter
+                      </CTAButton>
+                    </div>
+                  }
                 </form>
               </div>
             )}
