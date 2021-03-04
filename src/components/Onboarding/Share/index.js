@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import cN from 'classnames';
+import s from './style.module.less';
 import gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
@@ -16,7 +18,11 @@ export const Share = ({
   const [shareChannel, setShareChannel] = useState();
 
   return (
-    <section className={gS.pageContainer}>
+    <section
+      className={cN(gS.pageContainer, {
+        [s.municipalityShareContainer]: !isInOnboarding,
+      })}
+    >
       {!sharePreviewActive ? (
         <>
           {isInOnboarding ? (
