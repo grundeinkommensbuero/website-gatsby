@@ -7,6 +7,8 @@ import diw from './logo-diw.svg';
 import fribis from './logo-fribis.png';
 import xbge from './logo-xbge-white.svg';
 
+import { SignupButtonAndTile } from '../TickerToSignup/SignupButtonAndTile';
+
 export const IntroText = ({
   highlightText: { highlightText },
   note: { note },
@@ -15,6 +17,7 @@ export const IntroText = ({
     <div>
       <p className={s.introText}>{highlightText}</p>
       <p className={s.introText}>{note}</p>
+      <SignupButtonAndTile className={s.centerButton} />
       <div className={s.logoContainer}>
         <div className={cN(s.partnerLogo, s.diwLogo)}>
           <img
@@ -26,7 +29,10 @@ export const IntroText = ({
           <img src={change} alt="Logo Change.org e.V." />
         </div>
         <div className={cN(s.partnerLogo, s.fribisLogo)}>
-          <img src={fribis} alt="Logo Freiburg Institute for Basic Income Studies" />
+          <img
+            src={fribis}
+            alt="Logo Freiburg Institute for Basic Income Studies"
+          />
         </div>
         <div className={cN(s.partnerLogo, s.xbgeLogo)}>
           <img src={xbge} alt="Logo Expedition Grundeinkommen" />
