@@ -49,11 +49,11 @@ export const MunicipalityProgress = ({
             municipality.ags === '02000000' ||
             municipality.ags === '04011000') && (
             <p>
-              Um den offiziellen Volksbegehrensprozess in die zweite,
-              entscheidende Runde zu bringen, brauchen wir mindestens{' '}
-              {municipality.goal.toLocaleString('de-DE')} Menschen aus{' '}
-              {municipality.name} – und am besten so viele wie möglich! Hol also
-              noch Menschen dazu.
+              Um den offiziellen Volksbegehrensprozess erfolgreich 
+              bis zum Volksentscheid zu bringen, müssen wir mindestens{' '}
+              {municipality.goal.toLocaleString('de-DE')} Menschen in{' '}
+              {municipality.name} werden – und am besten so viele wie 
+              möglich! Hol also noch Menschen dazu.
             </p>
           )}
         {/* all other municipalities */}
