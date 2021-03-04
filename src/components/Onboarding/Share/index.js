@@ -69,6 +69,7 @@ export const Share = ({
             userData={userData}
             userId={userId}
             municipality={municipality}
+            isInOnboarding={isInOnboarding}
           />
           <div className={gS.fullWidthFlex}>
             <span

@@ -22,9 +22,21 @@
   border-bottom: 0px solid @white;
   line-height: 1.2em;
 
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
+    font-size: 5rem;
+    border-bottom: 0px solid @white;
+    line-height: 1.3em;
+  }
+
+  @media (max-width: @breakPointM) {
+    font-size: @DesktopFontSizeXXL;
+    border-bottom: 0px solid @white;
+    line-height: 1.3em;
+  }
+
+  @media (max-width: 530px) {
     font-size: @MobileFontSizeXXL;
     border-bottom: 0px solid @white;
-    line-height: 1.3;
+    line-height: 1.3em;
   }
 }
