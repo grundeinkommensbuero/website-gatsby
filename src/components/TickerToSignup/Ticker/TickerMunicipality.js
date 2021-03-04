@@ -10,7 +10,6 @@ export const TickerMunicipality = () => {
   const { municipality } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(0);
 
-
   useEffect(() => {
     if (municipality && typeof municipality.signups === 'number') {
       setPeopleCount(municipality.signups);
@@ -29,7 +28,7 @@ export const TickerMunicipality = () => {
   );
 };
 
-const numberWithDots = (num) => {
+const numberWithDots = num => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 
@@ -109,12 +108,12 @@ const TickerDisplay = ({
                 className={cN(
                   s.counterLabelSlotMachine,
                   s.counterLabelMarginRight,
-                  s.noMarginTop
+                  s.counterLabelLongText
                 )}
               >
                 {inBetween2 && <span>{inBetween2} </span>}
                 <br />
-                <span className={s.highlightHeadline}>{highlight2}</span>
+                <span>{highlight2}.</span>
                 {/* {suffixHighlight2 && <span>{suffixHighlight2}</span>} */}
               </h2>
             </>
