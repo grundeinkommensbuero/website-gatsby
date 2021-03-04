@@ -22,6 +22,7 @@ export const TickerToSignup = ({
         <Ticker tickerDescription={tickerDescription} />
       }
   
+      <!-- SignupButtonAndTile className={s.centerButton} / -->
       <div className={s.moreInfo}>
         <InlineLinkButton href="#info">Mehr erfahren</InlineLinkButton>
       </div>
