@@ -16,7 +16,6 @@ import { Share } from './Share';
 import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
 import { FinalNote } from './FinalNote';
-import { LoadingAnimation } from './LoadingAnimation';
 
 export const Onboarding = ({ setOverlayOpen }) => {
   const {

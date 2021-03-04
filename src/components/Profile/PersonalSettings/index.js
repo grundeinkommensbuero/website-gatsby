@@ -92,11 +92,12 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   </p>;
 
   const deleteUserAccount = (updateSnackbarMessage) => {
+    signOut();
     openSnackbar(deleteSnackbarMessage, [6000]);
     setTimeout(() => {
+      signOut();
       deleteUser({ userId });
       updateSnackbarMessage(accountDeletedMessage);
-      signOut();
     }, 3000);
   };
 

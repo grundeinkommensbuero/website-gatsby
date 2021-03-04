@@ -235,9 +235,9 @@ export const WelcomeBack = ({ children }) => {
       <div>
         <h3>Willkommen zurück!</h3>
         <p>
-          Schön, dass du wieder da bist! Wie du siehst, hat sich bei uns einiges
-          verändert! Bitte gib deinen Wohnort im Suchfeld oben ein, um
-          mitzuhelfen, das Grundeinkommen bei dir vor Ort voran zu bringen.
+          Schön, dass du wieder da bist! Wie du siehst, hat sich bei uns einiges{' '}
+          verändert! Melde dich für deinen Wohnort an, um mitzuhelfen, das{' '}
+          Grundeinkommen bei dir vor Ort voran zu bringen.
         </p>
         <div>{children}</div>
       </div>

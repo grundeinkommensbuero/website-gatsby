@@ -96,7 +96,8 @@
   left: 11%;
   z-index: 2;
   width: 25%;
-  height: auto;
+  height: 47.25%;
+  border: solid 1px black;
 }
 
 .mainCaption {
@@ -108,20 +109,48 @@
   font-size: 2.25rem;
   max-width: 50%;
 
+  &.mainCaptionHuge {
+    font-size: 3rem;
+  }
+
+  @media (max-width: 1250px) {
+    font-size: 2.25rem;
+
+    &.mainCaptionHuge {
+      font-size: 2.25rem;
+    }
+  }
+
   @media (max-width: @breakPointL) {
     font-size: 2rem;
+
+    &.mainCaptionHuge {
+      font-size: 2rem;
+    }
   }
 
   @media (max-width: @breakPointM) {
     font-size: 1.5rem;
+
+    &.mainCaptionHuge {
+      font-size: 1.5rem;
+    }
   }
 
   @media (max-width: 650px) {
     font-size: 1.25rem;
+
+    &.mainCaptionHuge {
+      font-size: 1.25rem;
+    }
   }
 
   @media (max-width: @breakPointS) {
     font-size: 1rem;
+
+    &.mainCaptionHuge {
+      font-size: 1rem;
+    }
   }
 }
 
