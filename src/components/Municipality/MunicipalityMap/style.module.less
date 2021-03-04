@@ -1,6 +1,6 @@
 @import '../../style/vars.less';
 
-@mapHeight: 90vh;
+@mapHeight: 87vh;
 
 .defaultPositionRelative {
   position: relative;
@@ -32,7 +32,7 @@
     background-image: url('./assets/map.png');
   }
   &.fallback {
-    background-image: url('./assets/map-full.png');
+    background-image: url('./assets/map-full.jpg');
   }
 }
 
@@ -198,8 +198,10 @@
   & div {
     display: inline-block;
     height: 100%;
+    width: 50%;
     & svg {
       height: 100%;
+      width: 100%;
     }
   }
   & .legendGradient {

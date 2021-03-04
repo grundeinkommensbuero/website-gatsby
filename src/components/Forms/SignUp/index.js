@@ -53,7 +53,7 @@ export default ({
 
   let prefilledZip;
 
-  if (municipalityInForm?.zipCodes.length === 1) {
+  if (municipalityInForm?.zipCodes?.length === 1) {
     prefilledZip = municipalityInForm?.zipCodes[0];
   } else if (userData?.zipCode) {
     prefilledZip = userData.zipCode;
@@ -200,7 +200,8 @@ export default ({
 
   return (
     <>
-      <h2>Komm dazu.</h2>
+      <h3>Willkommen bei der Expedition!</h3>
+      <br />
       <Form
         onSubmit={e => {
           e.ags = municipalityInForm?.ags;

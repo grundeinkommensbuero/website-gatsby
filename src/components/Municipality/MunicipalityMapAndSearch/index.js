@@ -11,6 +11,9 @@ export const MunicipalityMapAndSearch = () => {
         <MunicipalityMap />
       </div>
       <div className={s.searchWrapper}>
+        <p className={s.searchInfoText}>
+          Finde deinen Ort und schaue, wie viele Menschen schon dabei sind:
+        </p>
         <MunicipalitySearch />
       </div>
       <div className={s.legend}>

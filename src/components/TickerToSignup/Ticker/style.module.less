@@ -60,6 +60,10 @@
   }
 }
 
+.counterLabelLongText {
+  line-height: 1.5;
+}
+
 .actionTextBig {
   font-size: 2.25rem;
   letter-spacing: 0.04px;
@@ -94,4 +98,12 @@
   font-size: @DesktopFontSizeXXL;
   font-weight: 600;
   line-height: 1.1em;
+
+  @media (max-width: 1600px) {
+    font-size: 3.5rem;
+  }
+
+  @media (max-width: @breakPointM) {
+    font-size: 5rem;
+  }
 }

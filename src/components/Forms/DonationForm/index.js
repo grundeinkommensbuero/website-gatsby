@@ -188,9 +188,10 @@ export default ({ onboardingNextPage }) => {
       {!hasDonated && !donationError && !enteredPaymentInfo && !needsToLogin && (
         <div className={s.donationIntervalSelection}>
           <p className={s.hint}>
-            Hinweis: Falls du eine Spendenbescheinigung möchtest, schreibe eine E-Mail an{' '}
-            support@expedition-grundeinkommen.de. Du bekommst die Spendenbescheinigung dann{' '}
-            über den gesamten Jahresbetrag. Du kannst deine Spende jederzeit wieder beenden.
+            Hinweis: Falls du eine Spendenbescheinigung möchtest, schreibe eine
+            E-Mail an support@expedition-grundeinkommen.de. Du bekommst die
+            Spendenbescheinigung dann über den gesamten Jahresbetrag. Du kannst
+            deine Spende jederzeit wieder beenden.
           </p>
           <h3>Wie möchtest du spenden?</h3>
           <div className={s.selectionContainer}>
@@ -353,14 +354,6 @@ export default ({ onboardingNextPage }) => {
                             Bitte gib deine &#8203;Zahlungs&shy;informationen
                             ein
                           </h3>
-                          {/* <p>
-                            Du möchtest{' '}
-                            <span className={s.info}>
-                              {donationInterval}{' '}
-                              {getFormDataAmount(formData.customAmount)} €
-                            </span>{' '}
-                            an die Expedition spenden.
-                          </p> */}
 
                           <FormSection className={s.partialForm}>
                             <Field
@@ -500,21 +493,6 @@ export default ({ onboardingNextPage }) => {
                           </p>
 
                           <p>Danke für deine Spende!</p>
-                          <h3>Charity-SMS</h3>
-                          <p>
-                            Du kannst unsere Arbeit auch mit 5€ oder 10€ per SMS
-                            unterstützen.
-                          </p>
-                          <p>
-                            Sende dazu das Kennwort{' '}
-                            <span className={s.emphasis}>expedition5</span> oder{' '}
-                            <span className={s.emphasis}>expedition10</span> an
-                            die <span className={s.emphasis}>81190</span>.
-                          </p>
-                          <p>
-                            Expedition Grundeinkommen erhält davon 4,83 € bzw.
-                            9,83 €.
-                          </p>
 
                           {onboardingNextPage !== undefined &&
                             <div className={s.donationButtons}>
@@ -631,11 +609,11 @@ export default ({ onboardingNextPage }) => {
               IBAN: <span className={s.info}>{donationInfo.donation.iban}</span>
             </p>
             <p>
-              Mit dem Klick auf "Jetzt spenden" bestätigst du, dass du{' '}
+              Du spendest{' '}
               <span className={s.info}>
                 {donationInterval} {donationInfo.donation.amount} €
               </span>{' '}
-              an die Expedition spenden möchtest.
+              an die Expedition.
             </p>
 
             <PrimarySecondaryButtonContainer>
@@ -658,7 +636,7 @@ export default ({ onboardingNextPage }) => {
                 }}
                 size="MEDIUM"
               >
-                Jetzt spenden
+                Weiter
               </CTAButton>
             </PrimarySecondaryButtonContainer>
           </div>
@@ -698,23 +676,24 @@ export default ({ onboardingNextPage }) => {
             deinem Konto einziehen.
           </p>
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
-          {!onboardingNextPage ?
+          {!onboardingNextPage ? (
             <CTAButtonContainer className={s.buttonContainer}>
               <CTALink to="/">Zur Startseite</CTALink>
-            </CTAButtonContainer> :
-            <div className={s.donationButtons}>
-              <CTAButton
-                type="submit"
-                onClick={() => {
-                  onboardingNextPage();
-                }}
-                size="MEDIUM"
-                className={s.primaryButton}
-              >
-                Weiter
-            </CTAButton>
-            </div>
-          }
+            </CTAButtonContainer>
+          ) : (
+              <div className={s.donationButtons}>
+                <CTAButton
+                  type="submit"
+                  onClick={() => {
+                    onboardingNextPage();
+                  }}
+                  size="MEDIUM"
+                  className={s.primaryButton}
+                >
+                  Weiter
+              </CTAButton>
+              </div>
+            )}
 
           <Confetti></Confetti>
         </div>

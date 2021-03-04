@@ -3,75 +3,33 @@ import cN from 'classnames';
 import Reel from 'react-reel';
 import s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
-import * as u from './utils';
 
 import './reelstyle.less';
 
-export const Ticker = ({ tickerDescription }) => {
-  const { statsSummary, refreshContextStats } = useContext(MunicipalityContext);
-  const [timerIsReady, setTimerIsReady] = useState(false);
+export const TickerMunicipality = () => {
+  const { municipality } = useContext(MunicipalityContext);
   const [peopleCount, setPeopleCount] = useState(0);
-  const [municipalityCount, setMunicipalityCount] = useState(0);
-  const [updatedSummary, setUpdatedSummary] = useState(0);
-  const [timePassedInIntervalInPercent, setTimePassedInIntervalInPercent] = useState(0);
-
-  const prevTimestamp = new Date(statsSummary?.previous.timestamp);
-  const currTimestamp = new Date(statsSummary?.timestamp);
 
   useEffect(() => {
-    if (statsSummary && statsSummary.previous) {
-      u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
-      setTimerIsReady(true);
-      setUpdatedSummary(updatedSummary + 1);
+    if (municipality && typeof municipality.signups === 'number') {
+      setPeopleCount(municipality.signups);
     }
-  }, [statsSummary]);
-
-  useEffect(() => {
-    let updateTickerTimeout;
-    const timerConf = {
-      numberBetweenOneAndThree: Math.floor(Math.random() * 3) + 1,
-      interval: 3000
-    };
-    // Set timer in a range of 3 to 9 seconds
-    const randomTimer = timerConf.numberBetweenOneAndThree * timerConf.interval;
-    if (timerIsReady && timePassedInIntervalInPercent <= 1) {
-      // Set timeout to display data in the Ticker Comp
-      // console.log('Timer set to:', randomTimer, 'ms');
-      updateTickerTimeout = setTimeout(() => {
-        u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
-      }, randomTimer);
-    }
-    // Clear Timeout when done
-    return () => {
-      clearTimeout(updateTickerTimeout);
-    }
-  }, [updatedSummary]);
-
-  useEffect(() => {
-    if (statsSummary && statsSummary.previous) {
-      u.updateTicker({
-        statsSummary,
-        timePassedInIntervalInPercent,
-        setPeopleCount,
-        setMunicipalityCount,
-        updatedSummary,
-        setUpdatedSummary,
-        refreshContextStats
-      });
-    }
-  }, [timePassedInIntervalInPercent]);
+  }, [municipality]);
 
   return (
     <TickerDisplay
       prefixText="Schon"
       highlight1={peopleCount}
-      inBetween1="Menschen in"
-      // inBetween2="in"
-      highlight2={municipalityCount}
-      suffixHighlight2="Orten sind dabei."
-      tickerDescription={tickerDescription}
+      inBetween1=""
+      inBetween2="Menschen holen Grundeinkommen nach"
+      highlight2={municipality?.name}
+      suffixHighlight2=""
     />
   );
+};
+
+const numberWithDots = num => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 
 const TickerDisplay = ({
@@ -100,7 +58,7 @@ const TickerDisplay = ({
           )}
 
           <div className={s.numbersContainer}>
-            <Reel text={u.numberWithDots(highlight1)} />
+            <Reel text={numberWithDots(highlight1)} />
           </div>
 
           {inBetween1 && (
@@ -129,7 +87,7 @@ const TickerDisplay = ({
                 </h2>
               )}
               <div className={s.numbersContainer}>
-                <Reel text={u.numberWithDots(highlight2)} />
+                <Reel text={numberWithDots(highlight2)} />
               </div>
 
               {suffixHighlight2 && (
@@ -150,12 +108,12 @@ const TickerDisplay = ({
                 className={cN(
                   s.counterLabelSlotMachine,
                   s.counterLabelMarginRight,
-                  s.noMarginTop
+                  s.counterLabelLongText
                 )}
               >
                 {inBetween2 && <span>{inBetween2} </span>}
-                <span className={s.highlightHeadline}>{highlight2}</span>
-                {/* TODO: implement point */}
+                <br />
+                <span>{highlight2}.</span>
                 {/* {suffixHighlight2 && <span>{suffixHighlight2}</span>} */}
               </h2>
             </>

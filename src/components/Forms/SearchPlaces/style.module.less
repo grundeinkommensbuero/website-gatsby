@@ -2,6 +2,7 @@
 @inputWidth: 25rem;
 @inputButtonMargin: 0.4rem;
 
+
 .container {
   color: @white;
   display: flex;
@@ -11,18 +12,22 @@
   margin-top: -@inputButtonMargin;
   --secondary-color: @white;
   @media (max-width: @breakPointM) {
-    // margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center;
   }
 }
 
 .inputContainer {
   position: relative;
   width: @inputWidth;
-  margin-right: 2rem;
   // TODO: Check if ok for profile
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
   color: var(--secondary-color);
+  @media (max-width: @breakPointM) {
+    width: 100%;
+    margin-right: 0rem;
+  }
 }
 
 .searchTitle {
@@ -41,6 +46,8 @@
     border-radius: 25px;
     border-color: @aqua;
   }
+
+  border-radius: 0; // Possible iPhone fix
 }
 
 .suggestions {

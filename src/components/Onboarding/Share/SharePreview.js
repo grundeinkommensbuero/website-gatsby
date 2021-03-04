@@ -4,6 +4,8 @@ import gS from '../style.module.less';
 import AvatarImage from '../../AvatarImage';
 import ImageUpload from '../../Forms/ImageUpload';
 import ShareButtons from './ShareButtons.json';
+import { mailBody } from './mailBody';
+import cN from 'classnames';
 
 import {
   EmailShareButton,
@@ -18,6 +20,7 @@ export const SharePreview = ({
   userData,
   userId,
   municipality,
+  isInOnboarding
 }) => {
   const [showProfileImageUpload, setShowProfileImageUpload] = useState(false);
   const [useProfilePicture, setUseProfilePicture] = useState(
@@ -142,17 +145,7 @@ export const SharePreview = ({
       'ExpeditionGrundeinkommen',
     ];
     const subject = `Gemeinsam bringen wir das Grundeinkommen nach ${municipality.name}`;
-    const body = `Hallo,
-
-    stell dir vor, in deinem Wohnort startet in Kürze der erste staatliche Modellversuch zum Bedingungslosen Grundeinkommen. Jeder tausendste Mensch in deinem Wohnort erhält für drei Jahre Grundeinkommen. Wäre das nicht großartig?
-    
-    Heute hast du die Chance, das möglich zu machen. Ich hab’s schon getan. 
-    
-    Die Expedition Grundeinkommen startet heute den Qualifizierungsprozess für das Grundeinkommen an deinem Ort. Überall, wo 1% der Bevölkerung sich für den Modellversuch registrieren, startet ein Bürgerbegehren. Mit dem Ziel: Grundeinkommen in ganz Deutschland zu testen.
-    
-    Bist du dabei?
-    
-    Dann hole jetzt das Grundeinkommen nach ${municipality.name}:\t\n\t\n`;
+    const body = mailBody(municipality);
     const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     return (
       <>
@@ -165,6 +158,8 @@ export const SharePreview = ({
             quote={quote}
             url={constructShareURL()}
             className={gS.buttonRowSingle}
+            windowWidth={1200}
+            windowHeight={1000}
           >
             <div aria-hidden="true" className={gS.selectableOption}>
               Über {shareChannel?.label.replace(/\\/g, '')} teilen
@@ -207,7 +202,7 @@ export const SharePreview = ({
                 className={s.sharePreview}
               />
             )}
-            <h3 className={s.mainCaption}>
+            <h3 className={cN(s.mainCaption, { [s.mainCaptionHuge]: !isInOnboarding })}>
               {userData.username} bringt das #Grundeinkommen nach{' '}
               {municipality.name}
             </h3>
@@ -226,8 +221,7 @@ export const SharePreview = ({
                 Lieber kein Profilbild nutzen
               </span>
             ) : (
-              <>
-                {userData?.profilePictures?.original ? (
+                <>
                   <span
                     aria-hidden="true"
                     onClick={() => setUseProfilePicture(!useProfilePicture)}
@@ -235,17 +229,26 @@ export const SharePreview = ({
                   >
                     Lieber mit Profilbild teilen
                   </span>
-                ) : (
-                  <span
-                    aria-hidden="true"
-                    onClick={() => setShowProfileImageUpload(true)}
-                    className={gS.linkLikeFormatted}
-                  >
-                    Profilbild hochladen
-                  </span>
-                )}
-              </>
-            )}
+                  {/* TODO Enable Upload Image here: */}
+                  {/* {userData?.profilePictures?.original ? (
+                    <span
+                      aria-hidden="true"
+                      onClick={() => setUseProfilePicture(!useProfilePicture)}
+                      className={gS.linkLikeFormatted}
+                    >
+                      Lieber mit Profilbild teilen
+                    </span>
+                  ) : (
+                      <span
+                        aria-hidden="true"
+                        onClick={() => setShowProfileImageUpload(true)}
+                        className={gS.linkLikeFormatted}
+                      >
+                        Profilbild hochladen
+                      </span>
+                    )} */}
+                </>
+              )}
           </div>
 
           {showProfileImageUpload && (

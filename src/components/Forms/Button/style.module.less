@@ -2,7 +2,9 @@
 
 .linkButton,
 .button {
+  background: @white; // fallback for IE
   background: var(--button-bg-color);
+  border: @black; //fallback for IE
   border: var(--button-font-color) solid @borderWidthThick;
   border-radius: @borderRadius;
   color: var(--button-font-color);

@@ -19,7 +19,7 @@ export const SignupButtonAndTile = ({ className }) => {
   if (municipality && userContentfulState === 'loggedOut') {
     return (
       <>
-        <h2 className={s.inviteHeadline}>Komm dazu.</h2>
+        <p className={s.inviteHeadline}>Komm dazu.</p>
         <SignUpButton className={cN(className, s.signUpCTA)}>
           {buttonText}
         </SignUpButton>
@@ -31,7 +31,7 @@ export const SignupButtonAndTile = ({ className }) => {
   ) {
     return (
       <>
-        <h2 className={s.inviteHeadline}>Komm dazu.</h2>
+        <p className={s.inviteHeadline}>Komm dazu.</p>
         <div className={cN(s.tileContainer, s.sectionWhite)}>
           <h3>Willkommen zurück!</h3>
           <p>{welcomeExistingMessage}</p>
