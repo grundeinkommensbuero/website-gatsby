@@ -17,10 +17,11 @@ export const TickerToSignup = ({
 
   return (
     <>
-      {municipality?.ags ?
-        <TickerMunicipality tickerDescription={tickerDescription} /> :
+      {municipality?.ags ? (
+        <TickerMunicipality tickerDescription={tickerDescription} />
+      ) : (
         <Ticker tickerDescription={tickerDescription} />
-      }
+      )}
 
       <SignupButtonAndTile className={s.centerButton} />
       <div className={s.moreInfo}>

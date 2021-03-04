@@ -91,8 +91,11 @@ export const SearchPlaces = ({
         const fuseResults = fuse.search(searchProps);
         const results = fuseResults
           .map(x => ({ ...x.item, score: x.score }))
-          .slice(0, 10)
-          .sort((a, b) => b.population - a.population);
+          .slice(0, 10);
+        // Removed the sort by population for now, because we need to rewrite it
+        // due to issues when searching for zip codes for example
+        // .sort((a, b) => b.population - a.population);
+
         setResults(results);
       }
     } else {

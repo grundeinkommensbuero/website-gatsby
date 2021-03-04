@@ -153,7 +153,7 @@ export const MunicipalityMap = ({
   const [dataSignups, setDataSignups] = useState([]);
   const [dataLabels, setDataLabels] = useState([]);
   const [dataEvents, setDataEvents] = useState([]);
-  // TODO: Change in backend!
+  // Note: Values are overridden in backend!
   const [signupScale, setSignupScale] = useState([
     [1, 40000],
     [1000, 30000],

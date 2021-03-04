@@ -1,0 +1,18 @@
+# Map tools
+
+1. [Open Data Lab Geojson Utilities: Bundesländergrenzen](http://opendatalab.de/projects/geojson-utilities/)
+2. [QGIS: Anpassung der Bundsländergrenzen](https://www.qgis.org/en/site/)
+3. [Mapshaper: Tool um Geodaten zu vereinfachen](https://mapshaper.org/)
+4. [Deck.gl](https://deck.gl/docs)
+   1. [Geojson-Layer für BundesLändergrenzen](https://deck.gl/docs/api-reference/layers/geojson-layer)
+   2. [Scatterplot-Layer für nicht animierte Punkte](https://deck.gl/docs/api-reference/layers/scatterplot-layer)
+   3. [Text-Layer für die Labels](https://deck.gl/docs/api-reference/layers/text-layer)
+   4. [Easings: Die Funktionen hier können in Deck.gl verwendet werden](https://easings.net/#easeOutQuad)
+5. [D3: Scales]()
+   1. [Kreisflächen](https://github.com/d3/d3-scale/blob/v3.2.2/README.md#scaleSqrt)
+   2. [Kreisflächenbeispiel](https://observablehq.com/@d3/continuous-scales)
+   3. [Farbskala, Beispiele etwas weiter unten auf der Seite](https://observablehq.com/@d3/d3-scalelinear)
+6. [Turf.js: Verschieben der Labels ans unter Ende der Kreise](https://turfjs.org/docs/#along)
+7. [DelayedScatterPlotLayer von Peter Beshai, um die Animation der Kreise ohne Events in WebGl zu rendern](https://peterbeshai.com/blog/2019-08-10-deckgl-point-animation/)
+8. [Anime.js: Animation der Events](https://animejs.com/documentation/#timelineBasicshttps://animejs.com/documentation/#timelineBasics)
+

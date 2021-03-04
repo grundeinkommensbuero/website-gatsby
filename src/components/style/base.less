@@ -10,13 +10,18 @@ body {
   font-weight: 500;
   background: @white;
   margin: 0;
+  background-color: @white;
   color: @black;
-  --bg-color: @grey;
+  --grid-gap: 1rem;
+  --bg-color: @white;
   --font-color: @black;
-  --font-color-secondary: @violet;
   --secondary-color: @violet;
   --text-on-secondary-color: @white;
-  --grid-gap: 1rem;
+  --button-font-color: @violet;
+  --button-bg-color: rgb(152, 133, 255); // IE Fallback
+  --button-bg-color: @violetTransparent;
+  --button-hover-bg-color: @violet;
+  --button-hover-font-color: @white;
 
   @media (min-width: @breakPointL) {
     --grid-gap: 2rem;
