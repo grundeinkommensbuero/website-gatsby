@@ -77,7 +77,7 @@ const TooltipInfo = ({ name, signups, goal, percentToGoal }) => {
         Schon {display(signups)} Personen haben sich angemeldet und wollen
         Grundeinkommen nach {name} holen. Das sind {display(percentToGoal)}
         &nbsp;% vom Qualifizierungsziel. Es müssen sich noch{' '}
-        {display(goal - signups)} Personen anmelden, damit sich Köln zur
+        {display(goal - signups)} Personen anmelden, damit sich {name} zur
         Teilnahme qualifiziert.
       </div>
     );
