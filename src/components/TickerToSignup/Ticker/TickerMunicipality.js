@@ -114,6 +114,7 @@ const TickerDisplay = ({
                 {inBetween2 && <span>{inBetween2} </span>}
                 <br />
                 <span>{highlight2}.</span>
+                <p className={s.inviteHeadline}>Komm dazu.</p>
                 {/* {suffixHighlight2 && <span>{suffixHighlight2}</span>} */}
               </h2>
             </>

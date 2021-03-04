@@ -19,7 +19,6 @@ export const SignupButtonAndTile = ({ className }) => {
   if (municipality && userContentfulState === 'loggedOut') {
     return (
       <>
-        <p className={s.inviteHeadline}>Komm dazu.</p>
         <SignUpButton className={cN(className, s.signUpCTA)}>
           {buttonText}
         </SignUpButton>
