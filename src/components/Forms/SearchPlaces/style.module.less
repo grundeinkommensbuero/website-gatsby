@@ -20,7 +20,6 @@
 .inputContainer {
   position: relative;
   width: @inputWidth;
-  margin-right: 2rem;
   // TODO: Check if ok for profile
   margin-top: @inputButtonMargin;
   margin-bottom: @inputButtonMargin;
@@ -47,6 +46,8 @@
     border-radius: 25px;
     border-color: @aqua;
   }
+
+  border-radius: 0; // Possible iPhone fix
 }
 
 .suggestions {

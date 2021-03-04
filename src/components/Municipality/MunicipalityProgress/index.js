@@ -44,6 +44,7 @@ export const MunicipalityProgress = ({
         <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3>
         {/* Berlin Hamburg Bremen */}
         {showDescription &&
+          municipality &&
           (municipality.ags === '11000000' ||
             municipality.ags === '02000000' ||
             municipality.ags === '04011000') && (
@@ -57,6 +58,7 @@ export const MunicipalityProgress = ({
           )}
         {/* all other municipalities */}
         {showDescription &&
+          municipality &&
           !(
             municipality.ags === '11000000' ||
             municipality.ags === '02000000' ||
@@ -82,6 +84,7 @@ export const MunicipalityProgress = ({
         )}
         {/* <h3>{getSignupsLabel(municipality.signups, municipality.goal)}</h3> */}
         {showDescription &&
+          municipality &&
           (municipality.ags === '11000000' ||
             municipality.ags === '02000000' ||
             municipality.ags === '04011000') && (
@@ -104,6 +107,7 @@ export const MunicipalityProgress = ({
             </>
           )}
         {showDescription &&
+          municipality &&
           !(
             municipality.ags === '11000000' ||
             municipality.ags === '02000000' ||
