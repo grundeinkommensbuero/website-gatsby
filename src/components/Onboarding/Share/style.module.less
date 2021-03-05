@@ -20,6 +20,10 @@
   flex-grow: 1;
   flex-basis: 45%;
   cursor: pointer;
+
+  @media (max-width: @breakPointS) {
+    flex-basis: 100%;
+  }
 }
 
 .shareButtonContainer {
@@ -34,6 +38,10 @@
 
   > p {
     align-self: center;
+  }
+
+  &:hover {
+    background-color: darken(@aqua, 10%);
   }
 
   @media (max-width: @breakPointM) {
@@ -203,12 +211,8 @@
 }
 
 .municipalityShareContainer {
-  background-color: @aqua;
-
-  .shareButtonContainer {
-    background-color: transparent;
-    border: 3px solid @white;
-  }
+  margin-bottom: 0;
+  padding: 0;
 }
 
 .municipalityShare {
