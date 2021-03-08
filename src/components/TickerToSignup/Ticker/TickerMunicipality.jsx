@@ -1,38 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import cN from 'classnames';
 import Reel from 'react-reel';
 import s from './style.module.less';
-import { MunicipalityContext } from '../../../context/Municipality';
+
+import { numberWithDots } from './utils';
 
 import './reelstyle.less';
 
-export const TickerMunicipality = () => {
-  const { municipality } = useContext(MunicipalityContext);
-  const [peopleCount, setPeopleCount] = useState(0);
-
-  useEffect(() => {
-    if (municipality && typeof municipality.signups === 'number') {
-      setPeopleCount(municipality.signups);
-    }
-  }, [municipality]);
-
-  return (
-    <TickerDisplay
-      prefixText="Schon"
-      highlight1={peopleCount}
-      inBetween1=""
-      inBetween2="Menschen holen Grundeinkommen nach"
-      highlight2={municipality?.name}
-      suffixHighlight2=""
-    />
-  );
-};
-
-const numberWithDots = num => {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-};
-
-const TickerDisplay = ({
+export const TickerMuniciplaity = ({
   prefixText,
   highlight1,
   inBetween1,
