@@ -36,8 +36,7 @@ export const Share = ({
                 {municipality ? `${municipality.name}` : 'deine Gemeinde'} bald
                 Grundeinkommen erforscht.{' '}
                 {municipality
-                  ? `Wir müssen insgesamt{' '}
-                ${municipality.goal} Menschen werden!`
+                  ? `Wir müssen insgesamt ${municipality.goal} Menschen werden!`
                   : ''}
               </p>
             </>
