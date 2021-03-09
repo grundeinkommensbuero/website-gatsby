@@ -11,7 +11,11 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive, isInOnboarding }) => {
+export const ShareButtonRow = ({
+  setShareChannel,
+  setSharePreviewActive,
+  isInOnboarding,
+}) => {
   const iconInstagram = require('./icons/Instagram.svg');
 
   const activatePreview = channel => {
@@ -23,8 +27,12 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive, isInOnb
 
   return (
     <>
-      <section className={cN({ [s.shareButtonRow]: isInOnboarding })}>
-
+      <section
+        className={cN(
+          { [s.shareButtonRow]: isInOnboarding },
+          { [s.municipalityShare]: !isInOnboarding }
+        )}
+      >
         <div
           aria-hidden="true"
           className={s.shareItem}
@@ -85,7 +93,12 @@ export const ShareButtonRow = ({ setShareChannel, setSharePreviewActive, isInOnb
           onClick={() => activatePreview('whatsapp')}
         >
           <div className={s.shareButtonContainer}>
-            <WhatsappIcon size={50} round={true} bgStyle={{ fillOpacity: 0 }} className={s.iconCorrection} />
+            <WhatsappIcon
+              size={50}
+              round={true}
+              bgStyle={{ fillOpacity: 0 }}
+              className={s.iconCorrection}
+            />
             <p className={s.shareElementTitle}>WhatsApp</p>
           </div>
         </div>

@@ -20,6 +20,10 @@
   flex-grow: 1;
   flex-basis: 45%;
   cursor: pointer;
+
+  @media (max-width: @breakPointS) {
+    flex-basis: 100%;
+  }
 }
 
 .shareButtonContainer {
@@ -34,6 +38,10 @@
 
   > p {
     align-self: center;
+  }
+
+  &:hover {
+    background-color: darken(@aqua, 10%);
   }
 
   @media (max-width: @breakPointM) {
@@ -200,4 +208,14 @@
 .instaImageContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.municipalityShareContainer {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.municipalityShare {
+  display: flex;
+  flex-wrap: wrap;
 }
