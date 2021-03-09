@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -22,12 +22,14 @@ import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
+import { SharingFeature } from '../../Onboarding/Share';
 import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
 
 import { MunicipalityContext } from '../../../context/Municipality';
+import AuthContext from '../../../context/Authentication';
 import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
 import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
@@ -139,12 +141,32 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
+  const isSharingFeature = __typename === 'ContentfulPageSectionShare';
 
   const userContentfulState = useUserMunicipalityContentfulState();
 
   const { municipality, municipalityContentfulState } = useContext(
     MunicipalityContext
   );
+
+  const {
+    userId,
+    customUserData: userData
+  } = useContext(AuthContext);
+
+  const [municipalityToShare, setMunicipalityToShare] = useState();
+
+  useEffect(() => {
+    if (userData.municipalities) {
+      setMunicipalityToShare(getMostRecentMunicipality(userData.municipalities));
+    }
+  }, [userData]);
+
+  console.log(userData);
+
+  const getMostRecentMunicipality = (municipalities) => {
+    return municipalities.reduce((a, b) => (a.createdAt > b.createdAt ? a : b));
+  };
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
     const filteredComponents = getFilteredElementsByContentfulState({
@@ -345,6 +367,32 @@ export function ContentfulSection({ section, pageContext }) {
         <SectionInner>
           {introText && <div className={s.donationIntroText}>{introText}</div>}
           <DonationForm theme={theme}></DonationForm>
+        </SectionInner>
+      )}
+      {isSharingFeature && userData.municipalities && (
+        <SectionInner>
+          <h3>{introText}</h3>
+          <SharingFeature userData={userData} userId={userId} municipality={municipalityToShare} isInOnboarding={false} />
+          {userData?.municipalities?.length > 1 &&
+            <>
+              <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
+              </p>
+              <div className={s.municipalityConatainer}>
+                {userData.municipalities.sort((x, y) => {
+                  return new Date(x.createdAt) - new Date(y.createdAt);
+                }).reverse().map((municipality) => (
+                  <p
+                    aria-hidden="true"
+                    className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
+                    key={municipality.ags}
+                    onClick={() => setMunicipalityToShare(municipality)}
+                  >
+                    {municipality.name}
+                  </p>
+                ))}
+              </div>
+            </>
+          }
         </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (

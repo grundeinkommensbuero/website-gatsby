@@ -6,7 +6,7 @@ import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
 import { Button } from '../../Forms/Button';
 
-export const Share = ({
+export const SharingFeature = ({
   compIndex,
   setCurrentElementByIndex,
   municipality,

@@ -272,6 +272,12 @@ export const pageQuery = graphql`
             theme
             colorScheme
           }
+          ... on ContentfulPageSectionShare {
+            __typename
+            title
+            introText
+            colorScheme
+          }
         }
       }
     }

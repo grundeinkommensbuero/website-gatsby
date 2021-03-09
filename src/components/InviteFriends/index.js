@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
-import { Share } from '../Onboarding/Share';
+import { SharingFeature } from '../Onboarding/Share';
 import s from './style.module.less';
 import AuthContext from '../../context/Authentication';
 
@@ -20,7 +20,7 @@ export const InviteFriends = () => {
         <h2>Jetzt Freunde einladen</h2>
         {sharingCTA && <p>{sharingCTA}</p>}
         {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
-        <Share userData={userData} userId={userId} municipality={municipality} isInOnboarding={false} />
+        <SharingFeature userData={userData} userId={userId} municipality={municipality} isInOnboarding={false} />
       </div>
       <div className={s.componentElement}>
         <div></div>

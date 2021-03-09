@@ -696,3 +696,34 @@
 //     width: 100%;
 //   }
 // }
+
+.municipalityConatainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chooseMunicipality {
+  background: @white; // fallback for IE
+  background: var(--button-bg-color);
+  border: var(--button-font-color) solid @borderWidthThick;
+  border-radius: @borderRadius;
+  color: var(--button-font-color);
+  font-size: @DesktopFontSizeM;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0.5rem;
+  padding: 0.25rem 1.5rem 0.15rem 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: @violet;
+    border: @aqua solid @borderWidthThick;
+  }
+
+  &.activeMunicipality {
+    color: white;
+    background-color: @violet;
+    border: var(--button-font-color) solid @borderWidthThick;
+  }
+}

@@ -12,7 +12,7 @@ import { SignUpFlow } from './SignUpFlow';
 import { Engage } from './Engage';
 import { EngagementLevel } from './EngagementLevel';
 import { QuestionUBI } from './QuestionUBI';
-import { Share } from './Share';
+import { SharingFeature } from './Share';
 import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
 import { FinalNote } from './FinalNote';
@@ -40,7 +40,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
     Engage,
     EngagementLevel,
     QuestionUBI,
-    Share,
+    SharingFeature,
     Donate,
     SetupProfile,
     FinalNote,
