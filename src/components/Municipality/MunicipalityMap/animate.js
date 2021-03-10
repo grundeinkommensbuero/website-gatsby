@@ -7,7 +7,6 @@ export const animate = ({
   setDataEvents,
   flyToAgsOnLoad,
   updateFocus,
-  initialMapAnimation,
   setMunicipalityFadeProgress,
   municipalityStatsState,
 }) => {
@@ -19,15 +18,15 @@ export const animate = ({
     targets: localOpacities,
     empty: [1, 0],
     map: [0, 1],
-    delay: initialMapAnimation ? 500 : 0,
-    duration: initialMapAnimation ? 500 : 120,
+    delay: 500,
+    duration: 500,
     easing: 'easeOutQuad',
     update() {
       setFadeOpacities({ ...localOpacities });
     },
   });
   if (municipalityStatsState === 'success') {
-    if (initialMapAnimation) {
+
       const animation = { progress: 0 };
       // Fadein animatedmarkers
       tl.add({
@@ -100,7 +99,7 @@ export const animate = ({
         },
         '-=500'
       );
-    }
+
 
     tl.add({
       duration: 1,
