@@ -164,8 +164,8 @@ export const MunicipalityMap = ({
   const [zoom, setZoom] = useState(4.56);
   const [zoomMin, setZoomMin] = useState(Infinity);
   const [fadeOpacities, setFadeOpacities] = useState({
-    empty: 1,
-    map: 0,
+    empty: initialMapAnimation ? 1 : 0,
+    map: initialMapAnimation ? 0 : 1,
     animatedMarkers: initialMapAnimation ? 0 : 1,
   });
   // WebGL
@@ -287,6 +287,7 @@ export const MunicipalityMap = ({
       (mapDataReady && shouldStartAnimation) ||
       allMunicipalityStatsState === 'error'
     ) {
+      if (initialMapAnimation) {
       animate({
         fadeOpacities,
         setFadeOpacities,
@@ -294,10 +295,10 @@ export const MunicipalityMap = ({
         setDataEvents,
         flyToAgsOnLoad,
         updateFocus,
-        initialMapAnimation,
         setMunicipalityFadeProgress,
         municipalityStatsState: allMunicipalityStatsState,
       });
+    }
     }
   }, [shouldStartAnimation, mapDataReady, animate, allMunicipalityStatsState]);
 
