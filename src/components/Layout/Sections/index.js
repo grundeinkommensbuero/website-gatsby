@@ -41,6 +41,8 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 
 import { LinkButton } from '../../Forms/Button';
+import { Onboarding } from '../../Onboarding/index';
+import { LoadingAnimation } from '../../Onboarding/LoadingAnimation';
 
 const Components = {
   TickerToSignup,
@@ -368,7 +370,7 @@ export function ContentfulSection({ section, pageContext }) {
           <DonationForm theme={theme}></DonationForm>
         </SectionInner>
       )}
-      {isSharingFeature && userData.municipalities && (
+      {isSharingFeature && userData.municipalities ? (
         <SectionInner>
           <SharingFeature
             userData={userData}
@@ -400,7 +402,7 @@ export function ContentfulSection({ section, pageContext }) {
             </>
           }
         </SectionInner>
-      )}
+      ) : <LoadingAnimation />}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
           {body && body.json ? contentfulJsonToHtml(body.json) : body}
