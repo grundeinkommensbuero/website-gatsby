@@ -277,6 +277,9 @@ export const pageQuery = graphql`
             title
             introText
             colorScheme
+            previewDescription {
+              json
+            }
           }
         }
       }

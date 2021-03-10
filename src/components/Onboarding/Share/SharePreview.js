@@ -149,7 +149,7 @@ export const SharePreview = ({
     const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     return (
       <>
-        {CaseButton ? (
+        {CaseButton && shareChannel ? (
           <CaseButton
             title={title}
             hashtags={hashtags}
@@ -162,7 +162,7 @@ export const SharePreview = ({
             windowHeight={1000}
           >
             <div aria-hidden="true" className={gS.selectableOption}>
-              Über {shareChannel?.label.replace(/\\/g, '')} teilen
+              Über {shareChannel?.label?.replace(/\\/g, '')} teilen
             </div>
           </CaseButton>
         ) : null}

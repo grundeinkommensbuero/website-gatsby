@@ -131,6 +131,7 @@ export function ContentfulSection({ section, pageContext }) {
     columnBottomLeft,
     columnBottomRight,
     introText,
+    previewDescription,
     theme,
     headline,
   } = section;
@@ -369,7 +370,19 @@ export function ContentfulSection({ section, pageContext }) {
       )}
       {isSharingFeature && userData.municipalities && (
         <SectionInner>
-          <h3>{introText}</h3>
+          <div className={s.previewContainer}>
+            <div className={s.previewElement}>
+              <h3>{introText}</h3>
+              {previewDescription && contentfulJsonToHtml(previewDescription.json)}
+            </div>
+            <div className={s.previewElement}>
+              <img
+                className={s.previewSharing}
+                src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/7f1c2139b24e7e55e47a603ff5603b4e/SharePreview.png?h=500'}
+                alt={'Teilen Vorschau'}
+              />
+            </div>
+          </div>
           <SharingFeature userData={userData} userId={userId} municipality={municipalityToShare} isInOnboarding={false} />
           {userData?.municipalities?.length > 1 &&
             <>
