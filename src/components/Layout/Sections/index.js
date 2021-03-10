@@ -162,8 +162,6 @@ export function ContentfulSection({ section, pageContext }) {
     }
   }, [userData]);
 
-  console.log(userData);
-
   const getMostRecentMunicipality = (municipalities) => {
     return municipalities.reduce((a, b) => (a.createdAt > b.createdAt ? a : b));
   };
