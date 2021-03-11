@@ -2,6 +2,7 @@ import React from 'react';
 import s from './style.module.less';
 import ShareButtons from './ShareButtons.json';
 import cN from 'classnames';
+import { navigate } from 'gatsby';
 
 import {
   EmailIcon,
@@ -23,6 +24,7 @@ export const ShareButtonRow = ({
     // console.log(ShareButtons[i]);
     setShareChannel(ShareButtons[i]);
     setSharePreviewActive(true);
+    window.scrollTo(0, 0);
   };
 
   return (
