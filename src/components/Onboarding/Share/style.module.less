@@ -122,6 +122,14 @@
   }
 
   @media (max-width: 1250px) {
+    font-size: 2.5rem;
+
+    &.mainCaptionHuge {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 1100px) {
     font-size: 2.25rem;
 
     &.mainCaptionHuge {
@@ -218,4 +226,90 @@
 .municipalityShare {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.previewCalloutContainerOnboarding {
+  display: flex;
+  justify-content: center;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+
+  @media (max-width: 1250px) {
+    margin-right: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.previewCalloutContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1rem;
+  margin-bottom: 3rem;
+  padding-top: 2rem;
+
+  @media (max-width: 1250px) {
+    margin-right: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.previewElement {
+  width: 48%;
+  margin-bottom: 1rem;
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
+}
+
+.sharePreviewElement {
+  position: relative;
+  width: 48%;
+
+  @media (max-width: 1250px) {
+    width: 75%;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+}
+
+.sharingHands {
+  width: 90%;
+  height: auto;
+  margin-top: 2rem;
+}
+
+.previewSharing {
+  position: absolute;
+  top: -2rem;
+  right: 0;
+  width: 55%;
+  height: auto;
+  margin-top: 2rem;
+
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: gentleCheer;
+
+  @media (max-width: 1250px) {
+    padding: 1rem;
+  }
+}
+
+@keyframes gentleCheer {
+  0% {
+    transform: translateY(-1%) translateX(1%) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(1%) translateX(-1%) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(-1%) translateX(1%) rotate(-5deg);
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -22,12 +22,14 @@ import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
+import { SharingFeature } from '../../Onboarding/Share';
 import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
 
 import { MunicipalityContext } from '../../../context/Municipality';
+import AuthContext from '../../../context/Authentication';
 import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
 import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
@@ -39,6 +41,7 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 
 import { LinkButton } from '../../Forms/Button';
+import { LoadingAnimation } from '../../Onboarding/LoadingAnimation';
 
 const Components = {
   TickerToSignup,
@@ -129,6 +132,7 @@ export function ContentfulSection({ section, pageContext }) {
     columnBottomLeft,
     columnBottomRight,
     introText,
+    previewDescription,
     theme,
     headline,
   } = section;
@@ -139,12 +143,31 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
+  const isSharingFeature = __typename === 'ContentfulPageSectionShare';
 
   const userContentfulState = useUserMunicipalityContentfulState();
 
   const { municipality, municipalityContentfulState } = useContext(
     MunicipalityContext
   );
+
+  const {
+    userId,
+    customUserData: userData
+  } = useContext(AuthContext);
+
+  const [municipalityToShare, setMunicipalityToShare] = useState();
+  const scrollToRef = useRef(null);
+
+  useEffect(() => {
+    if (userData.municipalities) {
+      setMunicipalityToShare(getMostRecentMunicipality(userData.municipalities));
+    }
+  }, [userData]);
+
+  const getMostRecentMunicipality = (municipalities) => {
+    return municipalities.reduce((a, b) => (a.createdAt > b.createdAt ? a : b));
+  };
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
     const filteredComponents = getFilteredElementsByContentfulState({
@@ -347,6 +370,43 @@ export function ContentfulSection({ section, pageContext }) {
           <DonationForm theme={theme}></DonationForm>
         </SectionInner>
       )}
+      {isSharingFeature && userData.municipalities ? (
+        <>
+          <div ref={scrollToRef}></div>
+          <SectionInner>
+            <SharingFeature
+              userData={userData}
+              userId={userId}
+              municipality={municipalityToShare}
+              isInOnboarding={false}
+              introText={introText}
+              previewComponent={contentfulJsonToHtml(previewDescription.json)}
+              scrollToRef={scrollToRef}
+            />
+            {userData?.municipalities?.length > 1 &&
+              <>
+                <br />
+                <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
+              </p>
+                <div className={s.municipalityConatainer}>
+                  {userData.municipalities.sort((x, y) => {
+                    return new Date(x.createdAt) - new Date(y.createdAt);
+                  }).reverse().map((municipality) => (
+                    <p
+                      aria-hidden="true"
+                      className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
+                      key={municipality.ags}
+                      onClick={() => setMunicipalityToShare(municipality)}
+                    >
+                      {municipality.name}
+                    </p>
+                  ))}
+                </div>
+              </>
+            }
+          </SectionInner>
+        </>
+      ) : <LoadingAnimation />}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
           {body && body.json ? contentfulJsonToHtml(body.json) : body}

@@ -6,20 +6,27 @@ import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
 import { Button } from '../../Forms/Button';
 
-export const Share = ({
+export const SharingFeature = ({
   compIndex,
   setCurrentElementByIndex,
   municipality,
   userData,
   userId,
   isInOnboarding = true,
+  introText,
+  previewComponent,
+  scrollToRef
 }) => {
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
 
+  const executeScroll = () => scrollToRef.current.scrollIntoView();
+
   return (
     <section
-      className={cN(gS.pageContainer, {
+      className={cN({
+        [gS.pageContainer]: isInOnboarding,
+      }, {
         [s.municipalityShareContainer]: !isInOnboarding,
       })}
     >
@@ -35,7 +42,7 @@ export const Share = ({
                 die Chancen, dass{' '}
                 {municipality ? `${municipality.name}` : 'deine Gemeinde'} bald
                 Grundeinkommen erforscht.{' '}
-                {municipality
+                {municipality?.goal
                   ? `Wir müssen insgesamt ${municipality.goal} Menschen werden!`
                   : ''}
               </p>
@@ -44,10 +51,46 @@ export const Share = ({
             <br />
           )}
 
+          {introText && previewComponent ?
+            <div className={s.previewCalloutContainer}>
+              <div className={s.previewElement}>
+                <h3>{introText}</h3>
+                {previewComponent}
+              </div>
+              <div className={s.sharePreviewElement}>
+                <img
+                  className={s.sharingHands}
+                  src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
+                  alt={'Teilen Vorschau'}
+                />
+                <img
+                  className={s.previewSharing}
+                  src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
+                  alt={'Teilen Vorschau'}
+                />
+              </div>
+            </div> :
+            <div className={s.previewCalloutContainerOnboarding}>
+              <div className={s.sharePreviewElement}>
+                <img
+                  className={s.sharingHands}
+                  src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
+                  alt={'Teilen Vorschau'}
+                />
+                <img
+                  className={s.previewSharing}
+                  src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
+                  alt={'Teilen Vorschau'}
+                />
+              </div>
+            </div>
+          }
+
           <ShareButtonRow
             setShareChannel={setShareChannel}
             setSharePreviewActive={setSharePreviewActive}
             isInOnboarding={isInOnboarding}
+            executeScroll={executeScroll}
           />
 
           {isInOnboarding && (
@@ -79,7 +122,10 @@ export const Share = ({
           <div className={gS.fullWidthFlex}>
             <span
               className={gS.linkLikeFormatted}
-              onClick={() => setSharePreviewActive(false)}
+              onClick={() => {
+                setSharePreviewActive(false);
+                executeScroll();
+              }}
               aria-hidden="true"
             >
               {'< Zurück zur Übersicht'}
