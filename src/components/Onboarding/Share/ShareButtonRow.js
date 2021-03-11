@@ -16,6 +16,7 @@ export const ShareButtonRow = ({
   setShareChannel,
   setSharePreviewActive,
   isInOnboarding,
+  executeScroll
 }) => {
   const iconInstagram = require('./icons/Instagram.svg');
 
@@ -24,7 +25,7 @@ export const ShareButtonRow = ({
     // console.log(ShareButtons[i]);
     setShareChannel(ShareButtons[i]);
     setSharePreviewActive(true);
-    window.scrollTo(0, 0);
+    executeScroll();
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
 import { SharingFeature } from '../Onboarding/Share';
 import s from './style.module.less';
@@ -14,18 +14,23 @@ export const InviteFriends = () => {
   const sharingFactorAnnouncement = getSharingFactorAnnouncement(municipality);
   const sharingCTA = getSharingCTA(municipality);
 
+  const scrollToRef = useRef(null);
+
   return (
-    <div className={s.componentContainer}>
-      <div className={s.componentElement}>
-        <h2>Jetzt Freunde einladen</h2>
-        {sharingCTA && <p>{sharingCTA}</p>}
-        {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
-        <SharingFeature userData={userData} userId={userId} municipality={municipality} isInOnboarding={false} />
+    <>
+      <div ref={scrollToRef}></div>
+      <div className={s.componentContainer}>
+        <div className={s.componentElement}>
+          <h2>Jetzt Freunde einladen</h2>
+          {sharingCTA && <p>{sharingCTA}</p>}
+          {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
+          <SharingFeature userData={userData} userId={userId} municipality={municipality} isInOnboarding={false} scrollToRef={scrollToRef} />
+        </div>
+        <div className={s.componentElement}>
+          <div></div>
+        </div>
       </div>
-      <div className={s.componentElement}>
-        <div></div>
-      </div>
-    </div>
+    </>
   );
 };
 

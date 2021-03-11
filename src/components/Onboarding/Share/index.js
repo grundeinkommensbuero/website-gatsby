@@ -14,10 +14,13 @@ export const SharingFeature = ({
   userId,
   isInOnboarding = true,
   introText,
-  previewComponent
+  previewComponent,
+  scrollToRef
 }) => {
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
+
+  const executeScroll = () => scrollToRef.current.scrollIntoView();
 
   return (
     <section
@@ -87,6 +90,7 @@ export const SharingFeature = ({
             setShareChannel={setShareChannel}
             setSharePreviewActive={setSharePreviewActive}
             isInOnboarding={isInOnboarding}
+            executeScroll={executeScroll}
           />
 
           {isInOnboarding && (
@@ -118,7 +122,10 @@ export const SharingFeature = ({
           <div className={gS.fullWidthFlex}>
             <span
               className={gS.linkLikeFormatted}
-              onClick={() => setSharePreviewActive(false)}
+              onClick={() => {
+                setSharePreviewActive(false);
+                executeScroll();
+              }}
               aria-hidden="true"
             >
               {'< Zurück zur Übersicht'}

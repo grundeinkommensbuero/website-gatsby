@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -41,7 +41,6 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 
 import { LinkButton } from '../../Forms/Button';
-import { Onboarding } from '../../Onboarding/index';
 import { LoadingAnimation } from '../../Onboarding/LoadingAnimation';
 
 const Components = {
@@ -158,6 +157,7 @@ export function ContentfulSection({ section, pageContext }) {
   } = useContext(AuthContext);
 
   const [municipalityToShare, setMunicipalityToShare] = useState();
+  const scrollToRef = useRef(null);
 
   useEffect(() => {
     if (userData.municipalities) {
@@ -371,37 +371,41 @@ export function ContentfulSection({ section, pageContext }) {
         </SectionInner>
       )}
       {isSharingFeature && userData.municipalities ? (
-        <SectionInner>
-          <SharingFeature
-            userData={userData}
-            userId={userId}
-            municipality={municipalityToShare}
-            isInOnboarding={false}
-            introText={introText}
-            previewComponent={contentfulJsonToHtml(previewDescription.json)}
-          />
-          {userData?.municipalities?.length > 1 &&
-            <>
-              <br />
-              <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
+        <>
+          <div ref={scrollToRef}></div>
+          <SectionInner>
+            <SharingFeature
+              userData={userData}
+              userId={userId}
+              municipality={municipalityToShare}
+              isInOnboarding={false}
+              introText={introText}
+              previewComponent={contentfulJsonToHtml(previewDescription.json)}
+              scrollToRef={scrollToRef}
+            />
+            {userData?.municipalities?.length > 1 &&
+              <>
+                <br />
+                <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
               </p>
-              <div className={s.municipalityConatainer}>
-                {userData.municipalities.sort((x, y) => {
-                  return new Date(x.createdAt) - new Date(y.createdAt);
-                }).reverse().map((municipality) => (
-                  <p
-                    aria-hidden="true"
-                    className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
-                    key={municipality.ags}
-                    onClick={() => setMunicipalityToShare(municipality)}
-                  >
-                    {municipality.name}
-                  </p>
-                ))}
-              </div>
-            </>
-          }
-        </SectionInner>
+                <div className={s.municipalityConatainer}>
+                  {userData.municipalities.sort((x, y) => {
+                    return new Date(x.createdAt) - new Date(y.createdAt);
+                  }).reverse().map((municipality) => (
+                    <p
+                      aria-hidden="true"
+                      className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
+                      key={municipality.ags}
+                      onClick={() => setMunicipalityToShare(municipality)}
+                    >
+                      {municipality.name}
+                    </p>
+                  ))}
+                </div>
+              </>
+            }
+          </SectionInner>
+        </>
       ) : <LoadingAnimation />}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
