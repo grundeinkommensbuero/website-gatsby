@@ -370,7 +370,7 @@ export function ContentfulSection({ section, pageContext }) {
           <DonationForm theme={theme}></DonationForm>
         </SectionInner>
       )}
-      {isSharingFeature && userData.municipalities ? (
+      {isSharingFeature && userData.municipalities && (
         <>
           <div ref={scrollToRef}></div>
           <SectionInner>
@@ -406,7 +406,7 @@ export function ContentfulSection({ section, pageContext }) {
             }
           </SectionInner>
         </>
-      ) : <LoadingAnimation />}
+      )}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
           {body && body.json ? contentfulJsonToHtml(body.json) : body}
