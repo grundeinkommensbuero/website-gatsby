@@ -271,6 +271,56 @@ export function ContentfulSection({ section, pageContext }) {
     );
   }
 
+  if (__typename === 'ContentfulPageSectionShare') {
+    return (
+      <>
+        {userData.municipalities &&
+          <Section
+            className={cN({
+              [s.sectionWhite]: colorScheme === 'white',
+              [s.sectionViolet]: colorScheme === 'violet',
+              [s.sectionAqua]: colorScheme === 'aqua',
+              [s.sectionRed]: colorScheme === 'red',
+            })}>
+            <h2>{title}</h2>
+            <div ref={scrollToRef}></div>
+            <SectionInner>
+              <SharingFeature
+                userData={userData}
+                userId={userId}
+                municipality={municipalityToShare}
+                isInOnboarding={false}
+                introText={introText ? introText : null}
+                previewComponent={previewDescription?.json ? contentfulJsonToHtml(previewDescription.json) : null}
+                scrollToRef={scrollToRef}
+              />
+              {userData?.municipalities?.length > 1 &&
+                <>
+                  <br />
+                  <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
+              </p>
+                  <div className={s.municipalityConatainer}>
+                    {userData.municipalities.sort((x, y) => {
+                      return new Date(x.createdAt) - new Date(y.createdAt);
+                    }).reverse().map((municipality) => (
+                      <p
+                        aria-hidden="true"
+                        className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
+                        key={municipality.ags}
+                        onClick={() => setMunicipalityToShare(municipality)}
+                      >
+                        {municipality.name}
+                      </p>
+                    ))}
+                  </div>
+                </>
+              }
+            </SectionInner>
+          </Section>}
+      </>
+    )
+  }
+
   return (
     <Section
       title={title}
@@ -369,43 +419,6 @@ export function ContentfulSection({ section, pageContext }) {
           {introText && <div className={s.donationIntroText}>{introText}</div>}
           <DonationForm theme={theme}></DonationForm>
         </SectionInner>
-      )}
-      {isSharingFeature && userData.municipalities && (
-        <>
-          <div ref={scrollToRef}></div>
-          <SectionInner>
-            <SharingFeature
-              userData={userData}
-              userId={userId}
-              municipality={municipalityToShare}
-              isInOnboarding={false}
-              introText={introText ? introText : null}
-              previewComponent={previewDescription?.json ? contentfulJsonToHtml(previewDescription.json) : null}
-              scrollToRef={scrollToRef}
-            />
-            {userData?.municipalities?.length > 1 &&
-              <>
-                <br />
-                <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
-              </p>
-                <div className={s.municipalityConatainer}>
-                  {userData.municipalities.sort((x, y) => {
-                    return new Date(x.createdAt) - new Date(y.createdAt);
-                  }).reverse().map((municipality) => (
-                    <p
-                      aria-hidden="true"
-                      className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
-                      key={municipality.ags}
-                      onClick={() => setMunicipalityToShare(municipality)}
-                    >
-                      {municipality.name}
-                    </p>
-                  ))}
-                </div>
-              </>
-            }
-          </SectionInner>
-        </>
       )}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
