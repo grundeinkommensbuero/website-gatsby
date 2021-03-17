@@ -135,26 +135,26 @@ export const EnterLoginCode = ({
 
       {(answerChallengeState === 'resentCode' ||
         answerChallengeState === 'restartSignIn') && (
-        <p>
-          Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
+          <p>
+            Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
           geschickt.
-        </p>
-      )}
+          </p>
+        )}
 
       {!answerChallengeState && (
         <>
           {children ? (
             children
           ) : (
-              <>
-                <h3>Schön, dass du an Bord bist.</h3>
-                <p>
-                  Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-                  {tempEmail ? ` (${tempEmail})` : ''} geschickt. Bitte gib diesen
-                  ein:
-                </p>
-              </>
-            )}{' '}
+            <>
+              <h3>Schön, dass du an Bord bist.</h3>
+              <p>
+                Um dich zu identifizieren, haben wir dir einen Code per E-Mail
+                  {tempEmail ? ` (${tempEmail})` : ''} geschickt.
+                  <br /><b>Dein Code ist drei Minuten lang gültig. </b>
+              </p>
+            </>
+          )}{' '}
         </>
       )}
       <Form
