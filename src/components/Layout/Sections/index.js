@@ -379,8 +379,8 @@ export function ContentfulSection({ section, pageContext }) {
               userId={userId}
               municipality={municipalityToShare}
               isInOnboarding={false}
-              introText={introText}
-              previewComponent={contentfulJsonToHtml(previewDescription.json)}
+              introText={introText ? introText : null}
+              previewComponent={previewDescription?.json ? contentfulJsonToHtml(previewDescription.json) : null}
               scrollToRef={scrollToRef}
             />
             {userData?.municipalities?.length > 1 &&

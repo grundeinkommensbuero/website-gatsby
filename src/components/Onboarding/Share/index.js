@@ -22,6 +22,23 @@ export const SharingFeature = ({
 
   const executeScroll = () => scrollToRef.current.scrollIntoView();
 
+  const SharingHandsPreviewElement = () => {
+    return (
+      <div className={s.sharePreviewElement}>
+        <img
+          className={s.sharingHands}
+          src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
+          alt={'Teilen Vorschau'}
+        />
+        <img
+          className={s.previewSharing}
+          src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
+          alt={'Teilen Vorschau'}
+        />
+      </div>
+    )
+  }
+
   return (
     <section
       className={cN({
@@ -50,39 +67,18 @@ export const SharingFeature = ({
           ) : (
             <br />
           )}
-
-          {introText && previewComponent ?
-            <div className={s.previewCalloutContainer}>
-              <div className={s.previewElement}>
-                <h3>{introText}</h3>
-                {previewComponent}
+          {introText && <h3 className={s.previewHeading}>{introText}</h3>}
+          {previewComponent ?
+            <>
+              <div className={s.previewCalloutContainer}>
+                <div className={s.previewElement}>
+                  {previewComponent}
+                </div>
+                <SharingHandsPreviewElement />
               </div>
-              <div className={s.sharePreviewElement}>
-                <img
-                  className={s.sharingHands}
-                  src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
-                  alt={'Teilen Vorschau'}
-                />
-                <img
-                  className={s.previewSharing}
-                  src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
-                  alt={'Teilen Vorschau'}
-                />
-              </div>
-            </div> :
+            </> :
             <div className={s.previewCalloutContainerOnboarding}>
-              <div className={s.sharePreviewElement}>
-                <img
-                  className={s.sharingHands}
-                  src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
-                  alt={'Teilen Vorschau'}
-                />
-                <img
-                  className={s.previewSharing}
-                  src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
-                  alt={'Teilen Vorschau'}
-                />
-              </div>
+              <SharingHandsPreviewElement />
             </div>
           }
 
