@@ -92,9 +92,25 @@ export const SearchPlaces = ({
         const results = fuseResults
           .map(x => ({ ...x.item, score: x.score }))
           .slice(0, 10);
-        // Removed the sort by population for now, because we need to rewrite it
-        // due to issues when searching for zip codes for example
-        // .sort((a, b) => b.population - a.population);
+
+        // Specific sort if searched for zip codes
+        if (digits !== '') {
+          // If a result with a correct match was found show that result
+          // as first item and sort the rest by population
+          results.sort((a, b) => {
+            if (a.score < 0.001) {
+              return -1;
+            } else if (b.score < 0.001) {
+              return 1;
+            }
+            return b.population - a.population;
+          });
+        }
+
+        // Sort by population if searched for name
+        if (digits === '') {
+          results.sort((a, b) => b.population - a.population);
+        }
 
         setResults(results);
       }
