@@ -412,17 +412,20 @@
   left: 0;
   height: 100%;
   width: 100%;
-  filter: grayscale(1) contrast(0.3) brightness(1.6);
+}
+
+.heroBackground {
+  background-color: @violet;
 }
 
 .heroImageOverlay {
   background: @white;
+  background: linear-gradient(0deg, @white, transparent);
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  mix-blend-mode: multiply;
 }
 
 .sectionWithHeroImage {
@@ -457,6 +460,10 @@
   @media (max-width: @breakPointS) {
     font-size: @DesktopFontSizeL;
   }
+}
+
+.headerTitleLight {
+  color: white;
 }
 
 .headerPreTitle {

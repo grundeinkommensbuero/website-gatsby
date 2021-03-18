@@ -151,21 +151,20 @@ export function ContentfulSection({ section, pageContext }) {
     MunicipalityContext
   );
 
-  const {
-    userId,
-    customUserData: userData
-  } = useContext(AuthContext);
+  const { userId, customUserData: userData } = useContext(AuthContext);
 
   const [municipalityToShare, setMunicipalityToShare] = useState();
   const scrollToRef = useRef(null);
 
   useEffect(() => {
     if (userData.municipalities) {
-      setMunicipalityToShare(getMostRecentMunicipality(userData.municipalities));
+      setMunicipalityToShare(
+        getMostRecentMunicipality(userData.municipalities)
+      );
     }
   }, [userData]);
 
-  const getMostRecentMunicipality = (municipalities) => {
+  const getMostRecentMunicipality = municipalities => {
     return municipalities.reduce((a, b) => (a.createdAt > b.createdAt ? a : b));
   };
 
@@ -274,14 +273,15 @@ export function ContentfulSection({ section, pageContext }) {
   if (__typename === 'ContentfulPageSectionShare') {
     return (
       <>
-        {userData.municipalities &&
+        {userData.municipalities && (
           <Section
             className={cN({
               [s.sectionWhite]: colorScheme === 'white',
               [s.sectionViolet]: colorScheme === 'violet',
               [s.sectionAqua]: colorScheme === 'aqua',
               [s.sectionRed]: colorScheme === 'red',
-            })}>
+            })}
+          >
             <h2>{title}</h2>
             <div ref={scrollToRef}></div>
             <SectionInner>
@@ -291,34 +291,47 @@ export function ContentfulSection({ section, pageContext }) {
                 municipality={municipalityToShare}
                 isInOnboarding={false}
                 introText={introText ? introText : null}
-                previewComponent={previewDescription?.json ? contentfulJsonToHtml(previewDescription.json) : null}
+                previewComponent={
+                  previewDescription?.json
+                    ? contentfulJsonToHtml(previewDescription.json)
+                    : null
+                }
                 scrollToRef={scrollToRef}
               />
-              {userData?.municipalities?.length > 1 &&
+              {userData?.municipalities?.length > 1 && (
                 <>
                   <br />
-                  <p>Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde für die du teilen möchtest!
-              </p>
+                  <p>
+                    Du bist für mehrere Gemeinden angemeldet. Wähle die Gemeinde
+                    für die du teilen möchtest!
+                  </p>
                   <div className={s.municipalityConatainer}>
-                    {userData.municipalities.sort((x, y) => {
-                      return new Date(x.createdAt) - new Date(y.createdAt);
-                    }).reverse().map((municipality) => (
-                      <p
-                        aria-hidden="true"
-                        className={cN(s.chooseMunicipality, { [s.activeMunicipality]: municipality.ags === municipalityToShare?.ags })}
-                        key={municipality.ags}
-                        onClick={() => setMunicipalityToShare(municipality)}
-                      >
-                        {municipality.name}
-                      </p>
-                    ))}
+                    {userData.municipalities
+                      .sort((x, y) => {
+                        return new Date(x.createdAt) - new Date(y.createdAt);
+                      })
+                      .reverse()
+                      .map(municipality => (
+                        <p
+                          aria-hidden="true"
+                          className={cN(s.chooseMunicipality, {
+                            [s.activeMunicipality]:
+                              municipality.ags === municipalityToShare?.ags,
+                          })}
+                          key={municipality.ags}
+                          onClick={() => setMunicipalityToShare(municipality)}
+                        >
+                          {municipality.name}
+                        </p>
+                      ))}
                   </div>
                 </>
-              }
+              )}
             </SectionInner>
-          </Section>}
+          </Section>
+        )}
       </>
-    )
+    );
   }
 
   return (
@@ -548,7 +561,14 @@ export function SectionHeader({
             <div className={s.heroImageOverlay} />
           </>
         ) : (
-          <HeaderBackgrounds />
+          <>
+            <div className={cN(s.heroImage, s.heroBackground)}>
+              <svg width="100%" height="100%">
+                <line x1="20" y1="0" x2="30" y2="300" stroke="black" />
+                <line x1="00" y1="40" x2="3000" y2="10" stroke="black" />
+              </svg>
+            </div>
+          </>
         )
       }
       className={cN(className, {
@@ -560,7 +580,13 @@ export function SectionHeader({
         <header className={s.header}>
           <div className={s.headerText}>
             {preTitle && <div className={s.headerPreTitle}>{preTitle}</div>}
-            <h2 className={s.headerTitle}>{title}</h2>
+            <h2
+              className={cN(s.headerTitle, {
+                [s.headerTitleLight]: !backgroundImageSet,
+              })}
+            >
+              {title}
+            </h2>
             {subTitle && <div className={s.headerSubTitle}>{subTitle}</div>}
           </div>
         </header>
