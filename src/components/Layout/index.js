@@ -135,7 +135,7 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const donationBarVisible = false; // TODO: reactive from context, to adapt, when user clicks bar away
+  const donationBarVisible = true; // TODO: reactive from context, to adapt, when user clicks bar away
 
   const variableMarginClass = () => {
     if (donationBarVisible) {
