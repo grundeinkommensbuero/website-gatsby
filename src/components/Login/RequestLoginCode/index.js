@@ -72,7 +72,7 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
     window.addEventListener('hashchange', () => setTempEmail(undefined));
   }, [setTempEmail]);
 
-  if (!userId && !tempEmail) {
+  if (!tempEmail) {
     return (
       <FinallyMessage type="success">
         {/* Custom text */}
