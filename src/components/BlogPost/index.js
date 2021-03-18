@@ -32,13 +32,25 @@ export default ({
       <Helmet>
         <title>{title}</title>
 
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@exbeditionbge" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={html2plaintext(excerpt)} />
+
         {featured_media && (
           <meta
             property="og:image"
             content={featured_media.localFile.childImageSharp.og.src}
           />
         )}
+        {featured_media && (
+          <meta
+            name="twitter:image"
+            content={featured_media.localFile.childImageSharp.og.src}
+          />
+        )}
         {!featured_media && <meta property="og:image" content={OGImage} />}
+        {!featured_media && <meta name="twitter:image" content={OGImage} />}
 
         <meta name="description" content={html2plaintext(excerpt)} />
         <meta property="og:description" content={html2plaintext(excerpt)} />
