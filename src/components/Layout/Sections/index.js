@@ -12,7 +12,6 @@ import Pledge from '../../Forms/Pledge';
 import SignatureListDownload from '../../Forms/SignatureListDownload';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
-import HeaderBackgrounds from '../HeaderBackgrounds';
 import Img from 'gatsby-image';
 import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
