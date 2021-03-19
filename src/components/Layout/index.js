@@ -154,7 +154,7 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   };
 
-  // Temporary modify section color scheme, when none is set from contentful
+  // Modify section color scheme, when none is set from contentful
   // keyVisual component excluded, because its already violet
   const modifySections = origSections => {
     if (origSections && origSections.length !== 0) {

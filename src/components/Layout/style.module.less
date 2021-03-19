@@ -11,7 +11,15 @@
 .withDonationBar {
   margin-top: calc(@headerHeight + @donationBarHeight);
 
-  @media (max-width: @breakPointS) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS);
+  @media (max-width: 529px) {
+    margin-top: calc(@headerHeightS + @donationBarHeightS * 1.75);
+  }
+
+  @media (max-width: 380px) {
+    margin-top: calc(@headerHeightS + @donationBarHeightS * 2.1);
+  }
+
+  @media (max-width: 303px) {
+    margin-top: calc(@headerHeightS + @donationBarHeightS * 2.6);
   }
 }

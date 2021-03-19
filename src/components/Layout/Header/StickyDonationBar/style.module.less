@@ -4,8 +4,16 @@
   height: @donationBarHeight;
   background: @aqua;
 
-  @media (max-width: @breakPointS) {
-    height: @donationBarHeightS;
+  @media (max-width: 529px) {
+    height: calc(@donationBarHeightS * 1.75);
+  }
+
+  @media (max-width: 380px) {
+    height: calc(@donationBarHeightS * 2.1);
+  }
+
+  @media (max-width: 303px) {
+    height: calc(@donationBarHeightS * 2.6);
   }
 }
 
