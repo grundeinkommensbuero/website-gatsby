@@ -117,12 +117,34 @@ export const Legend = () => {
             <p className={s.legendIconLabel}>
               Die Farbe der Kreise zeigt, wie nah der Ort am Anmeldeziel ist
             </p>
-            <div className={s.legendIcon}>
+
+
+            <div className={s.legendGradientBarContainer}>
               <div
-                className={s.legendGradient}
-                dangerouslySetInnerHTML={{ __html: legendGradient }}
-              ></div>
+                className={s.legendGradientBarNotGoal}
+              >
+              </div>
+              <div
+                className={s.legendGradientBarGoal}
+              >
+              </div>
             </div>
+
+            <div className={s.barLabelContainer}>
+              <div
+                className={s.barLabelNotGoal}
+              >
+                <span>0%</span>
+                <span>99%</span>
+              </div>
+              <div
+                className={s.barLabelGoal}
+              >
+                <span>100%</span>
+              </div>
+            </div>
+
+
             <div className={s.legendSpacer}></div>
           </div>
         </>
@@ -288,17 +310,17 @@ export const MunicipalityMap = ({
       allMunicipalityStatsState === 'error'
     ) {
       if (initialMapAnimation) {
-      animate({
-        fadeOpacities,
-        setFadeOpacities,
-        dataEvents,
-        setDataEvents,
-        flyToAgsOnLoad,
-        updateFocus,
-        setMunicipalityFadeProgress,
-        municipalityStatsState: allMunicipalityStatsState,
-      });
-    }
+        animate({
+          fadeOpacities,
+          setFadeOpacities,
+          dataEvents,
+          setDataEvents,
+          flyToAgsOnLoad,
+          updateFocus,
+          setMunicipalityFadeProgress,
+          municipalityStatsState: allMunicipalityStatsState,
+        });
+      }
     }
   }, [shouldStartAnimation, mapDataReady, animate, allMunicipalityStatsState]);
 

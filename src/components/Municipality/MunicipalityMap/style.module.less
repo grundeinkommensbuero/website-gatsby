@@ -93,8 +93,8 @@
     'top  top top'
     'left empty right'
     'bottom bottom bottom';
-    grid-template-rows: 0% 100% 0%;
-    grid-template-columns: 10% 80% 10%;
+  grid-template-rows: 0% 100% 0%;
+  grid-template-columns: 10% 80% 10%;
 
   pointer-events: none;
 
@@ -204,13 +204,60 @@
       width: 100%;
     }
   }
-  & .legendGradient {
-    width: 100%;
-    & svg {
-      height: 100%;
-      width: 100%;
-    }
-  }
+}
+
+.legendGradientBarContainer {
+  display: flex;
+  width: 100%;
+}
+
+.legendGradientBarNotGoal {
+  width: 80%;
+  height: 2rem;
+  border: solid white 1px;
+  background: #02c3ed; /* Old browsers */
+  background: -moz-linear-gradient(
+    left,
+    #02c3ed 0%,
+    #42066e 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    left,
+    #02c3ed 0%,
+    #42066e 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to right,
+    #02c3ed 0%,
+    #42066e 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#02c3ed', endColorstr='#42066e',GradientType=1 ); /* IE6-9 */
+}
+
+.legendGradientBarGoal {
+  width: 25%;
+  height: 2rem;
+  border: solid white 1px;
+  background: #fc484c;
+}
+
+.barLabelContainer {
+  display: flex;
+  width: 100%;
+  height: 0.5rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.barLabelNotGoal {
+  width: 75%;
+  display: flex;
+  justify-content: space-between;
+}
+.barLabelGoal {
+  width: 25%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .legendIconLabel {
