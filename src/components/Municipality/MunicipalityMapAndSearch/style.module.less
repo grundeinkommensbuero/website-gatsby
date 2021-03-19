@@ -13,6 +13,21 @@
   }
 }
 
+.topDesktopLegend {
+  margin-top: 1rem;
+  @media (max-width: @breakPointL) {
+    display: none;
+  }
+}
+
+.bottomMobileLegend {
+  margin-top: 1rem;
+  display: none;
+  @media (max-width: @breakPointL) {
+    display: block;
+  }
+}
+
 .map {
   grid-column-start: 1;
   grid-column-end: 2;
@@ -25,42 +40,25 @@
     grid-row-start: 2;
     padding-right: 0rem;
   }
-  padding-right: 1.5rem;
+  padding-right: 2rem;
 }
 
-.legend {
-  grid-column-start: 2;
-  grid-column-end: last-line;
-  grid-row-start: 2;
-  grid-row-end: 6;
+.mapControlContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  padding-left: 1rem;
+
   @media (max-width: @breakPointL) {
-    order: 2;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 3;
     padding-left: 0rem;
   }
-  padding-left: 1.5rem;
 }
 
 .searchWrapper {
-  grid-column-start: 2;
-  grid-column-end: last-line;
-  grid-row-start: 1;
-  grid-row-end: 2;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  //justify-content: center;
-  padding: 1.5rem 0;
-  @media (max-width: @breakPointL) {
-    order: 0;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    padding-left: 0rem;
-  }
-  padding-left: 1.5rem;
+  padding: 1rem 0 1rem 0;
 }
 
 .searchInfoText {

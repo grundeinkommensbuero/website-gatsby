@@ -10,13 +10,18 @@ export const MunicipalityMapAndSearch = () => {
       <div className={s.map}>
         <MunicipalityMap />
       </div>
-      <div className={s.searchWrapper}>
-        <p className={s.searchInfoText}>
-          Finde deinen Ort und schaue, wie viele Menschen schon dabei sind:
+      <div className={s.mapControlContainer}>
+        <div className={s.searchWrapper}>
+          <p className={s.searchInfoText}>
+            Finde deinen Ort und schaue, wie viele Menschen schon dabei sind:
         </p>
-        <MunicipalitySearch />
+          <MunicipalitySearch />
+        </div>
+        <div className={s.topDesktopLegend}>
+          <Legend />
+        </div>
       </div>
-      <div className={s.legend}>
+      <div className={s.bottomMobileLegend}>
         <Legend />
       </div>
     </div>
