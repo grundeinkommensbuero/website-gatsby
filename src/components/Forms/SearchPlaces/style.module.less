@@ -36,7 +36,6 @@
 }
 
 .searchBar {
-  width: 100%;
   &:focus {
     outline: none;
     box-shadow: inset 0 0 0 @borderWidthThick @aqua;
@@ -45,6 +44,10 @@
   &.isNotInsideForm {
     border-radius: 25px;
     border-color: @aqua;
+  }
+
+  &.fullWidthInput {
+    width: 100%;
   }
 
   border-radius: 0; // Possible iPhone fix

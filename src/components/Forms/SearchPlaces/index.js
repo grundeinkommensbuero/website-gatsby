@@ -32,6 +32,7 @@ export const SearchPlaces = ({
   buttonSize,
   profileButtonStyle,
   isInsideForm,
+  fullWidthInput = false,
   handleButtonClick = handleButtonClickDefault,
   initialPlace = {},
 }) => {
@@ -238,7 +239,7 @@ export const SearchPlaces = ({
             onChange={handleChange}
             onKeyDown={handleEnterKey}
             onBlur={handleBlur}
-            className={cN(s.searchBar, { [s.isNotInsideForm]: !isInsideForm })}
+            className={cN(s.searchBar, { [s.isNotInsideForm]: !isInsideForm }, { [s.fullWidthInput]: fullWidthInput })}
           />
 
           <AutoCompleteList

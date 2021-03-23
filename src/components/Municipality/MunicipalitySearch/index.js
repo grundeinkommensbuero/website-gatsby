@@ -19,6 +19,7 @@ export const MunicipalitySearch = ({ searchTitle }) => {
       inputSize="SMALL"
       buttonSize="MEDIUM"
       searchTitle={searchTitle}
+      fullWidthInput={true}
     />
   );
 };
