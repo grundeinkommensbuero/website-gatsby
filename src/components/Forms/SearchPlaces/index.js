@@ -47,7 +47,7 @@ export const SearchPlaces = ({
     import('./municipalitiesForSearch.json').then(({ default: places }) => {
       setFuse(
         new Fuse(places, {
-          keys: ['name', 'zipCodes'],
+          keys: ['nameUnique', 'zipCodes'],
           includeScore: true,
           threshold: 0.2,
         })
@@ -78,7 +78,7 @@ export const SearchPlaces = ({
         // we should search the data for name AND zip code
         if (digits !== '' && name !== '') {
           searchProps = {
-            $and: [{ name: name }, { zipCodes: digits }],
+            $and: [{ nameUnique: name }, { zipCodes: digits }],
           };
         } else if (digits !== '') {
           searchProps = digits;
@@ -122,11 +122,11 @@ export const SearchPlaces = ({
             // we want to prioritize it, e.g. Halle (Saale) or Halle.
             // If a and b match the condition we sort by population
             const aHasNameAsFirstWord =
-              a.name.toLowerCase().startsWith(`${lowercaseName} `) ||
-              a.name.toLowerCase() === lowercaseName;
+              a.nameUnique.toLowerCase().startsWith(`${lowercaseName} `) ||
+              a.nameUnique.toLowerCase() === lowercaseName;
             const bHasNameAsFirstWord =
-              b.name.toLowerCase().startsWith(`${lowercaseName} `) ||
-              b.name.toLowerCase() === lowercaseName;
+              b.nameUnique.toLowerCase().startsWith(`${lowercaseName} `) ||
+              b.nameUnique.toLowerCase() === lowercaseName;
 
             if (aHasNameAsFirstWord && bHasNameAsFirstWord) {
               return b.population - a.population;
@@ -142,33 +142,33 @@ export const SearchPlaces = ({
 
             // Next in prioritization: if result starts with query
             if (
-              a.name.toLowerCase().startsWith(lowercaseName) &&
-              b.name.toLowerCase().startsWith(lowercaseName)
+              a.nameUnique.toLowerCase().startsWith(lowercaseName) &&
+              b.nameUnique.toLowerCase().startsWith(lowercaseName)
             ) {
               return b.population - a.population;
             }
 
-            if (a.name.toLowerCase().startsWith(lowercaseName)) {
+            if (a.nameUnique.toLowerCase().startsWith(lowercaseName)) {
               return -1;
             }
 
-            if (b.name.toLowerCase().startsWith(lowercaseName)) {
+            if (b.nameUnique.toLowerCase().startsWith(lowercaseName)) {
               return 1;
             }
 
             // Next in prioritization: if result includes the query
             if (
-              a.name.toLowerCase().includes(lowercaseName) &&
-              b.name.toLowerCase().includes(lowercaseName)
+              a.nameUnique.toLowerCase().includes(lowercaseName) &&
+              b.nameUnique.toLowerCase().includes(lowercaseName)
             ) {
               return b.population - a.population;
             }
 
-            if (a.name.toLowerCase().includes(lowercaseName)) {
+            if (a.nameUnique.toLowerCase().includes(lowercaseName)) {
               return -1;
             }
 
-            if (b.name.toLowerCase().includes(lowercaseName)) {
+            if (b.nameUnique.toLowerCase().includes(lowercaseName)) {
               return 1;
             }
 
@@ -389,7 +389,7 @@ export function AutoCompleteList({
                 handleArrowListNavigation(e);
               }}
             >
-              {x.name},{' '}
+              {x.nameUnique},{' '}
               {x.zipCodes.length === 1
                 ? `${x.zipCodes[0]}`
                 : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}
