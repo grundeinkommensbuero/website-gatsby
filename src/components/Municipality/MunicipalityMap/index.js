@@ -760,6 +760,7 @@ const Map = ({
         onResize={dimensions => {
           handleResize(dimensions);
         }}
+        getCursor={({ isHovering }) => (isHovering ? 'pointer' : 'default')}
       ></DeckGL>
     </>
   );
