@@ -62,6 +62,7 @@ const getAndStoreDataVariations = municipalities => {
       coordinates: [longitude, latitude],
       goal,
       population,
+      slug,
     });
     // The page has access to all information including the goal
     municipalitiesForPage.push({ ...municipality, goal });
