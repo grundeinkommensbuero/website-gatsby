@@ -37,6 +37,7 @@ export const getLayeredData = ({
     const {
       goal,
       coordinates: [longitude, latitudeEnd],
+      slug,
     } = municipalities[i];
 
     // ---- Check events / animation ---------------------------------------------------------
@@ -99,6 +100,7 @@ export const getLayeredData = ({
           latitude,
           latitudeRange,
           hasLabel,
+          slug,
         });
 
         // Set signupRange to end for the overall municipalities data (labels)

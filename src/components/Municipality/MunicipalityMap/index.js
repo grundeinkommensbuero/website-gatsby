@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import s from './style.module.less';
 import cN from 'classnames';
+import { navigate } from 'gatsby';
 
 import characterSet from './data/characterSet.json';
 import labels from './data/labels.json';
@@ -118,32 +119,20 @@ export const Legend = () => {
               Die Farbe der Kreise zeigt, wie nah der Ort am Anmeldeziel ist
             </p>
 
-
             <div className={s.legendGradientBarContainer}>
-              <div
-                className={s.legendGradientBarNotGoal}
-              >
-              </div>
-              <div
-                className={s.legendGradientBarGoal}
-              >
-              </div>
+              <div className={s.legendGradientBarNotGoal}></div>
+              <div className={s.legendGradientBarGoal}></div>
             </div>
 
             <div className={s.barLabelContainer}>
-              <div
-                className={s.barLabelNotGoal}
-              >
+              <div className={s.barLabelNotGoal}>
                 <span>0%</span>
                 <span>99%</span>
               </div>
-              <div
-                className={s.barLabelGoal}
-              >
+              <div className={s.barLabelGoal}>
                 <span>100%</span>
               </div>
             </div>
-
 
             <div className={s.legendSpacer}></div>
           </div>
@@ -464,6 +453,10 @@ const flyTo = ({
   }, 150);
 };
 
+const goToMunicipalityPage = info => {
+  navigate(`/gemeinden/${info.object.slug}`);
+};
+
 const Map = ({
   dataStates,
   dataSignups,
@@ -525,6 +518,7 @@ const Map = ({
       getRadius: d => scaleEmphSmallQualifiedMunicipalities(d.signups, d.goal),
       getFillColor: d => getColor(d.percentToGoal),
       onHover: info => setHoverInfo(info),
+      onClick: info => goToMunicipalityPage(info),
       animationProgress: municipalityFadeProgress,
       getDelayFactor: d => {
         return signupAnimationDelayScale(d.population);
