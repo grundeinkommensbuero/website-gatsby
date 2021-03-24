@@ -123,9 +123,11 @@ export const SearchPlaces = ({
             // If a and b match the condition we sort by population
             const aHasNameAsFirstWord =
               a.nameUnique.toLowerCase().startsWith(`${lowercaseName} `) ||
+              a.nameUnique.toLowerCase().startsWith(`${lowercaseName},`) ||
               a.nameUnique.toLowerCase() === lowercaseName;
             const bHasNameAsFirstWord =
               b.nameUnique.toLowerCase().startsWith(`${lowercaseName} `) ||
+              b.nameUnique.toLowerCase().startsWith(`${lowercaseName},`) ||
               b.nameUnique.toLowerCase() === lowercaseName;
 
             if (aHasNameAsFirstWord && bHasNameAsFirstWord) {
