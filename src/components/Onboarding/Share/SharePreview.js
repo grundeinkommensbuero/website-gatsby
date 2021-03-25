@@ -21,9 +21,9 @@ export const SharePreview = ({
   userData,
   userId,
   municipality,
-  isInOnboarding
+  isInOnboarding,
 }) => {
-  const [showProfileImageUpload, setShowProfileImageUpload] = useState(false);
+  const [showProfileImageUpload] = useState(false);
   const [useProfilePicture, setUseProfilePicture] = useState(
     userData?.profilePictures?.original
   );
@@ -34,7 +34,7 @@ export const SharePreview = ({
       headers: {},
     })
       .then(response => {
-        response.arrayBuffer().then(function (buffer) {
+        response.arrayBuffer().then(function(buffer) {
           const url = window.URL.createObjectURL(new Blob([buffer]));
           const link = document.createElement('a');
           link.href = url;
@@ -54,18 +54,25 @@ export const SharePreview = ({
         <h3 className={gS.moduleTitle}>So teilst du über Instagram:</h3>
         <p>
           Teile die Expedition über deine Insta-Story und zeige all deinen
-          Freundinnen, dass du dabei bist.
-          Schau direkt auf unserer Instagram Seite vorbei. Dort haben wir
-          einige Posts und Stories zum teilen zusammengestellt.
+          Freundinnen, dass du dabei bist. Schau direkt auf unserer Instagram
+          Seite vorbei. Dort haben wir einige Posts und Stories zum teilen
+          zusammengestellt.
         </p>
 
-        <Button onClick={() => window.open("https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTAxOTExMTczNzgwMzgy?igshid=3pvxrqh2oxij", "_blank")}>
+        <Button
+          onClick={() =>
+            window.open(
+              'https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTAxOTExMTczNzgwMzgy?igshid=3pvxrqh2oxij',
+              '_blank'
+            )
+          }
+        >
           Zu unserer Insta-Story
         </Button>
 
         <p>
-          Oder einfach Datei runterladen, in deine Insta-Story einfügen
-          und die @expedition.grundeinkommen verlinken.
+          Oder einfach Datei runterladen, in deine Insta-Story einfügen und die
+          @expedition.grundeinkommen verlinken.
         </p>
 
         <div className={s.instaImageContainer}>
@@ -134,8 +141,9 @@ export const SharePreview = ({
 
     // Quickfix, if user id for some reason is not available
     if (userId) {
-      return `${baseUrl}gemeinde-teilen/${userId}?ags=${municipality.ags
-        }&version=1${addProfileImage()}`;
+      return `${baseUrl}gemeinde-teilen/${userId}?ags=${
+        municipality.ags
+      }&version=1${addProfileImage()}`;
     } else {
       return baseUrl;
     }
@@ -144,9 +152,9 @@ export const SharePreview = ({
   const ShareButton = () => {
     let CaseButton =
       Components[
-      ShareButtons.find(
-        el => el.channelIdentifier === shareChannel?.channelIdentifier
-      )?.name
+        ShareButtons.find(
+          el => el.channelIdentifier === shareChannel?.channelIdentifier
+        )?.name
       ];
     const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = [
@@ -212,7 +220,11 @@ export const SharePreview = ({
                 className={s.sharePreview}
               />
             )}
-            <h3 className={cN(s.mainCaption, { [s.mainCaptionHuge]: !isInOnboarding })}>
+            <h3
+              className={cN(s.mainCaption, {
+                [s.mainCaptionHuge]: !isInOnboarding,
+              })}
+            >
               {userData.username} bringt das #Grundeinkommen nach{' '}
               {municipality.name}
             </h3>
@@ -221,7 +233,7 @@ export const SharePreview = ({
 
           <ShareButton />
 
-          {userData?.profilePictures?.original &&
+          {userData?.profilePictures?.original && (
             <div className={gS.optionSelectionContainer}>
               {useProfilePicture ? (
                 <span
@@ -261,7 +273,7 @@ export const SharePreview = ({
                 </>
               )}
             </div>
-          }
+          )}
 
           {showProfileImageUpload && (
             <div className={s.imageUploadContainer}>
@@ -271,7 +283,7 @@ export const SharePreview = ({
                 showUploadLabel={false}
                 showEditLabel={true}
                 size={'large'}
-                onUploadDone={() => { }}
+                onUploadDone={() => {}}
               />
             </div>
           )}
