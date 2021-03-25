@@ -45,7 +45,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
 // Note: Only needed for Pins as Markers:
 // const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
-const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
+// const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
 
 // ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
@@ -118,32 +118,20 @@ export const Legend = () => {
               Die Farbe der Kreise zeigt, wie nah der Ort am Anmeldeziel ist
             </p>
 
-
             <div className={s.legendGradientBarContainer}>
-              <div
-                className={s.legendGradientBarNotGoal}
-              >
-              </div>
-              <div
-                className={s.legendGradientBarGoal}
-              >
-              </div>
+              <div className={s.legendGradientBarNotGoal}></div>
+              <div className={s.legendGradientBarGoal}></div>
             </div>
 
             <div className={s.barLabelContainer}>
-              <div
-                className={s.barLabelNotGoal}
-              >
+              <div className={s.barLabelNotGoal}>
                 <span>0%</span>
                 <span>99%</span>
               </div>
-              <div
-                className={s.barLabelGoal}
-              >
+              <div className={s.barLabelGoal}>
                 <span>100%</span>
               </div>
             </div>
-
 
             <div className={s.legendSpacer}></div>
           </div>

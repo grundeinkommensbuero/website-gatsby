@@ -65,7 +65,7 @@ export const RequestLoginCode = ({ children, buttonText }) => {
 };
 
 export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
-  const { userId, tempEmail, setTempEmail } = useContext(AuthContext);
+  const { tempEmail, setTempEmail } = useContext(AuthContext);
 
   // Add event listener on url hash change
   useEffect(() => {
