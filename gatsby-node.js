@@ -49,13 +49,21 @@ const getAndStoreDataVariations = municipalities => {
       ags,
       slug,
       name,
+      nameUnique,
       longitude,
       latitude,
       zipCodes,
       population,
     } = municipality;
     const goal = getGoal(population);
-    municipalitiesForSearch.push({ ags, name, zipCodes, population, slug });
+    municipalitiesForSearch.push({
+      ags,
+      name,
+      zipCodes,
+      population,
+      slug,
+      nameUnique,
+    });
     municipalitiesForMap.push({
       ags,
       name,
