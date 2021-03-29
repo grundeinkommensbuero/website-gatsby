@@ -51,7 +51,7 @@ export function contentfulJsonToHtml(json) {
           return <Link to={uri}>{node.content[0].value}</Link>;
         } else {
           return (
-            <a href={uri} target="_self">
+            <a href={uri}>
               {node.content[0].value}
             </a>
           );
