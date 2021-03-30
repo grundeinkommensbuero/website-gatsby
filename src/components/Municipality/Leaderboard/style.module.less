@@ -1,0 +1,49 @@
+@import '../../style/vars.less';
+
+.title {
+  text-align: left;
+}
+
+.tableBody {
+  border-collapse: collapse;
+  border: 3px solid #ddd;
+  width: 100%;
+
+  &.tableBody td,
+  &.tableBody th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  &.tableBody th {
+    border-bottom: 3px solid #ddd;
+  }
+}
+
+.tableHead {
+  text-align: left;
+}
+
+.pageSelectorElement {
+  padding: 1rem;
+  border: solid 1px white;
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+  &:hover {
+    background-color: @red;
+  }
+
+  &.activePageSelector {
+    background-color: @aqua;
+  }
+}
+
+.pageSelectorContainer {
+  display: flex;
+  border-bottom: 3px solid #ddd;
+  border-left: 3px solid #ddd;
+  border-right: 3px solid #ddd;
+  margin-bottom: 3rem;
+}

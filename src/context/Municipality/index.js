@@ -3,6 +3,8 @@ import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
 import { history } from '../utils';
 // import { usePrevious } from '../../hooks/utils';
 
+import municipalities from '../../components/Municipality/MunicipalityMap/data/municipalitiesForMap.json';
+
 export const MunicipalityContext = React.createContext();
 
 export const MunicipalityProvider = ({ children }) => {
@@ -12,7 +14,8 @@ export const MunicipalityProvider = ({ children }) => {
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
-
+  const [municipalitiesGoalSignup, setMunicipalitiesGoalSignup] = useState([]);
+  const [municipalitiesInObject, setMunicipalitiesInObject] = useState({});
 
   // Stats for all municipalities
   const [
@@ -152,6 +155,42 @@ export const MunicipalityProvider = ({ children }) => {
     }
   }, [allMunicipalityStats]);
 
+  useEffect(() => {
+    // Create Object with raw municipality data for faster reference
+    const municipalityObject = municipalities.reduce((muniObj, municipality) => {
+      muniObj[municipality.ags.toString()] = {
+        name: municipality.name,
+        goal: municipality.goal,
+        population: municipality.population
+      };
+      return muniObj;
+    }, {});
+    setMunicipalitiesInObject(municipalityObject);
+  }, []);
+
+  useEffect(() => {
+    // Find all municipalities with signups and goal
+    const municipalitiesWithGoalAndSignups = [];
+    if ('municipalities' in allMunicipalityStats) {
+      allMunicipalityStats.municipalities.forEach(municipality => {
+        if (municipality.ags.toString() in municipalitiesInObject) {
+          const fullMunicipality = {
+            ags: municipality.ags,
+            signups: municipality.signups,
+            percent: Math.round(municipality.signups / municipalitiesInObject[municipality.ags.toString()].goal * 100),
+            ...municipalitiesInObject[municipality.ags.toString()]
+          }
+          municipalitiesWithGoalAndSignups.push(fullMunicipality);
+        }
+      });
+      municipalitiesWithGoalAndSignups.sort((a, b) => {
+        return a.percent - b.percent;
+      });
+      console.log(municipalitiesWithGoalAndSignups);
+      setMunicipalitiesGoalSignup(municipalitiesWithGoalAndSignups.reverse());
+    }
+  }, [allMunicipalityStats]);
+
   return (
     <MunicipalityContext.Provider
       value={{
@@ -169,6 +208,7 @@ export const MunicipalityProvider = ({ children }) => {
         singleMunicipalityStats,
         singleMunicipalityStatsState,
         statsSummary,
+        municipalitiesGoalSignup,
         refreshContextStats: () => getAllMunicipalityStats()
       }}
     >
