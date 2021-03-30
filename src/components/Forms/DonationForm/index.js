@@ -34,7 +34,6 @@ export default ({ onboardingNextPage }) => {
     customUserData: userData,
   } = useContext(AuthContext);
   const [, , signUp] = useSignUp();
-  const [isRecurring, setIsRecurring] = useState(false);
   const [enteredAmount, setEnteredAmount] = useState(false);
   const [enteredPaymentInfo, setEnteredPaymentInfo] = useState(false);
   const [needsToLogin, setNeedsToLogin] = useState(false);
@@ -115,13 +114,6 @@ export default ({ onboardingNextPage }) => {
       e.preventDefault();
     }
     toggleOverlay();
-  };
-
-  const getFormDataAmount = amount => {
-    console.log('amount: ' + amount);
-    //console.log('customAmount' + customAmount);
-    //return amount === 'custom' && customAmount ? +customAmount : +amount;
-    return +amount;
   };
 
   const validate = (values, emailRequired) => {
@@ -495,7 +487,7 @@ export default ({ onboardingNextPage }) => {
 
                           <p>Danke für deine Spende!</p>
 
-                          {onboardingNextPage !== undefined &&
+                          {onboardingNextPage !== undefined && (
                             <div className={s.donationButtons}>
                               <CTAButton
                                 type="submit"
@@ -508,7 +500,7 @@ export default ({ onboardingNextPage }) => {
                                 Weiter
                               </CTAButton>
                             </div>
-                          }
+                          )}
                         </div>
                       )}
                     </form>
@@ -545,9 +537,14 @@ export default ({ onboardingNextPage }) => {
                     name="amount"
                     value={+initialValues.customAmount}
                   />
-                  <Button name="submit" onClick={() => setPaypalButtonClicked(true)}>Weiter zu Papyal</Button>
+                  <Button
+                    name="submit"
+                    onClick={() => setPaypalButtonClicked(true)}
+                  >
+                    Weiter zu Papyal
+                  </Button>
 
-                  {onboardingNextPage !== undefined && paypalButtonClicked &&
+                  {onboardingNextPage !== undefined && paypalButtonClicked && (
                     <div className={s.donationButtons}>
                       <CTAButton
                         type="submit"
@@ -560,7 +557,7 @@ export default ({ onboardingNextPage }) => {
                         Weiter
                       </CTAButton>
                     </div>
-                  }
+                  )}
                 </form>
               </div>
             )}
@@ -594,9 +591,14 @@ export default ({ onboardingNextPage }) => {
                     name="amount"
                     value={+initialValues.customAmount}
                   />
-                  <Button name="submit" onClick={() => setPaypalButtonClicked(true)}>Jetzt spenden</Button>
+                  <Button
+                    name="submit"
+                    onClick={() => setPaypalButtonClicked(true)}
+                  >
+                    Jetzt spenden
+                  </Button>
 
-                  {onboardingNextPage !== undefined && paypalButtonClicked &&
+                  {onboardingNextPage !== undefined && paypalButtonClicked && (
                     <div className={s.donationButtons}>
                       <CTAButton
                         type="submit"
@@ -609,7 +611,7 @@ export default ({ onboardingNextPage }) => {
                         Weiter
                       </CTAButton>
                     </div>
-                  }
+                  )}
                 </form>
               </div>
             )}
@@ -712,19 +714,19 @@ export default ({ onboardingNextPage }) => {
               <CTALink to="/">Zur Startseite</CTALink>
             </CTAButtonContainer>
           ) : (
-              <div className={s.donationButtons}>
-                <CTAButton
-                  type="submit"
-                  onClick={() => {
-                    onboardingNextPage();
-                  }}
-                  size="MEDIUM"
-                  className={s.primaryButton}
-                >
-                  Weiter
+            <div className={s.donationButtons}>
+              <CTAButton
+                type="submit"
+                onClick={() => {
+                  onboardingNextPage();
+                }}
+                size="MEDIUM"
+                className={s.primaryButton}
+              >
+                Weiter
               </CTAButton>
-              </div>
-            )}
+            </div>
+          )}
 
           <Confetti></Confetti>
         </div>
@@ -748,7 +750,6 @@ export default ({ onboardingNextPage }) => {
           <CTAButtonContainer className={s.buttonContainer}>
             <CTAButton
               onClick={() => {
-                setIsRecurring(false);
                 setEnteredAmount(false);
                 setEnteredPaymentInfo(false);
                 setDonationError(false);

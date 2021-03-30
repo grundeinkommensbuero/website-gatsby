@@ -11,13 +11,14 @@ import { useSignUp } from '../../../hooks/Authentication';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
-import AuthInfo from '../../AuthInfo';
-import { FinallyMessage } from '../FinallyMessage';
+// import AuthInfo from '../../AuthInfo';
+// import { FinallyMessage } from '../FinallyMessage';
 import s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { SearchPlaces } from '../SearchPlaces';
 
-const AuthenticatedDialogDefault = () => {
+// Not needed at the moment
+/* const AuthenticatedDialogDefault = () => {
   return (
     <FinallyMessage preventScrolling={true}>
       <p>
@@ -29,7 +30,7 @@ const AuthenticatedDialogDefault = () => {
       </p>
     </FinallyMessage>
   );
-};
+}; */
 
 export default ({
   initialValues,

@@ -46,7 +46,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 const legendSize = require('!svg-inline-loader!./assets/legend-size.svg');
 // Note: Only needed for Pins as Markers:
 // const legendMarker = require('!svg-inline-loader!./assets/legend-marker.svg');
-const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
+// const legendGradient = require('!svg-inline-loader!./assets/legend-gradient.svg');
 
 // ---- Constants ------------------------------------------------------------------------
 const maxZoom = 9;
