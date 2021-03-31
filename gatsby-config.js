@@ -100,6 +100,7 @@ const config = {
          * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
          */
         baseUrl: 'xbge.uber.space',
+        url: 'https://xbge.uber.space/graphql',
         protocol: 'http',
         hostingWPCOM: false,
         useACF: false,

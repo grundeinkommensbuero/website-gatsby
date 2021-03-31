@@ -172,7 +172,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 const clientId =
   process.env.NODE_ENV === 'development' ||
-  process.env.GATSBY_USE_DEV_BACKEND === 'override'
+    process.env.GATSBY_USE_DEV_BACKEND === 'override'
     ? process.env.DEV_COGNITO_APP_CLIENT_ID
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
 
