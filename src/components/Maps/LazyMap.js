@@ -70,7 +70,7 @@ export default ({ mapConfig }) => {
               lon
             }
             description {
-              json
+              raw
             }
             date
             state

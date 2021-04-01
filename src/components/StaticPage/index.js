@@ -72,7 +72,7 @@ export const pageQuery = graphql`
               addToSignatureCount
               ctaLink
               eyeCatcher {
-                json
+                raw
               }
               eyeCatcherLink
               goalUnbuffered
@@ -83,7 +83,7 @@ export const pageQuery = graphql`
               }
             }
             body {
-              json
+              raw
             }
             maps {
               name
@@ -126,7 +126,7 @@ export const pageQuery = graphql`
             blogTeaser
             questionUbi
             bodyAtTheEnd {
-              json
+              raw
             }
           }
           ... on ContentfulPageSectionVideo {
@@ -134,7 +134,7 @@ export const pageQuery = graphql`
             title
             videoLink
             bodyAtTheEnd {
-              json
+              raw
             }
             showForOptions
             colorScheme
@@ -178,7 +178,7 @@ export const pageQuery = graphql`
                   }
                 }
                 text {
-                  json
+                  raw
                 }
               }
               ... on ContentfulSectionComponentTickerToSignup {
@@ -209,7 +209,7 @@ export const pageQuery = graphql`
                 headline
                 column
                 body {
-                  json
+                  raw
                 }
               }
               ... on ContentfulSectionComponentInviteFriends {
@@ -219,7 +219,7 @@ export const pageQuery = graphql`
                 headline
                 column
                 body {
-                  json
+                  raw
                 }
               }
               ... on ContentfulSectionComponentBecomeActive {
@@ -229,7 +229,7 @@ export const pageQuery = graphql`
                 headline
                 column
                 body {
-                  json
+                  raw
                 }
                 fullWidthOnDesktop
               }
@@ -259,7 +259,7 @@ export const pageQuery = graphql`
                 showForOptions
                 column
                 body {
-                  json
+                  raw
                 }
                 fullWidthOnDesktop
               }
@@ -278,7 +278,7 @@ export const pageQuery = graphql`
             introText
             colorScheme
             previewDescription {
-              json
+              raw
             }
           }
         }

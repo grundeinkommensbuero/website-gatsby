@@ -15,7 +15,7 @@ import html2plaintext from 'html2plaintext';
 
 export default ({
   data: {
-    wordpressPost: { title, content, featured_media, date, tags, excerpt },
+    wpPost: { title, content, featuredImage, date, tags, excerpt },
     allWordpressTag,
     contentfulGlobalStuff: { siteTitle },
   },
@@ -37,20 +37,20 @@ export default ({
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={html2plaintext(excerpt)} />
 
-        {featured_media && (
+        {featuredImage && (
           <meta
             property="og:image"
-            content={featured_media.localFile.childImageSharp.og.src}
+            content={featuredImage.node.localFile.childImageSharp.og.src}
           />
         )}
-        {featured_media && (
+        {featuredImage && (
           <meta
             name="twitter:image"
-            content={featured_media.localFile.childImageSharp.og.src}
+            content={featuredImage.node.localFile.childImageSharp.og.src}
           />
         )}
-        {!featured_media && <meta property="og:image" content={OGImage} />}
-        {!featured_media && <meta name="twitter:image" content={OGImage} />}
+        {!featuredImage && <meta property="og:image" content={OGImage} />}
+        {!featuredImage && <meta name="twitter:image" content={OGImage} />}
 
         <meta name="description" content={html2plaintext(excerpt)} />
         <meta property="og:description" content={html2plaintext(excerpt)} />
@@ -63,7 +63,7 @@ export default ({
       <SectionWrapper>
         <SectionHeader
           backgroundImageSet={
-            featured_media && featured_media.localFile.childImageSharp.hero
+            featuredImage && featuredImage.node.localFile.childImageSharp.hero
           }
           preTitle={
             tags && (
@@ -82,9 +82,9 @@ export default ({
           }
         />
         <Section>
-          {/* {featured_media && (
+          {/* {featuredImage && (
           <SectionInner wide={true}>
-            <Img fluid={featured_media.localFile.childImageSharp.hero} />
+            <Img fluid={featuredImage.node.localFile.childImageSharp.hero} />
           </SectionInner>
         )} */}
           <SectionInner>
@@ -102,30 +102,29 @@ export default ({
 };
 
 export const pageQuery = graphql`
-  query WordpressPostByPath($path: String!) {
-    wordpressPost(path: { eq: $path }) {
+  query WordpressPostByPath($uri: String!) {
+    wpPost(uri: { eq: $uri }) {
       title
       content
       excerpt
       date
-      featured_media {
-        localFile {
-          childImageSharp {
-            hero: fluid(maxWidth: 2000) {
-              ...GatsbyImageSharpFluid_noBase64
-            }
-            og: fixed(width: 1200, quality: 90) {
-              src
+      featuredImage {
+        node {
+          localFile {
+            childImageSharp {
+              hero: fluid(maxWidth: 2000, quality: 50) {
+                src
+              }
+              og: fixed(width: 1200, quality: 90) {
+                src
+              }
             }
           }
+          uri
         }
-        path
-      }
-      tags {
-        id
       }
     }
-    allWordpressTag {
+    allWpTag {
       edges {
         node {
           id

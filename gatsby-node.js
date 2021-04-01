@@ -122,10 +122,10 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allWordpressPost {
+            allWpPost {
               edges {
                 node {
-                  path
+                  uri
                 }
               }
             }
@@ -152,14 +152,14 @@ exports.createPages = ({ graphql, actions }) => {
           });
         });
 
-        const blogPosts = result.data.allWordpressPost.edges;
+        const blogPosts = result.data.allWpPost.edges;
 
         blogPosts.forEach(post => {
           createPage({
-            path: post.node.path,
+            path: post.node.uri,
             component: blogPost,
             context: {
-              slug: post.node.path,
+              slug: post.node.uri,
               isMunicipality: false,
               isSpecificMunicipality: true,
             },

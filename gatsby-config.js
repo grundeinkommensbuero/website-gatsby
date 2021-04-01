@@ -35,8 +35,8 @@ const config = {
         `,
         feeds: [
           {
-            serialize: ({ query: { allWordpressPost } }) => {
-              return allWordpressPost.edges.map(edge => {
+            serialize: ({ query: { allWpPost } }) => {
+              return allWpPost.edges.map(edge => {
                 return Object.assign({}, edge.node, {
                   description: html2plaintext(edge.node.excerpt),
                   date: edge.node.date,
@@ -48,9 +48,9 @@ const config = {
             },
             query: `
               {
-                allWordpressPost(
+                allWpPost(
                   sort: { fields: date, order: DESC }
-                  filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
+                  filter: {tags: {nodes: {elemMatch: {name: {ne: "unlisted"}}}}}
                 ) {
                   edges {
                     node {
@@ -58,7 +58,7 @@ const config = {
                       title
                       excerpt
                       slug
-                      path
+                      link
                       date
                       content
                     }

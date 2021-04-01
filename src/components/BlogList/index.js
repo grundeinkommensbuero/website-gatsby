@@ -19,7 +19,7 @@ export const BlogList = ({ posts }) => {
   );
 };
 
-export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
+export const BlogSnippet = ({ title, excerpt, path, date, featuredImage }) => {
   const dateObject = new Date(date);
   return (
     <article className={s.article}>
@@ -33,11 +33,11 @@ export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
           </Link>
         </h1>
       </header>
-      {featured_media && (
+      {featuredImage && (
         <Link to={path}>
           <Img
             className={s.image}
-            fluid={featured_media.localFile.childImageSharp.hero}
+            fluid={featuredImage.node.localFile.childImageSharp}
           />
         </Link>
       )}

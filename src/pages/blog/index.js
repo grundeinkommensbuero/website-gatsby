@@ -12,7 +12,7 @@ import { BlogList } from '../../components/BlogList';
 
 export default ({
   data: {
-    allWordpressPost: { edges: posts },
+    allWpPost: { edges: posts },
   },
 }) => {
   const postsMapped = posts.map(post => post.node);
@@ -35,9 +35,9 @@ export default ({
 
 export const pageQuery = graphql`
   query {
-    allWordpressPost(
+    allWpPost(
       sort: { fields: date, order: DESC }
-      filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
+      filter: {tags: {nodes: {elemMatch: {name: {ne: "unlisted"}}}}}
     ) {
       edges {
         node {
@@ -45,13 +45,15 @@ export const pageQuery = graphql`
           title
           excerpt
           slug
-          path
+          uri
           date
-          featured_media {
-            localFile {
-              childImageSharp {
-                hero: fluid(maxWidth: 650) {
-                  ...GatsbyImageSharpFluid_noBase64
+          featuredImage {
+            node {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 750) {
+                    src
+                  }
                 }
               }
             }

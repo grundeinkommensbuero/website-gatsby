@@ -68,7 +68,7 @@ function Template({ children, sections, pageContext, title, description }) {
                 addToSignatureCount
                 ctaLink
                 eyeCatcher {
-                  json
+                  raw
                 }
                 goalUnbuffered
                 goalInbetweenMultiple
@@ -78,7 +78,7 @@ function Template({ children, sections, pageContext, title, description }) {
                 }
               }
               body {
-                json
+                raw
               }
               callToActionLink
               callToActionText
@@ -97,7 +97,7 @@ function Template({ children, sections, pageContext, title, description }) {
               teamMembers {
                 image {
                   fluid(maxWidth: 200, quality: 80) {
-                    ...GatsbyContentfulFluid
+                    src
                   }
                 }
                 name
@@ -112,7 +112,7 @@ function Template({ children, sections, pageContext, title, description }) {
               blogTeaser
               questionUbi
               bodyAtTheEnd {
-                json
+                raw
               }
             }
           }
