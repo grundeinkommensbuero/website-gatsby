@@ -42,7 +42,7 @@ export function contentfulJsonToHtml(json) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        // console.log(node);
+        console.log(node.data);
         const isPage = node.data.target.fields.slug;
         const uri = isPage
           ? `/${node.data.target.fields.slug['en-US']}`
@@ -171,8 +171,8 @@ export function contentfulJsonToHtml(json) {
       },
     },
   };
-  console.log(json);
-  return documentToReactComponents(json, documentToREactComponentsOptions);
+  const parsedJson = JSON.parse(json)
+  return documentToReactComponents(parsedJson, documentToREactComponentsOptions);
 }
 
 function QuestionAnswer({ question, answer, openInitially = false }) {
