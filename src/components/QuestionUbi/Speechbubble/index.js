@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import SpeechbubbleTop from '!svg-inline-loader!./speechbubble_top.svg';
 import SpeechbubbleBottom from '!svg-inline-loader!./speechbubble_bottom.svg';

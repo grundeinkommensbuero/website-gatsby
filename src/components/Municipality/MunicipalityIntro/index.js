@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 
 import { MunicipalityMap } from '../MunicipalityMap';
@@ -61,8 +61,8 @@ const ColumnQualifying = ({
               {municipalityStats.signups === 1
                 ? 'eine Anmeldung '
                 : `${municipalityStats.signups?.toLocaleString(
-                    'de'
-                  )} Anmeldungen `}
+                  'de'
+                )} Anmeldungen `}
               {municipality ? `in ${municipality.name}` : ''}!{' '}
             </p>
           ) : (
@@ -277,7 +277,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     }
     return () => {
       if (typeof window !== `undefined`) {
-        window.onpopstate = () => {};
+        window.onpopstate = () => { };
       }
     };
   }, [municipality]);

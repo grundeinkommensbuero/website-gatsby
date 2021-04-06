@@ -7,7 +7,7 @@ import { TickerMunicipality } from './Ticker/TickerMunicipality';
 import { SignupButtonAndTile } from './SignupButtonAndTile';
 import { InlineLinkButton } from '../Forms/Button';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,

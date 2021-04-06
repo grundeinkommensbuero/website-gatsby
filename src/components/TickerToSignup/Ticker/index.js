@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import cN from 'classnames';
 import Reel from 'react-reel';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import * as u from './utils';
 

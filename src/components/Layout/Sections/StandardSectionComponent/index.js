@@ -5,7 +5,7 @@ import { useUserMunicipalityContentfulState } from '../../../../hooks/Municipali
 import { SignUpButton } from '../../../TickerToSignup/SignupButton';
 import { contentfulJsonToHtml } from '../../../utils/contentfulJsonToHtml';
 import { getButtonText } from '../../../TickerToSignup/SignupButtonAndTile';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import Img from 'gatsby-image';
 
 export const StandardSectionComponent = ({
@@ -22,7 +22,7 @@ export const StandardSectionComponent = ({
     <>
       {videoLink && <YoutubeEmbed url={videoLink} />}
       {image && image.fluid && <Img fluid={image.fluid} />}
-      {text && <div>{contentfulJsonToHtml(text.json)}</div>}
+      {text && <div>{contentfulJsonToHtml(text.raw)}</div>}
       {signUpButton && (
         <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>
       )}

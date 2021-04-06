@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 
 import { useUploadImage } from '../../../hooks/images';

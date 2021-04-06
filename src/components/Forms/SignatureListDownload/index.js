@@ -8,7 +8,7 @@ import {
   // mapCampaignCodeToAgs,
   // mapCampaignCodeToState,
 } from '../../utils';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
@@ -108,14 +108,14 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
             - alle weiteren Infos findest du dort!
           </p>
         ) : (
-            <p>
-              Juhu!{' '}
-              <a target="_blank" rel="noreferrer" href={pdf.url}>
-                Hier
+          <p>
+            Juhu!{' '}
+            <a target="_blank" rel="noreferrer" href={pdf.url}>
+              Hier
             </a>{' '}
             kannst du die Unterschriftslisten samt Leitfaden herunterladen!
-            </p>
-          )}
+          </p>
+        )}
         <DownloadListsNextSteps>
           {anonymous && (
             <StepListItem icon="download">
@@ -174,12 +174,12 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                   </div>
                 </>
               ) : (
-                  <FinallyMessage className={s.hint} preventScrolling={true}>
-                    <p>
-                      <AuthInfo />
-                    </p>
-                  </FinallyMessage>
-                )}
+                <FinallyMessage className={s.hint} preventScrolling={true}>
+                  <p>
+                    <AuthInfo />
+                  </p>
+                </FinallyMessage>
+              )}
               <CTAButtonContainer illustration="POINT_RIGHT">
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>

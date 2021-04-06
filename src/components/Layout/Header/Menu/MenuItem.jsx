@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'gatsby-link';
 import cN from 'classnames';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 const MenuItemLink = ({ slug, isChild, children, ...rest }) => (
   <li className={cN(s.navItem, { [s.navItemChild]: isChild })}>

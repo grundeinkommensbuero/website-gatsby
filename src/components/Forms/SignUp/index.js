@@ -13,7 +13,7 @@ import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 // import AuthInfo from '../../AuthInfo';
 // import { FinallyMessage } from '../FinallyMessage';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { SearchPlaces } from '../SearchPlaces';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import '../style/base.less';
 import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';

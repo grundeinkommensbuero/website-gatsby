@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { MunicipalityProgress } from '../MunicipalityProgress';
 import { MunicipalityContext } from '../../../context/Municipality';
 

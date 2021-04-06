@@ -8,7 +8,7 @@ import {
   SectionHeader,
   SectionWrapper,
 } from '../Layout/Sections';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
 import html2plaintext from 'html2plaintext';

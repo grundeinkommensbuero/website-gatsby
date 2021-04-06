@@ -1,6 +1,6 @@
 import React from 'react';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Helmet } from 'react-helmet-async';

@@ -1,4 +1,4 @@
-import s from './style.module.less';
+import * as s from './style.module.less';
 import React, { useState, useEffect } from 'react';
 
 export const OnboardingOverlayContext = React.createContext();

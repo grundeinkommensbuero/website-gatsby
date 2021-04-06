@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import cN from 'classnames';
 import { formatDateMonthYear } from '../utils';
@@ -174,7 +174,7 @@ export const Visualisation = ({
       return count < goal && count > goalInbetweenMultipleSorted[index + 1];
     });
   }
-  const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.json);
+  const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.raw);
 
   const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
 

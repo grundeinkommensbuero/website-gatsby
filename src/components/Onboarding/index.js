@@ -4,7 +4,7 @@ import AuthContext from '../../context/Authentication';
 import { MunicipalityContext } from '../../context/Municipality';
 import { useUpdateUser } from '../../hooks/Api/Users/Update';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import menuElements from './BreadcrumbMenu.json';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';

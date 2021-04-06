@@ -5,7 +5,7 @@ import { CrowdFundingVisualistation } from '../CampaignVisualisations';
 import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
 import { getMailtoUrl, objectMap } from '.';
 import { validateEmail } from './index';
-import s from './contentfulJsonToHtml.module.less';
+import * as s from './contentfulJsonToHtml.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { usePrevious } from '../../hooks/utils';
@@ -27,7 +27,7 @@ export function contentfulJsonToHtml(json) {
           (uri.startsWith(website_url) ||
             uri.startsWith('/') ||
             uri.startsWith('#')) &&
-          !uri.endsWith('.pdf')
+            !uri.endsWith('.pdf')
             ? '_self'
             : '_blank';
         const rel =
@@ -171,7 +171,7 @@ export function contentfulJsonToHtml(json) {
       },
     },
   };
-
+  console.log(json);
   return documentToReactComponents(json, documentToREactComponentsOptions);
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
 import { Onboarding } from '../Onboarding';
 import cN from 'classnames';

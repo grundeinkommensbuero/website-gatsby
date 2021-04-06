@@ -17,7 +17,7 @@ import FormWrapper from '../FormWrapper';
 import FormSection from '../FormSection';
 import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export default ({ successMessage, campaignCode, className }) => {
   const [

@@ -2,7 +2,7 @@ import React from 'react';
 import { Legend, MunicipalityMap } from '../MunicipalityMap';
 import { MunicipalitySearch } from '../MunicipalitySearch';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MunicipalityMapAndSearch = () => {
   return (

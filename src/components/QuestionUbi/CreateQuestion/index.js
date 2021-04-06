@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SectionInner } from '../../Layout/Sections';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { Speechbubble } from '../Speechbubble';
 import { Form, Field } from 'react-final-form';

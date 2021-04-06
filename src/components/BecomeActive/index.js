@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
 import { CTAButton } from '../Layout/CTAButton';
 // import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { navigate } from 'gatsby';
 
 export const BecomeActive = ({ headline, body }) => {
   const { municipality } = useContext(MunicipalityContext);
 
   // TODO: text from contentful
-  // const text = contentfulJsonToHtml(body.json);
+  // const text = contentfulJsonToHtml(body.raw);
   // console.log(text);
 
   return (
@@ -22,10 +22,10 @@ export const BecomeActive = ({ headline, body }) => {
           Organisation helfen können. Wenn du Lust hast, dann finde jetzt
           heraus, wie du aktiv werden kannst!
         </p>
-        <CTAButton size="MEDIUM" 
+        <CTAButton size="MEDIUM"
           onClick={() => {
-          navigate('/aktiv-werden');
-        }}>
+            navigate('/aktiv-werden');
+          }}>
           Aktiv werden
         </CTAButton>
       </div>

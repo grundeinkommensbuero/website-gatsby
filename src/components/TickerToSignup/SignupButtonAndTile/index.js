@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 
 import { SignUpButton } from '../SignupButton';

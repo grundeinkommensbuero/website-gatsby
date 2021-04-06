@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
 
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 // Borrow style from Newsletter-Settings
 import nS from '../ProfileNotifications/style.module.less';
 
@@ -333,36 +333,36 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               (tempName !== userData.username ||
                 tempZIP !== userData.zipCode ||
                 tempCity !== userData.city) ? (
-                <>
-                  <Button
-                    size="SMALL"
-                    className={s.mobileBtn}
-                    onClick={() => {
-                      setTempName(userData.username);
-                      setTempZIP(userData.zipCode);
-                      setTempCity(userData.city);
-                    }}
-                  >
-                    abbrechen
+              <>
+                <Button
+                  size="SMALL"
+                  className={s.mobileBtn}
+                  onClick={() => {
+                    setTempName(userData.username);
+                    setTempZIP(userData.zipCode);
+                    setTempCity(userData.city);
+                  }}
+                >
+                  abbrechen
                   </Button>
-                  <Button
-                    size="SMALL"
-                    className={s.mobileBtn}
-                    onClick={saveUserDataChanges}
-                  >
-                    speichern
+                <Button
+                  size="SMALL"
+                  className={s.mobileBtn}
+                  onClick={saveUserDataChanges}
+                >
+                  speichern
                 </Button>
-                </>
-              ) : (
-                <section>
-                  {waitingForApi ? (
-                    <span>
-                      <span className={gS.loading}></span>
-                      <b className={gS.loadingMsg}>Speichern</b>
-                    </span>
-                  ) : null}
-                </section>
-              )}
+              </>
+            ) : (
+              <section>
+                {waitingForApi ? (
+                  <span>
+                    <span className={gS.loading}></span>
+                    <b className={gS.loadingMsg}>Speichern</b>
+                  </span>
+                ) : null}
+              </section>
+            )}
 
             <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 
 const avatarPlaceholders = [require('./avatar1.svg'), require('./avatar2.svg')];

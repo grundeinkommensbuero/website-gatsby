@@ -6,7 +6,7 @@ import React, {
   useContext,
   useRef,
 } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { navigate } from 'gatsby';
 

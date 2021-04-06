@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MunicipalityProgress = ({
   showHeadline = true,
@@ -49,10 +49,10 @@ export const MunicipalityProgress = ({
             municipality.ags === '02000000' ||
             municipality.ags === '04011000') && (
             <p>
-              Um den offiziellen Volksbegehrensprozess erfolgreich 
+              Um den offiziellen Volksbegehrensprozess erfolgreich
               bis zum Volksentscheid zu bringen, müssen wir mindestens{' '}
               {municipality.goal.toLocaleString('de-DE')} Menschen in{' '}
-              {municipality.name} werden – und am besten so viele wie 
+              {municipality.name} werden – und am besten so viele wie
               möglich! Hol also noch Menschen dazu.
             </p>
           )}

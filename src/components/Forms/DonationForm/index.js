@@ -19,7 +19,7 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';

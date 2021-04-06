@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import AvatarImage from '../../AvatarImage';
 import ImageUpload from '../../Forms/ImageUpload';
 import { Button } from '../../Forms/Button';
@@ -34,7 +34,7 @@ export const SharePreview = ({
       headers: {},
     })
       .then(response => {
-        response.arrayBuffer().then(function(buffer) {
+        response.arrayBuffer().then(function (buffer) {
           const url = window.URL.createObjectURL(new Blob([buffer]));
           const link = document.createElement('a');
           link.href = url;
@@ -141,9 +141,8 @@ export const SharePreview = ({
 
     // Quickfix, if user id for some reason is not available
     if (userId) {
-      return `${baseUrl}gemeinde-teilen/${userId}?ags=${
-        municipality.ags
-      }&version=1${addProfileImage()}`;
+      return `${baseUrl}gemeinde-teilen/${userId}?ags=${municipality.ags
+        }&version=1${addProfileImage()}`;
     } else {
       return baseUrl;
     }
@@ -152,9 +151,9 @@ export const SharePreview = ({
   const ShareButton = () => {
     let CaseButton =
       Components[
-        ShareButtons.find(
-          el => el.channelIdentifier === shareChannel?.channelIdentifier
-        )?.name
+      ShareButtons.find(
+        el => el.channelIdentifier === shareChannel?.channelIdentifier
+      )?.name
       ];
     const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = [
@@ -283,7 +282,7 @@ export const SharePreview = ({
                 showUploadLabel={false}
                 showEditLabel={true}
                 size={'large'}
-                onUploadDone={() => {}}
+                onUploadDone={() => { }}
               />
             </div>
           )}

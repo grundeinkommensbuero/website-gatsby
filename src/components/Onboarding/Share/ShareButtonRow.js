@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import ShareButtons from './ShareButtons.json';
 import cN from 'classnames';
 
@@ -42,7 +42,7 @@ export const ShareButtonRow = ({
         >
           <div className={s.shareButtonContainer}>
             <TwitterIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
-            <p className={s.shareElementTitle}>Twitter</p>
+            <p>Twitter</p>
           </div>
         </div>
 
@@ -53,7 +53,7 @@ export const ShareButtonRow = ({
         >
           <div className={s.shareButtonContainer}>
             <FacebookIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
-            <p className={s.shareElementTitle}>Facebook</p>
+            <p>Facebook</p>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ export const ShareButtonRow = ({
               src={iconInstagram}
               className={s.icon}
             />
-            <p className={s.shareElementTitle}>Instagram</p>
+            <p>Instagram</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export const ShareButtonRow = ({
               bgStyle={{ fillOpacity: 0 }}
               className={s.iconCorrection}
             />
-            <p className={s.shareElementTitle}>Telegram</p>
+            <p>Telegram</p>
           </div>
         </div>
 
@@ -101,7 +101,7 @@ export const ShareButtonRow = ({
               bgStyle={{ fillOpacity: 0 }}
               className={s.iconCorrection}
             />
-            <p className={s.shareElementTitle}>WhatsApp</p>
+            <p>WhatsApp</p>
           </div>
         </div>
 
@@ -112,7 +112,7 @@ export const ShareButtonRow = ({
         >
           <div className={s.shareButtonContainer}>
             <EmailIcon size={65} round={true} bgStyle={{ fillOpacity: 0 }} />
-            <p className={s.shareElementTitle}>E-Mail</p>
+            <p>E-Mail</p>
           </div>
         </div>
       </section>

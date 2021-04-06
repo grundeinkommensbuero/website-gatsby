@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import Img from 'gatsby-image';
 import { formatDate } from '../utils';
 

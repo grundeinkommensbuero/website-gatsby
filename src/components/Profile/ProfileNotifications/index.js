@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { NewsletterCard } from './NewsletterCard';
@@ -224,10 +224,10 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Du erhältst die wichtigsten Infos über die Expedition.
           </p>
         ) : (
-            <p className={s.newsletterCardDescription}>
-              Du erhältst keine Infos über die Expedition.
-            </p>
-          )}
+          <p className={s.newsletterCardDescription}>
+            Du erhältst keine Infos über die Expedition.
+          </p>
+        )}
         {/* toggle main newsletter consent */}
         {waitingForApi && componentToBeUpdated === 'Main' ? (
           <p className={cN(gS.alignRight, gS.noMargin)}>
@@ -235,28 +235,28 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             <b className={gS.loadingMsg}>Speichern</b>
           </p>
         ) : (
-            <p className={cN(gS.alignRight, gS.noMargin)}>
-              {mainNewsletterConsent && mainNewsletterConsent.value ? (
-                <span
-                  aria-hidden="true"
-                  className={gS.linkLikeFormatted}
-                  onClick={toggleUnsubscribeMainNewsletterDialog}
-                  onKeyDown={toggleUnsubscribeMainNewsletterDialog}
-                >
-                  abbestellen
-                </span>
-              ) : (
-                  <span
-                    aria-hidden="true"
-                    className={gS.linkLikeFormatted}
-                    onClick={toggleMainNewsletterConsent}
-                    onKeyDown={toggleMainNewsletterConsent}
-                  >
-                    Newsletter erhalten
-                  </span>
-                )}
-            </p>
-          )}
+          <p className={cN(gS.alignRight, gS.noMargin)}>
+            {mainNewsletterConsent && mainNewsletterConsent.value ? (
+              <span
+                aria-hidden="true"
+                className={gS.linkLikeFormatted}
+                onClick={toggleUnsubscribeMainNewsletterDialog}
+                onKeyDown={toggleUnsubscribeMainNewsletterDialog}
+              >
+                abbestellen
+              </span>
+            ) : (
+              <span
+                aria-hidden="true"
+                className={gS.linkLikeFormatted}
+                onClick={toggleMainNewsletterConsent}
+                onKeyDown={toggleMainNewsletterConsent}
+              >
+                Newsletter erhalten
+              </span>
+            )}
+          </p>
+        )}
       </div>
     );
   };
@@ -273,10 +273,10 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Du erhältst verschiedene Erinnerungsmails von uns.
           </p>
         ) : (
-            <p className={s.newsletterCardDescription}>
-              Du erhältst keine Erinnerungsmails von uns.
-            </p>
-          )}
+          <p className={s.newsletterCardDescription}>
+            Du erhältst keine Erinnerungsmails von uns.
+          </p>
+        )}
         {/* toggle remindermail consent */}
         {waitingForApi && componentToBeUpdated === 'MailSettings' ? (
           <p className={cN(gS.alignRight, gS.noMargin)}>
@@ -284,28 +284,28 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             <b className={gS.loadingMsg}>Speichern</b>
           </p>
         ) : (
-            <p className={cN(gS.alignRight, gS.noMargin)}>
-              {reminderMailConsent && reminderMailConsent.value ? (
-                <span
-                  aria-hidden="true"
-                  className={gS.linkLikeFormatted}
-                  onClick={toggleUnsubscribeReminderMailsDialog}
-                  onKeyDown={toggleUnsubscribeReminderMailsDialog}
-                >
-                  abbestellen
-                </span>
-              ) : (
-                  <span
-                    aria-hidden="true"
-                    className={gS.linkLikeFormatted}
-                    onClick={toggleReminderMailConsent}
-                    onKeyDown={toggleReminderMailConsent}
-                  >
-                    Erinnerungsmails erhalten
-                  </span>
-                )}
-            </p>
-          )}
+          <p className={cN(gS.alignRight, gS.noMargin)}>
+            {reminderMailConsent && reminderMailConsent.value ? (
+              <span
+                aria-hidden="true"
+                className={gS.linkLikeFormatted}
+                onClick={toggleUnsubscribeReminderMailsDialog}
+                onKeyDown={toggleUnsubscribeReminderMailsDialog}
+              >
+                abbestellen
+              </span>
+            ) : (
+              <span
+                aria-hidden="true"
+                className={gS.linkLikeFormatted}
+                onClick={toggleReminderMailConsent}
+                onKeyDown={toggleReminderMailConsent}
+              >
+                Erinnerungsmails erhalten
+              </span>
+            )}
+          </p>
+        )}
       </div>
     );
   };

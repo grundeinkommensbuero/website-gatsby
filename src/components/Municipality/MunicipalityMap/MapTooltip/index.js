@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MapTooltip = ({ hoverInfo, getColor }) => {
   // No tootltip if these attributes are not available

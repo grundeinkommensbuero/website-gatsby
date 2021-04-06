@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { Manager, Reference, Popper } from 'react-popper';
 import cN from 'classnames';
 

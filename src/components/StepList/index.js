@@ -1,6 +1,6 @@
 import React from 'react';
 import cN from 'classnames';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 const ICONS = {
   mail: require('./mail.svg'),

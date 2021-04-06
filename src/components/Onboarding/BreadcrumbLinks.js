@@ -1,7 +1,7 @@
 import React from 'react';
 import menuElements from './BreadcrumbMenu.json';
 import cN from 'classnames';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const BreadcrumbLinks = ({ setCurrentElement, currentElement, setOverlayOpen }) => {
 

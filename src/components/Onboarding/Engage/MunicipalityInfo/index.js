@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cN from 'classnames';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MunicipalityInfo = ({ start = 0, end = 0, goal = 0, title, description }) => {
   const [displayCount, setDisplayCount] = useState(0);

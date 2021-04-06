@@ -9,7 +9,7 @@ import { useSEO } from '../../hooks/Municipality/SEO';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-export default ({ data, location, pageContext }) => {
+const staticPage = ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
 
   const { setPageContext } = useContext(MunicipalityContext);
@@ -46,6 +46,8 @@ export default ({ data, location, pageContext }) => {
     </>
   );
 };
+
+export default staticPage;
 
 export const pageQuery = graphql`
   query StaticPageBySlug($slug: String!) {

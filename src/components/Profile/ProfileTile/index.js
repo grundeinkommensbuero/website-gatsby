@@ -6,7 +6,7 @@ import AvatarImage from '../../AvatarImage';
 import { LinkButtonLocal, Button } from '../../Forms/Button';
 import { SignUpButton } from '../../TickerToSignup/SignupButton';
 import { formatDate } from '../../utils';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 
 export const ProfileTile = ({ children }) => {
