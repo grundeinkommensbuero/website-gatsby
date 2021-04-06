@@ -49,19 +49,28 @@ const getAndStoreDataVariations = municipalities => {
       ags,
       slug,
       name,
+      nameUnique,
       longitude,
       latitude,
       zipCodes,
       population,
     } = municipality;
     const goal = getGoal(population);
-    municipalitiesForSearch.push({ ags, name, zipCodes, population, slug });
+    municipalitiesForSearch.push({
+      ags,
+      name,
+      zipCodes,
+      population,
+      slug,
+      nameUnique,
+    });
     municipalitiesForMap.push({
       ags,
       name,
       coordinates: [longitude, latitude],
       goal,
       population,
+      slug,
     });
     // The page has access to all information including the goal
     municipalitiesForPage.push({ ...municipality, goal });
