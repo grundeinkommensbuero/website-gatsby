@@ -181,6 +181,20 @@ export const pageQuery = graphql`
                   json
                 }
               }
+              ... on ContentfulSectionComponentTextAndImage {
+                __typename
+                title
+                showForOptions
+                layout
+                image {
+                  fluid(maxWidth: 500, quality: 90) {
+                    ...GatsbyContentfulFluid
+                  }
+                }
+                text {
+                  json
+                }
+              }
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename
                 title
