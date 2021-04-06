@@ -60,63 +60,63 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
             <AvatarImage
               user={userData.user}
               className={cN(s.avatarImage,
-                { [s.default]: size === 'default' },
+                { [s.defaultSize]: size === 'default' },
                 { [s.large]: size === 'large' }
               )}
               sizes="80px"
             />
           ) : (
-              <>
-                <div className={s.avatarImageContainer}>
-                  <Field
-                    name="image"
-                    component={ImageInput}
-                    user={userData}
-                    size={size}
-                    unsavedChanges={unsavedChanges}
-                    showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
-                    onChange={() => { }}
-                  />
-                  <OnChange name="image">
-                    {() => setUnsavedChanges(true)}
-                  </OnChange>
-                </div>
+            <>
+              <div className={s.avatarImageContainer}>
+                <Field
+                  name="image"
+                  component={ImageInput}
+                  user={userData}
+                  size={size}
+                  unsavedChanges={unsavedChanges}
+                  showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
+                  onChange={() => { }}
+                />
+                <OnChange name="image">
+                  {() => setUnsavedChanges(true)}
+                </OnChange>
+              </div>
 
-                {unsavedChanges ?
-                  <CTAButton
-                    type="submit"
-                    className={cN(
-                      s.submitButton,
-                      { [s.buttonOnAquaBackground]: buttonOnAquaBackground }
-                    )}
-                  >
-                    Hochladen
+              {unsavedChanges ?
+                <CTAButton
+                  type="submit"
+                  className={cN(
+                    s.submitButton,
+                    { [s.buttonOnAquaBackground]: buttonOnAquaBackground }
+                  )}
+                >
+                  Hochladen
                   </CTAButton> : null
-                }
+              }
 
-                <div className={s.uploadMessageContainer}>
-                  {imageUploadIsProcessing ?
-                    <span className={s.uploadStateMessage}>
-                      <Spinner />
-                      <b className={s.loadingMsg}>Bild hochladen...</b>
-                    </span>
-                    : <>
-                      {showUploadSuccessMessage ?
-                        <span className={s.uploadStateMessage}>
-                          Upload erfolgreich!
+              <div className={s.uploadMessageContainer}>
+                {imageUploadIsProcessing ?
+                  <span className={s.uploadStateMessage}>
+                    <Spinner />
+                    <b className={s.loadingMsg}>Bild hochladen...</b>
+                  </span>
+                  : <>
+                    {showUploadSuccessMessage ?
+                      <span className={s.uploadStateMessage}>
+                        Upload erfolgreich!
                       </span> : null
-                      }
-                      {showUploadErrorMessage ?
-                        <span className={s.uploadStateMessage}>
-                          Fehler beim Upload! :(
+                    }
+                    {showUploadErrorMessage ?
+                      <span className={s.uploadStateMessage}>
+                        Fehler beim Upload! :(
                           <br />Bitte versuche es später erneut!
                       </span> : null
-                      }
-                    </>
-                  }
-                </div>
-              </>
-            )}
+                    }
+                  </>
+                }
+              </div>
+            </>
+          )}
         </form>
       )}
     />
@@ -144,7 +144,7 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, size, u
       <AvatarImage
         srcOverwrite={avatarImage}
         className={cN(s.avatarImage,
-          { [s.default]: size === 'default' },
+          { [s.defaultSize]: size === 'default' },
           { [s.large]: size === 'large' }
         )}
         user={user}

@@ -45,7 +45,6 @@
     "d3-array": "^2.9.1",
     "d3-scale": "^3.2.3",
     "deck.gl": "^8.4.9",
-    "eslint-config-react-app": "^5.2.1",
     "eslint-loader": "^4.0.2",
     "final-form": "^4.20.1",
     "fuse.js": "^6.4.3",
@@ -53,7 +52,7 @@
     "gatsby-image": "^3.1.0",
     "gatsby-plugin-eslint": "^3.0.0",
     "gatsby-plugin-feed": "^3.1.0",
-    "gatsby-plugin-less": "^5.1.0",
+    "gatsby-plugin-less": "^5.2.0",
     "gatsby-plugin-matomo": "^0.9.0",
     "gatsby-plugin-netlify": "^3.1.0",
     "gatsby-plugin-netlify-cache": "^1.2.0",
@@ -87,10 +86,17 @@
     "trackjs": "^3.7.4"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
     "babel-eslint": "^10.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.23.0",
-    "eslint-plugin-react": "^7.20.6",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.6.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^1.19.1"
   }
 }
