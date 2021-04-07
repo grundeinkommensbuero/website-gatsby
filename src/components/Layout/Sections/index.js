@@ -38,6 +38,7 @@ import { IntroText } from '../../IntroText';
 import { BecomeActive } from '../../BecomeActive';
 import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
+import { SectionComponentTextAndImage } from './SectionComponentTextAndImage';
 
 import { LinkButton } from '../../Forms/Button';
 
@@ -50,6 +51,7 @@ const Components = {
   IntroText,
   BecomeActive,
   ProfileTile,
+  SectionComponentTextAndImage,
   Standard: StandardSectionComponent,
 };
 
