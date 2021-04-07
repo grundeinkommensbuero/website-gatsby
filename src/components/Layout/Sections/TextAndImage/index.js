@@ -2,7 +2,7 @@ import React from 'react';
 import { contentfulJsonToHtml } from '../../../utils/contentfulJsonToHtml';
 import Img from 'gatsby-image';
 
-export const SectionComponentTextAndImage = ({ text, image }) => {
+export const TextAndImage = ({ text, image }) => {
   return (
     <>
       {image && image.fluid && <Img fluid={image.fluid} />}
