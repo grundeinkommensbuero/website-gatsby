@@ -185,6 +185,7 @@ export const pageQuery = graphql`
                 __typename
                 title
                 showForOptions
+                column
                 layout
                 image {
                   fluid(maxWidth: 500, quality: 90) {
