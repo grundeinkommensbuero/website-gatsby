@@ -7,7 +7,7 @@ import cN from 'classnames';
 export const TextAndImage = ({ layout, text, image }) => {
   return (
     <div
-      className={cN(s.container, { [s.imageRight]: layout === 'imageRight' })}
+      className={cN(s.container, { [s.imageRight]: layout === 'ImageRight' })}
     >
       {image && image.fluid && <Img className={s.image} fluid={image.fluid} />}
       {text && <div className={s.text}>{contentfulJsonToHtml(text.json)}</div>}
