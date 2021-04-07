@@ -12,10 +12,11 @@
   padding: 0;
   margin: 0;
   cursor: pointer;
-  font-size: inherit;
-  color: inherit;
+  font-size: @DesktopFontSizeL;
+  color: @violet;
   text-align: left;
   position: relative;
+  width: 100%;
 
   @media (max-width: @breakPointM) {
     margin-left: 2rem;
@@ -26,40 +27,23 @@
     text-decoration: underline;
   }
 
-  &:before,
   &:after {
     content: '';
     position: absolute;
-    height: 1.5em;
-    width: 1.5em;
-    left: -2.2em;
-    top: -0.2em;
-  }
-
-  &:before {
-    background-image: url('./arrow.svg'),
-      linear-gradient(currentColor, currentColor);
-    background-size: cover, 88% 95%;
+    height: 1.2em;
+    width: 1.2em;
+    right: 0;
+    top: 0rem;
+    background-image: url('./plus.svg');
+    background-size: contain;
     background-repeat: no-repeat;
-    transform: rotate(-45deg);
     transition: 0.3s cubic-bezier(0.47, 0.45, 0.57, 1.26);
   }
 
   &.open {
-    &:before {
-      transform: rotate(45deg);
+    &:after {
+      background-image: url('./minus.svg');
     }
-  }
-
-  &:after {
-    content: '?';
-    color: var(--bg-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.1em;
-    margin-left: -0.1em;
-    text-decoration: none;
   }
 }
 
@@ -83,6 +67,7 @@
 
 .answer {
   padding-top: 1rem;
+  font-size: @DesktopFontSizeS;
 
   p:first-child {
     margin-top: 0;
@@ -94,5 +79,11 @@
 }
 
 .questionAndAnswer {
-  margin: 2rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid @violet;
+  position: relative;
+
+  &:last-of-type {
+    border-bottom: 1px solid @violet;
+  }
 }
