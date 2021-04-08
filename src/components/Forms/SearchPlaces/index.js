@@ -48,7 +48,7 @@ export const SearchPlaces = ({
     import('./municipalitiesForSearch.json').then(({ default: places }) => {
       setFuse(
         new Fuse(places, {
-          keys: ['name', 'zipCodes'],
+          keys: ['nameUnique', 'zipCodes'],
           includeScore: true,
           threshold: 0.2,
         })
@@ -79,7 +79,7 @@ export const SearchPlaces = ({
         // we should search the data for name AND zip code
         if (digits !== '' && name !== '') {
           searchProps = {
-            $and: [{ name: name }, { zipCodes: digits }],
+            $and: [{ nameUnique: name }, { zipCodes: digits }],
           };
         } else if (digits !== '') {
           searchProps = digits;
@@ -92,7 +92,7 @@ export const SearchPlaces = ({
         const fuseResults = fuse.search(searchProps);
         const results = fuseResults
           .map(x => ({ ...x.item, score: x.score }))
-          .slice(0, 10);
+          .slice(0, 15);
 
         // Specific sort if searched for zip codes
         if (digits !== '') {
@@ -101,9 +101,12 @@ export const SearchPlaces = ({
           results.sort((a, b) => {
             if (a.score < 0.001) {
               return -1;
-            } else if (b.score < 0.001) {
+            }
+
+            if (b.score < 0.001) {
               return 1;
             }
+
             return b.population - a.population;
           });
         }
@@ -111,6 +114,69 @@ export const SearchPlaces = ({
         // Sort by population if searched for name
         if (digits === '') {
           results.sort((a, b) => b.population - a.population);
+        }
+
+        if (name !== '') {
+          results.sort((a, b) => {
+            const lowercaseName = name.toLowerCase();
+            // If result has name as first word (therefore the ${name}+space ) or equals name,
+            // we want to prioritize it, e.g. Halle (Saale) or Halle.
+            // If a and b match the condition we sort by population
+            const aHasNameAsFirstWord =
+              a.nameUnique.toLowerCase().startsWith(`${lowercaseName} `) ||
+              a.nameUnique.toLowerCase().startsWith(`${lowercaseName},`) ||
+              a.nameUnique.toLowerCase() === lowercaseName;
+            const bHasNameAsFirstWord =
+              b.nameUnique.toLowerCase().startsWith(`${lowercaseName} `) ||
+              b.nameUnique.toLowerCase().startsWith(`${lowercaseName},`) ||
+              b.nameUnique.toLowerCase() === lowercaseName;
+
+            if (aHasNameAsFirstWord && bHasNameAsFirstWord) {
+              return b.population - a.population;
+            }
+
+            if (aHasNameAsFirstWord) {
+              return -1;
+            }
+
+            if (bHasNameAsFirstWord) {
+              return 1;
+            }
+
+            // Next in prioritization: if result starts with query
+            if (
+              a.nameUnique.toLowerCase().startsWith(lowercaseName) &&
+              b.nameUnique.toLowerCase().startsWith(lowercaseName)
+            ) {
+              return b.population - a.population;
+            }
+
+            if (a.nameUnique.toLowerCase().startsWith(lowercaseName)) {
+              return -1;
+            }
+
+            if (b.nameUnique.toLowerCase().startsWith(lowercaseName)) {
+              return 1;
+            }
+
+            // Next in prioritization: if result includes the query
+            if (
+              a.nameUnique.toLowerCase().includes(lowercaseName) &&
+              b.nameUnique.toLowerCase().includes(lowercaseName)
+            ) {
+              return b.population - a.population;
+            }
+
+            if (a.nameUnique.toLowerCase().includes(lowercaseName)) {
+              return -1;
+            }
+
+            if (b.nameUnique.toLowerCase().includes(lowercaseName)) {
+              return 1;
+            }
+
+            return b.population - a.population;
+          });
         }
 
         setResults(results);
@@ -326,7 +392,7 @@ export function AutoCompleteList({
                 handleArrowListNavigation(e);
               }}
             >
-              {x.name},{' '}
+              {x.nameUnique},{' '}
               {x.zipCodes.length === 1
                 ? `${x.zipCodes[0]}`
                 : `${x.zipCodes[0]} – ${x.zipCodes[x.zipCodes.length - 1]}`}

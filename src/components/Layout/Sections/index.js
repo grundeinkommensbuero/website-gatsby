@@ -38,9 +38,9 @@ import { IntroText } from '../../IntroText';
 import { BecomeActive } from '../../BecomeActive';
 import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
+import { TextAndImage } from './TextAndImage';
 
 import { LinkButton } from '../../Forms/Button';
-import { LoadingAnimation } from '../../Onboarding/LoadingAnimation';
 
 const Components = {
   TickerToSignup,
@@ -51,6 +51,7 @@ const Components = {
   IntroText,
   BecomeActive,
   ProfileTile,
+  TextAndImage,
   Standard: StandardSectionComponent,
 };
 
@@ -142,7 +143,6 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
   const isChristmasDonationTheme = theme === 'christmas';
-  const isSharingFeature = __typename === 'ContentfulPageSectionShare';
 
   const userContentfulState = useUserMunicipalityContentfulState();
 

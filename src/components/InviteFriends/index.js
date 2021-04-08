@@ -5,10 +5,7 @@ import s from './style.module.less';
 import AuthContext from '../../context/Authentication';
 
 export const InviteFriends = () => {
-  const {
-    userId,
-    customUserData: userData,
-  } = useContext(AuthContext);
+  const { userId, customUserData: userData } = useContext(AuthContext);
 
   const { municipality } = useContext(MunicipalityContext);
   const sharingFactorAnnouncement = getSharingFactorAnnouncement(municipality);
@@ -24,7 +21,13 @@ export const InviteFriends = () => {
           <h2>Jetzt Freunde einladen</h2>
           {sharingCTA && <p>{sharingCTA}</p>}
           {sharingFactorAnnouncement && <p>{sharingFactorAnnouncement}</p>}
-          <SharingFeature userData={userData} userId={userId} municipality={municipality} isInOnboarding={false} scrollToRef={scrollToRef} />
+          <SharingFeature
+            userData={userData}
+            userId={userId}
+            municipality={municipality}
+            isInOnboarding={false}
+            scrollToRef={scrollToRef}
+          />
         </div>
         <div className={s.componentElement}>
           <div></div>
