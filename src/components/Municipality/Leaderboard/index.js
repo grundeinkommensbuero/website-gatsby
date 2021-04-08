@@ -1,17 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fetchPageNumbers, paginate } from './utils';
 import { MunicipalityContext } from '../../../context/Municipality/index';
 
 import s from './style.module.less';
 
+import { TabSelector } from './TabSelector';
 import { TableHeader } from './TableHeader';
 import { TableData } from './TableData';
 import { PageSelector } from './PageSelector';
 
 export const Leaderboard = () => {
-  const { municipalitiesGoalSignup } = useContext(MunicipalityContext);
+  const { leaderboardSegments } = useContext(MunicipalityContext);
+  const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const paginated = paginate(municipalitiesGoalSignup.length, currentPage);
+  const paginated = paginate(currentDataSet.length, currentPage);
+
+  useEffect(() => {
+    setCurrentDataSet(leaderboardSegments.hot);
+  }, [leaderboardSegments]);
 
   const pageControls = fetchPageNumbers({
     currentPage,
@@ -19,7 +25,7 @@ export const Leaderboard = () => {
     pageNeighbours: 2,
   });
 
-  const slicedMunicipalities = municipalitiesGoalSignup.slice(
+  const slicedMunicipalities = currentDataSet.slice(
     paginated.startIndex,
     paginated.endIndex + 1
   );
@@ -27,6 +33,13 @@ export const Leaderboard = () => {
   return (
     <div>
       <h3 className={s.title}>Leader:innenboard</h3>
+      <div className={s.pageSelectorContainer}>
+        {/* <TabSelector
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageControls={pageControls}
+        /> */}
+      </div>
       <table className={s.tableBody}>
         <tbody>
           <tr>

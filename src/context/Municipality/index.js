@@ -15,7 +15,9 @@ export const MunicipalityProvider = ({ children }) => {
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
   const [municipalitiesGoalSignup, setMunicipalitiesGoalSignup] = useState([]);
+  const [municipalitiesWithEvents, setMunicipalitiesWithEvents] = useState([]);
   const [municipalitiesInObject, setMunicipalitiesInObject] = useState({});
+  const [leaderboardSegments, setLeaderboardSegments] = useState({});
 
   // Stats for all municipalities
   const [
@@ -165,8 +167,17 @@ export const MunicipalityProvider = ({ children }) => {
       };
       return muniObj;
     }, {});
+    // When there are events, add them to municipality key
+    if (allMunicipalityStats.events) {
+      allMunicipalityStats.events.forEach(e => {
+        municipalityObject[e.ags.toString()] = {
+          event: e,
+          ...municipalityObject[e.ags.toString()]
+        }
+      });
+    }
     setMunicipalitiesInObject(municipalityObject);
-  }, []);
+  }, [allMunicipalityStats]);
 
   useEffect(() => {
     // Find all municipalities with signups and goal
@@ -181,15 +192,26 @@ export const MunicipalityProvider = ({ children }) => {
             ...municipalitiesInObject[municipality.ags.toString()]
           }
           municipalitiesWithGoalAndSignups.push(fullMunicipality);
+
         }
       });
       municipalitiesWithGoalAndSignups.sort((a, b) => {
         return a.percent - b.percent;
       });
-      console.log(municipalitiesWithGoalAndSignups);
       setMunicipalitiesGoalSignup(municipalitiesWithGoalAndSignups.reverse());
     }
-  }, [allMunicipalityStats]);
+  }, [municipalitiesInObject]);
+
+  useEffect(() => {
+    // Arrange an object with leaderboard data
+    const segments = {
+      qualified: municipalitiesGoalSignup.filter(m => m.percent > 100),
+      smallMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population < 20000),
+      largeMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population > 20000),
+      hot: municipalitiesGoalSignup.filter(m => 'event' in m)
+    };
+    setLeaderboardSegments(segments);
+  }, [municipalitiesGoalSignup]);
 
   return (
     <MunicipalityContext.Provider
@@ -209,6 +231,7 @@ export const MunicipalityProvider = ({ children }) => {
         singleMunicipalityStatsState,
         statsSummary,
         municipalitiesGoalSignup,
+        leaderboardSegments,
         refreshContextStats: () => getAllMunicipalityStats()
       }}
     >
