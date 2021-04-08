@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
+import { StickyBannerContext } from '../../context/StickyBanner';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
 
@@ -135,29 +136,24 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const donationBarVisible = true; // TODO: reactive from context, to adapt, when user clicks bar away
+  const { stickyBannerVisible } = useContext(StickyBannerContext);
 
   const variableMarginClass = () => {
-    if (donationBarVisible) {
-      return 'withDonationBar';
-    } else {
-      return 'withoutDonationBar';
-    }
+    return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
   };
 
   const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
       const updatedUrl = `https:${url}`;
       return updatedUrl;
-    } else {
-      return url;
     }
+    return url;
   };
 
   // Modify section color scheme, when none is set from contentful
   // keyVisual component excluded, because its already violet
-  const modifySections = origSections => {
-    if (origSections && origSections.length !== 0) {
+  const addColorScheme = sections => {
+    if (sections && sections.length !== 0) {
       const colorSchemes = ['white', 'violet', 'aqua'];
       let counter = 0;
       const modSections = [...sections];
@@ -171,11 +167,10 @@ function Template({ children, sections, pageContext, title, description }) {
         }
       }
       return modSections;
-    } else {
-      return undefined;
     }
+    return undefined;
   };
-  const modifiedSections = modifySections(sections);
+  const sectionsWithColorScheme = addColorScheme(sections);
 
   return (
     <>
@@ -193,7 +188,7 @@ function Template({ children, sections, pageContext, title, description }) {
       <Header
         menu={globalStuff.mainMenu}
         hasOverlay={!!globalStuff?.overlay}
-        donationBarVisible={donationBarVisible}
+        stickyBannerVisible={stickyBannerVisible}
       />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
@@ -217,7 +212,7 @@ function Template({ children, sections, pageContext, title, description }) {
       </Helmet>
       <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={modifiedSections} pageContext={pageContext} />
+        <Sections sections={sectionsWithColorScheme} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}
