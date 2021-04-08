@@ -8,7 +8,7 @@ import s from './style.module.less';
 export const MunicipalityMapAndSearch = () => {
   return (
     <>
-      <Leaderboard />
+
       <div className={s.mapSectionContainer}>
         <div className={s.map}>
           <MunicipalityMap />
@@ -21,12 +21,13 @@ export const MunicipalityMapAndSearch = () => {
             <MunicipalitySearch />
           </div>
           <div className={s.topDesktopLegend}>
-
-            <Legend />
+            <Leaderboard />
+            {/* <Legend /> */}
           </div>
         </div>
         <div className={s.bottomMobileLegend}>
-          <Legend />
+          <Leaderboard />
+          {/* <Legend /> */}
         </div>
       </div>
     </>

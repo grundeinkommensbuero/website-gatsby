@@ -22,7 +22,7 @@ export const Leaderboard = () => {
   const pageControls = fetchPageNumbers({
     currentPage,
     totalPages: paginated.pages.length,
-    pageNeighbours: 2,
+    pageNeighbours: 1,
   });
 
   const slicedMunicipalities = currentDataSet.slice(
@@ -33,12 +33,11 @@ export const Leaderboard = () => {
   return (
     <div>
       <h3 className={s.title}>Leader:innenboard</h3>
-      <div className={s.pageSelectorContainer}>
-        {/* <TabSelector
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pageControls={pageControls}
-        /> */}
+      <div className={s.tabSelectorContainer}>
+        <TabSelector
+          setCurrentDataSet={setCurrentDataSet}
+          leaderboardSegments={leaderboardSegments}
+        />
       </div>
       <table className={s.tableBody}>
         <tbody>

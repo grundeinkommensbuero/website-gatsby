@@ -1,0 +1,18 @@
+[
+  {
+    "tabName": "Hot Shots",
+    "dataSet": "hot"
+  },
+  {
+    "tabName": "Bis 20.000",
+    "dataSet": "smallMunicipalities"
+  },
+  {
+    "tabName": "Ab 20.000",
+    "dataSet": "largeMunicipalities"
+  },
+  {
+    "tabName": "Schon qualifiziert",
+    "dataSet": "qualified"
+  }
+]
