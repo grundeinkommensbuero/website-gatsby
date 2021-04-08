@@ -5,6 +5,7 @@ import { MunicipalityProvider } from './src/context/Municipality';
 import SurveySaver from './src/components/SurveySaver';
 import { OverlayProvider } from './src/context/Overlay';
 import { OnboardingOverlayProvider } from './src/context/Overlay/OnboardingOverlay';
+import { StickyBannerProvider } from './src/context/StickyBanner';
 import { SnackbarMessageProvider } from './src/context/Snackbar/index.js';
 import SnackbarProvider from 'react-simple-snackbar';
 
@@ -35,9 +36,11 @@ export default ({ element }) => {
         <SurveySaver>
           <OverlayProvider>
             <OnboardingOverlayProvider>
-              <SnackbarProvider>
-                <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
-              </SnackbarProvider>
+              <StickyBannerProvider>
+                <SnackbarProvider>
+                  <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
+                </SnackbarProvider>
+              </StickyBannerProvider>
             </OnboardingOverlayProvider>
           </OverlayProvider>
         </SurveySaver>

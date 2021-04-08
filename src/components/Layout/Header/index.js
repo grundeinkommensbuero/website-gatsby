@@ -10,7 +10,7 @@ import Menu from './Menu';
 import { StickyDonationBar } from './StickyDonationBar';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-const Header = ({ menu, hasOverlay, donationBarVisible }) => {
+const Header = ({ menu, hasOverlay, stickyBannerVisible }) => {
   const { setPageContext } = useContext(MunicipalityContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -61,7 +61,7 @@ const Header = ({ menu, hasOverlay, donationBarVisible }) => {
             )}
           </>
         </div>
-        {donationBarVisible && <StickyDonationBar />}
+        {stickyBannerVisible && <StickyDonationBar />}
       </header>
     </>
   );
