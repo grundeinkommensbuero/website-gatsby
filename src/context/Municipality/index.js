@@ -205,10 +205,13 @@ export const MunicipalityProvider = ({ children }) => {
   useEffect(() => {
     // Arrange an object with leaderboard data
     const segments = {
-      qualified: municipalitiesGoalSignup.filter(m => m.percent > 100),
+      hot: municipalitiesGoalSignup.filter(m => 'event' in m),
       smallMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population < 20000),
       largeMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population > 20000),
-      hot: municipalitiesGoalSignup.filter(m => 'event' in m)
+      qualified: municipalitiesGoalSignup
+        .filter(m => m.percent > 100)
+        .sort((a, b) => b.population - a.population)
+
     };
     setLeaderboardSegments(segments);
   }, [municipalitiesGoalSignup]);

@@ -6,7 +6,7 @@ import tabs from './tabs.json';
 export const TabSelector = ({
   setCurrentDataSet,
   leaderboardSegments,
-  defaultDataSet = 'hot',
+  defaultDataSet = 'largeMunicipalities',
 }) => {
   const [currentTab, setCurrentTab] = useState(defaultDataSet);
 
@@ -19,12 +19,11 @@ export const TabSelector = ({
           [s.activeTabSelector]: tab.dataSet === currentTab,
         })}
         onClick={() => {
-          console.log(tab);
           setCurrentTab(tab.dataSet);
           setCurrentDataSet(leaderboardSegments[tab.dataSet]);
         }}
       >
-        <b>{tab.tabName}</b>
+        {tab.tabName}
       </div>
     );
   });

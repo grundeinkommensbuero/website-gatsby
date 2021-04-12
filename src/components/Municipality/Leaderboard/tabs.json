@@ -4,12 +4,12 @@
     "dataSet": "hot"
   },
   {
-    "tabName": "Bis 20.000",
-    "dataSet": "smallMunicipalities"
-  },
-  {
     "tabName": "Ab 20.000",
     "dataSet": "largeMunicipalities"
+  },
+  {
+    "tabName": "Bis 20.000",
+    "dataSet": "smallMunicipalities"
   },
   {
     "tabName": "Schon qualifiziert",

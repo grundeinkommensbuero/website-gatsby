@@ -62,10 +62,6 @@ export const paginate = (
 const LEFT_PAGE = '<<';
 const RIGHT_PAGE = '>>';
 
-/**
- * Helper method for creating a range of numbers
- * range(1, 5) => [1, 2, 3, 4, 5]
- */
 const range = (from, to, step = 1) => {
   let i = from;
   const range = [];

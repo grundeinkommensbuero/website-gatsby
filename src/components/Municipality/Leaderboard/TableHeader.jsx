@@ -2,7 +2,7 @@ import React from 'react';
 import * as s from './style.module.less';
 
 export const TableHeader = () => {
-  const header = ['Ort', 'Prozent'];
+  const header = ['Ort', 'Signups', 'Prozent'];
 
   return header.map((key, index) => {
     return (

@@ -7,7 +7,9 @@
 
 .tableBody {
   border-collapse: collapse;
-  border: 3px solid #ddd;
+  border-top: 3px solid #ddd;
+  border-right: 3px solid #ddd;
+  border-left: 3px solid #ddd;
   width: 100%;
 
   &.tableBody td,
@@ -18,7 +20,7 @@
     padding-bottom: 12px;
   }
   &.tableBody th {
-    border-bottom: 3px solid #ddd;
+    border-bottom: 1px solid #ddd;
   }
 }
 
@@ -27,11 +29,11 @@
 }
 
 .pageSelectorElement {
-  padding: 1rem 0.25rem;
-  border: solid 1px white;
+  padding: 0.75rem 0.25rem 0.5rem;
   cursor: pointer;
   flex-grow: 1;
   text-align: center;
+
   &:hover {
     background-color: @red;
   }
@@ -50,8 +52,13 @@
 }
 
 .tabSelectorElement {
-  padding: 1rem 0.25rem;
-  border: solid 1px white;
+  padding: 1rem 0.25rem 0.7rem;
+  border-top: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: lightgrey;
   cursor: pointer;
   flex-grow: 1;
   text-align: center;
@@ -61,12 +68,24 @@
 
   &.activeTabSelector {
     background-color: @aqua;
+    color: white;
+    padding: calc(1rem - 3px) 0.25rem 0.7rem;
+    border-top: 3px solid #ddd;
+    border-left: 3px solid #ddd;
+    border-right: 3px solid #ddd;
+    font-weight: 1000;
   }
 }
 
 .tabSelectorContainer {
   display: flex;
-  border-top: 3px solid #ddd;
-  border-left: 3px solid #ddd;
-  border-right: 3px solid #ddd;
+}
+
+.smallGoalNumber {
+  font-size: 10px;
+  color: lightgrey;
+}
+
+.alignRight {
+  text-align: right;
 }

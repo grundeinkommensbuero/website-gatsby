@@ -13,21 +13,21 @@ export const Leaderboard = () => {
   const { leaderboardSegments } = useContext(MunicipalityContext);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const paginated = paginate(currentDataSet.length, currentPage);
+  const paginationInfo = paginate(currentDataSet.length, currentPage);
 
   useEffect(() => {
-    setCurrentDataSet(leaderboardSegments.hot);
+    setCurrentDataSet(leaderboardSegments.largeMunicipalities);
   }, [leaderboardSegments]);
 
   const pageControls = fetchPageNumbers({
     currentPage,
-    totalPages: paginated.pages.length,
+    totalPages: paginationInfo.pages.length,
     pageNeighbours: 1,
   });
 
   const slicedMunicipalities = currentDataSet.slice(
-    paginated.startIndex,
-    paginated.endIndex + 1
+    paginationInfo.startIndex,
+    paginationInfo.endIndex + 1
   );
 
   return (
