@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
@@ -9,6 +9,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 import { StickyBannerContext } from '../../context/StickyBanner';
+import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
 
@@ -172,6 +173,28 @@ function Template({ children, sections, pageContext, title, description }) {
   };
   const sectionsWithColorScheme = addColorScheme(sections);
 
+  // Hacky solution for additional menu entry linking to users most recent campaign
+  const { customUserData } = useContext(AuthContext);
+  const [modifiedMainMenu, setModifiedMainMenu] = useState(globalStuff.mainMenu);
+  const getMostRecentMunicipality = municipalities => {
+    return municipalities.reduce((a, b) => (a.createdAt > b.createdAt ? a : b));
+  };
+  useEffect(() => {
+    if (customUserData.municipalities) {
+      const mainMenu = [...modifiedMainMenu];
+      const mostRecentMunicipalitiy = getMostRecentMunicipality(customUserData.municipalities);
+      const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
+      if (mainMenu[indexToMod].contentfulchildren[0].title !== "Mein Ort") {
+        mainMenu[indexToMod].contentfulchildren.unshift({
+          title: 'Mein Ort',
+          slug: `gemeinden/${mostRecentMunicipalitiy.slug}`,
+          shortTitle: null
+        });
+      }
+      setModifiedMainMenu(mainMenu);
+    }
+  }, [customUserData]);
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -186,7 +209,7 @@ function Template({ children, sections, pageContext, title, description }) {
       />
 
       <Header
-        menu={globalStuff.mainMenu}
+        menu={modifiedMainMenu}
         hasOverlay={!!globalStuff?.overlay}
         stickyBannerVisible={stickyBannerVisible}
       />
