@@ -173,27 +173,40 @@ function Template({ children, sections, pageContext, title, description }) {
   };
   const sectionsWithColorScheme = addColorScheme(sections);
 
-  // Hacky solution for additional menu entry linking to users most recent campaign
+  // Adds additional menu items for users municipality, default max: 5
   const { customUserData } = useContext(AuthContext);
   const [modifiedMainMenu, setModifiedMainMenu] = useState(globalStuff.mainMenu);
-  const getMostRecentMunicipality = municipalities => {
-    return municipalities.reduce((a, b) => (a.createdAt > b.createdAt ? a : b));
-  };
+  // Updates the Menu when userData is loaded
   useEffect(() => {
     if (customUserData.municipalities) {
-      const mainMenu = [...modifiedMainMenu];
-      const mostRecentMunicipalitiy = getMostRecentMunicipality(customUserData.municipalities);
-      const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
-      if (mainMenu[indexToMod].contentfulchildren[0].title !== "Mein Ort") {
-        mainMenu[indexToMod].contentfulchildren.unshift({
-          title: 'Mein Ort',
-          slug: `gemeinden/${mostRecentMunicipalitiy.slug}`,
-          shortTitle: null
-        });
-      }
-      setModifiedMainMenu(mainMenu);
+      const municipalityMenuItems = createMunicipalityMenuItems();
+      const modifiedMenu = mergeIntoMenu(municipalityMenuItems);
+      setModifiedMainMenu(modifiedMenu);
     }
   }, [customUserData]);
+  // Helper functions
+  const createMunicipalityMenuItems = (num = 5) => {
+    const sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+    const menuItems = [];
+    sortedMunicipalities.slice(0, num).forEach(item => {
+      menuItems.push({
+        title: `Mein Ort: ${item.name}`,
+        slug: `gemeinden/${item.slug}`,
+        shortTitle: null
+      });
+    });
+    return menuItems;
+  };
+  const mergeIntoMenu = municipalityMenuItems => {
+    const mainMenu = [...globalStuff.mainMenu];
+    const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
+    const engageMenuEntry = [...mainMenu[indexToMod]];
+    const mergedMenu = municipalityMenuItems.concat(engageMenuEntry);
+    mainMenu[indexToMod].contentfulchildren = mergedMenu;
+    return mainMenu;
+  };
 
   return (
     <>
