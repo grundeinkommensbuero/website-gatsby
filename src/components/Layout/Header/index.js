@@ -18,7 +18,8 @@ const Header = ({ menu, stickyBannerVisible }) => {
     setMenuOpen(!menuOpen);
   };
 
-  const notOnPlayground = window.location.pathname.includes('playground') ? false : true;
+  const currentURL = typeof window !== 'undefined' ? window.location.pathname : '';
+  const notOnPlayground = currentURL.includes('playground') ? false : true;
 
   return (
     <>
