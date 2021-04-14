@@ -10,13 +10,15 @@ import Menu from './Menu';
 import { StickyDonationBar } from './StickyDonationBar';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-const Header = ({ menu, hasOverlay, stickyBannerVisible }) => {
+const Header = ({ menu, stickyBannerVisible }) => {
   const { setPageContext } = useContext(MunicipalityContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const notOnPlayground = window.location.pathname.includes('playground') ? false : true;
 
   return (
     <>
@@ -61,7 +63,7 @@ const Header = ({ menu, hasOverlay, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && <StickyDonationBar />}
+        {stickyBannerVisible && notOnPlayground && <StickyDonationBar />}
       </header>
     </>
   );
