@@ -174,36 +174,39 @@ function Template({ children, sections, pageContext, title, description }) {
   const sectionsWithColorScheme = addColorScheme(sections);
 
   // Adds additional menu items for users municipality, default max: 5
-  const { customUserData } = useContext(AuthContext);
+  const { customUserData, isAuthenticated } = useContext(AuthContext);
   const [modifiedMainMenu, setModifiedMainMenu] = useState(globalStuff.mainMenu);
   // Updates the Menu when userData is loaded
   useEffect(() => {
-    if (customUserData.municipalities) {
-      const municipalityMenuItems = createMunicipalityMenuItems();
-      const modifiedMenu = mergeIntoMenu(municipalityMenuItems);
-      setModifiedMainMenu(modifiedMenu);
-    }
-  }, [customUserData]);
-  // Helper functions
+    const municipalityMenuItems = createMunicipalityMenuItems();
+    const modifiedMenu = mergeIntoMenu(municipalityMenuItems);
+    return setModifiedMainMenu(modifiedMenu);
+  }, [customUserData, isAuthenticated]);
+  // Helpers
   const createMunicipalityMenuItems = (num = 5) => {
-    const sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    });
+    let sortedMunicipalities = [];
     const menuItems = [];
-    sortedMunicipalities.slice(0, num).forEach(item => {
-      menuItems.push({
-        title: `Mein Ort: ${item.name}`,
-        slug: `gemeinden/${item.slug}`,
-        shortTitle: null
+    // After logout the customuserData gets populated again,
+    // so we check for isAuthenticated here too
+    if (customUserData.municipalities && isAuthenticated) {
+      sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
       });
-    });
+      sortedMunicipalities.slice(0, num).forEach(item => {
+        menuItems.push({
+          title: `Mein Ort: ${item.name}`,
+          slug: `gemeinden/${item.slug}`,
+          shortTitle: null
+        });
+      });
+    }
     return menuItems;
   };
   const mergeIntoMenu = municipalityMenuItems => {
-    const mainMenu = [...globalStuff.mainMenu];
+    const mainMenu = JSON.parse(JSON.stringify(globalStuff.mainMenu));
     const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
-    const engageMenuEntry = [...mainMenu[indexToMod]];
-    const mergedMenu = municipalityMenuItems.concat(engageMenuEntry);
+    const engageMenuEntries = [...mainMenu[indexToMod].contentfulchildren];
+    const mergedMenu = municipalityMenuItems.concat(engageMenuEntries);
     mainMenu[indexToMod].contentfulchildren = mergedMenu;
     return mainMenu;
   };
