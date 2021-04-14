@@ -6,14 +6,17 @@ import SocialMediaButtons from '../../components/SocialMedia/Share';
 import s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
 import cN from 'classnames';
-import { Button } from '../../components/Forms/Button';
 import { CTALink } from '../../components/Layout/CTAButton';
 import querystring from 'query-string';
 
 const Verification = () => {
-  const [verificationState, confirmSignUp, resendEmail] = useVerification();
+  const [verificationState, confirmSignUp] = useVerification();
   const [urlParams, setUrlParams] = useState(null);
-  const urlParamsComplete = !!(urlParams && urlParams.code && urlParams.email);
+  const urlParamsComplete = !!(
+    urlParams &&
+    urlParams.userId &&
+    urlParams.token
+  );
 
   useEffect(() => {
     const params = querystring.parse(window.location.search);
@@ -23,7 +26,7 @@ const Verification = () => {
 
   useEffect(() => {
     if (urlParams) {
-      confirmSignUp(urlParams.email, urlParams.code);
+      confirmSignUp(urlParams.userId, urlParams.token);
     }
   }, [urlParams]);
 
@@ -31,20 +34,13 @@ const Verification = () => {
     verificationState can now be:
     - verifying
     - verified
-    - alreadyVerified
     - userNotFound
-    - wrongCode
-    - expiredCode
-    - resendingEmail
-    - resentEmail
     - error (which is every other error)
   */
 
-  const hasError = ['userNotFound', 'wrongCode', 'error'].includes(
-    verificationState
-  );
+  const hasError = ['userNotFound', 'error'].includes(verificationState);
 
-  const isOk = ['verified', 'alreadyVerified'].includes(verificationState);
+  const isOk = verificationState === 'verified';
 
   let finallyMessageState;
 
@@ -52,10 +48,7 @@ const Verification = () => {
     finallyMessageState = 'success';
   }
 
-  if (
-    verificationState === 'verifying' ||
-    verificationState === 'resendingEmail'
-  ) {
+  if (verificationState === 'verifying') {
     finallyMessageState = 'progress';
   }
 
@@ -92,38 +85,26 @@ const Verification = () => {
                   )}
                   {verificationState === 'userNotFound' && (
                     <>
-                      Wir haben "{urlParams.email}" nicht in unserer Datenbank
-                      gefunden. Ist die Registrierung vielleicht sehr lange her?
+                      Wir haben dich nicht in unserer Datenbank gefunden. Ist
+                      die Registrierung vielleicht sehr lange her?
                       <br />
                       <br />
                     </>
                   )}
-                  Probiere es bitte ein weiteres Mal oder melde dich bei uns mit
-                  dem Hinweis zu der genauen Fehlermeldung. Nenne uns bitte
-                  außerdem falls möglich deinen Browser und die Version:
-                  <br />
-                  <br />
-                  <a href="mailto:support@expedition-grundeinkommen.de">
-                    support@expedition-grundeinkommen.de
-                  </a>
+                  {verificationState === 'error' && urlParamsComplete && (
+                    <>
+                      Möglicherweise ist der Zeitraum der Verifizierung bereits
+                      abgelaufen. Melde dich einfach bei{' '}
+                      <a href="mailto:support@expedition-grundeinkommen.de">
+                        support@expedition-grundeinkommen.de
+                      </a>
+                      , dann können wir dich manuell verifizieren.
+                      <br />
+                      <br />
+                    </>
+                  )}
                 </>
               )}
-              {verificationState === 'expiredCode' && (
-                <>
-                  Dein Verifizierungslink ist abgelaufen. Bitte klicke diesen
-                  Button, um einen neuen zu erhalten: <br /> <br />
-                  <Button
-                    onClick={() => {
-                      resendEmail(urlParams.email);
-                    }}
-                  >
-                    Sende neue Verifizierungs-E-Mail
-                  </Button>
-                </>
-              )}
-              {verificationState === 'resendingEmail' && 'Sende neue E-Mail...'}
-              {verificationState === 'resentEmail' &&
-                'Wir haben dir eine neue E-Mail geschickt. Bitte klicke darin den Link, dann bist du dabei!'}
             </FinallyMessage>
           )}
           {isOk && (
