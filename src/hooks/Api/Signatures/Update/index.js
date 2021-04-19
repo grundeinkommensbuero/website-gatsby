@@ -30,13 +30,13 @@ export const useUpdateSignatureListByUser = () => {
 // function, which makes an api call to set the signature count
 // for a specific list after user has scanned the qr code
 const updateSignatureListByUser = async (
-  { listId, userId, email, count, campaignCode },
+  { listId, userId, email, count },
   setState
 ) => {
   // make api call to create new singature list and get pdf
   setState('saving');
 
-  const body = { count, campaignCode };
+  const body = { count };
 
   // Depending on whether a user id or email was provided
   // we either send only list id or with user id or email

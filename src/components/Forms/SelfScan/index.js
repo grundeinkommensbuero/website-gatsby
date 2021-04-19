@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 import cN from 'classnames';
 import querystring from 'query-string';
@@ -10,7 +9,7 @@ import AuthContext from '../../../context/Authentication';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
 import { Section } from '../../Layout/Sections';
-import CampaignVisualisations from '../../CampaignVisualisations';
+
 import SignatureStats from '../../SignatureStats';
 import SignUp from '../SignUp';
 import FormWrapper from '../FormWrapper';
@@ -19,7 +18,7 @@ import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
 import s from './style.module.less';
 
-export default ({ successMessage, campaignCode, className }) => {
+export default ({ successMessage, className }) => {
   const [
     state,
     updateSignatureList,
@@ -56,35 +55,7 @@ export default ({ successMessage, campaignCode, className }) => {
     }
   }, [userId]);
 
-  const {
-    allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
-  } = useStaticQuery(graphql`
-    query campaignVisualisations {
-      allContentfulKampagnenvisualisierung {
-        edges {
-          node {
-            hint {
-              hint
-            }
-            goal
-            goalInbetween
-            goalUnbuffered
-            minimum
-            startDate
-            title
-            addToSignatureCount
-            campainCode
-          }
-        }
-      }
-    }
-  `);
 
-  const campaignVisualisationsMapped = campaignVisualisations
-    .map(({ node }) => node)
-    .filter(({ campainCode: campaignCodeVisualisation }) => {
-      return campaignCodeVisualisation === campaignCode;
-    });
 
   const countSignaturesFormProps = {
     state,
@@ -96,7 +67,6 @@ export default ({ successMessage, campaignCode, className }) => {
     successMessage,
     count,
     setCount,
-    campaignCode,
     setListId,
     resetSignatureListState,
   };
@@ -111,13 +81,7 @@ export default ({ successMessage, campaignCode, className }) => {
           />
           <div className={s.visualisation}>
             <CountSignaturesForm {...countSignaturesFormProps} />
-            {campaignVisualisationsMapped.length && (
-              <div className={s.campaignVisualisations}>
-                <CampaignVisualisations
-                  visualisations={campaignVisualisationsMapped}
-                />
-              </div>
-            )}
+
           </div>
         </Section>
       ) : null
@@ -136,7 +100,6 @@ const CountSignaturesForm = ({
   successMessage,
   count,
   setCount,
-  campaignCode,
   setListId,
   resetSignatureListState,
 }) => {
@@ -206,8 +169,7 @@ const CountSignaturesForm = ({
                 const data = {
                   userId,
                   listId,
-                  count,
-                  campaignCode,
+                  count
                 };
                 setCount(parseInt(data.count));
                 await updateSignatureList(data);
@@ -275,8 +237,6 @@ const CountSignaturesForm = ({
     <>
       <Form
         onSubmit={data => {
-          data.campaignCode = campaignCode;
-
           // We can set both the list id and user id here,
           // because if the param is not set it will just be null
           data.userId = userId;
