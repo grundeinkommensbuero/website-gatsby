@@ -33,6 +33,7 @@ import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
 import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
 import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
+import { MunicipalityCollectionMap } from '../../Municipality/MunicipalityCollectionMap';
 import { InviteFriends } from '../../InviteFriends';
 import { IntroText } from '../../IntroText';
 import { BecomeActive } from '../../BecomeActive';
@@ -53,6 +54,7 @@ const Components = {
   ProfileTile,
   TextAndImage,
   Standard: StandardSectionComponent,
+  CollectionMap: MunicipalityCollectionMap,
 };
 
 export default function Sections({ sections, pageContext }) {
