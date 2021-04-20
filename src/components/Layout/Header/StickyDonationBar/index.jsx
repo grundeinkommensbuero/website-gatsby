@@ -3,7 +3,7 @@ import s from './style.module.less';
 import { MunicipalityContext } from '../../../../context/Municipality';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
 
-export const StickyDonationBar = className => {
+export const StickyDonationBar = () => {
   const closeIcon = require('./close-icon.svg');
   const { allMunicipalityStats } = useContext(MunicipalityContext);
   const { closeStickyBanner } = useContext(StickyBannerContext);
