@@ -181,6 +181,23 @@ export const pageQuery = graphql`
                 }
                 text {
                   raw
+                  references {
+                    ... on ContentfulEntry {
+                      # __typename and contentful_id are required to resolve the references
+                      __typename
+                      contentful_id
+                      title
+                      slug
+                    }
+                    ... on ContentfulAsset {
+                      # __typename and contentful_id are required to resolve the references
+                      __typename
+                      contentful_id
+                      fluid(maxWidth: 500, quality: 90) {
+                        ...GatsbyContentfulFluid
+                      }
+                    }
+                  }
                 }
               }
               ... on ContentfulSectionComponentTickerToSignup {
