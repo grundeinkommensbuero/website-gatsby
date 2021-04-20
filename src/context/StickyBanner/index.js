@@ -19,7 +19,7 @@ export const StickyBannerProvider = ({ children }) => {
   }, [customUserData]);
 
   const closeStickyBanner = ({ whichBanner = 'mainBanner' }) => {
-    if (userId && customUserData) {
+    if (userId && customUserData && isAuthenticated) {
       const updateBanner = {};
       updateBanner[whichBanner] = true;
       updateUser({

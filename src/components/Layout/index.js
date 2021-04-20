@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import s from './style.module.less';
@@ -9,6 +9,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 import { StickyBannerContext } from '../../context/StickyBanner';
+import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
 
@@ -172,6 +173,44 @@ function Template({ children, sections, pageContext, title, description }) {
   };
   const sectionsWithColorScheme = addColorScheme(sections);
 
+  // Adds additional menu items for users municipality, default max: 5
+  const { customUserData, isAuthenticated } = useContext(AuthContext);
+  const [modifiedMainMenu, setModifiedMainMenu] = useState(globalStuff.mainMenu);
+  // Updates the Menu when userData is loaded
+  useEffect(() => {
+    const municipalityMenuItems = createMunicipalityMenuItems();
+    const modifiedMenu = mergeIntoMenu(municipalityMenuItems);
+    return setModifiedMainMenu(modifiedMenu);
+  }, [customUserData, isAuthenticated]);
+  // Helpers
+  const createMunicipalityMenuItems = (num = 5) => {
+    let sortedMunicipalities = [];
+    const menuItems = [];
+    // After logout the customuserData gets populated again,
+    // so we check for isAuthenticated here too
+    if (customUserData.municipalities && isAuthenticated) {
+      sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      sortedMunicipalities.slice(0, num).forEach(item => {
+        menuItems.push({
+          title: `Mein Ort: ${item.name}`,
+          slug: `gemeinden/${item.slug}`,
+          shortTitle: null
+        });
+      });
+    }
+    return menuItems;
+  };
+  const mergeIntoMenu = municipalityMenuItems => {
+    const mainMenu = JSON.parse(JSON.stringify(globalStuff.mainMenu));
+    const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
+    const engageMenuEntries = [...mainMenu[indexToMod].contentfulchildren];
+    const mergedMenu = municipalityMenuItems.concat(engageMenuEntries);
+    mainMenu[indexToMod].contentfulchildren = mergedMenu;
+    return mainMenu;
+  };
+
   return (
     <>
       {globalStuff.overlayActive && globalStuff.overlay && (
@@ -186,7 +225,7 @@ function Template({ children, sections, pageContext, title, description }) {
       />
 
       <Header
-        menu={globalStuff.mainMenu}
+        menu={modifiedMainMenu}
         hasOverlay={!!globalStuff?.overlay}
         stickyBannerVisible={stickyBannerVisible}
       />
