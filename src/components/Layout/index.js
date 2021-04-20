@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import * as s from './style.module.less';
@@ -8,6 +8,8 @@ import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
 import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
+import { StickyBannerContext } from '../../context/StickyBanner';
+import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
 
@@ -157,29 +159,24 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const donationBarVisible = true; // TODO: reactive from context, to adapt, when user clicks bar away
+  const { stickyBannerVisible } = useContext(StickyBannerContext);
 
   const variableMarginClass = () => {
-    if (donationBarVisible) {
-      return 'withDonationBar';
-    } else {
-      return 'withoutDonationBar';
-    }
+    return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
   };
 
   const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
       const updatedUrl = `https:${url}`;
       return updatedUrl;
-    } else {
-      return url;
     }
+    return url;
   };
 
   // Modify section color scheme, when none is set from contentful
   // keyVisual component excluded, because its already violet
-  const modifySections = origSections => {
-    if (origSections && origSections.length !== 0) {
+  const addColorScheme = sections => {
+    if (sections && sections.length !== 0) {
       const colorSchemes = ['white', 'violet', 'aqua'];
       let counter = 0;
       const modSections = [...sections];
@@ -193,11 +190,48 @@ function Template({ children, sections, pageContext, title, description }) {
         }
       }
       return modSections;
-    } else {
-      return undefined;
     }
+    return undefined;
   };
-  const modifiedSections = modifySections(sections);
+  const sectionsWithColorScheme = addColorScheme(sections);
+
+  // Adds additional menu items for users municipality, default max: 5
+  const { customUserData, isAuthenticated } = useContext(AuthContext);
+  const [modifiedMainMenu, setModifiedMainMenu] = useState(globalStuff.mainMenu);
+  // Updates the Menu when userData is loaded
+  useEffect(() => {
+    const municipalityMenuItems = createMunicipalityMenuItems();
+    const modifiedMenu = mergeIntoMenu(municipalityMenuItems);
+    return setModifiedMainMenu(modifiedMenu);
+  }, [customUserData, isAuthenticated]);
+  // Helpers
+  const createMunicipalityMenuItems = (num = 5) => {
+    let sortedMunicipalities = [];
+    const menuItems = [];
+    // After logout the customuserData gets populated again,
+    // so we check for isAuthenticated here too
+    if (customUserData.municipalities && isAuthenticated) {
+      sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      sortedMunicipalities.slice(0, num).forEach(item => {
+        menuItems.push({
+          title: `Mein Ort: ${item.name}`,
+          slug: `gemeinden/${item.slug}`,
+          shortTitle: null
+        });
+      });
+    }
+    return menuItems;
+  };
+  const mergeIntoMenu = municipalityMenuItems => {
+    const mainMenu = JSON.parse(JSON.stringify(globalStuff.mainMenu));
+    const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
+    const engageMenuEntries = [...mainMenu[indexToMod].contentfulchildren];
+    const mergedMenu = municipalityMenuItems.concat(engageMenuEntries);
+    mainMenu[indexToMod].contentfulchildren = mergedMenu;
+    return mainMenu;
+  };
 
   return (
     <>
@@ -213,9 +247,9 @@ function Template({ children, sections, pageContext, title, description }) {
       />
 
       <Header
-        menu={globalStuff.mainMenu}
+        menu={modifiedMainMenu}
         hasOverlay={!!globalStuff?.overlay}
-        donationBarVisible={donationBarVisible}
+        stickyBannerVisible={stickyBannerVisible}
       />
       <Helmet
         defaultTitle={globalStuff.siteTitle}
@@ -239,7 +273,7 @@ function Template({ children, sections, pageContext, title, description }) {
       </Helmet>
       <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={modifiedSections} pageContext={pageContext} />
+        <Sections sections={sectionsWithColorScheme} pageContext={pageContext} />
       </main>
       <Footer
         footerText={globalStuff.footerText}
