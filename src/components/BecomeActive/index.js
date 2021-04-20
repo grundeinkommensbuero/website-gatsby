@@ -9,7 +9,7 @@ export const BecomeActive = ({ headline, body }) => {
   const { municipality } = useContext(MunicipalityContext);
 
   // TODO: text from contentful
-  // const text = contentfulJsonToHtml(body.raw);
+  // const text = contentfulJsonToHtml(body);
   // console.log(text);
 
   return (
@@ -22,10 +22,12 @@ export const BecomeActive = ({ headline, body }) => {
           Organisation helfen können. Wenn du Lust hast, dann finde jetzt
           heraus, wie du aktiv werden kannst!
         </p>
-        <CTAButton size="MEDIUM"
+        <CTAButton
+          size="MEDIUM"
           onClick={() => {
             navigate('/aktiv-werden');
-          }}>
+          }}
+        >
           Aktiv werden
         </CTAButton>
       </div>

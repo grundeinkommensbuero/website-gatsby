@@ -184,7 +184,7 @@ const PopupContent = ({ title, description, date, phone, mail }) => (
     {description && (
       <div className={s.tooltipDescription}>
         <hr />
-        {contentfulJsonToHtml(description.raw)}
+        {contentfulJsonToHtml(description)}
       </div>
     )}
     {(phone || mail) && <hr />}

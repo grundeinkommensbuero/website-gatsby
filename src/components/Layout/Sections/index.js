@@ -290,7 +290,7 @@ export function ContentfulSection({ section, pageContext }) {
                 introText={introText ? introText : null}
                 previewComponent={
                   previewDescription?.raw
-                    ? contentfulJsonToHtml(previewDescription.raw)
+                    ? contentfulJsonToHtml(previewDescription)
                     : null
                 }
                 scrollToRef={scrollToRef}
@@ -375,7 +375,7 @@ export function ContentfulSection({ section, pageContext }) {
       {isTwoColumns && (
         <SectionInner>
           <div className={s.columnIntroText}>
-            {contentfulJsonToHtml(columnIntroText.raw)}
+            {contentfulJsonToHtml(columnIntroText)}
           </div>
           <TwoColumns className={s.columnWrapper}>
             <section className={s.column}>
@@ -385,7 +385,7 @@ export function ContentfulSection({ section, pageContext }) {
                 </div>
               )}
               {columnTopLeft && (
-                <div>{contentfulJsonToHtml(columnTopLeft.raw)}</div>
+                <div>{contentfulJsonToHtml(columnTopLeft)}</div>
               )}
             </section>
             <section className={s.column}>
@@ -395,7 +395,7 @@ export function ContentfulSection({ section, pageContext }) {
                 </div>
               )}
               {columnTopRight && (
-                <div>{contentfulJsonToHtml(columnTopRight.raw)}</div>
+                <div>{contentfulJsonToHtml(columnTopRight)}</div>
               )}
             </section>
             <section className={s.column}>
@@ -405,7 +405,7 @@ export function ContentfulSection({ section, pageContext }) {
                 </div>
               )}
               {columnBottomLeft && (
-                <div>{contentfulJsonToHtml(columnBottomLeft.raw)}</div>
+                <div>{contentfulJsonToHtml(columnBottomLeft)}</div>
               )}
             </section>
             <section className={s.column}>
@@ -418,7 +418,7 @@ export function ContentfulSection({ section, pageContext }) {
                 </div>
               )}
               {columnBottomRight && (
-                <div>{contentfulJsonToHtml(columnBottomRight.raw)}</div>
+                <div>{contentfulJsonToHtml(columnBottomRight)}</div>
               )}
             </section>
           </TwoColumns>
@@ -432,7 +432,7 @@ export function ContentfulSection({ section, pageContext }) {
       )}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
-          {body && body.raw ? contentfulJsonToHtml(body.raw) : body}
+          {body && body.raw ? contentfulJsonToHtml(body) : body}
           {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
           {signaturesId && (
             <SignatureListDownload
@@ -500,7 +500,7 @@ export function ContentfulSection({ section, pageContext }) {
       )}
       {bodyAtTheEnd && bodyAtTheEnd.raw && (
         <SectionInner hugeText={bodyTextSizeHuge}>
-          {contentfulJsonToHtml(bodyAtTheEnd.raw)}
+          {contentfulJsonToHtml(bodyAtTheEnd)}
         </SectionInner>
       )}
     </Section>

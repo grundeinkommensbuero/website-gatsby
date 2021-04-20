@@ -86,6 +86,28 @@ export const pageQuery = graphql`
             }
             body {
               raw
+              references {
+                ... on ContentfulAsset {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  fluid(maxWidth: 500, quality: 90) {
+                    ...GatsbyContentfulFluid
+                  }
+                }
+                ... on ContentfulStaticContent {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  slug
+                }
+                ... on ContentfulPageSectionWithComponents {
+                  __typename
+                  contentful_id
+                  id
+                  titleShort
+                }
+              }
             }
             maps {
               name
@@ -182,13 +204,6 @@ export const pageQuery = graphql`
                 text {
                   raw
                   references {
-                    ... on ContentfulEntry {
-                      # __typename and contentful_id are required to resolve the references
-                      __typename
-                      contentful_id
-                      title
-                      slug
-                    }
                     ... on ContentfulAsset {
                       # __typename and contentful_id are required to resolve the references
                       __typename

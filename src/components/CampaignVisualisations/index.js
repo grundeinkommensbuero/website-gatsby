@@ -174,7 +174,7 @@ export const Visualisation = ({
       return count < goal && count > goalInbetweenMultipleSorted[index + 1];
     });
   }
-  const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher.raw);
+  const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher);
 
   const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
 

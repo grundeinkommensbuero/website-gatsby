@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import { INLINES, BLOCKS } from '@contentful/rich-text-types';
 import { CrowdFundingVisualistation } from '../CampaignVisualisations';
 import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
@@ -12,7 +12,7 @@ import { usePrevious } from '../../hooks/utils';
 
 const website_url = 'https://expedition-grundeinkommen.de/';
 
-export function contentfulJsonToHtml(json) {
+export function contentfulJsonToHtml(richText) {
   const documentToREactComponentsOptions = {
     // needed so that line breaks are properly added.
     renderText: text => {
@@ -27,7 +27,7 @@ export function contentfulJsonToHtml(json) {
           (uri.startsWith(website_url) ||
             uri.startsWith('/') ||
             uri.startsWith('#')) &&
-            !uri.endsWith('.pdf')
+          !uri.endsWith('.pdf')
             ? '_self'
             : '_blank';
         const rel =
@@ -42,18 +42,25 @@ export function contentfulJsonToHtml(json) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        const isPage = node.data.target.fields.slug;
-        const uri = isPage
-          ? `/${node.data.target.fields.slug['en-US']}`
-          : `#${node.data.target.fields.titleShort['en-US']}`;
-        if (isPage) {
-          return <Link to={uri}>{node.content[0].value}</Link>;
-        } else {
-          return (
-            <a href={uri} target="_self">
-              {node.content[0].value}
-            </a>
-          );
+        try {
+          console.log('node', node);
+
+          const isPage = node.data.target.slug;
+          const uri = isPage
+            ? `/${node.data.target.slug}`
+            : `#${node.data.target.titleShort}`;
+          if (isPage) {
+            return <Link to={uri}>{node.content[0].value}</Link>;
+          } else {
+            return (
+              <a href={uri} target="_self">
+                {node.content[0].value}
+              </a>
+            );
+          }
+        } catch (error) {
+          console.log(error);
+          console.log('node', node);
         }
       },
       [BLOCKS.EMBEDDED_ENTRY]: ({
@@ -170,8 +177,7 @@ export function contentfulJsonToHtml(json) {
       },
     },
   };
-  const parsedJson = JSON.parse(json)
-  return documentToReactComponents(parsedJson, documentToREactComponentsOptions);
+  return renderRichText(richText, documentToREactComponentsOptions);
 }
 
 function QuestionAnswer({ question, answer, openInitially = false }) {
