@@ -5,16 +5,21 @@
 }
 
 .donationBarItemContainer {
+  position: relative;
   display: flex;
-  min-height: @donationBarHeight;
-  //justify-content: flex-end;
-  justify-content: space-between;
+  min-height: 11.5rem;
+  justify-content: space-around;
   width: @headerWidth;
   margin: auto;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
+  color: white;
 
   @media (max-width: @breakPointXL) {
     width: 100%;
+  }
+
+  @media (max-width: @breakPointM) {
+    display: block;
   }
 }
 
@@ -52,10 +57,12 @@
 }
 
 .closeButton {
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
-  margin: auto 1rem;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
 
   @media (max-width: @breakPointM) {
     width: 1.25rem;
@@ -65,4 +72,131 @@
   @media (max-width: @breakPointS) {
     margin: auto 0.25rem;
   }
+}
+
+.crowdfundingHeading {
+  margin: 0.25em 0;
+  font-size: @MobileFontSizeXL;
+
+  @media (max-width: @breakPointL) {
+    font-size: @MobileFontSizeL;
+  }
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeXL;
+  }
+}
+
+.crowdfundingDescription {
+  font-size: @MobileFontSizeM;
+  margin: 0.5em 0 1rem 0;
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeM;
+    margin: 1em 0;
+  }
+}
+
+.leftSection {
+  width: 47.5%;
+
+  @media (max-width: @breakPointM) {
+    width: 95%;
+  }
+}
+.rightSection {
+  width: 47.5%;
+  margin-top: 2rem;
+
+  @media (max-width: @breakPointM) {
+    width: 95%;
+  }
+}
+.actionRow {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.engageText {
+  margin-top: 0.25rem;
+  margin-right: 2rem;
+}
+
+.crowdfundingCTA {
+  background: @white; // fallback for IE
+  background: var(--button-bg-color);
+  border: @black; //fallback for IE
+  border: var(--button-font-color) solid @borderWidthThick;
+  border-radius: @borderRadius;
+  color: var(--button-font-color);
+  font-size: @DesktopFontSizeM;
+  font-weight: bold;
+  padding: 0.6rem 2rem 0.55rem;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--button-hover-font-color);
+    background: var(--button-hover-bg-color);
+  }
+
+  &:focus {
+    outline: none;
+    background-color: darken(@violet, 10%);
+    color: @white;
+    border-color: darken(@violet, 10%);
+    //box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
+  }
+
+  @media (max-width: @breakPointL) {
+    padding: 0.6rem 1rem 0.55rem;
+    font-size: @DesktopFontSizeM;
+  }
+}
+
+.moreInfo {
+  font-size: @MobileFontSizeL;
+  text-decoration: underline;
+  margin: 0;
+
+  @media (max-width: @breakPointL) {
+    font-size: @MobileFontSizeM;
+  }
+
+  @media (max-width: @breakPointM) {
+    font-size: @MobileFontSizeL;
+  }
+}
+
+.arrowDown {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+
+  @media (max-width: @breakPointS) {
+    margin: auto 0.25rem;
+  }
+}
+
+.visualisationForMobile {
+  display: none;
+
+  @media (max-width: @breakPointM) {
+    display: block;
+    margin-bottom: 1rem;
+  }
+}
+
+.visualisationForDesktop {
+  display: block;
+
+  @media (max-width: @breakPointM) {
+    display: none;
+  }
+}
+
+.hidden {
+  display: none;
 }
