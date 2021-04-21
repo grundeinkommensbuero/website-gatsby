@@ -32,7 +32,7 @@ export const CrowdfundingInfo = () => {
       <div className={s.containerCTA}>
         <Button onClick={() =>
           window.open(
-            'https://www.startnext.com/expedition-bge',
+            'https://www.startnext.com/DvZ',
             '_blank'
           )
         }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import s from './style.module.less';
+import s from './hertieStyle.module.less';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
 import { CrowdfundingVisual } from '../../../CrowdfundingInfo/CrowdfundingVisual';
 import cN from 'classnames';
@@ -36,10 +36,7 @@ export const HertieCrowdfunding = () => {
             <button
               className={s.crowdfundingCTA}
               onClick={() =>
-                window.open(
-                  'https://www.startnext.com/expedition-bge',
-                  '_blank'
-                )
+                window.open('https://www.startnext.com/DvZ', '_blank')
               }
             >
               Zum Crowdfunding
