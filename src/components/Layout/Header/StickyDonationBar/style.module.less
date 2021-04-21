@@ -1,7 +1,17 @@
 @import '../../../style/vars.less';
 
 .donationBar {
-  background: @aqua;
+  background-color: @red;
+  color: @white;
+  --bg-color: @red;
+  --font-color: @white;
+  --secondary-color: @white;
+  --text-on-secondary-color: @black;
+  --button-font-color: @white;
+  --button-bg-color: @black; // IE Fallback
+  --button-bg-color: @whiteTransparent;
+  --button-hover-bg-color: @white;
+  --button-hover-font-color: @red;
 }
 
 .donationBarItemContainer {

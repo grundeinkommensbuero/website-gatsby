@@ -1,7 +1,9 @@
 import React from 'react';
 import videoPlaceholder from './videoPlaceholder.png';
+import { Button } from '../Forms/Button';
 import s from './style.module.less';
-import { CampainVisualisation } from '../CampaignVisualisations';
+import { CrowdfundingVisual } from './CrowdfundingVisual';
+
 
 export const CrowdfundingInfo = () => {
   return (
@@ -10,38 +12,27 @@ export const CrowdfundingInfo = () => {
       <div className={s.contentContainer}>
         <img className={s.videoPlaceholder} alt="" src={videoPlaceholder} />
         <p className={s.description}>
-          Vestibulum convallis mauris vel sapien ultrices, sit amet placerat
-          nisi rhoncus. Suspendisse vitae nisi et magna tempor tempus. Integer
-          eleifend suscipit porta. Duis tristique tortor eget tellus convallis
-          sagittis. Cras urna lorem, blandit sit amet enim at, dapibus hendrerit
-          quam. Orci varius natoque penatibus et magnis dis parturient montes,
-          nascetur ridiculus mus.
+          Der einfachste Ansatz ist gleichzeitig der effektivste: ein bedingungsloses
+          Grundeinkommen.“ (Martin Luther King jr.) Große Veränderungen brauchen Menschen,
+          die an sie glauben. Menschen wie du und ich – und Martin Luther King. Mit deiner
+          Spende bringst du das Grundeinkommen von der Utopie zur Realität und stärkst
+          gleichzeitig noch unsere Demokratie. Ganz nach dem Motto: Eine kleine Spende für
+          dich, ein großer Schritt für die Menschheit!
         </p>
       </div>
       <div>
-        <CampainVisualisation
-          goal={20000}
-          count={7653}
-          isCrowdfunding={true}
-          // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
-          labels={{
-            NEEDED: () => <>Benötigte Anmeldungen</>,
-            GOAL_INBETWEEN_TOOLTIP: count => (
-              <>
-                Insgesamt benötigt:
-              <br />
-                {count} Anmeldungen
-            </>
-            ),
-            GOAL_INBETWEEN: count => (
-              <>Nächstes Ziel: {count} Anmeldungen</>
-            ),
-            CURRENT_COUNT: () => <>Anmeldungen</>,
-            CTA: () => <>Mitmachen</>,
-          }}
-          currency="Anmeldungen"
-          startDate={false}
-        />
+        <CrowdfundingVisual />
+      </div>
+      <div className={s.containerCTA}>
+        <Button onClick={() =>
+          window.open(
+            'https://www.startnext.com/expedition-bge',
+            '_blank'
+          )
+        }
+        >
+          Zum Crowdfunding
+      </Button>
       </div>
     </>
   )
