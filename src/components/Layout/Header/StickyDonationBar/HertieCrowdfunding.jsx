@@ -26,8 +26,8 @@ export const HertieCrowdfunding = () => {
             <b>Mach mit beim Crowdfunding!</b>
           </p>
           <p className={s.crowdfundingDescription}>
-            Bring mit deiner Spende Grundeinkommen näher an die Realität. Mach
-            mit beim Crowdfunding!
+            Bring mit deiner Spende Grundeinkommen näher an die Realität. Egal
+            ob 1€ oder 100€ – jede Spende zählt!
           </p>
           <div className={s.visualisationForMobile}>
             <CrowdfundingVisual />

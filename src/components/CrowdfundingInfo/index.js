@@ -14,12 +14,16 @@ export const CrowdfundingInfo = () => {
           <YoutubeEmbed url={'I7DjXaVPI2M'} />
         </div>
         <p className={s.description}>
-          Der einfachste Ansatz ist gleichzeitig der effektivste: ein bedingungsloses
-          Grundeinkommen.“ (Martin Luther King jr.) Große Veränderungen brauchen Menschen,
-          die an sie glauben. Menschen wie du und ich – und Martin Luther King. Mit deiner
-          Spende bringst du das Grundeinkommen von der Utopie zur Realität und stärkst
-          gleichzeitig noch unsere Demokratie. Ganz nach dem Motto: Eine kleine Spende für
-          dich, ein großer Schritt für die Menschheit!
+          „Der einfachste Ansatz ist gleichzeitig der effektivste:
+          ein bedingungsloses Grundeinkommen.“ (Martin Luther King)
+
+          Große Veränderungen brauchen Menschen, die an sie glauben.
+          Menschen wie du und ich. Mit deiner Spende beim Crowdfunding
+          bringst du das Grundeinkommen von der Utopie zur Realität
+          und stärkst gleichzeitig noch unsere Demokratie. Egal ob 1€
+          oder 100€ – jede Spende bringt das Thema voran. Ganz nach dem
+          Motto: Eine kleine Spende für dich, ein großer Schritt für
+          die Menschheit!
         </p>
       </div>
       <div>
