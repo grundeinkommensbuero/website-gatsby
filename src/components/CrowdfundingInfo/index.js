@@ -8,7 +8,7 @@ import { YoutubeEmbed } from '../Layout/Sections';
 export const CrowdfundingInfo = () => {
   return (
     <>
-      <h2>Crowdfunding: Unterstütze uns!</h2>
+      <h2>Mach mit beim Crowdfunding!</h2>
       <div className={s.contentContainer}>
         <div className={s.video}>
           <YoutubeEmbed url={'I7DjXaVPI2M'} />
@@ -16,7 +16,7 @@ export const CrowdfundingInfo = () => {
         <p className={s.description}>
           „Der einfachste Ansatz ist gleichzeitig der effektivste:
           ein bedingungsloses Grundeinkommen.“ (Martin Luther King)
-
+          <br /><br />
           Große Veränderungen brauchen Menschen, die an sie glauben.
           Menschen wie du und ich. Mit deiner Spende beim Crowdfunding
           bringst du das Grundeinkommen von der Utopie zur Realität
@@ -25,9 +25,6 @@ export const CrowdfundingInfo = () => {
           Motto: Eine kleine Spende für dich, ein großer Schritt für
           die Menschheit!
         </p>
-      </div>
-      <div>
-        <CrowdfundingVisual />
       </div>
       <div className={s.containerCTA}>
         <Button onClick={() =>
@@ -38,7 +35,10 @@ export const CrowdfundingInfo = () => {
         }
         >
           Zum Crowdfunding
-      </Button>
+        </Button>
+      </div>
+      <div>
+        <CrowdfundingVisual />
       </div>
     </>
   )

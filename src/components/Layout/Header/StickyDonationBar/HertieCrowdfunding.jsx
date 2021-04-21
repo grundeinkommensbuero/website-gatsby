@@ -23,7 +23,7 @@ export const HertieCrowdfunding = () => {
         />
         <div className={s.leftSection}>
           <p className={s.crowdfundingHeading}>
-            <b>Mach mit beim Crowdfunding!</b>
+            <b>Wir crowdfunden die Expedition</b>
           </p>
           <p className={s.crowdfundingDescription}>
             Bring mit deiner Spende Grundeinkommen näher an die Realität. Egal
