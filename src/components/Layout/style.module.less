@@ -11,27 +11,15 @@
 .withStickyBanner {
   margin-top: calc(@headerHeight + 11.5rem);
 
-  @media (max-width: 529px) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS * 1.75);
+  @media (max-width: @breakPointM) {
+    margin-top: calc(@headerHeight + 20rem);
   }
 
-  @media (max-width: 380px) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS * 2.1);
+  @media (max-width: 460px) {
+    margin-top: calc(@headerHeight + 22rem);
   }
 
-  @media (max-width: 303px) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS * 2.6);
-  }
-
-  @media (max-width: 273px) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS * 3);
-  }
-
-  @media (max-width: 231px) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS * 4);
-  }
-
-  @media (max-width: 189px) {
-    margin-top: calc(@headerHeightS + @donationBarHeightS * 6);
+  @media (max-width: 343px) {
+    margin-top: calc(@headerHeight + 24rem);
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import videoPlaceholder from './videoPlaceholder.png';
 import { Button } from '../Forms/Button';
 import s from './style.module.less';
 import { CrowdfundingVisual } from './CrowdfundingVisual';
+import { YoutubeEmbed } from '../Layout/Sections';
 
 
 export const CrowdfundingInfo = () => {
@@ -10,7 +10,9 @@ export const CrowdfundingInfo = () => {
     <>
       <h2>Crowdfunding: Unterstütze uns!</h2>
       <div className={s.contentContainer}>
-        <img className={s.videoPlaceholder} alt="" src={videoPlaceholder} />
+        <div className={s.video}>
+          <YoutubeEmbed url={'I7DjXaVPI2M'} />
+        </div>
         <p className={s.description}>
           Der einfachste Ansatz ist gleichzeitig der effektivste: ein bedingungsloses
           Grundeinkommen.“ (Martin Luther King jr.) Große Veränderungen brauchen Menschen,

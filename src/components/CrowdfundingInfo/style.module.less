@@ -4,16 +4,28 @@
   display: flex;
   justify-content: space-between;
   margin: 4rem 0;
+
+  @media (max-width: @breakPointL) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
-.videoPlaceholder {
+.video {
   width: 47.5%;
-  height: 30%;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
 }
 
 .description {
   width: 47.5%;
   margin: 0;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
 }
 
 .crowdfundingInfo {
