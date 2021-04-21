@@ -40,8 +40,8 @@ import { BecomeActive } from '../../BecomeActive';
 import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { TextAndImage } from './TextAndImage';
-
 import { LinkButton } from '../../Forms/Button';
+import { CrowdfundingInfo } from '../../CrowdfundingInfo';
 
 const Components = {
   TickerToSignup,
@@ -83,6 +83,14 @@ export default function Sections({ sections, pageContext }) {
             />
           );
         })}
+        <Section
+          jumpToId={'crowdfunding'}
+          className={s.sectionAqua}
+        >
+          <SectionInner>
+            <CrowdfundingInfo />
+          </SectionInner>
+        </Section>
       </SectionWrapper>
     );
   }
@@ -222,6 +230,7 @@ export function ContentfulSection({ section, pageContext }) {
             {headline && <h2>{headline.headline}</h2>}
             <div className={s.componentElementContainer}>
               {filteredComponents.map((component, index) => {
+
                 return (
                   <div
                     key={index}
