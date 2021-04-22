@@ -29,6 +29,7 @@ export const CrowdfundingVisual = () => {
           CTA: () => <>Mitmachen</>,
         }}
         currency="€"
+        currencyShort="&#8239;€"
         startDate={false}
       />}
     </div>
