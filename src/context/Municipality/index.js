@@ -13,7 +13,6 @@ export const MunicipalityProvider = ({ children }) => {
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
 
-
   // Stats for all municipalities
   const [
     allMunicipalityStatsState,
@@ -169,7 +168,7 @@ export const MunicipalityProvider = ({ children }) => {
         singleMunicipalityStats,
         singleMunicipalityStatsState,
         statsSummary,
-        refreshContextStats: () => getAllMunicipalityStats()
+        refreshContextStats: () => getAllMunicipalityStats(),
       }}
     >
       {children}

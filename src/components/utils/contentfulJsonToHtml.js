@@ -3,7 +3,7 @@ import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import { INLINES, BLOCKS } from '@contentful/rich-text-types';
 import { CrowdFundingVisualistation } from '../CampaignVisualisations';
 import { LinkButton, LinkButtonLocal, Button } from '../Forms/Button';
-import { getMailtoUrl, objectMap } from '.';
+import { getMailtoUrl } from '.';
 import { validateEmail } from './index';
 import * as s from './contentfulJsonToHtml.module.less';
 import cN from 'classnames';
@@ -42,114 +42,102 @@ export function contentfulJsonToHtml(richText) {
         );
       },
       [INLINES.ENTRY_HYPERLINK]: node => {
-        try {
-          console.log('node', node);
-
-          const isPage = node.data.target.slug;
-          const uri = isPage
-            ? `/${node.data.target.slug}`
-            : `#${node.data.target.titleShort}`;
-          if (isPage) {
-            return <Link to={uri}>{node.content[0].value}</Link>;
-          } else {
-            return (
-              <a href={uri} target="_self">
-                {node.content[0].value}
-              </a>
-            );
-          }
-        } catch (error) {
-          console.log(error);
-          console.log('node', node);
+        const isPage = node.data.target.slug;
+        const uri = isPage
+          ? `/${node.data.target.slug}`
+          : `#${node.data.target.titleShort}`;
+        if (isPage) {
+          return <Link to={uri}>{node.content[0].value}</Link>;
+        } else {
+          return (
+            <a href={uri} target="_self">
+              {node.content[0].value}
+            </a>
+          );
         }
       },
-      [BLOCKS.EMBEDDED_ENTRY]: ({
-        data: {
-          target: {
-            sys: {
-              contentType: {
-                sys: { id: contentTypeId },
-              },
-            },
-            fields,
-          },
-        },
-      }) => {
-        const fieldsMapped = objectMap(fields, field => field['en-US']);
+      [BLOCKS.EMBEDDED_ENTRY]: ({ data }) => {
+        // For some reason the content type id is not passed for questions (no idea why...)
+        // and also not for some buttons
+        let contentTypeId;
+        if (data.target.__typename === 'ContentfulQuestion') {
+          contentTypeId = 'question';
+        } else if (data.target.__typename === 'ContentfulCallToActionButton') {
+          contentTypeId = 'callToActionButton';
+        } else {
+          contentTypeId = data.target.sys.contentType.sys.id;
+        }
+
         if (contentTypeId === 'campainVisualisation') {
-          return <CrowdFundingVisualistation {...fieldsMapped} />;
+          return <CrowdFundingVisualistation {...data.target} />;
         }
         if (contentTypeId === 'callToActionButton') {
-          if (fieldsMapped.linkLong) {
+          console.log(data);
+          if (data.target.linkLong) {
             return (
               <p>
                 <LinkButton
-                  href={fieldsMapped.linkLong}
-                  target={fieldsMapped.openInNewTab ? '_blank' : null}
+                  href={data.target.linkLong.linkLong}
+                  target={data.target.openInNewTab ? '_blank' : null}
                 >
-                  {fieldsMapped.text}
+                  {data.target.text}
                 </LinkButton>
               </p>
             );
-          } else if (fieldsMapped.internalReference) {
-            const referenseFieldsMapped = objectMap(
-              fieldsMapped.internalReference.fields,
-              field => field['en-US']
-            );
-
-            const jumpToAppendix = fieldsMapped.jumpTo
-              ? `#${fieldsMapped.jumpTo}`
+          } else if (data.target.internalReference) {
+            const jumpToAppendix = data.target.jumpTo
+              ? `#${data.target.jumpTo}`
               : '';
 
             return (
               <p>
                 <LinkButtonLocal
-                  to={referenseFieldsMapped.slug + jumpToAppendix}
-                  target={fieldsMapped.openInNewTab ? '_blank' : null}
+                  to={data.target.internalReference.slug + jumpToAppendix}
+                  target={data.target.openInNewTab ? '_blank' : null}
                 >
-                  {fieldsMapped.text}
+                  {data.target.text}
                 </LinkButtonLocal>
               </p>
             );
-          } else if (fieldsMapped.mailto) {
+          } else if (data.target.mailto) {
             const href = getMailtoUrl(
-              fieldsMapped.mailto === 'BLANK' ? '' : fieldsMapped.mailto,
-              fieldsMapped.mailtoSubject,
-              fieldsMapped.mailtoBody
+              data.target.mailto === 'BLANK' ? '' : data.target.mailto,
+              data.target.mailtoSubject,
+              data.target.mailtoBody
             );
 
             return (
               <p>
-                <LinkButton href={href}>{fieldsMapped.text}</LinkButton>
+                <LinkButton href={href}>{data.target.text}</LinkButton>
               </p>
             );
-          } else if (fieldsMapped.copyToClipboard) {
+          } else if (data.target.copyToClipboard) {
             return (
               <p>
-                <CopyToClipboardButton toCopy={fieldsMapped.copyToClipboard}>
-                  {fieldsMapped.text}
+                <CopyToClipboardButton toCopy={data.target.copyToClipboard}>
+                  {data.target.text}
                 </CopyToClipboardButton>
               </p>
             );
           }
         }
         if (contentTypeId === 'question') {
-          return <QuestionAnswer {...fieldsMapped} />;
+          return <QuestionAnswer {...data.target} />;
         }
       },
       [BLOCKS.EMBEDDED_ASSET]: node => {
         // https://github.com/contentful/rich-text/issues/61#issuecomment-475999852
-        const { title, description, file } = node.data.target.fields;
-        const mimeType = file['en-US'].contentType;
+        const { title, description, file } = node.data.target;
+        const mimeType = file.contentType;
         const mimeGroup = mimeType.split('/')[0];
 
         switch (mimeGroup) {
           case 'image':
             // return (
             //   <img
-            //     title={title ? title['en-US'] : null}
-            //     alt={description ? description['en-US'] : null}
-            //     src={file['en-US'].url}
+            //     title={title ? title : null}
+            //     alt={description ? description : null}
+            //     src={file.url}
             //   />
             // );
             break;
@@ -159,10 +147,10 @@ export function contentfulJsonToHtml(richText) {
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  alt={description ? description['en-US'] : null}
-                  href={file['en-US'].url}
+                  alt={description ? description : null}
+                  href={file.url}
                 >
-                  {title ? title['en-US'] : file['en-US'].details.fileName}
+                  {title ? title : file.details.fileName}
                 </a>
               </p>
             );
@@ -177,6 +165,7 @@ export function contentfulJsonToHtml(richText) {
       },
     },
   };
+
   return renderRichText(richText, documentToREactComponentsOptions);
 }
 
@@ -215,14 +204,14 @@ function QuestionAnswer({ question, answer, openInitially = false }) {
     }
   }, [isOpen]);
 
-  if (question && answer.content) {
+  if (question && answer) {
     return (
       <div className={s.questionAndAnswer}>
         <button
           className={cN(s.question, { [s.open]: isOpen })}
           onClick={() => setIsOpen(!isOpen)}
         >
-          {question}
+          {question.question}
         </button>
         <div
           className={cN(s.answerContainer, {
@@ -239,6 +228,8 @@ function QuestionAnswer({ question, answer, openInitially = false }) {
       </div>
     );
   }
+
+  return null;
 }
 
 function CopyToClipboardButton({ children, toCopy }) {

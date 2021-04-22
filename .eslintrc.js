@@ -68,6 +68,6 @@ module.exports = {
     'jsx-a11y/role-supports-aria-props': `warn`,
     'jsx-a11y/scope': `warn`,
     'jsx-a11y/tabindex-no-positive': `warn`,
-    'import/no-anonymous-default-export': 'off',
+    'import/no-anonymous-default-export': [0],
   },
 };
