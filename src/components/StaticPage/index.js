@@ -519,7 +519,7 @@ export const pageQuery = graphql`
                   }
                 }
                 text {
-                  json
+                  raw
                 }
               }
             }

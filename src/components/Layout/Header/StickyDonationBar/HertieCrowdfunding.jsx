@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import s from './hertieStyle.module.less';
+import * as s from './hertieStyle.module.less';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
 import { CrowdfundingVisual } from '../../../CrowdfundingInfo/CrowdfundingVisual';
 import cN from 'classnames';
