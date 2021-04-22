@@ -1,0 +1,40 @@
+@import '../style/vars.less';
+
+.contentContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 4rem 0 2rem;
+
+  @media (max-width: @breakPointL) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.video {
+  width: 47.5%;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+}
+
+.description {
+  width: 47.5%;
+  margin: 0;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+}
+
+.crowdfundingInfo {
+  margin: 2rem 0;
+  background: black;
+}
+
+.containerCTA {
+  margin: 2rem 0 3rem;
+  display: flex;
+  justify-content: center;
+}

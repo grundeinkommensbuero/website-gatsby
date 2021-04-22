@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import { MunicipalityContext } from '../../../context/Municipality';
-import Map from '../../Maps/Map';
 
 import * as s from './style.module.less';
 
@@ -57,34 +56,6 @@ export const MunicipalityProgress = ({
               Hol also noch Menschen dazu.
             </p>
           )}
-        {/* Quickfix: Show list collection map on page for Bremen */}
-        {showDescription && municipality && municipality.ags === '04011000' && (
-          <>
-            <h2 className={s.collectionMapHeadline}>Vor Ort unterschreiben</h2>
-            <p>
-              Hier findest du Orte in Bremen und Bremerhaven, an denen unsere
-              Listen ausliegen. Komm einfach vorbei und unterschreibe vor Ort!
-            </p>
-            <Map
-              mapConfig={{
-                state: 'bremen',
-                config: {
-                  center: [8.8108603, 53.0782442],
-                  zoom: 11,
-                },
-              }}
-            />
-            <Map
-              mapConfig={{
-                state: 'bremen',
-                config: {
-                  center: [8.6069175, 53.5480746],
-                  zoom: 11,
-                },
-              }}
-            />
-          </>
-        )}
         {/* all other municipalities */}
         {showDescription &&
           municipality &&

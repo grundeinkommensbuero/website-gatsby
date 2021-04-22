@@ -505,6 +505,23 @@ export const pageQuery = graphql`
                 }
                 fullWidthOnDesktop
               }
+              ... on ContentfulSectionComponentCollectionMap {
+                __typename
+                showForOptions
+                column
+                maps {
+                  name
+                  state
+                  config {
+                    maxBounds
+                    zoom
+                    center
+                  }
+                }
+                text {
+                  json
+                }
+              }
             }
           }
           ... on ContentfulPageSectionDonation {

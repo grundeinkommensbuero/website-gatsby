@@ -118,6 +118,7 @@ export const CampainVisualisation = ({
   maximum,
   addToSignatureCount,
   currentCount,
+  isCrowdfunding = false,
   ...props
 }) => {
   let count = currentCount || 0;
@@ -136,7 +137,7 @@ export const CampainVisualisation = ({
     }
   }
 
-  return <Visualisation count={count} {...props} />;
+  return <Visualisation count={count} isCrowdfunding={isCrowdfunding} {...props} />;
 };
 
 export const Visualisation = ({
@@ -156,6 +157,7 @@ export const Visualisation = ({
   currency,
   currencyShort,
   labels,
+  isCrowdfunding
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -250,20 +252,20 @@ export const Visualisation = ({
               <div className={s.barGoalBar}>
                 {hasStarted && (
                   <div
-                    className={s.barGoalInbetween}
+                    className={cN(s.barGoalInbetween, { [s.crowdfunding]: isCrowdfunding })}
                     style={{ width: `${goalInbetweenPercentage || 100}%` }}
                   ></div>
                 )}
               </div>
               {goal && !goalInbetween && (
-                <Tooltip className={s.goal} content={labels.NEEDED()}>
+                <Tooltip className={cN(s.goal, { [s.crowdfunding]: isCrowdfunding })} content={labels.NEEDED()}>
                   {goal.toLocaleString('de')}
                   {currencyShort}
                 </Tooltip>
               )}
               {goalInbetween && (
                 <Tooltip
-                  className={s.goal}
+                  className={cN(s.goal, { [s.crowdfunding]: isCrowdfunding })}
                   content={labels.GOAL_INBETWEEN_TOOLTIP(
                     goal.toLocaleString('de')
                   )}

@@ -7,7 +7,7 @@ import Link from 'gatsby-link';
 import * as s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
-import { StickyDonationBar } from './StickyDonationBar';
+import { HertieCrowdfunding } from './StickyDonationBar/HertieCrowdfunding';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 const Header = ({ menu, stickyBannerVisible }) => {
@@ -64,7 +64,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && notOnPlayground && <StickyDonationBar />}
+        {stickyBannerVisible && notOnPlayground && <HertieCrowdfunding />}
       </header>
     </>
   );

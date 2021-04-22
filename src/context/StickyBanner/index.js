@@ -5,13 +5,21 @@ import { useUpdateUser } from '../../hooks/Api/Users/Update';
 export const StickyBannerContext = React.createContext();
 
 export const StickyBannerProvider = ({ children }) => {
-  const { customUserData, userId, isAuthenticated, updateCustomUserData } = useContext(AuthContext);
+  const {
+    customUserData,
+    userId,
+    isAuthenticated,
+    updateCustomUserData,
+  } = useContext(AuthContext);
   const [, updateUser] = useUpdateUser();
 
   const [stickyBannerVisible, setStickyBannerVisible] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated && customUserData?.store?.hiddenBanner?.mainBanner) {
+    if (
+      isAuthenticated &&
+      customUserData?.store?.hiddenBanner?.hertieCrowdfunding
+    ) {
       setStickyBannerVisible(false);
     } else if (isAuthenticated !== undefined) {
       setStickyBannerVisible(true);
@@ -25,7 +33,7 @@ export const StickyBannerProvider = ({ children }) => {
       updateUser({
         userId: userId,
         store: {
-          hiddenBanner: updateBanner
+          hiddenBanner: updateBanner,
         },
       });
       // Refresh local userData Object
@@ -34,7 +42,7 @@ export const StickyBannerProvider = ({ children }) => {
       }, 500);
     }
     setStickyBannerVisible(false);
-  }
+  };
 
   return (
     <StickyBannerContext.Provider
