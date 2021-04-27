@@ -27,7 +27,7 @@ export const HertieCrowdfunding = () => {
           </p>
           <p className={s.crowdfundingDescription}>
             Bring mit deiner Spende Grundeinkommen näher an die Realität. Egal
-            ob 1&#8239;€ oder 100&#8239;€ – jede Spende zählt!
+            ob 5&#8239;€ oder 100&#8239;€ – jede Spende zählt!
           </p>
           <div className={s.visualisationForMobile}>
             <CrowdfundingVisual />
