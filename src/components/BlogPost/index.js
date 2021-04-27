@@ -11,7 +11,7 @@ import {
 import * as s from './style.module.less';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
-import html2plaintext from 'html2plaintext';
+import { htmlToText } from 'html-to-text';
 
 export default ({
   data: {
@@ -35,7 +35,7 @@ export default ({
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@exbeditionbge" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={html2plaintext(excerpt)} />
+        <meta name="twitter:description" content={htmlToText(excerpt)} />
 
         {featuredImage && (
           <meta
@@ -52,8 +52,8 @@ export default ({
         {!featuredImage && <meta property="og:image" content={OGImage} />}
         {!featuredImage && <meta name="twitter:image" content={OGImage} />}
 
-        <meta name="description" content={html2plaintext(excerpt)} />
-        <meta property="og:description" content={html2plaintext(excerpt)} />
+        <meta name="description" content={htmlToText(excerpt)} />
+        <meta property="og:description" content={htmlToText(excerpt)} />
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={siteTitle} />
         <meta property="article:published_time" content={date} />
