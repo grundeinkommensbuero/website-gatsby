@@ -28,8 +28,8 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
   const isDisabledRequestListsByMail = !!disableRequestListsByMail;
-  const iconMail = require('./mail_red.svg');
-  const iconIncognito = require('./incognito_red.svg');
+  const iconMail = require('!svg-inline-loader!./mail_red.svg');
+  const iconIncognito = require('!svg-inline-loader!./incognito_red.svg');
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
@@ -187,13 +187,10 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
               {!isAuthenticated && (
                 <>
                   <div className={s.iconParagraph}>
-                    <img
-                      aria-hidden="true"
-                      alt=""
-                      src={iconIncognito}
+                    <div
                       className={s.icon}
-                    />
-
+                      dangerouslySetInnerHTML={{ __html: iconIncognito }}
+                    ></div>
                     <p>
                       Du willst deine E-Mail-Adresse nicht angeben? Du kannst
                       die Liste{' '}
@@ -215,13 +212,10 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
               {!isDisabledRequestListsByMail && (
                 <>
                   <div className={s.iconParagraph}>
-                    <img
-                      aria-hidden="true"
-                      alt=""
-                      src={iconMail}
+                    <div
                       className={s.icon}
-                    />
-
+                      dangerouslySetInnerHTML={{ __html: iconMail }}
+                    ></div>
                     <p>
                       Kein Drucker?{' '}
                       <a

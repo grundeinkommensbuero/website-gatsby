@@ -17,7 +17,7 @@ export const ShareButtonRow = ({
   isInOnboarding,
   executeScroll,
 }) => {
-  const iconInstagram = require('./icons/Instagram.svg');
+  const iconInstagram = require('!svg-inline-loader!./icons/Instagram.svg');
 
   const activatePreview = channel => {
     const i = ShareButtons.findIndex(el => el.channelIdentifier === channel);
@@ -63,12 +63,11 @@ export const ShareButtonRow = ({
           onClick={() => activatePreview('instagram')}
         >
           <div className={s.shareButtonContainer}>
-            <img
+            <div
               aria-hidden="true"
-              alt="Instagram Logo"
-              src={iconInstagram}
-              className={s.icon}
-            />
+              className={s.iconInstagram}
+              dangerouslySetInnerHTML={{ __html: iconInstagram }}
+            ></div>
             <p>Instagram</p>
           </div>
         </div>

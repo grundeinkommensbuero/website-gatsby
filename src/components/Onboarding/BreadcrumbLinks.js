@@ -9,7 +9,7 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, setOverlayO
     return currentElement === element;
   };
 
-  const closeIcon = require('./close-icon.svg');
+  const closeIcon = require('!svg-inline-loader!./close-icon.svg');
 
   return menuElements.map(element => {
     if (element.name !== 'close') {
@@ -39,12 +39,12 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, setOverlayO
               { [s.breadcrumbElementActive]: pathMatchesMenuElement(element.name) }
             )}
         >
-          <img
+          <div
             aria-hidden="true"
             alt=""
-            className={s.closeButton}
-            src={closeIcon}
-          />
+            className={s.closeButtonBreadcrumb}
+            dangerouslySetInnerHTML={{ __html: closeIcon }}
+          ></div>
         </div>
       )
     }

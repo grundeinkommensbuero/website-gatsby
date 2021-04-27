@@ -15,7 +15,7 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
 
   const [updateUserState, updateUser] = useUpdateUser();
 
-  const rocketIcon = require('./rocket-icon.min.svg');
+  const rocketIcon = require('!svg-inline-loader!./rocket-icon.min.svg');
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -93,7 +93,11 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
           !showDonationForm ?
           <>
             <div className={cN(s.flexContainerSimple, s.donationStatusMessage)}>
-              <img aria-hidden="true" alt="" className={s.icon} src={rocketIcon} />
+              <div
+                aria-hidden="true"
+                className={s.icon}
+                dangerouslySetInnerHTML={{ __html: rocketIcon }}
+              ></div>
               <div>
                 <h3>Du bist Dauerspender:in! <br />Vielen Dank!</h3>
                 <p>Du spendest aktuell monatlich <span className={s.donationAmountRecurring}>{userData.donations.recurringDonation.amount}€</span></p>
