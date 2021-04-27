@@ -16,13 +16,13 @@ import html2plaintext from 'html2plaintext';
 export default ({
   data: {
     wpPost: { title, content, featuredImage, date, tags, excerpt },
-    allWordpressTag,
+    allWpTag,
     contentfulGlobalStuff: { siteTitle },
   },
   location,
 }) => {
   const dateObject = new Date(date);
-  const tagList = allWordpressTag.edges.reduce((list, tag) => {
+  const tagList = allWpTag.edges.reduce((list, tag) => {
     list[tag.node.id] = tag.node.name;
     return list;
   }, {});
@@ -102,8 +102,8 @@ export default ({
 };
 
 export const pageQuery = graphql`
-  query WordpressPostByPath($uri: String!) {
-    wpPost(uri: { eq: $uri }) {
+  query WordpressPostByPath($path: String!) {
+    wpPost(uri: { eq: $path }) {
       title
       content
       excerpt

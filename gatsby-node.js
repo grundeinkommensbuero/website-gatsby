@@ -153,7 +153,6 @@ exports.createPages = ({ graphql, actions }) => {
         });
 
         const blogPosts = result.data.allWpPost.edges;
-
         blogPosts.forEach(post => {
           createPage({
             path: post.node.uri,
@@ -172,7 +171,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 const clientId =
   process.env.NODE_ENV === 'development' ||
-    process.env.GATSBY_USE_DEV_BACKEND === 'override'
+  process.env.GATSBY_USE_DEV_BACKEND === 'override'
     ? process.env.DEV_COGNITO_APP_CLIENT_ID
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
 
@@ -190,17 +189,17 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
     ],
     resolve: {
       fallback: {
-        "fs": false,
-        "tls": false,
-        "net": false,
-        "path": false,
-        "zlib": false,
-        "http": false,
-        "https": false,
-        "stream": false,
-        "crypto": false,
-        "util": false
-      }
+        fs: false,
+        tls: false,
+        net: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        crypto: false,
+        util: false,
+      },
     },
   });
 };

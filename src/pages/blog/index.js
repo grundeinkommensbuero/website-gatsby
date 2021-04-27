@@ -37,7 +37,7 @@ export const pageQuery = graphql`
   query {
     allWpPost(
       sort: { fields: date, order: DESC }
-      filter: {tags: {nodes: {elemMatch: {name: {ne: "unlisted"}}}}}
+      filter: { tags: { nodes: { elemMatch: { name: { ne: "unlisted" } } } } }
     ) {
       edges {
         node {

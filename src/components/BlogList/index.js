@@ -19,7 +19,7 @@ export const BlogList = ({ posts }) => {
   );
 };
 
-export const BlogSnippet = ({ title, excerpt, path, date, featuredImage }) => {
+export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
   const dateObject = new Date(date);
   return (
     <article className={s.article}>
@@ -28,13 +28,13 @@ export const BlogSnippet = ({ title, excerpt, path, date, featuredImage }) => {
           {formatDate(dateObject)}
         </time>
         <h1 className={s.title}>
-          <Link to={path}>
+          <Link to={uri}>
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </Link>
         </h1>
       </header>
       {featuredImage && (
-        <Link to={path}>
+        <Link to={uri}>
           <Img
             className={s.image}
             fluid={featuredImage.node.localFile.childImageSharp}
@@ -48,7 +48,7 @@ export const BlogSnippet = ({ title, excerpt, path, date, featuredImage }) => {
         }}
       />
       <p>
-        <Link to={path}>Mehr...</Link>
+        <Link to={uri}>Mehr...</Link>
       </p>
     </article>
   );
