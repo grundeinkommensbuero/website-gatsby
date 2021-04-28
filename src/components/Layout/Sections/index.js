@@ -83,10 +83,7 @@ export default function Sections({ sections, pageContext }) {
             />
           );
         })}
-        <Section
-          jumpToId={'crowdfunding'}
-          className={s.sectionAqua}
-        >
+        <Section jumpToId={'crowdfunding'} className={s.sectionAqua}>
           <SectionInner>
             <CrowdfundingInfo />
           </SectionInner>
@@ -230,7 +227,6 @@ export function ContentfulSection({ section, pageContext }) {
             {headline && <h2>{headline.headline}</h2>}
             <div className={s.componentElementContainer}>
               {filteredComponents.map((component, index) => {
-
                 return (
                   <div
                     key={index}

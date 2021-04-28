@@ -37,7 +37,7 @@ export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
         <Link to={uri}>
           <Img
             className={s.image}
-            fluid={featuredImage.node.localFile.childImageSharp}
+            fluid={featuredImage.node.localFile.childImageSharp.hero}
           />
         </Link>
       )}

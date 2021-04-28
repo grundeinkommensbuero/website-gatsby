@@ -11,7 +11,7 @@ export default () => {
     query BlogPosts {
       allWpPost(
         sort: { fields: date, order: DESC }
-        filter: {tags: {nodes: {elemMatch: {name: {ne: "unlisted"}}}}}
+        filter: { tags: { nodes: { elemMatch: { name: { ne: "unlisted" } } } } }
         limit: 3
       ) {
         edges {
@@ -26,8 +26,8 @@ export default () => {
               node {
                 localFile {
                   childImageSharp {
-                    fluid(maxWidth: 750) {
-                      src
+                    hero: fluid(maxWidth: 400) {
+                      ...GatsbyImageSharpFluid_noBase64
                     }
                   }
                 }
