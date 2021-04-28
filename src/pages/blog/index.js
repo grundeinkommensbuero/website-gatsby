@@ -35,10 +35,7 @@ export default ({
 
 export const pageQuery = graphql`
   query {
-    allWpPost(
-      sort: { fields: date, order: DESC }
-      filter: { tags: { nodes: { elemMatch: { name: { ne: "unlisted" } } } } }
-    ) {
+    allWpPost(sort: { fields: date, order: DESC }) {
       edges {
         node {
           id
@@ -51,7 +48,7 @@ export const pageQuery = graphql`
             node {
               localFile {
                 childImageSharp {
-                  hero: fluid(maxWidth: 650) {
+                  hero: fluid(maxWidth: 1000) {
                     ...GatsbyImageSharpFluid_noBase64
                   }
                 }
