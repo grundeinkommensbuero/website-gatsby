@@ -6,7 +6,6 @@ import AuthContext from '../../../context/Authentication';
 import Layout from '../../Layout';
 import { Section, SectionInner, SectionWrapper } from '../../Layout/Sections';
 
-import * as s from './style.module.less';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
 import { LinkButtonLocal } from '../../Forms/Button';
