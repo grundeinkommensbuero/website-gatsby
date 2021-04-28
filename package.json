@@ -27,7 +27,9 @@
     "build": "cross-env gatsby build",
     "build-dev-backend": "cross-env GATSBY_USE_DEV_BACKEND=override gatsby build",
     "start": "npm run develop",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "clean-start": "npm run clean && npm i && npm start"
   },
   "dependencies": {
     "@aws-amplify/auth": "^3.4.1",

@@ -24,7 +24,7 @@ export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
   return (
     <article className={s.article}>
       <header>
-        <time dateTime={dateObject.toISOString()} className={s.date}>
+        <time dateTime={dateObject.toISOString()}>
           {formatDate(dateObject)}
         </time>
         <h1 className={s.title}>

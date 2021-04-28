@@ -59,7 +59,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
       {userData && (
         <div className={cN(s.tileContainer, s.sectionAqua)}>
           <div className={s.avatarAndInfo}>
-            <div className={s.avatarContainer}>
+            <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 
@@ -130,7 +130,7 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
             </div>
           </div>
           <div className={s.avatarAndInfo}>
-            <div className={s.avatarContainer}>
+            <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 
@@ -199,7 +199,7 @@ const TileMunicipalityLoggedInOtherMunicipality = ({
             )}
           </div>
           <div className={s.avatarAndInfo}>
-            <div className={s.avatarContainer}>
+            <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 

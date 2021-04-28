@@ -30,7 +30,7 @@ export const MapTooltip = ({ hoverInfo, getColor }) => {
       <div className={s.tooltipHeader}>
         <span className={s.tooltipMunicipality}>{name}</span>
       </div>
-      <div className={s.tooltipInfoContainer}>
+      <div>
         <TooltipInfo
           name={name}
           signups={signups}

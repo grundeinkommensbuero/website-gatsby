@@ -18,7 +18,7 @@ export const FinallyMessage = ({
   const messageRef = useRef(null);
 
   return (
-    <div className={cN(s.container, className)}>
+    <div className={className}>
       {state === 'success' && <HurrayCrowd />}
       <div className={s.message} ref={messageRef}>
         <div className={cN(s.messageInner)}>

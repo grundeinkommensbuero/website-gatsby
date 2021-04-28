@@ -122,7 +122,6 @@ export default ({ setQuestionJustSent, userId, userData }) => {
               {userData.user && userData.user.profilePictures ? (
                 <AvatarImage
                   user={userData.user}
-                  className={s.avatarImage}
                   sizes="80px"
                 />
               ) : (

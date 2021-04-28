@@ -79,7 +79,7 @@ const ProfilePage = ({ id: slugId }) => {
       <SectionWrapper>
         {isLoading && (
           <Section>
-            <div className={s.profilePageGrid}>
+            <div>
               <h2>Lade...</h2>
             </div>
           </Section>

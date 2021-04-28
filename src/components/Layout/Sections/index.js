@@ -149,7 +149,6 @@ export function ContentfulSection({ section, pageContext }) {
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
-  const isChristmasDonationTheme = theme === 'christmas';
 
   const userContentfulState = useUserMunicipalityContentfulState();
 
@@ -213,14 +212,11 @@ export function ContentfulSection({ section, pageContext }) {
         <Section
           jumpToId={id}
           className={cN({
-            [s.sectionTwoColumns]: isTwoColumns,
             // [s.sectionConfetti]: backgroundIllustration === 'confetti',
             [s.sectionWhite]: colorScheme === 'white',
             [s.sectionViolet]: colorScheme === 'violet',
             [s.sectionAqua]: colorScheme === 'aqua',
             [s.sectionRed]: colorScheme === 'red',
-            [s.sectionChristmas]: colorScheme === 'christmas',
-            // [s.sectionChristmasDonation]: isChristmasDonationTheme,
           })}
         >
           <SectionInner>
@@ -356,7 +352,6 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionNewsletter]: !!emailSignup,
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
-        [s.sectionTwoColumns]: isTwoColumns, // Actually four columns
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
@@ -365,8 +360,6 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionViolet]: colorScheme === 'violet',
         [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',
-        [s.sectionChristmas]: colorScheme === 'christmas',
-        [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
       // NOTE (felix): isVideoSection was in this before, not sure why
       // Breaks the possibility to add a CTA Button to the video section
@@ -374,9 +367,6 @@ export function ContentfulSection({ section, pageContext }) {
       // sectionBodyNoEvents={isIllustration || isVideoSection}
       sectionBodyNoEvents={isIllustration}
     >
-      {/* {theme === 'christmas' && <Confetti componentTheme="christmas" />}
-      {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
-      {isVideoSection && <Confetti componentTheme="christmas" />} */}
 
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
@@ -389,7 +379,7 @@ export function ContentfulSection({ section, pageContext }) {
           <TwoColumns className={s.columnWrapper}>
             <section className={s.column}>
               {imageTopLeft && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
                 </div>
               )}
@@ -399,7 +389,7 @@ export function ContentfulSection({ section, pageContext }) {
             </section>
             <section className={s.column}>
               {imageTopRight && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
                 </div>
               )}
@@ -409,7 +399,7 @@ export function ContentfulSection({ section, pageContext }) {
             </section>
             <section className={s.column}>
               {imageBottomLeft && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
                 </div>
               )}
@@ -419,7 +409,7 @@ export function ContentfulSection({ section, pageContext }) {
             </section>
             <section className={s.column}>
               {imageBottomRight && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img
                     className={s.columnIcon}
                     fixed={imageBottomRight.fixed}

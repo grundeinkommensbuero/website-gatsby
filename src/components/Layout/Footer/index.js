@@ -6,7 +6,7 @@ import SocialMediaButtons from '../../SocialMedia/Follow';
 export default ({ footerText, footerMenu }) => (
   <footer className={s.footer}>
     <div className={s.itemContainer}>
-      <div className={s.footerText}>{footerText}</div>
+      <div>{footerText}</div>
       <SocialMediaButtons className={s.socialMedia} />
       <nav>
         <ul className={s.nav}>

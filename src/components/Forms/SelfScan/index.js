@@ -104,7 +104,7 @@ export default ({ successMessage, campaignCode, className }) => {
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
-        <Section className={cN(s.signatureSection, className)}>
+        <Section className={className}>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}

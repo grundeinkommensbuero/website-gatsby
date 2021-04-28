@@ -30,7 +30,7 @@ export const SignupButtonAndTile = ({ className }) => {
   ) {
     return (
       <>
-        <p className={s.inviteHeadline}>Komm dazu.</p>
+        <p>Komm dazu.</p>
         <div className={cN(s.tileContainer, s.sectionWhite)}>
           <h3>Willkommen zurück!</h3>
           <p>{welcomeExistingMessage}</p>

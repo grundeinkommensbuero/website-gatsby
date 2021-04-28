@@ -1,10 +1,9 @@
 import React from 'react';
 import * as s from './style.module.less';
-import cN from 'classnames';
 import SocialMediaButton from '../Button';
 
 export default ({ className }) => (
-  <div className={cN(s.followButtons, className)}>
+  <div className={className}>
     <SocialMediaButton
       icon="Facebook"
       link="https://www.facebook.com/expedition.grundeinkommen"
