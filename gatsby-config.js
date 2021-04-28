@@ -2,7 +2,7 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const html2plaintext = require('html2plaintext');
+const { htmlToText } = require('html-to-text');
 
 const url = 'https://expedition-grundeinkommen.de';
 
@@ -38,7 +38,7 @@ const config = {
             serialize: ({ query: { allWpPost } }) => {
               return allWpPost.edges.map(edge => {
                 return Object.assign({}, edge.node, {
-                  description: html2plaintext(edge.node.excerpt),
+                  description: htmlToText(edge.node.excerpt),
                   date: edge.node.date,
                   url: url + edge.node.path,
                   guid: url + edge.node.path,
