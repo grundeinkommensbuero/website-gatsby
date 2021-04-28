@@ -8,7 +8,7 @@ import {
 } from '../../components/Layout/Sections';
 import { useUploadImage } from '../../hooks/images';
 
-export default () => {
+const PlaygroundUploadImage = () => {
   const [, uploadImage] = useUploadImage();
 
   return (
@@ -35,3 +35,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundUploadImage;

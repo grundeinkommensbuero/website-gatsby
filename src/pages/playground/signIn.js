@@ -8,7 +8,7 @@ import {
 } from '../../components/Layout/Sections';
 import { useSignIn, useAnswerChallenge } from '../../hooks/Authentication';
 
-export default () => {
+const PlaygroundSignIn = () => {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [signInState, signIn] = useSignIn();
@@ -66,3 +66,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundSignIn;

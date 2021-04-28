@@ -8,7 +8,7 @@ import {
 } from '../../components/Layout/Sections';
 import CampaignVisualisations from '../../components/CampaignVisualisations';
 
-export default () => {
+const PlaygroundCampaignVisualisation = () => {
   return (
     <Layout>
       <Helmet>
@@ -111,3 +111,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundCampaignVisualisation;

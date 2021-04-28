@@ -13,7 +13,7 @@ import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
 import { htmlToText } from 'html-to-text';
 
-export default ({
+const BlogPost = ({
   data: {
     wpPost: { title, content, featuredImage, date, tags, excerpt },
     allWpTag,
@@ -100,6 +100,8 @@ export default ({
     </Layout>
   );
 };
+
+export default BlogPost;
 
 export const pageQuery = graphql`
   query WordpressPostByPath($path: String!) {

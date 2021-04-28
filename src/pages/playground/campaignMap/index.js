@@ -5,7 +5,7 @@ import { Section } from '../../../components/Layout/Sections';
 import { MunicipalityMap } from '../../../components/Municipality/MunicipalityMap';
 import * as s from './style.module.less';
 
-export default () => {
+const PlaygroundCampaignMap = () => {
   return (
     <Layout>
       <Helmet>
@@ -17,3 +17,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundCampaignMap;

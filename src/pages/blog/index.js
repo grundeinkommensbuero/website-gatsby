@@ -10,7 +10,7 @@ import {
 import { graphql } from 'gatsby';
 import { BlogList } from '../../components/BlogList';
 
-export default ({
+const Blog = ({
   data: {
     allWpPost: { edges: posts },
   },
@@ -32,6 +32,8 @@ export default ({
     </Layout>
   );
 };
+
+export default Blog;
 
 export const pageQuery = graphql`
   query {

@@ -4,7 +4,7 @@ import { SectionWrapper } from '../../../components/Layout/Sections';
 import SelfScan from '../../../components/Forms/SelfScan';
 import { Helmet } from 'react-helmet-async';
 
-export default () => {
+const SelfScanHB = () => {
   return (
     <Layout>
       <Helmet>
@@ -20,3 +20,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default SelfScanHB;
