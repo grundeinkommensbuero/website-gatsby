@@ -10,7 +10,7 @@ export const OnboardingOverlay = ({ ...props }) => {
       {({ overlayOpen, setOverlayOpen }) => (
         <>
           {overlayOpen ? (
-            <div className={s.blurryBackground}>
+            <div>
               <div
                 className={cN(s.onboardingContainer, s.backdropBlur)}
                 role="dialog"

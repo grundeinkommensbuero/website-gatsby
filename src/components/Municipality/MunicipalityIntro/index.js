@@ -143,7 +143,7 @@ const MapColumn = ({ municipality, setMapDataReady }) => {
   }
 
   return (
-    <div className={s.headerContainer}>
+    <div>
       <MunicipalityMap
         className={s.mapContainer}
         onDataReady={() => {

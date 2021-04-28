@@ -14,7 +14,7 @@ export default function LabelInputErrorWrapper({
 }) {
   return (
     <label className={cN(s.container, className)}>
-      <div className={s.label}>
+      <div>
         {label}
         {explanation && (
           <>
@@ -25,7 +25,7 @@ export default function LabelInputErrorWrapper({
           </>
         )}
       </div>
-      <div className={s.inputContainer}>{children}</div>
+      <div>{children}</div>
       {meta.error && meta.touched && (
         <ValidationError className={s.error} theme={theme}>{meta.error}</ValidationError>
       )}

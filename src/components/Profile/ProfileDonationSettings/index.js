@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
-import nS from '../ProfileNotifications/style.module.less';
+import * as nS from '../ProfileNotifications/style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
@@ -52,14 +52,12 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
         <br />
         <div className={s.revokeButtonRow}>
           <Button
-            className={s.revokeButton}
             onClick={() => setShowDeleteDonationDialog(false)}
             size="SMALL"
           >
             Abbrechen
           </Button>
           {!waitingForApi ? <Button
-            className={s.revokeButton}
             onClick={removeDonation}
             size="SMALL"
           >

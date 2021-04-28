@@ -2,7 +2,7 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const html2plaintext = require('html2plaintext');
+const html2plaintext = require('html-to-text');
 
 const url = 'https://expedition-grundeinkommen.de';
 

@@ -73,7 +73,7 @@ const TickerDisplay = ({
           )}
         </div>
 
-        <div className={cN(s.counterContainer, s.alignRight)}>
+        <div className={cN(s.counterContainer)}>
           {typeof highlight2 !== 'string' && (
             <>
               {inBetween2 && (

@@ -433,7 +433,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
 
-        <h2 className={s.sectionHeadline}>Newsletter & Kontakt</h2>
+        <h2>Newsletter & Kontakt</h2>
         <h3 className={gS.optionSectionHeading}>
           E-Mail Einstellungen
         </h3>

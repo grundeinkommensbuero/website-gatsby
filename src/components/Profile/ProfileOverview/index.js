@@ -41,8 +41,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
           <div>
             <h2
               className={cN({
-                [gS.username]: userData.username,
-                [s.email]: !userData.username,
+                [gS.username]: userData.username
               })}
             >
               {userData.username || userData.email}
