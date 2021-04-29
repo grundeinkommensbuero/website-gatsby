@@ -18,9 +18,6 @@ const Header = ({ menu, stickyBannerVisible }) => {
     setMenuOpen(!menuOpen);
   };
 
-  const currentURL = typeof window !== 'undefined' ? window.location.pathname : '';
-  const notOnPlayground = currentURL.includes('playground') ? false : true;
-
   return (
     <>
       <header className={s.header}>
@@ -64,7 +61,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && notOnPlayground && <HertieCrowdfunding />}
+        {stickyBannerVisible && <HertieCrowdfunding />}
       </header>
     </>
   );

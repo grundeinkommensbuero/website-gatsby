@@ -24,7 +24,7 @@ export const StickyDonationBar = () => {
           alt=""
           className={s.closeButton}
           src={closeIcon}
-          onClick={() => closeStickyBanner({ whichBanner: 'mainBanner' })}
+          onClick={() => closeStickyBanner()}
         />
       </div>
     </div>
