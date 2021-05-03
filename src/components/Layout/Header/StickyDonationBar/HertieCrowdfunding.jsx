@@ -17,9 +17,7 @@ export const HertieCrowdfunding = () => {
           alt=""
           className={s.closeButton}
           src={closeIcon}
-          onClick={() =>
-            closeStickyBanner({ whichBanner: 'hertieCrowdfunding' })
-          }
+          onClick={() => closeStickyBanner()}
         />
         <div className={s.leftSection}>
           <p className={s.crowdfundingHeading}>
@@ -48,7 +46,7 @@ export const HertieCrowdfunding = () => {
                 const link = document.createElement('a');
                 link.href = '#crowdfunding';
                 link.click();
-                closeStickyBanner({ whichBanner: 'hertieCrowdfunding' });
+                closeStickyBanner();
               }}
             >
               <span className={s.moreInfo}>Mehr erfahren</span>
