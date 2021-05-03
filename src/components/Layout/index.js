@@ -199,6 +199,12 @@ function Template({ children, sections, pageContext, title, description }) {
           shortTitle: null
         });
       });
+    } else {
+      menuItems.push({
+        title: 'Mein Ort',
+        slug: 'registrieren/',
+        shortTitle: null
+      });
     }
     return menuItems;
   };
