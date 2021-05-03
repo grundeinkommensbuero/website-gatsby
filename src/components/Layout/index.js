@@ -202,7 +202,7 @@ function Template({ children, sections, pageContext, title, description }) {
     } else {
       menuItems.push({
         title: 'Mein Ort',
-        slug: 'registrieren/',
+        slug: 'registrieren',
         shortTitle: null
       });
     }
