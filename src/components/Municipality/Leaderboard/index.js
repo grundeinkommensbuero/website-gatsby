@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { fetchPageNumbers, paginate } from './utils';
 import { MunicipalityContext } from '../../../context/Municipality/index';
 
@@ -11,13 +11,10 @@ import { PageSelector } from './PageSelector';
 
 export const Leaderboard = () => {
   const { leaderboardSegments } = useContext(MunicipalityContext);
+  const [currentTab, setCurrentTab] = useState(0);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const paginationInfo = paginate(currentDataSet.length, currentPage);
-
-  useEffect(() => {
-    setCurrentDataSet(leaderboardSegments.largeMunicipalities);
-  }, [leaderboardSegments]);
 
   const pageControls = fetchPageNumbers({
     currentPage,
@@ -35,6 +32,8 @@ export const Leaderboard = () => {
       <h3 className={s.title}>Leader:innenboard</h3>
       <div className={s.tabSelectorContainer}>
         <TabSelector
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
           setCurrentDataSet={setCurrentDataSet}
           leaderboardSegments={leaderboardSegments}
         />
