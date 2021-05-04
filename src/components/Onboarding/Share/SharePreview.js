@@ -225,7 +225,9 @@ export const SharePreview = ({
                 [s.mainCaptionHuge]: !isInOnboarding,
               })}
             >
-              {userData.username}  lässt #Grundeinkommen Realität werden.
+              {userData.username ?
+                `${userData.username}  lässt #Grundeinkommen Realität werden.` :
+                'Ich lasse #Grundeinkommen Realität werden.'}
             </h3>
             {/* <h4 className={s.subCaption}>Hol es auch in deinen Ort!</h4> */}
           </div>
