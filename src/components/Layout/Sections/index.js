@@ -308,7 +308,7 @@ export function ContentfulSection({ section, pageContext }) {
                 }
                 scrollToRef={scrollToRef}
               />
-              {userData?.municipalities?.length > 1 && (
+              {/* {userData?.municipalities?.length > 1 && (
                 <>
                   <br />
                   <p>
@@ -336,7 +336,7 @@ export function ContentfulSection({ section, pageContext }) {
                       ))}
                   </div>
                 </>
-              )}
+              )} */}
             </SectionInner>
           </Section>
         )}
