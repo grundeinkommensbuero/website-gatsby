@@ -17,25 +17,22 @@
     padding-top: 12px;
     padding-bottom: 12px;
   }
-  &.tableBody th {
-    border-bottom: 1px solid #ddd;
-  }
   &.tableBody tr {
     border: none;
   }
 }
 
 .tableRow {
-  background: white;
-  color: black;
-  &:nth-child(even) {
-    background: black;
+  color: white;
+  &:nth-child(odd) {
+    background: @violetLight;
     color: white;
   }
 }
 
 .tableHead {
   text-align: left;
+  background: @aqua;
 }
 
 .pageSelectorElement {
@@ -64,7 +61,7 @@
 .tabSelectorElement {
   padding: 1rem 0.25rem 0.7rem;
   border-top: 1px solid lightgrey;
-  border-left: 1px solid lightgrey;
+
   border-right: 1px solid lightgrey;
   border-bottom: 1px solid #ddd;
   border-top-left-radius: 10px;
@@ -73,6 +70,7 @@
   cursor: pointer;
   flex-grow: 1;
   text-align: center;
+
   &:hover {
     background-color: @red;
   }
@@ -81,10 +79,21 @@
     color: white;
     padding: calc(1rem - 1px) 0.25rem 0.7rem;
     border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+
     border-right: 1px solid #ddd;
     border-bottom: none;
     font-weight: 1000;
+    background: @aqua;
+  }
+
+  &:nth-child(1) {
+    border-left: 1px solid lightgrey;
+    border-left: 1px solid #ddd;
+  }
+
+  &:nth-child(last) {
+    border-left: 1px solid lightgrey;
+    border-left: 1px solid #ddd;
   }
 }
 

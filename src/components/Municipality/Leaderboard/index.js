@@ -29,13 +29,14 @@ export const Leaderboard = () => {
 
   return (
     <div>
-      <h3 className={s.title}>Leader:innenboard</h3>
+      <h3 className={s.title}>Schau wo deine Gemeinde steht!</h3>
       <div className={s.tabSelectorContainer}>
         <TabSelector
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           setCurrentDataSet={setCurrentDataSet}
           leaderboardSegments={leaderboardSegments}
+          setCurrentPage={setCurrentPage}
         />
       </div>
       <table className={s.tableBody}>

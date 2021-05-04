@@ -8,6 +8,7 @@ export const TabSelector = ({
   setCurrentTab,
   setCurrentDataSet,
   leaderboardSegments,
+  setCurrentPage,
 }) => {
   useEffect(() => {
     setCurrentDataSet(leaderboardSegments[tabs[currentTab].dataSet]);
@@ -24,6 +25,7 @@ export const TabSelector = ({
         onClick={() => {
           setCurrentTab(tabIndex);
           setCurrentDataSet(leaderboardSegments[tab.dataSet]);
+          setCurrentPage(1);
         }}
       >
         {tab.tabName}
