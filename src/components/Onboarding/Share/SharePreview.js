@@ -156,7 +156,7 @@ export const SharePreview = ({
           el => el.channelIdentifier === shareChannel?.channelIdentifier
         )?.name
       ];
-    const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an.`;
+    const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an und spende 5€ für den Crowdfunding Contest.`;
     const hashtags = [
       'ModellversuchJetzt',
       'Grundeinkommen',
@@ -164,7 +164,7 @@ export const SharePreview = ({
     ];
     const subject = `Gemeinsam lassen wir #Grundeinkommen Realität werden`;
     const body = mailBody(municipality);
-    const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an.`;
+    const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an und unterstütze die Expedition mit 5€, um den Hertie Crowdfunding Contest zu gewinnen.`;
     return (
       <>
         {CaseButton && shareChannel ? (
