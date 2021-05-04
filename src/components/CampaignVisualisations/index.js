@@ -13,6 +13,8 @@ import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 
 export default ({ visualisations }) => {
+  const currentCounts = useSignatureCount();
+
   return (
     <>
       {visualisations.map((visualisation, index) => {
@@ -21,8 +23,16 @@ export default ({ visualisations }) => {
             <CampainVisualisation
               key={index}
               index={index}
-              currentCount={true}
-              receivedCount={true}
+              currentCount={
+                currentCounts &&
+                currentCounts[visualisation.campainCode] &&
+                currentCounts[visualisation.campainCode].computed
+              }
+              receivedCount={
+                currentCounts &&
+                currentCounts[visualisation.campainCode] &&
+                currentCounts[visualisation.campainCode].withMixed
+              }
               showCTA={visualisations.length !== 1 && visualisation.ctaLink}
               labels={{
                 NEEDED: () => <>Benötigte Unterschriften</>,
