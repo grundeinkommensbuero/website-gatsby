@@ -1,49 +1,48 @@
-import React, { useState, useEffect, useContext } from 'react';
-import AuthContext from '../Authentication';
-import { useUpdateUser } from '../../hooks/Api/Users/Update';
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+const COOKIE_NAME = 'bannerHasBeenDismissed';
+const EXCLUDED_ROUTES = [
+  'playground'
+];
 
 export const StickyBannerContext = React.createContext();
 
 export const StickyBannerProvider = ({ children }) => {
-  const { customUserData, userId, isAuthenticated, updateCustomUserData } = useContext(AuthContext);
-  const [, updateUser] = useUpdateUser();
-
-  const [stickyBannerVisible, setStickyBannerVisible] = useState(false);
+  const hasBeenDismissed = useHasBeenDismissed();
+  const [stickyBannerVisible, setStickyBannerVisible] = useState(!hasBeenDismissed);
+  const [currentURL, setCurrentURL] = useState();
 
   useEffect(() => {
-    if (isAuthenticated && customUserData?.store?.hiddenBanner?.mainBanner) {
-      setStickyBannerVisible(false);
-    } else if (isAuthenticated !== undefined) {
-      setStickyBannerVisible(true);
-    }
-  }, [customUserData]);
+    EXCLUDED_ROUTES.forEach(route => {
+      if (!hasBeenDismissed && currentURL && currentURL.includes(route)) {
+        setStickyBannerVisible(false);
+      } else if (!hasBeenDismissed) {
+        setStickyBannerVisible(true);
+      }
+    })
+  }, [currentURL]);
 
-  const closeStickyBanner = ({ whichBanner = 'mainBanner' }) => {
-    if (userId && customUserData && isAuthenticated) {
-      const updateBanner = {};
-      updateBanner[whichBanner] = true;
-      updateUser({
-        userId: userId,
-        store: {
-          hiddenBanner: updateBanner
-        },
-      });
-      // Refresh local userData Object
-      setTimeout(() => {
-        updateCustomUserData();
-      }, 500);
-    }
+  const closeStickyBanner = () => {
     setStickyBannerVisible(false);
-  }
+    Cookies.set(COOKIE_NAME, true, { expires: 7 });
+  };
 
   return (
     <StickyBannerContext.Provider
       value={{
         stickyBannerVisible,
         closeStickyBanner,
+        setCurrentURL
       }}
     >
       {children}
     </StickyBannerContext.Provider>
   );
+};
+
+const useHasBeenDismissed = () => {
+  if (Cookies.get(COOKIE_NAME) !== undefined) {
+    return true;
+  }
+  return false;
 };

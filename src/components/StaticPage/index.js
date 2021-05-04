@@ -167,7 +167,6 @@ export const pageQuery = graphql`
             components {
               ... on ContentfulSectionComponentStandard {
                 __typename
-                title
                 showForOptions
                 column
                 videoLink
@@ -183,7 +182,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentTextAndImage {
                 __typename
-                title
                 showForOptions
                 column
                 layout
@@ -198,7 +196,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename
-                title
                 showForOptions
                 column
                 tickerDescription {
@@ -207,19 +204,16 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentMunicipalityMap {
                 __typename
-                title
                 showForOptions
                 column
               }
               ... on ContentfulSectionComponentMunicipalityProgress {
                 __typename
-                title
                 showForOptions
                 column
               }
               ... on ContentfulSectionComponentInviteFriends {
                 __typename
-                title
                 showForOptions
                 headline
                 column
@@ -229,7 +223,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentInviteFriends {
                 __typename
-                title
                 showForOptions
                 headline
                 column
@@ -239,7 +232,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentBecomeActive {
                 __typename
-                title
                 showForOptions
                 headline
                 column
@@ -250,14 +242,12 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentInfoText {
                 __typename
-                title
                 showForOptions
                 fullWidthOnDesktop
                 column
               }
               ... on ContentfulSectionComponentIntroText {
                 __typename
-                title
                 showForOptions
                 fullWidthOnDesktop
                 column
@@ -270,7 +260,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentProfileTile {
                 __typename
-                title
                 showForOptions
                 column
                 body {
@@ -278,18 +267,33 @@ export const pageQuery = graphql`
                 }
                 fullWidthOnDesktop
               }
+              ... on ContentfulSectionComponentCollectionMap {
+                __typename
+                showForOptions
+                column
+                maps {
+                  name
+                  state
+                  config {
+                    maxBounds
+                    zoom
+                    center
+                  }
+                }
+                text {
+                  json
+                }
+              }
             }
           }
           ... on ContentfulPageSectionDonation {
             __typename
-            title
             introText
             theme
             colorScheme
           }
           ... on ContentfulPageSectionShare {
             __typename
-            title
             introText
             colorScheme
             previewDescription {

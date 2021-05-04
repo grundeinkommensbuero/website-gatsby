@@ -33,14 +33,15 @@ import { TickerToSignup } from '../../TickerToSignup';
 import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
 import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
 import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
+import { MunicipalityCollectionMap } from '../../Municipality/MunicipalityCollectionMap';
 import { InviteFriends } from '../../InviteFriends';
 import { IntroText } from '../../IntroText';
 import { BecomeActive } from '../../BecomeActive';
 import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { TextAndImage } from './TextAndImage';
-
 import { LinkButton } from '../../Forms/Button';
+import { CrowdfundingInfo } from '../../CrowdfundingInfo';
 
 const Components = {
   TickerToSignup,
@@ -53,6 +54,7 @@ const Components = {
   ProfileTile,
   TextAndImage,
   Standard: StandardSectionComponent,
+  CollectionMap: MunicipalityCollectionMap,
 };
 
 export default function Sections({ sections, pageContext }) {
@@ -81,6 +83,14 @@ export default function Sections({ sections, pageContext }) {
             />
           );
         })}
+        <Section
+          jumpToId={'crowdfunding'}
+          className={s.sectionAqua}
+        >
+          <SectionInner>
+            <CrowdfundingInfo />
+          </SectionInner>
+        </Section>
       </SectionWrapper>
     );
   }
@@ -220,6 +230,7 @@ export function ContentfulSection({ section, pageContext }) {
             {headline && <h2>{headline.headline}</h2>}
             <div className={s.componentElementContainer}>
               {filteredComponents.map((component, index) => {
+
                 return (
                   <div
                     key={index}
@@ -297,7 +308,7 @@ export function ContentfulSection({ section, pageContext }) {
                 }
                 scrollToRef={scrollToRef}
               />
-              {userData?.municipalities?.length > 1 && (
+              {/* {userData?.municipalities?.length > 1 && (
                 <>
                   <br />
                   <p>
@@ -325,7 +336,7 @@ export function ContentfulSection({ section, pageContext }) {
                       ))}
                   </div>
                 </>
-              )}
+              )} */}
             </SectionInner>
           </Section>
         )}

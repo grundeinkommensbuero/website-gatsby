@@ -7,10 +7,10 @@ import Link from 'gatsby-link';
 import s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
-import { StickyDonationBar } from './StickyDonationBar';
+import { HertieCrowdfunding } from './StickyDonationBar/HertieCrowdfunding';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-const Header = ({ menu, hasOverlay, stickyBannerVisible }) => {
+const Header = ({ menu, stickyBannerVisible }) => {
   const { setPageContext } = useContext(MunicipalityContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -61,7 +61,7 @@ const Header = ({ menu, hasOverlay, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && <StickyDonationBar />}
+        {stickyBannerVisible && <HertieCrowdfunding />}
       </header>
     </>
   );

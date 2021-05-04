@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './style.module.less';
 import gS from '../style.module.less';
 import cN from 'classnames';
@@ -6,31 +6,26 @@ import { Link } from 'gatsby';
 import { Helmet } from 'react-helmet-async';
 import { SectionWrapper } from '../../../components/Layout/Sections';
 import SelfScan from '../../../components/Forms/SelfScan';
+import campaignCodes from './campaignCodes.json';
+import { CampainScanVisualisation } from '../../Forms/SelfScan/CampaignScanVisualisation';
 
-export const campaignCodes = [
-  {
-    campaignCode: 'berlin-1',
-    successMessage: 'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin'
-  },
-  {
-    campaignCode: 'brandenburg-1',
-    successMessage: 'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin.'
-  },
-  {
-    campaignCode: 'bremen-1',
-    successMessage: 'Danke! Bitte schicke die Listen möglichst schnell an: Svenja Heer, Borchshöher Straße 168 b, 28755 Bremen'
-  },
-  {
-    campaignCode: 'hamburg-1',
-    successMessage: 'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Am Langenzug 12, 22085 Hamburg'
-  },
-  {
-    campaignCode: 'schleswig-holstein-1',
-    successMessage: 'Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf.'
-  },
-]
+export const ProfileSignatures = ({ userId, userData }) => {
+  const [userCampaigns, setUserCampaigns] = useState([]);
 
-export const ProfileSignatures = ({ userId }) => {
+  useEffect(() => {
+    if (userData && 'municipalities' in userData) {
+      const activeCampaigns = [];
+      userData.municipalities.forEach(mun => {
+        campaignCodes.forEach(campCode => {
+          if (mun.ags === campCode.ags) {
+            activeCampaigns.push(campCode);
+          }
+        })
+      })
+      setUserCampaigns(activeCampaigns);
+    }
+  }, [userData]);
+
   return (
     <section className={gS.profilePageGrid}>
       <section className={cN(gS.editPageSection, gS.editSettings)}>
@@ -44,33 +39,20 @@ export const ProfileSignatures = ({ userId }) => {
           </Helmet>
 
           <SectionWrapper>
-            <h2>Eingegangene Unterschriften</h2>
             <SelfScan
-              campaignCode="berlin-1"
-              successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin"
+              successMessage={'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'}
               className={s.signatureWrapper}
             />
+            {userCampaigns[0] ? userCampaigns.map(scan => {
+              return (
+                <div className={s.signatureContainer}>
+                  <h2>Eingegangene Unterschriften {scan.campaignName}</h2>
+                  <CampainScanVisualisation campaignCode={scan.campaignCode} />
+                </div>
+              )
+            }) :
+              <h3>Du bist für keine Kampagne angemeldet, die gerade Unterschriften sammelt.</h3>}
           </SectionWrapper>
-
-          {/* <SelfScan
-            campaignCode="brandenburg-1"
-            successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Karl-Marx-Straße 50, 12043 Berlin."
-          />
-
-          <SelfScan
-            campaignCode="bremen-1"
-            successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Svenja Heer, Borchshöher Straße 168 b, 28755 Bremen"
-          />
-
-          <SelfScan
-            campaignCode="hamburg-1"
-            successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Am Langenzug 12, 22085 Hamburg"
-          />
-
-          <SelfScan
-            campaignCode="schleswig-holstein-1"
-            successMessage="Danke! Bitte schicke die Listen möglichst schnell an: Johannes Wagner, Postfach 1104, 24585 Nortorf."
-          /> */}
         </section>
       </section>
     </section>
