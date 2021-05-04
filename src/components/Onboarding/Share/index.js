@@ -60,7 +60,8 @@ export const SharingFeature = ({
                 {municipality ? `${municipality.name}` : 'deine Gemeinde'} bald
                 Grundeinkommen erforscht.{' '}
                 {municipality?.goal
-                  ? `Wir müssen insgesamt ${municipality.goal} Menschen werden!`
+                  ? `Wir müssen dazu in ${municipality.name} insgesamt 
+                  ${municipality.goal.toLocaleString('de')} Menschen werden!`
                   : ''}
               </p>
             </>
