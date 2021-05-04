@@ -11,14 +11,17 @@
   border-left: 1px solid #ddd;
   width: 100%;
 
-  &.tableBody td,
   &.tableBody th {
+    padding: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  &.tableBody td,
+  &.tableBody tr {
+    border: none;
     padding: 8px;
     padding-top: 12px;
     padding-bottom: 12px;
-  }
-  &.tableBody tr {
-    border: none;
   }
 }
 
@@ -33,6 +36,10 @@
 .tableHead {
   text-align: left;
   background: @aqua;
+
+  &:last-child {
+    text-align: right;
+  }
 }
 
 .pageSelectorElement {

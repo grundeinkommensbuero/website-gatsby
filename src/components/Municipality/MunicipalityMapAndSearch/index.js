@@ -20,6 +20,7 @@ export const MunicipalityMapAndSearch = () => {
             <WrappedMunicipalitySearch />
           </div>
           <div className={s.leaderboard}>
+            <br className={s.hideOnDesktop} />
             <Leaderboard />
           </div>
         </div>
