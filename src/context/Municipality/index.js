@@ -222,6 +222,7 @@ export const MunicipalityProvider = ({ children }) => {
         segments.largeMunicipalities.push(municipality);
       }
     });
+    segments.hot.sort((a, b) => b.grewByPercent - a.grewByPercent);
     segments.qualified.sort((a, b) => b.population - a.population);
     setLeaderboardSegments(segments);
   }, [municipalitiesGoalSignup]);
