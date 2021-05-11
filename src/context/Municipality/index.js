@@ -202,25 +202,27 @@ export const MunicipalityProvider = ({ children }) => {
   }, [municipalitiesInObject]);
 
   useEffect(() => {
-    // Calculate change in percentage for event data
-    const municipalitiesWithEvent = municipalitiesGoalSignup.filter(m => 'event' in m);
-    municipalitiesWithEvent.forEach(municipality => {
-      const beforePercent = municipality.event.signups[0] / municipality.goal * 100;
-      const afterPercent = municipality.event.signups[1] / municipality.goal * 100;
-      municipality.grewByPercent = Math.round((afterPercent - beforePercent) * 100) / 100;
-    });
-    municipalitiesWithEvent.sort((a, b) => {
-      return b.grewByPercent - a.grewByPercent;
-    });
-    // Arrange an object with leaderboard data
     const segments = {
-      hot: municipalitiesWithEvent,
-      smallMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population < 20000),
-      largeMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population > 20000),
-      qualified: municipalitiesGoalSignup
-        .filter(m => m.percent > 100)
-        .sort((a, b) => b.population - a.population)
+      hot: [],
+      smallMunicipalities: [],
+      largeMunicipalities: [],
+      qualified: [],
     };
+    municipalitiesGoalSignup.forEach(municipality => {
+      if ('event' in municipality) {
+        const beforePercent = municipality.event.signups[0] / municipality.goal * 100;
+        const afterPercent = municipality.event.signups[1] / municipality.goal * 100;
+        municipality.grewByPercent = Math.round((afterPercent - beforePercent) * 100) / 100;
+        segments.hot.push(municipality);
+      } else if (municipality.percent > 100) {
+        segments.qualified.push(municipality);
+      } else if (municipality.population < 20000) {
+        segments.smallMunicipalities.push(municipality);
+      } else if (municipality.population > 20000) {
+        segments.largeMunicipalities.push(municipality);
+      }
+    });
+    segments.qualified.sort((a, b) => b.population - a.population);
     setLeaderboardSegments(segments);
   }, [municipalitiesGoalSignup]);
 
