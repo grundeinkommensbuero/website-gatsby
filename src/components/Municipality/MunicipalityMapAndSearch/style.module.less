@@ -1,56 +1,37 @@
 @import '../../style/vars.less';
 
 .mapSectionContainer {
-  display: grid;
-  grid-template-columns: 60% 40%;
-  grid-template-rows: 22% 20% 20% 20% 18%;
-  height: 90vh;
+  display: flex;
   margin-bottom: 2rem;
+  flex-direction: row;
   @media (max-width: @breakPointL) {
-    grid-template-columns: 100%;
-    grid-template-rows: auto;
-    height: auto;
+    flex-direction: column;
   }
 }
 
-.topDesktopLegend {
+.leaderboard {
   margin-top: 1rem;
-  @media (max-width: @breakPointL) {
-    display: none;
-  }
-}
-
-.bottomMobileLegend {
-  margin-top: 1rem;
-  display: none;
-  @media (max-width: @breakPointL) {
-    display: block;
-  }
 }
 
 .map {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: last-line;
-  @media (max-width: @breakPointL) {
-    order: 1;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    padding-right: 0rem;
-  }
+  box-sizing: border-box;
+  width: 60%;
   padding-right: 2rem;
+  @media (max-width: @breakPointL) {
+    padding-right: 0rem;
+    width: 100%;
+  }
 }
 
 .mapControlContainer {
   display: flex;
   flex-direction: column;
-  margin: 2rem 0;
   padding-left: 1rem;
-
+  box-sizing: border-box;
+  width: 40%;
   @media (max-width: @breakPointL) {
     padding-left: 0rem;
+    width: 100%;
   }
 }
 
@@ -63,4 +44,18 @@
 
 .searchInfoText {
   margin: 0 0 1rem 0;
+}
+
+.hideOnDesktop {
+  display: none;
+  @media (max-width: @breakPointL) {
+    display: block;
+  }
+}
+
+.hideOnMobile {
+  display: block;
+  @media (max-width: @breakPointL) {
+    display: none;
+  }
 }
