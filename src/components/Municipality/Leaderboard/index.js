@@ -4,10 +4,9 @@ import { MunicipalityContext } from '../../../context/Municipality/index';
 
 import s from './style.module.less';
 
-import { TabSelector } from './TabSelector';
-import { TableHeader } from './TableHeader';
-import { TableData } from './TableData';
-import { PageSelector } from './PageSelector';
+import { TabSelector } from './Table/TabSelector';
+import { Table } from './Table';
+import { PageSelector } from './Table/PageSelector';
 
 export const Leaderboard = () => {
   const { leaderboardSegments } = useContext(MunicipalityContext);
@@ -29,7 +28,7 @@ export const Leaderboard = () => {
 
   return (
     <div>
-      <h3 className={s.title}>Schau wo deine Gemeinde steht!</h3>
+      <p className={s.title}>Schau, wie es in deinem Ort voran geht:</p>
       <div className={s.tabSelectorContainer}>
         <TabSelector
           currentTab={currentTab}
@@ -39,14 +38,7 @@ export const Leaderboard = () => {
           setCurrentPage={setCurrentPage}
         />
       </div>
-      <table className={s.tableBody}>
-        <tbody>
-          <tr>
-            <TableHeader />
-          </tr>
-          <TableData slicedMunicipalities={slicedMunicipalities} />
-        </tbody>
-      </table>
+      <Table currentTab={currentTab} slicedMunicipalities={slicedMunicipalities} />
       <div className={s.pageSelectorContainer}>
         <PageSelector
           currentPage={currentPage}

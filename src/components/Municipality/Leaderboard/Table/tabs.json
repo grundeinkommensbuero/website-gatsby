@@ -1,14 +1,14 @@
 [
   {
-    "tabName": "Größte Änderung",
+    "tabName": "Besonders aktiv",
     "dataSet": "hot"
   },
   {
-    "tabName": "Ab 20.000",
+    "tabName": "Größere Orte",
     "dataSet": "largeMunicipalities"
   },
   {
-    "tabName": "Bis 20.000",
+    "tabName": "Kleinere Orte",
     "dataSet": "smallMunicipalities"
   },
   {

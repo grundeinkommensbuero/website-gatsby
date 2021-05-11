@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import * as s from './style.module.less';
+import * as s from '../style.module.less';
 import cN from 'classnames';
 import tabs from './tabs.json';
 

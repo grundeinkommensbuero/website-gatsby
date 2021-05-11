@@ -1,5 +1,5 @@
 import React from 'react';
-import * as s from './style.module.less';
+import * as s from '../style.module.less';
 import cN from 'classnames';
 
 export const PageSelector = ({ currentPage, setCurrentPage, pageControls }) => {

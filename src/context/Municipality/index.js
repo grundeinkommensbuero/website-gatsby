@@ -15,7 +15,6 @@ export const MunicipalityProvider = ({ children }) => {
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
   const [municipalitiesGoalSignup, setMunicipalitiesGoalSignup] = useState([]);
-  const [municipalitiesWithEvents, setMunicipalitiesWithEvents] = useState([]);
   const [municipalitiesInObject, setMunicipalitiesInObject] = useState({});
   const [leaderboardSegments, setLeaderboardSegments] = useState({});
 
@@ -196,22 +195,31 @@ export const MunicipalityProvider = ({ children }) => {
         }
       });
       municipalitiesWithGoalAndSignups.sort((a, b) => {
-        return a.percent - b.percent;
+        return b.percent - a.percent;
       });
-      setMunicipalitiesGoalSignup(municipalitiesWithGoalAndSignups.reverse());
+      setMunicipalitiesGoalSignup(municipalitiesWithGoalAndSignups);
     }
   }, [municipalitiesInObject]);
 
   useEffect(() => {
+    // Calculate change in percentage for event data
+    const municipalitiesWithEvent = municipalitiesGoalSignup.filter(m => 'event' in m);
+    municipalitiesWithEvent.forEach(municipality => {
+      const beforePercent = municipality.event.signups[0] / municipality.goal * 100;
+      const afterPercent = municipality.event.signups[1] / municipality.goal * 100;
+      municipality.grewByPercent = Math.round((afterPercent - beforePercent) * 100) / 100;
+    });
+    municipalitiesWithEvent.sort((a, b) => {
+      return b.grewByPercent - a.grewByPercent;
+    });
     // Arrange an object with leaderboard data
     const segments = {
-      hot: municipalitiesGoalSignup.filter(m => 'event' in m),
+      hot: municipalitiesWithEvent,
       smallMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population < 20000),
       largeMunicipalities: municipalitiesGoalSignup.filter(m => m.percent < 100 && m.population > 20000),
       qualified: municipalitiesGoalSignup
         .filter(m => m.percent > 100)
         .sort((a, b) => b.population - a.population)
-
     };
     setLeaderboardSegments(segments);
   }, [municipalitiesGoalSignup]);
