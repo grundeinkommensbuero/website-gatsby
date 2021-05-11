@@ -129,17 +129,17 @@ export const EnterLoginCode = ({
       {answerChallengeState === 'wrongCode' && (
         <p>
           Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
-          überprüfe die Email erneut oder lade die Seite neu.
+          überprüfe die Email erneut oder fordere unten einen neuen Code an.
         </p>
       )}
 
       {(answerChallengeState === 'resentCode' ||
         answerChallengeState === 'restartSignIn') && (
-          <p>
-            Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
+        <p>
+          Der Code wurde erneut per E-Mail {tempEmail ? ` (${tempEmail})` : ''}{' '}
           geschickt.
-          </p>
-        )}
+        </p>
+      )}
 
       {!answerChallengeState && (
         <>
@@ -150,8 +150,9 @@ export const EnterLoginCode = ({
               <h3>Schön, dass du an Bord bist.</h3>
               <p>
                 Um dich zu identifizieren, haben wir dir einen Code per E-Mail
-                  {tempEmail ? ` (${tempEmail})` : ''} geschickt.
-                  <br /><b>Dein Code ist drei Minuten lang gültig. </b>
+                {tempEmail ? ` (${tempEmail})` : ''} geschickt.
+                <br />
+                <b>Dein Code ist 20 Minuten lang gültig. </b>
               </p>
             </>
           )}{' '}
@@ -185,22 +186,27 @@ export const EnterLoginCode = ({
                   <CTAButton type="submit">
                     {buttonText ? buttonText : 'Abschicken'}
                   </CTAButton>
-                  {timerCounter === 0 ? <InlineButton
-                    type="button"
-                    onClick={() => {
-                      setAnswerChallengeState(undefined);
-                      setCode('resendCode');
-                      setTriggerOneMinuteTimer(triggerMinuteTimer + 1);
-                    }}
-                  >
-                    Code erneut senden
-                  </InlineButton> :
+                  {timerCounter === 0 ? (
+                    <InlineButton
+                      type="button"
+                      onClick={() => {
+                        setAnswerChallengeState(undefined);
+                        setCode('resendCode');
+                        setTriggerOneMinuteTimer(triggerMinuteTimer + 1);
+                      }}
+                    >
+                      Code erneut senden
+                    </InlineButton>
+                  ) : (
                     <div className={s.counterDescriptionContainer}>
                       <p className={s.counterDescription}>
-                        Wenn du den Code nicht erhalten hast, kannst du in {timerCounter} {timerCounter !== 1 ? 'Sekunden' : 'Sekunde'}{' '}
-                        den Code erneut anfordern.
+                        Wenn du den Code nicht erhalten hast, kannst du in{' '}
+                        {timerCounter}{' '}
+                        {timerCounter !== 1 ? 'Sekunden' : 'Sekunde'} den Code
+                        erneut anfordern.
                       </p>
-                    </div>}
+                    </div>
+                  )}
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
