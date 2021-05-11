@@ -214,11 +214,14 @@ export const MunicipalityProvider = ({ children }) => {
         const afterPercent = municipality.event.signups[1] / municipality.goal * 100;
         municipality.grewByPercent = Math.round((afterPercent - beforePercent) * 100) / 100;
         segments.hot.push(municipality);
-      } else if (municipality.percent >= 100) {
+      }
+      if (municipality.percent >= 100) {
         segments.qualified.push(municipality);
-      } else if (municipality.population < 20000) {
+      }
+      if (municipality.percent < 100 && municipality.population < 20000) {
         segments.smallMunicipalities.push(municipality);
-      } else if (municipality.population > 20000) {
+      }
+      if (municipality.percent < 100 && municipality.population > 20000) {
         segments.largeMunicipalities.push(municipality);
       }
     });
