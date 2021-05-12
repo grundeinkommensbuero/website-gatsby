@@ -16,6 +16,7 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { SearchPlaces } from '../SearchPlaces';
+import { useRef } from 'react';
 
 // Not needed at the moment
 /* const AuthenticatedDialogDefault = () => {
@@ -52,6 +53,8 @@ export default ({
   const { municipality, setMunicipality } = useContext(MunicipalityContext);
   const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
 
+  const inputRef = useRef(null);
+
   let prefilledZip;
 
   if (municipalityInForm?.zipCodes?.length === 1) {
@@ -61,6 +64,13 @@ export default ({
   } else {
     prefilledZip = '';
   }
+
+  useEffect(() => {
+    console.log('input ref use effect called', inputRef);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -240,6 +250,16 @@ export default ({
               <form onSubmit={handleSubmit}>
                 <FormSection>
                   {fields.map((field, i) => {
+                    if (i === 0) {
+                      return (
+                        <Field
+                          key={`form-field-${i}`}
+                          {...fieldData[field]}
+                          customRef={inputRef}
+                        />
+                      );
+                    }
+
                     return (
                       <Field key={`form-field-${i}`} {...fieldData[field]} />
                     );
