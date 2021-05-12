@@ -11,11 +11,20 @@ import { Spinner } from '../../Spinner';
 
 import AuthContext from '../../../context/Authentication';
 
-export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAquaBackground = false }) => {
+export default ({
+  userData,
+  userId,
+  onUploadDone,
+  size = 'default',
+  buttonOnAquaBackground = false,
+  customRef,
+}) => {
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [imageUploadIsProcessing, setImageUploadIsProcessing] = useState(false);
-  const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(false);
+  const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(
+    false
+  );
   const [showUploadErrorMessage, setShowUploadErrorMessage] = useState(false);
 
   const { updateCustomUserData } = useContext(AuthContext);
@@ -59,71 +68,87 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
           {userData?.user?.profilePictures ? (
             <AvatarImage
               user={userData.user}
-              className={cN(s.avatarImage,
+              className={cN(
+                s.avatarImage,
                 { [s.default]: size === 'default' },
                 { [s.large]: size === 'large' }
               )}
               sizes="80px"
             />
           ) : (
-              <>
-                <div className={s.avatarImageContainer}>
-                  <Field
-                    name="image"
-                    component={ImageInput}
-                    user={userData}
-                    size={size}
-                    unsavedChanges={unsavedChanges}
-                    showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
-                    onChange={() => { }}
-                  />
-                  <OnChange name="image">
-                    {() => setUnsavedChanges(true)}
-                  </OnChange>
-                </div>
-
-                {unsavedChanges ?
-                  <CTAButton
-                    type="submit"
-                    className={cN(
-                      s.submitButton,
-                      { [s.buttonOnAquaBackground]: buttonOnAquaBackground }
-                    )}
-                  >
-                    Hochladen
-                  </CTAButton> : null
-                }
-
-                <div className={s.uploadMessageContainer}>
-                  {imageUploadIsProcessing ?
-                    <span className={s.uploadStateMessage}>
-                      <Spinner />
-                      <b className={s.loadingMsg}>Bild hochladen...</b>
-                    </span>
-                    : <>
-                      {showUploadSuccessMessage ?
-                        <span className={s.uploadStateMessage}>
-                          Upload erfolgreich!
-                      </span> : null
-                      }
-                      {showUploadErrorMessage ?
-                        <span className={s.uploadStateMessage}>
-                          Fehler beim Upload! :(
-                          <br />Bitte versuche es später erneut!
-                      </span> : null
-                      }
-                    </>
+            <>
+              <div className={s.avatarImageContainer}>
+                <Field
+                  name="image"
+                  component={ImageInput}
+                  user={userData}
+                  size={size}
+                  unsavedChanges={unsavedChanges}
+                  showUploadLabel={
+                    !(
+                      imageUploadIsProcessing ||
+                      showUploadSuccessMessage ||
+                      showUploadErrorMessage
+                    )
                   }
-                </div>
-              </>
-            )}
+                  onChange={() => {}}
+                  customRef={customRef}
+                />
+                <OnChange name="image">
+                  {() => setUnsavedChanges(true)}
+                </OnChange>
+              </div>
+
+              {unsavedChanges ? (
+                <CTAButton
+                  type="submit"
+                  className={cN(s.submitButton, {
+                    [s.buttonOnAquaBackground]: buttonOnAquaBackground,
+                  })}
+                >
+                  Hochladen
+                </CTAButton>
+              ) : null}
+
+              <div className={s.uploadMessageContainer}>
+                {imageUploadIsProcessing ? (
+                  <span className={s.uploadStateMessage}>
+                    <Spinner />
+                    <b className={s.loadingMsg}>Bild hochladen...</b>
+                  </span>
+                ) : (
+                  <>
+                    {showUploadSuccessMessage ? (
+                      <span className={s.uploadStateMessage}>
+                        Upload erfolgreich!
+                      </span>
+                    ) : null}
+                    {showUploadErrorMessage ? (
+                      <span className={s.uploadStateMessage}>
+                        Fehler beim Upload! :(
+                        <br />
+                        Bitte versuche es später erneut!
+                      </span>
+                    ) : null}
+                  </>
+                )}
+              </div>
+            </>
+          )}
         </form>
       )}
     />
   );
 };
 
-export const ImageInput = ({ input: { value, onChange, ...input }, user, size, unsavedChanges, showUploadLabel }) => {
+export const ImageInput = ({
+  input: { value, onChange, ...input },
+  user,
+  size,
+  unsavedChanges,
+  showUploadLabel,
+  customRef,
+}) => {
   const [avatarImage, setAvatarImage] = useState(null);
 
   const handleChange = ({ target }) => {
@@ -143,25 +168,30 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, size, u
     <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
       <AvatarImage
         srcOverwrite={avatarImage}
-        className={cN(s.avatarImage,
+        className={cN(
+          s.avatarImage,
           { [s.default]: size === 'default' },
           { [s.large]: size === 'large' }
         )}
         user={user}
         sizes="80px"
       />
-      {showUploadLabel ?
+      {showUploadLabel ? (
         <>
-          {(user && user.profilePictures) || unsavedChanges ?
+          {(user && user.profilePictures) || unsavedChanges ? (
             <div className={cN(s.avatarImageLabel)}>Bild ändern</div>
-            : <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
-          }
-        </> : null}
+          ) : (
+            <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
+          )}
+        </>
+      ) : null}
       <input
         type="file"
         onChange={handleChange}
         className={s.avatarUploadButton}
         accept="image/png, image/jpeg"
+        ref={customRef}
+        aria-label="Hier klicken um Bild hochzuladen"
         {...input}
       />
     </label>

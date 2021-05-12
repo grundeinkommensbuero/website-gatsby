@@ -111,13 +111,13 @@ export const Onboarding = ({ setOverlayOpen }) => {
       ) : (
         <>
           {/* Show onboarding content */}
-          <div className={s.breadcrumbContainer}>
+          <nav className={s.breadcrumbContainer}>
             <BreadcrumbLinks
               setCurrentElement={setCurrentElement}
               currentElement={currentElement}
               setOverlayOpen={setOverlayOpen}
             />
-          </div>
+          </nav>
           <CurrentComponent />
         </>
       )}

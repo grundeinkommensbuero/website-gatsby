@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import s from './style.module.less';
 import gS from '../style.module.less';
 import ImageUpload from '../../Forms/ImageUpload';
 import { Button } from '../../Forms/Button';
 
-export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
+export const SetupProfile = ({
+  userData,
+  userId,
+  compIndex,
+  setCurrentElementByIndex,
+}) => {
+  const uploadRef = useRef(null);
+
+  // On mount focus the upload image cta
+  useEffect(() => {
+    if (uploadRef.current) {
+      console.log('focus ref', uploadRef);
+      uploadRef.current.focus();
+    }
+  }, []);
+
   return (
     <>
       <section className={gS.pageContainer}>
@@ -21,7 +36,8 @@ export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByI
             showUploadLabel={false}
             showEditLabel={true}
             size={'large'}
-            onUploadDone={() => { }}
+            onUploadDone={() => {}}
+            customRef={uploadRef}
           />
         </div>
 
@@ -31,15 +47,16 @@ export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByI
             onClick={() => setCurrentElementByIndex(compIndex + 1)}
           >
             Weiter
-        </Button>
+          </Button>
         </div>
         <div className={gS.fullWidthFlex}>
           <span
             aria-hidden="true"
             className={gS.linkLikeFormatted}
-            onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+            onClick={() => setCurrentElementByIndex(compIndex + 1)}
+          >
             Jetzt nicht
-        </span>
+          </span>
         </div>
       </section>
     </>
