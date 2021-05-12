@@ -8,7 +8,6 @@ import querystring from 'query-string';
 import { navigate } from '@reach/router';
 import AuthContext from '../../context/Authentication';
 import { createUser } from '../Api/Users/Create';
-import CONFIG from '../../../aws-config';
 export { useAnswerChallenge } from './AnswerChallenge';
 export { useVerification } from './Verification';
 export { useLocalStorageUser } from './LocalStorageUser';
@@ -44,7 +43,7 @@ export const useSignIn = () => {
           setState('success');
         })
         .catch(error => {
-          if (error.message === 'UserNotFoundException') {
+          if (error.code === 'UserNotFoundException') {
             setState('userNotFound');
           } else {
             setState('error');
@@ -133,33 +132,22 @@ const signUp = async (data, { setUserId }) => {
   setUserId(userId);
 };
 
-// Sign in user through api endpoint
-const signIn = async ({ email }, { setTempEmail }) => {
-  const request = {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  };
-
-  const response = await fetch(
-    `${CONFIG.API.INVOKE_URL}/users/sign-in`,
-    request
+// Sign in user through AWS Cognito (passwordless)
+const signIn = async ({ email }, { setCognitoUser, userId }) => {
+  const { default: Auth } = await import(
+    /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
   );
 
-  if (response.status === 500) {
-    throw new Error('InternalServerException');
-  }
+  // If no email was passed we use the userId from context
+  const param = email ? email.toLowerCase() : userId;
 
-  if (response.status === 404) {
-    throw new Error('UserNotFoundException');
-  }
+  // This will initiate the custom flow, which will lead to the user receiving a mail.
+  // The code will timeout after 3 minutes (enforced server side by AWS Cognito).
+  const user = await Auth.signIn(param);
 
-  // We need the temp mail later in the answe challenge function when we call
-  // the actual signIn function of Amplify
-  setTempEmail(email);
+  // We already set the user here in the global context,
+  // because we need the object in answerCustomChallenge()
+  setCognitoUser(user);
 };
 
 //Function, which uses the amplify api to sign out user
