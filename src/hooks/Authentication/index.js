@@ -134,14 +134,22 @@ const signUp = async (data, { setUserId }) => {
 };
 
 // Sign in user through api endpoint
-const signIn = async ({ email }, { setTempEmail }) => {
+const signIn = async ({ email }, { setTempEmail, userId }) => {
+  const body = {};
+
+  if (email) {
+    body.email = email.toLowerCase();
+  } else {
+    body.userId = userId;
+  }
+
   const request = {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email }),
+    body: JSON.stringify(body),
   };
 
   const response = await fetch(
@@ -157,9 +165,11 @@ const signIn = async ({ email }, { setTempEmail }) => {
     throw new Error('UserNotFoundException');
   }
 
-  // We need the temp mail later in the answe challenge function when we call
+  // We need the temp mail later in the answer challenge function when we call
   // the actual signIn function of Amplify
-  setTempEmail(email);
+  if (email) {
+    setTempEmail(email);
+  }
 };
 
 //Function, which uses the amplify api to sign out user
