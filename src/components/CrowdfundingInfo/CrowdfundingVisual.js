@@ -8,7 +8,7 @@ export const CrowdfundingVisual = () => {
   return (
     <div>
       {crowdFunding && <CampainVisualisation
-        goal={Math.round(14400)}
+        goal={Math.round(23300)}
         count={Math.round(crowdFunding.project.funding_status)}
         isCrowdfunding={true}
         // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
