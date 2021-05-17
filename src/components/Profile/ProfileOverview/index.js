@@ -24,6 +24,14 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
     return [newsletterLabels.slice(0, -1).join(', '), newsletterLabels.slice(-1)[0]].join(newsletterLabels.length < 2 ? '' : ' und ');
   }
 
+  const getReferredUserMessage = () => {
+    if (userData.referredUsers.length === 1) {
+      return `Dank dir hat sich ein:e weitere User:in angemeldet!`;
+    } else {
+      return `Dank dir haben sich ${userData.referredUsers.length} weitere User:innen angemeldet!`;
+    }
+  }
+
   return (
     <section className={gS.profilePageGrid}>
       <Link to="stammdaten" className={cN(s.profilePageSection, s.profilePageSectionLarge)}>
@@ -44,6 +52,10 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
             </div>
+            {userData && userData.referredUsers && userData.referredUsers[0] ?
+              <div className={s.referredUsersMessage}>
+                {getReferredUserMessage()}
+              </div> : null}
           </div>
           <div className={s.sectionLink}>
             <span>Stammdaten bearbeiten</span>
