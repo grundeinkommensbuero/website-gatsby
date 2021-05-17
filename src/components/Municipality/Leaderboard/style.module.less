@@ -87,7 +87,6 @@
   &.activeTabSelector {
     padding: calc(1rem - 1px) 0.25rem 0.7rem;
     border-top: 1px solid #ddd;
-
     border-right: 1px solid #ddd;
     border-bottom: none;
     font-weight: 1000;
@@ -95,12 +94,7 @@
     color: @violet;
   }
 
-  &:nth-child(1) {
-    border-left: 1px solid lightgrey;
-    border-left: 1px solid #ddd;
-  }
-
-  &:nth-child(last) {
+  &:first-child {
     border-left: 1px solid lightgrey;
     border-left: 1px solid #ddd;
   }
