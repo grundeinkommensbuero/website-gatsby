@@ -1,0 +1,114 @@
+@import '../../style/vars.less';
+
+.title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.tableBody {
+  border-collapse: collapse;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  width: 100%;
+
+  &.tableBody th {
+    padding: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  &.tableBody td,
+  &.tableBody tr {
+    border: none;
+    padding: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+.tableRow {
+  color: white;
+  &:nth-child(odd) {
+    background: @violetLight;
+    color: white;
+  }
+}
+
+.tableHead {
+  text-align: left;
+  background: @white;
+  color: @violet;
+
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.pageSelectorElement {
+  padding: 0.5rem 0.25rem 0.25rem;
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+
+  &:hover {
+    background-color: @red;
+  }
+
+  &.activePageSelector {
+    background: @white;
+    color: @violet;
+  }
+}
+
+.pageSelectorContainer {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  margin-bottom: 3rem;
+}
+
+.tabSelectorElement {
+  padding: 1rem 0.25rem 0.7rem;
+  border-top: 1px solid lightgrey;
+
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid #ddd;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
+  color: @white;
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+
+  &:hover {
+    background-color: @red;
+  }
+
+  &.activeTabSelector {
+    padding: calc(1rem - 1px) 0.25rem 0.7rem;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: none;
+    font-weight: 1000;
+    background: @white;
+    color: @violet;
+  }
+
+  &:first-child {
+    border-left: 1px solid lightgrey;
+    border-left: 1px solid #ddd;
+  }
+}
+
+.tabSelectorContainer {
+  display: flex;
+}
+
+.smallGoalNumber {
+  font-size: 10px;
+  color: lightgrey;
+}
+
+.alignRight {
+  text-align: right;
+}

@@ -27,11 +27,11 @@ export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
         <time dateTime={dateObject.toISOString()}>
           {formatDate(dateObject)}
         </time>
-        <h1 className={s.title}>
+        <h2 className={s.title}>
           <Link to={uri}>
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </Link>
-        </h1>
+        </h2>
       </header>
       {featuredImage && (
         <Link to={uri}>

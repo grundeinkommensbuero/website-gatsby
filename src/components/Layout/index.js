@@ -159,7 +159,12 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const { stickyBannerVisible } = useContext(StickyBannerContext);
+  const { stickyBannerVisible, setCurrentURL } = useContext(StickyBannerContext);
+  // update current URL in banner context, to check for pages where banner shoud not appear
+  // context itself does not reload on route change, so we set it from layout component
+  useEffect(() => {
+    setCurrentURL(typeof window !== 'undefined' ? window.location.pathname : '');
+  });
 
   const variableMarginClass = () => {
     return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
@@ -220,6 +225,12 @@ function Template({ children, sections, pageContext, title, description }) {
           slug: `gemeinden/${item.slug}`,
           shortTitle: null
         });
+      });
+    } else {
+      menuItems.push({
+        title: 'Mein Ort',
+        slug: 'registrieren',
+        shortTitle: null
       });
     }
     return menuItems;

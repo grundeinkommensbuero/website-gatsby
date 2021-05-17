@@ -32,7 +32,7 @@ export const SharingFeature = ({
         />
         <img
           className={s.previewSharing}
-          src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
+          src={'https://images.ctfassets.net/af08tobnb0cl/4WfOUuXL4JY2VEF2oPLNSG/dc7a5e777d9a93ce2d61af47922bdfd2/SharePreviewCrowdfundingNico.png?h=500'}
           alt={'Teilen Vorschau'}
         />
       </div>
@@ -60,7 +60,8 @@ export const SharingFeature = ({
                 {municipality ? `${municipality.name}` : 'deine Gemeinde'} bald
                 Grundeinkommen erforscht.{' '}
                 {municipality?.goal
-                  ? `Wir müssen insgesamt ${municipality.goal} Menschen werden!`
+                  ? `Wir müssen dazu in ${municipality.name} insgesamt 
+                  ${municipality.goal.toLocaleString('de')} Menschen werden!`
                   : ''}
               </p>
             </>

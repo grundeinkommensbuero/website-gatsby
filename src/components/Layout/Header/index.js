@@ -18,14 +18,11 @@ const Header = ({ menu, stickyBannerVisible }) => {
     setMenuOpen(!menuOpen);
   };
 
-  const currentURL = typeof window !== 'undefined' ? window.location.pathname : '';
-  const notOnPlayground = currentURL.includes('playground') ? false : true;
-
   return (
     <>
       <header className={s.header}>
         <div className={s.headerItemContainer}>
-          <h1 className={s.title}>
+          <h2 className={s.title}>
             <Link
               to="/"
               onClick={() => {
@@ -42,7 +39,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
                 alt="Expedition Grundeinkommen Home"
               />
             </Link>
-          </h1>
+          </h2>
           <>
             {menu && (
               <nav className={s.nav}>
@@ -64,7 +61,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && notOnPlayground && <HertieCrowdfunding />}
+        {stickyBannerVisible && <HertieCrowdfunding />}
       </header>
     </>
   );

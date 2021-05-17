@@ -17,18 +17,15 @@ export const HertieCrowdfunding = () => {
           alt=""
           className={s.closeButton}
           src={closeIcon}
-          onClick={() =>
-            closeStickyBanner({ whichBanner: 'hertieCrowdfunding' })
-          }
-          dangerouslySetInnerHTML={{ __html: closeIcon }}
-        ></div>
+          onClick={() => closeStickyBanner()}
+        />
         <div className={s.leftSection}>
           <p className={s.crowdfundingHeading}>
             <b>Wir crowdfunden die Expedition</b>
           </p>
           <p className={s.crowdfundingDescription}>
             Bring mit deiner Spende Grundeinkommen näher an die Realität. Egal
-            ob 1&#8239;€ oder 100&#8239;€ – jede Spende zählt!
+            ob 5&#8239;€ oder 100&#8239;€ – jede Spende zählt!
           </p>
           <div className={s.visualisationForMobile}>
             <CrowdfundingVisual />
@@ -49,7 +46,7 @@ export const HertieCrowdfunding = () => {
                 const link = document.createElement('a');
                 link.href = '#crowdfunding';
                 link.click();
-                closeStickyBanner({ whichBanner: 'hertieCrowdfunding' });
+                closeStickyBanner();
               }}
             >
               <span className={s.moreInfo}>Mehr erfahren</span>

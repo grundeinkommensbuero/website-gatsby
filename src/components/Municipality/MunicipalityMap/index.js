@@ -186,6 +186,8 @@ export const MunicipalityMap = ({
     initialMapAnimation ? 0 : 1
   );
 
+  const [legendOverlayActive, setLegendOverlayActive] = useState(false);
+
   const [hoverInfo, setHoverInfo] = useState();
 
   const [isInView, setIsInView] = useState(animateOnScroll ? false : true);
@@ -332,6 +334,10 @@ export const MunicipalityMap = ({
       setZoom(updated);
     }
   };
+
+  const handleLegendClick = () => {
+    setLegendOverlayActive(!legendOverlayActive)
+  };
   // ---- Template -------------------------------------------------------------------------
 
   if (!hasWebGl) {
@@ -343,6 +349,12 @@ export const MunicipalityMap = ({
       </div>
     );
   }
+
+  const LegendOverlay = () => (
+    <div className={s.legendOverlay}>
+      <Legend />
+    </div>
+  )
 
   return (
     <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
@@ -371,6 +383,14 @@ export const MunicipalityMap = ({
           >
             {/* Minus */}
             &#x2212;
+          </button>
+          <button
+            className={s.mapButton}
+            onClick={() => {
+              handleLegendClick()
+            }}
+          >
+            i
           </button>
         </div>
 
@@ -411,6 +431,7 @@ export const MunicipalityMap = ({
       {hoverInfo && hoverInfo.object && (
         <MapTooltip hoverInfo={hoverInfo} getColor={getColor} />
       )}
+      {legendOverlayActive && <LegendOverlay />}
     </div>
   );
 };

@@ -4,12 +4,11 @@ import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 
 export const CrowdfundingVisual = () => {
   const [crowdFunding] = useGetCrowdfundingDirectly(109676);
-  // console.log(crowdFunding);
 
   return (
     <div>
       {crowdFunding && <CampainVisualisation
-        goal={Math.round(crowdFunding.project.funding_target)}
+        goal={Math.round(23300)}
         count={Math.round(crowdFunding.project.funding_status)}
         isCrowdfunding={true}
         // showCTA={visualisations.length !== 1 && visualisation.ctaLink}

@@ -23,9 +23,9 @@ export const StickyDonationBar = () => {
           aria-hidden="true"
           alt=""
           className={s.closeButton}
-          onClick={() => closeStickyBanner({ whichBanner: 'mainBanner' })}
-          dangerouslySetInnerHTML={{ __html: closeIcon }}
-        ></div>
+          src={closeIcon}
+          onClick={() => closeStickyBanner()}
+        />
       </div>
     </div>
   );

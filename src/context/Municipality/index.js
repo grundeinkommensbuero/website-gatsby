@@ -3,6 +3,8 @@ import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
 import { history } from '../utils';
 // import { usePrevious } from '../../hooks/utils';
 
+import municipalities from '../../components/Municipality/MunicipalityMap/data/municipalitiesForMap.json';
+
 export const MunicipalityContext = React.createContext();
 
 export const MunicipalityProvider = ({ children }) => {
@@ -12,6 +14,9 @@ export const MunicipalityProvider = ({ children }) => {
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
+  const [municipalitiesGoalSignup, setMunicipalitiesGoalSignup] = useState([]);
+  const [municipalitiesInObject, setMunicipalitiesInObject] = useState({});
+  const [leaderboardSegments, setLeaderboardSegments] = useState({});
 
   // Stats for all municipalities
   const [
@@ -151,6 +156,80 @@ export const MunicipalityProvider = ({ children }) => {
     }
   }, [allMunicipalityStats]);
 
+  useEffect(() => {
+    // Create Object with raw municipality data for faster reference
+    const municipalityObject = municipalities.reduce((muniObj, municipality) => {
+      muniObj[municipality.ags.toString()] = {
+        name: municipality.name,
+        goal: municipality.goal,
+        population: municipality.population
+      };
+      return muniObj;
+    }, {});
+    // When there are events, add them to municipality key
+    if (allMunicipalityStats.events) {
+      allMunicipalityStats.events.forEach(e => {
+        municipalityObject[e.ags.toString()] = {
+          event: e,
+          ...municipalityObject[e.ags.toString()]
+        }
+      });
+    }
+    setMunicipalitiesInObject(municipalityObject);
+  }, [allMunicipalityStats]);
+
+  useEffect(() => {
+    // Find all municipalities with signups and goal
+    const municipalitiesWithGoalAndSignups = [];
+    if ('municipalities' in allMunicipalityStats) {
+      allMunicipalityStats.municipalities.forEach(municipality => {
+        if (municipality.ags.toString() in municipalitiesInObject) {
+          const fullMunicipality = {
+            ags: municipality.ags,
+            signups: municipality.signups,
+            percent: Math.round(municipality.signups / municipalitiesInObject[municipality.ags.toString()].goal * 100),
+            ...municipalitiesInObject[municipality.ags.toString()]
+          }
+          municipalitiesWithGoalAndSignups.push(fullMunicipality);
+
+        }
+      });
+      municipalitiesWithGoalAndSignups.sort((a, b) => {
+        return b.percent - a.percent;
+      });
+      setMunicipalitiesGoalSignup(municipalitiesWithGoalAndSignups);
+    }
+  }, [municipalitiesInObject]);
+
+  useEffect(() => {
+    const segments = {
+      hot: [],
+      smallMunicipalities: [],
+      largeMunicipalities: [],
+      qualified: [],
+    };
+    municipalitiesGoalSignup.forEach(municipality => {
+      if ('event' in municipality) {
+        const beforePercent = municipality.event.signups[0] / municipality.goal * 100;
+        const afterPercent = municipality.event.signups[1] / municipality.goal * 100;
+        municipality.grewByPercent = Math.round((afterPercent - beforePercent) * 100) / 100;
+        segments.hot.push(municipality);
+      }
+      if (municipality.percent >= 100) {
+        segments.qualified.push(municipality);
+      }
+      if (municipality.percent < 100 && municipality.population < 20000) {
+        segments.smallMunicipalities.push(municipality);
+      }
+      if (municipality.percent < 100 && municipality.population > 20000) {
+        segments.largeMunicipalities.push(municipality);
+      }
+    });
+    segments.hot.sort((a, b) => b.grewByPercent - a.grewByPercent);
+    segments.qualified.sort((a, b) => b.population - a.population);
+    setLeaderboardSegments(segments);
+  }, [municipalitiesGoalSignup]);
+
   return (
     <MunicipalityContext.Provider
       value={{
@@ -168,7 +247,9 @@ export const MunicipalityProvider = ({ children }) => {
         singleMunicipalityStats,
         singleMunicipalityStatsState,
         statsSummary,
-        refreshContextStats: () => getAllMunicipalityStats(),
+        municipalitiesGoalSignup,
+        leaderboardSegments,
+        refreshContextStats: () => getAllMunicipalityStats()
       }}
     >
       {children}
