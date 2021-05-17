@@ -2,7 +2,7 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const html2plaintext = require('html2plaintext');
+const { htmlToText } = require('html-to-text');
 
 const url = 'https://expedition-grundeinkommen.de';
 
@@ -35,10 +35,10 @@ const config = {
         `,
         feeds: [
           {
-            serialize: ({ query: { allWordpressPost } }) => {
-              return allWordpressPost.edges.map(edge => {
+            serialize: ({ query: { allWpPost } }) => {
+              return allWpPost.edges.map(edge => {
                 return Object.assign({}, edge.node, {
-                  description: html2plaintext(edge.node.excerpt),
+                  description: htmlToText(edge.node.excerpt),
                   date: edge.node.date,
                   url: url + edge.node.path,
                   guid: url + edge.node.path,
@@ -48,9 +48,9 @@ const config = {
             },
             query: `
               {
-                allWordpressPost(
+                allWpPost(
                   sort: { fields: date, order: DESC }
-                  filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
+                  filter: {tags: {nodes: {elemMatch: {name: {ne: "unlisted"}}}}}
                 ) {
                   edges {
                     node {
@@ -58,7 +58,7 @@ const config = {
                       title
                       excerpt
                       slug
-                      path
+                      link
                       date
                       content
                     }
@@ -100,6 +100,7 @@ const config = {
          * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
          */
         baseUrl: 'xbge.uber.space',
+        url: 'https://xbge.uber.space/graphql',
         protocol: 'http',
         hostingWPCOM: false,
         useACF: false,

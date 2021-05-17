@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import AvatarImage from '../../AvatarImage';
 import ImageUpload from '../../Forms/ImageUpload';
 import { Button } from '../../Forms/Button';

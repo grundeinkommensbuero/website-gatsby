@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cN from 'classnames';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
 import { Button } from '../../Forms/Button';

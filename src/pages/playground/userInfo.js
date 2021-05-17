@@ -8,7 +8,7 @@ import {
 } from '../../components/Layout/Sections';
 import { useUserData } from '../../hooks/Api/Users/Get';
 
-export default () => {
+const PlaygroundUserInfo = () => {
   const [/*userData, */ requestUserData] = useUserData();
 
   useEffect(() => {
@@ -30,3 +30,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundUserInfo;

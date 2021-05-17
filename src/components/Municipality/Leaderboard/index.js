@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { fetchPageNumbers, paginate } from './utils';
 import { MunicipalityContext } from '../../../context/Municipality/index';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 import { TabSelector } from './Table/TabSelector';
 import { Table } from './Table';

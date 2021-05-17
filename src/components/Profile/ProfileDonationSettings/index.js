@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import s from './style.module.less';
-import gS from '../style.module.less';
-import nS from '../ProfileNotifications/style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
+import * as nS from '../ProfileNotifications/style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
@@ -15,7 +15,7 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
 
   const [updateUserState, updateUser] = useUpdateUser();
 
-  const rocketIcon = require('./rocket-icon.min.svg');
+  const rocketIcon = require('!svg-inline-loader!./rocket-icon.min.svg');
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -52,14 +52,12 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
         <br />
         <div className={s.revokeButtonRow}>
           <Button
-            className={s.revokeButton}
             onClick={() => setShowDeleteDonationDialog(false)}
             size="SMALL"
           >
             Abbrechen
           </Button>
           {!waitingForApi ? <Button
-            className={s.revokeButton}
             onClick={removeDonation}
             size="SMALL"
           >
@@ -93,7 +91,11 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
           !showDonationForm ?
           <>
             <div className={cN(s.flexContainerSimple, s.donationStatusMessage)}>
-              <img aria-hidden="true" alt="" className={s.icon} src={rocketIcon} />
+              <div
+                aria-hidden="true"
+                className={s.icon}
+                dangerouslySetInnerHTML={{ __html: rocketIcon }}
+              ></div>
               <div>
                 <h3>Du bist Dauerspender:in! <br />Vielen Dank!</h3>
                 <p>Du spendest aktuell monatlich <span className={s.donationAmountRecurring}>{userData.donations.recurringDonation.amount}€</span></p>

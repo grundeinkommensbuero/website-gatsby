@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Checkbox } from '../../Forms/Checkbox';
 import { Button } from '../../Forms/Button';
@@ -65,8 +65,8 @@ export const NewsletterCard = ({
             {newsletterSettings.extraInfo ? (
               <span>, sowie zusätzliche Sammelinfos.</span>
             ) : (
-                <span>.</span>
-              )}
+              <span>.</span>
+            )}
           </p>
           {/* toggle extra info consent */}
           {waitingForApi && componentToBeUpdated === newsletterSettings.ags ? (
@@ -75,24 +75,24 @@ export const NewsletterCard = ({
               <b className={gS.loadingMsg}>Speichern</b>
             </span>
           ) : (
-              <Form
-                onSubmit={() => { }}
-                initialValues={{ extraInfoConsent: newsletterSettings.extraInfo }}
-                validate={values =>
-                  !isEmptyObj(values) ? toggleExtraInfoConsent(values) : null
-                }
-                render={() => {
-                  return (
-                    <Field
-                      name="extraInfoConsent"
-                      label={`Für ${newsletterSettings.name} zusätzliche Sammelinfos erhalten`}
-                      type="checkbox"
-                      component={Checkbox}
-                    ></Field>
-                  );
-                }}
-              ></Form>
-            )}
+            <Form
+              onSubmit={() => { }}
+              initialValues={{ extraInfoConsent: newsletterSettings.extraInfo }}
+              validate={values =>
+                !isEmptyObj(values) ? toggleExtraInfoConsent(values) : null
+              }
+              render={() => {
+                return (
+                  <Field
+                    name="extraInfoConsent"
+                    label={`Für ${newsletterSettings.name} zusätzliche Sammelinfos erhalten`}
+                    type="checkbox"
+                    component={Checkbox}
+                  ></Field>
+                );
+              }}
+            ></Form>
+          )}
           {/* toggle newsletter consent */}
           <p className={cN(gS.alignRight, gS.noMargin)}>
             <span
@@ -106,36 +106,36 @@ export const NewsletterCard = ({
           </p>
         </section>
       ) : (
-          <section>
-            <p className={s.newsletterCardHeading}>
-              Bist du sicher, dass du keine Neuigkeiten mehr aus{' '}
-              {newsletterSettings.name} bekommen möchtest?
+        <section>
+          <p className={s.newsletterCardHeading}>
+            Bist du sicher, dass du keine Neuigkeiten mehr aus{' '}
+            {newsletterSettings.name} bekommen möchtest?
           </p>
-            <br />
-            <p className={s.newsletterCardDescription}>
-              Wir können dich nicht mehr informieren, wenn sich etwas an der
+          <br />
+          <p className={s.newsletterCardDescription}>
+            Wir können dich nicht mehr informieren, wenn sich etwas an der
             Kampagne in {newsletterSettings.name} ändert oder neue Sammelevents
             in deiner Nähe geplant werden.
           </p>
-            <div className={s.revokeButtonRow}>
-              <Button
-                className={s.revokeButton}
-                onClick={toggleNewsletterConsent}>
-                Abbestellen
+          <div className={s.revokeButtonRow}>
+            <Button
+              className={s.revokeButton}
+              onClick={toggleNewsletterConsent}>
+              Abbestellen
               </Button>
-              <div className={s.cancelRevokeProcess}>
-                <span
-                  aria-hidden="true"
-                  className={gS.linkLikeFormatted}
-                  onClick={toggleNewsletterRevokeProcess}
-                  onKeyUp={toggleNewsletterRevokeProcess}
-                >
-                  Newsletter weiter erhalten
+            <div className={s.cancelRevokeProcess}>
+              <span
+                aria-hidden="true"
+                className={gS.linkLikeFormatted}
+                onClick={toggleNewsletterRevokeProcess}
+                onKeyUp={toggleNewsletterRevokeProcess}
+              >
+                Newsletter weiter erhalten
               </span>
-              </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

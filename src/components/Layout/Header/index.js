@@ -4,7 +4,7 @@ import Link from 'gatsby-link';
 // import { OverlayContext } from '../../../context/Overlay';
 // import { Button } from '../../Forms/Button';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
 import { HertieCrowdfunding } from './StickyDonationBar/HertieCrowdfunding';

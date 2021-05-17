@@ -11,7 +11,7 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const EnterLoginCode = ({
   children,

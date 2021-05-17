@@ -1,6 +1,6 @@
 import React from 'react';
 import SocialMediaButton from '../SocialMedia/Button';
-import gS from './style.module.less';
+import * as gS from './style.module.less';
 
 export const MessengerButtonRow = ({ iconSize }) => {
   return (

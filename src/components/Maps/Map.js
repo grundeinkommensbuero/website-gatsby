@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 
 const LoadableMap = React.lazy(() => import('./LazyMap'));

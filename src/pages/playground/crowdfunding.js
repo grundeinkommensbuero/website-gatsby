@@ -7,7 +7,7 @@ import {
   SectionInner,
 } from '../../components/Layout/Sections';
 
-export default () => {
+const PlaygroundCrowdfunding = () => {
   return (
     <Layout>
       <Helmet>
@@ -21,3 +21,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundCrowdfunding;

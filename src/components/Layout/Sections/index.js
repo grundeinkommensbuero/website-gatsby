@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Maps from '../../Maps';
@@ -83,10 +83,7 @@ export default function Sections({ sections, pageContext }) {
             />
           );
         })}
-        <Section
-          jumpToId={'crowdfunding'}
-          className={s.sectionAqua}
-        >
+        <Section jumpToId={'crowdfunding'} className={s.sectionAqua}>
           <SectionInner>
             <CrowdfundingInfo />
           </SectionInner>
@@ -152,7 +149,6 @@ export function ContentfulSection({ section, pageContext }) {
   const isIllustration = __typename === 'ContentfulPageSectionIllustration';
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
-  const isChristmasDonationTheme = theme === 'christmas';
 
   const userContentfulState = useUserMunicipalityContentfulState();
 
@@ -216,21 +212,17 @@ export function ContentfulSection({ section, pageContext }) {
         <Section
           jumpToId={id}
           className={cN({
-            [s.sectionTwoColumns]: isTwoColumns,
             // [s.sectionConfetti]: backgroundIllustration === 'confetti',
             [s.sectionWhite]: colorScheme === 'white',
             [s.sectionViolet]: colorScheme === 'violet',
             [s.sectionAqua]: colorScheme === 'aqua',
             [s.sectionRed]: colorScheme === 'red',
-            [s.sectionChristmas]: colorScheme === 'christmas',
-            // [s.sectionChristmasDonation]: isChristmasDonationTheme,
           })}
         >
           <SectionInner>
             {headline && <h2>{headline.headline}</h2>}
             <div className={s.componentElementContainer}>
               {filteredComponents.map((component, index) => {
-
                 return (
                   <div
                     key={index}
@@ -302,8 +294,8 @@ export function ContentfulSection({ section, pageContext }) {
                 isInOnboarding={false}
                 introText={introText ? introText : null}
                 previewComponent={
-                  previewDescription?.json
-                    ? contentfulJsonToHtml(previewDescription.json)
+                  previewDescription?.raw
+                    ? contentfulJsonToHtml(previewDescription)
                     : null
                 }
                 scrollToRef={scrollToRef}
@@ -360,7 +352,6 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionNewsletter]: !!emailSignup,
         [s.sectionIllustration]: isIllustration,
         [s.sectionVideo]: isVideoSection,
-        [s.sectionTwoColumns]: isTwoColumns, // Actually four columns
         [s.sectionCrowdCollect]: backgroundIllustration === 'crowd_collect',
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
@@ -369,8 +360,6 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionViolet]: colorScheme === 'violet',
         [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',
-        [s.sectionChristmas]: colorScheme === 'christmas',
-        [s.sectionChristmasDonation]: isChristmasDonationTheme,
       })}
       // NOTE (felix): isVideoSection was in this before, not sure why
       // Breaks the possibility to add a CTA Button to the video section
@@ -378,9 +367,6 @@ export function ContentfulSection({ section, pageContext }) {
       // sectionBodyNoEvents={isIllustration || isVideoSection}
       sectionBodyNoEvents={isIllustration}
     >
-      {/* {theme === 'christmas' && <Confetti componentTheme="christmas" />}
-      {colorScheme === 'christmas' && <Confetti componentTheme="christmas" />}
-      {isVideoSection && <Confetti componentTheme="christmas" />} */}
 
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
@@ -388,42 +374,42 @@ export function ContentfulSection({ section, pageContext }) {
       {isTwoColumns && (
         <SectionInner>
           <div className={s.columnIntroText}>
-            {contentfulJsonToHtml(columnIntroText.json)}
+            {contentfulJsonToHtml(columnIntroText)}
           </div>
           <TwoColumns className={s.columnWrapper}>
             <section className={s.column}>
               {imageTopLeft && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
                 </div>
               )}
               {columnTopLeft && (
-                <div>{contentfulJsonToHtml(columnTopLeft.json)}</div>
+                <div>{contentfulJsonToHtml(columnTopLeft)}</div>
               )}
             </section>
             <section className={s.column}>
               {imageTopRight && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
                 </div>
               )}
               {columnTopRight && (
-                <div>{contentfulJsonToHtml(columnTopRight.json)}</div>
+                <div>{contentfulJsonToHtml(columnTopRight)}</div>
               )}
             </section>
             <section className={s.column}>
               {imageBottomLeft && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
                 </div>
               )}
               {columnBottomLeft && (
-                <div>{contentfulJsonToHtml(columnBottomLeft.json)}</div>
+                <div>{contentfulJsonToHtml(columnBottomLeft)}</div>
               )}
             </section>
             <section className={s.column}>
               {imageBottomRight && (
-                <div className={s.columnIconWrapper}>
+                <div>
                   <Img
                     className={s.columnIcon}
                     fixed={imageBottomRight.fixed}
@@ -431,7 +417,7 @@ export function ContentfulSection({ section, pageContext }) {
                 </div>
               )}
               {columnBottomRight && (
-                <div>{contentfulJsonToHtml(columnBottomRight.json)}</div>
+                <div>{contentfulJsonToHtml(columnBottomRight)}</div>
               )}
             </section>
           </TwoColumns>
@@ -445,7 +431,7 @@ export function ContentfulSection({ section, pageContext }) {
       )}
       {(body || pledgeId || signaturesId) && (
         <SectionInner hugeText={bodyTextSizeHuge}>
-          {body && body.json ? contentfulJsonToHtml(body.json) : body}
+          {body && body.raw ? contentfulJsonToHtml(body) : body}
           {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
           {signaturesId && (
             <SignatureListDownload
@@ -511,9 +497,9 @@ export function ContentfulSection({ section, pageContext }) {
           <Share />
         </SectionInner>
       )}
-      {bodyAtTheEnd && bodyAtTheEnd.json && (
+      {bodyAtTheEnd && bodyAtTheEnd.raw && (
         <SectionInner hugeText={bodyTextSizeHuge}>
-          {contentfulJsonToHtml(bodyAtTheEnd.json)}
+          {contentfulJsonToHtml(bodyAtTheEnd)}
         </SectionInner>
       )}
     </Section>

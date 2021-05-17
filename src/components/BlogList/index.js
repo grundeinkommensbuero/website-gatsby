@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import Img from 'gatsby-image';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
@@ -19,25 +19,25 @@ export const BlogList = ({ posts }) => {
   );
 };
 
-export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
+export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
   const dateObject = new Date(date);
   return (
     <article className={s.article}>
       <header>
-        <time dateTime={dateObject.toISOString()} className={s.date}>
+        <time dateTime={dateObject.toISOString()}>
           {formatDate(dateObject)}
         </time>
         <h2 className={s.title}>
-          <Link to={path}>
+          <Link to={uri}>
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </Link>
         </h2>
       </header>
-      {featured_media && (
-        <Link to={path}>
+      {featuredImage && (
+        <Link to={uri}>
           <Img
             className={s.image}
-            fluid={featured_media.localFile.childImageSharp.hero}
+            fluid={featuredImage.node.localFile.childImageSharp.hero}
           />
         </Link>
       )}
@@ -48,7 +48,7 @@ export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
         }}
       />
       <p>
-        <Link to={path}>Mehr...</Link>
+        <Link to={uri}>Mehr...</Link>
       </p>
     </article>
   );

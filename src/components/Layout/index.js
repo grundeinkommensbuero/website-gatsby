@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import '../style/base.less';
 import Sections, { ContentfulSection } from './Sections';
 import { Helmet } from 'react-helmet-async';
@@ -70,7 +70,7 @@ function Template({ children, sections, pageContext, title, description }) {
                 addToSignatureCount
                 ctaLink
                 eyeCatcher {
-                  json
+                  raw
                 }
                 goalUnbuffered
                 goalInbetweenMultiple
@@ -80,7 +80,29 @@ function Template({ children, sections, pageContext, title, description }) {
                 }
               }
               body {
-                json
+                raw
+                references {
+                  ... on ContentfulAsset {
+                    # __typename and contentful_id are required to resolve the references
+                    __typename
+                    contentful_id
+                    fluid(maxWidth: 500, quality: 90) {
+                      ...GatsbyContentfulFluid
+                    }
+                  }
+                  ... on ContentfulStaticContent {
+                    # __typename and contentful_id are required to resolve the references
+                    __typename
+                    contentful_id
+                    slug
+                  }
+                  ... on ContentfulPageSectionWithComponents {
+                    __typename
+                    contentful_id
+                    id
+                    titleShort
+                  }
+                }
               }
               callToActionLink
               callToActionText
@@ -99,7 +121,7 @@ function Template({ children, sections, pageContext, title, description }) {
               teamMembers {
                 image {
                   fluid(maxWidth: 200, quality: 80) {
-                    ...GatsbyContentfulFluid
+                    src
                   }
                 }
                 name
@@ -114,7 +136,7 @@ function Template({ children, sections, pageContext, title, description }) {
               blogTeaser
               questionUbi
               bodyAtTheEnd {
-                json
+                raw
               }
             }
           }

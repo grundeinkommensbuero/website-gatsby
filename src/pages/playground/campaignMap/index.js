@@ -3,9 +3,9 @@ import Layout from '../../../components/Layout';
 import { Helmet } from 'react-helmet-async';
 import { Section } from '../../../components/Layout/Sections';
 import { MunicipalityMap } from '../../../components/Municipality/MunicipalityMap';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
-export default () => {
+const PlaygroundCampaignMap = () => {
   return (
     <Layout>
       <Helmet>
@@ -17,3 +17,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundCampaignMap;

@@ -19,7 +19,7 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { Overlay } from '../../Overlay';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { FinallyMessage } from '../FinallyMessage';
 import Confetti from '../../Confetti';
@@ -462,7 +462,6 @@ export default ({ onboardingNextPage }) => {
                                   onAmountClick(true);
                                 }}
                                 size="MEDIUM"
-                                className={s.primaryButton}
                               >
                                 Spenden
                               </CTAButton>
@@ -495,7 +494,6 @@ export default ({ onboardingNextPage }) => {
                                   onboardingNextPage();
                                 }}
                                 size="MEDIUM"
-                                className={s.primaryButton}
                               >
                                 Weiter
                               </CTAButton>
@@ -552,7 +550,7 @@ export default ({ onboardingNextPage }) => {
                           onboardingNextPage();
                         }}
                         size="MEDIUM"
-                        className={s.primaryButton}
+
                       >
                         Weiter
                       </CTAButton>
@@ -606,7 +604,6 @@ export default ({ onboardingNextPage }) => {
                           onboardingNextPage();
                         }}
                         size="MEDIUM"
-                        className={s.primaryButton}
                       >
                         Weiter
                       </CTAButton>
@@ -625,7 +622,6 @@ export default ({ onboardingNextPage }) => {
         !needsToLogin && (
           <div>
             <h3>Bitte überprüfe deine Daten</h3>
-
             <p>
               Name:{' '}
               <span className={s.info}>
@@ -710,7 +706,7 @@ export default ({ onboardingNextPage }) => {
           </p>
           <p>Vielen Dank, dass du die Expedition unterstützt! </p>
           {!onboardingNextPage ? (
-            <CTAButtonContainer className={s.buttonContainer}>
+            <CTAButtonContainer>
               <CTALink to="/">Zur Startseite</CTALink>
             </CTAButtonContainer>
           ) : (
@@ -721,7 +717,6 @@ export default ({ onboardingNextPage }) => {
                   onboardingNextPage();
                 }}
                 size="MEDIUM"
-                className={s.primaryButton}
               >
                 Weiter
               </CTAButton>
@@ -747,7 +742,7 @@ export default ({ onboardingNextPage }) => {
             01
           </p>
           <p>Vielen Dank für deine Unterstützung!</p>
-          <CTAButtonContainer className={s.buttonContainer}>
+          <CTAButtonContainer>
             <CTAButton
               onClick={() => {
                 setEnteredAmount(false);

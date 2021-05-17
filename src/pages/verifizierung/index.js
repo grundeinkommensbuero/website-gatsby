@@ -3,7 +3,7 @@ import Layout from '../../components/Layout';
 import { useVerification } from '../../hooks/Authentication';
 import { FinallyMessage } from '../../components/Forms/FinallyMessage';
 import SocialMediaButtons from '../../components/SocialMedia/Share';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { HurrayCrowd } from '../../components/HurrayCrowd';
 import cN from 'classnames';
 import { CTALink } from '../../components/Layout/CTAButton';

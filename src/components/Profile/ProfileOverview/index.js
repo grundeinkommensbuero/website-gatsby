@@ -2,8 +2,8 @@ import React from 'react';
 import AvatarImage from '../../AvatarImage';
 import SignatureStats from '../../SignatureStats';
 import { formatDate } from '../../utils';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 
@@ -32,8 +32,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
           <div>
             <h2
               className={cN({
-                [gS.username]: userData.username,
-                [s.email]: !userData.username,
+                [gS.username]: userData.username
               })}
             >
               {userData.username || userData.email}

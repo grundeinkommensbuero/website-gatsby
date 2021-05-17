@@ -4,7 +4,7 @@ import AuthContext from '../../context/Authentication';
 import { MunicipalityContext } from '../../context/Municipality';
 import { useUpdateUser } from '../../hooks/Api/Users/Update';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import menuElements from './BreadcrumbMenu.json';
 
 import { BreadcrumbLinks } from './BreadcrumbLinks';
@@ -33,7 +33,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
   ] = useState(false);
   const [, updateUser] = useUpdateUser();
 
-  const closeIcon = require('./close-icon.svg');
+  const closeIcon = require('!svg-inline-loader!./close-icon.svg');
 
   const Components = {
     SignUpFlow,
@@ -99,12 +99,12 @@ export const Onboarding = ({ setOverlayOpen }) => {
             onClick={() => setOverlayOpen(false)}
             onKeyPress={() => setOverlayOpen(false)}
           >
-            <img
+            <div
               aria-hidden="true"
               alt=""
               className={s.closeButton}
-              src={closeIcon}
-            />
+              dangerouslySetInnerHTML={{ __html: closeIcon }}
+            ></div>
           </span>
           <SignUpFlow />
         </>

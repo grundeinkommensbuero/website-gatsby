@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MapTooltip = ({ hoverInfo, getColor }) => {
   // No tootltip if these attributes are not available
@@ -30,7 +30,7 @@ export const MapTooltip = ({ hoverInfo, getColor }) => {
       <div className={s.tooltipHeader}>
         <span className={s.tooltipMunicipality}>{name}</span>
       </div>
-      <div className={s.tooltipInfoContainer}>
+      <div>
         <TooltipInfo
           name={name}
           signups={signups}

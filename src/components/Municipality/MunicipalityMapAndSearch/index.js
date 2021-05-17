@@ -3,7 +3,7 @@ import { MunicipalityMap } from '../MunicipalityMap';
 import { WrappedMunicipalitySearch } from '../MunicipalitySearch/WrappedMunicipalitySearch';
 import { Leaderboard } from '../Leaderboard';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MunicipalityMapAndSearch = () => {
   return (

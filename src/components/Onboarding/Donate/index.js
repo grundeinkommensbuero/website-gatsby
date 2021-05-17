@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import gS from '../style.module.less';
-import s from './style.module.less';
+import * as gS from '../style.module.less';
+import * as s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
 
 export const Donate = ({

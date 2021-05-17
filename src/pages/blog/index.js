@@ -10,9 +10,9 @@ import {
 import { graphql } from 'gatsby';
 import { BlogList } from '../../components/BlogList';
 
-export default ({
+const Blog = ({
   data: {
-    allWordpressPost: { edges: posts },
+    allWpPost: { edges: posts },
   },
 }) => {
   const postsMapped = posts.map(post => post.node);
@@ -33,25 +33,26 @@ export default ({
   );
 };
 
+export default Blog;
+
 export const pageQuery = graphql`
   query {
-    allWordpressPost(
-      sort: { fields: date, order: DESC }
-      filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
-    ) {
+    allWpPost(sort: { fields: date, order: DESC }) {
       edges {
         node {
           id
           title
           excerpt
           slug
-          path
+          uri
           date
-          featured_media {
-            localFile {
-              childImageSharp {
-                hero: fluid(maxWidth: 650) {
-                  ...GatsbyImageSharpFluid_noBase64
+          featuredImage {
+            node {
+              localFile {
+                childImageSharp {
+                  hero: fluid(maxWidth: 1000) {
+                    ...GatsbyImageSharpFluid_noBase64
+                  }
                 }
               }
             }

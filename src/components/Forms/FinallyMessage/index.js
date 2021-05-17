@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { scrollIntoView } from '../../utils';
 import cN from 'classnames';
 import { HurrayCrowd } from '../../HurrayCrowd';
@@ -18,7 +18,7 @@ export const FinallyMessage = ({
   const messageRef = useRef(null);
 
   return (
-    <div className={cN(s.container, className)}>
+    <div className={className}>
       {state === 'success' && <HurrayCrowd />}
       <div className={s.message} ref={messageRef}>
         <div className={cN(s.messageInner)}>

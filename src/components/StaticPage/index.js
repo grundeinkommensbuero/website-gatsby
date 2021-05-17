@@ -9,7 +9,7 @@ import { useSEO } from '../../hooks/Municipality/SEO';
 
 const URL = 'https://expedition-grundeinkommen.de';
 
-export default ({ data, location, pageContext }) => {
+const staticPage = ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
 
   const { setPageContext } = useContext(MunicipalityContext);
@@ -47,6 +47,8 @@ export default ({ data, location, pageContext }) => {
   );
 };
 
+export default staticPage;
+
 export const pageQuery = graphql`
   query StaticPageBySlug($slug: String!) {
     contentfulStaticContent(slug: { eq: $slug }) {
@@ -72,7 +74,7 @@ export const pageQuery = graphql`
               addToSignatureCount
               ctaLink
               eyeCatcher {
-                json
+                raw
               }
               eyeCatcherLink
               goalUnbuffered
@@ -81,9 +83,122 @@ export const pageQuery = graphql`
               hint {
                 hint
               }
+              sys {
+                contentType {
+                  sys {
+                    id
+                  }
+                }
+              }
             }
             body {
-              json
+              raw
+              references {
+                ... on ContentfulAsset {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  fluid(maxWidth: 500, quality: 90) {
+                    ...GatsbyContentfulFluid
+                  }
+                  description
+                  title
+                  file {
+                    details {
+                      image {
+                        height
+                        width
+                      }
+                      size
+                    }
+                    fileName
+                    url
+                    contentType
+                  }
+                }
+                ... on ContentfulStaticContent {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  slug
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulPageSectionWithComponents {
+                  __typename
+                  contentful_id
+                  id
+                  titleShort
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulPageSectionOneColumn {
+                  __typename
+                  contentful_id
+                  id
+                  titleShort
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulCallToActionButton {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  id
+                  internalReference {
+                    slug
+                  }
+                  openInNewTab
+                  linkLong {
+                    linkLong
+                  }
+                  link
+                  jumpTo
+                  mailtoSubject
+                  mailtoBody {
+                    mailtoBody
+                  }
+                  mailto
+                  text
+                  copyToClipboard {
+                    copyToClipboard
+                  }
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulQuestion {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  id
+                  question {
+                    question
+                  }
+                  answer {
+                    raw
+                  }
+                }
+              }
             }
             maps {
               name
@@ -126,7 +241,40 @@ export const pageQuery = graphql`
             blogTeaser
             questionUbi
             bodyAtTheEnd {
-              json
+              raw
+              references {
+                ... on ContentfulCallToActionButton {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  id
+                  internalReference {
+                    slug
+                  }
+                  openInNewTab
+                  linkLong {
+                    linkLong
+                  }
+                  link
+                  jumpTo
+                  mailtoSubject
+                  mailtoBody {
+                    mailtoBody
+                  }
+                  mailto
+                  text
+                  copyToClipboard {
+                    copyToClipboard
+                  }
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
           ... on ContentfulPageSectionVideo {
@@ -134,7 +282,40 @@ export const pageQuery = graphql`
             title
             videoLink
             bodyAtTheEnd {
-              json
+              raw
+              references {
+                ... on ContentfulCallToActionButton {
+                  # __typename and contentful_id are required to resolve the references
+                  __typename
+                  contentful_id
+                  id
+                  internalReference {
+                    slug
+                  }
+                  openInNewTab
+                  linkLong {
+                    linkLong
+                  }
+                  link
+                  jumpTo
+                  mailtoSubject
+                  mailtoBody {
+                    mailtoBody
+                  }
+                  mailto
+                  text
+                  copyToClipboard {
+                    copyToClipboard
+                  }
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+              }
             }
             showForOptions
             colorScheme
@@ -177,7 +358,31 @@ export const pageQuery = graphql`
                   }
                 }
                 text {
-                  json
+                  raw
+                  references {
+                    ... on ContentfulAsset {
+                      # __typename and contentful_id are required to resolve the references
+                      __typename
+                      contentful_id
+                      fluid(maxWidth: 500, quality: 90) {
+                        ...GatsbyContentfulFluid
+                      }
+                      description
+                      title
+                      file {
+                        details {
+                          image {
+                            height
+                            width
+                          }
+                          size
+                        }
+                        fileName
+                        url
+                        contentType
+                      }
+                    }
+                  }
                 }
               }
               ... on ContentfulSectionComponentTextAndImage {
@@ -191,7 +396,40 @@ export const pageQuery = graphql`
                   }
                 }
                 text {
-                  json
+                  raw
+                  references {
+                    ... on ContentfulCallToActionButton {
+                      # __typename and contentful_id are required to resolve the references
+                      __typename
+                      contentful_id
+                      id
+                      internalReference {
+                        slug
+                      }
+                      openInNewTab
+                      linkLong {
+                        linkLong
+                      }
+                      link
+                      jumpTo
+                      mailtoSubject
+                      mailtoBody {
+                        mailtoBody
+                      }
+                      mailto
+                      text
+                      copyToClipboard {
+                        copyToClipboard
+                      }
+                      sys {
+                        contentType {
+                          sys {
+                            id
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
               ... on ContentfulSectionComponentTickerToSignup {
@@ -218,7 +456,7 @@ export const pageQuery = graphql`
                 headline
                 column
                 body {
-                  json
+                  raw
                 }
               }
               ... on ContentfulSectionComponentInviteFriends {
@@ -227,7 +465,7 @@ export const pageQuery = graphql`
                 headline
                 column
                 body {
-                  json
+                  raw
                 }
               }
               ... on ContentfulSectionComponentBecomeActive {
@@ -236,7 +474,7 @@ export const pageQuery = graphql`
                 headline
                 column
                 body {
-                  json
+                  raw
                 }
                 fullWidthOnDesktop
               }
@@ -263,7 +501,7 @@ export const pageQuery = graphql`
                 showForOptions
                 column
                 body {
-                  json
+                  raw
                 }
                 fullWidthOnDesktop
               }
@@ -281,7 +519,7 @@ export const pageQuery = graphql`
                   }
                 }
                 text {
-                  json
+                  raw
                 }
               }
             }
@@ -297,7 +535,7 @@ export const pageQuery = graphql`
             introText
             colorScheme
             previewDescription {
-              json
+              raw
             }
           }
         }

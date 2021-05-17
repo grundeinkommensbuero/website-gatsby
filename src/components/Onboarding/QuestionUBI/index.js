@@ -1,5 +1,5 @@
 import React from 'react';
-import gS from '../style.module.less';
+import * as gS from '../style.module.less';
 
 import { Textarea } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';

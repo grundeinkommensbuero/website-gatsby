@@ -1,6 +1,6 @@
 import React from 'react';
 import VisualCounter from '../VisualCounter';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export default ({ signatureCount, layout, className }) => {
   return (
