@@ -3,7 +3,7 @@ import { TableHeader } from './TableHeader';
 import { TableData } from './TableData';
 import { TableHeaderEvent } from './TableHeader';
 import { TableDataEvent } from './TableData';
-import s from '../style.module.less';
+import * as s from '../style.module.less';
 import tabs from './tabs.json';
 
 export const Table = ({ slicedMunicipalities, currentTab }) => {
