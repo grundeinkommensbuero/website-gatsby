@@ -20,7 +20,11 @@ export const SharingFeature = ({
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
 
-  const executeScroll = () => scrollToRef.current.scrollIntoView();
+  const executeScroll = () => {
+    if (scrollToRef.current) {
+      scrollToRef.current.scrollIntoView();
+    }
+  };
 
   const SharingHandsPreviewElement = () => {
     return (

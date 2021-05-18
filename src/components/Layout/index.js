@@ -145,9 +145,6 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   `);
 
-  // State of onboarding overlay
-  const [showOnboardingOverlay, setShowOnboardingOverlay] = useState(true);
-
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
     globalStuff?.overlay?.campainVisualisations
@@ -252,10 +249,7 @@ function Template({ children, sections, pageContext, title, description }) {
         </Overlay>
       )}
 
-      <OnboardingOverlay
-        isOpen={showOnboardingOverlay}
-        toggleOverlay={setShowOnboardingOverlay}
-      />
+      <OnboardingOverlay />
 
       <Header
         menu={modifiedMainMenu}
