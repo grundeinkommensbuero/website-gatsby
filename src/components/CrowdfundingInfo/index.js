@@ -5,14 +5,20 @@ import { CrowdfundingVisual } from './CrowdfundingVisual';
 const YoutubeEmbed = React.lazy(() => import('../YoutubeEmbed'));
 
 export const CrowdfundingInfo = () => {
+  const isSSR = typeof window === 'undefined';
+
   return (
     <>
       <h2>Mach mit beim Crowdfunding!</h2>
       <div className={s.contentContainer}>
         <div className={s.video}>
-          <React.Suspense fallback={<div>Lädt...</div>}>
-            <YoutubeEmbed url={'I7DjXaVPI2M'} />
-          </React.Suspense>
+          {isSSR ? (
+            <div>Lädt...</div>
+          ) : (
+            <React.Suspense fallback={<div>Lädt...</div>}>
+              <YoutubeEmbed url={'I7DjXaVPI2M'} />
+            </React.Suspense>
+          )}
         </div>
         <p className={s.description}>
           „Der einfachste Ansatz ist gleichzeitig der effektivste: ein

@@ -17,10 +17,12 @@ export const StandardSectionComponent = ({
   const { municipality } = useContext(MunicipalityContext);
   const userContentfulState = useUserMunicipalityContentfulState();
   const buttonText = getButtonText(municipality, userContentfulState);
+  const isSSR = typeof window === 'undefined';
 
   return (
     <>
-      {videoLink && (
+      {videoLink && isSSR && <div>Lädt...</div>}
+      {videoLink && !isSSR && (
         <React.Suspense fallback={<div>Lädt...</div>}>
           <YoutubeEmbed url={videoLink} />
         </React.Suspense>

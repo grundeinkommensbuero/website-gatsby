@@ -151,6 +151,8 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
 
+  const isSSR = typeof window === 'undefined';
+
   const userContentfulState = useUserMunicipalityContentfulState();
 
   const { municipality, municipalityContentfulState } = useContext(
@@ -456,7 +458,8 @@ export function ContentfulSection({ section, pageContext }) {
           <EmailListForm className={s.emailSignup} />
         </SectionInner>
       )}
-      {videoLink && (
+      {videoLink && isSSR && <div>Lädt...</div>}
+      {videoLink && !isSSR && (
         <React.Suspense fallback={<div>Lädt...</div>}>
           <YoutubeEmbed url={videoLink} />
         </React.Suspense>
