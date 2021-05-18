@@ -42,6 +42,7 @@ import { StandardSectionComponent } from './StandardSectionComponent';
 import { TextAndImage } from './TextAndImage';
 import { LinkButton } from '../../Forms/Button';
 import { CrowdfundingInfo } from '../../CrowdfundingInfo';
+const YoutubeEmbed = React.lazy(() => import('../../YoutubeEmbed'));
 
 const Components = {
   TickerToSignup,
@@ -455,7 +456,11 @@ export function ContentfulSection({ section, pageContext }) {
           <EmailListForm className={s.emailSignup} />
         </SectionInner>
       )}
-      {videoLink && <YoutubeEmbed url={videoLink} />}
+      {videoLink && (
+        <React.Suspense fallback={<div>Lädt...</div>}>
+          <YoutubeEmbed url={videoLink} />
+        </React.Suspense>
+      )}
       {teamMembers && (
         <SectionInner wide={true}>
           <AboutUs members={teamMembers} />
@@ -615,22 +620,5 @@ function Slogan({ sloganLine1, sloganLine2 }) {
       <span className={s.sloganLine2}>{sloganLine2}</span>
       {/* <EmailListForm className={s.sloganLineSignup} /> */}
     </h2>
-  );
-}
-
-export function YoutubeEmbed({ url }) {
-  return (
-    <div className={s.youtubeContainer}>
-      <iframe
-        title="Youtube Embed"
-        width="560"
-        height="315"
-        src={`https://www.youtube-nocookie.com/embed/${url}?rel=0`}
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        loading="lazy"
-      ></iframe>
-    </div>
   );
 }

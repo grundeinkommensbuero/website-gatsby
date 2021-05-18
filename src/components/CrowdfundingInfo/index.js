@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../Forms/Button';
 import * as s from './style.module.less';
 import { CrowdfundingVisual } from './CrowdfundingVisual';
-import { YoutubeEmbed } from '../Layout/Sections';
+const YoutubeEmbed = React.lazy(() => import('../YoutubeEmbed'));
 
 export const CrowdfundingInfo = () => {
   return (
@@ -10,7 +10,9 @@ export const CrowdfundingInfo = () => {
       <h2>Mach mit beim Crowdfunding!</h2>
       <div className={s.contentContainer}>
         <div className={s.video}>
-          <YoutubeEmbed url={'I7DjXaVPI2M'} />
+          <React.Suspense fallback={<div>Lädt...</div>}>
+            <YoutubeEmbed url={'I7DjXaVPI2M'} />
+          </React.Suspense>
         </div>
         <p className={s.description}>
           „Der einfachste Ansatz ist gleichzeitig der effektivste: ein

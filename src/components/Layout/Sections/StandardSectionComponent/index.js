@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { YoutubeEmbed } from '..';
 import { MunicipalityContext } from '../../../../context/Municipality';
 import { useUserMunicipalityContentfulState } from '../../../../hooks/Municipality/UserMunicipalityContentfulState';
 import { SignUpButton } from '../../../TickerToSignup/SignupButton';
@@ -7,6 +6,7 @@ import { contentfulJsonToHtml } from '../../../utils/contentfulJsonToHtml';
 import { getButtonText } from '../../../TickerToSignup/SignupButtonAndTile';
 import * as s from './style.module.less';
 import Img from 'gatsby-image';
+const YoutubeEmbed = React.lazy(() => import('../../../YoutubeEmbed'));
 
 export const StandardSectionComponent = ({
   videoLink,
@@ -20,7 +20,11 @@ export const StandardSectionComponent = ({
 
   return (
     <>
-      {videoLink && <YoutubeEmbed url={videoLink} />}
+      {videoLink && (
+        <React.Suspense fallback={<div>Lädt...</div>}>
+          <YoutubeEmbed url={videoLink} />
+        </React.Suspense>
+      )}
       {image && image.fluid && <Img fluid={image.fluid} />}
       {text && <div>{contentfulJsonToHtml(text)}</div>}
       {signUpButton && (
