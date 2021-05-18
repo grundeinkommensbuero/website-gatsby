@@ -367,7 +367,6 @@ export function ContentfulSection({ section, pageContext }) {
       // sectionBodyNoEvents={isIllustration || isVideoSection}
       sectionBodyNoEvents={isIllustration}
     >
-
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
@@ -630,6 +629,7 @@ export function YoutubeEmbed({ url }) {
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
+        loading="lazy"
       ></iframe>
     </div>
   );
