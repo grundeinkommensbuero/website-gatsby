@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import * as s from './hertieStyle.module.less';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
-import { CrowdfundingVisual } from '../../../CrowdfundingInfo/CrowdfundingVisual';
 import cN from 'classnames';
 import Confetti from '../../../Confetti';
+import Crowd1 from './crowd1.svg';
 
 export const HertieCrowdfunding = () => {
   const closeIcon = require('!svg-inline-loader!./close-icon.svg');
@@ -32,12 +32,9 @@ export const HertieCrowdfunding = () => {
               🎉
             </span>
           </p>
-          <div className={s.visualisationForMobile}>
-            <CrowdfundingVisual />
-          </div>
         </div>
         <div className={cN(s.rightSection, s.visualisationForDesktop)}>
-          <CrowdfundingVisual />
+          <img src={Crowd1} className={s.crowd} alt="Illustration von feiernden Händen" />
         </div>
       </div>
 
