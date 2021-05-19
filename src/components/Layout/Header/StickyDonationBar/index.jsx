@@ -21,10 +21,11 @@ export const StickyDonationBar = () => {
         {/* <button className={s.donationBarCTA}>Sei dabei</button> */}
         <div
           aria-hidden="true"
+          alt=""
           className={s.closeButton}
-          dangerouslySetInnerHTML={{ __html: closeIcon }}
+          src={closeIcon}
           onClick={() => closeStickyBanner()}
-        ></div>
+        />
       </div>
     </div>
   );
