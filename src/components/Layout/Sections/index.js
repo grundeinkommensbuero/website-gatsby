@@ -41,7 +41,6 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { TextAndImage } from './TextAndImage';
 import { LinkButton } from '../../Forms/Button';
-import { CrowdfundingInfo } from '../../CrowdfundingInfo';
 
 const Components = {
   TickerToSignup,
@@ -83,11 +82,6 @@ export default function Sections({ sections, pageContext }) {
             />
           );
         })}
-        <Section jumpToId={'crowdfunding'} className={s.sectionAqua}>
-          <SectionInner>
-            <CrowdfundingInfo />
-          </SectionInner>
-        </Section>
       </SectionWrapper>
     );
   }
@@ -367,7 +361,6 @@ export function ContentfulSection({ section, pageContext }) {
       // sectionBodyNoEvents={isIllustration || isVideoSection}
       sectionBodyNoEvents={isIllustration}
     >
-
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
