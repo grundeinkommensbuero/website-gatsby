@@ -26,10 +26,17 @@ export const IntroText = ({
           />
         </div>
         <div className={cN(s.partnerLogo, s.changeLogo)}>
-          <img src={change} alt="Logo Change.org e.V." />
+          <img
+            width="525"
+            height="198"
+            src={change}
+            alt="Logo Change.org e.V."
+          />
         </div>
         <div className={cN(s.partnerLogo, s.fribisLogo)}>
           <img
+            width="446"
+            height="140"
             src={fribis}
             alt="Logo Freiburg Institute for Basic Income Studies"
           />
