@@ -14,11 +14,10 @@ export const HertieCrowdfunding = () => {
       <div className={s.donationBarItemContainer}>
         <div
           aria-hidden="true"
-          alt=""
           className={s.closeButton}
-          src={closeIcon}
+          dangerouslySetInnerHTML={{ __html: closeIcon }}
           onClick={() => closeStickyBanner()}
-        />
+        ></div>
         <div className={s.leftSection}>
           <p className={s.crowdfundingHeading}>
             <b>
