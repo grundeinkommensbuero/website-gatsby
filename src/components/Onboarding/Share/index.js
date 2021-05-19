@@ -32,7 +32,7 @@ export const SharingFeature = ({
         />
         <img
           className={s.previewSharing}
-          src={'https://images.ctfassets.net/af08tobnb0cl/4WfOUuXL4JY2VEF2oPLNSG/dc7a5e777d9a93ce2d61af47922bdfd2/SharePreviewCrowdfundingNico.png?h=500'}
+          src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
           alt={'Teilen Vorschau'}
         />
       </div>
