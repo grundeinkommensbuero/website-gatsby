@@ -21,7 +21,7 @@ const config = {
     'gatsby-plugin-netlify',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
-    'gatsby-image',
+    'gatsby-plugin-image',
     'gatsby-plugin-eslint',
     {
       resolve: `gatsby-plugin-feed`,

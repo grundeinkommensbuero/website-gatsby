@@ -86,9 +86,11 @@ function Template({ children, sections, pageContext, title, description }) {
                     # __typename and contentful_id are required to resolve the references
                     __typename
                     contentful_id
-                    fluid(maxWidth: 500, quality: 90) {
-                      ...GatsbyContentfulFluid
-                    }
+                    gatsbyImageData(
+                      width: 400
+                      layout: CONSTRAINED
+                      quality: 90
+                    )
                   }
                   ... on ContentfulStaticContent {
                     # __typename and contentful_id are required to resolve the references
@@ -120,9 +122,7 @@ function Template({ children, sections, pageContext, title, description }) {
               }
               teamMembers {
                 image {
-                  fluid(maxWidth: 200, quality: 80) {
-                    src
-                  }
+                  gatsbyImageData(width: 200, layout: CONSTRAINED, quality: 80)
                 }
                 name
                 twitter
@@ -159,11 +159,15 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const { stickyBannerVisible, setCurrentURL } = useContext(StickyBannerContext);
+  const { stickyBannerVisible, setCurrentURL } = useContext(
+    StickyBannerContext
+  );
   // update current URL in banner context, to check for pages where banner shoud not appear
   // context itself does not reload on route change, so we set it from layout component
   useEffect(() => {
-    setCurrentURL(typeof window !== 'undefined' ? window.location.pathname : '');
+    setCurrentURL(
+      typeof window !== 'undefined' ? window.location.pathname : ''
+    );
   });
 
   const variableMarginClass = () => {
@@ -202,7 +206,9 @@ function Template({ children, sections, pageContext, title, description }) {
 
   // Adds additional menu items for users municipality, default max: 5
   const { customUserData, isAuthenticated } = useContext(AuthContext);
-  const [modifiedMainMenu, setModifiedMainMenu] = useState(globalStuff.mainMenu);
+  const [modifiedMainMenu, setModifiedMainMenu] = useState(
+    globalStuff.mainMenu
+  );
   // Updates the Menu when userData is loaded
   useEffect(() => {
     const municipalityMenuItems = createMunicipalityMenuItems();
@@ -223,14 +229,14 @@ function Template({ children, sections, pageContext, title, description }) {
         menuItems.push({
           title: `Mein Ort: ${item.name}`,
           slug: `gemeinden/${item.slug}`,
-          shortTitle: null
+          shortTitle: null,
         });
       });
     } else {
       menuItems.push({
         title: 'Mein Ort',
         slug: 'registrieren',
-        shortTitle: null
+        shortTitle: null,
       });
     }
     return menuItems;
@@ -284,7 +290,10 @@ function Template({ children, sections, pageContext, title, description }) {
       </Helmet>
       <main className={cN(s[variableMarginClass()])}>
         {children}
-        <Sections sections={sectionsWithColorScheme} pageContext={pageContext} />
+        <Sections
+          sections={sectionsWithColorScheme}
+          pageContext={pageContext}
+        />
       </main>
       <Footer
         footerText={globalStuff.footerText}

@@ -5,7 +5,7 @@ import { SignUpButton } from '../../../TickerToSignup/SignupButton';
 import { contentfulJsonToHtml } from '../../../utils/contentfulJsonToHtml';
 import { getButtonText } from '../../../TickerToSignup/SignupButtonAndTile';
 import * as s from './style.module.less';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 const YoutubeEmbed = React.lazy(() => import('../../../YoutubeEmbed'));
 
 export const StandardSectionComponent = ({
@@ -27,7 +27,9 @@ export const StandardSectionComponent = ({
           <YoutubeEmbed url={videoLink} />
         </React.Suspense>
       )}
-      {image && image.fluid && <Img fluid={image.fluid} />}
+      {image && image.gatsbyImageData && (
+        <GatsbyImage image={image.gatsbyImageData} alt="" />
+      )}
       {text && <div>{contentfulJsonToHtml(text)}</div>}
       {signUpButton && (
         <SignUpButton className={s.signUpCTA}>{buttonText}</SignUpButton>

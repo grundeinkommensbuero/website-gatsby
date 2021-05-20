@@ -12,7 +12,7 @@ import Pledge from '../../Forms/Pledge';
 import SignatureListDownload from '../../Forms/SignatureListDownload';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
@@ -267,7 +267,7 @@ export function ContentfulSection({ section, pageContext }) {
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
       <SectionHeader
-        backgroundImageSet={backgroundImage && backgroundImage.fluid}
+        backgroundImageSet={backgroundImage && backgroundImage.gatsbyImageData}
         title={title}
         preTitle={preTitle}
         subTitle={subTitle}
@@ -382,7 +382,11 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageTopLeft && (
                 <div>
-                  <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
+                  <GatsbyImage
+                    image={imageTopLeft.gatsbyImageData}
+                    className={s.columnIcon}
+                    alt=""
+                  />
                 </div>
               )}
               {columnTopLeft && (
@@ -392,7 +396,11 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageTopRight && (
                 <div>
-                  <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
+                  <GatsbyImage
+                    image={imageTopRight.gatsbyImageData}
+                    className={s.columnIcon}
+                    alt=""
+                  />
                 </div>
               )}
               {columnTopRight && (
@@ -402,7 +410,11 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageBottomLeft && (
                 <div>
-                  <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
+                  <GatsbyImage
+                    image={imageBottomLeft.gatsbyImageData}
+                    className={s.columnIcon}
+                    alt=""
+                  />
                 </div>
               )}
               {columnBottomLeft && (
@@ -412,9 +424,10 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageBottomRight && (
                 <div>
-                  <Img
+                  <GatsbyImage
+                    image={imageBottomRight.gatsbyImageData}
                     className={s.columnIcon}
-                    fixed={imageBottomRight.fixed}
+                    alt=""
                   />
                 </div>
               )}
@@ -560,7 +573,11 @@ export function SectionHeader({
       afterBodyContent={
         backgroundImageSet ? (
           <>
-            <Img className={s.heroImage} fluid={backgroundImageSet} />
+            <GatsbyImage
+              image={backgroundImageSet}
+              className={s.heroImage}
+              alt=""
+            />
             <div className={s.heroImageOverlay} />
           </>
         ) : (

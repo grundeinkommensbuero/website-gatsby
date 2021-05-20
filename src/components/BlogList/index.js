@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import * as s from './style.module.less';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
 import { Helmet } from 'react-helmet-async';
@@ -35,9 +35,10 @@ export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
       </header>
       {featuredImage && (
         <Link to={uri}>
-          <Img
+          <GatsbyImage
+            image={featuredImage.node.localFile.childImageSharp.hero}
             className={s.image}
-            fluid={featuredImage.node.localFile.childImageSharp.hero}
+            alt="Titelbild des Blogeintrags"
           />
         </Link>
       )}

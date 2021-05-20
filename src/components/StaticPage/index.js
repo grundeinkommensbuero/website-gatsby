@@ -98,9 +98,7 @@ export const pageQuery = graphql`
                   # __typename and contentful_id are required to resolve the references
                   __typename
                   contentful_id
-                  fluid(maxWidth: 500, quality: 90) {
-                    ...GatsbyContentfulFluid
-                  }
+                  gatsbyImageData(width: 500, layout: CONSTRAINED, quality: 90)
                   description
                   title
                   file {
@@ -225,9 +223,7 @@ export const pageQuery = graphql`
             }
             teamMembers {
               image {
-                fluid(maxWidth: 200, quality: 80) {
-                  ...GatsbyContentfulFluid
-                }
+                gatsbyImageData(width: 200, layout: CONSTRAINED, quality: 80)
               }
               name
               twitter
@@ -331,9 +327,7 @@ export const pageQuery = graphql`
             title
             subTitle
             backgroundImage {
-              fluid(maxWidth: 1500, quality: 80) {
-                ...GatsbyContentfulFluid
-              }
+              gatsbyImageData(width: 1500, layout: CONSTRAINED, quality: 80)
             }
           }
           ... on ContentfulPageSectionWithComponents {
@@ -353,9 +347,7 @@ export const pageQuery = graphql`
                 videoLink
                 signUpButton
                 image {
-                  fluid(maxWidth: 500, quality: 90) {
-                    ...GatsbyContentfulFluid
-                  }
+                  gatsbyImageData(width: 500, layout: CONSTRAINED, quality: 90)
                 }
                 text {
                   raw
@@ -364,9 +356,11 @@ export const pageQuery = graphql`
                       # __typename and contentful_id are required to resolve the references
                       __typename
                       contentful_id
-                      fluid(maxWidth: 500, quality: 90) {
-                        ...GatsbyContentfulFluid
-                      }
+                      gatsbyImageData(
+                        width: 500
+                        layout: CONSTRAINED
+                        quality: 90
+                      )
                       description
                       title
                       file {
@@ -391,9 +385,7 @@ export const pageQuery = graphql`
                 column
                 layout
                 image {
-                  fluid(maxWidth: 500, quality: 90) {
-                    ...GatsbyContentfulFluid
-                  }
+                  gatsbyImageData(width: 500, layout: CONSTRAINED, quality: 90)
                 }
                 text {
                   raw
