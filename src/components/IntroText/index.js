@@ -2,10 +2,9 @@ import React from 'react';
 import * as s from './style.module.less';
 import cN from 'classnames';
 
-import change from './logo-changeverein.png';
 import diw from './logo-diw.svg';
-import fribis from './logo-fribis.png';
 import xbge from './logo-xbge-white.svg';
+import { StaticImage } from 'gatsby-plugin-image';
 
 import { SignupButtonAndTile } from '../TickerToSignup/SignupButtonAndTile';
 
@@ -26,19 +25,21 @@ export const IntroText = ({
           />
         </div>
         <div className={cN(s.partnerLogo, s.changeLogo)}>
-          <img
-            width="525"
-            height="198"
-            src={change}
+          <StaticImage
+            width={525}
+            height={198}
+            src="./logo-changeverein.png"
             alt="Logo Change.org e.V."
+            placeholder="blurred"
           />
         </div>
         <div className={cN(s.partnerLogo, s.fribisLogo)}>
-          <img
-            width="446"
-            height="140"
-            src={fribis}
+          <StaticImage
+            width={446}
+            height={140}
+            src="./logo-fribis.png"
             alt="Logo Freiburg Institute for Basic Income Studies"
+            placeholder="blurred"
           />
         </div>
         <div className={cN(s.partnerLogo, s.xbgeLogo)}>
