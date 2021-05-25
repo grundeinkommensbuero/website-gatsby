@@ -11,11 +11,19 @@ import { Spinner } from '../../Spinner';
 
 import AuthContext from '../../../context/Authentication';
 
-export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAquaBackground = false }) => {
+export default ({
+  userData,
+  userId,
+  onUploadDone,
+  size = 'default',
+  buttonOnAquaBackground = false,
+}) => {
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [imageUploadIsProcessing, setImageUploadIsProcessing] = useState(false);
-  const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(false);
+  const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(
+    false
+  );
   const [showUploadErrorMessage, setShowUploadErrorMessage] = useState(false);
 
   const { updateCustomUserData } = useContext(AuthContext);
@@ -59,7 +67,8 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
           {userData?.user?.profilePictures ? (
             <AvatarImage
               user={userData.user}
-              className={cN(s.avatarImage,
+              className={cN(
+                s.avatarImage,
                 { [s.defaultSize]: size === 'default' },
                 { [s.large]: size === 'large' }
               )}
@@ -74,46 +83,53 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
                   user={userData}
                   size={size}
                   unsavedChanges={unsavedChanges}
-                  showUploadLabel={!(imageUploadIsProcessing || showUploadSuccessMessage || showUploadErrorMessage)}
-                  onChange={() => { }}
+                  showUploadLabel={
+                    !(
+                      imageUploadIsProcessing ||
+                      showUploadSuccessMessage ||
+                      showUploadErrorMessage
+                    )
+                  }
+                  onChange={() => {}}
                 />
                 <OnChange name="image">
                   {() => setUnsavedChanges(true)}
                 </OnChange>
               </div>
 
-              {unsavedChanges ?
+              {unsavedChanges ? (
                 <CTAButton
                   type="submit"
-                  className={cN(
-                    s.submitButton,
-                    { [s.buttonOnAquaBackground]: buttonOnAquaBackground }
-                  )}
+                  className={cN(s.submitButton, {
+                    [s.buttonOnAquaBackground]: buttonOnAquaBackground,
+                  })}
                 >
                   Hochladen
-                  </CTAButton> : null
-              }
+                </CTAButton>
+              ) : null}
 
               <div className={s.uploadMessageContainer}>
-                {imageUploadIsProcessing ?
+                {imageUploadIsProcessing ? (
                   <span className={s.uploadStateMessage}>
                     <Spinner />
                     <b className={s.loadingMsg}>Bild hochladen...</b>
                   </span>
-                  : <>
-                    {showUploadSuccessMessage ?
+                ) : (
+                  <>
+                    {showUploadSuccessMessage ? (
                       <span className={s.uploadStateMessage}>
                         Upload erfolgreich!
-                      </span> : null
-                    }
-                    {showUploadErrorMessage ?
+                      </span>
+                    ) : null}
+                    {showUploadErrorMessage ? (
                       <span className={s.uploadStateMessage}>
                         Fehler beim Upload! :(
-                          <br />Bitte versuche es später erneut!
-                      </span> : null
-                    }
+                        <br />
+                        Bitte versuche es später erneut!
+                      </span>
+                    ) : null}
                   </>
-                }
+                )}
               </div>
             </>
           )}
@@ -123,7 +139,13 @@ export default ({ userData, userId, onUploadDone, size = 'default', buttonOnAqua
   );
 };
 
-export const ImageInput = ({ input: { value, onChange, ...input }, user, size, unsavedChanges, showUploadLabel }) => {
+export const ImageInput = ({
+  input: { value, onChange, ...input },
+  user,
+  size,
+  unsavedChanges,
+  showUploadLabel,
+}) => {
   const [avatarImage, setAvatarImage] = useState(null);
 
   const handleChange = ({ target }) => {
@@ -140,28 +162,37 @@ export const ImageInput = ({ input: { value, onChange, ...input }, user, size, u
   };
 
   return (
-    <label className={s.avatarImageContainer} aria-label="Lade ein Bild hoch">
+    <label
+      id="imageUpload"
+      className={s.avatarImageContainer}
+      aria-label="Lade ein Bild hoch"
+    >
       <AvatarImage
         srcOverwrite={avatarImage}
-        className={cN(s.avatarImage,
+        className={cN(
+          s.avatarImage,
           { [s.defaultSize]: size === 'default' },
           { [s.large]: size === 'large' }
         )}
         user={user}
         sizes="80px"
       />
-      {showUploadLabel ?
+      {showUploadLabel ? (
         <>
-          {(user && user.profilePictures) || unsavedChanges ?
+          {(user && user.profilePictures) || unsavedChanges ? (
             <div className={cN(s.avatarImageLabel)}>Bild ändern</div>
-            : <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
-          }
-        </> : null}
+          ) : (
+            <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
+          )}
+        </>
+      ) : null}
       <input
+        tabIndex="0"
         type="file"
         onChange={handleChange}
         className={s.avatarUploadButton}
         accept="image/png, image/jpeg"
+        aria-labelledby="imageUpload"
         {...input}
       />
     </label>

@@ -91,10 +91,18 @@
 
 .modalStyle {
   position: fixed;
-  width: 70%;
+  width: 60%;
+  max-width: 60rem;
+  height: 90vh;
   z-index: 1040;
-  top: 5%;
-  left: 15%;
+  background-color: @white;
+  border: 1px solid @violet;
+  border-radius: 25px;
+  margin: 0 auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
 }
 
 /* if backdrop support: very transparent and blurred */
@@ -104,25 +112,6 @@
   .backdropBlur {
     background-color: rgb(31, 30, 30);
     opacity: 0.5;
-  }
-}
-
-.closeButtonOnboarding {
-  position: fixed;
-  top: 5rem;
-  right: 4rem;
-  height: 2rem;
-  width: 2rem;
-  cursor: pointer;
-  font-size: 0;
-  background-image: url('./close-icon.svg');
-  background-size: cover;
-  background-color: transparent;
-  border: none;
-
-  @media (max-width: @breakPointM) {
-    width: 2rem;
-    height: 2rem;
   }
 }
 

@@ -550,7 +550,6 @@ export default ({ onboardingNextPage }) => {
                           onboardingNextPage();
                         }}
                         size="MEDIUM"
-
                       >
                         Weiter
                       </CTAButton>
@@ -591,6 +590,7 @@ export default ({ onboardingNextPage }) => {
                   />
                   <Button
                     name="submit"
+                    tabIndex="0"
                     onClick={() => setPaypalButtonClicked(true)}
                   >
                     Jetzt spenden

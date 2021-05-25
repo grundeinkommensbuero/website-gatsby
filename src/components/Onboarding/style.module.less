@@ -1,11 +1,18 @@
 @import '../../components/style/vars.less';
 
-.onboardingOverlayContainer {
-  background-color: @white;
-  border: 1px solid @violet;
-  border-radius: 25px;
-  max-width: 50rem;
-  margin: 0 auto;
+.onboardingContent {
+  padding: 5rem;
+  width: 90%;
+  height: 100%;
+  overflow: auto;
+  /* Hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .pageContainer {

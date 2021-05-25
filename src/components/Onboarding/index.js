@@ -90,7 +90,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
   };
 
   return (
-    <div className={s.onboardingOverlayContainer}>
+    <>
       {!isForMunicipalityAuthenticated ? (
         <>
           <span
@@ -106,7 +106,9 @@ export const Onboarding = ({ setOverlayOpen }) => {
               dangerouslySetInnerHTML={{ __html: closeIcon }}
             ></div>
           </span>
-          <SignUpFlow />
+          <div className={s.onboardingContent}>
+            <SignUpFlow />
+          </div>
         </>
       ) : (
         <>
@@ -118,9 +120,11 @@ export const Onboarding = ({ setOverlayOpen }) => {
               setOverlayOpen={setOverlayOpen}
             />
           </div>
-          <CurrentComponent />
+          <div className={s.onboardingContent}>
+            <CurrentComponent />
+          </div>
         </>
       )}
-    </div>
+    </>
   );
 };
