@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import * as s from './hertieStyle.module.less';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
-import { CrowdfundingVisual } from '../../../CrowdfundingInfo/CrowdfundingVisual';
 import cN from 'classnames';
+import Confetti from '../../../Confetti';
+import Crowd1 from './crowd1.svg';
 
 export const HertieCrowdfunding = () => {
   const closeIcon = require('!svg-inline-loader!./close-icon.svg');
-  const arrowDown = require('!svg-inline-loader!./arrow-down.svg');
   const { closeStickyBanner } = useContext(StickyBannerContext);
 
   return (
@@ -14,53 +14,30 @@ export const HertieCrowdfunding = () => {
       <div className={s.donationBarItemContainer}>
         <div
           aria-hidden="true"
-          alt=""
           className={s.closeButton}
-          src={closeIcon}
+          dangerouslySetInnerHTML={{ __html: closeIcon }}
           onClick={() => closeStickyBanner()}
-        />
+        ></div>
         <div className={s.leftSection}>
           <p className={s.crowdfundingHeading}>
-            <b>Wir crowdfunden die Expedition</b>
+            <b>
+              Vielen Dank für eure Unterstützung beim Hertie Crowdfunding
+              Contest.
+            </b>
           </p>
           <p className={s.crowdfundingDescription}>
-            Bring mit deiner Spende Grundeinkommen näher an die Realität. Egal
-            ob 5&#8239;€ oder 100&#8239;€ – jede Spende zählt!
+            Dank euch allen hat die Expedition den ersten Platz gewonnen!{' '}
+            <span role="img" aria-label="Party-Tüte">
+              🎉
+            </span>
           </p>
-          <div className={s.visualisationForMobile}>
-            <CrowdfundingVisual />
-          </div>
-          <div className={s.actionRow}>
-            <button
-              className={s.crowdfundingCTA}
-              onClick={() =>
-                window.open('https://www.startnext.com/DvZ', '_blank')
-              }
-            >
-              Zum Crowdfunding
-            </button>
-            <div
-              className={s.engageText}
-              aria-hidden="true"
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = '#crowdfunding';
-                link.click();
-                closeStickyBanner();
-              }}
-            >
-              <span className={s.moreInfo}>Mehr erfahren</span>
-              <div
-                className={s.arrowDown}
-                dangerouslySetInnerHTML={{ __html: arrowDown }}
-              ></div>
-            </div>
-          </div>
         </div>
         <div className={cN(s.rightSection, s.visualisationForDesktop)}>
-          <CrowdfundingVisual />
+          <img src={Crowd1} className={s.crowd} alt="Illustration von feiernden Händen" />
         </div>
       </div>
+
+      <Confetti></Confetti>
     </div>
   );
 };
