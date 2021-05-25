@@ -34,7 +34,7 @@
   "dependencies": {
     "@aws-amplify/auth": "^3.4.1",
     "@contentful/rich-text-react-renderer": "^14.1.2",
-    "@loadable/component": "^5.13.1",
+    "@loadable/component": "^5.15.0",
     "@popperjs/core": "^2.9.2",
     "@turf/along": "^6.2.0",
     "@turf/distance": "^6.0.1",
@@ -56,6 +56,7 @@
     "gatsby-plugin-feed": "^3.1.0",
     "gatsby-plugin-image": "^1.5.0",
     "gatsby-plugin-less": "^5.2.0",
+    "gatsby-plugin-loadable-components-ssr": "^2.1.0",
     "gatsby-plugin-matomo": "^0.9.0",
     "gatsby-plugin-netlify": "^3.1.0",
     "gatsby-plugin-netlify-cache": "^1.2.0",

@@ -6,7 +6,8 @@ import { contentfulJsonToHtml } from '../../../utils/contentfulJsonToHtml';
 import { getButtonText } from '../../../TickerToSignup/SignupButtonAndTile';
 import * as s from './style.module.less';
 import { GatsbyImage } from 'gatsby-plugin-image';
-const YoutubeEmbed = React.lazy(() => import('../../../YoutubeEmbed'));
+import loadable from '@loadable/component';
+const YoutubeEmbed = loadable(() => import('../../../YoutubeEmbed'));
 
 export const StandardSectionComponent = ({
   videoLink,
@@ -23,9 +24,7 @@ export const StandardSectionComponent = ({
     <>
       {videoLink && isSSR && <div>Lädt...</div>}
       {videoLink && !isSSR && (
-        <React.Suspense fallback={<div>Lädt...</div>}>
-          <YoutubeEmbed url={videoLink} />
-        </React.Suspense>
+        <YoutubeEmbed url={videoLink} fallback={<div>Lädt...</div>} />
       )}
       {image && image.gatsbyImageData && (
         <GatsbyImage image={image.gatsbyImageData} alt="" />

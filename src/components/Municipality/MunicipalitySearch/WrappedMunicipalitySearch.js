@@ -1,7 +1,8 @@
+import loadable from '@loadable/component';
 import React from 'react';
 import * as s from './style.module.less';
 
-const MunicipalitySearch = React.lazy(() => import('./index'));
+const MunicipalitySearch = loadable(() => import('./index'));
 
 export const WrappedMunicipalitySearch = ({ searchTitle }) => {
   const isSSR = typeof window === 'undefined';
@@ -14,9 +15,7 @@ export const WrappedMunicipalitySearch = ({ searchTitle }) => {
       {isSSR ? (
         <div>Lädt...</div>
       ) : (
-        <React.Suspense fallback={<div>Lädt...</div>}>
-          <MunicipalitySearch />
-        </React.Suspense>
+        <MunicipalitySearch fallback={<div>Lädt...</div>} />
       )}
     </div>
   );

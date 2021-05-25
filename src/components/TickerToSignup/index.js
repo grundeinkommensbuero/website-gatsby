@@ -5,9 +5,10 @@ import { MunicipalityContext } from '../../context/Municipality';
 import { SignupButtonAndTile } from './SignupButtonAndTile';
 import { InlineLinkButton } from '../Forms/Button';
 import * as s from './style.module.less';
+import loadable from '@loadable/component';
 
-const Ticker = React.lazy(() => import('./Ticker'));
-const TickerMunicipality = React.lazy(() =>
+const Ticker = loadable(() => import('./Ticker'));
+const TickerMunicipality = loadable(() =>
   import('./Ticker/TickerMunicipality')
 );
 
@@ -20,13 +21,15 @@ export const TickerToSignup = ({
   return (
     <>
       {municipality?.ags ? (
-        <React.Suspense fallback={<div>Lade...</div>}>
-          <TickerMunicipality tickerDescription={tickerDescription} />
-        </React.Suspense>
+        <TickerMunicipality
+          tickerDescription={tickerDescription}
+          fallback={<div>Lade...</div>}
+        />
       ) : (
-        <React.Suspense fallback={<div>Lade...</div>}>
-          <Ticker tickerDescription={tickerDescription} />
-        </React.Suspense>
+        <Ticker
+          tickerDescription={tickerDescription}
+          fallback={<div>Lade...</div>}
+        />
       )}
 
       <SignupButtonAndTile className={s.centerButton} />

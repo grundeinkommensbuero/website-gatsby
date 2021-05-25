@@ -1,8 +1,9 @@
 import React from 'react';
 import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
+import loadable from '@loadable/component';
 
-const LoadableMap = React.lazy(() => import('./LazyMap'));
+const LoadableMap = loadable(() => import('./LazyMap'));
 
 export default ({ mapConfig }) => {
   const isSSR = typeof window === 'undefined';
@@ -11,9 +12,7 @@ export default ({ mapConfig }) => {
       {isSSR ? (
         <Fallback />
       ) : (
-        <React.Suspense fallback={<Fallback />}>
-          <LoadableMap mapConfig={mapConfig} />
-        </React.Suspense>
+        <LoadableMap mapConfig={mapConfig} fallback={<Fallback />} />
       )}
     </>
   );

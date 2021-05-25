@@ -41,7 +41,8 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { TextAndImage } from './TextAndImage';
 import { LinkButton } from '../../Forms/Button';
-const YoutubeEmbed = React.lazy(() => import('../../YoutubeEmbed'));
+import loadable from '@loadable/component';
+const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
 
 const Components = {
   TickerToSignup,
@@ -467,9 +468,7 @@ export function ContentfulSection({ section, pageContext }) {
       )}
       {videoLink && isSSR && <div>Lädt...</div>}
       {videoLink && !isSSR && (
-        <React.Suspense fallback={<div>Lädt...</div>}>
-          <YoutubeEmbed url={videoLink} />
-        </React.Suspense>
+        <YoutubeEmbed url={videoLink} fallback={<div>Lädt...</div>} />
       )}
       {teamMembers && (
         <SectionInner wide={true}>

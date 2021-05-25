@@ -3,8 +3,9 @@ import { FallbackMap } from '../MunicipalityMap';
 import { WrappedMunicipalitySearch } from '../MunicipalitySearch/WrappedMunicipalitySearch';
 import { Leaderboard } from '../Leaderboard';
 import * as s from './style.module.less';
+import loadable from '@loadable/component';
 
-const MunicipalityMap = React.lazy(() => import('../MunicipalityMap'));
+const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MunicipalityMapAndSearch = () => {
   const isSSR = typeof window === 'undefined';
@@ -19,9 +20,7 @@ export const MunicipalityMapAndSearch = () => {
           {isSSR ? (
             <FallbackMap />
           ) : (
-            <React.Suspense fallback={<FallbackMap />}>
-              <MunicipalityMap />
-            </React.Suspense>
+            <MunicipalityMap fallback={<FallbackMap />} />
           )}
         </div>
         <div className={s.mapControlContainer}>

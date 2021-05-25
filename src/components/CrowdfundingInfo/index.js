@@ -2,7 +2,8 @@ import React from 'react';
 import { Button } from '../Forms/Button';
 import * as s from './style.module.less';
 import { CrowdfundingVisual } from './CrowdfundingVisual';
-const YoutubeEmbed = React.lazy(() => import('../YoutubeEmbed'));
+import loadable from '@loadable/component';
+const YoutubeEmbed = loadable(() => import('../YoutubeEmbed'));
 
 export const CrowdfundingInfo = () => {
   const isSSR = typeof window === 'undefined';
@@ -15,9 +16,7 @@ export const CrowdfundingInfo = () => {
           {isSSR ? (
             <div>Lädt...</div>
           ) : (
-            <React.Suspense fallback={<div>Lädt...</div>}>
-              <YoutubeEmbed url={'I7DjXaVPI2M'} />
-            </React.Suspense>
+            <YoutubeEmbed url={'I7DjXaVPI2M'} fallback={<div>Lädt...</div>} />
           )}
         </div>
         <p className={s.description}>
