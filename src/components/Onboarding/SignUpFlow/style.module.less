@@ -3,7 +3,6 @@
 .signupContainer {
   max-width: 30rem;
   margin: 0 auto;
-  padding: 0 1rem;
   background-color: @white;
   color: @black;
   --bg-color: @white;
@@ -21,5 +20,9 @@
 
   .message {
     background-color: lawngreen;
+  }
+
+  @media (min-width: @breakPointM) {
+    padding: 0 1rem;
   }
 }
