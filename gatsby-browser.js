@@ -66,7 +66,7 @@ const waitForElementToDisplay = (
 export const replaceHydrateFunction = () => {
   return (element, container, callback) => {
     loadableReady(() => {
-      hydrate(element, container, callback);
+      hydrate(wrapWithProvider(element, null), container, callback);
     });
   };
 };

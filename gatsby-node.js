@@ -177,39 +177,33 @@ const clientId =
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
-  if (
-    stage === 'build-javascript' ||
-    stage === 'develop' ||
-    stage === 'develop-html'
-  ) {
-    actions.setWebpackConfig({
-      plugins: [
-        new webpack.DefinePlugin({
-          VERSION: JSON.stringify(gitRevisionPlugin.version()),
-          COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
-          APP_CLIENT_ID: JSON.stringify(clientId),
-          'process.env': {
-            STATIC: stage === 'build-html',
-          },
-        }),
-        new LoadablePlugin(),
-      ],
-      resolve: {
-        fallback: {
-          fs: false,
-          tls: false,
-          net: false,
-          path: false,
-          zlib: false,
-          http: false,
-          https: false,
-          stream: false,
-          crypto: false,
-          util: false,
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.DefinePlugin({
+        VERSION: JSON.stringify(gitRevisionPlugin.version()),
+        COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
+        APP_CLIENT_ID: JSON.stringify(clientId),
+        'process.env': {
+          STATIC: stage === 'build-html',
         },
+      }),
+      new LoadablePlugin(),
+    ],
+    resolve: {
+      fallback: {
+        fs: false,
+        tls: false,
+        net: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        crypto: false,
+        util: false,
       },
-    });
-  }
+    },
+  });
 };
 
 /**
