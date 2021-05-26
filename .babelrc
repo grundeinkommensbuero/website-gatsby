@@ -36,6 +36,7 @@
         "helpers": true,
         "regenerator": true
       }
-    ]
+    ],
+    "@loadable/babel-plugin"
   ]
 }

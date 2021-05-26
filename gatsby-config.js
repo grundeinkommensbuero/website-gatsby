@@ -23,7 +23,6 @@ const config = {
     'gatsby-plugin-sharp',
     'gatsby-plugin-image',
     'gatsby-plugin-eslint',
-    'gatsby-plugin-loadable-components-ssr',
     {
       resolve: `gatsby-plugin-feed`,
       options: {
