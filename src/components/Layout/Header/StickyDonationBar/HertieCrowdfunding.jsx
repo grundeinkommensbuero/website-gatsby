@@ -21,14 +21,13 @@ export const HertieCrowdfunding = () => {
         <div className={s.leftSection}>
           <p className={s.crowdfundingHeading}>
             <b>
-              Vielen Dank für eure Unterstützung beim Hertie Crowdfunding
-              Contest.
+            Grundeinkommen kommt ins Parlament.
             </b>
           </p>
           <p className={s.crowdfundingDescription}>
-            Dank euch allen hat die Expedition den ersten Platz gewonnen!{' '}
-            <span role="img" aria-label="Party-Tüte">
-              🎉
+          <a href="https://www.parlament-berlin.de/de/Mediathek/Parlament-live/Livestream-Ausschuss">Verfolge hier live die Anhörung am 27. Mai um 9 Uhr</a> 
+            <span role="img" aria-label="Kamera-Symbol">
+            🎥
             </span>
           </p>
         </div>
