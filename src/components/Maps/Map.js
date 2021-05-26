@@ -3,7 +3,8 @@ import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import loadable from '@loadable/component';
 
-const LoadableMap = loadable(() => import('./LazyMap'));
+// Only load the component on the client (somehow had issues not finding chunk)
+const LoadableMap = loadable(() => import('./LazyMap'), { ssr: false });
 
 export default ({ mapConfig }) => {
   return <LoadableMap mapConfig={mapConfig} fallback={<Fallback />} />;
