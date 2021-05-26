@@ -26,7 +26,7 @@ export const HertieCrowdfunding = () => {
           </p>
           <p className={s.crowdfundingDescription}>
           <a href="https://www.parlament-berlin.de/de/Mediathek/Parlament-live/Livestream-Ausschuss">Verfolge hier live die Anhörung am 27. Mai um 9 Uhr</a> 
-            <span role="img" aria-label="Kamera-Symbol">
+            &nbsp;<span role="img" aria-label="Kamera-Symbol">
             🎥
             </span>
           </p>
