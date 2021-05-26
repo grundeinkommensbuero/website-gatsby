@@ -18,12 +18,10 @@ export const StandardSectionComponent = ({
   const { municipality } = useContext(MunicipalityContext);
   const userContentfulState = useUserMunicipalityContentfulState();
   const buttonText = getButtonText(municipality, userContentfulState);
-  const isSSR = typeof window === 'undefined';
 
   return (
     <>
-      {videoLink && isSSR && <div>Lädt...</div>}
-      {videoLink && !isSSR && (
+      {videoLink && (
         <YoutubeEmbed url={videoLink} fallback={<div>Lädt...</div>} />
       )}
       {image && image.gatsbyImageData && (

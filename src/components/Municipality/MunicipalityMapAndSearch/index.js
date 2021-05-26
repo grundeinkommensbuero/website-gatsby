@@ -8,8 +8,6 @@ import loadable from '@loadable/component';
 const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MunicipalityMapAndSearch = () => {
-  const isSSR = typeof window === 'undefined';
-
   return (
     <>
       <div className={s.mapSectionContainer}>
@@ -17,11 +15,7 @@ export const MunicipalityMapAndSearch = () => {
           <div className={s.hideOnDesktop}>
             <WrappedMunicipalitySearch />
           </div>
-          {isSSR ? (
-            <FallbackMap />
-          ) : (
-            <MunicipalityMap fallback={<FallbackMap />} />
-          )}
+          <MunicipalityMap fallback={<FallbackMap />} />
         </div>
         <div className={s.mapControlContainer}>
           <div className={s.hideOnMobile}>

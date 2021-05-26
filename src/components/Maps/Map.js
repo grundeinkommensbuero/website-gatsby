@@ -6,16 +6,7 @@ import loadable from '@loadable/component';
 const LoadableMap = loadable(() => import('./LazyMap'));
 
 export default ({ mapConfig }) => {
-  const isSSR = typeof window === 'undefined';
-  return (
-    <>
-      {isSSR ? (
-        <Fallback />
-      ) : (
-        <LoadableMap mapConfig={mapConfig} fallback={<Fallback />} />
-      )}
-    </>
-  );
+  return <LoadableMap mapConfig={mapConfig} fallback={<Fallback />} />;
 };
 
 const Fallback = () => (
