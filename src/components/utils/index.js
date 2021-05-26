@@ -291,7 +291,6 @@ export const getFilteredElementsByContentfulState = ({
   }
   return elements.filter(el => {
     if (el.showForOptions || el.showForAgs) {
-      console.log(el);
       let showState = false;
 
       if (el.showForOptions) {
