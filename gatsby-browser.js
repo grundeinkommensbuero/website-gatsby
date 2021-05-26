@@ -2,7 +2,8 @@ import wrapWithProvider from './wrap-with-provider';
 import { TrackJS } from 'trackjs';
 import { loadableReady } from '@loadable/component';
 import { hydrate } from 'react-dom';
-export const wrapRootElement = wrapWithProvider;
+
+export const wrapRootElement = ({ element }) => wrapWithProvider(element, null);
 
 window.commitHash = COMMITHASH; // eslint-disable-line no-undef
 window.version = VERSION; // eslint-disable-line no-undef

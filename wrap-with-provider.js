@@ -30,7 +30,7 @@ export default (element, extractor) => {
     console.log('no userPoolWebClientId provided');
   }
 
-  return (
+  const app = (
     <AuthProvider>
       <MunicipalityProvider>
         <SurveySaver>
@@ -38,9 +38,7 @@ export default (element, extractor) => {
             <OnboardingOverlayProvider>
               <StickyBannerProvider>
                 <SnackbarProvider>
-                  <SnackbarMessageProvider>
-                    {extractor.collectChunks(element)}
-                  </SnackbarMessageProvider>
+                  <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
                 </SnackbarProvider>
               </StickyBannerProvider>
             </OnboardingOverlayProvider>
@@ -49,4 +47,6 @@ export default (element, extractor) => {
       </MunicipalityProvider>
     </AuthProvider>
   );
+
+  return extractor ? extractor.collectChunks(app) : app;
 };
