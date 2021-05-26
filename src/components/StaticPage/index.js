@@ -345,6 +345,7 @@ export const pageQuery = graphql`
             titleShort
             colorScheme
             showForOptions
+            showForAgs
             components {
               ... on ContentfulSectionComponentStandard {
                 __typename
