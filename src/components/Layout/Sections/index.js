@@ -29,33 +29,28 @@ import {
 
 import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
-import { TickerToSignup } from '../../TickerToSignup';
-import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
-import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
-import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
-import { MunicipalityCollectionMap } from '../../Municipality/MunicipalityCollectionMap';
-import { InviteFriends } from '../../InviteFriends';
-import { IntroText } from '../../IntroText';
-import { BecomeActive } from '../../BecomeActive';
-import { ProfileTile } from '../../Profile/ProfileTile';
-import { StandardSectionComponent } from './StandardSectionComponent';
-import { TextAndImage } from './TextAndImage';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
 const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
 
 const Components = {
-  TickerToSignup,
-  MunicipalityMap: MunicipalityMapAndSearch,
-  InfoText: MunicipalityInfoText,
-  MunicipalityProgress,
-  InviteFriends,
-  IntroText,
-  BecomeActive,
-  ProfileTile,
-  TextAndImage,
-  Standard: StandardSectionComponent,
-  CollectionMap: MunicipalityCollectionMap,
+  TickerToSignup: loadable(() => import('../../TickerToSignup')),
+  MunicipalityMap: loadable(() =>
+    import('../../Municipality/MunicipalityMapAndSearch')
+  ),
+  InfoText: loadable(() => import('../../Municipality/MunicipalityInfoText')),
+  MunicipalityProgress: loadable(() =>
+    import('../../Municipality/MunicipalityProgress')
+  ),
+  InviteFriends: loadable(() => import('../../InviteFriends')),
+  IntroText: loadable(() => import('../../IntroText')),
+  BecomeActive: loadable(() => import('../../BecomeActive')),
+  ProfileTile: loadable(() => import('../../Profile/ProfileTile')),
+  TextAndImage: loadable(() => import('./TextAndImage')),
+  Standard: loadable(() => import('./StandardSectionComponent')),
+  CollectionMap: loadable(() =>
+    import('../../Municipality/MunicipalityCollectionMap')
+  ),
 };
 
 export default function Sections({ sections, pageContext }) {
