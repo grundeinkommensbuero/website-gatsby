@@ -234,7 +234,6 @@ export function ContentfulSection({ section, pageContext }) {
                     {getComponentFromContentful({
                       Components,
                       component,
-                      key: index,
                     })}
                   </div>
                 );

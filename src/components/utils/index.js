@@ -311,21 +311,19 @@ export const getFilteredElementsByContentfulState = ({
   });
 };
 
-export const getComponentFromContentful = ({ Components, component, key }) => {
+export const getComponentFromContentful = ({ Components, component }) => {
   const componentSelector = component.__typename.replace(
     'ContentfulSectionComponent',
     ''
   );
-  if (typeof Components[componentSelector] !== 'undefined') {
-    return React.createElement(Components[componentSelector], {
-      ...component,
-      key,
-    });
+
+  const ComponentToRender = Components[componentSelector];
+
+  if (typeof ComponentToRender !== 'undefined') {
+    <ComponentToRender {...component} />;
   } else {
     return (
-      <div key={key}>
-        The component {componentSelector} has not been created yet.
-      </div>
+      <div>The component {componentSelector} has not been created yet.</div>
     );
   }
 };
