@@ -27,6 +27,8 @@ import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
+import { TextAndImage } from './TextAndImage';
+import { StandardSectionComponent } from './StandardSectionComponent';
 
 import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
@@ -47,11 +49,11 @@ const Components = {
   IntroText: loadable(() => import('../../IntroText')),
   BecomeActive: loadable(() => import('../../BecomeActive')),
   ProfileTile: loadable(() => import('../../Profile/ProfileTile')),
-  TextAndImage: loadable(() => import('./TextAndImage')),
-  Standard: loadable(() => import('./StandardSectionComponent')),
   CollectionMap: loadable(() =>
     import('../../Municipality/MunicipalityCollectionMap')
   ),
+  TextAndImage,
+  Standard: StandardSectionComponent,
 };
 
 export default function Sections({ sections, pageContext }) {

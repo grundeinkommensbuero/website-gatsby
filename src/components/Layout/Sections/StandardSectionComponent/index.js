@@ -33,6 +33,3 @@ export const StandardSectionComponent = ({
     </>
   );
 };
-
-// Default export needed for lazy loading
-export default StandardSectionComponent;

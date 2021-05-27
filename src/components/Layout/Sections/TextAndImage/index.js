@@ -16,6 +16,3 @@ export const TextAndImage = ({ layout, text, image }) => {
     </div>
   );
 };
-
-// Default export needed for lazy loading
-export default TextAndImage;
