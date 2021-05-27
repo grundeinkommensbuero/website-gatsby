@@ -4,7 +4,6 @@ import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Maps from '../../Maps';
-import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
@@ -461,11 +460,6 @@ export function ContentfulSection({ section, pageContext }) {
       {signUpForm && (
         <SectionInner>
           <SignUp />
-        </SectionInner>
-      )}
-      {emailSignup && (
-        <SectionInner>
-          <EmailListForm className={s.emailSignup} />
         </SectionInner>
       )}
       {videoLink && <YoutubeEmbed url={videoLink} fallback={<Loader />} />}
