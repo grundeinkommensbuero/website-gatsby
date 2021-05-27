@@ -19,7 +19,7 @@ export const useAnswerChallenge = () => {
 const answerCustomChallenge = async (
   answer,
   setState,
-  { cognitoUser, setCognitoUser, setIsAuthenticated }
+  { tempEmail, setCognitoUser, userId }
 ) => {
   // Send the answer to the User Pool
   try {
@@ -28,8 +28,17 @@ const answerCustomChallenge = async (
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
     );
 
+    // If there is no email we definitely should have a userId
+    const param = tempEmail || userId;
+
+    // We call the signIn function of Amplify to then immediately send the challenge answer.
+    // The email with the code has already been sent via the /sign-in endpoint, so this function basically
+    // just initializes the custom flow without doing much (the backend function just gets the login code from the cognito user
+    // and sets it as the expected answer)
+    const user = await Auth.signIn(param);
+
     // sendCustomChallengeAnswer() will throw an error if it’s the 3rd wrong answer
-    const tempUser = await Auth.sendCustomChallengeAnswer(cognitoUser, answer);
+    const tempUser = await Auth.sendCustomChallengeAnswer(user, answer);
 
     if (answer === 'resendCode') {
       setState('resentCode');
