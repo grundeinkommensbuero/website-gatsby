@@ -1,7 +1,7 @@
 import wrapWithProvider from './wrap-with-provider';
 import { TrackJS } from 'trackjs';
 import { loadableReady } from '@loadable/component';
-import { hydrate } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 
 export const wrapRootElement = ({ element }) => wrapWithProvider(element, null);
 
@@ -66,7 +66,13 @@ const waitForElementToDisplay = (
 export const replaceHydrateFunction = () => {
   return (element, container, callback) => {
     loadableReady(() => {
-      hydrate(wrapWithProvider(element, null), container, callback);
+      // Using ReactDOM.hydrate on develop will throw an error in console
+      // Comment from Vali: I didn't actually check, but I just copied it from gatsby-plugin-loadable-components-ssr
+      const renderFn = process.env.GATSBY_BUILD_STAGE.includes('develop')
+        ? render
+        : hydrate;
+
+      renderFn(wrapWithProvider(element, null), container, callback);
     });
   };
 };

@@ -320,7 +320,7 @@ export const getComponentFromContentful = ({ Components, component }) => {
   const ComponentToRender = Components[componentSelector];
 
   if (typeof ComponentToRender !== 'undefined') {
-    <ComponentToRender {...component} fallback={<div>Lade...</div>} />;
+    return <ComponentToRender {...component} fallback={<div>Lade...</div>} />;
   } else {
     return (
       <div>The component {componentSelector} has not been created yet.</div>

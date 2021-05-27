@@ -84,3 +84,6 @@ const getSharingFactorAnnouncement = municipality => {
     }
   }
 };
+
+// Default export needed for lazy loading
+export default InviteFriends;

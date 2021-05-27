@@ -39,3 +39,6 @@ export const TickerToSignup = ({
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default TickerToSignup;

@@ -30,3 +30,6 @@ export const MunicipalityMapAndSearch = () => {
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default MunicipalityMapAndSearch;
