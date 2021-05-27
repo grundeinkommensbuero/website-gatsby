@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
+import { List as Loader } from 'react-content-loader';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
@@ -458,9 +459,7 @@ export function ContentfulSection({ section, pageContext }) {
           <EmailListForm className={s.emailSignup} />
         </SectionInner>
       )}
-      {videoLink && (
-        <YoutubeEmbed url={videoLink} fallback={<div>Lädt...</div>} />
-      )}
+      {videoLink && <YoutubeEmbed url={videoLink} fallback={<Loader />} />}
       {teamMembers && (
         <SectionInner wide={true}>
           <AboutUs members={teamMembers} />

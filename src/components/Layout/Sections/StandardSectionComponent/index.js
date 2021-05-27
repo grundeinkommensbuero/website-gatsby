@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { List as Loader } from 'react-content-loader';
 import { MunicipalityContext } from '../../../../context/Municipality';
 import { useUserMunicipalityContentfulState } from '../../../../hooks/Municipality/UserMunicipalityContentfulState';
 import { SignUpButton } from '../../../TickerToSignup/SignupButton';
@@ -21,9 +22,7 @@ export const StandardSectionComponent = ({
 
   return (
     <>
-      {videoLink && (
-        <YoutubeEmbed url={videoLink} fallback={<div>Lädt...</div>} />
-      )}
+      {videoLink && <YoutubeEmbed url={videoLink} fallback={<Loader />} />}
       {image && image.gatsbyImageData && (
         <GatsbyImage image={image.gatsbyImageData} alt="" />
       )}

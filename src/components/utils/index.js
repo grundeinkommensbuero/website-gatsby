@@ -1,4 +1,5 @@
 import React from 'react';
+import { List as Loader } from 'react-content-loader';
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
   return string && string.toString().replace(/^[^a-z]+|[^\w:.-]+/gi, '');
@@ -320,7 +321,7 @@ export const getComponentFromContentful = ({ Components, component }) => {
   const ComponentToRender = Components[componentSelector];
 
   if (typeof ComponentToRender !== 'undefined') {
-    return <ComponentToRender {...component} fallback={<div>Lade...</div>} />;
+    return <ComponentToRender {...component} fallback={<Loader />} />;
   } else {
     return (
       <div>The component {componentSelector} has not been created yet.</div>

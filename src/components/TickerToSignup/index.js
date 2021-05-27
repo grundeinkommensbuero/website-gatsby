@@ -6,6 +6,7 @@ import { SignupButtonAndTile } from './SignupButtonAndTile';
 import { InlineLinkButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import loadable from '@loadable/component';
+import { List as Loader } from 'react-content-loader';
 
 const Ticker = loadable(() => import('./Ticker'));
 const TickerMunicipality = loadable(() =>
@@ -23,13 +24,10 @@ export const TickerToSignup = ({
       {municipality?.ags ? (
         <TickerMunicipality
           tickerDescription={tickerDescription}
-          fallback={<div>Lade...</div>}
+          fallback={<Loader />}
         />
       ) : (
-        <Ticker
-          tickerDescription={tickerDescription}
-          fallback={<div>Lade...</div>}
-        />
+        <Ticker tickerDescription={tickerDescription} fallback={<Loader />} />
       )}
 
       <SignupButtonAndTile className={s.centerButton} />
