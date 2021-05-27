@@ -4,22 +4,20 @@ import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Maps from '../../Maps';
-import SignUp from '../../Forms/SignUp';
 import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
-import Pledge from '../../Forms/Pledge';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
-import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
-// NOTE: this is not needed anymore, so I commented it out for better performance
+// NOTE: this is not needed anymore (or right now), so I commented it out for better performance
 // import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+// import QuestionUbi from '../../QuestionUbi';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
 import {
   getFilteredElementsByContentfulState,
@@ -34,6 +32,8 @@ import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
 
+const SignUp = loadable(() => import('../../Forms/SignUp'));
+const Pledge = loadable(() => import('../../Forms/Pledge'));
 const SignatureListDownload = loadable(() =>
   import('../../Forms/SignatureListDownload')
 );
@@ -126,7 +126,7 @@ export function ContentfulSection({ section, pageContext }) {
     preTitle,
     subTitle,
     backgroundImage,
-    questionUbi,
+    // questionUbi,
     bodyAtTheEnd,
     columnIntroText,
     imageTopLeft,
@@ -298,6 +298,7 @@ export function ContentfulSection({ section, pageContext }) {
                     : null
                 }
                 scrollToRef={scrollToRef}
+                fallback={<Loader />}
               />
               {userData?.municipalities?.length > 1 && (
                 <>
@@ -437,7 +438,7 @@ export function ContentfulSection({ section, pageContext }) {
       {isDonationFeature && (
         <SectionInner>
           {introText && <div className={s.donationIntroText}>{introText}</div>}
-          <DonationForm theme={theme}></DonationForm>
+          <DonationForm theme={theme} fallback={<Loader />}></DonationForm>
         </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (
@@ -488,7 +489,7 @@ export function ContentfulSection({ section, pageContext }) {
       {blogTeaser && callToActionText && callToActionLink && (
         <div className={s.spaceBetweenBlogAndCTA} />
       )}
-      {questionUbi && <QuestionUbi mode={questionUbi} />}
+      {/* {questionUbi && <QuestionUbi mode={questionUbi} />} */}
       {callToActionText && callToActionLink && (
         <SectionInner>
           <CTAButtonContainer>
