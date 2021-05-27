@@ -1,8 +1,9 @@
 import React from 'react';
 import * as s from './style.module.less';
 import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
-import { Onboarding } from '../Onboarding';
 import cN from 'classnames';
+import loadable from '@loadable/component';
+const Onboarding = loadable(() => import('../Onboarding'));
 
 export const OnboardingOverlay = ({ ...props }) => {
   return (
