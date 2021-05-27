@@ -29,6 +29,7 @@ import {
 } from '../../utils';
 import { TextAndImage } from './TextAndImage';
 import { StandardSectionComponent } from './StandardSectionComponent';
+import { IntroText } from '../../IntroText';
 
 import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
@@ -46,12 +47,12 @@ const Components = {
     import('../../Municipality/MunicipalityProgress')
   ),
   InviteFriends: loadable(() => import('../../InviteFriends')),
-  IntroText: loadable(() => import('../../IntroText')),
   BecomeActive: loadable(() => import('../../BecomeActive')),
   ProfileTile: loadable(() => import('../../Profile/ProfileTile')),
   CollectionMap: loadable(() =>
     import('../../Municipality/MunicipalityCollectionMap')
   ),
+  IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
 };

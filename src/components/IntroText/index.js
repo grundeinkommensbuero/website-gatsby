@@ -49,6 +49,3 @@ export const IntroText = ({
     </div>
   );
 };
-
-// Default export needed for lazy loading
-export default IntroText;
