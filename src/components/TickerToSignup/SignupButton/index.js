@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { OnboardingOverlay } from '../../Overlay/OverlayOnboarding';
 import { OnboardingOverlayContext } from '../../../context/Overlay/OnboardingOverlay';
 import * as s from './style.module.less';
 
@@ -10,7 +9,6 @@ export const SignUpButton = ({ children, className }) => {
 
   return (
     <>
-      <OnboardingOverlay />
       <div className={s.signUpButton}>
         <Button className={className} onClick={() => setOverlayOpen(true)}>
           {children}
