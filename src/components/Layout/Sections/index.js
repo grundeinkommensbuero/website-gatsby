@@ -10,7 +10,6 @@ import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
 import Pledge from '../../Forms/Pledge';
-import SignatureListDownload from '../../Forms/SignatureListDownload';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
 import { GatsbyImage } from 'gatsby-plugin-image';
@@ -18,11 +17,10 @@ import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
 import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
-import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
-import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+// NOTE: this is not needed anymore, so I commented it out for better performance
+// import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
-import { SharingFeature } from '../../Onboarding/Share';
 import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
@@ -35,6 +33,12 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
+
+const SignatureListDownload = loadable(() =>
+  import('../../Forms/SignatureListDownload')
+);
+const DonationForm = loadable(() => import('../../Forms/DonationForm'));
+const SharingFeature = loadable(() => import('../../Onboarding/Share'));
 const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
 
 const Components = {
@@ -244,16 +248,17 @@ export function ContentfulSection({ section, pageContext }) {
     );
   }
 
-  if (__typename === 'ContentfulPageSectionGemeindeIntro') {
-    return (
-      <MunicipalityIntro
-        pageContext={pageContext}
-        className={s.sectionGemeindeIntro}
-        title={title}
-        body={body?.body}
-      />
-    );
-  }
+  // NOTE: this is not needed anymore, so I commented it out for better performance
+  // if (__typename === 'ContentfulPageSectionGemeindeIntro') {
+  //   return (
+  //     <MunicipalityIntro
+  //       pageContext={pageContext}
+  //       className={s.sectionGemeindeIntro}
+  //       title={title}
+  //       body={body?.body}
+  //     />
+  //   );
+  // }
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
