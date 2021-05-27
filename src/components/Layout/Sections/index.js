@@ -63,15 +63,18 @@ const Components = {
 export default function Sections({ sections, pageContext }) {
   const userContentfulState = useUserMunicipalityContentfulState();
 
-  const { municipalityContentfulState, berlinHamburgBremenState } = useContext(
-    MunicipalityContext
-  );
+  const {
+    municipality,
+    municipalityContentfulState,
+    berlinHamburgBremenState,
+  } = useContext(MunicipalityContext);
 
   const displayedSections = getFilteredElementsByContentfulState({
     elements: sections,
     municipalityContentfulState,
     userContentfulState,
     berlinHamburgBremenState,
+    municipality,
     showByDefault: true,
   });
   if (displayedSections && displayedSections.length) {
@@ -176,6 +179,7 @@ export function ContentfulSection({ section, pageContext }) {
       elements: section.components,
       municipalityContentfulState,
       userContentfulState,
+      municipality,
       showByDefault: false,
     });
 

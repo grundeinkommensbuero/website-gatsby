@@ -235,4 +235,19 @@
   position: absolute;
   bottom: -20%;
   height: 100%;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: gentleCheer;
+}
+
+@keyframes gentleCheer {
+  0% {
+    transform: translateY(-5%);
+  }
+  50% {
+    transform: translateY(5%);
+  }
+  100% {
+    transform: translateY(-5%);
+  }
 }
