@@ -24,7 +24,7 @@ export const HertieCrowdfunding = () => {
             </b>
           </p>
           <p className={s.crowdfundingDescription}>
-          <a href="https://youtu.be/8lafJcpNpXY?t=3993">Sieh hier die Aufzeichnung vom 27. Mai 2021 an.</a> 
+          <a target="_blank" rel="noreferrer" href="https://youtu.be/8lafJcpNpXY?t=3993">Sieh hier die Aufzeichnung vom 27. Mai 2021 an.</a> 
           </p>
         </div>
         <div className={cN(s.rightSection, s.visualisationForDesktop)}>
