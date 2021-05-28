@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import * as s from './hertieStyle.module.less';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
 import cN from 'classnames';
-import Confetti from '../../../Confetti';
 import Crowd1 from './crowd1.svg';
 
 export const HertieCrowdfunding = () => {
@@ -25,10 +24,7 @@ export const HertieCrowdfunding = () => {
             </b>
           </p>
           <p className={s.crowdfundingDescription}>
-          <a href="https://www.parlament-berlin.de/de/Mediathek/Parlament-live/Livestream-Ausschuss">Verfolge hier live die Anhörung am 27. Mai um 9 Uhr</a> 
-            <span role="img" aria-label="Kamera-Symbol">
-            🎥
-            </span>
+          <a href="https://youtu.be/8lafJcpNpXY?t=3993">Sieh hier die Aufzeichnung vom 27. Mai 2021 an.</a> 
           </p>
         </div>
         <div className={cN(s.rightSection, s.visualisationForDesktop)}>
@@ -36,7 +32,6 @@ export const HertieCrowdfunding = () => {
         </div>
       </div>
 
-      <Confetti></Confetti>
     </div>
   );
 };
