@@ -43,12 +43,11 @@ const waitForElementToDisplay = (
   var startTimeInMs = Date.now();
   (function loopSearch() {
     const element = document.querySelector(selector);
-    console.log('element', element);
     if (element !== null) {
       callback(element);
       return;
     } else {
-      setTimeout(function() {
+      setTimeout(function () {
         if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs) return;
         loopSearch();
       }, checkFrequencyInMs);

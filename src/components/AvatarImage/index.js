@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import * as s from './style.module.less';
 import cN from 'classnames';
+import { StaticImage } from 'gatsby-plugin-image';
 
-const avatarPlaceholders = [require('./avatar1.svg'), require('./avatar2.svg')];
+const avatarPlaceholders = [require('!svg-inline-loader!./avatar1.svg'), require('!svg-inline-loader!./avatar2.svg')];
 
 export default ({ user, className, srcOverwrite, sizes }) => {
   const [placeHolderImage] = useState(() => {
@@ -17,17 +18,22 @@ export default ({ user, className, srcOverwrite, sizes }) => {
     user && user.profilePictures && Object.entries(user.profilePictures)[0][1];
 
   return (
-    <img
-      className={cN(s.image, className)}
-      src={
-        srcOverwrite || (user && user.srcOverwrite) || src || placeHolderImage
-      }
-      srcSet={srcOverwrite || (user && user.srcOverwrite) ? null : srcset}
-      alt={user && user.name && `Avatarbild von ${user.name}`}
-      sizes={sizes}
-    />
+    <>
+      {srcset || src ?
+        <img
+          className={cN(s.image, className)}
+          src={
+            srcOverwrite || (user && user.srcOverwrite) || src
+          }
+          srcSet={srcOverwrite || (user && user.srcOverwrite) ? null : srcset}
+          alt={user && user.name && `Avatarbild von ${user.name}`}
+          sizes={sizes}
+        /> :
+        <div className={cN(s.image, className)} dangerouslySetInnerHTML={{ __html: placeHolderImage }}></div>}
+    </>
   );
 };
+
 
 const generateSrcset = images => {
   return Object.entries(images)
