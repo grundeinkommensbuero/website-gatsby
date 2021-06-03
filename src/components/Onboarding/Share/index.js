@@ -4,7 +4,7 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
-import { Button } from '../../Forms/Button';
+import { Button, InlineButton } from '../../Forms/Button';
 
 export const SharingFeature = ({
   compIndex,
@@ -15,7 +15,7 @@ export const SharingFeature = ({
   isInOnboarding = true,
   introText,
   previewComponent,
-  scrollToRef
+  scrollToRef,
 }) => {
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
@@ -31,25 +31,32 @@ export const SharingFeature = ({
       <div className={s.sharePreviewElement}>
         <img
           className={s.sharingHands}
-          src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
+          src={
+            'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'
+          }
           alt={'Teilen Vorschau'}
         />
         <img
           className={s.previewSharing}
-          src={'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'}
+          src={
+            'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'
+          }
           alt={'Teilen Vorschau'}
         />
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <section
-      className={cN({
-        [gS.pageContainer]: isInOnboarding,
-      }, {
-        [s.municipalityShareContainer]: !isInOnboarding,
-      })}
+      className={cN(
+        {
+          [gS.pageContainer]: isInOnboarding,
+        },
+        {
+          [s.municipalityShareContainer]: !isInOnboarding,
+        }
+      )}
     >
       {!sharePreviewActive ? (
         <>
@@ -73,19 +80,18 @@ export const SharingFeature = ({
             <br />
           )}
           {introText && <h3 className={s.previewHeading}>{introText}</h3>}
-          {previewComponent ?
+          {previewComponent ? (
             <>
               <div className={s.previewCalloutContainer}>
-                <div className={s.previewElement}>
-                  {previewComponent}
-                </div>
+                <div className={s.previewElement}>{previewComponent}</div>
                 <SharingHandsPreviewElement />
               </div>
-            </> :
+            </>
+          ) : (
             <div className={s.previewCalloutContainerOnboarding}>
               <SharingHandsPreviewElement />
             </div>
-          }
+          )}
 
           <ShareButtonRow
             setShareChannel={setShareChannel}
@@ -121,16 +127,14 @@ export const SharingFeature = ({
             isInOnboarding={isInOnboarding}
           />
           <div className={gS.fullWidthFlex}>
-            <span
-              className={gS.linkLikeFormatted}
+            <InlineButton
               onClick={() => {
                 setSharePreviewActive(false);
                 executeScroll();
               }}
-              aria-hidden="true"
             >
               {'< Zurück zur Übersicht'}
-            </span>
+            </InlineButton>
           </div>
         </>
       )}

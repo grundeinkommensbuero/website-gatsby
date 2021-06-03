@@ -20,6 +20,8 @@
   flex-grow: 1;
   flex-basis: 45%;
   cursor: pointer;
+  background-color: transparent;
+  border: 0px;
 
   @media (max-width: @breakPointS) {
     flex-basis: 100%;
@@ -319,5 +321,14 @@
   }
   100% {
     transform: translateY(-1%) translateX(1%) rotate(-5deg);
+  }
+}
+
+.imageButton {
+  background-color: transparent;
+  border: 0px;
+
+  &:hover {
+    background-color: transparent;
   }
 }

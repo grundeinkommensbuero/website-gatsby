@@ -35,8 +35,7 @@ export const ShareButtonRow = ({
           { [s.municipalityShare]: !isInOnboarding }
         )}
       >
-        <div
-          aria-hidden="true"
+        <button
           className={s.shareItem}
           onClick={() => activatePreview('twitter')}
         >
@@ -44,10 +43,9 @@ export const ShareButtonRow = ({
             <TwitterIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
             <p>Twitter</p>
           </div>
-        </div>
+        </button>
 
-        <div
-          aria-hidden="true"
+        <button
           className={s.shareItem}
           onClick={() => activatePreview('facebook')}
         >
@@ -55,10 +53,9 @@ export const ShareButtonRow = ({
             <FacebookIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
             <p>Facebook</p>
           </div>
-        </div>
+        </button>
 
-        <div
-          aria-hidden="true"
+        <button
           className={s.shareItem}
           onClick={() => activatePreview('instagram')}
         >
@@ -70,10 +67,9 @@ export const ShareButtonRow = ({
             ></div>
             <p>Instagram</p>
           </div>
-        </div>
+        </button>
 
-        <div
-          aria-hidden="true"
+        <button
           className={s.shareItem}
           onClick={() => activatePreview('telegram')}
         >
@@ -86,10 +82,9 @@ export const ShareButtonRow = ({
             />
             <p>Telegram</p>
           </div>
-        </div>
+        </button>
 
-        <div
-          aria-hidden="true"
+        <button
           className={s.shareItem}
           onClick={() => activatePreview('whatsapp')}
         >
@@ -102,10 +97,9 @@ export const ShareButtonRow = ({
             />
             <p>WhatsApp</p>
           </div>
-        </div>
+        </button>
 
-        <div
-          aria-hidden="true"
+        <button
           className={s.shareItem}
           onClick={() => activatePreview('email')}
         >
@@ -113,7 +107,7 @@ export const ShareButtonRow = ({
             <EmailIcon size={65} round={true} bgStyle={{ fillOpacity: 0 }} />
             <p>E-Mail</p>
           </div>
-        </div>
+        </button>
       </section>
     </>
   );

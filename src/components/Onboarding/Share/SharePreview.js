@@ -3,7 +3,7 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import AvatarImage from '../../AvatarImage';
 import ImageUpload from '../../Forms/ImageUpload';
-import { Button } from '../../Forms/Button';
+import { Button, LinkButton } from '../../Forms/Button';
 import ShareButtons from './ShareButtons.json';
 import { mailBody } from './mailBody';
 import cN from 'classnames';
@@ -34,7 +34,7 @@ export const SharePreview = ({
       headers: {},
     })
       .then(response => {
-        response.arrayBuffer().then(function (buffer) {
+        response.arrayBuffer().then(function(buffer) {
           const url = window.URL.createObjectURL(new Blob([buffer]));
           const link = document.createElement('a');
           link.href = url;
@@ -76,36 +76,42 @@ export const SharePreview = ({
         </p>
 
         <div className={s.instaImageContainer}>
-          <div>
+          <button
+            className={s.imageButton}
+            onClick={() =>
+              downloadImage({
+                url:
+                  'https://images.ctfassets.net/af08tobnb0cl/15Vjd0mpP0FpMwmgvP5RHw/1ceaf02a8a52c1bd0d779e9281a552a9/Launch_Story_Ich_bin_dabei.jpg?h=1000',
+                filename: 'Launch_Story_Ich_bin_dabei.jpg',
+              })
+            }
+            aria-label="Bild herunterladen"
+          >
             <img
               aria-hidden="true"
               className={s.sharePicInstagram}
               src="https://images.ctfassets.net/af08tobnb0cl/15Vjd0mpP0FpMwmgvP5RHw/1ceaf02a8a52c1bd0d779e9281a552a9/Launch_Story_Ich_bin_dabei.jpg?h=1000"
-              onClick={() =>
-                downloadImage({
-                  url:
-                    'https://images.ctfassets.net/af08tobnb0cl/15Vjd0mpP0FpMwmgvP5RHw/1ceaf02a8a52c1bd0d779e9281a552a9/Launch_Story_Ich_bin_dabei.jpg?h=1000',
-                  filename: 'Launch_Story_Ich_bin_dabei.jpg',
-                })
-              }
               alt="sharepic"
             />
-          </div>
-          <div>
+          </button>
+          <button
+            className={s.imageButton}
+            onClick={() =>
+              downloadImage({
+                url:
+                  'https://images.ctfassets.net/af08tobnb0cl/4f7aQbZP37iUc0H0od4BAQ/c76cc9f24ef9970fffcd552ef6c45c5e/Launch_Story_Ich_bin_dabei_Nominierung.jpg?h=1000',
+                filename: 'Launch_Story_Ich_bin_dabei_Nominierung.jpg',
+              })
+            }
+            aria-label="Bild herunterladen"
+          >
             <img
               aria-hidden="true"
               className={s.sharePicInstagram}
               src="https://images.ctfassets.net/af08tobnb0cl/4f7aQbZP37iUc0H0od4BAQ/c76cc9f24ef9970fffcd552ef6c45c5e/Launch_Story_Ich_bin_dabei_Nominierung.jpg?h=1000"
-              onClick={() =>
-                downloadImage({
-                  url:
-                    'https://images.ctfassets.net/af08tobnb0cl/4f7aQbZP37iUc0H0od4BAQ/c76cc9f24ef9970fffcd552ef6c45c5e/Launch_Story_Ich_bin_dabei_Nominierung.jpg?h=1000',
-                  filename: 'Launch_Story_Ich_bin_dabei_Nominierung.jpg',
-                })
-              }
               alt="sharepic"
             />
-          </div>
+          </button>
         </div>
 
         <p>
@@ -141,8 +147,9 @@ export const SharePreview = ({
 
     // Quickfix, if user id for some reason is not available
     if (userId) {
-      return `${baseUrl}gemeinde-teilen/${userId}?ags=${municipality.ags
-        }&version=1${addProfileImage()}`;
+      return `${baseUrl}gemeinde-teilen/${userId}?ags=${
+        municipality.ags
+      }&version=1${addProfileImage()}`;
     } else {
       return baseUrl;
     }
@@ -151,9 +158,9 @@ export const SharePreview = ({
   const ShareButton = () => {
     let CaseButton =
       Components[
-      ShareButtons.find(
-        el => el.channelIdentifier === shareChannel?.channelIdentifier
-      )?.name
+        ShareButtons.find(
+          el => el.channelIdentifier === shareChannel?.channelIdentifier
+        )?.name
       ];
     const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = [
@@ -178,9 +185,9 @@ export const SharePreview = ({
             windowWidth={1200}
             windowHeight={1000}
           >
-            <div aria-hidden="true" className={gS.selectableOption}>
+            <button className={gS.selectableOption}>
               Über {shareChannel?.label?.replace(/\\/g, '')} teilen
-            </div>
+            </button>
           </CaseButton>
         ) : null}
       </>
@@ -224,10 +231,10 @@ export const SharePreview = ({
                 [s.mainCaptionHuge]: !isInOnboarding,
               })}
             >
-              {userData.username ?
-                `${userData.username} bringt das #Grundeinkommen nach${' '}
-                ${municipality.name}` :
-                `Ich bringe das #Grundeinkomme nach${' '}
+              {userData.username
+                ? `${userData.username} bringt das #Grundeinkommen nach${' '}
+                ${municipality.name}`
+                : `Ich bringe das #Grundeinkomme nach${' '}
                 ${municipality.name}`}
             </h3>
             <h4 className={s.subCaption}>Hol es auch in deinen Ort!</h4>
@@ -238,22 +245,18 @@ export const SharePreview = ({
           {userData?.profilePictures?.original && (
             <div className={gS.optionSelectionContainer}>
               {useProfilePicture ? (
-                <span
-                  aria-hidden="true"
+                <Button
                   onClick={() => setUseProfilePicture(!useProfilePicture)}
-                  className={gS.linkLikeFormatted}
                 >
                   Lieber kein Profilbild nutzen
-                </span>
+                </Button>
               ) : (
                 <>
-                  <span
-                    aria-hidden="true"
+                  <Button
                     onClick={() => setUseProfilePicture(!useProfilePicture)}
-                    className={gS.linkLikeFormatted}
                   >
                     Lieber mit Profilbild teilen
-                  </span>
+                  </Button>
                   {/* TODO Enable Upload Image here: */}
                   {/* {userData?.profilePictures?.original ? (
                     <span

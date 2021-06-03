@@ -25,7 +25,7 @@ export function LinkButtonLocal({ children, className, size, ...other }) {
   );
 }
 
-export function Button({ children, className, size, ...other }) {
+export function Button({ children, className, size, customRef, ...other }) {
   return (
     <button
       className={cN(
@@ -34,6 +34,7 @@ export function Button({ children, className, size, ...other }) {
         { [s.medium]: size === 'MEDIUM' },
         { [s.small]: size === 'SMALL' }
       )}
+      ref={customRef}
       {...other}
     >
       {children}
