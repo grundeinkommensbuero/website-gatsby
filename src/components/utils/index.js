@@ -283,30 +283,40 @@ export const getFilteredElementsByContentfulState = ({
   municipalityContentfulState,
   userContentfulState,
   berlinHamburgBremenState,
+  municipality,
   showByDefault,
 }) => {
   if (!elements) {
     return elements;
   }
   return elements.filter(el => {
-    if (el.showForOptions) {
-      const showForOptions = getShowForOptions(el.showForOptions);
-      // console.log(
-      //   showForOptions,
-      //   municipalityContentfulState,
-      //   userContentfulState
-      // );
+    if (el.showForOptions || el.showForAgs) {
+      let showState = false;
 
-      let showState =
-        showForOptions[municipalityContentfulState] &&
-        showForOptions[userContentfulState];
+      if (el.showForOptions) {
+        const showForOptions = getShowForOptions(el.showForOptions);
 
-      // BerlinHamburgBremen state might be undefined (on component level)
-      if (berlinHamburgBremenState) {
-        showState = showState && showForOptions[berlinHamburgBremenState];
+        showState =
+          showForOptions[municipalityContentfulState] &&
+          showForOptions[userContentfulState];
+
+        // BerlinHamburgBremen state might be undefined (on component level)
+        if (berlinHamburgBremenState) {
+          showState = showState && showForOptions[berlinHamburgBremenState];
+        }
       }
+
+      if (
+        el.showForAgs &&
+        municipality?.ags &&
+        el.showForAgs !== municipality.ags
+      ) {
+        showState = false;
+      }
+
       return showState;
     }
+
     return showByDefault;
   });
 };

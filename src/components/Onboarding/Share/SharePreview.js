@@ -155,15 +155,15 @@ export const SharePreview = ({
         el => el.channelIdentifier === shareChannel?.channelIdentifier
       )?.name
       ];
-    const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an und spende 5€ für den Crowdfunding Contest.`;
+    const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = [
       'ModellversuchJetzt',
       'Grundeinkommen',
       'ExpeditionGrundeinkommen',
     ];
-    const subject = `Gemeinsam lassen wir #Grundeinkommen Realität werden`;
+    const subject = `Gemeinsam bringen wir das Grundeinkommen nach ${municipality.name}`;
     const body = mailBody(municipality);
-    const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an und unterstütze die Expedition mit 5€, um den Hertie Crowdfunding Contest zu gewinnen.`;
+    const quote = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     return (
       <>
         {CaseButton && shareChannel ? (
@@ -203,7 +203,7 @@ export const SharePreview = ({
               <>
                 <img
                   src={
-                    'https://images.ctfassets.net/af08tobnb0cl/694pHdfxxgXfIl4IckPzHL/38e066345bde0b587a911bbaff16a614/Teilen_Crowdfundingv3_leer.png?h=500'
+                    'https://images.ctfassets.net/af08tobnb0cl/4LVqlgSyy9xfpnZvsABNlF/65e368bfbe1d3f7c650bf640927cb59d/Teilen-Leer.png?h=500'
                   }
                   alt={'sharing background'}
                   className={s.sharePreview}
@@ -213,7 +213,7 @@ export const SharePreview = ({
             ) : (
               <img
                 src={
-                  'https://images.ctfassets.net/af08tobnb0cl/5WDl82fjV2aPFl6olbx8EO/ceabe8fa8e6e461d88b244d2f26c2cbb/Teilen_Crowdfunding_v3.png'
+                  'https://images.ctfassets.net/af08tobnb0cl/2JpoX7gHOGy49opxwetJXG/f5fa878ae57259ee0dcfbe7af45ddaf8/Teilen-Fallback-Leer.png?h=500'
                 }
                 alt={'sharing background'}
                 className={s.sharePreview}
@@ -225,10 +225,12 @@ export const SharePreview = ({
               })}
             >
               {userData.username ?
-                `${userData.username}  lässt #Grundeinkommen Realität werden.` :
-                'Ich lasse #Grundeinkommen Realität werden.'}
+                `${userData.username} bringt das #Grundeinkommen nach${' '}
+                ${municipality.name}` :
+                `Ich bringe das #Grundeinkomme nach${' '}
+                ${municipality.name}`}
             </h3>
-            {/* <h4 className={s.subCaption}>Hol es auch in deinen Ort!</h4> */}
+            <h4 className={s.subCaption}>Hol es auch in deinen Ort!</h4>
           </div>
 
           <ShareButton />
@@ -283,7 +285,7 @@ export const SharePreview = ({
                 showUploadLabel={false}
                 showEditLabel={true}
                 size={'large'}
-                onUploadDone={() => { }}
+                onUploadDone={() => {}}
               />
             </div>
           )}

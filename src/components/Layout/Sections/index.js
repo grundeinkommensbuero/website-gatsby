@@ -41,7 +41,6 @@ import { ProfileTile } from '../../Profile/ProfileTile';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { TextAndImage } from './TextAndImage';
 import { LinkButton } from '../../Forms/Button';
-import { CrowdfundingInfo } from '../../CrowdfundingInfo';
 
 const Components = {
   TickerToSignup,
@@ -60,15 +59,18 @@ const Components = {
 export default function Sections({ sections, pageContext }) {
   const userContentfulState = useUserMunicipalityContentfulState();
 
-  const { municipalityContentfulState, berlinHamburgBremenState } = useContext(
-    MunicipalityContext
-  );
+  const {
+    municipality,
+    municipalityContentfulState,
+    berlinHamburgBremenState,
+  } = useContext(MunicipalityContext);
 
   const displayedSections = getFilteredElementsByContentfulState({
     elements: sections,
     municipalityContentfulState,
     userContentfulState,
     berlinHamburgBremenState,
+    municipality,
     showByDefault: true,
   });
   if (displayedSections && displayedSections.length) {
@@ -83,11 +85,6 @@ export default function Sections({ sections, pageContext }) {
             />
           );
         })}
-        <Section jumpToId={'crowdfunding'} className={s.sectionAqua}>
-          <SectionInner>
-            <CrowdfundingInfo />
-          </SectionInner>
-        </Section>
       </SectionWrapper>
     );
   }
@@ -178,6 +175,7 @@ export function ContentfulSection({ section, pageContext }) {
       elements: section.components,
       municipalityContentfulState,
       userContentfulState,
+      municipality,
       showByDefault: false,
     });
 
@@ -300,7 +298,7 @@ export function ContentfulSection({ section, pageContext }) {
                 }
                 scrollToRef={scrollToRef}
               />
-              {/* {userData?.municipalities?.length > 1 && (
+              {userData?.municipalities?.length > 1 && (
                 <>
                   <br />
                   <p>
@@ -328,7 +326,7 @@ export function ContentfulSection({ section, pageContext }) {
                       ))}
                   </div>
                 </>
-              )} */}
+              )}
             </SectionInner>
           </Section>
         )}
@@ -367,7 +365,6 @@ export function ContentfulSection({ section, pageContext }) {
       // sectionBodyNoEvents={isIllustration || isVideoSection}
       sectionBodyNoEvents={isIllustration}
     >
-
       {isIllustration && (
         <Slogan sloganLine1={sloganLine1} sloganLine2={sloganLine2} />
       )}
