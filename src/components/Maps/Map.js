@@ -1,22 +1,13 @@
 import React from 'react';
 import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
+import loadable from '@loadable/component';
 
-const LoadableMap = React.lazy(() => import('./LazyMap'));
+// Only load the component on the client (somehow had issues not finding chunk)
+const LoadableMap = loadable(() => import('./LazyMap'), { ssr: false });
 
 export default ({ mapConfig }) => {
-  const isSSR = typeof window === 'undefined';
-  return (
-    <>
-      {isSSR ? (
-        <Fallback />
-      ) : (
-        <React.Suspense fallback={<Fallback />}>
-          <LoadableMap mapConfig={mapConfig} />
-        </React.Suspense>
-      )}
-    </>
-  );
+  return <LoadableMap mapConfig={mapConfig} fallback={<Fallback />} />;
 };
 
 const Fallback = () => (

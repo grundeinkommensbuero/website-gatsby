@@ -37,3 +37,6 @@ export const BecomeActive = ({ headline, body }) => {
     </div>
   );
 };
+
+// Default export needed for lazy loading
+export default BecomeActive;

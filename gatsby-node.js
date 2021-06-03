@@ -4,6 +4,7 @@ const path = require('path');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const webpack = require('webpack');
 const gitRevisionPlugin = new GitRevisionPlugin();
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
 let municipalities = JSON.parse(raw);
@@ -186,6 +187,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
           STATIC: stage === 'build-html',
         },
       }),
+      new LoadablePlugin(),
     ],
     resolve: {
       fallback: {

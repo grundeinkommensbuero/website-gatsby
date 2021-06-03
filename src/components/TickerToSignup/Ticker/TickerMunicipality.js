@@ -127,3 +127,6 @@ const TickerDisplay = ({
     </section>
   );
 };
+
+// Needed for lazy loading
+export default TickerMunicipality;

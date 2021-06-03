@@ -36,7 +36,7 @@ const Blog = ({
 export default Blog;
 
 export const pageQuery = graphql`
-  query {
+  {
     allWpPost(sort: { fields: date, order: DESC }) {
       edges {
         node {
@@ -50,9 +50,7 @@ export const pageQuery = graphql`
             node {
               localFile {
                 childImageSharp {
-                  hero: fluid(maxWidth: 1000) {
-                    ...GatsbyImageSharpFluid_noBase64
-                  }
+                  hero: gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
                 }
               }
             }

@@ -162,3 +162,6 @@ const getSignupsLabel = (signups, goal) => {
     return 'Noch keine Anmeldungen. Melde dich jetzt an und bring das Grundeinkommen auf den Weg!';
   }
 };
+
+// Default export needed for lazy loading
+export default MunicipalityProgress;

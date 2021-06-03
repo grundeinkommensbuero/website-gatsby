@@ -1,6 +1,9 @@
 import wrapWithProvider from './wrap-with-provider';
 import { TrackJS } from 'trackjs';
-export const wrapRootElement = wrapWithProvider;
+import { loadableReady } from '@loadable/component';
+import { hydrate, render } from 'react-dom';
+
+export const wrapRootElement = ({ element }) => wrapWithProvider(element, null);
 
 window.commitHash = COMMITHASH; // eslint-disable-line no-undef
 window.version = VERSION; // eslint-disable-line no-undef
@@ -54,4 +57,22 @@ const waitForElementToDisplay = (
       }, checkFrequencyInMs);
     }
   })();
+};
+
+// Needed for loadable to work with ssr
+// https://loadable-components.com/docs/server-side-rendering/
+// See also: https://github.com/graysonhicks/gatsby-plugin-loadable-components-ssr
+// I did not use the plugin though due to path issues
+export const replaceHydrateFunction = () => {
+  return (element, container, callback) => {
+    loadableReady(() => {
+      // Using ReactDOM.hydrate on develop will throw an error in console
+      // Comment from Vali: I didn't actually check, but I just copied it from gatsby-plugin-loadable-components-ssr
+      const renderFn = process.env.GATSBY_BUILD_STAGE.includes('develop')
+        ? render
+        : hydrate;
+
+      renderFn(wrapWithProvider(element, null), container, callback);
+    });
+  };
 };

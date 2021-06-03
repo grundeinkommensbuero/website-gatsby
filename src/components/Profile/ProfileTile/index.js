@@ -244,3 +244,6 @@ export const WelcomeBack = ({ children }) => {
     </div>
   );
 };
+
+// Default export needed for lazy loading
+export default ProfileTile;
