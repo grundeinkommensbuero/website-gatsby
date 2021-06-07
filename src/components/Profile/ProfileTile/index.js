@@ -54,6 +54,15 @@ export const ProfileTile = ({ children }) => {
 };
 
 const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
+
+  const getReferredUserMessage = () => {
+    if (userData.referredUsers.length === 1) {
+      return `Dank dir hat sich ein:e weitere User:in angemeldet!`;
+    } else {
+      return `Dank dir haben sich ${userData.referredUsers.length} weitere User:innen angemeldet!`;
+    }
+  }
+
   return (
     <>
       {userData && (
@@ -76,6 +85,10 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
                 </li>
               </ul>
             </div>
+            {userData && userData.referredUsers && userData.referredUsers[0] ?
+              <div className={s.referredUsersMessage}>
+                {getReferredUserMessage()}
+              </div> : null}
           </div>
           <div className={s.flexElement}>
             <h3 className={s.headline}>Hallo {userData.username}!</h3>
