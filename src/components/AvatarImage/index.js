@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import * as s from './style.module.less';
 import cN from 'classnames';
+import avatar1 from './avatar1.svg';
+import avatar2 from './avatar2.svg';
 
-const avatarPlaceholders = [require('./avatar1.svg'), require('./avatar2.svg')];
+const avatarPlaceholders = [avatar1, avatar2];
 
 export default ({ user, className, srcOverwrite, sizes }) => {
   const [placeHolderImage] = useState(() => {
