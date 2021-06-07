@@ -8,7 +8,7 @@ import {
 } from '../../components/Layout/Sections';
 import Map from '../../components/Maps/Map';
 
-export default () => {
+const PlaygroundMap = () => {
   return (
     <Layout>
       <Helmet>
@@ -34,3 +34,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundMap;

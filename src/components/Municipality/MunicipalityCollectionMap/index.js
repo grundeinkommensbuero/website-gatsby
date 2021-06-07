@@ -5,8 +5,11 @@ import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 export const MunicipalityCollectionMap = ({ text, maps }) => {
   return (
     <>
-      {text && <div>{contentfulJsonToHtml(text.json)}</div>}
+      {text && <div>{contentfulJsonToHtml(text)}</div>}
       {maps && <Maps config={maps} />}
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default MunicipalityCollectionMap;

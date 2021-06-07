@@ -1,6 +1,6 @@
 import React from 'react';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import { Button } from '../../Forms/Button';
 import cN from 'classnames';
 

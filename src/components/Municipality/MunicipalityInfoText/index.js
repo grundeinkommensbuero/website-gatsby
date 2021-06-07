@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { MunicipalityProgress } from '../MunicipalityProgress';
 import { MunicipalityContext } from '../../../context/Municipality';
 
@@ -59,7 +59,8 @@ const MunicipalityDescription = ({ municipality }) => {
         <p>
           Im März 2020 haben wir die Sammelphase 1 erfolgreich beendet und
           13.421 Unterschriften bei der Senatsverwaltung eingereicht. Wenn das
-          Land Hamburg die Forderung nicht umsetzt, geht es in die nächste Phase.
+          Land Hamburg die Forderung nicht umsetzt, geht es in die nächste
+          Phase.
         </p>
         <p>
           Sobald Phase 2 beginnt, brauchen wir noch mehr Unterschriften – melde
@@ -92,8 +93,8 @@ const MunicipalityDescription = ({ municipality }) => {
   return (
     <p>
       Wenn sich genug Menschen {municipality ? `in ${municipality.name}` : ''}{' '}
-      anmelden, kann der Modellversuch losgehen. Melde dich an, und lade noch weitere
-      Menschen ein!
+      anmelden, kann der Modellversuch losgehen. Melde dich an, und lade noch
+      weitere Menschen ein!
     </p>
   );
 };
@@ -144,3 +145,6 @@ const MunicipalityCTA = ({ municipality }) => {
     </p>
   );
 };
+
+// Default export needed for lazy loading
+export default MunicipalityInfoText;

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { MunicipalityContext } from '../../../../context/Municipality';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
 
 export const StickyDonationBar = () => {
-  const closeIcon = require('./close-icon.svg');
+  const closeIcon = require('!svg-inline-loader!./close-icon.svg');
   const { allMunicipalityStats } = useContext(MunicipalityContext);
   const { closeStickyBanner } = useContext(StickyBannerContext);
 
@@ -19,7 +19,7 @@ export const StickyDonationBar = () => {
           auf dem Weg zum Ziel. Hilf mit weitere Orte ins Ziel zu bringen!
         </p>
         {/* <button className={s.donationBarCTA}>Sei dabei</button> */}
-        <img
+        <div
           aria-hidden="true"
           alt=""
           className={s.closeButton}

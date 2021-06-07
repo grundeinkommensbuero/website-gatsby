@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import s from './style.module.less';
-import Img from 'gatsby-image';
+import * as s from './style.module.less';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
 import { Helmet } from 'react-helmet-async';
@@ -19,25 +19,26 @@ export const BlogList = ({ posts }) => {
   );
 };
 
-export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
+export const BlogSnippet = ({ title, excerpt, uri, date, featuredImage }) => {
   const dateObject = new Date(date);
   return (
     <article className={s.article}>
       <header>
-        <time dateTime={dateObject.toISOString()} className={s.date}>
+        <time dateTime={dateObject.toISOString()}>
           {formatDate(dateObject)}
         </time>
         <h2 className={s.title}>
-          <Link to={path}>
+          <Link to={uri}>
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </Link>
         </h2>
       </header>
-      {featured_media && (
-        <Link to={path}>
-          <Img
+      {featuredImage && (
+        <Link to={uri}>
+          <GatsbyImage
+            image={featuredImage.node.localFile.childImageSharp.hero}
             className={s.image}
-            fluid={featured_media.localFile.childImageSharp.hero}
+            alt="Titelbild des Blogeintrags"
           />
         </Link>
       )}
@@ -48,7 +49,7 @@ export const BlogSnippet = ({ title, excerpt, path, date, featured_media }) => {
         }}
       />
       <p>
-        <Link to={path}>Mehr...</Link>
+        <Link to={uri}>Mehr...</Link>
       </p>
     </article>
   );

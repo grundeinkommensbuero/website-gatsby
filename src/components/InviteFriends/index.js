@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { MunicipalityContext } from '../../context/Municipality';
 import { SharingFeature } from '../Onboarding/Share';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import AuthContext from '../../context/Authentication';
 
 export const InviteFriends = () => {
@@ -84,3 +84,6 @@ const getSharingFactorAnnouncement = municipality => {
     }
   }
 };
+
+// Default export needed for lazy loading
+export default InviteFriends;

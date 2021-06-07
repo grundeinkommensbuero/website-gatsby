@@ -1,6 +1,8 @@
+import loadable from '@loadable/component';
 import React from 'react';
-import { MunicipalitySearch } from './index';
 import * as s from './style.module.less';
+
+const MunicipalitySearch = loadable(() => import('./index'));
 
 export const WrappedMunicipalitySearch = ({ searchTitle }) => {
   return (
@@ -8,7 +10,7 @@ export const WrappedMunicipalitySearch = ({ searchTitle }) => {
       <p className={s.searchInfoText}>
         Finde deinen Ort und schaue, wie viele Menschen schon dabei sind:
       </p>
-      <MunicipalitySearch />
+      <MunicipalitySearch fallback={<div>Lädt...</div>} />
     </div>
   );
 };

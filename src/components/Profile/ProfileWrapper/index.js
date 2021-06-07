@@ -6,7 +6,6 @@ import AuthContext from '../../../context/Authentication';
 import Layout from '../../Layout';
 import { Section, SectionInner, SectionWrapper } from '../../Layout/Sections';
 
-import s from './style.module.less';
 import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import { useBounceToIdentifiedState } from '../../../hooks/Authentication';
 import { LinkButtonLocal } from '../../Forms/Button';
@@ -79,7 +78,7 @@ const ProfilePage = ({ id: slugId }) => {
       <SectionWrapper>
         {isLoading && (
           <Section>
-            <div className={s.profilePageGrid}>
+            <div>
               <h2>Lade...</h2>
             </div>
           </Section>

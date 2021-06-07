@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { ValidationError } from '../ValidationError';
 import { Tooltip } from '../../Tooltip';
@@ -14,7 +14,7 @@ export default function LabelInputErrorWrapper({
 }) {
   return (
     <label className={cN(s.container, className)}>
-      <div className={s.label}>
+      <div>
         {label}
         {explanation && (
           <>
@@ -25,7 +25,7 @@ export default function LabelInputErrorWrapper({
           </>
         )}
       </div>
-      <div className={s.inputContainer}>{children}</div>
+      <div>{children}</div>
       {meta.error && meta.touched && (
         <ValidationError className={s.error} theme={theme}>{meta.error}</ValidationError>
       )}

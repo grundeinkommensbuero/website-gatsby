@@ -1,32 +1,36 @@
 import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
-import s from './style.module.less';
-import Img from 'gatsby-image';
+import * as s from './style.module.less';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { formatDate } from '../utils';
 
 export default () => {
   const {
-    allWordpressPost: { edges: posts },
+    allWpPost: { edges: posts },
   } = useStaticQuery(graphql`
     query BlogPosts {
-      allWordpressPost(
+      allWpPost(
         sort: { fields: date, order: DESC }
-        filter: { tags: { elemMatch: { name: { ne: "unlisted" } } } }
+        filter: { tags: { nodes: { elemMatch: { name: { ne: "unlisted" } } } } }
         limit: 3
       ) {
         edges {
           node {
             id
-            title
-            excerpt
-            slug
-            path
             date
-            featured_media {
-              localFile {
-                childImageSharp {
-                  hero: fluid(maxWidth: 400) {
-                    ...GatsbyImageSharpFluid_noBase64
+            excerpt
+            title
+            uri
+            slug
+            featuredImage {
+              node {
+                localFile {
+                  childImageSharp {
+                    hero: gatsbyImageData(
+                      width: 400
+                      placeholder: NONE
+                      layout: CONSTRAINED
+                    )
                   }
                 }
               }
@@ -39,20 +43,21 @@ export default () => {
 
   return (
     <>
-      {posts.map(({ node: { id, title, featured_media, path, date } }) => {
+      {posts.map(({ node: { id, title, featuredImage, uri, date } }) => {
         const dateObject = new Date(date);
 
         return (
           <article key={id} className={s.article}>
-            <Link to={path} className={s.link}>
+            <Link to={uri} className={s.link}>
               <time dateTime={dateObject.toISOString()} className={s.date}>
                 {formatDate(dateObject)}
               </time>
               <div className={s.imageContainer}>
-                {featured_media && (
-                  <Img
+                {featuredImage && (
+                  <GatsbyImage
+                    image={featuredImage.node.localFile.childImageSharp.hero}
                     className={s.image}
-                    fluid={featured_media.localFile.childImageSharp.hero}
+                    alt="Titelbild des Blogeintrags"
                   />
                 )}
               </div>

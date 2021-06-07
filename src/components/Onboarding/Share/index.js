@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cN from 'classnames';
-import s from './style.module.less';
-import gS from '../style.module.less';
+import * as s from './style.module.less';
+import * as gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
 import { Button } from '../../Forms/Button';
@@ -15,7 +15,7 @@ export const SharingFeature = ({
   isInOnboarding = true,
   introText,
   previewComponent,
-  scrollToRef
+  scrollToRef,
 }) => {
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
@@ -27,25 +27,32 @@ export const SharingFeature = ({
       <div className={s.sharePreviewElement}>
         <img
           className={s.sharingHands}
-          src={'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'}
+          src={
+            'https://images.ctfassets.net/af08tobnb0cl/2I5hO8nJ1RNeGZlawwh1WF/9aa812e0b6c08e4a5304e7dfa70a976d/newsletter_background.png?h=250'
+          }
           alt={'Teilen Vorschau'}
         />
         <img
           className={s.previewSharing}
-          src={'https://images.ctfassets.net/af08tobnb0cl/4WfOUuXL4JY2VEF2oPLNSG/dc7a5e777d9a93ce2d61af47922bdfd2/SharePreviewCrowdfundingNico.png?h=500'}
+          src={
+            'https://images.ctfassets.net/af08tobnb0cl/6t0temjcKv4dK7YOlfTVtz/a34774d9958afe1abacdb6cd0579ae84/SharePreviewNico.png?h=500'
+          }
           alt={'Teilen Vorschau'}
         />
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <section
-      className={cN({
-        [gS.pageContainer]: isInOnboarding,
-      }, {
-        [s.municipalityShareContainer]: !isInOnboarding,
-      })}
+      className={cN(
+        {
+          [gS.pageContainer]: isInOnboarding,
+        },
+        {
+          [s.municipalityShareContainer]: !isInOnboarding,
+        }
+      )}
     >
       {!sharePreviewActive ? (
         <>
@@ -69,19 +76,18 @@ export const SharingFeature = ({
             <br />
           )}
           {introText && <h3 className={s.previewHeading}>{introText}</h3>}
-          {previewComponent ?
+          {previewComponent ? (
             <>
               <div className={s.previewCalloutContainer}>
-                <div className={s.previewElement}>
-                  {previewComponent}
-                </div>
+                <div className={s.previewElement}>{previewComponent}</div>
                 <SharingHandsPreviewElement />
               </div>
-            </> :
+            </>
+          ) : (
             <div className={s.previewCalloutContainerOnboarding}>
               <SharingHandsPreviewElement />
             </div>
-          }
+          )}
 
           <ShareButtonRow
             setShareChannel={setShareChannel}
@@ -133,3 +139,6 @@ export const SharingFeature = ({
     </section>
   );
 };
+
+// Default export needed for lazy loading
+export default SharingFeature;

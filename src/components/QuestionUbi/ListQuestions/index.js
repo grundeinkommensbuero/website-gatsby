@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { SectionInner } from '../../Layout/Sections';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { Speechbubble } from '../Speechbubble';
 import AvatarImage from '../../AvatarImage';
 import { useGetMostRecentQuestions } from '../../../hooks/Api/Questions';
@@ -21,8 +21,8 @@ export default ({ questionJustSent, userId }) => {
 
   let questionsWithJustSent = questionJustSent
     ? [questionJustSent, ...questions].filter(
-        ({ belongsToCurrentUser }) => !belongsToCurrentUser
-      )
+      ({ belongsToCurrentUser }) => !belongsToCurrentUser
+    )
     : questions;
 
   return (

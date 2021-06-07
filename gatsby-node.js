@@ -4,6 +4,7 @@ const path = require('path');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const webpack = require('webpack');
 const gitRevisionPlugin = new GitRevisionPlugin();
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const raw = fs.readFileSync('./content/municipalities.json', 'utf8');
 let municipalities = JSON.parse(raw);
@@ -122,10 +123,10 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allWordpressPost {
+            allWpPost {
               edges {
                 node {
-                  path
+                  uri
                 }
               }
             }
@@ -152,14 +153,13 @@ exports.createPages = ({ graphql, actions }) => {
           });
         });
 
-        const blogPosts = result.data.allWordpressPost.edges;
-
+        const blogPosts = result.data.allWpPost.edges;
         blogPosts.forEach(post => {
           createPage({
-            path: post.node.path,
+            path: post.node.uri,
             component: blogPost,
             context: {
-              slug: post.node.path,
+              slug: post.node.uri,
               isMunicipality: false,
               isSpecificMunicipality: true,
             },
@@ -187,7 +187,22 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
           STATIC: stage === 'build-html',
         },
       }),
+      new LoadablePlugin(),
     ],
+    resolve: {
+      fallback: {
+        fs: false,
+        tls: false,
+        net: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        crypto: false,
+        util: false,
+      },
+    },
   });
 };
 

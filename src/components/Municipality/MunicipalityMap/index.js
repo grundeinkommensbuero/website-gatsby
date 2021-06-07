@@ -6,7 +6,7 @@ import React, {
   useContext,
   useRef,
 } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { navigate } from 'gatsby';
 
@@ -336,16 +336,14 @@ export const MunicipalityMap = ({
   };
 
   const handleLegendClick = () => {
-    setLegendOverlayActive(!legendOverlayActive)
+    setLegendOverlayActive(!legendOverlayActive);
   };
   // ---- Template -------------------------------------------------------------------------
 
   if (!hasWebGl) {
     return (
       <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
-        <div className={s.interfaceContainer}>
-          <div className={cN(s.mapStatic, s.fallback)}></div>
-        </div>
+        <FallbackMap />
       </div>
     );
   }
@@ -354,7 +352,7 @@ export const MunicipalityMap = ({
     <div className={s.legendOverlay}>
       <Legend />
     </div>
-  )
+  );
 
   return (
     <div ref={mapEl} className={cN(s.defaultPositionRelative, className)}>
@@ -387,7 +385,7 @@ export const MunicipalityMap = ({
           <button
             className={s.mapButton}
             onClick={() => {
-              handleLegendClick()
+              handleLegendClick();
             }}
           >
             i
@@ -786,3 +784,12 @@ const Map = ({
     </>
   );
 };
+
+export const FallbackMap = () => (
+  <div className={s.interfaceContainer}>
+    <div className={cN(s.mapStatic, s.fallback)}></div>
+  </div>
+);
+
+// Needed for lazy loaded
+export default MunicipalityMap;

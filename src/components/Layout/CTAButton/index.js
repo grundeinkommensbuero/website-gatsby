@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { LinkButton, Button, LinkButtonLocal } from '../../Forms/Button';
 import POINT_LEFT_YELLOW from './figure_point_left_yellow.svg';

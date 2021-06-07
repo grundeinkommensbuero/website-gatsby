@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { TextInput } from '../TextInput';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { Button } from '../Button';
 import { navigate } from 'gatsby';

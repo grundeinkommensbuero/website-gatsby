@@ -17,7 +17,7 @@ const sections = [
   },
 ];
 
-export default function DesignSystem() {
+const PlaygroundNextSteps = function DesignSystem() {
   return (
     <Layout title="Design System">
       <Helmet>
@@ -26,4 +26,6 @@ export default function DesignSystem() {
       <Sections sections={sections}></Sections>
     </Layout>
   );
-}
+};
+
+export default PlaygroundNextSteps;

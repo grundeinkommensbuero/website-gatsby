@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import cN from 'classnames';
 import Reel from 'react-reel';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import * as u from './utils';
 
@@ -13,14 +13,21 @@ export const Ticker = ({ tickerDescription }) => {
   const [peopleCount, setPeopleCount] = useState(0);
   const [municipalityCount, setMunicipalityCount] = useState(0);
   const [updatedSummary, setUpdatedSummary] = useState(0);
-  const [timePassedInIntervalInPercent, setTimePassedInIntervalInPercent] = useState(0);
+  const [
+    timePassedInIntervalInPercent,
+    setTimePassedInIntervalInPercent,
+  ] = useState(0);
 
   const prevTimestamp = new Date(statsSummary?.previous.timestamp);
   const currTimestamp = new Date(statsSummary?.timestamp);
 
   useEffect(() => {
     if (statsSummary && statsSummary.previous) {
-      u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
+      u.calcTickerValues({
+        prevTimestamp,
+        currTimestamp,
+        setTimePassedInIntervalInPercent,
+      });
       setTimerIsReady(true);
       setUpdatedSummary(updatedSummary + 1);
     }
@@ -30,7 +37,7 @@ export const Ticker = ({ tickerDescription }) => {
     let updateTickerTimeout;
     const timerConf = {
       numberBetweenOneAndThree: Math.floor(Math.random() * 3) + 1,
-      interval: 3000
+      interval: 3000,
     };
     // Set timer in a range of 3 to 9 seconds
     const randomTimer = timerConf.numberBetweenOneAndThree * timerConf.interval;
@@ -38,13 +45,17 @@ export const Ticker = ({ tickerDescription }) => {
       // Set timeout to display data in the Ticker Comp
       // console.log('Timer set to:', randomTimer, 'ms');
       updateTickerTimeout = setTimeout(() => {
-        u.calcTickerValues({ prevTimestamp, currTimestamp, setTimePassedInIntervalInPercent });
+        u.calcTickerValues({
+          prevTimestamp,
+          currTimestamp,
+          setTimePassedInIntervalInPercent,
+        });
       }, randomTimer);
     }
     // Clear Timeout when done
     return () => {
       clearTimeout(updateTickerTimeout);
-    }
+    };
   }, [updatedSummary]);
 
   useEffect(() => {
@@ -56,7 +67,7 @@ export const Ticker = ({ tickerDescription }) => {
         setMunicipalityCount,
         updatedSummary,
         setUpdatedSummary,
-        refreshContextStats
+        refreshContextStats,
       });
     }
   }, [timePassedInIntervalInPercent]);
@@ -115,7 +126,7 @@ const TickerDisplay = ({
           )}
         </div>
 
-        <div className={cN(s.counterContainer, s.alignRight)}>
+        <div className={cN(s.counterContainer)}>
           {typeof highlight2 !== 'string' && (
             <>
               {inBetween2 && (
@@ -168,3 +179,6 @@ const TickerDisplay = ({
     </section>
   );
 };
+
+// Needed for lazy loading
+export default Ticker;

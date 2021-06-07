@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CampainVisualisation } from '../../CampaignVisualisations';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const MunicipalityProgress = ({
   showHeadline = true,
@@ -162,3 +162,6 @@ const getSignupsLabel = (signups, goal) => {
     return 'Noch keine Anmeldungen. Melde dich jetzt an und bring das Grundeinkommen auf den Weg!';
   }
 };
+
+// Default export needed for lazy loading
+export default MunicipalityProgress;

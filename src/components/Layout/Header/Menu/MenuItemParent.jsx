@@ -2,11 +2,11 @@ import React from 'react';
 import Link from 'gatsby-link';
 import cN from 'classnames';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 const MenuItemParent = ({ title, children, internalLink, externalLink }) => {
   return (
-    <li className={cN({[s.navItemParent]: true}, s.navItem)}>
+    <li className={cN({ [s.navItemParent]: true }, s.navItem)}>
       {!internalLink && !externalLink && (
         <div className={s.menuItemParentTitle}>{title}</div>
       )}

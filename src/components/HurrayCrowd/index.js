@@ -5,7 +5,7 @@ import Crowd1 from './crowd1.svg';
 import Crowd2 from './crowd2.svg';
 import Crowd1Red from './crowd1_red.svg';
 import Crowd2Red from './crowd2_red.svg';
-import s from './style.module.less';
+import * as s from './style.module.less';
 
 export const HurrayCrowd = ({ color }) => (
   <div className={s.savedStage}>

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 let canvasConfetti;
 

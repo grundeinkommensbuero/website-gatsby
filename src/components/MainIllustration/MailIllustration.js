@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import Stage from '!svg-inline-loader?classPrefix=b-!./figure-1-groups_stage-1.svg';
 import StageVertical from '!svg-inline-loader?classPrefix=a-&idPrefix=b-!./figure-1-groups_stage-1-vertical.svg';
@@ -9,7 +9,7 @@ if (!process.env.STATIC) {
   interact = require('interactjs');
 }
 
-export default function({ className }) {
+export default function ({ className }) {
   return (
     <div className={cN(className, s.container)} aria-hidden="true">
       <div className={s.stage}>

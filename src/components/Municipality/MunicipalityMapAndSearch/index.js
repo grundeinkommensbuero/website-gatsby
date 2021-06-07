@@ -1,9 +1,11 @@
 import React from 'react';
-import { MunicipalityMap } from '../MunicipalityMap';
+import { FallbackMap } from '../MunicipalityMap';
 import { WrappedMunicipalitySearch } from '../MunicipalitySearch/WrappedMunicipalitySearch';
 import { Leaderboard } from '../Leaderboard';
+import * as s from './style.module.less';
+import loadable from '@loadable/component';
 
-import s from './style.module.less';
+const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MunicipalityMapAndSearch = () => {
   return (
@@ -13,7 +15,7 @@ export const MunicipalityMapAndSearch = () => {
           <div className={s.hideOnDesktop}>
             <WrappedMunicipalitySearch />
           </div>
-          <MunicipalityMap />
+          <MunicipalityMap fallback={<FallbackMap />} />
         </div>
         <div className={s.mapControlContainer}>
           <div className={s.hideOnMobile}>
@@ -28,3 +30,6 @@ export const MunicipalityMapAndSearch = () => {
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default MunicipalityMapAndSearch;

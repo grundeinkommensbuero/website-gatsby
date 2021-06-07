@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { formatDateTime } from '../utils';
 import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { useStaticQuery, graphql } from 'gatsby';
 import { SectionInner } from '../Layout/Sections';
 import { FinallyMessage } from '../Forms/FinallyMessage';
@@ -54,7 +54,7 @@ const addPropsToMapboxConfig = (defaultConfig, props) => {
   };
 };
 
-export default ({ mapConfig }) => {
+const lazyMap = ({ mapConfig }) => {
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
   } = useStaticQuery(graphql`
@@ -70,7 +70,7 @@ export default ({ mapConfig }) => {
               lon
             }
             description {
-              json
+              raw
             }
             date
             state
@@ -184,7 +184,7 @@ const PopupContent = ({ title, description, date, phone, mail }) => (
     {description && (
       <div className={s.tooltipDescription}>
         <hr />
-        {contentfulJsonToHtml(description.json)}
+        {contentfulJsonToHtml(description)}
       </div>
     )}
     {(phone || mail) && <hr />}
@@ -206,3 +206,5 @@ const PopupContent = ({ title, description, date, phone, mail }) => (
     )}
   </div>
 );
+
+export default lazyMap;

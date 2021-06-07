@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SectionInner } from '../../Layout/Sections';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import { Speechbubble } from '../Speechbubble';
 import { Form, Field } from 'react-final-form';
@@ -122,7 +122,6 @@ export default ({ setQuestionJustSent, userId, userData }) => {
               {userData.user && userData.user.profilePictures ? (
                 <AvatarImage
                   user={userData.user}
-                  className={s.avatarImage}
                   sizes="80px"
                 />
               ) : (

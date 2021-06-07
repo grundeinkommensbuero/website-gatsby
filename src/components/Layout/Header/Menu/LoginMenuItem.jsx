@@ -5,7 +5,7 @@ import AuthContext from '../../../../context/Authentication';
 import { useSignOut } from '../../../../hooks/Authentication';
 import AvatarImage from '../../../../components/AvatarImage';
 
-import s from './style.module.less';
+import * as s from './style.module.less';
 import MenuItemParent from './MenuItemParent';
 import { MenuItemButton, MenuItemLink } from './MenuItem';
 
@@ -35,18 +35,22 @@ const LoginMenuItem = () => {
   // We need this loading state, because otherwise for some ssg reason
   // the hover of the MenuItemParent would not work. Also this way we don't
   // render "Einloggen" -> "Lade..." -> "Profil"
-  if(typeof isAuthenticated === 'undefined'){
-    return <MenuItemParent title={'Lade...'} />
+  if (typeof isAuthenticated === 'undefined') {
+    return <MenuItemParent title={'Lade...'} />;
   }
 
   // If user is not identified, show "login" button`, next page after login
   // should be the current page
-  if (!userId){
+  if (!userId) {
     return (
       <MenuItemLink
         slug={`login${
           location.pathname !== '/'
-            ? `/?nextPage=${location.pathname.slice(-1) === '/' ? location.pathname.slice(1, -1) : location.pathname.slice(1)}`
+            ? `/?nextPage=${
+                location.pathname.slice(-1) === '/'
+                  ? location.pathname.slice(1, -1)
+                  : location.pathname.slice(1)
+              }`
             : ''
         }`}
       >

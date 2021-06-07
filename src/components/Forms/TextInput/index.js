@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { ValidationError } from '../ValidationError';
@@ -91,19 +91,19 @@ export const TextInputWrapped = ({
           autoComplete={autoComplete}
         />
       ) : (
-          <TextInput
-            {...input}
-            placeholder={placeholder}
-            className={inputClassName}
-            maxLength={maxLength}
-            min={min}
-            max={max}
-            label={outputLabel}
-            pattern={pattern}
-            inputMode={inputMode}
-            autoComplete={autoComplete}
-          />
-        )}
+        <TextInput
+          {...input}
+          placeholder={placeholder}
+          className={inputClassName}
+          maxLength={maxLength}
+          min={min}
+          max={max}
+          label={outputLabel}
+          pattern={pattern}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
+        />
+      )}
     </LabelInputErrorWrapper>
   );
 };

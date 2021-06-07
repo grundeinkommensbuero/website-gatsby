@@ -1,7 +1,7 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 
 const ICONS = {
   twitter: require('!svg-inline-loader!./icons/twitter-brands.svg'),
@@ -26,7 +26,12 @@ const AboutUs = ({ members, className }) => {
             <li key={index} className={s.member}>
               {image && (
                 <div className={s.imageContainer}>
-                  <Img fluid={image.fluid} className={s.image} loading="lazy" />
+                  <GatsbyImage
+                    image={image.gatsbyImageData}
+                    className={s.image}
+                    loading="lazy"
+                    alt=""
+                  />
                   {!!links.length && (
                     <div className={s.socialMediaButtons}>
                       {links.map(link => (

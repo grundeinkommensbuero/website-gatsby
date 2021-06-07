@@ -1,4 +1,4 @@
-import s from './style.module.less';
+import * as s from './style.module.less';
 import React, { useState, useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 const COOKIE_NAME = 'overlayHasBeenDismissed';

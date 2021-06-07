@@ -8,7 +8,7 @@ import {
 } from '../../components/Layout/Sections';
 import { SearchPlaces } from '../../components/Forms/SearchPlaces';
 
-export default () => {
+const PlaygroundSearch = () => {
   return (
     <Layout>
       <Helmet>
@@ -28,3 +28,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default PlaygroundSearch;

@@ -6,7 +6,7 @@ import AvatarImage from '../../AvatarImage';
 import { LinkButtonLocal, Button } from '../../Forms/Button';
 import { SignUpButton } from '../../TickerToSignup/SignupButton';
 import { formatDate } from '../../utils';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import cN from 'classnames';
 
 export const ProfileTile = ({ children }) => {
@@ -59,7 +59,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
       {userData && (
         <div className={cN(s.tileContainer, s.sectionAqua)}>
           <div className={s.avatarAndInfo}>
-            <div className={s.avatarContainer}>
+            <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 
@@ -130,7 +130,7 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
             </div>
           </div>
           <div className={s.avatarAndInfo}>
-            <div className={s.avatarContainer}>
+            <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 
@@ -199,7 +199,7 @@ const TileMunicipalityLoggedInOtherMunicipality = ({
             )}
           </div>
           <div className={s.avatarAndInfo}>
-            <div className={s.avatarContainer}>
+            <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 
@@ -244,3 +244,6 @@ export const WelcomeBack = ({ children }) => {
     </div>
   );
 };
+
+// Default export needed for lazy loading
+export default ProfileTile;

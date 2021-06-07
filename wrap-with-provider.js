@@ -11,7 +11,7 @@ import SnackbarProvider from 'react-simple-snackbar';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
-export default ({ element }) => {
+export default (element, extractor) => {
   // APP_CLIENT_ID was in onCreateWebpackConfig callback in gatsby-node
   const clientId = APP_CLIENT_ID; // eslint-disable-line no-undef
   if (clientId) {
@@ -30,7 +30,7 @@ export default ({ element }) => {
     console.log('no userPoolWebClientId provided');
   }
 
-  return (
+  const app = (
     <AuthProvider>
       <MunicipalityProvider>
         <SurveySaver>
@@ -47,4 +47,6 @@ export default ({ element }) => {
       </MunicipalityProvider>
     </AuthProvider>
   );
+
+  return extractor ? extractor.collectChunks(app) : app;
 };

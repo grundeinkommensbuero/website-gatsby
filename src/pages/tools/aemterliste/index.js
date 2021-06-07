@@ -8,7 +8,7 @@ import {
 } from '../../../components/Layout/Sections';
 import Aemterliste from '../../../components/Aemterliste';
 
-export default () => {
+const AemterlistePage = () => {
   return (
     <Layout>
       <Helmet>
@@ -24,3 +24,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default AemterlistePage;

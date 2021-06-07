@@ -23,3 +23,6 @@ export const MunicipalitySearch = ({ searchTitle }) => {
     />
   );
 };
+
+// Needed for lazy loading
+export default MunicipalitySearch;

@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { TextInputInline } from '../TextInput';
 import cN from 'classnames';
 import { shuffle } from '../../utils';

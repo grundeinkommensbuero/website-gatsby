@@ -9,7 +9,7 @@ import { SignatureCountSlider } from '../SignatureCountSlider';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import FormWrapper from '../FormWrapper';
 import SignUpFeedbackMessage from '../SignUpFeedbackMessage';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { useSignUp } from '../../../hooks/Authentication';
 import { RequestLoginCode } from '../../Login/RequestLoginCode';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
@@ -164,19 +164,19 @@ const SignaturePledge = ({ pledgeId }) => {
               <FormSection>
                 {(!isAuthenticated ||
                   (isAuthenticated && !userData?.newsletterConsent?.value)) && (
-                  <Field
-                    name="newsletterConsent"
-                    label={
-                      <>
-                        Schreibt mir, wenn die Unterschriftslisten da sind und
-                        haltet mich über alle weiteren Kampagnenschritte auf dem
-                        Laufenden.
-                      </>
-                    }
-                    type="checkbox"
-                    component={Checkbox}
-                  ></Field>
-                )}
+                    <Field
+                      name="newsletterConsent"
+                      label={
+                        <>
+                          Schreibt mir, wenn die Unterschriftslisten da sind und
+                          haltet mich über alle weiteren Kampagnenschritte auf dem
+                          Laufenden.
+                        </>
+                      }
+                      type="checkbox"
+                      component={Checkbox}
+                    ></Field>
+                  )}
                 {!isAuthenticated && (
                   <Field
                     name="privacyConsent"

@@ -8,21 +8,21 @@ import {
   SectionHeader,
   SectionWrapper,
 } from '../Layout/Sections';
-import s from './style.module.less';
+import * as s from './style.module.less';
 import { formatDate } from '../utils';
 import OGImage from './blog_og.png';
-import html2plaintext from 'html2plaintext';
+import { htmlToText } from 'html-to-text';
 
-export default ({
+const BlogPost = ({
   data: {
-    wordpressPost: { title, content, featured_media, date, tags, excerpt },
-    allWordpressTag,
+    wpPost: { title, content, featuredImage, date, tags, excerpt },
+    allWpTag,
     contentfulGlobalStuff: { siteTitle },
   },
   location,
 }) => {
   const dateObject = new Date(date);
-  const tagList = allWordpressTag.edges.reduce((list, tag) => {
+  const tagList = allWpTag.edges.reduce((list, tag) => {
     list[tag.node.id] = tag.node.name;
     return list;
   }, {});
@@ -35,25 +35,25 @@ export default ({
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@exbeditionbge" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={html2plaintext(excerpt)} />
+        <meta name="twitter:description" content={htmlToText(excerpt)} />
 
-        {featured_media && (
+        {featuredImage && (
           <meta
             property="og:image"
-            content={featured_media.localFile.childImageSharp.og.src}
+            content={featuredImage.node.localFile.childImageSharp.og.src}
           />
         )}
-        {featured_media && (
+        {featuredImage && (
           <meta
             name="twitter:image"
-            content={featured_media.localFile.childImageSharp.og.src}
+            content={featuredImage.node.localFile.childImageSharp.og.src}
           />
         )}
-        {!featured_media && <meta property="og:image" content={OGImage} />}
-        {!featured_media && <meta name="twitter:image" content={OGImage} />}
+        {!featuredImage && <meta property="og:image" content={OGImage} />}
+        {!featuredImage && <meta name="twitter:image" content={OGImage} />}
 
-        <meta name="description" content={html2plaintext(excerpt)} />
-        <meta property="og:description" content={html2plaintext(excerpt)} />
+        <meta name="description" content={htmlToText(excerpt)} />
+        <meta property="og:description" content={htmlToText(excerpt)} />
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={siteTitle} />
         <meta property="article:published_time" content={date} />
@@ -63,7 +63,7 @@ export default ({
       <SectionWrapper>
         <SectionHeader
           backgroundImageSet={
-            featured_media && featured_media.localFile.childImageSharp.hero
+            featuredImage && featuredImage.node.localFile.childImageSharp.hero
           }
           preTitle={
             tags && (
@@ -82,9 +82,9 @@ export default ({
           }
         />
         <Section>
-          {/* {featured_media && (
+          {/* {featuredImage && (
           <SectionInner wide={true}>
-            <Img fluid={featured_media.localFile.childImageSharp.hero} />
+            <Img fluid={featuredImage.node.localFile.childImageSharp.hero} />
           </SectionInner>
         )} */}
           <SectionInner>
@@ -101,41 +101,41 @@ export default ({
   );
 };
 
-export const pageQuery = graphql`
-  query WordpressPostByPath($path: String!) {
-    wordpressPost(path: { eq: $path }) {
-      title
-      content
-      excerpt
-      date
-      featured_media {
+export default BlogPost;
+
+export const pageQuery = graphql`query WordpressPostByPath($path: String!) {
+  wpPost(uri: {eq: $path}) {
+    title
+    content
+    excerpt
+    date
+    featuredImage {
+      node {
         localFile {
           childImageSharp {
-            hero: fluid(maxWidth: 2000) {
-              ...GatsbyImageSharpFluid_noBase64
-            }
-            og: fixed(width: 1200, quality: 90) {
-              src
-            }
+            hero: gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+            og: gatsbyImageData(
+              width: 1200
+              quality: 90
+              placeholder: BLURRED
+              layout: FIXED
+            )
           }
         }
-        path
+        uri
       }
-      tags {
-        id
-      }
-    }
-    allWordpressTag {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-
-    contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
-      siteTitle
     }
   }
+  allWpTag {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  contentfulGlobalStuff(contentful_id: {eq: "3mMymrVLEHYrPI9b6wgBzg"}) {
+    siteTitle
+  }
+}
 `;
