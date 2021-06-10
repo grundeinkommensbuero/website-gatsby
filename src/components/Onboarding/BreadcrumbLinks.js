@@ -3,9 +3,12 @@ import menuElements from './BreadcrumbMenu.json';
 import cN from 'classnames';
 import * as s from './style.module.less';
 
-export const BreadcrumbLinks = ({ setCurrentElement, currentElement, setOverlayOpen }) => {
-
-  const pathMatchesMenuElement = (element) => {
+export const BreadcrumbLinks = ({
+  setCurrentElement,
+  currentElement,
+  setOverlayOpen,
+}) => {
+  const pathMatchesMenuElement = element => {
     return currentElement === element;
   };
 
@@ -14,39 +17,36 @@ export const BreadcrumbLinks = ({ setCurrentElement, currentElement, setOverlayO
   return menuElements.map(element => {
     if (element.name !== 'close') {
       return (
-        <div
+        <button
           aria-hidden={true}
           onClick={() => setCurrentElement(element.name)}
           onKeyUp={() => setCurrentElement(element.name)}
           key={element.name}
-          className={
-            cN(s.breadcrumbElement,
-              { [s.breadcrumbElementActive]: pathMatchesMenuElement(element.name) }
-            )}
+          className={cN(s.breadcrumbElement, {
+            [s.breadcrumbElementActive]: pathMatchesMenuElement(element.name),
+          })}
         >
           {element.title}
-        </div>
-      )
+        </button>
+      );
     } else {
       return (
-        <div
-          aria-hidden={true}
+        <button
           onClick={() => setOverlayOpen(false)}
-          onKeyUp={() => setOverlayOpen(false)}
           key={element.name}
-          className={
-            cN(s.breadcrumbElement,
-              { [s.breadcrumbElementActive]: pathMatchesMenuElement(element.name) }
-            )}
+          aria-label="Schließen"
+          className={cN(s.breadcrumbElement, {
+            [s.breadcrumbElementActive]: pathMatchesMenuElement(element.name),
+          })}
         >
           <div
-            aria-hidden="true"
             alt=""
+            aria-hidden="true"
             className={s.closeButtonBreadcrumb}
             dangerouslySetInnerHTML={{ __html: closeIcon }}
           ></div>
-        </div>
-      )
+        </button>
+      );
     }
-  })
-}
+  });
+};
