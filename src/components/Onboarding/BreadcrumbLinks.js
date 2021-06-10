@@ -20,7 +20,6 @@ export const BreadcrumbLinks = ({
         <button
           aria-hidden={true}
           onClick={() => setCurrentElement(element.name)}
-          onKeyUp={() => setCurrentElement(element.name)}
           key={element.name}
           className={cN(s.breadcrumbElement, {
             [s.breadcrumbElementActive]: pathMatchesMenuElement(element.name),
