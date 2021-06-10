@@ -90,7 +90,7 @@ export default ({ onboardingNextPage }) => {
   };
 
   const saveDonationPledge = () => {
-    console.log('Saving: ', +initialValues.customAmount, paymentType);
+    // console.log('Saving: ', +initialValues.customAmount, paymentType);
     updateUserStore({
       userId: userId,
       store: {
@@ -245,7 +245,8 @@ export default ({ onboardingNextPage }) => {
                   iban: formData.extractedIban,
                 };
                 const donationInfo = { donation };
-                setTempEmail(data.email);
+                // only set temporary mail address, when user is not already signed in
+                !isAuthenticated && setTempEmail(data.email);
                 setInitialValues(data);
                 setDonationInfo(donationInfo);
                 setEnteredPaymentInfo(true);

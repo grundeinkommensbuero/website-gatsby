@@ -1,4 +1,5 @@
 import React from 'react';
+import { List as Loader } from 'react-content-loader';
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
   return string && string.toString().replace(/^[^a-z]+|[^\w:.-]+/gi, '');
@@ -321,21 +322,19 @@ export const getFilteredElementsByContentfulState = ({
   });
 };
 
-export const getComponentFromContentful = ({ Components, component, key }) => {
+export const getComponentFromContentful = ({ Components, component }) => {
   const componentSelector = component.__typename.replace(
     'ContentfulSectionComponent',
     ''
   );
-  if (typeof Components[componentSelector] !== 'undefined') {
-    return React.createElement(Components[componentSelector], {
-      ...component,
-      key,
-    });
+
+  const ComponentToRender = Components[componentSelector];
+
+  if (typeof ComponentToRender !== 'undefined') {
+    return <ComponentToRender {...component} fallback={<Loader />} />;
   } else {
     return (
-      <div key={key}>
-        The component {componentSelector} has not been created yet.
-      </div>
+      <div>The component {componentSelector} has not been created yet.</div>
     );
   }
 };

@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import * as s from './style.module.less';
 import { OnboardingOverlayContext } from '../../context/Overlay/OnboardingOverlay';
-import { Onboarding } from '../Onboarding';
+
 import Modal from 'react-overlays/Modal';
+import loadable from '@loadable/component';
+const Onboarding = loadable(() => import('../Onboarding'));
 
 export const OnboardingOverlay = () => {
   const { overlayOpen, setOverlayOpen } = useContext(OnboardingOverlayContext);

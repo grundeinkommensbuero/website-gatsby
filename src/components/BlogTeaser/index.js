@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import * as s from './style.module.less';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { formatDate } from '../utils';
 
 export default () => {
@@ -26,9 +26,11 @@ export default () => {
               node {
                 localFile {
                   childImageSharp {
-                    hero: fluid(maxWidth: 400) {
-                      ...GatsbyImageSharpFluid_noBase64
-                    }
+                    hero: gatsbyImageData(
+                      width: 400
+                      placeholder: NONE
+                      layout: CONSTRAINED
+                    )
                   }
                 }
               }
@@ -52,9 +54,10 @@ export default () => {
               </time>
               <div className={s.imageContainer}>
                 {featuredImage && (
-                  <Img
+                  <GatsbyImage
+                    image={featuredImage.node.localFile.childImageSharp.hero}
                     className={s.image}
-                    fluid={featuredImage.node.localFile.childImageSharp.hero}
+                    alt="Titelbild des Blogeintrags"
                   />
                 )}
               </div>

@@ -21,7 +21,7 @@ const config = {
     'gatsby-plugin-netlify',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
-    'gatsby-image',
+    'gatsby-plugin-image',
     'gatsby-plugin-eslint',
     {
       resolve: `gatsby-plugin-feed`,
@@ -120,10 +120,9 @@ const config = {
       },
     },
     // {
-    //   resolve: 'gatsby-plugin-webpack-bundle-analyzer',
+    //   resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
     //   options: {
     //     analyzerPort: 3000,
-    //     production: true,
     //   },
     // },
   ],

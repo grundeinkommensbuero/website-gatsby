@@ -128,3 +128,6 @@ export const Onboarding = ({ setOverlayOpen }) => {
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default Onboarding;

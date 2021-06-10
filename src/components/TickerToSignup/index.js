@@ -2,12 +2,16 @@ import React, { useContext } from 'react';
 
 import { MunicipalityContext } from '../../context/Municipality';
 
-import { Ticker } from './Ticker';
-import { TickerMunicipality } from './Ticker/TickerMunicipality';
 import { SignupButtonAndTile } from './SignupButtonAndTile';
 import { InlineLinkButton } from '../Forms/Button';
-
 import * as s from './style.module.less';
+import loadable from '@loadable/component';
+import { List as Loader } from 'react-content-loader';
+
+const Ticker = loadable(() => import('./Ticker'));
+const TickerMunicipality = loadable(() =>
+  import('./Ticker/TickerMunicipality')
+);
 
 export const TickerToSignup = ({
   tickerDescription: tickerDescriptionObject,
@@ -18,9 +22,12 @@ export const TickerToSignup = ({
   return (
     <>
       {municipality?.ags ? (
-        <TickerMunicipality tickerDescription={tickerDescription} />
+        <TickerMunicipality
+          tickerDescription={tickerDescription}
+          fallback={<Loader />}
+        />
       ) : (
-        <Ticker tickerDescription={tickerDescription} />
+        <Ticker tickerDescription={tickerDescription} fallback={<Loader />} />
       )}
 
       <SignupButtonAndTile className={s.centerButton} />
@@ -30,3 +37,6 @@ export const TickerToSignup = ({
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default TickerToSignup;

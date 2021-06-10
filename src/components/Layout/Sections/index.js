@@ -1,59 +1,63 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
+import { List as Loader } from 'react-content-loader';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import Maps from '../../Maps';
-import SignUp from '../../Forms/SignUp';
-import EmailListForm from '../../EmailListForm';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
-import Pledge from '../../Forms/Pledge';
-import SignatureListDownload from '../../Forms/SignatureListDownload';
 import { CTAButtonContainer, CTALinkExternal, CTALink } from '../CTAButton';
 import TwitterEmbed from '../../TwitterEmbed';
-import Img from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import Share from '../../SocialMedia/Share';
 import BlogTeaser from '../../BlogTeaser';
-import QuestionUbi from '../../QuestionUbi';
 import Confetti from '../../Confetti';
-import DonationForm from '../../Forms/DonationForm';
 import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
-import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+// NOTE: this is not needed anymore (or right now), so I commented it out for better performance
+// import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
+// import QuestionUbi from '../../QuestionUbi';
 import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
-import { SharingFeature } from '../../Onboarding/Share';
 import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
+import { TextAndImage } from './TextAndImage';
+import { StandardSectionComponent } from './StandardSectionComponent';
+import { IntroText } from '../../IntroText';
 
 import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
-import { TickerToSignup } from '../../TickerToSignup';
-import { MunicipalityMapAndSearch } from '../../Municipality/MunicipalityMapAndSearch';
-import { MunicipalityInfoText } from '../../Municipality/MunicipalityInfoText';
-import { MunicipalityProgress } from '../../Municipality/MunicipalityProgress';
-import { MunicipalityCollectionMap } from '../../Municipality/MunicipalityCollectionMap';
-import { InviteFriends } from '../../InviteFriends';
-import { IntroText } from '../../IntroText';
-import { BecomeActive } from '../../BecomeActive';
-import { ProfileTile } from '../../Profile/ProfileTile';
-import { StandardSectionComponent } from './StandardSectionComponent';
-import { TextAndImage } from './TextAndImage';
 import { LinkButton } from '../../Forms/Button';
+import loadable from '@loadable/component';
+
+const SignUp = loadable(() => import('../../Forms/SignUp'));
+const Pledge = loadable(() => import('../../Forms/Pledge'));
+const SignatureListDownload = loadable(() =>
+  import('../../Forms/SignatureListDownload')
+);
+const DonationForm = loadable(() => import('../../Forms/DonationForm'));
+const SharingFeature = loadable(() => import('../../Onboarding/Share'));
+const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
 
 const Components = {
-  TickerToSignup,
-  MunicipalityMap: MunicipalityMapAndSearch,
-  InfoText: MunicipalityInfoText,
-  MunicipalityProgress,
-  InviteFriends,
+  TickerToSignup: loadable(() => import('../../TickerToSignup')),
+  MunicipalityMap: loadable(() =>
+    import('../../Municipality/MunicipalityMapAndSearch')
+  ),
+  InfoText: loadable(() => import('../../Municipality/MunicipalityInfoText')),
+  MunicipalityProgress: loadable(() =>
+    import('../../Municipality/MunicipalityProgress')
+  ),
+  InviteFriends: loadable(() => import('../../InviteFriends')),
+  BecomeActive: loadable(() => import('../../BecomeActive')),
+  ProfileTile: loadable(() => import('../../Profile/ProfileTile')),
+  CollectionMap: loadable(() =>
+    import('../../Municipality/MunicipalityCollectionMap')
+  ),
   IntroText,
-  BecomeActive,
-  ProfileTile,
   TextAndImage,
   Standard: StandardSectionComponent,
-  CollectionMap: MunicipalityCollectionMap,
 };
 
 export default function Sections({ sections, pageContext }) {
@@ -124,7 +128,7 @@ export function ContentfulSection({ section, pageContext }) {
     preTitle,
     subTitle,
     backgroundImage,
-    questionUbi,
+    // questionUbi,
     bodyAtTheEnd,
     columnIntroText,
     imageTopLeft,
@@ -236,7 +240,6 @@ export function ContentfulSection({ section, pageContext }) {
                     {getComponentFromContentful({
                       Components,
                       component,
-                      key: index,
                     })}
                   </div>
                 );
@@ -248,21 +251,22 @@ export function ContentfulSection({ section, pageContext }) {
     );
   }
 
-  if (__typename === 'ContentfulPageSectionGemeindeIntro') {
-    return (
-      <MunicipalityIntro
-        pageContext={pageContext}
-        className={s.sectionGemeindeIntro}
-        title={title}
-        body={body?.body}
-      />
-    );
-  }
+  // NOTE: this is not needed anymore, so I commented it out for better performance
+  // if (__typename === 'ContentfulPageSectionGemeindeIntro') {
+  //   return (
+  //     <MunicipalityIntro
+  //       pageContext={pageContext}
+  //       className={s.sectionGemeindeIntro}
+  //       title={title}
+  //       body={body?.body}
+  //     />
+  //   );
+  // }
 
   if (__typename === 'ContentfulPageSectionIntro') {
     return (
       <SectionHeader
-        backgroundImageSet={backgroundImage && backgroundImage.fluid}
+        backgroundImageSet={backgroundImage && backgroundImage.gatsbyImageData}
         title={title}
         preTitle={preTitle}
         subTitle={subTitle}
@@ -297,6 +301,7 @@ export function ContentfulSection({ section, pageContext }) {
                     : null
                 }
                 scrollToRef={scrollToRef}
+                fallback={<Loader />}
               />
               {userData?.municipalities?.length > 1 && (
                 <>
@@ -377,7 +382,11 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageTopLeft && (
                 <div>
-                  <Img className={s.columnIcon} fixed={imageTopLeft.fixed} />
+                  <GatsbyImage
+                    image={imageTopLeft.gatsbyImageData}
+                    className={s.columnIcon}
+                    alt=""
+                  />
                 </div>
               )}
               {columnTopLeft && (
@@ -387,7 +396,11 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageTopRight && (
                 <div>
-                  <Img className={s.columnIcon} fixed={imageTopRight.fixed} />
+                  <GatsbyImage
+                    image={imageTopRight.gatsbyImageData}
+                    className={s.columnIcon}
+                    alt=""
+                  />
                 </div>
               )}
               {columnTopRight && (
@@ -397,7 +410,11 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageBottomLeft && (
                 <div>
-                  <Img className={s.columnIcon} fixed={imageBottomLeft.fixed} />
+                  <GatsbyImage
+                    image={imageBottomLeft.gatsbyImageData}
+                    className={s.columnIcon}
+                    alt=""
+                  />
                 </div>
               )}
               {columnBottomLeft && (
@@ -407,9 +424,10 @@ export function ContentfulSection({ section, pageContext }) {
             <section className={s.column}>
               {imageBottomRight && (
                 <div>
-                  <Img
+                  <GatsbyImage
+                    image={imageBottomRight.gatsbyImageData}
                     className={s.columnIcon}
-                    fixed={imageBottomRight.fixed}
+                    alt=""
                   />
                 </div>
               )}
@@ -423,7 +441,7 @@ export function ContentfulSection({ section, pageContext }) {
       {isDonationFeature && (
         <SectionInner>
           {introText && <div className={s.donationIntroText}>{introText}</div>}
-          <DonationForm theme={theme}></DonationForm>
+          <DonationForm theme={theme} fallback={<Loader />}></DonationForm>
         </SectionInner>
       )}
       {(body || pledgeId || signaturesId) && (
@@ -448,12 +466,7 @@ export function ContentfulSection({ section, pageContext }) {
           <SignUp />
         </SectionInner>
       )}
-      {emailSignup && (
-        <SectionInner>
-          <EmailListForm className={s.emailSignup} />
-        </SectionInner>
-      )}
-      {videoLink && <YoutubeEmbed url={videoLink} />}
+      {videoLink && <YoutubeEmbed url={videoLink} fallback={<Loader />} />}
       {teamMembers && (
         <SectionInner wide={true}>
           <AboutUs members={teamMembers} />
@@ -474,7 +487,7 @@ export function ContentfulSection({ section, pageContext }) {
       {blogTeaser && callToActionText && callToActionLink && (
         <div className={s.spaceBetweenBlogAndCTA} />
       )}
-      {questionUbi && <QuestionUbi mode={questionUbi} />}
+      {/* {questionUbi && <QuestionUbi mode={questionUbi} />} */}
       {callToActionText && callToActionLink && (
         <SectionInner>
           <CTAButtonContainer>
@@ -550,7 +563,11 @@ export function SectionHeader({
       afterBodyContent={
         backgroundImageSet ? (
           <>
-            <Img className={s.heroImage} fluid={backgroundImageSet} />
+            <GatsbyImage
+              image={backgroundImageSet}
+              className={s.heroImage}
+              alt=""
+            />
             <div className={s.heroImageOverlay} />
           </>
         ) : (
@@ -613,21 +630,5 @@ function Slogan({ sloganLine1, sloganLine2 }) {
       <span className={s.sloganLine2}>{sloganLine2}</span>
       {/* <EmailListForm className={s.sloganLineSignup} /> */}
     </h2>
-  );
-}
-
-export function YoutubeEmbed({ url }) {
-  return (
-    <div className={s.youtubeContainer}>
-      <iframe
-        title="Youtube Embed"
-        width="560"
-        height="315"
-        src={`https://www.youtube-nocookie.com/embed/${url}?rel=0`}
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-    </div>
   );
 }

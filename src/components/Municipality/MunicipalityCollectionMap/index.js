@@ -10,3 +10,6 @@ export const MunicipalityCollectionMap = ({ text, maps }) => {
     </>
   );
 };
+
+// Default export needed for lazy loading
+export default MunicipalityCollectionMap;

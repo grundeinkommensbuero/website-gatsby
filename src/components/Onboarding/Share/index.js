@@ -141,3 +141,6 @@ export const SharingFeature = ({
     </section>
   );
 };
+
+// Default export needed for lazy loading
+export default SharingFeature;
