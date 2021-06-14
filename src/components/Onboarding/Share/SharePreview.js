@@ -3,7 +3,7 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import AvatarImage from '../../AvatarImage';
 import ImageUpload from '../../Forms/ImageUpload';
-import { Button, LinkButton } from '../../Forms/Button';
+import { Button } from '../../Forms/Button';
 import ShareButtons from './ShareButtons.json';
 import { mailBody } from './mailBody';
 import cN from 'classnames';
