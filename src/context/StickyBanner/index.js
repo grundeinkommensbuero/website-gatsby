@@ -14,13 +14,14 @@ export const StickyBannerProvider = ({ children }) => {
   const [currentURL, setCurrentURL] = useState();
 
   useEffect(() => {
-    EXCLUDED_ROUTES.forEach(route => {
-      if (!hasBeenDismissed && currentURL && currentURL.includes(route)) {
+    if (currentURL) {
+      const routeExcluded = EXCLUDED_ROUTES.find(route => currentURL.includes(route));
+      if (!hasBeenDismissed && routeExcluded) {
         setStickyBannerVisible(false);
-      } else if (!hasBeenDismissed) {
+      } else if (!hasBeenDismissed && !routeExcluded) {
         setStickyBannerVisible(true);
       }
-    })
+    }
   }, [currentURL]);
 
   const closeStickyBanner = () => {
