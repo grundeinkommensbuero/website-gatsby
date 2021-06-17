@@ -4,7 +4,7 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import { ShareButtonRow } from './ShareButtonRow';
 import { SharePreview } from './SharePreview';
-import { Button } from '../../Forms/Button';
+import { Button, InlineButton } from '../../Forms/Button';
 
 export const SharingFeature = ({
   compIndex,
@@ -20,7 +20,11 @@ export const SharingFeature = ({
   const [sharePreviewActive, setSharePreviewActive] = useState(false);
   const [shareChannel, setShareChannel] = useState();
 
-  const executeScroll = () => scrollToRef.current.scrollIntoView();
+  const executeScroll = () => {
+    if (scrollToRef.current) {
+      scrollToRef.current.scrollIntoView();
+    }
+  };
 
   const SharingHandsPreviewElement = () => {
     return (
@@ -123,16 +127,14 @@ export const SharingFeature = ({
             isInOnboarding={isInOnboarding}
           />
           <div className={gS.fullWidthFlex}>
-            <span
-              className={gS.linkLikeFormatted}
+            <InlineButton
               onClick={() => {
                 setSharePreviewActive(false);
                 executeScroll();
               }}
-              aria-hidden="true"
             >
               {'< Zurück zur Übersicht'}
-            </span>
+            </InlineButton>
           </div>
         </>
       )}

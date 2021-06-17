@@ -90,7 +90,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
   };
 
   return (
-    <div className={s.onboardingOverlayContainer}>
+    <>
       {!isForMunicipalityAuthenticated ? (
         <>
           <span
@@ -106,22 +106,26 @@ export const Onboarding = ({ setOverlayOpen }) => {
               dangerouslySetInnerHTML={{ __html: closeIcon }}
             ></div>
           </span>
-          <SignUpFlow />
+          <div className={s.onboardingContent}>
+            <SignUpFlow />
+          </div>
         </>
       ) : (
         <>
           {/* Show onboarding content */}
-          <div className={s.breadcrumbContainer}>
+          <nav className={s.breadcrumbContainer}>
             <BreadcrumbLinks
               setCurrentElement={setCurrentElement}
               currentElement={currentElement}
               setOverlayOpen={setOverlayOpen}
             />
+          </nav>
+          <div className={s.onboardingContent}>
+            <CurrentComponent />
           </div>
-          <CurrentComponent />
         </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -188,8 +188,7 @@ export default ({ onboardingNextPage }) => {
           </p>
           <h3>Wie möchtest du spenden?</h3>
           <div className={s.selectionContainer}>
-            <div
-              aria-hidden="true"
+            <button
               className={cN(s.selectionElement, {
                 [s.selectionElementActive]: donationInterval === 'jährlich',
               })}
@@ -198,9 +197,8 @@ export default ({ onboardingNextPage }) => {
               }}
             >
               Jährlich
-            </div>
-            <div
-              aria-hidden="true"
+            </button>
+            <button
               className={cN(s.selectionElement, {
                 [s.selectionElementActive]: donationInterval === 'monatlich',
               })}
@@ -209,9 +207,8 @@ export default ({ onboardingNextPage }) => {
               }}
             >
               Monatlich
-            </div>
-            <div
-              aria-hidden="true"
+            </button>
+            <button
               className={cN(s.selectionElement, {
                 [s.selectionElementActive]: donationInterval === 'einmalig',
               })}
@@ -220,7 +217,7 @@ export default ({ onboardingNextPage }) => {
               }}
             >
               Einmalig
-            </div>
+            </button>
           </div>
         </div>
       )}
@@ -284,8 +281,7 @@ export default ({ onboardingNextPage }) => {
                           <div className={s.donationIntervalSelection}>
                             <h3>Zahlungsart wählen</h3>
                             <div className={s.selectionContainer}>
-                              <div
-                                aria-hidden="true"
+                              <button
                                 className={cN(s.selectionElement, {
                                   [s.selectionElementActive]:
                                     paymentType === 'Lastschrift',
@@ -296,9 +292,8 @@ export default ({ onboardingNextPage }) => {
                                 }}
                               >
                                 Lastschrift
-                              </div>
-                              <div
-                                aria-hidden="true"
+                              </button>
+                              <button
                                 className={cN(s.selectionElement, {
                                   [s.selectionElementActive]:
                                     paymentType === 'Überweisung',
@@ -309,9 +304,8 @@ export default ({ onboardingNextPage }) => {
                                 }}
                               >
                                 Überweisung
-                              </div>
-                              <div
-                                aria-hidden="true"
+                              </button>
+                              <button
                                 className={cN(s.selectionElement, {
                                   [s.selectionElementActive]:
                                     paymentType === 'PayPal',
@@ -322,9 +316,8 @@ export default ({ onboardingNextPage }) => {
                                 }}
                               >
                                 PayPal
-                              </div>
-                              <div
-                                aria-hidden="true"
+                              </button>
+                              <button
                                 className={cN(s.selectionElement, {
                                   [s.selectionElementActive]:
                                     paymentType === 'Kreditkarte',
@@ -335,7 +328,7 @@ export default ({ onboardingNextPage }) => {
                                 }}
                               >
                                 Kreditkarte
-                              </div>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -551,7 +544,6 @@ export default ({ onboardingNextPage }) => {
                           onboardingNextPage();
                         }}
                         size="MEDIUM"
-
                       >
                         Weiter
                       </CTAButton>
@@ -592,6 +584,7 @@ export default ({ onboardingNextPage }) => {
                   />
                   <Button
                     name="submit"
+                    tabIndex="0"
                     onClick={() => setPaypalButtonClicked(true)}
                   >
                     Jetzt spenden

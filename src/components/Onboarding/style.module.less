@@ -1,11 +1,17 @@
 @import '../../components/style/vars.less';
 
-.onboardingOverlayContainer {
-  background-color: @white;
-  border: 1px solid @violet;
-  border-radius: 25px;
-  max-width: 50rem;
-  margin: 0 auto;
+.onboardingContent {
+  width: 100%;
+  height: 90%;
+  overflow: auto;
+  /* Hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .pageContainer {
@@ -13,7 +19,7 @@
   padding: 1rem 2rem;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2rem;
+  //margin-top: 2rem;
   margin-bottom: 2rem;
 
   background-color: @white;
@@ -83,6 +89,7 @@
   padding-bottom: 0.6em;
   width: 100%;
   background: @aqua;
+  font-size: 1rem;
   text-align: center;
   color: white;
   text-decoration: none;
@@ -135,7 +142,7 @@
 
 .closeButtonBreadcrumb {
   width: 0.75rem;
-  height: 0.75rem;
+  height: 1rem;
   margin-left: 45%;
   cursor: pointer;
   fill: @white;
@@ -216,6 +223,7 @@
   font-size: @MobileFontSizeXL;
   border: 1px solid @violet;
   cursor: pointer;
+  background-color: transparent;
 
   &:hover {
     background-color: @violet;

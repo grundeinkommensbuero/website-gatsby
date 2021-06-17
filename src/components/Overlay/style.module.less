@@ -78,33 +78,46 @@
   background-color: white;
 }
 
+.backdrop {
+  position: fixed;
+  z-index: 1040;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-backdrop-filter: blur(30px) brightness(0.8);
+  backdrop-filter: blur(30px) brightness(0.8);
+
+  /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
+  @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.modalStyle {
+  position: fixed;
+  width: 90%;
+  max-width: 50rem;
+  height: 90vh;
+  z-index: 1040;
+  background-color: @white;
+  border: 1px solid @violet;
+  border-radius: 25px;
+  margin: 0 auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  padding-bottom: 2rem;
+}
+
 /* if backdrop support: very transparent and blurred */
 @supports (
   (-webkit-backdrop-filter: blur(35px)) or (backdrop-filter: blur(35px))
 ) {
   .backdropBlur {
-    background-color: rgba(255, 255, 255, 0.5);
-    -webkit-backdrop-filter: blur(35px);
-    backdrop-filter: blur(35px);
-  }
-}
-
-.closeButtonOnboarding {
-  position: fixed;
-  top: 5rem;
-  right: 4rem;
-  height: 2rem;
-  width: 2rem;
-  cursor: pointer;
-  font-size: 0;
-  background-image: url('./close-icon.svg');
-  background-size: cover;
-  background-color: transparent;
-  border: none;
-
-  @media (max-width: @breakPointM) {
-    width: 2rem;
-    height: 2rem;
+    background-color: rgb(31, 30, 30);
+    opacity: 0.5;
   }
 }
 

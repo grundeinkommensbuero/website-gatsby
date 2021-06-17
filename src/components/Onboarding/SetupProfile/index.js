@@ -2,9 +2,14 @@ import React from 'react';
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import ImageUpload from '../../Forms/ImageUpload';
-import { Button } from '../../Forms/Button';
+import { Button, InlineButton } from '../../Forms/Button';
 
-export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByIndex }) => {
+export const SetupProfile = ({
+  userData,
+  userId,
+  compIndex,
+  setCurrentElementByIndex,
+}) => {
   return (
     <>
       <section className={gS.pageContainer}>
@@ -21,7 +26,7 @@ export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByI
             showUploadLabel={false}
             showEditLabel={true}
             size={'large'}
-            onUploadDone={() => { }}
+            onUploadDone={() => {}}
           />
         </div>
 
@@ -31,15 +36,15 @@ export const SetupProfile = ({ userData, userId, compIndex, setCurrentElementByI
             onClick={() => setCurrentElementByIndex(compIndex + 1)}
           >
             Weiter
-        </Button>
+          </Button>
         </div>
         <div className={gS.fullWidthFlex}>
-          <span
-            aria-hidden="true"
-            className={gS.linkLikeFormatted}
-            onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+          <InlineButton
+            aria-label={'Schritt überspringen'}
+            onClick={() => setCurrentElementByIndex(compIndex + 1)}
+          >
             Jetzt nicht
-        </span>
+          </InlineButton>
         </div>
       </section>
     </>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as gS from '../style.module.less';
 import * as s from './style.module.less';
 import DonationForm from '../../Forms/DonationForm';
+import { InlineButton } from '../../Forms/Button';
 
 export const Donate = ({
   userData,
@@ -65,16 +66,14 @@ export const Donate = ({
           </p>
 
           <div className={gS.buttonRow}>
-            <div
-              aria-hidden="true"
+            <button
               className={s.engagementOption}
               onClick={() => setShowDonationForm(true)}
             >
               Jetzt spenden
-            </div>
+            </button>
 
-            <div
-              aria-hidden="true"
+            <button
               className={s.engagementOption}
               onClick={() => {
                 saveDonationReaction('remindMeLater');
@@ -82,20 +81,19 @@ export const Donate = ({
               }}
             >
               Später erinnern
-            </div>
+            </button>
           </div>
 
           <div className={gS.fullWidthFlex}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <InlineButton
+              aria-label={'Schritt überspringen'}
               onClick={() => {
                 saveDonationReaction('skipedDonation');
                 setCurrentElementByIndex(compIndex + 1);
               }}
             >
               Überspringen
-            </span>
+            </InlineButton>
           </div>
         </>
       )}

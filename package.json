@@ -83,6 +83,7 @@
     "react-final-form": "^6.5.3",
     "react-final-form-listeners": "^1.0.3",
     "react-helmet-async": "^1.0.9",
+    "react-overlays": "^5.0.1",
     "react-popper": "^2.2.5",
     "react-reel": "^1.2.3",
     "react-share": "^4.3.1",
