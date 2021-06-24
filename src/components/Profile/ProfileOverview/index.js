@@ -46,7 +46,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
             </div>
-            {userData && userData.referredUsers && userData.referredUsers[0] ?
+            {referredUserMessage ?
               <div className={s.referredUsersMessage}>
                 {referredUserMessage}
               </div> : null}

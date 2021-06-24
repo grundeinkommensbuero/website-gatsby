@@ -80,7 +80,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
                 </li>
               </ul>
             </div>
-            {userData && userData.referredUsers && userData.referredUsers[0] ?
+            {referredUserMessage ?
               <div className={s.referredUsersMessage}>
                 {referredUserMessage}
               </div> : null}
