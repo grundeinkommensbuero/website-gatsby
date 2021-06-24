@@ -8,6 +8,7 @@ import { SignUpButton } from '../../TickerToSignup/SignupButton';
 import { formatDate } from '../../utils';
 import * as s from './style.module.less';
 import cN from 'classnames';
+import { getReferredUserMessage } from '../ProfileOverview/referredUserMessage';
 
 export const ProfileTile = ({ children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);
@@ -55,13 +56,7 @@ export const ProfileTile = ({ children }) => {
 
 const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
 
-  const getReferredUserMessage = () => {
-    if (userData.referredUsers.length === 1) {
-      return `Dank dir hat sich ein:e weitere User:in angemeldet!`;
-    } else {
-      return `Dank dir haben sich ${userData.referredUsers.length} weitere User:innen angemeldet!`;
-    }
-  }
+  const referredUserMessage = getReferredUserMessage({ userData });
 
   return (
     <>
@@ -87,7 +82,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
             </div>
             {userData && userData.referredUsers && userData.referredUsers[0] ?
               <div className={s.referredUsersMessage}>
-                {getReferredUserMessage()}
+                {referredUserMessage}
               </div> : null}
           </div>
           <div className={s.flexElement}>

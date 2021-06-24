@@ -6,6 +6,7 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
+import { getReferredUserMessage } from './referredUserMessage';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
   /* list newsletters of current user as human readable string */
@@ -24,13 +25,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
     return [newsletterLabels.slice(0, -1).join(', '), newsletterLabels.slice(-1)[0]].join(newsletterLabels.length < 2 ? '' : ' und ');
   }
 
-  const getReferredUserMessage = () => {
-    if (userData.referredUsers.length === 1) {
-      return `Dank dir hat sich ein:e weitere User:in angemeldet!`;
-    } else {
-      return `Dank dir haben sich ${userData.referredUsers.length} weitere User:innen angemeldet!`;
-    }
-  }
+  const referredUserMessage = getReferredUserMessage({ userData });
 
   return (
     <section className={gS.profilePageGrid}>
@@ -53,7 +48,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
             </div>
             {userData && userData.referredUsers && userData.referredUsers[0] ?
               <div className={s.referredUsersMessage}>
-                {getReferredUserMessage()}
+                {referredUserMessage}
               </div> : null}
           </div>
           <div className={s.sectionLink}>
