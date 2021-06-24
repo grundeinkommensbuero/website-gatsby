@@ -105,3 +105,25 @@
   box-shadow: 0 0.1em currentColor;
   border-bottom: 0.05em transparent solid;
 }
+
+.linkLikeFormattedButton {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0;
+  font-size: @DesktopFontSizeM;
+  &:hover {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+
+  &.onWhiteBackground {
+    color: black;
+  }
+}
+
+.alignLeft {
+  text-align: left;
+}

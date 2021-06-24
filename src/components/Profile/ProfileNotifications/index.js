@@ -227,23 +227,19 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         ) : (
           <p className={cN(gS.alignRight, gS.noMargin)}>
             {mainNewsletterConsent && mainNewsletterConsent.value ? (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleUnsubscribeMainNewsletterDialog}
-                onKeyDown={toggleUnsubscribeMainNewsletterDialog}
               >
                 abbestellen
-              </span>
+              </button>
             ) : (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleMainNewsletterConsent}
-                onKeyDown={toggleMainNewsletterConsent}
               >
                 Newsletter erhalten
-              </span>
+              </button>
             )}
           </p>
         )}
@@ -276,23 +272,19 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         ) : (
           <p className={cN(gS.alignRight, gS.noMargin)}>
             {reminderMailConsent && reminderMailConsent.value ? (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleUnsubscribeReminderMailsDialog}
-                onKeyDown={toggleUnsubscribeReminderMailsDialog}
               >
                 abbestellen
-              </span>
+              </button>
             ) : (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleReminderMailConsent}
-                onKeyDown={toggleReminderMailConsent}
               >
                 Erinnerungsmails erhalten
-              </span>
+              </button>
             )}
           </p>
         )}
@@ -319,14 +311,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Abbestellen
           </Button>
           <div className={s.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={toggleUnsubscribeMainNewsletterDialog}
-              onKeyUp={toggleUnsubscribeMainNewsletterDialog}
             >
               Newsletter weiter erhalten
-            </span>
+            </button>
           </div>
         </div>
       </section>
@@ -352,14 +342,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Abbestellen
           </Button>
           <div className={s.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={toggleUnsubscribeReminderMailsDialog}
-              onKeyUp={toggleUnsubscribeReminderMailsDialog}
             >
               Erinnerungsmails weiter erhalten
-            </span>
+            </button>
           </div>
         </div>
       </section>
@@ -385,14 +373,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Abbestellen
           </Button>
           <div className={s.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={() => setShowUnsubscribeAllDialog(false)}
-              onKeyUp={() => setShowUnsubscribeAllDialog(false)}
             >
               Newsletter weiter erhalten
-            </span>
+            </button>
           </div>
         </div>
       </section>
@@ -457,11 +443,11 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         </div>
 
         {!unsubscribeAllDialogActive ?
-          <p
-            aria-hidden="true"
-            className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
-            onClick={() => setShowUnsubscribeAllDialog(true)}
-            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
+          <button
+            className={cN(gS.linkLikeFormattedButton, gS.bottomRightLink)}
+            onClick={() => setShowUnsubscribeAllDialog(true)}>
+            Alle abbestellen
+          </button>
           : <UnsubscribeAllDialog />
         }
       </section>

@@ -171,12 +171,11 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
             </div>
 
             {!showDeleteAccountDialog ?
-              <span
-                aria-hidden="true"
-                className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.bottomRightLink)}
                 onClick={() => setShowDeleteAccountDialog(true)}>
                 Profil löschen
-              </span> :
+              </button> :
               <div>
                 <br></br>
                 <DeleteAccountDialog
