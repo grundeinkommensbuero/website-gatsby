@@ -10,8 +10,6 @@ import * as gS from '../style.module.less';
 // Get newsletter styles from Newsletter-Settings
 import * as nS from '../ProfileNotifications/style.module.less';
 
-
-
 export const DeleteAccountDialog = ({ userId, setShowDeleteAccountDialog }) => {
 
   const deleteUser = useDeleteUser();
