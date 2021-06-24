@@ -17,6 +17,8 @@ import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
 import { FinalNote } from './FinalNote';
 
+import cN from 'classnames';
+
 export const Onboarding = ({ setOverlayOpen }) => {
   const {
     isAuthenticated,
@@ -93,19 +95,21 @@ export const Onboarding = ({ setOverlayOpen }) => {
     <>
       {!isForMunicipalityAuthenticated ? (
         <>
-          <span
-            aria-hidden="true"
-            className={s.lonelyCloseButton}
+          <button
+            aria-label="Schließen"
+            className={cN(s.lonelyCloseButton)}
             onClick={() => setOverlayOpen(false)}
-            onKeyPress={() => setOverlayOpen(false)}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter' || event.key === 'Space') {
+                setOverlayOpen(false)
+              }
+            }}
           >
             <div
-              aria-hidden="true"
-              alt=""
               className={s.closeButton}
               dangerouslySetInnerHTML={{ __html: closeIcon }}
             ></div>
-          </span>
+          </button>
           <div className={s.onboardingContent}>
             <SignUpFlow />
           </div>
