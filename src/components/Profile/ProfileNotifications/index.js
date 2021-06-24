@@ -458,7 +458,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           </section>
         ) : null}
 
-        <h3 className={gS.optionSectionHeading}>Newsletter hinzufügen</h3>
+        <h3 className={gS.optionSectionHeading}>Regionale Newsletter hinzufügen</h3>
         <div className={s.searchPlaces}>
           <SearchPlaces
             label={''}
