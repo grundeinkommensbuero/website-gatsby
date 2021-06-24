@@ -6,6 +6,7 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
+import { getReferredUserMessage } from './referredUserMessage';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
   /* list newsletters of current user as human readable string */
@@ -23,6 +24,8 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
     }
     return [newsletterLabels.slice(0, -1).join(', '), newsletterLabels.slice(-1)[0]].join(newsletterLabels.length < 2 ? '' : ' und ');
   }
+
+  const referredUserMessage = getReferredUserMessage({ userData });
 
   return (
     <section className={gS.profilePageGrid}>
@@ -43,6 +46,10 @@ export const ProfileOverview = ({ userData, signatureCountOfUser, userId }) => {
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
             </div>
+            {userData && userData.referredUsers && userData.referredUsers[0] ?
+              <div className={s.referredUsersMessage}>
+                {referredUserMessage}
+              </div> : null}
           </div>
           <div className={s.sectionLink}>
             <span>Stammdaten bearbeiten</span>
