@@ -42,7 +42,7 @@ export const SearchPlaces = ({
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
   const [fuse, setFuse] = useState();
-  const [focusedResult, setFocusedResult] = useState();
+  const [focusedResult, setFocusedResult] = useState(null);
 
   useEffect(() => {
     import('./municipalitiesForSearch.json').then(({ default: places }) => {
@@ -225,9 +225,14 @@ export const SearchPlaces = ({
   };
 
   const handleEnterKey = e => {
-    // Emulate click when enter or space are pressed
+    // Emulate click when enter is pressed
     if (e.key === 'Enter') {
       handleSuggestionClick(results[0]);
+    }
+
+    // Focus into suggestions when pressing arrow down
+    if (e.key === 'ArrowDown' || e.which === 40) {
+      setFocusedResult(0);
     }
   };
 
@@ -243,10 +248,7 @@ export const SearchPlaces = ({
       // At the end of a list jump back to the beginning
       // and vice versa (but only for arrow keys).
       // If at the end and tab is pressed we want default behaviour
-      if (
-        focusedResult < results.length - 1 &&
-        typeof focusedResult !== 'undefined'
-      ) {
+      if (focusedResult < results.length - 1 && focusedResult !== null) {
         setFocusedResult(prev => prev + 1);
         e.preventDefault();
       } else if (!isTab) {
@@ -277,6 +279,7 @@ export const SearchPlaces = ({
     if (!isAutoCompleteTarget && !isAutoCompleteContainerTarget) {
       setTimeout(() => {
         setSuggestionsActive(false);
+        setFocusedResult(null);
 
         // If search places input is inside form,
         // we want to choose first element of suggestions as place
@@ -363,10 +366,7 @@ export function AutoCompleteList({
   }, [results]);
 
   useLayoutEffect(() => {
-    if (
-      typeof focusedResult !== 'undefined' &&
-      focusedResult < resultsRef.current.length
-    ) {
+    if (focusedResult !== null && focusedResult < resultsRef.current.length) {
       resultsRef.current[focusedResult].focus();
     }
   }, [focusedResult, resultsRef]);
