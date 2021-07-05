@@ -61,7 +61,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && <HertieCrowdfunding />}
+        {/* {stickyBannerVisible && <HertieCrowdfunding />} */}
       </header>
     </>
   );
