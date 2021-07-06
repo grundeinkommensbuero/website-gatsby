@@ -335,11 +335,12 @@ export const pageQuery = graphql`
             headline {
               headline
             }
+            sectionId
             keyVisual
+            showForOwnMunicipality
             titleShort
             colorScheme
-            showForOptions
-            showForAgs
+            ags
             components {
               ... on ContentfulSectionComponentStandard {
                 __typename

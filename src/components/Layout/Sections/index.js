@@ -22,6 +22,7 @@ import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
+// import { runElFilterTest } from '../../utils/testUtils';
 import { TextAndImage } from './TextAndImage';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { IntroText } from '../../IntroText';
@@ -55,45 +56,42 @@ const Components = {
   CollectionMap: loadable(() =>
     import('../../Municipality/MunicipalityCollectionMap')
   ),
+
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
 };
 
-export default function Sections({ sections, pageContext }) {
-  const userContentfulState = useUserMunicipalityContentfulState();
-
-  const {
-    municipality,
-    municipalityContentfulState,
-    berlinHamburgBremenState,
-  } = useContext(MunicipalityContext);
+export const getRenderedSections = ({
+  sections,
+  pageContext,
+  municipality,
+  isAuthenticated,
+  userData,
+}) => {
+  const renderedSections = [];
 
   const displayedSections = getFilteredElementsByContentfulState({
     elements: sections,
-    municipalityContentfulState,
-    userContentfulState,
-    berlinHamburgBremenState,
     municipality,
-    showByDefault: true,
+    userData,
+    isAuthenticated,
   });
+
   if (displayedSections && displayedSections.length) {
-    return (
-      <SectionWrapper>
-        {displayedSections.map((section, index) => {
-          return (
-            <ContentfulSection
-              section={section}
-              pageContext={pageContext}
-              key={index}
-            />
-          );
-        })}
-      </SectionWrapper>
-    );
+    displayedSections.forEach((section, index) => {
+      renderedSections.push(
+        <ContentfulSection
+          section={section}
+          pageContext={pageContext}
+          key={index}
+        />
+      );
+    });
+    return renderedSections;
   }
   return null;
-}
+};
 
 export function SectionWrapper({ children, className }) {
   return <div className={cN(s.sections, className)}>{children}</div>;
@@ -175,14 +173,6 @@ export function ContentfulSection({ section, pageContext }) {
   };
 
   if (__typename === 'ContentfulPageSectionWithComponents') {
-    const filteredComponents = getFilteredElementsByContentfulState({
-      elements: section.components,
-      municipalityContentfulState,
-      userContentfulState,
-      municipality,
-      showByDefault: false,
-    });
-
     return (
       <>
         {section.keyVisual && (
@@ -224,25 +214,29 @@ export function ContentfulSection({ section, pageContext }) {
           <SectionInner>
             {headline && <h2>{headline.headline}</h2>}
             <div className={s.componentElementContainer}>
-              {filteredComponents.map((component, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={cN({
-                      [s.componentLeft]: component.column === 'left',
-                      [s.componentRight]: component.column === 'right',
-                      [s.componentCenterWide]:
-                        component.column === 'centerWide',
-                      [s.componentCenterNarrow]:
-                        component.column === 'centerNarrow',
-                    })}
-                  >
-                    {getComponentFromContentful({
-                      Components,
-                      component,
-                    })}
-                  </div>
-                );
+              {section.components.map((component, index) => {
+                if ('__typename' in component) {
+                  return (
+                    <div
+                      key={index}
+                      className={cN({
+                        [s.componentLeft]: component.column === 'left',
+                        [s.componentRight]: component.column === 'right',
+                        [s.componentCenterWide]:
+                          component.column === 'centerWide',
+                        [s.componentCenterNarrow]:
+                          component.column === 'centerNarrow',
+                      })}
+                    >
+                      {getComponentFromContentful({
+                        Components,
+                        component,
+                      })}
+                    </div>
+                  );
+                }
+
+                return null;
               })}
             </div>
           </SectionInner>
