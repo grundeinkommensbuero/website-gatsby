@@ -1,19 +1,22 @@
 import React from 'react';
 import { getRenderedSections, SectionWrapper } from './index';
 
-export const RenderPage = ({ sections, pageContext }) => {
-  const RenderedSections = () => {
-    return getRenderedSections({
-      sections,
-      pageContext,
-    }).map((section, index) => (
-      <React.Fragment key={index}>{section}</React.Fragment>
-    ));
-  };
+export const RenderPage = ({
+  municipality,
+  userData,
+  isAuthenticated,
+  sections,
+  pageContext,
+}) => {
+  const renderedSections = getRenderedSections({
+    municipality,
+    userData,
+    isAuthenticated,
+    sections,
+    pageContext,
+  }).map((section, index) => (
+    <React.Fragment key={index}>{section}</React.Fragment>
+  ));
 
-  return (
-    <SectionWrapper>
-      <RenderedSections />
-    </SectionWrapper>
-  );
+  return <SectionWrapper>{renderedSections}</SectionWrapper>;
 };

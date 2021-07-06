@@ -266,6 +266,7 @@ export const getFilteredElementsByContentfulState = ({
     // municipality based on the ags attribute in contentful. If there is a default section
     // with a specific sectionId it should be overwritten, if there is specific section with an ags.
     if (municipality?.ags) {
+      console.log('ags', el.ags);
       if (el.ags?.length) {
         if (!el.ags.includes(municipality.ags)) {
           showState = false;
@@ -274,7 +275,9 @@ export const getFilteredElementsByContentfulState = ({
         el.sectionId !== '' &&
         elements.findIndex(
           ({ sectionId, ags }) =>
-            sectionId === el.sectionId && ags.includes(municipality.ags)
+            sectionId === el.sectionId &&
+            ags?.length &&
+            ags.includes(municipality.ags)
         ) !== -1
       ) {
         showState = false;
