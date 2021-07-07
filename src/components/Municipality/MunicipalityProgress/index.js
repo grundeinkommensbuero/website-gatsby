@@ -3,12 +3,20 @@ import { CampainVisualisation } from '../../CampaignVisualisations';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 import * as s from './style.module.less';
+import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
 
 export const MunicipalityProgress = ({
   showHeadline = true,
   showDescription = true,
 }) => {
   const { municipality } = useContext(MunicipalityContext);
+  const userMunicipalityState = useUserMunicipalityState();
+
+  // Don't render this component if user has not signed up for this municipality
+  if (userMunicipalityState !== 'loggedInThisMunicipalitySignup') {
+    return null;
+  }
+
   const statsReady = municipality?.goal > 0;
   let signups = municipality?.signups;
 

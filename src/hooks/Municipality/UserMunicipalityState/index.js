@@ -2,33 +2,33 @@ import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 
-export const useUserMunicipalityContentfulState = () => {
-  const { customUserData, isAuthenticated, userId } = useContext(AuthContext);
+export const useUserMunicipalityState = () => {
+  const { customUserData, isAuthenticated } = useContext(AuthContext);
 
   const { municipality } = useContext(MunicipalityContext);
-  const [userContentfulState, setUserContentfulState] = useState();
+  const [userMunicipalityState, setUserMunicipalityState] = useState();
 
   useEffect(() => {
-    if (userId) {
+    if (isAuthenticated) {
       if (customUserData?.municipalities?.length) {
         const userAgs = customUserData.municipalities.map(m => m.ags);
         if (municipality?.ags && userAgs.includes(municipality.ags)) {
-          setUserContentfulState('loggedInThisMunicipalitySignup');
+          setUserMunicipalityState('loggedInThisMunicipalitySignup');
         } else {
-          setUserContentfulState('loggedInOtherMunicipalitySignup');
+          setUserMunicipalityState('loggedInOtherMunicipalitySignup');
         }
       } else {
-        setUserContentfulState('loggedInNoMunicipalitySignup');
+        setUserMunicipalityState('loggedInNoMunicipalitySignup');
       }
     } else {
-      setUserContentfulState('loggedOut');
+      setUserMunicipalityState('loggedOut');
     }
   }, [isAuthenticated, customUserData, municipality]);
 
   // Debug Contentful showForOptions with this log:
   // console.log(
-  //   `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userContentfulState}\n\n`
+  //   `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userMunicipalityState}\n\n`
   // );
 
-  return userContentfulState;
+  return userMunicipalityState;
 };

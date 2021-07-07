@@ -313,7 +313,6 @@ export const pageQuery = graphql`
                 }
               }
             }
-            showForOptions
             colorScheme
           }
           ... on ContentfulPageSectionIllustration {
@@ -337,14 +336,13 @@ export const pageQuery = graphql`
             }
             sectionId
             keyVisual
-            showForOwnMunicipality
+            showOnlyForOwnMunicipality
             titleShort
             colorScheme
             ags
             components {
               ... on ContentfulSectionComponentStandard {
                 __typename
-                showForOptions
                 column
                 videoLink
                 signUpButton
@@ -383,7 +381,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentTextAndImage {
                 __typename
-                showForOptions
                 column
                 layout
                 image {
@@ -428,7 +425,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentTickerToSignup {
                 __typename
-                showForOptions
                 column
                 tickerDescription {
                   tickerDescription
@@ -436,17 +432,14 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentMunicipalityMap {
                 __typename
-                showForOptions
                 column
               }
               ... on ContentfulSectionComponentMunicipalityProgress {
                 __typename
-                showForOptions
                 column
               }
               ... on ContentfulSectionComponentInviteFriends {
                 __typename
-                showForOptions
                 headline
                 column
                 body {
@@ -455,7 +448,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentInviteFriends {
                 __typename
-                showForOptions
                 headline
                 column
                 body {
@@ -464,7 +456,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentBecomeActive {
                 __typename
-                showForOptions
                 headline
                 column
                 body {
@@ -474,13 +465,11 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentInfoText {
                 __typename
-                showForOptions
                 fullWidthOnDesktop
                 column
               }
               ... on ContentfulSectionComponentIntroText {
                 __typename
-                showForOptions
                 fullWidthOnDesktop
                 column
                 highlightText {
@@ -492,7 +481,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentProfileTile {
                 __typename
-                showForOptions
                 column
                 body {
                   raw
@@ -501,7 +489,6 @@ export const pageQuery = graphql`
               }
               ... on ContentfulSectionComponentCollectionMap {
                 __typename
-                showForOptions
                 column
                 maps {
                   name

@@ -284,12 +284,15 @@ export const getFilteredElementsByContentfulState = ({
       }
     }
 
+    // If element has checkbox showOnlyForOwnMunicipality we only render the component
+    // if user is signed in and has signed up for that municipality
     if (
-      el.showForOwnMunicipality &&
-      isAuthenticated &&
-      userData.municipalities.findIndex(municipality =>
-        el.ags.includes(municipality.ags)
-      ) === -1
+      el.showOnlyForOwnMunicipality &&
+      (!isAuthenticated ||
+        (isAuthenticated &&
+          userData.municipalities.findIndex(municipality =>
+            el.ags.includes(municipality.ags)
+          ) === -1))
     ) {
       showState = false;
     }

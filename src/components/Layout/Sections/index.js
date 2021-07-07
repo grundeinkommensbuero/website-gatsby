@@ -17,7 +17,7 @@ import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 // NOTE: this is not needed anymore (or right now), so I commented it out for better performance
 // import { MunicipalityIntro } from '../../Municipality/MunicipalityIntro';
 // import QuestionUbi from '../../QuestionUbi';
-import { useUserMunicipalityContentfulState } from '../../../hooks/Municipality/UserMunicipalityContentfulState';
+import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
 import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
@@ -149,7 +149,7 @@ export function ContentfulSection({ section, pageContext }) {
   const isTwoColumns = __typename === 'ContentfulPageSectionTwoColumns'; // Actually four columns
   const isDonationFeature = __typename === 'ContentfulPageSectionDonation';
 
-  const userContentfulState = useUserMunicipalityContentfulState();
+  const userMunicipalityState = useUserMunicipalityState();
 
   const { municipality, municipalityContentfulState } = useContext(
     MunicipalityContext
