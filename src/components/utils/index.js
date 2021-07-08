@@ -256,7 +256,7 @@ export const getFilteredElementsByContentfulState = ({
   elements,
   municipality,
   isAuthenticated,
-  userData,
+  userMunicipalityState,
 }) => {
   return elements?.filter(el => {
     let showState = true;
@@ -266,7 +266,6 @@ export const getFilteredElementsByContentfulState = ({
     // municipality based on the ags attribute in contentful. If there is a default section
     // with a specific sectionId it should be overwritten, if there is specific section with an ags.
     if (municipality?.ags) {
-      console.log('ags', el.ags);
       if (el.ags?.length) {
         if (!el.ags.includes(municipality.ags)) {
           showState = false;
@@ -284,15 +283,22 @@ export const getFilteredElementsByContentfulState = ({
       }
     }
 
-    // If element has checkbox showOnlyForOwnMunicipality we only render the component
-    // if user is signed in and has signed up for that municipality
+    // If element has checkbox showForOwnMunicipality we only render the component
+    // if user is signed in and has signed up for that municipality.
     if (
-      el.showOnlyForOwnMunicipality &&
-      (!isAuthenticated ||
-        (isAuthenticated &&
-          userData.municipalities.findIndex(municipality =>
-            el.ags.includes(municipality.ags)
-          ) === -1))
+      el.showForOwnMunicipality &&
+      (!municipality?.ags ||
+        !isAuthenticated ||
+        userMunicipalityState !== 'loggedInThisMunicipalitySignup')
+    ) {
+      showState = false;
+    }
+
+    // Check if false, because default is null and default means show everywhere,
+    // while false means don't show element for own municipality
+    if (
+      el.showForOwnMunicipality === false &&
+      userMunicipalityState === 'loggedInThisMunicipalitySignup'
     ) {
       showState = false;
     }

@@ -67,6 +67,7 @@ export const getRenderedSections = ({
   municipality,
   isAuthenticated,
   userData,
+  userMunicipalityState,
 }) => {
   const renderedSections = [];
 
@@ -75,6 +76,7 @@ export const getRenderedSections = ({
     municipality,
     userData,
     isAuthenticated,
+    userMunicipalityState,
   });
 
   if (displayedSections && displayedSections.length) {

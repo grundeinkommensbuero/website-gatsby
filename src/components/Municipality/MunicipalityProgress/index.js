@@ -8,12 +8,16 @@ import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunici
 export const MunicipalityProgress = ({
   showHeadline = true,
   showDescription = true,
+  isPartOfInfoText,
 }) => {
   const { municipality } = useContext(MunicipalityContext);
   const userMunicipalityState = useUserMunicipalityState();
 
   // Don't render this component if user has not signed up for this municipality
-  if (userMunicipalityState !== 'loggedInThisMunicipalitySignup') {
+  if (
+    !isPartOfInfoText &&
+    userMunicipalityState !== 'loggedInThisMunicipalitySignup'
+  ) {
     return null;
   }
 

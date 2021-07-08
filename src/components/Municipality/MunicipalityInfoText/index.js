@@ -25,7 +25,11 @@ export const MunicipalityInfoText = () => {
         </p>
         <MunicipalityDescription municipality={municipality} />
         <div>
-          <MunicipalityProgress showHeadline={false} showDescription={false} />
+          <MunicipalityProgress
+            showHeadline={false}
+            showDescription={false}
+            isPartOfInfoText={true}
+          />
         </div>
         <MunicipalityCTA municipality={municipality} />
       </div>

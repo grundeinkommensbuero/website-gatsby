@@ -13,7 +13,6 @@ import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
-import { MunicipalityContext } from '../../context/Municipality';
 
 function Template({ children, sections, pageContext, title, description }) {
   const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
@@ -205,7 +204,6 @@ function Template({ children, sections, pageContext, title, description }) {
 
   // Adds additional menu items for users municipality, default max: 5
   const { customUserData, isAuthenticated } = useContext(AuthContext);
-  const { municipality } = useContext(MunicipalityContext);
   const [modifiedMainMenu, setModifiedMainMenu] = useState(
     globalStuff.mainMenu
   );
@@ -293,9 +291,6 @@ function Template({ children, sections, pageContext, title, description }) {
         <RenderPage
           sections={sectionsWithColorScheme}
           pageContext={pageContext}
-          isAuthenticated={isAuthenticated}
-          municipality={municipality}
-          userData={customUserData}
         />
       </main>
       <Footer

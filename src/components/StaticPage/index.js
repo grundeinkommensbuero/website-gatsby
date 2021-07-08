@@ -336,7 +336,7 @@ export const pageQuery = graphql`
             }
             sectionId
             keyVisual
-            showOnlyForOwnMunicipality
+            showForOwnMunicipality
             titleShort
             colorScheme
             ags
