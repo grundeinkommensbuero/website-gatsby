@@ -167,9 +167,10 @@ function Template({ children, sections, pageContext, title, description }) {
     );
   });
 
-  const variableMarginClass = () => {
-    return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
-  };
+  // NOTE: not needed until banner is activated again
+  // const variableMarginClass = () => {
+  //   return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
+  // };
 
   const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
