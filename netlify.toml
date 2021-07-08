@@ -8,6 +8,11 @@ command = "npm run build-dev-backend"
 CONTENTFUL_ENVIRONMENT = "launch"
 GATSBY_USE_DEV_BACKEND = "override"
 
+[context.restructure-pages.environment]
+CONTENTFUL_ENVIRONMENT = "master-2021-07-05"
+GATSBY_USE_DEV_BACKEND = "override"
+
+
 [context.deploy-preview]
 command = "npm run build-dev-backend"
 
