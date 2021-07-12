@@ -14,10 +14,6 @@ export const HertieCrowdfunding = () => {
         <button
           className={s.closeButton}
           onClick={() => closeStickyBanner()}
-          onKeyPress={event =>
-            !!(event.key === 'Enter' || event.key === 'Space') &&
-            closeStickyBanner()
-          }
         >
           <img
             className={s.closeIcon}

@@ -99,11 +99,6 @@ export const Onboarding = ({ setOverlayOpen }) => {
             aria-label="Schließen"
             className={cN(s.lonelyCloseButton)}
             onClick={() => setOverlayOpen(false)}
-            onKeyPress={(event) => {
-              if (event.key === 'Enter' || event.key === 'Space') {
-                setOverlayOpen(false)
-              }
-            }}
           >
             <div
               className={s.closeButton}
