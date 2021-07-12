@@ -7,6 +7,7 @@ import Link from 'gatsby-link';
 import * as s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
+// import { HertieCrowdfunding } from './StickyDonationBar/HertieCrowdfunding';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 const Header = ({ menu, stickyBannerVisible }) => {

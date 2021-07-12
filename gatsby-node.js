@@ -176,7 +176,7 @@ const clientId =
     ? process.env.DEV_COGNITO_APP_CLIENT_ID
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
 
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   actions.setWebpackConfig({
     plugins: [
       new webpack.DefinePlugin({
@@ -204,6 +204,20 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
       },
     },
   });
+
+  // Css chunk order warning can be ignored when using css modules
+  // https://spectrum.chat/gatsby-js/general/having-issue-related-to-chunk-commons-mini-css-extract-plugin~0ee9c456-a37e-472a-a1a0-cc36f8ae6033
+  if (stage === 'build-javascript' || stage === 'develop') {
+    const config = getConfig();
+
+    const miniCssExtractPlugin = config.plugins.find(
+      plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
+    );
+    if (miniCssExtractPlugin) {
+      miniCssExtractPlugin.options.ignoreOrder = true;
+    }
+    actions.replaceWebpackConfig(config);
+  }
 };
 
 /**
