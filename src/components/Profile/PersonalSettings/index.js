@@ -103,7 +103,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 onChange={evt => setTempName(evt.target.value)}
                 placeholder="Name"
                 value={tempName || ''}
-                className={tempName !== userData.username && s.inputHighlighted}
+                className={cN({ [s.inputHighlighted]: tempName !== userData.username })}
               />
             </div>
             <p className={s.optionHeading}>Postleitzahl</p>
@@ -112,7 +112,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 onChange={evt => setTempZIP(evt.target.value)}
                 placeholder="Postleitzahl"
                 value={tempZIP || ''}
-                className={tempZIP !== userData.zipCode && s.inputHighlighted}
+                className={cN({ [s.inputHighlighted]: tempZIP !== userData.zipCode })}
               />
             </div>
             <p className={s.optionHeading}>Ort</p>
@@ -121,7 +121,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 onChange={evt => setTempCity(evt.target.value)}
                 placeholder="Ort"
                 value={tempCity || ''}
-                className={tempCity !== userData.city && s.inputHighlighted}
+                className={cN({ [s.inputHighlighted]: tempCity !== userData.city })}
               />
             </div>
 
