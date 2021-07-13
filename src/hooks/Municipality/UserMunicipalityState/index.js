@@ -25,10 +25,5 @@ export const useUserMunicipalityState = () => {
     }
   }, [isAuthenticated, customUserData, municipality]);
 
-  // Debug Contentful showForOptions with this log:
-  // console.log(
-  //   `*\nContentful state:\nmunicipality: ${municipalityContentfulState}, user: ${userMunicipalityState}\n\n`
-  // );
-
   return userMunicipalityState;
 };
