@@ -317,9 +317,9 @@ export function ContentfulSection({ section, pageContext }) {
                       })
                       .reverse()
                       .map(municipality => (
-                        <p
-                          aria-hidden="true"
-                          className={cN(s.chooseMunicipality, {
+                        <button
+                          className={cN(s.chooseMunicipality,
+                            s.linkLikeFormattedButton, {
                             [s.activeMunicipality]:
                               municipality.ags === municipalityToShare?.ags,
                           })}
@@ -327,7 +327,7 @@ export function ContentfulSection({ section, pageContext }) {
                           onClick={() => setMunicipalityToShare(municipality)}
                         >
                           {municipality.name}
-                        </p>
+                        </button>
                       ))}
                   </div>
                 </>

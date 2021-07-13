@@ -16,12 +16,16 @@ export const TabSelector = ({
 
   return tabs.map((tab, tabIndex) => {
     return (
-      <div
+      <button
         key={tab.dataSet}
-        aria-hidden="true"
-        className={cN(s.tabSelectorElement, {
-          [s.activeTabSelector]: tabIndex === currentTab,
-        })}
+        className={cN(
+          s.linkLikeFormattedButton,
+          s.noTextDecoration,
+          s.tabSelectorElement,
+          {
+            [s.activeTabSelector]: tabIndex === currentTab,
+          }
+        )}
         onClick={() => {
           setCurrentTab(tabIndex);
           setCurrentDataSet(leaderboardSegments[tab.dataSet]);
@@ -29,7 +33,7 @@ export const TabSelector = ({
         }}
       >
         {tab.tabName}
-      </div>
+      </button>
     );
   });
 };
