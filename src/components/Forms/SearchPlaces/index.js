@@ -42,7 +42,7 @@ export const SearchPlaces = ({
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [formState, setFormState] = useState({});
   const [fuse, setFuse] = useState();
-  const [focusedResult, setFocusedResult] = useState(0);
+  const [focusedResult, setFocusedResult] = useState(null);
 
   useEffect(() => {
     import('./municipalitiesForSearch.json').then(({ default: places }) => {
@@ -225,42 +225,43 @@ export const SearchPlaces = ({
   };
 
   const handleEnterKey = e => {
-    // Emulate click when enter or space are pressed
+    // Emulate click when enter is pressed
     if (e.key === 'Enter') {
       handleSuggestionClick(results[0]);
+    }
+
+    // Focus into suggestions when pressing arrow down
+    if (e.key === 'ArrowDown' || e.which === 40) {
+      setFocusedResult(0);
     }
   };
 
   const handleArrowListNavigation = e => {
-    const upBehavior =
-      e.key === 'ArrowUp' ||
-      e.which === 38 ||
-      ((e.key === 'Tab' || e.which === 9) && e.shiftKey);
-    const downBehavior =
-      e.key === 'ArrowDown' ||
-      e.which === 40 ||
-      ((e.key === 'Tab' || e.which === 9) && !e.shiftKey);
+    const isTab = e.key === 'Tab' || e.which === 9;
 
-    if (upBehavior || downBehavior) {
-      e.preventDefault();
-    }
+    const upBehavior =
+      e.key === 'ArrowUp' || e.which === 38 || (isTab && e.shiftKey);
+    const downBehavior =
+      e.key === 'ArrowDown' || e.which === 40 || (isTab && !e.shiftKey);
 
     if (downBehavior) {
       // At the end of a list jump back to the beginning
-      // and vice versa
-      if (
-        focusedResult < results.length - 1 &&
-        typeof focusedResult !== 'undefined'
-      ) {
+      // and vice versa (but only for arrow keys).
+      // If at the end and tab is pressed we want default behaviour
+      if (focusedResult < results.length - 1 && focusedResult !== null) {
         setFocusedResult(prev => prev + 1);
-      } else {
+        e.preventDefault();
+      } else if (!isTab) {
         setFocusedResult(0);
+        e.preventDefault();
       }
     } else if (upBehavior) {
       if (focusedResult > 0 && focusedResult < results.length) {
         setFocusedResult(prev => prev - 1);
-      } else {
+        e.preventDefault();
+      } else if (!isTab) {
         setFocusedResult(results.length - 1);
+        e.preventDefault();
       }
     }
   };
@@ -270,9 +271,15 @@ export const SearchPlaces = ({
       e.relatedTarget &&
       [...e.relatedTarget.classList].join('').includes('suggestionsItem');
 
-    if (!isAutoCompleteTarget) {
+    const isAutoCompleteContainerTarget =
+      e.relatedTarget &&
+      [...e.relatedTarget.classList].join('').includes('suggestions') &&
+      ![...e.relatedTarget.classList].join('').includes('suggestionsItem');
+
+    if (!isAutoCompleteTarget && !isAutoCompleteContainerTarget) {
       setTimeout(() => {
         setSuggestionsActive(false);
+        setFocusedResult(null);
 
         // If search places input is inside form,
         // we want to choose first element of suggestions as place
@@ -286,6 +293,9 @@ export const SearchPlaces = ({
           validate();
         }
       }, 300);
+    }
+
+    if (isAutoCompleteContainerTarget) {
       setFocusedResult(0);
     }
   };
@@ -305,7 +315,11 @@ export const SearchPlaces = ({
             onChange={handleChange}
             onKeyDown={handleEnterKey}
             onBlur={handleBlur}
-            className={cN(s.searchBar, { [s.isNotInsideForm]: !isInsideForm }, { [s.fullWidthInput]: fullWidthInput })}
+            className={cN(
+              s.searchBar,
+              { [s.isNotInsideForm]: !isInsideForm },
+              { [s.fullWidthInput]: fullWidthInput }
+            )}
           />
 
           <AutoCompleteList
@@ -352,19 +366,16 @@ export function AutoCompleteList({
   }, [results]);
 
   useLayoutEffect(() => {
-    if (
-      typeof focusedResult !== 'undefined' &&
-      focusedResult < resultsRef.current.length
-    ) {
+    if (focusedResult !== null && focusedResult < resultsRef.current.length) {
       resultsRef.current[focusedResult].focus();
     }
   }, [focusedResult, resultsRef]);
 
   return (
     <div
-      aria-hidden={true}
       className={cN(s.suggestions, { [s.active]: suggestionsActive })}
       onBlur={handleBlur}
+      role="listbox"
     >
       {results.length === 0 && query.length > 1 && (
         <div className={s.noSuggestionsItem}>Keine Ergebnisse</div>
