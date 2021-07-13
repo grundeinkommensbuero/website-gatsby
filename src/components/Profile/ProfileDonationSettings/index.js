@@ -7,15 +7,13 @@ import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
 import DonationForm from '../../Forms/DonationForm';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+import rocketIcon from './rocket-icon.min.svg';
 
 export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData }) => {
   const [showDonationForm, setShowDonationForm] = useState(false);
   const [showDeleteDonationDialog, setShowDeleteDonationDialog] = useState(false);
   const [waitingForApi, setWaitingForApi] = useState(false);
-
   const [updateUserState, updateUser] = useUpdateUser();
-
-  const rocketIcon = require('!svg-inline-loader!./rocket-icon.min.svg');
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -91,35 +89,34 @@ export const ProfileDonationSettings = ({ userId, userData, updateCustomUserData
           !showDonationForm ?
           <>
             <div className={cN(s.flexContainerSimple, s.donationStatusMessage)}>
-              <div
-                aria-hidden="true"
+              <img
                 className={s.icon}
-                dangerouslySetInnerHTML={{ __html: rocketIcon }}
-              ></div>
+                src={rocketIcon}
+                alt="Ein Raketensymbol"
+              />
               <div>
-                <h3>Du bist Dauerspender:in! <br />Vielen Dank!</h3>
-                <p>Du spendest aktuell monatlich <span className={s.donationAmountRecurring}>{userData.donations.recurringDonation.amount}€</span></p>
+                <h3>Du bist Dauerspender*in! <br />Vielen Dank!</h3>
+                <p>Du spendest aktuell monatlich{' '}
+                  <span className={s.donationAmountRecurring}>
+                    {userData.donations.recurringDonation.amount}€
+                  </span>
+                </p>
               </div>
             </div>
             {!showDeleteDonationDialog ?
               <div className={s.flexContainer}>
-                <p
-                  aria-hidden="true"
-                  className={gS.linkLikeFormatted}
+                <button
+                  className={gS.linkLikeFormattedButton}
                   onClick={() => setShowDonationForm(true)}>
                   Meine Spende bearbeiten
-                </p>
-                <p
-                  aria-hidden="true"
-                  className={gS.linkLikeFormatted}
+                </button>
+                <button
+                  className={gS.linkLikeFormattedButton}
                   onClick={() => setShowDeleteDonationDialog(true)}>
                   Meine Spende löschen
-                  </p>
+                </button>
               </div> : <DeleteDonationDialog />}
-          </> :
-          <>
-            <DonationForm />
-          </>
+          </> : <DonationForm />
         }
       </section>
     </section>

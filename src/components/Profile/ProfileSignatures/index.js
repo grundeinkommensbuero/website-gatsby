@@ -43,9 +43,9 @@ export const ProfileSignatures = ({ userId, userData }) => {
               successMessage={'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'}
               className={s.signatureWrapper}
             />
-            {userCampaigns[0] ? userCampaigns.map(scan => {
+            {userCampaigns[0] ? userCampaigns.map((scan, index) => {
               return (
-                <div className={s.signatureContainer}>
+                <div className={s.signatureContainer} key={index}>
                   <h2>Eingegangene Unterschriften {scan.campaignName}</h2>
                   <CampainScanVisualisation campaignCode={scan.campaignCode} />
                 </div>

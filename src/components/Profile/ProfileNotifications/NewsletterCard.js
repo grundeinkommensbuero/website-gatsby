@@ -76,7 +76,7 @@ export const NewsletterCard = ({
             </span>
           ) : (
             <Form
-              onSubmit={() => { }}
+              onSubmit={() => {}}
               initialValues={{ extraInfoConsent: newsletterSettings.extraInfo }}
               validate={values =>
                 !isEmptyObj(values) ? toggleExtraInfoConsent(values) : null
@@ -95,14 +95,12 @@ export const NewsletterCard = ({
           )}
           {/* toggle newsletter consent */}
           <p className={cN(gS.alignRight, gS.noMargin)}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={toggleNewsletterRevokeProcess}
-              onKeyDown={toggleNewsletterRevokeProcess}
             >
               abbestellen
-            </span>
+            </button>
           </p>
         </section>
       ) : (
@@ -122,16 +120,14 @@ export const NewsletterCard = ({
               className={s.revokeButton}
               onClick={toggleNewsletterConsent}>
               Abbestellen
-              </Button>
+            </Button>
             <div className={s.cancelRevokeProcess}>
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleNewsletterRevokeProcess}
-                onKeyUp={toggleNewsletterRevokeProcess}
               >
                 Newsletter weiter erhalten
-              </span>
+              </button>
             </div>
           </div>
         </section>

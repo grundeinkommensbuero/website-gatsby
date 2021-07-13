@@ -8,7 +8,7 @@ import { SignUpButton } from '../../TickerToSignup/SignupButton';
 import { formatDate } from '../../utils';
 import * as s from './style.module.less';
 import cN from 'classnames';
-import { getReferredUserMessage } from '../ProfileOverview/referredUserMessage';
+import { getReferredUserMessage } from '../utils/referredUserMessage';
 
 export const ProfileTile = ({ children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);

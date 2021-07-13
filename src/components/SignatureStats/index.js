@@ -11,7 +11,7 @@ export default ({ signatureCount, layout, className }) => {
         </div>
         <div className={s.statisticsLabel}>
           Unterschriften
-          <br />
+          {layout === 'horizontal' ? ' ' : <br />}
           von dir gemeldet
         </div>
       </div>{' '}
