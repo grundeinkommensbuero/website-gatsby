@@ -10,7 +10,11 @@ import { DeleteAccountDialog } from './DeleteAccountDialog';
 import ImageUpload from '../../Forms/ImageUpload';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
-export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
+export const PersonalSettings = ({
+  userData,
+  userId,
+  updateCustomUserData,
+}) => {
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
@@ -34,14 +38,18 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   }, [updateUserState]);
 
   useEffect(() => {
-    if (userData && (
-      tempName === undefined ||
-      tempZIP === undefined ||
-      tempCity === undefined
-    )) {
-      setTempName(userData.username);
-      setTempZIP(userData.zipCode);
-      setTempCity(userData.city);
+    if (userData) {
+      if (tempName === undefined) {
+        setTempName(userData.username);
+      }
+
+      if (tempZIP === undefined) {
+        setTempZIP(userData.zipCode);
+      }
+
+      if (tempCity === undefined) {
+        setTempCity(userData.city);
+      }
     }
   });
 
@@ -78,7 +86,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
           <div className={s.marginBottomOnMobile}>
             <h2
               className={cN({
-                [gS.username]: userData.username
+                [gS.username]: userData.username,
               })}
             >
               {userData.username || userData.email}
@@ -103,7 +111,9 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 onChange={evt => setTempName(evt.target.value)}
                 placeholder="Name"
                 value={tempName || ''}
-                className={cN({ [s.inputHighlighted]: tempName !== userData.username })}
+                className={cN({
+                  [s.inputHighlighted]: tempName !== userData.username,
+                })}
               />
             </div>
             <p className={s.optionHeading}>Postleitzahl</p>
@@ -112,7 +122,9 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 onChange={evt => setTempZIP(evt.target.value)}
                 placeholder="Postleitzahl"
                 value={tempZIP || ''}
-                className={cN({ [s.inputHighlighted]: tempZIP !== userData.zipCode })}
+                className={cN({
+                  [s.inputHighlighted]: tempZIP !== userData.zipCode,
+                })}
               />
             </div>
             <p className={s.optionHeading}>Ort</p>
@@ -121,14 +133,16 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                 onChange={evt => setTempCity(evt.target.value)}
                 placeholder="Ort"
                 value={tempCity || ''}
-                className={cN({ [s.inputHighlighted]: tempCity !== userData.city })}
+                className={cN({
+                  [s.inputHighlighted]: tempCity !== userData.city,
+                })}
               />
             </div>
 
             {!waitingForApi &&
-              (tempName !== userData.username ||
-                tempZIP !== userData.zipCode ||
-                tempCity !== userData.city) ? (
+            (tempName !== userData.username ||
+              tempZIP !== userData.zipCode ||
+              tempCity !== userData.city) ? (
               <>
                 <Button
                   size="SMALL"
@@ -162,20 +176,22 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
             <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
             <div className={s.optionSectionDescription}>
-              Falls du deine E-Mail Adresse ändern{' '}
-              möchtest, schick uns eine E-Mail an{' '}
+              Falls du deine E-Mail Adresse ändern möchtest, schick uns eine
+              E-Mail an{' '}
               <a href="mailto:support@expedition-grundeinkommen.de">
                 support@expedition-grundeinkommen.de
               </a>
               .
             </div>
 
-            {!showDeleteAccountDialog ?
+            {!showDeleteAccountDialog ? (
               <button
                 className={cN(gS.linkLikeFormattedButton, gS.bottomRightLink)}
-                onClick={() => setShowDeleteAccountDialog(true)}>
+                onClick={() => setShowDeleteAccountDialog(true)}
+              >
                 Profil löschen
-              </button> :
+              </button>
+            ) : (
               <div>
                 <br></br>
                 <DeleteAccountDialog
@@ -183,7 +199,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   setShowDeleteAccountDialog={setShowDeleteAccountDialog}
                 />
               </div>
-            }
+            )}
           </div>
         </section>
       </section>
