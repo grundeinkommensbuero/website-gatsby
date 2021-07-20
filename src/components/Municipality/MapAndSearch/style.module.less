@@ -1,0 +1,73 @@
+@import '../../style/vars.less';
+
+.mapSectionContainer {
+  display: flex;
+  margin-bottom: 2rem;
+  flex-direction: row;
+  @media (max-width: @breakPointL) {
+    flex-direction: column;
+  }
+}
+
+.map {
+  box-sizing: border-box;
+  width: 50%;
+  padding-left: 2rem;
+  @media (max-width: @breakPointL) {
+    padding-right: 0rem;
+    width: 100%;
+  }
+}
+
+.search {
+  box-sizing: border-box;
+  width: 50%;
+  padding-right: 2rem;
+  @media (max-width: @breakPointL) {
+    padding-right: 0rem;
+    width: 100%;
+  }
+}
+
+.municipalityDetails {
+  background-color: @white;
+  padding: 1rem;
+  color: @black;
+  margin-bottom: 2rem;
+}
+
+.elementHeading {
+  margin: 0.3rem 0;
+}
+
+.description {
+  color: gray;
+  margin: 0.5rem 0;
+  font-size: @DesktopFontSizeS;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leaderboard {
+  display: flex;
+
+  justify-content: space-between;
+  @media (max-width: @breakPointL) {
+    flex-wrap: wrap;
+  }
+}
+
+.leaderboardTable {
+  width: 47.5%;
+  align-self: flex-end;
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
-import { history } from '../utils';
+// import { history } from '../utils';
 // import { usePrevious } from '../../hooks/utils';
 
 import municipalities from '../../components/Municipality/MunicipalityMap/data/municipalitiesForMap.json';
@@ -56,12 +56,12 @@ export const MunicipalityProvider = ({ children }) => {
         isMunicipality,
         isSpecificMunicipality,
         municipality,
-        isFromHistoryEvent,
+        // isFromHistoryEvent,
       } = pageContext;
 
-      if (!isFromHistoryEvent) {
-        history.replaceHistoryState(municipality, pageContext);
-      }
+      // if (!isFromHistoryEvent) {
+      //   history.replaceHistoryState(municipality, pageContext);
+      // }
       if (isMunicipality) {
         setIsMunicipality(true);
         if (isSpecificMunicipality) {
@@ -88,12 +88,12 @@ export const MunicipalityProvider = ({ children }) => {
         getSingleMunicipalityStats(ags.current);
         setIsMunicipality(true);
         setIsSpecific(true);
-        history.pushToHistoryState(municipality, pageContext);
-        history.updateOnPopStateListener(
-          municipality,
-          setMunicipality,
-          setPageContext
-        );
+        // history.pushToHistoryState(municipality, pageContext);
+        // history.updateOnPopStateListener(
+        //   municipality,
+        //   setMunicipality,
+        //   setPageContext
+        // );
         // TODO: We cannot know what state the municipality is in
         // but in case the municipality stats endpoint is down we should
         // set it to qualifying for now?
@@ -158,21 +158,24 @@ export const MunicipalityProvider = ({ children }) => {
 
   useEffect(() => {
     // Create Object with raw municipality data for faster reference
-    const municipalityObject = municipalities.reduce((muniObj, municipality) => {
-      muniObj[municipality.ags.toString()] = {
-        name: municipality.name,
-        goal: municipality.goal,
-        population: municipality.population
-      };
-      return muniObj;
-    }, {});
+    const municipalityObject = municipalities.reduce(
+      (muniObj, municipality) => {
+        muniObj[municipality.ags.toString()] = {
+          name: municipality.name,
+          goal: municipality.goal,
+          population: municipality.population,
+        };
+        return muniObj;
+      },
+      {}
+    );
     // When there are events, add them to municipality key
     if (allMunicipalityStats.events) {
       allMunicipalityStats.events.forEach(e => {
         municipalityObject[e.ags.toString()] = {
           event: e,
-          ...municipalityObject[e.ags.toString()]
-        }
+          ...municipalityObject[e.ags.toString()],
+        };
       });
     }
     setMunicipalitiesInObject(municipalityObject);
@@ -187,11 +190,14 @@ export const MunicipalityProvider = ({ children }) => {
           const fullMunicipality = {
             ags: municipality.ags,
             signups: municipality.signups,
-            percent: Math.round(municipality.signups / municipalitiesInObject[municipality.ags.toString()].goal * 100),
-            ...municipalitiesInObject[municipality.ags.toString()]
-          }
+            percent: Math.round(
+              (municipality.signups /
+                municipalitiesInObject[municipality.ags.toString()].goal) *
+                100
+            ),
+            ...municipalitiesInObject[municipality.ags.toString()],
+          };
           municipalitiesWithGoalAndSignups.push(fullMunicipality);
-
         }
       });
       municipalitiesWithGoalAndSignups.sort((a, b) => {
@@ -210,9 +216,12 @@ export const MunicipalityProvider = ({ children }) => {
     };
     municipalitiesGoalSignup.forEach(municipality => {
       if ('event' in municipality) {
-        const beforePercent = municipality.event.signups[0] / municipality.goal * 100;
-        const afterPercent = municipality.event.signups[1] / municipality.goal * 100;
-        municipality.grewByPercent = Math.round((afterPercent - beforePercent) * 100) / 100;
+        const beforePercent =
+          (municipality.event.signups[0] / municipality.goal) * 100;
+        const afterPercent =
+          (municipality.event.signups[1] / municipality.goal) * 100;
+        municipality.grewByPercent =
+          Math.round((afterPercent - beforePercent) * 100) / 100;
         segments.hot.push(municipality);
       }
       if (municipality.percent >= 100) {
@@ -249,7 +258,7 @@ export const MunicipalityProvider = ({ children }) => {
         statsSummary,
         municipalitiesGoalSignup,
         leaderboardSegments,
-        refreshContextStats: () => getAllMunicipalityStats()
+        refreshContextStats: () => getAllMunicipalityStats(),
       }}
     >
       {children}

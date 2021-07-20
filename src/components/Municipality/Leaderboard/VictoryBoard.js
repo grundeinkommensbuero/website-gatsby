@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fetchPageNumbers, paginate } from './utils';
 import { MunicipalityContext } from '../../../context/Municipality/index';
 
@@ -8,12 +8,16 @@ import { TabSelector } from './Table/TabSelector';
 import { Table } from './Table';
 import { PageSelector } from './Table/PageSelector';
 
-export const Leaderboard = () => {
+export const VictoryBoard = () => {
   const { leaderboardSegments } = useContext(MunicipalityContext);
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(3);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const paginationInfo = paginate(currentDataSet.length, currentPage);
+
+  useEffect(() => {
+    setCurrentDataSet(leaderboardSegments.qualified);
+  }, [leaderboardSegments]);
 
   const pageControls = fetchPageNumbers({
     currentPage,
@@ -28,15 +32,6 @@ export const Leaderboard = () => {
 
   return (
     <div>
-      <div className={s.tabSelectorContainer}>
-        <TabSelector
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-          setCurrentDataSet={setCurrentDataSet}
-          leaderboardSegments={leaderboardSegments}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
       <Table
         currentTab={currentTab}
         slicedMunicipalities={slicedMunicipalities}

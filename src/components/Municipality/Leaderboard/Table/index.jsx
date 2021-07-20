@@ -10,7 +10,9 @@ export const Table = ({ slicedMunicipalities, currentTab }) => {
   const [isEventTable, setIsEventTable] = useState();
 
   useEffect(() => {
-    setIsEventTable(tabs[currentTab].dataSet === 'hot');
+    if (currentTab !== 3) {
+      setIsEventTable(tabs[currentTab].dataSet === 'hot');
+    }
   });
 
   return (
@@ -18,18 +20,18 @@ export const Table = ({ slicedMunicipalities, currentTab }) => {
       {isEventTable ? (
         <table className={s.tableBody}>
           <tbody>
-            <tr>
+            {/* <tr>
               <TableHeaderEvent />
-            </tr>
+            </tr> */}
             <TableDataEvent slicedMunicipalities={slicedMunicipalities} />
           </tbody>
         </table>
       ) : (
         <table className={s.tableBody}>
           <tbody>
-            <tr>
+            {/* <tr>
               <TableHeader />
-            </tr>
+            </tr> */}
             <TableData slicedMunicipalities={slicedMunicipalities} />
           </tbody>
         </table>
