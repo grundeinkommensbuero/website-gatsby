@@ -4,13 +4,11 @@ import { MunicipalityContext } from '../../../context/Municipality/index';
 
 import * as s from './style.module.less';
 
-import { TabSelector } from './Table/TabSelector';
 import { Table } from './Table';
 import { PageSelector } from './Table/PageSelector';
 
-export const VictoryBoard = () => {
+export const QualifiedBoard = () => {
   const { leaderboardSegments } = useContext(MunicipalityContext);
-  const [currentTab, setCurrentTab] = useState(3);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const paginationInfo = paginate(currentDataSet.length, currentPage);
@@ -32,10 +30,7 @@ export const VictoryBoard = () => {
 
   return (
     <div>
-      <Table
-        currentTab={currentTab}
-        slicedMunicipalities={slicedMunicipalities}
-      />
+      <Table currentTab={3} slicedMunicipalities={slicedMunicipalities} />
       <div className={s.pageSelectorContainer}>
         <PageSelector
           currentPage={currentPage}

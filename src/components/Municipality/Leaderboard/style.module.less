@@ -42,9 +42,9 @@
 }
 
 .pageSelectorElement {
-  padding: 0.5rem 0.25rem 0.25rem;
+  padding: 0.35rem 0.25rem 0.25rem;
   cursor: pointer;
-  flex-grow: 1;
+  min-width: 2rem;
   text-align: center;
 
   &:hover {
@@ -60,7 +60,8 @@
 
 .pageSelectorContainer {
   display: flex;
-  margin-bottom: 3rem;
+  justify-content: center;
+  margin: 1rem 0 2rem 0;
 }
 
 .tabSelectorElement {
@@ -87,8 +88,6 @@
   }
 
   &:first-child {
-    border-left: 1px solid lightgrey;
-    border-left: 1px solid #ddd;
     margin-left: 0;
   }
 }

@@ -42,7 +42,7 @@
 
 .description {
   color: gray;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 0 0;
   font-size: @DesktopFontSizeS;
 }
 
@@ -70,4 +70,54 @@
   @media (max-width: @breakPointL) {
     width: 100%;
   }
+}
+
+.municipalityButton {
+  background: @white; // fallback for IE
+  background: @violetTransparent;
+  border: @black; //fallback for IE
+  border: @violet solid @borderWidthThick;
+  border-radius: @borderRadius;
+  color: @violet;
+  font-size: @DesktopFontSizeM;
+  font-weight: bold;
+  padding: @buttonPadding;
+  text-decoration: none;
+
+  @media (max-width: @breakPointXS) {
+    padding: @buttonPaddingSmall;
+  }
+
+  &.medium {
+    font-size: @DesktopFontSizeM;
+  }
+
+  &.small {
+    font-size: @DesktopFontSizeXS;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 1em;
+  }
+
+  &:hover {
+    color: @white;
+    background: @violet;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: darken(@violet, 10%);
+    color: @white;
+    border-color: darken(@violet, 10%);
+    //box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }

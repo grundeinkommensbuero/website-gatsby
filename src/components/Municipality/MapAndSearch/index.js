@@ -4,8 +4,9 @@ import { WrappedMunicipalitySearch } from '../MunicipalitySearch/WrappedMunicipa
 import * as s from './style.module.less';
 import loadable from '@loadable/component';
 import { Leaderboard } from '../Leaderboard';
-import { VictoryBoard } from '../Leaderboard/VictoryBoard';
+import { QualifiedBoard } from '../Leaderboard/QualifiedBoard';
 import { CampainVisualisation } from '../../CampaignVisualisations';
+import { Button } from '../../Forms/Button';
 
 const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
@@ -29,6 +30,7 @@ export const MapAndSearch = () => {
             <CampainVisualisation
               goal={200}
               count={100}
+              onWhiteBackground={true}
               // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
               labels={{
                 NEEDED: () => <>Benötigte Anmeldungen</>,
@@ -48,6 +50,9 @@ export const MapAndSearch = () => {
               currency="Anmeldungen"
               startDate={new Date()}
             />
+            <div className={s.buttonContainer}>
+              <Button className={s.municipalityButton}>Zur Ortsseite</Button>
+            </div>
           </div>
 
           <h5 className={s.elementHeading}>
@@ -78,7 +83,7 @@ export const MapAndSearch = () => {
           <h5 className={s.elementHeading}>
             {'Schon über die Ziellinie'.toUpperCase()}
           </h5>
-          <VictoryBoard />
+          <QualifiedBoard />
         </div>
       </div>
     </>

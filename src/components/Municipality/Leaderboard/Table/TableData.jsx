@@ -19,22 +19,3 @@ export const TableData = ({ slicedMunicipalities }) => {
     );
   });
 };
-
-export const TableDataEvent = ({ slicedMunicipalities }) => {
-  return slicedMunicipalities.map(municipality => {
-    const { ags, name, percent, grewByPercent } = municipality;
-    return (
-      <tr className={s.tableRow} key={ags}>
-        <td>
-          <b>{name}</b>
-        </td>
-        <td className={s.alignRight}>{percent} %</td>
-        <td className={s.alignRight}>
-          <span>
-            <b>+ {grewByPercent} %</b>
-          </span>
-        </td>
-      </tr>
-    );
-  });
-};

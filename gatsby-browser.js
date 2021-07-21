@@ -46,7 +46,7 @@ const waitForElementToDisplay = (
   var startTimeInMs = Date.now();
   (function loopSearch() {
     const element = document.querySelector(selector);
-    console.log('element', element);
+    // console.log('element', element);
     if (element !== null) {
       callback(element);
       return;

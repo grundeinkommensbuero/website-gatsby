@@ -100,6 +100,10 @@
   height: 100%;
   border: 1px solid @white;
 
+  &.onWhiteBackground {
+    border: 1px solid @violet;
+  }
+
   &.crowdfunding {
     border: 1px solid var(--secondary-color);
   }
@@ -143,6 +147,14 @@
     width: 100%;
     z-index: 0;
     // transform: skewX(-3.2deg) skewY(0.3deg) rotate(0.2deg);
+  }
+
+  &.onWhiteBackground {
+    color: @white;
+
+    &::before {
+      background: @violet;
+    }
   }
 
   .barCurrentLabel {
