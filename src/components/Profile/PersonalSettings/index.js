@@ -9,6 +9,7 @@ import { Button } from '../../Forms/Button';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
 import ImageUpload from '../../Forms/ImageUpload';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+import { ChangeEmail } from './ChangeEmail';
 
 export const PersonalSettings = ({
   userData,
@@ -16,6 +17,7 @@ export const PersonalSettings = ({
   updateCustomUserData,
 }) => {
   const [updateUserState, updateUser] = useUpdateUser();
+
   const [waitingForApi, setWaitingForApi] = useState(false);
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
   const [tempName, setTempName] = useState();
@@ -174,15 +176,10 @@ export const PersonalSettings = ({
               </section>
             )}
 
-            <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
-            <div className={s.optionSectionDescription}>
-              Falls du deine E-Mail Adresse ändern möchtest, schick uns eine
-              E-Mail an{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </div>
+            <ChangeEmail
+              updateCustomUserData={updateCustomUserData}
+              userData={userData}
+            />
 
             {!showDeleteAccountDialog ? (
               <button

@@ -74,6 +74,24 @@ export const useBounceToIdentifiedState = () => {
   return () => bounceToIdentifiedState(context);
 };
 
+export const useChangeEmail = () => {
+  const [state, setState] = useState();
+
+  //get global context
+  const { cognitoUser } = useContext(AuthContext);
+
+  return [state, email => changeEmail(email, setState, cognitoUser), setState];
+};
+
+export const useValidateNewEmail = () => {
+  const [state, setState] = useState();
+
+  //get global context
+  const { cognitoUser } = useContext(AuthContext);
+
+  return [state, code => validateNewEmail(code, setState, cognitoUser)];
+};
+
 const startSignInProcess = async (data, setState, setUserExists, context) => {
   try {
     setState('loading');
@@ -229,5 +247,47 @@ const bounceToIdentifiedState = async ({
     setIsAuthenticated(false);
   } catch (error) {
     console.log('Error while bouncing user to identified state', error);
+  }
+};
+
+const changeEmail = async (email, setState, cognitoUser) => {
+  try {
+    setState('loading');
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
+    await Auth.updateUserAttributes(cognitoUser, { email });
+    setState('success');
+  } catch (error) {
+    if (error.code === 'AliasExistsException') {
+      setState('emailExists');
+    } else {
+      setState('error');
+    }
+
+    console.log('Error while changing email', error);
+  }
+};
+
+const validateNewEmail = async (code, setState, cognitoUser) => {
+  try {
+    setState('loading');
+    const { default: Auth } = await import(
+      /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
+    );
+
+    await Auth.verifyUserAttributeSubmit(cognitoUser, 'email', code);
+    setState('success');
+  } catch (error) {
+    if (
+      error.code === 'CodeMismatchException' ||
+      error.code === 'ExpiredCodeException'
+    ) {
+      setState('wrongCode');
+    } else {
+      setState('error');
+    }
+    console.log('Error while verifying new email', error);
   }
 };
