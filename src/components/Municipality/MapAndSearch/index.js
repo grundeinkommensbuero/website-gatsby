@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FallbackMap } from '../MunicipalityMap';
 import { WrappedMunicipalitySearch } from '../MunicipalitySearch/WrappedMunicipalitySearch';
 import * as s from './style.module.less';
 import loadable from '@loadable/component';
 import { Leaderboard } from '../Leaderboard';
 import { QualifiedBoard } from '../Leaderboard/QualifiedBoard';
-import { CampainVisualisation } from '../../CampaignVisualisations';
-import { Button } from '../../Forms/Button';
+import { ExpandableRow } from './ExpandableRow';
+import { MunicipalityContext } from '../../../context/Municipality';
 
 const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MapAndSearch = () => {
+  const { municipality, leaderboardSegments } = useContext(MunicipalityContext);
+  const [currentMunicipality, setCurrentMunicipality] = useState();
+
+  useEffect(() => {
+    console.log(leaderboardSegments.hot[0]);
+    setCurrentMunicipality(leaderboardSegments.hot[0]);
+  }, [leaderboardSegments]);
+
+  useEffect(() => {
+    if (municipality) {
+      setCurrentMunicipality(municipality);
+    }
+  }, [municipality]);
+
   return (
     <>
       <div className={s.mapSectionContainer}>
@@ -20,52 +34,17 @@ export const MapAndSearch = () => {
             {'Aufsteiger der Woche'.toUpperCase()}
           </h5>
           <div className={s.municipalityDetails}>
-            <div className={s.spaceBetween}>
-              <h3 className={s.noMargin}>Gemeindename</h3>
-              <h3 className={s.noMargin}>XX%</h3>
-            </div>
-            <p className={s.description}>
-              X Anmeldungen in den letzten X Tagen
-            </p>
-            <CampainVisualisation
-              goal={200}
-              count={100}
-              onWhiteBackground={true}
-              // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
-              labels={{
-                NEEDED: () => <>Benötigte Anmeldungen</>,
-                GOAL_INBETWEEN_TOOLTIP: count => (
-                  <>
-                    Insgesamt benötigt:
-                    <br />
-                    {count} Anmeldungen
-                  </>
-                ),
-                GOAL_INBETWEEN: count => (
-                  <>Nächstes Ziel: {count} Anmeldungen</>
-                ),
-                CURRENT_COUNT: () => <>Anmeldungen</>,
-                CTA: () => <>Mitmachen</>,
-              }}
-              currency="Anmeldungen"
-              startDate={new Date()}
+            <ExpandableRow
+              municipality={currentMunicipality}
+              isExpanded={true}
             />
-            <div className={s.buttonContainer}>
-              <Button className={s.municipalityButton}>Zur Ortsseite</Button>
-            </div>
           </div>
 
           <h5 className={s.elementHeading}>
             {'Kurz vor dem Ziel'.toUpperCase()}
           </h5>
           <div className={s.municipalityDetails}>
-            <div className={s.spaceBetween}>
-              <h3 className={s.noMargin}>Gemeindename</h3>
-              <h3 className={s.noMargin}>XX%</h3>
-            </div>
-            <p className={s.description}>
-              X Anmeldungen in den letzten X Tagen
-            </p>
+            <ExpandableRow municipality={currentMunicipality} />
           </div>
         </div>
         <div className={s.map}>

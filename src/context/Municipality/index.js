@@ -29,7 +29,7 @@ export const MunicipalityProvider = ({ children }) => {
   const [
     singleMunicipalityStatsState,
     singleMunicipalityStats,
-    getSingleMunicipalityStats,
+    // getSingleMunicipalityStats,
   ] = useGetMunicipalityStats();
 
   const [
@@ -39,7 +39,7 @@ export const MunicipalityProvider = ({ children }) => {
 
   // State to check whether this municipality is bremen,
   // hamburg, berlin or other municipality
-  const [berlinHamburgBremenState, setBerlinHamburgBremenState] = useState(
+  const [berlinHamburgBremenState /*setBerlinHamburgBremenState*/] = useState(
     'noMunicipality'
   );
 
@@ -78,7 +78,7 @@ export const MunicipalityProvider = ({ children }) => {
     }
   }, [pageContext]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (municipality) {
       if (
         typeof ags.current === undefined ||
@@ -121,7 +121,7 @@ export const MunicipalityProvider = ({ children }) => {
       // TODO: is it possible to set isMunicipality here?
       // QUESTION: Do we still have the generic /gemeinden site?
     }
-  }, [municipality]);
+  }, [municipality]); */
 
   useEffect(() => {
     if (municipality && municipality.ags === ags.current) {

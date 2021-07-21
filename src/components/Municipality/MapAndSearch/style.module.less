@@ -50,6 +50,10 @@
   margin: 0;
 }
 
+.percentage {
+  padding-right: 2rem;
+}
+
 .spaceBetween {
   display: flex;
   justify-content: space-between;
@@ -120,4 +124,60 @@
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+}
+
+.expandedRow {
+  margin-top: 1rem;
+}
+
+.extendableRow {
+  position: relative;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 8.6px solid transparent;
+  border-left: 10px solid #3e3e3e;
+  border-bottom: 8.6px solid transparent;
+  animation-name: rotateTriangle;
+  background: none;
+
+  position: absolute;
+  top: 1.5rem;
+  right: 0rem;
+
+  &:hover {
+    background: none;
+  }
+}
+
+.expandButton {
+  border: none;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.animateTriangle {
+  transform: rotate(90deg);
+  // animation-duration: 1s;
+  // animation-fill-mode: both;
+  // animation-name: rotateTriangle;
+}
+
+@keyframes rotateTriangle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+.srOnly {
+  display: none;
 }

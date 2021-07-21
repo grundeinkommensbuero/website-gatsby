@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableData } from './TableData';
+import { ExpandableRow } from '../../MapAndSearch/ExpandableRow';
 import * as s from '../style.module.less';
 
 export const Table = ({ slicedMunicipalities }) => {
@@ -10,4 +10,16 @@ export const Table = ({ slicedMunicipalities }) => {
       </tbody>
     </table>
   );
+};
+
+const TableData = ({ slicedMunicipalities }) => {
+  return slicedMunicipalities.map(municipality => {
+    return (
+      <tr className={s.tableRow} key={municipality.ags}>
+        <td className={s.tableRowContent}>
+          <ExpandableRow municipality={municipality} />
+        </td>
+      </tr>
+    );
+  });
 };
