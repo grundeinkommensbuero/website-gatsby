@@ -12,16 +12,20 @@ const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MapAndSearch = () => {
   const { municipality, leaderboardSegments } = useContext(MunicipalityContext);
-  const [currentMunicipality, setCurrentMunicipality] = useState();
+  const [highlightedMunicipality, setHighlightedMunicipality] = useState();
+  const [
+    almostQualifiedMunicipality,
+    setAlmostQualifiedMunicipality,
+  ] = useState();
 
   useEffect(() => {
-    console.log(leaderboardSegments.hot[0]);
-    setCurrentMunicipality(leaderboardSegments.hot[0]);
+    setHighlightedMunicipality(leaderboardSegments.hot[0]);
+    setAlmostQualifiedMunicipality(leaderboardSegments.largeMunicipalities[0]);
   }, [leaderboardSegments]);
 
   useEffect(() => {
     if (municipality) {
-      setCurrentMunicipality(municipality);
+      setHighlightedMunicipality(municipality);
     }
   }, [municipality]);
 
@@ -30,12 +34,16 @@ export const MapAndSearch = () => {
       <div className={s.mapSectionContainer}>
         <div className={s.search}>
           <WrappedMunicipalitySearch />
-          <h5 className={s.elementHeading}>
-            {'Aufsteiger der Woche'.toUpperCase()}
-          </h5>
+          {!municipality ? (
+            <h5 className={s.elementHeading}>
+              {'Aufsteiger der Woche'.toUpperCase()}
+            </h5>
+          ) : (
+            <h5 className={s.elementHeading}>{'Deine Suche'.toUpperCase()}</h5>
+          )}
           <div className={s.municipalityDetails}>
             <ExpandableRow
-              municipality={currentMunicipality}
+              municipality={highlightedMunicipality}
               isExpanded={true}
             />
           </div>
@@ -44,7 +52,7 @@ export const MapAndSearch = () => {
             {'Kurz vor dem Ziel'.toUpperCase()}
           </h5>
           <div className={s.municipalityDetails}>
-            <ExpandableRow municipality={currentMunicipality} />
+            <ExpandableRow municipality={almostQualifiedMunicipality} />
           </div>
         </div>
         <div className={s.map}>

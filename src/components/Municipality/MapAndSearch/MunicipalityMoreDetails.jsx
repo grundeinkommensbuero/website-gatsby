@@ -7,8 +7,8 @@ export const MunicipalityMoreDetails = ({ municipality }) => {
   return (
     <section className={s.expandedRow}>
       <CampainVisualisation
-        goal={200}
-        count={100}
+        goal={municipality.goal}
+        count={municipality.signups}
         onWhiteBackground={true}
         // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
         labels={{

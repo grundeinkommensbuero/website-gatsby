@@ -10,13 +10,39 @@ export const MunicipalityContext = React.createContext();
 export const MunicipalityProvider = ({ children }) => {
   // const prevMunicipality = usePrevious(municipality);
   const [isMunicipality, setIsMunicipality] = useState();
-  const [municipality, setMunicipality] = useState();
+  const [municipality, setMunicipalityState] = useState();
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
   const [municipalitiesGoalSignup, setMunicipalitiesGoalSignup] = useState([]);
   const [municipalitiesInObject, setMunicipalitiesInObject] = useState({});
   const [leaderboardSegments, setLeaderboardSegments] = useState({});
+
+  // Add the Signups and percentage to the municipality object
+  const setMunicipality = municipality => {
+    let municipalityForContext = municipality;
+    if (allMunicipalityStats.municipalities) {
+      const foundMunicipality = allMunicipalityStats.municipalities.find(
+        m => m.ags === municipality.ags
+      );
+      if (foundMunicipality) {
+        municipalityForContext = {
+          signups: foundMunicipality.signups,
+          percent: Math.round(
+            (foundMunicipality.signups / municipality.goal) * 100
+          ),
+          ...municipality,
+        };
+      } else {
+        municipalityForContext = {
+          signups: 0,
+          percent: 0,
+          ...municipality,
+        };
+      }
+    }
+    setMunicipalityState(municipalityForContext);
+  };
 
   // Stats for all municipalities
   const [
