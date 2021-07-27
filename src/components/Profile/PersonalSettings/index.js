@@ -1,45 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput } from '../../Forms/TextInput';
 import { formatDate } from '../../utils';
-
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
-// Borrow style from Newsletter-Settings
-import * as nS from '../ProfileNotifications/style.module.less';
-
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { Button } from '../../Forms/Button';
-// import { MessengerButtonRow } from '../MessengerButtonRow.js';
+import { DeleteAccountDialog } from './DeleteAccountDialog';
 import ImageUpload from '../../Forms/ImageUpload';
-
-import { SnackbarMessageContext } from '../../../context/Snackbar';
-
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
-import { useDeleteUser } from '../../../hooks/Api/Users/Delete';
-import { useSignOut } from '../../../hooks/Authentication';
-import { useSnackbar } from 'react-simple-snackbar';
+import { ChangeEmail } from './ChangeEmail';
 
-import snackbarTheme from '../../../context/Snackbar/snackbarTheme.json';
-
-export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => {
+export const PersonalSettings = ({
+  userData,
+  userId,
+  updateCustomUserData,
+}) => {
   const [updateUserState, updateUser] = useUpdateUser();
-  const deleteUser = useDeleteUser();
-  const signOut = useSignOut();
-  const [openSnackbar] = useSnackbar(snackbarTheme);
 
   const [waitingForApi, setWaitingForApi] = useState(false);
-  // const [editMailAddress, setEditMailAddress] = useState(false);
-  // const [editPhoneNumber, setEditPhoneNumber] = useState(false);
-
-  // const [tempMail, setTempMail] = useState();
-  // const [tempPhone, setTempPhone] = useState();
+  const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
   const [tempName, setTempName] = useState();
   const [tempZIP, setTempZIP] = useState();
   const [tempCity, setTempCity] = useState();
-  // const phonenumber = '';
-
-  const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
 
   useEffect(() => {
     if (updateUserState === 'loading') {
@@ -57,16 +40,18 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
   }, [updateUserState]);
 
   useEffect(() => {
-    if (userData && (
-      tempName === undefined ||
-      tempZIP === undefined ||
-      tempCity === undefined
-    )) {
-      setTempName(userData.username);
-      setTempZIP(userData.zipCode);
-      setTempCity(userData.city);
-      // setTempMail(userData.email);
-      // setTempPhone('');
+    if (userData) {
+      if (tempName === undefined) {
+        setTempName(userData.username);
+      }
+
+      if (tempZIP === undefined) {
+        setTempZIP(userData.zipCode);
+      }
+
+      if (tempCity === undefined) {
+        setTempCity(userData.city);
+      }
     }
   });
 
@@ -80,62 +65,6 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
     if (tempCity !== userData.city) {
       updateUser({ userId: userId, city: tempCity });
     }
-  };
-
-  const deleteSnackbarMessage = <p className={gS.snackbarMsg}>
-    <span className={gS.loading}></span>{' '}
-    <b>Dein Account wird gelöscht!</b>
-  </p>;
-
-  const accountDeletedMessage = <p className={gS.snackbarMsg}>
-    <b>Dein Account wurde gelöscht!</b>
-  </p>;
-
-  const deleteUserAccount = (updateSnackbarMessage) => {
-    signOut();
-    openSnackbar(deleteSnackbarMessage, [6000]);
-    setTimeout(() => {
-      signOut();
-      deleteUser({ userId });
-      updateSnackbarMessage(accountDeletedMessage);
-    }, 3000);
-  };
-
-  const DeleteAccountDialog = () => {
-    return (
-      <section className={nS.newsletterCard}>
-        <p className={nS.newsletterCardHeading}>
-          Bist du sicher, dass du deinen Account löschen möchtest?
-        </p>
-        <br />
-        <p className={nS.newsletterCardDescription}>
-          Diese Aktion kann nicht rückgängig gemacht werden!
-        </p>
-        <div className={s.revokeButtonRow}>
-
-          <Button
-            className={s.revokeButton}
-            onClick={() => setShowDeleteAccountDialog(false)}
-            size="SMALL"
-          >
-            Abbrechen
-          </Button>
-          <SnackbarMessageContext.Consumer>
-            {({ setMessage }) => (
-              <Button
-                size="SMALL"
-                className={s.revokeButton}
-                onClick={() => {
-                  deleteUserAccount(setMessage);
-                }}
-              >
-                Account endgültig löschen
-              </Button>
-            )}
-          </SnackbarMessageContext.Consumer>
-        </div>
-      </section>
-    );
   };
 
   return (
@@ -153,19 +82,18 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               userId={userId}
               buttonOnAquaBackground={true}
               size={'large'}
-              onUploadDone={() => { }}
+              onUploadDone={() => {}}
             />
           </div>
           <div className={s.marginBottomOnMobile}>
             <h2
               className={cN({
-                [gS.username]: userData.username
+                [gS.username]: userData.username,
               })}
             >
               {userData.username || userData.email}
             </h2>
             <div className={gS.placeInfo}>{userData.city}</div>
-            {/* Show profile edit button if own page */}
             <div>
               Dabei seit dem{' '}
               {userData.createdAt && formatDate(new Date(userData.createdAt))}
@@ -175,163 +103,48 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
 
         <section className={s.dataEditWrapper}>
           <div className={s.dataEditSection}>
-            {/*<h4 className={gS.optionSectionHeading}>Deine Kontaktdaten</h4>*/}
-            {/*<p className={s.optionHeading}>
-              <b>Email-Adresse</b>
-            </p>
-            <p className={s.optionDescription}>
-              Die Email-Adresse, die du verwendest um dich einzuloggen und
-              Neuigkeiten von uns zu erhalten.
-            </p>
-
-             {!editMailAddress ? (
-              <div className={s.editableRow}>
-                <span>{userData.email}</span>
-                <Button
-                  size="SMALL"
-                  className={s.mobileBtn}
-                  onClick={() => setEditMailAddress(true)}
-                >
-                  ändern
-                </Button>
-              </div>
-            ) : (
-                <div className={s.editableRow}>
-                  <TextInput
-                    onChange={evt => setTempMail(evt.target.value)}
-                    placeholder="E-Mail"
-                    value={tempMail || ''}
-                    size="SMALL"
-                    className={cN(
-                      tempMail !== userData.email ? s.inputHighlighted : null
-                    )}
-                  />
-                  <Button
-                    size="SMALL"
-                    className={s.mobileBtn}
-                    onClick={() => {
-                      setTempMail(userData.email);
-                      setEditMailAddress(false);
-                    }}
-                  >
-                    abbrechen
-                  </Button>
-                  {tempMail !== userData.email ? (
-                    <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
-                  ) : null}
-                </div>
-              )} */}
-
-            {/* <p className={s.optionHeading}>
-              <b>Telefonnummer</b>
-            </p>
-            <p className={s.optionDescription}>
-              Eine Telefonnummer erleichtert es uns, dich für die Koordination
-              von Veranstaltungen zu erreichen.
-            </p>
-
-            {!editPhoneNumber ? (
-              <div className={s.editableRow}>
-                {phonenumber ? (
-                  <span>{phonenumber}</span>
-                ) : (
-                    <span>Noch keine Telefonnummer angegeben</span>
-                  )}
-                <Button
-                  size="SMALL"
-                  className={s.mobileBtn}
-                  onClick={() => {
-                    setTempPhone(phonenumber);
-                    setEditPhoneNumber(true);
-                  }}
-                >
-                  {phonenumber ? (
-                    <span>ändern</span>
-                  ) : (
-                      <span>eintragen</span>
-                    )}
-                </Button>
-              </div>
-            ) : (
-                <div className={s.editableRow}>
-                  <TextInput
-                    onChange={evt => setTempPhone(evt.target.value)}
-                    placeholder="Telefonnummer"
-                    value={tempPhone || ''}
-                    size="SMALL"
-                    className={cN(
-                      tempPhone !== phonenumber ? s.inputHighlighted : null
-                    )}
-                  />
-                  <Button
-                    size="SMALL"
-                    className={s.mobileBtn}
-                    onClick={() => setEditPhoneNumber(false)}
-                  >
-                    abbrechen
-                  </Button>
-                  {tempPhone !== phonenumber ? (
-                    <Button size="SMALL" className={s.mobileBtn}>speichern</Button>
-                  ) : null}
-                </div>
-              )} */}
-
-            {/* <p className={s.optionHeading}>
-              <b>Messenger</b>
-            </p>
-            <p className={s.optionDescription}>
-              Wir sind auf mehreren Messenger-Diensten unterwegs. Du findest uns
-              hier:
-            </p>
-
-            <MessengerButtonRow iconSize="L" /> */}
-
             <h4 className={gS.optionSectionHeading}>Deine Stammdaten</h4>
-
             <p className={s.optionSectionDescription}>
               Name oder Adresse ändern:
             </p>
-
             <p className={s.optionHeading}>Name</p>
             <div className={s.editTextInput}>
               <TextInput
                 onChange={evt => setTempName(evt.target.value)}
                 placeholder="Name"
                 value={tempName || ''}
-                className={
-                  tempName !== userData.username ? s.inputHighlighted : null
-                }
+                className={cN({
+                  [s.inputHighlighted]: tempName !== userData.username,
+                })}
               />
             </div>
-
             <p className={s.optionHeading}>Postleitzahl</p>
             <div className={s.editTextInput}>
               <TextInput
                 onChange={evt => setTempZIP(evt.target.value)}
                 placeholder="Postleitzahl"
                 value={tempZIP || ''}
-                className={
-                  tempZIP !== userData.zipCode ? s.inputHighlighted : null
-                }
+                className={cN({
+                  [s.inputHighlighted]: tempZIP !== userData.zipCode,
+                })}
               />
             </div>
-
             <p className={s.optionHeading}>Ort</p>
             <div className={s.editTextInput}>
               <TextInput
                 onChange={evt => setTempCity(evt.target.value)}
                 placeholder="Ort"
                 value={tempCity || ''}
-                className={
-                  tempCity !== userData.city ? s.inputHighlighted : null
-                }
+                className={cN({
+                  [s.inputHighlighted]: tempCity !== userData.city,
+                })}
               />
             </div>
 
             {!waitingForApi &&
-              (tempName !== userData.username ||
-                tempZIP !== userData.zipCode ||
-                tempCity !== userData.city) ? (
+            (tempName !== userData.username ||
+              tempZIP !== userData.zipCode ||
+              tempCity !== userData.city) ? (
               <>
                 <Button
                   size="SMALL"
@@ -343,7 +156,7 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
                   }}
                 >
                   abbrechen
-                  </Button>
+                </Button>
                 <Button
                   size="SMALL"
                   className={s.mobileBtn}
@@ -354,40 +167,36 @@ export const PersonalSettings = ({ userData, userId, updateCustomUserData }) => 
               </>
             ) : (
               <section>
-                {waitingForApi ? (
+                {waitingForApi && (
                   <span>
                     <span className={gS.loading}></span>
                     <b className={gS.loadingMsg}>Speichern</b>
                   </span>
-                ) : null}
+                )}
               </section>
             )}
 
-            <h4 className={gS.optionSectionHeading}>Account verwalten</h4>
+            <ChangeEmail
+              updateCustomUserData={updateCustomUserData}
+              userData={userData}
+            />
 
-            <div className={s.optionSectionDescription}>
-              Falls du deine E-Mail Adresse ändern{' '}
-              möchtest, schick uns eine E-Mail an{' '}
-              <a href="mailto:support@expedition-grundeinkommen.de">
-                support@expedition-grundeinkommen.de
-              </a>
-              .
-            </div>
-
-            {!showDeleteAccountDialog ?
-              <span
-                aria-hidden="true"
-                className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
-                onClick={() => setShowDeleteAccountDialog(true)}>
+            {!showDeleteAccountDialog ? (
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.bottomRightLink)}
+                onClick={() => setShowDeleteAccountDialog(true)}
+              >
                 Profil löschen
-              </span> :
+              </button>
+            ) : (
               <div>
                 <br></br>
-                <DeleteAccountDialog />
+                <DeleteAccountDialog
+                  userId={userId}
+                  setShowDeleteAccountDialog={setShowDeleteAccountDialog}
+                />
               </div>
-            }
-
-
+            )}
           </div>
         </section>
       </section>

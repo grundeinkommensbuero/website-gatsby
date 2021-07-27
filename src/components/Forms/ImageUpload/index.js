@@ -169,6 +169,7 @@ export const ImageInput = ({
     >
       <AvatarImage
         srcOverwrite={avatarImage}
+        aria-label="Lade ein Bild hoch"
         className={cN(
           s.avatarImage,
           { [s.defaultSize]: size === 'default' },
@@ -180,9 +181,17 @@ export const ImageInput = ({
       {showUploadLabel ? (
         <>
           {(user && user.profilePictures) || unsavedChanges ? (
-            <div className={cN(s.avatarImageLabel)}>Bild ändern</div>
+            <button className={
+              cN(s.avatarImageLabel,
+                s.linkLikeFormattedButton,
+                s.alignLeft)
+            }>Bild ändern</button>
           ) : (
-            <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
+            <button className={
+              cN(s.avatarImageLabel,
+                s.linkLikeFormattedButton,
+                s.alignLeft)
+            }>Lad’ ein Bild hoch!</button>
           )}
         </>
       ) : null}

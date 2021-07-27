@@ -1,18 +1,14 @@
 [
   {
-    "tabName": "Besonders aktiv",
+    "tabName": "Aufsteiger",
     "dataSet": "hot"
   },
   {
-    "tabName": "Größere Orte",
+    "tabName": "Große Orte",
     "dataSet": "largeMunicipalities"
   },
   {
-    "tabName": "Kleinere Orte",
+    "tabName": "Kleine Orte",
     "dataSet": "smallMunicipalities"
-  },
-  {
-    "tabName": "Schon qualifiziert",
-    "dataSet": "qualified"
   }
 ]

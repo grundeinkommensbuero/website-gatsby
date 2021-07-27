@@ -1,19 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fetchPageNumbers, paginate } from './utils';
 import { MunicipalityContext } from '../../../context/Municipality/index';
 
 import * as s from './style.module.less';
 
-import { TabSelector } from './Table/TabSelector';
 import { Table } from './Table';
 import { PageSelector } from './Table/PageSelector';
 
-export const Leaderboard = () => {
+export const QualifiedBoard = () => {
   const { leaderboardSegments, statsInDays } = useContext(MunicipalityContext);
-  const [currentTab, setCurrentTab] = useState(0);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const paginationInfo = paginate(currentDataSet.length, currentPage);
+
+  useEffect(() => {
+    setCurrentDataSet(leaderboardSegments.qualified);
+  }, [leaderboardSegments]);
 
   const pageControls = fetchPageNumbers({
     currentPage,
@@ -28,17 +30,8 @@ export const Leaderboard = () => {
 
   return (
     <div>
-      <div className={s.tabSelectorContainer}>
-        <TabSelector
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-          setCurrentDataSet={setCurrentDataSet}
-          leaderboardSegments={leaderboardSegments}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
       <Table
-        currentTab={currentTab}
+        currentTab={3}
         slicedMunicipalities={slicedMunicipalities}
         statsInDays={statsInDays}
       />

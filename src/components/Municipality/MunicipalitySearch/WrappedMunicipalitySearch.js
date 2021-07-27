@@ -8,7 +8,8 @@ export const WrappedMunicipalitySearch = ({ searchTitle }) => {
   return (
     <div className={s.searchWrapper}>
       <p className={s.searchInfoText}>
-        Finde deinen Ort und schaue, wie viele Menschen schon dabei sind:
+        Suche nach einem beliebigen Ort in Deutschland und sieh dir an, wie die
+        Kampagne dort voran geht!
       </p>
       <MunicipalitySearch fallback={<div>Lädt...</div>} />
     </div>

@@ -41,9 +41,7 @@ const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
 
 const Components = {
   TickerToSignup: loadable(() => import('../../TickerToSignup')),
-  MunicipalityMap: loadable(() =>
-    import('../../Municipality/MunicipalityMapAndSearch')
-  ),
+  MunicipalityMap: loadable(() => import('../../Municipality/MapAndSearch')),
   InfoText: loadable(() => import('../../Municipality/MunicipalityInfoText')),
   MunicipalityProgress: loadable(() =>
     import('../../Municipality/MunicipalityProgress')
@@ -307,17 +305,20 @@ export function ContentfulSection({ section, pageContext }) {
                       })
                       .reverse()
                       .map(municipality => (
-                        <p
-                          aria-hidden="true"
-                          className={cN(s.chooseMunicipality, {
-                            [s.activeMunicipality]:
-                              municipality.ags === municipalityToShare?.ags,
-                          })}
+                        <button
+                          className={cN(
+                            s.chooseMunicipality,
+                            s.linkLikeFormattedButton,
+                            {
+                              [s.activeMunicipality]:
+                                municipality.ags === municipalityToShare?.ags,
+                            }
+                          )}
                           key={municipality.ags}
                           onClick={() => setMunicipalityToShare(municipality)}
                         >
                           {municipality.name}
-                        </p>
+                        </button>
                       ))}
                   </div>
                 </>

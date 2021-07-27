@@ -21,7 +21,7 @@ export const SharingFeature = ({
   const [shareChannel, setShareChannel] = useState();
 
   const executeScroll = () => {
-    if (scrollToRef.current) {
+    if (scrollToRef?.current) {
       scrollToRef.current.scrollIntoView();
     }
   };

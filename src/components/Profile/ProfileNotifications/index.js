@@ -15,9 +15,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   const [waitingForApi, setWaitingForApi] = useState(false);
   const [mainNewsletterConsent, setMainNewsletterConsent] = useState();
   const [reminderMailConsent, setReminderMailConsent] = useState();
-  const [customNewsletterSettings, setCustomNewsletterSettings] = useState(
-    []
-  );
+  const [customNewsletterSettings, setCustomNewsletterSettings] = useState([]);
   const [municipality, setMunicipality] = useState();
   const [unsubscribeMainNewsletterDialogActive, setUnsubscribeMainNewsletterDialog] = useState(false);
   const [unsubscribeReminderMailsDialogActive, setUnsubscribeReminderMailsDialog] = useState(false);
@@ -204,14 +202,6 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     setShowUnsubscribeAllDialog(false);
   }
 
-  // const updateUserPhone = () => {
-  //   try {
-  //     updateUser({ userId: userId, phone: userPhone })
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-
   const MainCard = () => {
     return (
       <div className={s.newsletterCard}>
@@ -237,23 +227,19 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         ) : (
           <p className={cN(gS.alignRight, gS.noMargin)}>
             {mainNewsletterConsent && mainNewsletterConsent.value ? (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleUnsubscribeMainNewsletterDialog}
-                onKeyDown={toggleUnsubscribeMainNewsletterDialog}
               >
                 abbestellen
-              </span>
+              </button>
             ) : (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleMainNewsletterConsent}
-                onKeyDown={toggleMainNewsletterConsent}
               >
                 Newsletter erhalten
-              </span>
+              </button>
             )}
           </p>
         )}
@@ -286,23 +272,19 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         ) : (
           <p className={cN(gS.alignRight, gS.noMargin)}>
             {reminderMailConsent && reminderMailConsent.value ? (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleUnsubscribeReminderMailsDialog}
-                onKeyDown={toggleUnsubscribeReminderMailsDialog}
               >
                 abbestellen
-              </span>
+              </button>
             ) : (
-              <span
-                aria-hidden="true"
-                className={gS.linkLikeFormatted}
+              <button
+                className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
                 onClick={toggleReminderMailConsent}
-                onKeyDown={toggleReminderMailConsent}
               >
                 Erinnerungsmails erhalten
-              </span>
+              </button>
             )}
           </p>
         )}
@@ -329,14 +311,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Abbestellen
           </Button>
           <div className={s.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={toggleUnsubscribeMainNewsletterDialog}
-              onKeyUp={toggleUnsubscribeMainNewsletterDialog}
             >
               Newsletter weiter erhalten
-            </span>
+            </button>
           </div>
         </div>
       </section>
@@ -362,14 +342,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Abbestellen
           </Button>
           <div className={s.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={toggleUnsubscribeReminderMailsDialog}
-              onKeyUp={toggleUnsubscribeReminderMailsDialog}
             >
               Erinnerungsmails weiter erhalten
-            </span>
+            </button>
           </div>
         </div>
       </section>
@@ -395,14 +373,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
             Abbestellen
           </Button>
           <div className={s.cancelRevokeProcess}>
-            <span
-              aria-hidden="true"
-              className={gS.linkLikeFormatted}
+            <button
+              className={cN(gS.linkLikeFormattedButton, gS.onWhiteBackground)}
               onClick={() => setShowUnsubscribeAllDialog(false)}
-              onKeyUp={() => setShowUnsubscribeAllDialog(false)}
             >
               Newsletter weiter erhalten
-            </span>
+            </button>
           </div>
         </div>
       </section>
@@ -411,19 +387,15 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
 
   // return active newsletter components
   const activeNewsletterCards = customNewsletterSettings.map(newsletter => {
-    if (newsletter.value) {
-      return (
-        <NewsletterCard
-          newsletter={newsletter}
-          key={`${newsletter.name}${newsletter.ags}`}
-          updateSingleNewsletter={updateSingleNewsletter}
-          waitingForApi={waitingForApi}
-          componentToBeUpdated={componentToBeUpdated}
-        />
-      );
-    } else {
-      return null;
-    }
+    return (
+      newsletter.value && <NewsletterCard
+        newsletter={newsletter}
+        key={`${newsletter.name}${newsletter.ags}`}
+        updateSingleNewsletter={updateSingleNewsletter}
+        waitingForApi={waitingForApi}
+        componentToBeUpdated={componentToBeUpdated}
+      />
+    );
   });
 
   return (
@@ -438,27 +410,27 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           E-Mail Einstellungen
         </h3>
 
-        {userData && userData.newsletterConsent ? (
+        {userData?.newsletterConsent && (
           <section>
             {/* Main Card is always visible */}
             {!unsubscribeReminderMailsDialogActive ? <MailSettingCard /> : <UnsubscribeReminderMailsDialog />}
           </section>
-        ) : null}
+        )}
 
         <h3 className={gS.optionSectionHeading}>
           Deine abonnierten Newsletter
         </h3>
 
-        {userData && userData.newsletterConsent ? (
+        {userData?.newsletterConsent && (
           <section>
             {/* Main Card is always visible */}
             {!unsubscribeMainNewsletterDialogActive ? <MainCard /> : <UnsubscribeNewsletterDialog />}
             {/* Conditionally render custom newsletter Cards */}
             <div>{activeNewsletterCards}</div>
           </section>
-        ) : null}
+        )}
 
-        <h3 className={gS.optionSectionHeading}>Newsletter hinzufügen</h3>
+        <h3 className={gS.optionSectionHeading}>Regionale Newsletter hinzufügen</h3>
         <div className={s.searchPlaces}>
           <SearchPlaces
             label={''}
@@ -470,34 +442,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           />
         </div>
 
-        {/* <h4 className={gS.optionSectionHeading}>Kontakt per Telefon</h4>
-        <p className={s.newsletterCardDescription}>
-          Hier kannst du angeben, ob wir dich auch telefonisch erreichen können.
-          Eine Telefonnummer erleichtert es uns, dich für die Koordination von
-          Veranstaltungen zu erreichen.
-          <br />
-          <br />
-          Mit dem Eintragen stimmst du zu, dass wir dich kontaktieren dürfen.
-        </p>
-        <div className={s.optionRow}>
-          <p className={cN(gS.noMargin, gS.inputDescription)}>Telefonnummer:</p>
-          <TextInput placeholder="Telefonnummer" className={s.phoneNumberInput} />
-          <Button>Eintragen</Button>
-        </div> */}
-
-        {/* <h4 className={gS.optionSectionHeading}>Kontakt per Messenger</h4>
-        <p className={s.newsletterCardDescription}>
-          Wenn du möchtest, kannst du auch per Messenger mit uns Kontakt
-          aufnehmen:
-        </p>
-        <MessengerButtonRow iconSize="XL" /> */}
-
         {!unsubscribeAllDialogActive ?
-          <p
-            aria-hidden="true"
-            className={cN(gS.linkLikeFormatted, gS.bottomRightLink)}
-            onClick={() => setShowUnsubscribeAllDialog(true)}
-            onKeyUp={() => setShowUnsubscribeAllDialog(true)}>Alle abbestellen</p>
+          <button
+            className={cN(gS.linkLikeFormattedButton, gS.bottomRightLink)}
+            onClick={() => setShowUnsubscribeAllDialog(true)}>
+            Alle abbestellen
+          </button>
           : <UnsubscribeAllDialog />
         }
       </section>

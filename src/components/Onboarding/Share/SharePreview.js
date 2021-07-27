@@ -34,7 +34,7 @@ export const SharePreview = ({
       headers: {},
     })
       .then(response => {
-        response.arrayBuffer().then(function(buffer) {
+        response.arrayBuffer().then(function (buffer) {
           const url = window.URL.createObjectURL(new Blob([buffer]));
           const link = document.createElement('a');
           link.href = url;
@@ -88,7 +88,6 @@ export const SharePreview = ({
             aria-label="Bild herunterladen"
           >
             <img
-              aria-hidden="true"
               className={s.sharePicInstagram}
               src="https://images.ctfassets.net/af08tobnb0cl/15Vjd0mpP0FpMwmgvP5RHw/1ceaf02a8a52c1bd0d779e9281a552a9/Launch_Story_Ich_bin_dabei.jpg?h=1000"
               alt="sharepic"
@@ -106,7 +105,6 @@ export const SharePreview = ({
             aria-label="Bild herunterladen"
           >
             <img
-              aria-hidden="true"
               className={s.sharePicInstagram}
               src="https://images.ctfassets.net/af08tobnb0cl/4f7aQbZP37iUc0H0od4BAQ/c76cc9f24ef9970fffcd552ef6c45c5e/Launch_Story_Ich_bin_dabei_Nominierung.jpg?h=1000"
               alt="sharepic"
@@ -147,9 +145,8 @@ export const SharePreview = ({
 
     // Quickfix, if user id for some reason is not available
     if (userId) {
-      return `${baseUrl}gemeinde-teilen/${userId}?ags=${
-        municipality.ags
-      }&version=1${addProfileImage()}`;
+      return `${baseUrl}gemeinde-teilen/${userId}?ags=${municipality.ags
+        }&version=1${addProfileImage()}`;
     } else {
       return baseUrl;
     }
@@ -158,9 +155,9 @@ export const SharePreview = ({
   const ShareButton = () => {
     let CaseButton =
       Components[
-        ShareButtons.find(
-          el => el.channelIdentifier === shareChannel?.channelIdentifier
-        )?.name
+      ShareButtons.find(
+        el => el.channelIdentifier === shareChannel?.channelIdentifier
+      )?.name
       ];
     const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = [
@@ -257,24 +254,6 @@ export const SharePreview = ({
                   >
                     Lieber mit Profilbild teilen
                   </Button>
-                  {/* TODO Enable Upload Image here: */}
-                  {/* {userData?.profilePictures?.original ? (
-                    <span
-                      aria-hidden="true"
-                      onClick={() => setUseProfilePicture(!useProfilePicture)}
-                      className={gS.linkLikeFormatted}
-                    >
-                      Lieber mit Profilbild teilen
-                    </span>
-                  ) : (
-                      <span
-                        aria-hidden="true"
-                        onClick={() => setShowProfileImageUpload(true)}
-                        className={gS.linkLikeFormatted}
-                      >
-                        Profilbild hochladen
-                      </span>
-                    )} */}
                 </>
               )}
             </div>

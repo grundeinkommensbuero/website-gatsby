@@ -1,22 +1,46 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
-import { history } from '../utils';
-// import { usePrevious } from '../../hooks/utils';
 
 import municipalities from '../../components/Municipality/MunicipalityMap/data/municipalitiesForMap.json';
 
 export const MunicipalityContext = React.createContext();
 
 export const MunicipalityProvider = ({ children }) => {
-  // const prevMunicipality = usePrevious(municipality);
   const [isMunicipality, setIsMunicipality] = useState();
-  const [municipality, setMunicipality] = useState();
+  const [municipality, setMunicipalityState] = useState();
   const [isSpecific, setIsSpecific] = useState();
   const [pageContext, setPageContext] = useState();
   const [statsSummary, setStatsSummary] = useState();
   const [municipalitiesGoalSignup, setMunicipalitiesGoalSignup] = useState([]);
   const [municipalitiesInObject, setMunicipalitiesInObject] = useState({});
   const [leaderboardSegments, setLeaderboardSegments] = useState({});
+  const [statsInDays, setStatsInDays] = useState();
+
+  // Add the Signups and percentage to the municipality object
+  const setMunicipality = municipality => {
+    let municipalityForContext = municipality;
+    if (allMunicipalityStats?.municipalities && municipality?.ags) {
+      const foundMunicipality = allMunicipalityStats.municipalities.find(
+        m => m.ags === municipality.ags
+      );
+      if (foundMunicipality) {
+        municipalityForContext = {
+          signups: foundMunicipality.signups,
+          percent: Math.round(
+            (foundMunicipality.signups / municipality.goal) * 100
+          ),
+          ...municipality,
+        };
+      } else {
+        municipalityForContext = {
+          signups: 0,
+          percent: 0,
+          ...municipality,
+        };
+      }
+    }
+    setMunicipalityState(municipalityForContext);
+  };
 
   // Stats for all municipalities
   const [
@@ -29,7 +53,7 @@ export const MunicipalityProvider = ({ children }) => {
   const [
     singleMunicipalityStatsState,
     singleMunicipalityStats,
-    getSingleMunicipalityStats,
+    // getSingleMunicipalityStats,
   ] = useGetMunicipalityStats();
 
   const [
@@ -50,12 +74,8 @@ export const MunicipalityProvider = ({ children }) => {
         isMunicipality,
         isSpecificMunicipality,
         municipality,
-        isFromHistoryEvent,
       } = pageContext;
 
-      if (!isFromHistoryEvent) {
-        history.replaceHistoryState(municipality, pageContext);
-      }
       if (isMunicipality) {
         setIsMunicipality(true);
         if (isSpecificMunicipality) {
@@ -71,37 +91,6 @@ export const MunicipalityProvider = ({ children }) => {
       }
     }
   }, [pageContext]);
-
-  useEffect(() => {
-    if (municipality) {
-      if (
-        typeof ags.current === undefined ||
-        municipality.ags !== ags.current
-      ) {
-        ags.current = municipality.ags;
-        getSingleMunicipalityStats(ags.current);
-        setIsMunicipality(true);
-        setIsSpecific(true);
-        history.pushToHistoryState(municipality, pageContext);
-        history.updateOnPopStateListener(
-          municipality,
-          setMunicipality,
-          setPageContext
-        );
-        // TODO: We cannot know what state the municipality is in
-        // but in case the municipality stats endpoint is down we should
-        // set it to qualifying for now?
-        setMunicipalityContentfulState('qualifying');
-      }
-    } else {
-      ags.current = undefined;
-      setMunicipalityContentfulState('noMunicipality');
-      setIsSpecific(false);
-      // ! IMPORTANT:
-      // TODO: is it possible to set isMunicipality here?
-      // QUESTION: Do we still have the generic /gemeinden site?
-    }
-  }, [municipality]);
 
   useEffect(() => {
     if (municipality && municipality.ags === ags.current) {
@@ -144,6 +133,7 @@ export const MunicipalityProvider = ({ children }) => {
           name: municipality.name,
           goal: municipality.goal,
           population: municipality.population,
+          slug: municipality.slug,
         };
         return muniObj;
       },
@@ -219,6 +209,12 @@ export const MunicipalityProvider = ({ children }) => {
     setLeaderboardSegments(segments);
   }, [municipalitiesGoalSignup]);
 
+  useEffect(() => {
+    const calcStatsInDays =
+      allMunicipalityStats.timePassed / 1000 / 60 / 60 / 24;
+    setStatsInDays(calcStatsInDays);
+  }, [allMunicipalityStats]);
+
   return (
     <MunicipalityContext.Provider
       value={{
@@ -237,6 +233,7 @@ export const MunicipalityProvider = ({ children }) => {
         statsSummary,
         municipalitiesGoalSignup,
         leaderboardSegments,
+        statsInDays,
         refreshContextStats: () => getAllMunicipalityStats(),
       }}
     >

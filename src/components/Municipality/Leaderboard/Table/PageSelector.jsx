@@ -11,16 +11,20 @@ export const PageSelector = ({ currentPage, setCurrentPage, pageControls }) => {
       nextpage = currentPage - 1;
     }
     return (
-      <span
+      <button
         key={pagenumber}
-        aria-hidden="true"
-        className={cN(s.pageSelectorElement, {
-          [s.activePageSelector]: pagenumber === currentPage,
-        })}
+        className={cN(
+          s.linkLikeFormattedButton,
+          s.noTextDecoration,
+          s.pageSelectorElement,
+          {
+            [s.activePageSelector]: pagenumber === currentPage,
+          }
+        )}
         onClick={() => setCurrentPage(nextpage)}
       >
         {pagenumber}
-      </span>
+      </button>
     );
   });
 };

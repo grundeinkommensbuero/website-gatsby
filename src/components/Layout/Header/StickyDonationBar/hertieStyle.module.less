@@ -68,17 +68,32 @@
 }
 
 .closeButton {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   cursor: pointer;
   position: absolute;
   right: 0.75rem;
   top: 0.75rem;
 
   @media (max-width: @breakPointM) {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
+
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  &:hover {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+}
+
+.closeIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
 
   @media (max-width: @breakPointS) {
     margin: auto 0.25rem;

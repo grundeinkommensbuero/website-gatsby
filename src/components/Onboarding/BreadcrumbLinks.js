@@ -18,7 +18,7 @@ export const BreadcrumbLinks = ({
     if (element.name !== 'close') {
       return (
         <button
-          aria-hidden={true}
+          aria-label="Schließen"
           onClick={() => setCurrentElement(element.name)}
           key={element.name}
           className={cN(s.breadcrumbElement, {
@@ -39,8 +39,6 @@ export const BreadcrumbLinks = ({
           })}
         >
           <div
-            alt=""
-            aria-hidden="true"
             className={s.closeButtonBreadcrumb}
             dangerouslySetInnerHTML={{ __html: closeIcon }}
           ></div>

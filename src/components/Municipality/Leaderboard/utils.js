@@ -1,7 +1,7 @@
 export const paginate = (
   totalItems,
   currentPage = 1,
-  pageSize = 10,
+  pageSize = 5,
   maxPages = 10000
 ) => {
   // calculate total pages
@@ -43,7 +43,9 @@ export const paginate = (
   let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
   // create an array of pages to ng-repeat in the pager control
-  let pages = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
+  let pages = Array.from(Array(endPage + 1 - startPage).keys()).map(
+    i => startPage + i
+  );
 
   // return object with all pager properties required by the view
   return {
@@ -55,9 +57,9 @@ export const paginate = (
     endPage: endPage,
     startIndex: startIndex,
     endIndex: endIndex,
-    pages: pages
+    pages: pages,
   };
-}
+};
 
 const LEFT_PAGE = '<<';
 const RIGHT_PAGE = '>>';
@@ -72,14 +74,18 @@ const range = (from, to, step = 1) => {
   }
 
   return range;
-}
+};
 
-export const fetchPageNumbers = ({ currentPage = 1, totalPages = 0, pageNeighbours = 0 }) => {
+export const fetchPageNumbers = ({
+  currentPage = 1,
+  totalPages = 0,
+  pageNeighbours = 0,
+}) => {
   /**
    * totalNumbers: the total page numbers to show on the control
    * totalBlocks: totalNumbers + 2 to cover for the left(<) and right(>) controls
    */
-  const totalNumbers = (pageNeighbours * 2) + 3;
+  const totalNumbers = pageNeighbours * 2 + 3;
   const totalBlocks = totalNumbers + 2;
 
   if (totalPages > totalBlocks) {
@@ -93,26 +99,26 @@ export const fetchPageNumbers = ({ currentPage = 1, totalPages = 0, pageNeighbou
      * spillOffset: number of hidden pages either to the left or to the right
      */
     const hasLeftSpill = startPage > 2;
-    const hasRightSpill = (totalPages - endPage) > 1;
+    const hasRightSpill = totalPages - endPage > 1;
     const spillOffset = totalNumbers - (pages.length + 1);
 
     switch (true) {
       // handle: (1) < {5 6} [7] {8 9} (10)
-      case (hasLeftSpill && !hasRightSpill): {
+      case hasLeftSpill && !hasRightSpill: {
         const extraPages = range(startPage - spillOffset, startPage - 1);
         pages = [LEFT_PAGE, ...extraPages, ...pages];
         break;
       }
 
       // handle: (1) {2 3} [4] {5 6} > (10)
-      case (!hasLeftSpill && hasRightSpill): {
+      case !hasLeftSpill && hasRightSpill: {
         const extraPages = range(endPage + 1, endPage + spillOffset);
         pages = [...pages, ...extraPages, RIGHT_PAGE];
         break;
       }
 
       // handle: (1) < {4 5} [6] {7 8} > (10)
-      case (hasLeftSpill && hasRightSpill):
+      case hasLeftSpill && hasRightSpill:
       default: {
         pages = [LEFT_PAGE, ...pages, RIGHT_PAGE];
         break;
@@ -123,4 +129,4 @@ export const fetchPageNumbers = ({ currentPage = 1, totalPages = 0, pageNeighbou
   }
 
   return range(1, totalPages);
-}
+};
