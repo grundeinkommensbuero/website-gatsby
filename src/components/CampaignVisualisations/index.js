@@ -297,7 +297,7 @@ export const Visualisation = ({
                     s.barCurrent,
                     { [s.onWhiteBackground]: onWhiteBackground },
                     { [s.outside]: countOutside },
-                    { [s.completed]: goalHasBeenReached }
+                    { [s.completed]: goalHasBeenReached && !onWhiteBackground }
                   )}
                   style={{ width: `${percentage}%` }}
                   aria-label={`${count} von ${goal} ${currency}`}

@@ -21,7 +21,7 @@ export const MunicipalityProvider = ({ children }) => {
   // Add the Signups and percentage to the municipality object
   const setMunicipality = municipality => {
     let municipalityForContext = municipality;
-    if (allMunicipalityStats.municipalities) {
+    if (allMunicipalityStats?.municipalities && municipality?.ags) {
       const foundMunicipality = allMunicipalityStats.municipalities.find(
         m => m.ags === municipality.ags
       );

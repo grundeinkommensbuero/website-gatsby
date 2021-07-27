@@ -1,3 +1,4 @@
+import { navigate } from 'gatsby';
 import React from 'react';
 import { CampainVisualisation } from '../../CampaignVisualisations/index';
 import { Button } from '../../Forms/Button/index';
@@ -29,7 +30,14 @@ export const MunicipalityMoreDetails = ({ municipality }) => {
         />
       )}
       <div className={s.buttonContainer}>
-        <Button className={s.municipalityButton}>Zur Ortsseite</Button>
+        <Button
+          className={s.municipalityButton}
+          onClick={() =>
+            navigate(`/gemeinden/${municipality.name.toLowerCase()}`)
+          }
+        >
+          Zur Ortsseite
+        </Button>
       </div>
     </section>
   );

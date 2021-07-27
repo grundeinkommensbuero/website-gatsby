@@ -16,7 +16,7 @@ const TableData = ({ slicedMunicipalities }) => {
   return slicedMunicipalities.map(municipality => {
     return (
       <tr className={s.tableRow} key={municipality.ags}>
-        <td className={s.tableRowContent}>
+        <td>
           <ExpandableRow municipality={municipality} />
         </td>
       </tr>

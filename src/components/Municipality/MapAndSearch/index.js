@@ -29,52 +29,58 @@ export const MapAndSearch = () => {
     }
   }, [municipality]);
 
-  return (
-    <>
-      <div className={s.mapSectionContainer}>
-        <div className={s.search}>
-          <WrappedMunicipalitySearch />
-          {!municipality ? (
-            <h5 className={s.elementHeading}>
-              {'Aufsteiger der Woche'.toUpperCase()}
-            </h5>
-          ) : (
-            <h5 className={s.elementHeading}>{'Deine Suche'.toUpperCase()}</h5>
-          )}
-          <div className={s.municipalityDetails}>
-            <ExpandableRow
-              municipality={highlightedMunicipality}
-              isExpanded={true}
-            />
-          </div>
+  // If there is data to display, show leaderboard and map, else show fallback map
+  if (highlightedMunicipality || almostQualifiedMunicipality) {
+    return (
+      <>
+        <div className={s.mapSectionContainer}>
+          <div className={s.search}>
+            <WrappedMunicipalitySearch />
+            {!municipality ? (
+              <h5 className={s.elementHeading}>
+                {'Aufsteiger der Woche'.toUpperCase()}
+              </h5>
+            ) : (
+              <h5 className={s.elementHeading}>
+                {'Deine Suche'.toUpperCase()}
+              </h5>
+            )}
+            <div className={s.municipalityDetails}>
+              <ExpandableRow
+                municipality={highlightedMunicipality}
+                isExpanded={true}
+              />
+            </div>
 
-          <h5 className={s.elementHeading}>
-            {'Kurz vor dem Ziel'.toUpperCase()}
-          </h5>
-          <div className={s.municipalityDetails}>
-            <ExpandableRow municipality={almostQualifiedMunicipality} />
+            <h5 className={s.elementHeading}>
+              {'Kurz vor dem Ziel'.toUpperCase()}
+            </h5>
+            <div className={s.municipalityDetails}>
+              <ExpandableRow municipality={almostQualifiedMunicipality} />
+            </div>
+          </div>
+          <div className={s.map}>
+            <MunicipalityMap fallback={<FallbackMap />} />
           </div>
         </div>
-        <div className={s.map}>
-          <MunicipalityMap fallback={<FallbackMap />} />
+        <div className={s.leaderboard}>
+          <div className={s.leaderboardTable}>
+            <h5 className={s.elementHeading}>
+              {'Auf dem Weg zum Ziel'.toUpperCase()}
+            </h5>
+            <Leaderboard />
+          </div>
+          <div className={s.leaderboardTable}>
+            <h5 className={s.elementHeading}>
+              {'Schon über die Ziellinie'.toUpperCase()}
+            </h5>
+            <QualifiedBoard />
+          </div>
         </div>
-      </div>
-      <div className={s.leaderboard}>
-        <div className={s.leaderboardTable}>
-          <h5 className={s.elementHeading}>
-            {'Auf dem Weg zum Ziel'.toUpperCase()}
-          </h5>
-          <Leaderboard />
-        </div>
-        <div className={s.leaderboardTable}>
-          <h5 className={s.elementHeading}>
-            {'Schon über die Ziellinie'.toUpperCase()}
-          </h5>
-          <QualifiedBoard />
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+  return <MunicipalityMap fallback={<FallbackMap />} />;
 };
 
 // Default export needed for lazy loading

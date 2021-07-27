@@ -8,25 +8,27 @@ export const ExpandableRow = ({ municipality, isExpanded = false }) => {
   const [isExpandedState, setIsExpandedState] = useState(isExpanded);
 
   return (
-    <div className={s.extendableRow}>
+    <div className={s.expandableRow}>
       <button
         className={s.expandButton}
         type="button"
-        aria-labelledby="forScreenReader"
+        aria-label={
+          isExpandedState
+            ? 'Gemeindeinfo einklappen'
+            : 'Gemeindeinfo ausklappen'
+        }
         onClick={() => setIsExpandedState(!isExpandedState)}
       >
-        <span id="forScreenReader" className={s.srOnly}>
-          Weitere Gemeindeinfo auskappen
-        </span>
         <div>
           <div
-            id={s.myTriangle}
             className={cN(s.triangle, { [s.animateTriangle]: isExpandedState })}
           ></div>
         </div>
       </button>
       <MunicipalityDetails municipality={municipality} />
-      {isExpanded && <MunicipalityMoreDetails municipality={municipality} />}
+      {isExpandedState && (
+        <MunicipalityMoreDetails municipality={municipality} />
+      )}
     </div>
   );
 };
