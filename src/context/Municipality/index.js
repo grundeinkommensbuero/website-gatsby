@@ -139,6 +139,7 @@ export const MunicipalityProvider = ({ children }) => {
           name: municipality.name,
           goal: municipality.goal,
           population: municipality.population,
+          slug: municipality.slug,
         };
         return muniObj;
       },
