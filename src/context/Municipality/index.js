@@ -61,12 +61,6 @@ export const MunicipalityProvider = ({ children }) => {
     setMunicipalityContentfulState,
   ] = useState('noMunicipality');
 
-  // State to check whether this municipality is bremen,
-  // hamburg, berlin or other municipality
-  const [berlinHamburgBremenState /*setBerlinHamburgBremenState*/] = useState(
-    'noMunicipality'
-  );
-
   const ags = useRef();
 
   // Get general municipality stats (of all munics)
@@ -231,7 +225,6 @@ export const MunicipalityProvider = ({ children }) => {
         isSpecific,
         setIsSpecific,
         municipalityContentfulState,
-        berlinHamburgBremenState,
         setPageContext,
         allMunicipalityStats,
         allMunicipalityStatsState,
