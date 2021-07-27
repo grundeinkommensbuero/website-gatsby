@@ -21,7 +21,6 @@ import {
   getFilteredElementsByContentfulState,
   getComponentFromContentful,
 } from '../../utils';
-// import { runElFilterTest } from '../../utils/testUtils';
 import { TextAndImage } from './TextAndImage';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { IntroText } from '../../IntroText';
