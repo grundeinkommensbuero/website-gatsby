@@ -22,7 +22,10 @@ history.updateOnPopStateListener = (
         adjustDocumentTitle(municipality, municipalityState.name);
       }
       if (pageContextState) {
-        setPageContext({ ...pageContextState, isFromHistoryEvent: true });
+        setPageContext({
+          ...pageContextState,
+          // isFromHistoryEvent: true
+        });
       }
     };
   }

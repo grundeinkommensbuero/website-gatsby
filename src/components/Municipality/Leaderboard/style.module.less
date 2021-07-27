@@ -7,8 +7,6 @@
 
 .tableBody {
   border-collapse: collapse;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
   width: 100%;
 
   &.tableBody th {
@@ -19,17 +17,15 @@
   &.tableBody td,
   &.tableBody tr {
     border: none;
-    padding: 8px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 1rem 2rem;
   }
 }
 
 .tableRow {
-  color: white;
+  color: black;
+  background: lighten(@violetLight, 10%);
   &:nth-child(odd) {
-    background: @violetLight;
-    color: white;
+    background: @white;
   }
 }
 
@@ -44,12 +40,13 @@
 }
 
 .pageSelectorElement {
-  padding: 0.5rem 0.25rem 0.25rem;
+  padding: 0.35rem 0.25rem 0.25rem;
   cursor: pointer;
-  flex-grow: 1;
+  min-width: 2rem;
   text-align: center;
 
   &:hover {
+    color: @white;
     background-color: @red;
   }
 
@@ -61,41 +58,35 @@
 
 .pageSelectorContainer {
   display: flex;
-  border-bottom: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  margin-bottom: 3rem;
+  justify-content: center;
+  margin: 1rem 0 2rem 0;
 }
 
 .tabSelectorElement {
   padding: 1rem 0.25rem 0.7rem;
-  border-top: 1px solid lightgrey;
-
-  border-right: 1px solid lightgrey;
-  border-bottom: 1px solid #ddd;
-  // border-top-left-radius: 10px;
-  // border-top-right-radius: 10px;
-  color: @white;
+  color: black;
   cursor: pointer;
-  flex-grow: 1;
   text-align: center;
+  min-width: 25%;
+  margin: 0 0.25rem;
+  background: @white; // fallback for IE
+  background: var(--button-bg-color);
+  font-size: @DesktopFontSizeS;
+  font-weight: 600;
 
   &:hover {
+    color: @white;
     background-color: @red;
   }
 
   &.activeTabSelector {
     padding: calc(1rem - 1px) 0.25rem 0.7rem;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: none;
     background: @white;
     color: @violet;
   }
 
   &:first-child {
-    border-left: 1px solid lightgrey;
-    border-left: 1px solid #ddd;
+    margin-left: 0;
   }
 }
 

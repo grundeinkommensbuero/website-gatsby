@@ -61,6 +61,7 @@ const getAndStoreDataVariations = municipalities => {
       ags,
       name,
       zipCodes,
+      goal,
       population,
       slug,
       nameUnique,

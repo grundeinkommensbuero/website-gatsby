@@ -119,6 +119,7 @@ export const CampainVisualisation = ({
   addToSignatureCount,
   currentCount,
   isCrowdfunding = false,
+  onWhiteBackground = false,
   ...props
 }) => {
   let count = currentCount || 0;
@@ -137,7 +138,14 @@ export const CampainVisualisation = ({
     }
   }
 
-  return <Visualisation count={count} isCrowdfunding={isCrowdfunding} {...props} />;
+  return (
+    <Visualisation
+      count={count}
+      isCrowdfunding={isCrowdfunding}
+      onWhiteBackground={onWhiteBackground}
+      {...props}
+    />
+  );
 };
 
 export const Visualisation = ({
@@ -157,7 +165,8 @@ export const Visualisation = ({
   currency,
   currencyShort,
   labels,
-  isCrowdfunding
+  isCrowdfunding,
+  onWhiteBackground,
 }) => {
   const barEl = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -252,13 +261,20 @@ export const Visualisation = ({
               <div className={s.barGoalBar}>
                 {hasStarted && (
                   <div
-                    className={cN(s.barGoalInbetween, { [s.crowdfunding]: isCrowdfunding })}
+                    className={cN(
+                      s.barGoalInbetween,
+                      { [s.crowdfunding]: isCrowdfunding },
+                      { [s.onWhiteBackground]: onWhiteBackground }
+                    )}
                     style={{ width: `${goalInbetweenPercentage || 100}%` }}
                   ></div>
                 )}
               </div>
               {goal && !goalInbetween && (
-                <Tooltip className={cN(s.goal, { [s.crowdfunding]: isCrowdfunding })} content={labels.NEEDED()}>
+                <Tooltip
+                  className={cN(s.goal, { [s.crowdfunding]: isCrowdfunding })}
+                  content={labels.NEEDED()}
+                >
                   {goal.toLocaleString('de')}
                   {currencyShort}
                 </Tooltip>
@@ -279,8 +295,9 @@ export const Visualisation = ({
                 <span
                   className={cN(
                     s.barCurrent,
+                    { [s.onWhiteBackground]: onWhiteBackground },
                     { [s.outside]: countOutside },
-                    { [s.completed]: goalHasBeenReached }
+                    { [s.completed]: goalHasBeenReached && !onWhiteBackground }
                   )}
                   style={{ width: `${percentage}%` }}
                   aria-label={`${count} von ${goal} ${currency}`}

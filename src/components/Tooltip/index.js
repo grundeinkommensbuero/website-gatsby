@@ -20,7 +20,7 @@ export const Tooltip = ({
           </div>
         )}
       </Reference>
-      <Popper placement={placement} modifiers={{ offset: { offset: '0, 25' } }}>
+      <Popper placement={placement}>
         {({ ref, style, placement, arrowProps }) => (
           <div
             ref={ref}

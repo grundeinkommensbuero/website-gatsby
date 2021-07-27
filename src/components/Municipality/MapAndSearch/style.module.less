@@ -1,0 +1,182 @@
+@import '../../style/vars.less';
+
+.mapSectionContainer {
+  display: flex;
+  margin-bottom: 2rem;
+  flex-direction: row;
+  @media (max-width: @breakPointL) {
+    flex-direction: column;
+  }
+}
+
+.map {
+  box-sizing: border-box;
+  width: 50%;
+  padding-left: 2rem;
+  @media (max-width: @breakPointL) {
+    padding-right: 0rem;
+    width: 100%;
+  }
+}
+
+.search {
+  box-sizing: border-box;
+  width: 50%;
+  padding-right: 2rem;
+  @media (max-width: @breakPointL) {
+    padding-right: 0rem;
+    width: 100%;
+  }
+}
+
+.municipalityDetails {
+  background-color: @white;
+  padding: 1rem;
+  color: @black;
+  margin-bottom: 2rem;
+}
+
+.elementHeading {
+  margin: 0.3rem 0;
+}
+
+.description {
+  color: gray;
+  margin: 0.5rem 0 0 0;
+  font-size: @DesktopFontSizeS;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.percentage {
+  padding-right: 2rem;
+}
+
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leaderboard {
+  display: flex;
+
+  justify-content: space-between;
+  @media (max-width: @breakPointL) {
+    flex-wrap: wrap;
+  }
+}
+
+.leaderboardTable {
+  width: 47.5%;
+  align-self: flex-end;
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+}
+
+.municipalityButton {
+  background: @white; // fallback for IE
+  background: @violetTransparent;
+  border: @black; //fallback for IE
+  border: @violet solid @borderWidthThick;
+  border-radius: @borderRadius;
+  color: @violet;
+  font-size: @DesktopFontSizeM;
+  font-weight: bold;
+  padding: @buttonPadding;
+  text-decoration: none;
+
+  @media (max-width: @breakPointXS) {
+    padding: @buttonPaddingSmall;
+  }
+
+  &.medium {
+    font-size: @DesktopFontSizeM;
+  }
+
+  &.small {
+    font-size: @DesktopFontSizeXS;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 1em;
+  }
+
+  &:hover {
+    color: @white;
+    background: @violet;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: darken(@violet, 10%);
+    color: @white;
+    border-color: darken(@violet, 10%);
+    //box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.expandedRow {
+  margin-top: 1rem;
+}
+
+.expandableRow {
+  position: relative;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 8.6px solid transparent;
+  border-left: 10px solid #3e3e3e;
+  border-bottom: 8.6px solid transparent;
+  animation-name: rotateTriangle;
+  background: none;
+
+  &:hover {
+    background: none;
+  }
+}
+
+.expandButton {
+  border: none;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+}
+
+.animateTriangle {
+  transform: rotate(90deg);
+  // animation-duration: 1s;
+  // animation-fill-mode: both;
+  // animation-name: rotateTriangle;
+}
+
+@keyframes rotateTriangle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+.srOnly {
+  display: none;
+}
