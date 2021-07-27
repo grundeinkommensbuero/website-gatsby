@@ -9,7 +9,7 @@ import { Table } from './Table';
 import { PageSelector } from './Table/PageSelector';
 
 export const Leaderboard = () => {
-  const { leaderboardSegments } = useContext(MunicipalityContext);
+  const { leaderboardSegments, statsInDays } = useContext(MunicipalityContext);
   const [currentTab, setCurrentTab] = useState(0);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,6 +40,7 @@ export const Leaderboard = () => {
       <Table
         currentTab={currentTab}
         slicedMunicipalities={slicedMunicipalities}
+        statsInDays={statsInDays}
       />
       <div className={s.pageSelectorContainer}>
         <PageSelector

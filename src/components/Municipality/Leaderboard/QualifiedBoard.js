@@ -8,7 +8,7 @@ import { Table } from './Table';
 import { PageSelector } from './Table/PageSelector';
 
 export const QualifiedBoard = () => {
-  const { leaderboardSegments } = useContext(MunicipalityContext);
+  const { leaderboardSegments, statsInDays } = useContext(MunicipalityContext);
   const [currentDataSet, setCurrentDataSet] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const paginationInfo = paginate(currentDataSet.length, currentPage);
@@ -30,7 +30,11 @@ export const QualifiedBoard = () => {
 
   return (
     <div>
-      <Table currentTab={3} slicedMunicipalities={slicedMunicipalities} />
+      <Table
+        currentTab={3}
+        slicedMunicipalities={slicedMunicipalities}
+        statsInDays={statsInDays}
+      />
       <div className={s.pageSelectorContainer}>
         <PageSelector
           currentPage={currentPage}

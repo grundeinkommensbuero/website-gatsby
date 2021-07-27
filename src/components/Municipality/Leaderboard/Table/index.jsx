@@ -2,22 +2,28 @@ import React from 'react';
 import { ExpandableRow } from '../../MapAndSearch/ExpandableRow';
 import * as s from '../style.module.less';
 
-export const Table = ({ slicedMunicipalities }) => {
+export const Table = ({ slicedMunicipalities, statsInDays }) => {
   return (
     <table className={s.tableBody}>
       <tbody>
-        <TableData slicedMunicipalities={slicedMunicipalities} />
+        <TableData
+          statsInDays={statsInDays}
+          slicedMunicipalities={slicedMunicipalities}
+        />
       </tbody>
     </table>
   );
 };
 
-const TableData = ({ slicedMunicipalities }) => {
+const TableData = ({ slicedMunicipalities, statsInDays }) => {
   return slicedMunicipalities.map(municipality => {
     return (
       <tr className={s.tableRow} key={municipality.ags}>
         <td>
-          <ExpandableRow municipality={municipality} />
+          <ExpandableRow
+            statsInDays={statsInDays}
+            municipality={municipality}
+          />
         </td>
       </tr>
     );

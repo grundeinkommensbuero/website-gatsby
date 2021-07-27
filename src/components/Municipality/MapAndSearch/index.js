@@ -11,7 +11,9 @@ import { MunicipalityContext } from '../../../context/Municipality';
 const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MapAndSearch = () => {
-  const { municipality, leaderboardSegments } = useContext(MunicipalityContext);
+  const { municipality, leaderboardSegments, statsInDays } = useContext(
+    MunicipalityContext
+  );
   const [highlightedMunicipality, setHighlightedMunicipality] = useState();
   const [
     almostQualifiedMunicipality,
@@ -47,6 +49,7 @@ export const MapAndSearch = () => {
             )}
             <div className={s.municipalityDetails}>
               <ExpandableRow
+                statsInDays={statsInDays}
                 municipality={highlightedMunicipality}
                 isExpanded={true}
               />
@@ -56,7 +59,10 @@ export const MapAndSearch = () => {
               {'Kurz vor dem Ziel'.toUpperCase()}
             </h5>
             <div className={s.municipalityDetails}>
-              <ExpandableRow municipality={almostQualifiedMunicipality} />
+              <ExpandableRow
+                statsInDays={statsInDays}
+                municipality={almostQualifiedMunicipality}
+              />
             </div>
           </div>
           <div className={s.map}>

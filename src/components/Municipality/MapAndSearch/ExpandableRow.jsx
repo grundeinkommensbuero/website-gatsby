@@ -4,7 +4,11 @@ import { MunicipalityMoreDetails } from './MunicipalityMoreDetails';
 import * as s from './style.module.less';
 import cN from 'classnames';
 
-export const ExpandableRow = ({ municipality, isExpanded = false }) => {
+export const ExpandableRow = ({
+  municipality,
+  statsInDays,
+  isExpanded = false,
+}) => {
   const [isExpandedState, setIsExpandedState] = useState(isExpanded);
 
   return (
@@ -25,7 +29,10 @@ export const ExpandableRow = ({ municipality, isExpanded = false }) => {
           ></div>
         </div>
       </button>
-      <MunicipalityDetails municipality={municipality} />
+      <MunicipalityDetails
+        statsInDays={statsInDays}
+        municipality={municipality}
+      />
       {isExpandedState && (
         <MunicipalityMoreDetails municipality={municipality} />
       )}
