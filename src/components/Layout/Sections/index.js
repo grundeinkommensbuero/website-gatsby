@@ -56,6 +56,7 @@ const Components = {
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
+  Pledge,
 };
 
 export const getRenderedSections = ({

@@ -379,6 +379,12 @@ export const pageQuery = graphql`
                   }
                 }
               }
+              ... on ContentfulSectionComponentPledge {
+                __typename
+                showForOptions
+                column
+                pledgeId
+              }
               ... on ContentfulSectionComponentTextAndImage {
                 __typename
                 column
