@@ -1,15 +1,16 @@
 import { useContext } from 'react';
-import CONFIG from '../../../../../aws-config';
+import CONFIG from '../../../../../backend-config';
 import AuthContext from '../../../../context/Authentication';
 
 export const useDeleteUser = () => {
   const { token, userId } = useContext(AuthContext);
-  return () => {deleteUser(userId, token)};
-}
+  return () => {
+    deleteUser(userId, token);
+  };
+};
 
 // Makes api call to delete user in db, throws error if unsuccessful
 const deleteUser = async (userId, token) => {
-  
   const url = `${CONFIG.API.INVOKE_URL}/users/${userId}`;
 
   const request = {
@@ -17,9 +18,9 @@ const deleteUser = async (userId, token) => {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token
-    }
-  }
+      Authorization: token,
+    },
+  };
 
   const response = await fetch(url, request);
 
