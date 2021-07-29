@@ -71,12 +71,12 @@ The general pipeline of static data loading and querying in Gatsby is as follows
 
 ### API
 
-The API runs on the Serverless Framework, deployed on AWS. The URL for accessing the API is configured in `aws-config.js`, which uses the dev or prod endpoints depending on the environment variable.
+The API runs on the Serverless Framework, deployed on AWS. The URL for accessing the API is configured in `backend-config.js`, which uses the dev or prod endpoints depending on the environment variable.
 
 Use the endpoints like this:
 
 ```js
-import CONFIG from '../../../aws-config';
+import CONFIG from '../../../backend-config';
 
 const url = `${CONFIG.API.INVOKE_URL}/analytics/signatures`,
 

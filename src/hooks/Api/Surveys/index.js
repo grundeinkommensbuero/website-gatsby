@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../../../context/Authentication';
-import CONFIG from '../../../../aws-config';
+import CONFIG from '../../../../backend-config';
 
 /*
   States:

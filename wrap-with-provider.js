@@ -1,5 +1,5 @@
 import React from 'react';
-import CONFIG from './aws-config';
+import CONFIG from './backend-config';
 import { AuthProvider } from './src/context/Authentication';
 import { MunicipalityProvider } from './src/context/Municipality';
 import SurveySaver from './src/components/SurveySaver';

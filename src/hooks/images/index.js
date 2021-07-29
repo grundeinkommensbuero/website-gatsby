@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CONFIG from '../../../aws-config';
+import CONFIG from '../../../backend-config';
 
 export const useUploadImage = () => {
   const [state, setState] = useState({});

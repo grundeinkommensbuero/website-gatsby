@@ -8,7 +8,7 @@ import querystring from 'query-string';
 import { navigate } from '@reach/router';
 import AuthContext from '../../context/Authentication';
 import { createUser } from '../Api/Users/Create';
-import CONFIG from '../../../aws-config';
+import CONFIG from '../../../backend-config';
 export { useAnswerChallenge } from './AnswerChallenge';
 export { useVerification } from './Verification';
 export { useLocalStorageUser } from './LocalStorageUser';

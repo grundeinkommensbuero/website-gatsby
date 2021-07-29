@@ -18,4 +18,7 @@ export default {
   API: {
     INVOKE_URL: API_INVOKE_URL,
   },
+  APP_API: {
+    INVOKE_URL: 'https://app-server.xbge.de',
+  },
 };
