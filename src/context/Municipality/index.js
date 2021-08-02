@@ -53,15 +53,13 @@ export const MunicipalityProvider = ({ children }) => {
   const [
     singleMunicipalityStatsState,
     singleMunicipalityStats,
-    // getSingleMunicipalityStats,
+    getSingleMunicipalityStats,
   ] = useGetMunicipalityStats();
 
   const [
     municipalityContentfulState,
     setMunicipalityContentfulState,
   ] = useState('noMunicipality');
-
-  const ags = useRef();
 
   // Get general municipality stats (of all munics)
   useEffect(() => {
@@ -80,6 +78,10 @@ export const MunicipalityProvider = ({ children }) => {
         setIsMunicipality(true);
         if (isSpecificMunicipality) {
           setIsSpecific(true);
+
+          // Get stats for single municipality
+          // (needed if municipality page is opened directly which is the case here)
+          getSingleMunicipalityStats(municipality.ags);
           setMunicipality(municipality);
         } else {
           setIsSpecific(false);
@@ -93,7 +95,7 @@ export const MunicipalityProvider = ({ children }) => {
   }, [pageContext]);
 
   useEffect(() => {
-    if (municipality && municipality.ags === ags.current) {
+    if (municipality) {
       const isQualifying =
         singleMunicipalityStats.signups < singleMunicipalityStats.goal;
       const isQualified =

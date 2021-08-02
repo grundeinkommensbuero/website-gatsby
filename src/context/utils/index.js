@@ -22,6 +22,7 @@ history.updateOnPopStateListener = (
         adjustDocumentTitle(municipality, municipalityState.name);
       }
       if (pageContextState) {
+        console.log('updating page context in onpop');
         setPageContext({
           ...pageContextState,
           // isFromHistoryEvent: true
