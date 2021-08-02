@@ -37,7 +37,10 @@ export const FinalNote = ({
 
       <Button
         className={s.redirectButton}
-        onClick={() => setCurrentElementByIndex(compIndex + 1)}
+        onClick={() => {
+          setCurrentElementByIndex(compIndex + 1);
+          navigate(`/gemeinden/${municipality.slug}`);
+        }}
       >
         Zur Unterseite
       </Button>
