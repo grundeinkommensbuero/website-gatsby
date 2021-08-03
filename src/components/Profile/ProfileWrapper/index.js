@@ -64,10 +64,20 @@ const ProfilePage = ({ id: slugId }) => {
   // If the user signed out (e.g. through the menu, we want to navigate to homepage)
   useEffect(() => {
     if (previousAction === 'signOut') {
-      setPreviousAction(undefined);
       navigate('/');
     }
-  }, previousAction);
+
+    // We want to reset previous action in a clean up function
+    // so that we can set the userId to undefined, which might have been
+    // set to slugId after signout in the useEffect above.
+    // It was a bit complicated to work around that
+    return () => {
+      if (previousAction === 'signOut') {
+        setUserId(undefined);
+        setPreviousAction(undefined);
+      }
+    };
+  }, [previousAction]);
 
   const triggerUpdateCustomUserData = () => {
     updateCustomUserData();
