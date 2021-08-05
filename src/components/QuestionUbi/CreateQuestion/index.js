@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
 import cN from 'classnames';
@@ -7,45 +7,19 @@ import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
-import { useUploadImage } from '../../../hooks/images';
 import { useSaveQuestion } from '../../../hooks/Api/Questions';
 import AvatarImage from '../../AvatarImage';
-import { ImageInput } from '../../Forms/ImageUpload';
 
-export default ({ setQuestionJustSent, userId, userData }) => {
-  const [uploadImageState, uploadImage] = useUploadImage();
+export default ({ userData }) => {
   const [questionState, uploadQuestion] = useSaveQuestion();
-  const [question, saveQuestion] = useState(null);
+  const [question, setQuestion] = useState();
 
-  useEffect(() => {
-    if (questionState === 'saved') {
-      setQuestionJustSent(question);
-    }
-  }, [questionState]);
-
-  if (
-    questionState === 'error' ||
-    uploadImageState === 'error' ||
-    userId === undefined ||
-    userData.state === 'error' ||
-    userData.state === 'notFound' ||
-    userId === undefined
-  ) {
+  if (questionState === 'error') {
     return (
       <SectionInner>
         <FinallyMessage>
-          {userId === undefined && <>Da ist was mit dem Link verkehrt. </>}
           {questionState === 'error' && (
             <>Das Absenden der Frage hat nicht geklappt. </>
-          )}
-          {uploadImageState === 'error' && (
-            <>Das Hochladen des Bildes hat nicht geklappt. </>
-          )}
-          {userData.state === 'error' && (
-            <>Abrufen des Benutzers hat nicht geklappt. </>
-          )}
-          {userData.state === 'notFound' && (
-            <>Den Benutzer konnten wir nicht finden. </>
           )}
           <br />
           <br />
@@ -62,15 +36,7 @@ export default ({ setQuestionJustSent, userId, userData }) => {
     );
   }
 
-  if (questionState === 'saved') {
-    return (
-      <SectionInner>
-        <FinallyMessage>Deine Frage ist gespeichert.</FinallyMessage>
-      </SectionInner>
-    );
-  }
-
-  if (questionState === 'saving' || uploadImageState === 'saving') {
+  if (questionState === 'saving') {
     return (
       <SectionInner>
         <FinallyMessage state="progress">Speichere...</FinallyMessage>
@@ -79,106 +45,67 @@ export default ({ setQuestionJustSent, userId, userData }) => {
   }
 
   return (
-    <Form
-      onSubmit={({ image, ...data }) => {
-        saveQuestion({
-          user: {
-            username: data.username,
-            profilePictures: userData.user && userData.user.profilePictures,
-            srcOverwrite: image && image.srcOverwrite,
-          },
-          body: data.question,
-        });
-        if (image && image.files && image.files[0]) {
-          uploadImage(userId, image.files[0]);
-        }
-        uploadQuestion(userId, data);
-      }}
-      validate={validate}
-      initialValues={{
-        username: userData.user && userData.user.username,
-        question:
-          userData.user &&
-          userData.user.questions &&
-          userData.user.questions[0] &&
-          userData.user.questions[0].body,
-      }}
-      render={({ handleSubmit, dirtyFields }) => (
+    <>
+      {questionState === 'saved' && (
         <SectionInner>
-          <form onSubmit={handleSubmit}>
-            <Speechbubble>
-              <Field
-                name="question"
-                label="Deine Frage an das Grundeinkommen"
-                placeholder="Deine Frage"
-                type="textarea"
-                maxLength={300}
-                component={TextInputWrapped}
-                inputClassName={s.questionInput}
-                hideLabel={true}
-              />
-            </Speechbubble>
-            <div className={s.belowBubble}>
-              {userData.user && userData.user.profilePictures ? (
-                <AvatarImage
-                  user={userData.user}
-                  sizes="80px"
-                />
-              ) : (
-                <Field
-                  name="image"
-                  component={ImageInput}
-                  user={userData.user}
-                />
-              )}
-              {userData.user && userData.user.username ? (
-                <div className={cN(s.usernameDisplay, s.textInput)}>
-                  {userData.user.username}
-                </div>
-              ) : (
-                <Field
-                  render={TextInputWrapped}
-                  name="username"
-                  label="Name"
-                  placeholder="Dein Name"
-                  inputClassName={s.nameInput}
-                  className={s.textInput}
-                />
-              )}
-              {userData.user && !userData.user.hasZipCode && (
-                <Field
-                  render={TextInputWrapped}
-                  name="zipCode"
-                  label="Postleitzahl"
-                  placeholder="Deine Postleitzahl"
-                  inputClassName={s.nameInput}
-                  explanation="Wenn du deine Postleitzahl angibst, bekommst du in Zukunft passendere Infos. Die Angabe ist optional."
-                  className={s.textInput}
-                />
-              )}
-              <div className={s.submitButtonContainer}>
-                <CTAButton
-                  type="submit"
-                  className={cN(s.submitButton, {
-                    [s.submitButtonDirty]: dirtyFields.question,
-                  })}
-                >
-                  Abschicken
-                </CTAButton>
-              </div>
-            </div>
-          </form>
+          <FinallyMessage>Deine Frage ist gespeichert.</FinallyMessage>
         </SectionInner>
       )}
-    ></Form>
+      <Form
+        onSubmit={({ image, ...data }) => {
+          setQuestion({
+            body: data.question,
+          });
+
+          uploadQuestion(data);
+        }}
+        validate={validate}
+        initialValues={{
+          // Use question from state, if question was just uploaded
+          question: question?.body || userData?.questions?.[0]?.body,
+        }}
+        render={({ handleSubmit, dirtyFields }) => (
+          <SectionInner>
+            <form onSubmit={handleSubmit}>
+              <Speechbubble>
+                <Field
+                  name="question"
+                  label="Deine Frage an das Grundeinkommen"
+                  placeholder="Deine Frage"
+                  type="textarea"
+                  maxLength={300}
+                  component={TextInputWrapped}
+                  inputClassName={s.questionInput}
+                  hideLabel={true}
+                />
+              </Speechbubble>
+              <div className={s.belowBubble}>
+                <AvatarImage user={userData.user} sizes="80px" />
+
+                <div className={s.submitButtonContainer}>
+                  <CTAButton
+                    type="submit"
+                    className={cN(s.submitButton, {
+                      [s.submitButtonDirty]: dirtyFields.question,
+                    })}
+                  >
+                    Abschicken
+                  </CTAButton>
+                </div>
+              </div>
+            </form>
+          </SectionInner>
+        )}
+      ></Form>
+    </>
   );
 };
 
 const validate = values => {
   const errors = {};
 
-  if (!values.username) {
-    errors.username = 'Bitte gib einen Namen an';
+  if (!values.question) {
+    errors.username = 'Bitte gib eine Frage ein';
   }
 
   return errors;

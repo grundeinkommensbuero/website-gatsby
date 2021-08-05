@@ -15,7 +15,7 @@ import { ProfileNotifications } from '../ProfileNotifications';
 import { ProfileOverview } from '../ProfileOverview';
 import { PersonalSettings } from '../PersonalSettings';
 import { ProfileSignatures } from '../ProfileSignatures';
-// import { ProfileQuestionUbi } from '../ProfileQuestionUbi';
+import { ProfileQuestionUbi } from '../ProfileQuestionUbi';
 import { ProfileDonationSettings } from '../ProfileDonationSettings';
 
 const ProfilePage = ({ id: slugId }) => {
@@ -118,11 +118,11 @@ const ProfilePage = ({ id: slugId }) => {
               path="kontakt-einstellungen"
               userId={userId}
             />
-            {/* <ProfileQuestionUbi
+            <ProfileQuestionUbi
               userData={userData}
               path="frage-an-das-grundeinkommen"
               userId={userId}
-            /> */}
+            />
             <ProfileDonationSettings
               userData={userData}
               updateCustomUserData={triggerUpdateCustomUserData}

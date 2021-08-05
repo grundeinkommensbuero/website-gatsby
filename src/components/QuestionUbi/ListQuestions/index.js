@@ -1,37 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
 import { Speechbubble } from '../Speechbubble';
 import AvatarImage from '../../AvatarImage';
 import { useGetMostRecentQuestions } from '../../../hooks/Api/Questions';
 import cN from 'classnames';
+import { CTALink } from '../../Layout/CTAButton';
+import AuthContext from '../../../context/Authentication';
 
-export default ({ questionJustSent, userId }) => {
+export default () => {
   const [, questions, getQuestions] = useGetMostRecentQuestions();
+  const { userId } = useContext(AuthContext);
 
   useEffect(() => {
-    if (userId !== null) {
-      getQuestions(userId, 6);
-    }
-  }, [userId]);
-
-  if (questionJustSent) {
-    questionJustSent.justSent = true;
-  }
-
-  let questionsWithJustSent = questionJustSent
-    ? [questionJustSent, ...questions].filter(
-      ({ belongsToCurrentUser }) => !belongsToCurrentUser
-    )
-    : questions;
+    getQuestions(null, 6);
+  }, []);
 
   return (
     <SectionInner wide={true}>
       <div className={s.container}>
-        {questionsWithJustSent.map((question, index) => {
+        {questions.map((question, index) => {
           return <Question key={index} {...question} />;
         })}
       </div>
+
+      {userId && (
+        <CTALink to={`/mensch/${userId}/frage-an-das-grundeinkommen`}>
+          Stell deine Frage ans Grundeinkommen
+        </CTALink>
+      )}
     </SectionInner>
   );
 };

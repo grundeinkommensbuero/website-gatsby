@@ -384,6 +384,10 @@ export const pageQuery = graphql`
                 column
                 pledgeId
               }
+              ... on ContentfulSectionComponentQuestions {
+                __typename
+                column
+              }
               ... on ContentfulSectionComponentTextAndImage {
                 __typename
                 column

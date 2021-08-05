@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import { useState } from 'react';
 import CONFIG from '../../../../backend-config';
+import AuthContext from '../../../context/Authentication';
 
 /*
   States:
@@ -11,28 +13,17 @@ export const useSaveQuestion = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
   // to our saveQuestion function, so we can set the state from there
   const [state, setState] = useState(null);
-  return [state, (userId, data) => saveQuestion(userId, data, setState)];
+
+  // Get user id and token from global context
+  const { userId, token } = useContext(AuthContext);
+
+  return [state, data => saveQuestion(userId, data, token, setState)];
 };
 
 // Function which calls the aws api to create a new question
-const saveQuestion = async (
-  userId,
-  { question, zipCode, username },
-  setState
-) => {
+const saveQuestion = async (userId, data, token, setState) => {
   try {
     setState('saving');
-
-    const data = { question };
-
-    // Check if zip code and username was provided to hook
-    if (zipCode && zipCode !== '') {
-      data.zipCode = zipCode;
-    }
-
-    if (username && username !== '') {
-      data.username = username;
-    }
 
     // Make request to api to save question
     const request = {
@@ -40,6 +31,7 @@ const saveQuestion = async (
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token,
       },
       body: JSON.stringify(data),
     };
@@ -88,7 +80,9 @@ const getMostRecentQuestions = async (
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/questions?limit=${limit}&userId=${userId}`,
+      `${CONFIG.API.INVOKE_URL}/questions?limit=${limit}${
+        userId ? `&userId=${userId}` : ''
+      }`,
       request
     );
 

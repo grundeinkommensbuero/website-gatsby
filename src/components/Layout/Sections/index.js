@@ -52,7 +52,7 @@ const Components = {
   CollectionMap: loadable(() =>
     import('../../Municipality/MunicipalityCollectionMap')
   ),
-
+  Questions: loadable(() => import('../../QuestionUbi/ListQuestions')),
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
