@@ -134,8 +134,6 @@ const lazyMap = ({ mapConfig }) => {
           .map(({ node }) => ({ ...node, isRichText: true }));
       }
 
-      console.log(collectSignaturesLocationsFiltered);
-
       // Initialize map only once
       if (!map.current) {
         // Default config for mapboxgl
@@ -158,7 +156,6 @@ const lazyMap = ({ mapConfig }) => {
 
       collectSignaturesLocationsFiltered.forEach(meetup => {
         if (meetup.location) {
-          console.log('add marker', meetup);
           new mapboxgl.Marker()
             .setLngLat([meetup.location.lon, meetup.location.lat])
             .addTo(map.current)
