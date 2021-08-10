@@ -187,7 +187,7 @@ export const Visualisation = ({
   }
   const EyeCatcherContent = eyeCatcher && contentfulJsonToHtml(eyeCatcher);
 
-  const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
+  // const goalInbetweenPercentage = goalInbetween && (goalInbetween / goal) * 100;
 
   useEffect(() => {
     if ('IntersectionObserver' in window) {
@@ -258,17 +258,25 @@ export const Visualisation = ({
               aria-hidden="true"
               style={{ width: `${barGoalWidth || 100}%` }}
             >
-              <div className={s.barGoalBar}>
-                {hasStarted && (
-                  <div
-                    className={cN(
-                      s.barGoalInbetween,
-                      { [s.crowdfunding]: isCrowdfunding },
-                      { [s.onWhiteBackground]: onWhiteBackground }
-                    )}
-                    style={{ width: `${goalInbetweenPercentage || 100}%` }}
-                  ></div>
+              <div
+                className={cN(
+                  s.barGoalBar,
+                  { [s.crowdfunding]: isCrowdfunding },
+                  { [s.onWhiteBackground]: onWhiteBackground }
                 )}
+              >
+                {/* NOTE by Vali: Is this still needed? Seems kinda unfinished or specifically written
+                for crowdfunding */}
+                {/* {hasStarted && (
+                  // <div
+                  //   className={cN(
+                  //     s.barGoalInbetween,
+                  //     { [s.crowdfunding]: isCrowdfunding },
+                  //     { [s.onWhiteBackground]: onWhiteBackground }
+                  //   )}
+                  //   style={{ width: `${goalInbetweenPercentage || 100}%` }}
+                  // ></div>
+                )} */}
               </div>
               {goal && !goalInbetween && (
                 <Tooltip

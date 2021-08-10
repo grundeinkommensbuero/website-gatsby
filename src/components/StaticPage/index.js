@@ -508,6 +508,40 @@ export const pageQuery = graphql`
                   raw
                 }
               }
+              ... on ContentfulSectionComponentCampaignVisualisation {
+                __typename
+                column
+                campaignVisualisations {
+                  campainCode
+                  goal
+                  startDate
+                  title
+                  minimum
+                  maximum
+                  addToSignatureCount
+                  ctaLink
+                  eyeCatcher {
+                    raw
+                  }
+                  eyeCatcherLink
+                  goalUnbuffered
+                  goalInbetweenMultiple
+                  startnextId
+                  hint {
+                    hint
+                  }
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                text {
+                  raw
+                }
+              }
             }
           }
           ... on ContentfulPageSectionDonation {

@@ -89,16 +89,11 @@
   width: 100%;
   z-index: 0;
   //transform: skewX(3.2deg) skewY(0.3deg) rotate(-0.2deg);
+  border: 1px solid @white;
 
   .hasNotStarted & {
     border: 1px solid var(--font-color);
   }
-}
-
-.barGoalInbetween {
-  position: absolute;
-  height: 100%;
-  border: 1px solid @white;
 
   &.onWhiteBackground {
     border: 1px solid @violet;
@@ -109,6 +104,24 @@
     border: 1px solid var(--secondary-color);
   }
 }
+
+//  NOTE by Vali: Is this still needed?
+
+// .barGoalInbetween {
+
+//   position: absolute;
+//   height: 100%;
+//   border: 1px solid @white;
+
+//   &.onWhiteBackground {
+//     border: 1px solid @violet;
+//     background: @white;
+//   }
+
+//   &.crowdfunding {
+//     border: 1px solid var(--secondary-color);
+//   }
+// }
 
 .starts {
   font-size: @DesktopFontSizeXL;
