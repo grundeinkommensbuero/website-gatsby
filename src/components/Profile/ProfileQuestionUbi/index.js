@@ -5,7 +5,11 @@ import * as s from './style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 
-export const ProfileQuestionUbi = ({ userId, userData }) => {
+export const ProfileQuestionUbi = ({
+  userId,
+  userData,
+  updateCustomUserData,
+}) => {
   return (
     <section className={gS.profilePageGrid}>
       <section
@@ -18,7 +22,10 @@ export const ProfileQuestionUbi = ({ userId, userData }) => {
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
-        <CreateQuestion userData={userData} />
+        <CreateQuestion
+          userData={userData}
+          updateCustomUserData={updateCustomUserData}
+        />
       </section>
     </section>
   );

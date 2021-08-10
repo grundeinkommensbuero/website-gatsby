@@ -120,6 +120,7 @@ const ProfilePage = ({ id: slugId }) => {
             />
             <ProfileQuestionUbi
               userData={userData}
+              updateCustomUserData={triggerUpdateCustomUserData}
               path="frage-an-das-grundeinkommen"
               userId={userId}
             />
