@@ -244,8 +244,8 @@ export const Visualisation = ({
       wide={true}
       className={cN({ [s.sectionInnerHasEyeCatcher]: !!EyeCatcherContent })}
     >
-      {title && <h3 className={s.title}>{title}</h3>}
-      {hintWithVariables && <div className={s.hint}>{hintWithVariables}</div>}
+      {/* Not currently needed */}
+      {/* {title && <h3 className={s.title}>{title}</h3>} */}
 
       <div
         className={cN(s.body, { [s.showCTA]: showCTA })}
@@ -366,6 +366,8 @@ export const Visualisation = ({
           </div>
         )}
       </div>
+      {hintWithVariables && <div className={s.hint}>{hintWithVariables}</div>}
+    
     </SectionInner>
   );
 };
