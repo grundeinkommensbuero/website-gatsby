@@ -80,7 +80,7 @@ export default ({ userData }) => {
                 />
               </Speechbubble>
               <div className={s.belowBubble}>
-                <AvatarImage user={userData.user} sizes="80px" />
+                <AvatarImage user={userData.user} className={s.createQuestionProfile} sizes="80px" />
 
                 <div className={s.submitButtonContainer}>
                   <CTAButton
