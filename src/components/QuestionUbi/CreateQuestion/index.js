@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
 import cN from 'classnames';
@@ -10,9 +10,15 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useSaveQuestion } from '../../../hooks/Api/Questions';
 import AvatarImage from '../../AvatarImage';
 
-export default ({ userData }) => {
+export default ({ userData, updateCustomUserData }) => {
   const [questionState, uploadQuestion] = useSaveQuestion();
   const [question, setQuestion] = useState();
+
+  useEffect(() => {
+    if (questionState === 'saved') {
+      updateCustomUserData();
+    }
+  }, [questionState]);
 
   if (questionState === 'error') {
     return (
