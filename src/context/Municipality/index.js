@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
 
 import municipalities from '../../components/Municipality/MunicipalityMap/data/municipalitiesForMap.json';
