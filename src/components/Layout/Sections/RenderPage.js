@@ -4,7 +4,7 @@ import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
 import { MunicipalityNews } from '../../Municipality/MunicipalityNews';
-import { getRenderedSections, Section, SectionWrapper } from './index';
+import { getRenderedSections, SectionWrapper } from './index';
 
 export const RenderPage = ({ sections, pageContext }) => {
   const { customUserData: userData, isAuthenticated } = useContext(AuthContext);
@@ -22,14 +22,15 @@ export const RenderPage = ({ sections, pageContext }) => {
     <React.Fragment key={index}>{section}</React.Fragment>
   ));
 
-  // Add news component as second component
-  // renderedSections.splice(
-  //   1,
-  //   0,
-  //   <Section>
-  //     <MunicipalityNews />
-  //   </Section>
-  // );
+  if (municipality) {
+    // Add news component as second component
+    renderedSections.splice(
+      1,
+      0,
+
+      <MunicipalityNews />
+    );
+  }
 
   return <SectionWrapper>{renderedSections}</SectionWrapper>;
 };
