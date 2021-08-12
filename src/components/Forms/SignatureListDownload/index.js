@@ -28,8 +28,8 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
   const isDisabledRequestListsByMail = !!disableRequestListsByMail;
-  const iconMail = require('!svg-inline-loader!./mail_red.svg');
-  const iconIncognito = require('!svg-inline-loader!./incognito_red.svg');
+  const iconMail = require('!svg-inline-loader!./mail_violet.svg');
+  const iconIncognito = require('!svg-inline-loader!./incognito_violet.svg');
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
@@ -180,7 +180,7 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                   </p>
                 </FinallyMessage>
               )}
-              <CTAButtonContainer illustration="POINT_RIGHT">
+              <CTAButtonContainer>
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
 
