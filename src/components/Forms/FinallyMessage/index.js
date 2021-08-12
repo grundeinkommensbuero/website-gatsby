@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as s from './style.module.less';
 import { scrollIntoView } from '../../utils';
 import cN from 'classnames';
-import { HurrayCrowd } from '../../HurrayCrowd';
+// import { HurrayCrowd } from '../../HurrayCrowd';
 
 export const FinallyMessage = ({
   state,
