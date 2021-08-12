@@ -23,13 +23,13 @@ export const RenderPage = ({ sections, pageContext }) => {
   ));
 
   // Add news component as second component
-  renderedSections.splice(
-    1,
-    0,
-    <Section>
-      <MunicipalityNews />
-    </Section>
-  );
+  // renderedSections.splice(
+  //   1,
+  //   0,
+  //   <Section>
+  //     <MunicipalityNews />
+  //   </Section>
+  // );
 
   return <SectionWrapper>{renderedSections}</SectionWrapper>;
 };
