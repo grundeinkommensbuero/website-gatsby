@@ -3,7 +3,6 @@ import { List as Loader } from 'react-content-loader';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
-import Maps from '../../Maps';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
@@ -29,6 +28,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
+import { ShowMeetups } from '../../Maps/ShowMeetups';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
@@ -452,7 +452,7 @@ export function ContentfulSection({ section, pageContext }) {
       {campainVisualisations && (
         <CampaignVisualisations visualisations={campainVisualisations} />
       )}
-      {maps && <Maps config={maps} />}
+      {maps && <ShowMeetups config={maps} />}
       {signUpForm && (
         <SectionInner>
           <SignUp />

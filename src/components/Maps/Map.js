@@ -6,8 +6,16 @@ import loadable from '@loadable/component';
 // Only load the component on the client (somehow had issues not finding chunk)
 const LoadableMap = loadable(() => import('./LazyMap'), { ssr: false });
 
-export default ({ mapConfig }) => {
-  return <LoadableMap mapConfig={mapConfig} fallback={<Fallback />} />;
+export default ({ mapConfig, locations, withSearch, onLocationChosen }) => {
+  return (
+    <LoadableMap
+      mapConfig={mapConfig}
+      locations={locations}
+      withSearch={withSearch}
+      onLocationChosen={onLocationChosen}
+      fallback={<Fallback />}
+    />
+  );
 };
 
 const Fallback = () => (

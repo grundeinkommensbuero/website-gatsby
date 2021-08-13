@@ -1,0 +1,30 @@
+@import '../../style/vars.less';
+
+.selectionContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.selectionElement {
+  border: @borderWidthThick solid @violet;
+  color: @violet;
+  font-size: 1.25rem;
+  padding: 1.2rem 2rem 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  min-width: 10rem;
+  text-align: center;
+  background-color: transparent;
+}
+
+.selectionElement:hover {
+  cursor: pointer;
+  background-color: @violet;
+  color: @white;
+}
+
+.selectionElementActive {
+  background-color: @violet;
+  color: @white;
+}

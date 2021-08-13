@@ -1,11 +1,11 @@
 import React from 'react';
-import Map from './Map';
+import { ShowMeetups } from './ShowMeetups';
 
 export default ({ config }) => {
   return (
     <>
       {config.map((mapConfig, i) => {
-        return <Map key={i} mapConfig={mapConfig} />;
+        return <ShowMeetups key={i} mapConfig={mapConfig} />;
       })}
     </>
   );

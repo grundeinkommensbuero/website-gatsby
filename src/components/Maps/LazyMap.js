@@ -4,19 +4,19 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { formatDateTime } from '../utils';
 import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 import * as s from './style.module.less';
-import { useStaticQuery, graphql } from 'gatsby';
 import { SectionInner } from '../Layout/Sections';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 
 import { detectWebGLContext } from '../utils';
-import { useGetMeetups } from '../../hooks/Api/Meetups';
 
 let mapboxgl;
+let MapboxGeocoder;
 
 if (!process.env.STATIC) {
   mapboxgl = require('mapbox-gl');
   mapboxgl.accessToken =
     'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
+  MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 }
 
 const DEFAULT_BOUNDS = [
@@ -55,85 +55,26 @@ const addPropsToMapboxConfig = (defaultConfig, props) => {
   };
 };
 
-const lazyMap = ({ mapConfig }) => {
-  const {
-    allContentfulSammelort: { edges: collectSignaturesLocations },
-  } = useStaticQuery(graphql`
-    query CollectSignaturesLocations {
-      allContentfulSammelort {
-        edges {
-          node {
-            mail
-            title
-            phone
-            location {
-              lat
-              lon
-            }
-            description {
-              raw
-            }
-            date
-            state
-          }
-        }
-      }
-    }
-  `);
-
+const lazyMap = ({
+  locations,
+  mapConfig,
+  withSearch = false,
+  onLocationChosen,
+}) => {
   const [hasWebGl, setHasWebGL] = useState(null);
 
   const container = useRef(null);
   const map = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
 
-  const [meetups, getMeetups] = useGetMeetups();
-
-  const isBerlin = mapConfig.state === 'berlin';
-
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
-
-    // We only need to fetch meetups from secondary API if it's the berlin map
-    if (isBerlin) {
-      getMeetups();
-    }
   }, []);
 
   useEffect(() => {
-    // Wait to initiate map until meetups are fetched (if map is for berlin)
-    if (hasWebGl && (!isBerlin || (isBerlin && meetups))) {
-      let collectSignaturesLocationsFiltered = [];
-      if (isBerlin) {
-        // We want to bring the meetups from the backend into the same format as
-        // the ones from contentful
-        collectSignaturesLocationsFiltered = meetups.map(
-          ({ properties, geometry }) => ({
-            location: {
-              lon: geometry.coordinates[0],
-              lat: geometry.coordinates[1],
-            },
-            description: properties.description,
-            title: properties.name,
-          })
-        );
-      } else {
-        collectSignaturesLocationsFiltered = collectSignaturesLocations
-          .filter(({ node: location }) => {
-            if (!location.date) {
-              return true;
-            }
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-
-            return +new Date(location.date) > +yesterday;
-          })
-          .filter(({ node: location }) => {
-            return location.state === mapConfig.state;
-          })
-          .map(({ node }) => ({ ...node, isRichText: true }));
-      }
-
+    // If we render the map with search, we don't
+    // need to depend on locations
+    if (hasWebGl && (withSearch || locations)) {
       // Initialize map only once
       if (!map.current) {
         // Default config for mapboxgl
@@ -152,34 +93,54 @@ const lazyMap = ({ mapConfig }) => {
           new mapboxgl.NavigationControl(),
           'top-left'
         );
+
+        if (withSearch) {
+          // Initialize geo coder
+          const geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl,
+            placeholer: 'Wähle einen Sammelort aus',
+          });
+
+          geocoder.on('result', e => {
+            if (onLocationChosen) {
+              onLocationChosen(e);
+            }
+          });
+
+          map.current.addControl(geocoder);
+        }
       }
 
-      collectSignaturesLocationsFiltered.forEach(meetup => {
-        if (meetup.location) {
-          new mapboxgl.Marker()
-            .setLngLat([meetup.location.lon, meetup.location.lat])
-            .addTo(map.current)
-            .setPopup(
-              new mapboxgl.Popup()
-                .setHTML(renderToStaticMarkup(<PopupContent {...meetup} />))
-                .on('open', () => {
-                  highlightedPoint.push(meetup);
-                  setHighlightedPoint([...highlightedPoint]);
-                })
-                .on('close', () => {
-                  highlightedPoint.shift();
-                  setHighlightedPoint([...highlightedPoint]);
-                })
-            );
-        }
-      });
+      if (locations) {
+        locations.forEach(meetup => {
+          if (meetup.location) {
+            new mapboxgl.Marker()
+              .setLngLat([meetup.location.lon, meetup.location.lat])
+              .addTo(map.current)
+              .setPopup(
+                new mapboxgl.Popup()
+                  .setHTML(renderToStaticMarkup(<PopupContent {...meetup} />))
+                  .on('open', () => {
+                    highlightedPoint.push(meetup);
+                    setHighlightedPoint([...highlightedPoint]);
+                  })
+                  .on('close', () => {
+                    highlightedPoint.shift();
+                    setHighlightedPoint([...highlightedPoint]);
+                  })
+              );
+          }
+        });
+      }
     }
+
     return () => {
       if (map.current) {
         map.current.remove();
       }
     };
-  }, [hasWebGl, meetups]);
+  }, [hasWebGl, locations]);
 
   return (
     <>

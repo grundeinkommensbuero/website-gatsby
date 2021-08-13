@@ -6,7 +6,7 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import { ShowMeetups } from '../../components/Maps/ShowMeetups';
+import { CreateMeetup } from '../../components/Forms/Meetup';
 
 const PlaygroundMap = () => {
   return (
@@ -15,9 +15,9 @@ const PlaygroundMap = () => {
         <title>Playground</title>
       </Helmet>
       <SectionWrapper>
-        <Section title="karte">
+        <Section title="Sammelort erstellen">
           <SectionInner wide={true}>
-            <ShowMeetups
+            <CreateMeetup
               mapConfig={{
                 state: 'berlin',
                 config: {
