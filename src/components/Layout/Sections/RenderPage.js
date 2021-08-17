@@ -24,7 +24,7 @@ export const RenderPage = ({ sections, pageContext }) => {
 
   if (municipality) {
     // Add news component as second component
-    renderedSections.splice(
+    renderedSections?.splice(
       1,
       0,
 
