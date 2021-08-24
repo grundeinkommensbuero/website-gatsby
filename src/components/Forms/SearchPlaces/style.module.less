@@ -73,6 +73,12 @@
     visibility: visible;
   }
 
+  // Fix for Safari scrollbar bug
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
   @media (max-width: @breakPointS) {
     width: 100%;
   }
