@@ -94,12 +94,18 @@ const lazyMap = ({
           'top-left'
         );
 
+        console.log([
+          ...mapboxConfig.maxBounds[0],
+          ...mapboxConfig.maxBounds[1],
+        ]);
+
         if (withSearch) {
           // Initialize geo coder
           const geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             mapboxgl,
-            placeholer: 'Wähle einen Sammelort aus',
+            placeholder: 'Nach Ort suchen',
+            bbox: [...mapboxConfig.maxBounds[0], ...mapboxConfig.maxBounds[1]],
           });
 
           geocoder.on('result', e => {

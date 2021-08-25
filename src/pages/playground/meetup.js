@@ -22,8 +22,8 @@ const PlaygroundMap = () => {
                 state: 'berlin',
                 config: {
                   maxBounds: [
-                    [3, 47.217923],
-                    [17.030017, 55.437655],
+                    [13.05, 52.2],
+                    [13.8, 52.8],
                   ],
                 },
               }}

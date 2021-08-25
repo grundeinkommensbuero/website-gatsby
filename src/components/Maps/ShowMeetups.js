@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { useGetMeetups } from '../../hooks/Api/Meetups';
 import Map from './Map';
+import {
+  SectionComponent,
+  SectionComponentContainer,
+} from '../Layout/Sections';
+import { Button } from '../Forms/Button';
+import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
 
 export const ShowMeetups = ({ mapConfig }) => {
   const {
@@ -28,6 +34,9 @@ export const ShowMeetups = ({ mapConfig }) => {
       }
     }
   `);
+  const { setType, setOverlayOpen, setMapConfig } = useContext(
+    MeetupOverlayContext
+  );
   const [meetups, getMeetups] = useGetMeetups();
   const [locationsFiltered, setLocationsFiltered] = useState();
 
@@ -38,7 +47,9 @@ export const ShowMeetups = ({ mapConfig }) => {
     if (isBerlin) {
       getMeetups();
     }
-  }, []);
+
+    setMapConfig(mapConfig);
+  }, [mapConfig]);
 
   useEffect(() => {
     if (!isBerlin || (isBerlin && meetups)) {
@@ -77,5 +88,30 @@ export const ShowMeetups = ({ mapConfig }) => {
     }
   }, [meetups]);
 
-  return <Map mapConfig={mapConfig} locations={locationsFiltered} />;
+  return (
+    <>
+      <Map mapConfig={mapConfig} locations={locationsFiltered} />
+      {isBerlin && (
+        <SectionComponentContainer>
+          <SectionComponent column={'left'}>
+            <h2>Plane eine Sammelaktion!</h2>
+            <Button onClick={() => setOverlayOpen(true)}>
+              Event erstellen
+            </Button>
+          </SectionComponent>
+          <SectionComponent column={'right'}>
+            <h2>Lege Listen an einem Sammelort aus</h2>
+            <Button
+              onClick={() => {
+                setType('lists');
+                setOverlayOpen(true);
+              }}
+            >
+              Ort eintragen
+            </Button>
+          </SectionComponent>
+        </SectionComponentContainer>
+      )}
+    </>
+  );
 };

@@ -13,74 +13,147 @@ import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import * as s from './style.module.less';
 import cN from 'classnames';
+import { DateInputWrapped, TimeInputWrapped } from '../DateTimeInput';
+import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 
-export const CreateMeetup = ({ mapConfig }) => {
+export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
   const [location, setLocation] = useState();
-  const [type, setType] = useState('collect');
+  console.log('render create meetup', type);
 
   const handleLocationChosen = e => {
     setLocation(e.result);
   };
 
   return (
-    <SectionInner wide={true}>
+    <SectionInner className={s.section}>
       <h3>Wähle einen Ort aus!</h3>
       <Map
         onLocationChosen={handleLocationChosen}
         withSearch={true}
         mapConfig={mapConfig}
       />
-      {location && <p>Ausgewählter Ort: {location.place_name_de}</p>}
+      {location && (
+        <>
+          <p className={s.chosenLocation}>
+            <span className={s.coloredText}>Gewählter Ort: </span>
+            {location.place_name_de}
+          </p>
 
-      <Form
-        onSubmit={e => {}}
-        validate={values => {}}
-        render={({ handleSubmit }) => (
-          <FormWrapper>
-            <form onSubmit={handleSubmit}>
-              <h3>Was für ein Event willst du erstellen?</h3>
-              <div className={s.selectionContainer}>
-                <button
-                  className={cN(s.selectionElement, {
-                    [s.selectionElementActive]: type === 'collect',
-                  })}
-                  onClick={() => {
-                    setType('collect');
-                  }}
-                >
-                  Sammeln
-                </button>
-                <button
-                  className={cN(s.selectionElement, {
-                    [s.selectionElementActive]: type === 'sign',
-                  })}
-                  onClick={() => {
-                    setType('sign');
-                  }}
-                >
-                  Listen augelegt
-                </button>
-              </div>
-              <FormSection>
-                <Field
-                  name="contact"
-                  label="Kontakt"
-                  placeholder="E-Mail oder Telefonnummer"
-                  type="text"
-                  component={TextInputWrapped}
-                ></Field>
-                <Field
-                  name="description"
-                  label="Beschreibung"
-                  placeholder="Beschreibe kurz das Event"
-                  type="textarea"
-                  component={TextInputWrapped}
-                ></Field>
-              </FormSection>
-            </form>
-          </FormWrapper>
-        )}
-      />
+          <Form
+            onSubmit={e => {}}
+            validate={values => validate(values, type)}
+            render={({ handleSubmit }) => (
+              <FormWrapper>
+                <form onSubmit={handleSubmit}>
+                  {type === 'collect' && (
+                    <FormSection
+                      className={s.formSection}
+                      fieldContainerClassName={s.inlineFieldSection}
+                    >
+                      <span className={s.eventText}>
+                        Du planst ein Event am
+                      </span>
+                      <Field
+                        name="date"
+                        label="Datum"
+                        component={DateInputWrapped}
+                      ></Field>
+                      <span className={s.eventText}>von</span>
+                      <Field
+                        name="start"
+                        label="Start"
+                        component={TimeInputWrapped}
+                      ></Field>
+                      <span className={s.eventText}>bis</span>
+                      <Field
+                        name="end"
+                        label="Ende"
+                        component={TimeInputWrapped}
+                      ></Field>
+                    </FormSection>
+                  )}
+                  {type === 'lists' && (
+                    <FormSection className={s.formSection}>
+                      <Field
+                        name="name"
+                        label="Name"
+                        placeholder="Name"
+                        type="text"
+                        inputClassName={s.textInput}
+                        component={TextInputWrapped}
+                      ></Field>
+                    </FormSection>
+                  )}
+                  <FormSection>
+                    <p>
+                      Bitte gib ein paar zusätzliche Infos an. Wo willst du
+                      sammeln? Sollen die anderen Sammler*innen etwas
+                      mitbringen? Wie findet ihr zueinander?
+                    </p>
+                    <Field
+                      name="description"
+                      label="Beschreibung"
+                      placeholder="Sag ein paar Sätze zum geplanten Event..."
+                      type="textarea"
+                      inputClassName={s.textarea}
+                      component={TextInputWrapped}
+                    ></Field>
+                    <p>
+                      Gib ein paar Infos über dich an: Woran erkennt man dich
+                      vor Ort und wie kann man dich kontaktieren? Bitte beachte,
+                      dass diese Angaben öffentlich auf der Karte zu sehen sein
+                      werden.
+                    </p>
+                    <Field
+                      name="contact"
+                      label="Informationen über dich"
+                      placeholder="Beschreibung"
+                      type="textarea"
+                      inputClassName={cN(s.textarea, s.shortTextarea)}
+                      component={TextInputWrapped}
+                    ></Field>
+                  </FormSection>
+
+                  <CTAButtonContainer className={s.buttonContainer}>
+                    <CTAButton type="submit" size="MEDIUM">
+                      Ort eintragen
+                    </CTAButton>
+                  </CTAButtonContainer>
+                </form>
+              </FormWrapper>
+            )}
+          />
+        </>
+      )}
     </SectionInner>
   );
+};
+
+const validate = (values, type) => {
+  const errors = {};
+  console.log(values);
+
+  if (!values.description) {
+    errors.description = 'Bitte gib eine kurze Beschreibung an';
+  }
+
+  if (type === 'lists' && !values.name) {
+    errors.name = 'Bitte gib einen Namen des Sammelortes an';
+  }
+
+  if (type === 'collect') {
+    if (!values.date) {
+      errors.date = 'Bitte gib ein Datum an';
+    }
+
+    if (!values.start) {
+      errors.start = 'Bitte gib einen Start an';
+    }
+
+    if (!values.end) {
+      errors.end = 'Bitte gib ein Ende an';
+    }
+  }
+
+  return errors;
 };

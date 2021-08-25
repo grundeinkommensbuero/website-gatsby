@@ -40,6 +40,28 @@
   }
 }
 
+.lonelyCloseButton {
+  background-color: @red;
+  width: 2.4rem;
+  border-radius: 5px;
+  padding: 0.5rem 0.4rem 0.4rem 0.5rem;
+  margin: 1rem;
+  float: right;
+  cursor: pointer;
+  &:hover {
+    background-color: @red;
+  }
+}
+
+.innerCloseIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.3rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  fill: @white;
+}
+
 .title {
   margin-top: 0;
 
@@ -53,7 +75,8 @@
   margin: 0 auto;
 }
 
-.onboardingContainer {
+.onboardingContainer,
+.meetupContainer {
   --font-color: @black;
   --secondary-color: @aqua;
   --text-on-secondary-color: @white;

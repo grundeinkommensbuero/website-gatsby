@@ -9,7 +9,7 @@ export function TextInput({ children, className, label, size, ...input }) {
     <input
       onFocus={e => {
         if (e.target.autocomplete) {
-          e.target.autocomplete = "none";
+          e.target.autocomplete = 'none';
         }
       }}
       aria-label={label}
