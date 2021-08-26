@@ -9,7 +9,7 @@ export function TextInput({ children, className, label, size, ...input }) {
     <input
       onFocus={e => {
         if (e.target.autocomplete) {
-          e.target.autocomplete = "none";
+          e.target.autocomplete = 'none';
         }
       }}
       aria-label={label}
@@ -68,6 +68,7 @@ export const TextInputWrapped = ({
   inputMode,
   pattern,
   autoComplete,
+  errorClassName,
 }) => {
   if (hide) {
     return null;
@@ -78,6 +79,7 @@ export const TextInputWrapped = ({
       label={!hideLabel && outputLabel}
       meta={meta}
       className={className}
+      errorClassName={errorClassName}
       explanation={explanation}
       theme={theme}
     >

@@ -25,9 +25,7 @@ export default () => {
       </div>
 
       {userId && (
-        <CTALink to={`/mensch/${userId}/frage-an-das-grundeinkommen`}>
-          Stell deine Frage ans Grundeinkommen
-        </CTALink>
+        <CTALink to={`/mensch/${userId}/paket-nehmen`}>Nimm dein Paket</CTALink>
       )}
     </SectionInner>
   );

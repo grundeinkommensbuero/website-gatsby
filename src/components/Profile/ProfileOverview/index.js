@@ -8,6 +8,7 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 import { getReferredUserMessage } from '../utils/referredUserMessage';
 import { getCustomNewsletterEnumeration } from '../utils/customNewsletterEnumeration';
+const BERLIN_AGS = '11000000';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   // list newsletters of current user as human readable string
@@ -16,6 +17,11 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   });
   // list referred users, if any
   const referredUserMessage = getReferredUserMessage({ userData });
+
+  const isSignedUpForBerlin =
+    userData.municipalities?.findIndex(({ ags }) => ags === BERLIN_AGS) !== -1;
+
+  console.log('userdata', userData, { isSignedUpForBerlin });
 
   return (
     <section className={gS.profilePageGrid}>
@@ -83,7 +89,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
 
       <Link
         to="unterschriften-eintragen"
-        className={cN(s.profilePageSection, s.profilePageSectionLarge)}
+        className={cN(s.profilePageSection, {
+          [s.profilePageSectionLarge]: !isSignedUpForBerlin,
+        })}
       >
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
@@ -132,25 +140,43 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
         </a>
       )} */}
 
-      <Link
-        to="frage-an-das-grundeinkommen"
-        className={cN(s.profilePageSection, s.profilePageSectionLarge)}
-      >
-        <section>
-          <h2>Deine Frage ans Grundeinkommen</h2>
-          <p>
-            {userData?.questions?.[0]?.body ||
-              'Du hast noch keine Frage ans Grundeinkommen gestellt.'}
-          </p>
-          <div className={s.sectionLink}>
-            <span>
-              {userData?.questions?.[0]?.body
-                ? 'Ändere deine Frage'
-                : 'Stelle deine Frage'}
-            </span>
-          </div>
-        </section>
-      </Link>
+      {/* Only show this section if user is signed up for berlin */}
+      {isSignedUpForBerlin && (
+        <Link
+          to="paket-nehmen"
+          className={cN(s.profilePageSection, {
+            [s.profilePageSectionLarge]: !isSignedUpForBerlin,
+          })}
+        >
+          <section>
+            <h2>Dein Sammelpaket</h2>
+            <p>
+              {userData?.questions?.length ? (
+                <>
+                  Du hast dir {userData.questions.length} Paket
+                  {userData.questions.length > 1 && 'e'} geschnappt und somit
+                  versprochen, 50 Unterschriften zu sammeln.
+                  <br />
+                  <br />
+                  {/* TODO: design package */}
+                  {/* Find question with message if exists to show this package (maybe in the future
+                    show most recent (was kinda in a hurry) */}
+                  "{userData.questions.find(question => question.body)?.body}"
+                </>
+              ) : (
+                <>Du hast noch kein Sammelpaket genommen.</>
+              )}
+            </p>
+            <div className={s.sectionLink}>
+              <span>
+                {userData?.questions?.length
+                  ? 'Weiteres Paket nehmen'
+                  : 'Nimm dein Paket'}
+              </span>
+            </div>
+          </section>
+        </Link>
+      )}
     </section>
   );
 };
