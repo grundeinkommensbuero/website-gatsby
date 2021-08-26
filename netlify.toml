@@ -12,5 +12,6 @@ GATSBY_USE_DEV_BACKEND = "override"
 command = "npm run build-dev-backend"
 
 [context.deploy-preview.environment]
-CONTENTFUL_ENVIRONMENT = "master-2021-07-05"
+CONTENTFUL_ENVIRONMENT = "2021-08-25"
 GATSBY_USE_DEV_BACKEND = "override"
+GATSBY_PROJECT = "Berlin"
