@@ -1,4 +1,4 @@
-import { navigate } from 'gatsby';
+import { navigate } from '@reach/router';
 import React, { useContext, useEffect } from 'react';
 import {
   Section,
@@ -20,11 +20,10 @@ const MePage = () => {
     const profilePath =
       splitPath.length <= 1 ? '' : splitPath[splitPath.length - 1];
 
-    console.log('profilePath ', profilePath);
     if (userId) {
-      navigate(`/mensch/${userId}/${profilePath}`);
+      navigate(`/mensch/${userId}/${profilePath}${location.search}`);
     } else {
-      navigate(`/login/?nextPage=me%2F${profilePath}`);
+      navigate(`/login/?nextPage=me%2F${profilePath}${location.search}`);
     }
   }, [userId]);
 
