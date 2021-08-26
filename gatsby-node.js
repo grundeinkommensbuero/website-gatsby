@@ -232,9 +232,7 @@ exports.onCreatePage = async ({ page, actions }) => {
     page.matchPath = '/mensch/*';
     page.component = path.resolve('src/pages/mensch/index.js');
     createPage(page);
-  }
-
-  if (page.path.match(/^\/me/)) {
+  } else if (page.path.match(/^\/me/)) {
     page.matchPath = '/me/*';
     page.component = path.resolve('src/pages/me/index.js');
     createPage(page);
