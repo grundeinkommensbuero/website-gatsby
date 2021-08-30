@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'gatsby';
 import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
@@ -57,25 +58,12 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
   return (
     <>
       {userData && (
-        <div className={cN(s.tileContainer, s.sectionAqua)}>
+        <div className={cN(s.tileContainer, s.sectionViolet)}>
           <div className={s.avatarAndInfo}>
             <div>
               <AvatarImage user={userData} className={s.avatar} />
             </div>
 
-            <div className={s.info}>
-              <h3 className={cN(s.headline, s.centerMobile)}>
-                {userData.username}
-              </h3>
-              <ul className={cN(s.infoText, s.centerMobile)}>
-                <li className={s.centerMobile}>{userData.city}</li>
-                <li className={s.centerMobile}>
-                  Dabei seit dem{' '}
-                  {userData.createdAt &&
-                    formatDate(new Date(userData.createdAt))}
-                </li>
-              </ul>
-            </div>
             {referredUserMessage ? (
               <div className={s.referredUsersMessage}>
                 {referredUserMessage}
@@ -83,18 +71,27 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
             ) : null}
           </div>
           <div className={s.flexElement}>
-            <h3 className={s.headline}>Hallo {userData.username}!</h3>
+          <div className={s.info}>
+              <h3 className={cN(s.headline, s.centerMobile)}>
+                {userData.username}
+              </h3>
+              <ul className={cN(s.infoText, s.centerMobile)}>
+                <li className={cN(s.centerMobile, s.userCity)}>{userData.city}</li>
+                <li className={cN(s.centerMobile, s.userCreated)}>
+                  Dabei seit dem{' '}
+                  {userData.createdAt &&
+                    formatDate(new Date(userData.createdAt))}
+                </li>
+              </ul>
+            </div>
             {municipality && (
               <p>
                 Du hast dich für {municipality.name} angemeldet. Schön, dass du
                 dabei bist!
               </p>
             )}
-            <p>Besuche dein Profil, um deine Einstellungen zu ändern.</p>
+            <p><Link to={`/mensch/${userId}`}>Besuche dein Profil</Link>, um deine Einstellungen zu ändern.</p>
             <div>
-              <LinkButtonLocal to={`/mensch/${userId}`}>
-                Zum Profil
-              </LinkButtonLocal>
             </div>
           </div>
         </div>
@@ -153,10 +150,7 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
               </ul>
             </div>
             <div>
-              <p>Besuche dein Profil, um deine Einstellungen zu ändern.</p>
-              <LinkButtonLocal to={`/mensch/${userId}`}>
-                Zum Profil
-              </LinkButtonLocal>
+              <p><Link to={`/mensch/${userId}`}>Besuche dein Profil</Link>, um deine Einstellungen zu ändern.</p>
             </div>
           </div>
         </div>
