@@ -3,7 +3,7 @@
  */
 
 import { useState } from 'react';
-import CONFIG from '../../../../backend-config';
+import CONFIG from '../../../../../backend-config';
 
 export const useGetMeetups = () => {
   const [meetups, setMeetups] = useState();
@@ -19,14 +19,11 @@ const getMeetups = async setMeetups => {
       mode: 'cors',
     };
 
-    const response = await fetch(
-      `${CONFIG.APP_API.INVOKE_URL}/service/action-export`,
-      request
-    );
+    const response = await fetch(`${CONFIG.API.INVOKE_URL}/meetups`, request);
 
     if (response.status === 200) {
       const json = await response.json();
-      setMeetups(json.features);
+      setMeetups(json.data);
     } else {
       console.log('Response is not 200', response.status);
     }

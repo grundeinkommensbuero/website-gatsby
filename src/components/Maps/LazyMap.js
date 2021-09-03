@@ -181,19 +181,31 @@ const PopupContent = ({
   phone,
   mail,
   isRichText,
+  startTime,
+  endTime,
+  contact,
+  address,
 }) => (
   <div className={s.tooltip}>
     {date && (
       <div className={s.tooltopDate}>{formatDateTime(new Date(date))}</div>
     )}
     <div className={s.tooltopTitle}>{title}</div>
+    {startTime && endTime && (
+      <div className={s.tooltopDate}>
+        Von {formatDateTime(new Date(startTime))} bis{' '}
+        {formatDateTime(new Date(endTime))}
+      </div>
+    )}
+    {address && <div>Wo? {address}</div>}
     {description && (
       <div className={s.tooltipDescription}>
         <hr />
+        Information:
         {isRichText ? contentfulJsonToHtml(description) : description}
       </div>
     )}
-    {(phone || mail) && <hr />}
+    {(phone || mail || contact) && <hr />}
     {phone && (
       <div>
         <span aria-label="phone" role="img">
@@ -210,6 +222,7 @@ const PopupContent = ({
         <a href={`mailto:${mail}`}>{mail}</a>
       </div>
     )}
+    {contact && <div>Kontakt: {contact}</div>}
   </div>
 );
 

@@ -15,14 +15,48 @@ import * as s from './style.module.less';
 import cN from 'classnames';
 import { DateInputWrapped, TimeInputWrapped } from '../DateTimeInput';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
+import { useCreateMeetup } from '../../../hooks/Api/Meetups/Create';
+import { FinallyMessage } from '../FinallyMessage';
 
+// Type can be either collect or lists
 export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
   const [location, setLocation] = useState();
-  console.log('render create meetup', type);
+  const [createMeetupState, createMeetup] = useCreateMeetup();
 
   const handleLocationChosen = e => {
     setLocation(e.result);
   };
+
+  if (
+    createMeetupState === 'saving' ||
+    createMeetupState === 'saved' ||
+    createMeetupState === 'error'
+  ) {
+    let messageState;
+
+    if (createMeetupState === 'saving') {
+      messageState = 'progress';
+    } else if (createMeetupState === 'error') {
+      messageState = 'error';
+    } else {
+      messageState = 'success';
+    }
+
+    return (
+      <FinallyMessage state={messageState} className={s.message}>
+        {createMeetupState === 'saving' && 'Wird gespeichert...'}
+        {createMeetupState === 'saved' && 'Erfolgreich gespeichert'}
+        {createMeetupState === 'error' && (
+          <>
+            Da ist was schief gegangen. Melde dich bitte bei{' '}
+            <a href="mailto:support@expedition-grundeinkommen.de">
+              support@expedition-grundeinkommen.de
+            </a>
+          </>
+        )}
+      </FinallyMessage>
+    );
+  }
 
   return (
     <SectionInner className={s.section}>
@@ -40,7 +74,20 @@ export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
           </p>
 
           <Form
-            onSubmit={e => {}}
+            onSubmit={e => {
+              createMeetup({
+                locationName: e.name,
+                description: e.description,
+                contact: e.contact,
+                coordinates: location.center,
+                address: location.place_name_de,
+                startTime: new Date(`${e.date}T${e.start}`),
+                endTime: new Date(`${e.date}T${e.end}`),
+                type,
+                // TODO: needs to be passed as variable for other campaigns
+                campaignCode: 'berlin-2',
+              });
+            }}
             validate={values => validate(values, type)}
             render={({ handleSubmit }) => (
               <FormWrapper>

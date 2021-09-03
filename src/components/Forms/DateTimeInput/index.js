@@ -49,7 +49,7 @@ export const DateInputWrapped = ({
       explanation={explanation}
       theme={theme}
     >
-      <DateInput input={input} className={inputClassName} label={outputLabel} />
+      <DateInput className={inputClassName} label={outputLabel} {...input} />
     </LabelInputErrorWrapper>
   );
 };
@@ -78,7 +78,7 @@ export const TimeInputWrapped = ({
       explanation={explanation}
       theme={theme}
     >
-      <TimeInput input={input} className={inputClassName} label={outputLabel} />
+      <TimeInput className={inputClassName} label={outputLabel} {...input} />
     </LabelInputErrorWrapper>
   );
 };

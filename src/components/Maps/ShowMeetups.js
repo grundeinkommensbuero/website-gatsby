@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import { useGetMeetups } from '../../hooks/Api/Meetups';
+import { useGetMeetups } from '../../hooks/Api/Meetups/Get';
 import Map from './Map';
 import {
   SectionComponent,
@@ -54,17 +54,22 @@ export const ShowMeetups = ({ mapConfig }) => {
   useEffect(() => {
     if (!isBerlin || (isBerlin && meetups)) {
       let collectSignaturesLocationsFiltered = [];
+      console.log(meetups);
       if (isBerlin) {
         // We want to bring the meetups from the backend into the same format as
         // the ones from contentful
         collectSignaturesLocationsFiltered = meetups.map(
-          ({ properties, geometry }) => ({
+          ({ coordinates, description, type, locationName, ...rest }) => ({
             location: {
-              lon: geometry.coordinates[0],
-              lat: geometry.coordinates[1],
+              lon: coordinates[0],
+              lat: coordinates[1],
             },
-            description: properties.description,
-            title: properties.name,
+            description: description,
+            title:
+              type === 'collect'
+                ? 'Sammelaktion'
+                : `Unterschreiben: ${locationName}`,
+            ...rest,
           })
         );
       } else {

@@ -28,7 +28,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
-import { ShowMeetups } from '../../Maps/ShowMeetups';
+import Maps from '../../Maps';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
@@ -442,7 +442,7 @@ export function ContentfulSection({ section, pageContext }) {
       {campainVisualisations && (
         <CampaignVisualisations visualisations={campainVisualisations} />
       )}
-      {maps && <ShowMeetups config={maps} />}
+      {maps && <Maps config={maps} />}
       {signUpForm && (
         <SectionInner>
           <SignUp />
