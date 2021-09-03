@@ -35,9 +35,14 @@ const Blog = ({
 
 export default Blog;
 
+// We added a filter to filter out all posts with category news
+// (because they should not be shown on the blog)
 export const pageQuery = graphql`
   {
-    allWpPost(sort: { fields: date, order: DESC }) {
+    allWpPost(
+      sort: { fields: date, order: DESC }
+      filter: { categories: { nodes: { elemMatch: { name: { ne: "news" } } } } }
+    ) {
       edges {
         node {
           id

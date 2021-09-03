@@ -22,6 +22,11 @@ export default () => {
             title
             uri
             slug
+            categories {
+              nodes {
+                name
+              }
+            }
             featuredImage {
               node {
                 localFile {
@@ -41,12 +46,14 @@ export default () => {
     }
   `);
 
-  return (
-    <>
-      {posts.map(({ node: { id, title, featuredImage, uri, date } }) => {
+  let renderedPosts = [];
+
+  posts.forEach(
+    ({ node: { id, title, featuredImage, uri, date, categories } }) => {
+      if (categories.nodes.findIndex(({ name }) => name === 'news') === -1) {
         const dateObject = new Date(date);
 
-        return (
+        renderedPosts.push(
           <article key={id} className={s.article}>
             <Link to={uri} className={s.link}>
               <time dateTime={dateObject.toISOString()} className={s.date}>
@@ -68,7 +75,8 @@ export default () => {
             </Link>
           </article>
         );
-      })}
-    </>
+      }
+    }
   );
+  return <>{renderedPosts}</>;
 };

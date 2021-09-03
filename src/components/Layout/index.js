@@ -15,130 +15,139 @@ import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfundin
 import { MeetupOverlay } from '../Overlay/OverlayMeetup';
 // import cN from 'classnames';
 
+const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
+const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
+
 function Template({ children, sections, pageContext, title, description }) {
-  const { contentfulGlobalStuff: globalStuff } = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
-        siteTitle
-        siteDescription {
-          siteDescription
-        }
-        ogimage {
-          fixed(width: 1000) {
-            src
+  const { contentfulProjects } = useStaticQuery(graphql`
+    query ProjectQuery {
+      contentfulProjects {
+        projects {
+          siteTitle
+          siteDescription {
+            siteDescription
           }
-        }
-        footerText
-        footerMenu {
-          slug
-          title
-        }
-        mainMenu {
-          ... on Node {
-            ... on ContentfulStaticContent {
-              __typename
-              slug
-              title
-              shortTitle
+          ogimage {
+            fixed(width: 1000) {
+              src
             }
-            ... on ContentfulMenuOberpunkt {
-              __typename
-              title
-              internalLink
-              externalLink
-              contentfulchildren {
-                title
+          }
+          footerText
+          footerMenu {
+            slug
+            title
+          }
+          mainMenu {
+            ... on Node {
+              ... on ContentfulStaticContent {
+                __typename
                 slug
+                title
                 shortTitle
               }
-            }
-          }
-        }
-        overlayActive
-        overlayDelay
-        overlay {
-          ... on Node {
-            ... on ContentfulPageSectionOneColumn {
-              __typename
-              title
-              titleShort
-              campainVisualisations {
-                campainCode
-                goal
-                startDate
+              ... on ContentfulMenuOberpunkt {
+                __typename
                 title
-                minimum
-                maximum
-                addToSignatureCount
-                ctaLink
-                eyeCatcher {
-                  raw
-                }
-                goalUnbuffered
-                goalInbetweenMultiple
-                startnextId
-                hint {
-                  hint
+                internalLink
+                externalLink
+                contentfulchildren {
+                  title
+                  slug
+                  shortTitle
                 }
               }
-              body {
-                raw
-                references {
-                  ... on ContentfulAsset {
-                    # __typename and contentful_id are required to resolve the references
-                    __typename
-                    contentful_id
+            }
+          }
+          overlayActive
+          overlayDelay
+          overlay {
+            ... on Node {
+              ... on ContentfulPageSectionOneColumn {
+                __typename
+                title
+                titleShort
+                campainVisualisations {
+                  campainCode
+                  goal
+                  startDate
+                  title
+                  minimum
+                  maximum
+                  addToSignatureCount
+                  ctaLink
+                  eyeCatcher {
+                    raw
+                  }
+                  goalUnbuffered
+                  goalInbetweenMultiple
+                  startnextId
+                  hint {
+                    hint
+                  }
+                }
+                body {
+                  raw
+                  references {
+                    ... on ContentfulAsset {
+                      # __typename and contentful_id are required to resolve the references
+                      __typename
+                      contentful_id
+                      gatsbyImageData(
+                        width: 400
+                        layout: CONSTRAINED
+                        quality: 90
+                      )
+                    }
+                    ... on ContentfulStaticContent {
+                      # __typename and contentful_id are required to resolve the references
+                      __typename
+                      contentful_id
+                      slug
+                    }
+                    ... on ContentfulPageSectionWithComponents {
+                      __typename
+                      contentful_id
+                      id
+                      titleShort
+                    }
+                  }
+                }
+                callToActionLink
+                callToActionText
+                colorScheme
+                bodyTextSizeHuge
+                signUpForm
+                emailSignup
+                pledgeId
+                signaturesId
+                disableRequestListsByMail
+                callToActionReference {
+                  slug
+                  title
+                  shortTitle
+                }
+                teamMembers {
+                  image {
                     gatsbyImageData(
-                      width: 400
+                      width: 200
                       layout: CONSTRAINED
-                      quality: 90
+                      quality: 80
                     )
                   }
-                  ... on ContentfulStaticContent {
-                    # __typename and contentful_id are required to resolve the references
-                    __typename
-                    contentful_id
-                    slug
-                  }
-                  ... on ContentfulPageSectionWithComponents {
-                    __typename
-                    contentful_id
-                    id
-                    titleShort
-                  }
+                  name
+                  twitter
+                  linkedin
+                  website
+                  role
                 }
-              }
-              callToActionLink
-              callToActionText
-              colorScheme
-              bodyTextSizeHuge
-              signUpForm
-              emailSignup
-              pledgeId
-              signaturesId
-              disableRequestListsByMail
-              callToActionReference {
-                slug
-                title
-                shortTitle
-              }
-              teamMembers {
-                image {
-                  gatsbyImageData(width: 200, layout: CONSTRAINED, quality: 80)
+                twitterFeed
+                backgroundIllustration
+                socialMediaButtons
+                blogTeaser
+                questionUbi
+                bodyAtTheEnd {
+                  raw
                 }
-                name
-                twitter
-                linkedin
-                website
-                role
-              }
-              twitterFeed
-              backgroundIllustration
-              socialMediaButtons
-              blogTeaser
-              questionUbi
-              bodyAtTheEnd {
-                raw
               }
             }
           }
@@ -147,14 +156,23 @@ function Template({ children, sections, pageContext, title, description }) {
     }
   `);
 
+  const projects = contentfulProjects.projects;
+
+  let project;
+  if (process.env.GATSBY_PROJECT === 'Berlin') {
+    project = projects.find(entry => entry.siteTitle === BERLIN_SITE_TITLE);
+  } else {
+    project = projects.find(entry => entry.siteTitle === DEFAULT_SITE_TITLE);
+  }
+
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
-    globalStuff?.overlay?.campainVisualisations
+    project?.overlay?.campainVisualisations
   );
 
   // Create new overlay definition
   const overlayDefninitionWithCrowdfunding = {
-    ...globalStuff.overlay,
+    ...project.overlay,
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
@@ -206,9 +224,7 @@ function Template({ children, sections, pageContext, title, description }) {
 
   // Adds additional menu items for users municipality, default max: 5
   const { customUserData, isAuthenticated } = useContext(AuthContext);
-  const [modifiedMainMenu, setModifiedMainMenu] = useState(
-    globalStuff.mainMenu
-  );
+  const [modifiedMainMenu, setModifiedMainMenu] = useState(project.mainMenu);
 
   // Updates the Menu when userData is loaded
   useEffect(() => {
@@ -245,7 +261,7 @@ function Template({ children, sections, pageContext, title, description }) {
   };
 
   const mergeIntoMenu = municipalityMenuItems => {
-    const mainMenu = JSON.parse(JSON.stringify(globalStuff.mainMenu));
+    const mainMenu = JSON.parse(JSON.stringify(project.mainMenu));
     const indexToMod = mainMenu.findIndex(el => el.title === 'Mitmachen');
     const engageMenuEntries = [...mainMenu[indexToMod].contentfulchildren];
     const mergedMenu = municipalityMenuItems.concat(engageMenuEntries);
@@ -255,8 +271,8 @@ function Template({ children, sections, pageContext, title, description }) {
 
   return (
     <>
-      {globalStuff.overlayActive && globalStuff.overlay && (
-        <Overlay delay={globalStuff.overlayDelay}>
+      {project.overlayActive && project.overlay && (
+        <Overlay delay={project.overlayDelay}>
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
@@ -267,25 +283,25 @@ function Template({ children, sections, pageContext, title, description }) {
 
       <Header
         menu={modifiedMainMenu}
-        hasOverlay={!!globalStuff?.overlay}
+        hasOverlay={!!project?.overlay}
         stickyBannerVisible={stickyBannerVisible}
       />
       <Helmet
-        defaultTitle={globalStuff.siteTitle}
-        titleTemplate={`${globalStuff.siteTitle} - %s`}
+        defaultTitle={project.siteTitle}
+        titleTemplate={`${project.siteTitle} - %s`}
       >
         <meta
           name="description"
-          content={globalStuff.siteDescription.siteDescription}
+          content={project.siteDescription.siteDescription}
         />
-        <meta property="og:title" content={globalStuff.siteTitle} />
+        <meta property="og:title" content={project.siteTitle} />
         <meta
           property="og:description"
-          content={globalStuff.siteDescription.siteDescription}
+          content={project.siteDescription.siteDescription}
         />
         <meta
           property="og:image"
-          content={checkUrlProtocolIdentifier(globalStuff.ogimage.fixed.src)}
+          content={checkUrlProtocolIdentifier(project.ogimage.fixed.src)}
         />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
@@ -297,10 +313,7 @@ function Template({ children, sections, pageContext, title, description }) {
           pageContext={pageContext}
         />
       </main>
-      <Footer
-        footerText={globalStuff.footerText}
-        footerMenu={globalStuff.footerMenu}
-      />
+      <Footer footerText={project.footerText} footerMenu={project.footerMenu} />
     </>
   );
 }
