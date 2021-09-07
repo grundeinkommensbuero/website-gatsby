@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
+import cN from 'classnames';
+import * as s from './style.module.less';
+
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
 import {
@@ -8,7 +11,6 @@ import {
   // mapCampaignCodeToAgs,
   // mapCampaignCodeToState,
 } from '../../utils';
-import * as s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
@@ -17,7 +19,6 @@ import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import { useSignUp } from '../../../hooks/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
-import AuthInfo from '../../AuthInfo';
 import DownloadListsNextSteps from '../DownloadListsNextSteps';
 
 const trackingCategory = 'ListDownload';
@@ -174,62 +175,63 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                   </div>
                 </>
               ) : (
-                <FinallyMessage className={s.hint} preventScrolling={true}>
-                  <p>
-                    <AuthInfo />
-                  </p>
-                </FinallyMessage>
+                <div>
+                  <p>Hier findest du die Unterschriftenlisten für das Volksbegehren zum Download. Lade dir eine Liste herunter, unterschreibe sie und schick sie an uns zurück!</p>
+                </div>
               )}
               <CTAButtonContainer>
                 <CTAButton type="submit">Her mit den Listen</CTAButton>
               </CTAButtonContainer>
 
-              {!isAuthenticated && (
-                <>
-                  <div className={s.iconParagraph}>
-                    <div
-                      className={s.icon}
-                      dangerouslySetInnerHTML={{ __html: iconIncognito }}
-                    ></div>
-                    <p>
-                      Du willst deine E-Mail-Adresse nicht angeben? Du kannst
-                      die Liste{' '}
-                      <InlineButton
-                        onClick={() => {
-                          createPdf({ campaignCode: signaturesId });
-                        }}
-                        type="button"
-                      >
-                        hier auch anonym herunterladen.
-                      </InlineButton>{' '}
-                      Allerdings können wir dich dann nicht informieren, wenn
-                      deine Unterschriften bei uns eingegangen sind!
-                    </p>
-                  </div>
-                </>
-              )}
+              <div className={s.iconParagraphContainer}>
+                {!isAuthenticated && (
+                  <>
+                    <div className={s.iconParagraph}>
+                      <div
+                        className={cN(s.icon, s.iconAnonymous)}
+                        dangerouslySetInnerHTML={{ __html: iconIncognito }}
+                      ></div>
+                      <p>
+                        Du willst deine E-Mail-Adresse nicht angeben? Du kannst
+                        die Liste{' '}
+                        <InlineButton
+                          onClick={() => {
+                            createPdf({ campaignCode: signaturesId });
+                          }}
+                          type="button"
+                        >
+                          hier auch anonym herunterladen.
+                        </InlineButton>{' '}
+                        Allerdings können wir dich dann nicht informieren, wenn
+                        deine Unterschriften bei uns eingegangen sind!
+                      </p>
+                    </div>
+                  </>
+                )}
 
-              {!isDisabledRequestListsByMail && (
-                <>
-                  <div className={s.iconParagraph}>
-                    <div
-                      className={s.icon}
-                      dangerouslySetInnerHTML={{ __html: iconMail }}
-                    ></div>
-                    <p>
-                      Kein Drucker?{' '}
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href="https://expeditionbge.typeform.com/to/Dq3SOi"
-                      >
-                        Bitte schickt mir Unterschriftenlisten per Post
-                      </a>
-                      !
-                    </p>
-                  </div>
-                </>
-              )}
+                {!isDisabledRequestListsByMail && (
+                  <>
+                    <div className={s.iconParagraph}>
+                      <div
+                        className={s.icon}
+                        dangerouslySetInnerHTML={{ __html: iconMail }}
+                      ></div>
+                      <p>
+                        Kein Drucker?{' '}
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href="https://expeditionbge.typeform.com/to/Dq3SOi"
+                        >
+                          Bitte schickt mir Unterschriftenlisten per Post
+                        </a>
+                        !
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+
             </form>
           );
         }}
