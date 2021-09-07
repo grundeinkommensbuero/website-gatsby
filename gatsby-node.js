@@ -95,7 +95,7 @@ municipalities = getAndStoreDataVariations(municipalities);
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
   municipalities.forEach(municipality => {
-    if (process.env.IS_BERLIN_PAGE) {
+    if (process.env.GATSBY_PROJECT === 'Berlin') {
       if (municipality.ags === '11000000') {
         createPage({
           path: `/`,
@@ -159,7 +159,10 @@ exports.createPages = ({ graphql, actions }) => {
 
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
-          if (process.env.IS_BERLIN_PAGE && page.node.slug === '/') {
+          if (
+            process.env.GATSBY_PROJECT === 'Berlin' &&
+            page.node.slug === '/'
+          ) {
             return;
           }
           const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
