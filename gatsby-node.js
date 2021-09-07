@@ -94,18 +94,32 @@ municipalities = getAndStoreDataVariations(municipalities);
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-
   municipalities.forEach(municipality => {
-    createPage({
-      path: `/gemeinden/${municipality.slug}`,
-      component: require.resolve('./src/components/StaticPage/index.js'),
-      context: {
-        municipality: { ...municipality },
-        isMunicipality: true,
-        isSpecificMunicipality: true,
-        slug: 'gemeinden',
-      },
-    });
+    if (process.env.IS_BERLIN_PAGE) {
+      if (municipality.ags === '11000000') {
+        createPage({
+          path: `/`,
+          component: require.resolve('./src/components/StaticPage/index.js'),
+          context: {
+            municipality: { ...municipality },
+            isMunicipality: true,
+            isSpecificMunicipality: true,
+            slug: '/',
+          },
+        });
+      }
+    } else {
+      createPage({
+        path: `/gemeinden/${municipality.slug}`,
+        component: require.resolve('./src/components/StaticPage/index.js'),
+        context: {
+          municipality: { ...municipality },
+          isMunicipality: true,
+          isSpecificMunicipality: true,
+          slug: 'gemeinden',
+        },
+      });
+    }
   });
 
   return new Promise((resolve, reject) => {
@@ -145,6 +159,9 @@ exports.createPages = ({ graphql, actions }) => {
 
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
+          if (process.env.IS_BERLIN_PAGE && page.node.slug === '/') {
+            return;
+          }
           const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
           const isMunicipality = page.node.slug === 'gemeinden';
           createPage({
