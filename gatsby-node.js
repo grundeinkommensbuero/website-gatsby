@@ -124,7 +124,11 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allWpPost {
+            allWpPost(
+              filter: {
+                categories: { nodes: { elemMatch: { name: { ne: "news" } } } }
+              }
+            ) {
               edges {
                 node {
                   uri
