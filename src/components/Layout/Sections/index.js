@@ -213,7 +213,6 @@ export function ContentfulSection({ section, pageContext }) {
             {headline && <h2>{headline.headline}</h2>}
             <div className={s.componentElementContainer}>
               {section.components.map((component, index) => {
-                console.log({ component });
                 if ('__typename' in component) {
                   return (
                     <div
