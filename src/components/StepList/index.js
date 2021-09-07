@@ -1,13 +1,18 @@
 import React from 'react';
 import cN from 'classnames';
 import * as s from './style.module.less';
+import mailIcon from './mail.svg';
+import stackIcon from './stack.svg';
+import printIcon from './print.svg';
+import sendIcon from './send.svg';
+import downloadIcon from './download.svg';
 
 const ICONS = {
-  mail: require('./mail.svg'),
-  stack: require('./stack.svg'),
-  print: require('./print.svg'),
-  send: require('./send.svg'),
-  download: require('./download.svg'),
+  mail: mailIcon,
+  stack: stackIcon,
+  print: printIcon,
+  send: sendIcon,
+  download: downloadIcon,
 };
 
 export function StepList({ children, className }) {
