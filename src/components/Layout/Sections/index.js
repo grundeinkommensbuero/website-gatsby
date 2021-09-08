@@ -59,6 +59,7 @@ const Components = {
   TextAndImage,
   Standard: StandardSectionComponent,
   Pledge,
+  ListDownload: SignatureListDownload,
 };
 
 export const getRenderedSections = ({
