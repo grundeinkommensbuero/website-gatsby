@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { fetchPageNumbers, paginate } from './utils';
+import { fetchPageNumbers, paginate } from '../../utils/pagination';
 import { MunicipalityContext } from '../../../context/Municipality/index';
 
 import * as s from './style.module.less';

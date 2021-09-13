@@ -1,0 +1,10 @@
+.mapboxgl-popup-content {
+  width: 25rem;
+  overflow: auto;
+}
+
+.mapboxgl-popup-close-button {
+  margin: 0.5rem;
+  color: red;
+  background: #f0f0f0;
+}

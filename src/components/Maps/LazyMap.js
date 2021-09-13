@@ -10,6 +10,9 @@ import { FinallyMessage } from '../Forms/FinallyMessage';
 
 import { detectWebGLContext } from '../utils';
 import { useGetMeetups } from '../../hooks/Api/Meetups';
+import { Table } from './Table';
+
+import('./mapbox-gl.css');
 
 let mapboxgl;
 
@@ -100,6 +103,11 @@ const lazyMap = ({ mapConfig }) => {
     }
   }, []);
 
+  const [
+    collectSignaturesLocationsFilteredTableData,
+    setCollectSignaturesLocationsFilteredTableData,
+  ] = useState([]);
+
   useEffect(() => {
     // Wait to initiate map until meetups are fetched (if map is for berlin)
     if (hasWebGl && (!isBerlin || (isBerlin && meetups))) {
@@ -173,6 +181,9 @@ const lazyMap = ({ mapConfig }) => {
             );
         }
       });
+      setCollectSignaturesLocationsFilteredTableData(
+        collectSignaturesLocationsFiltered
+      );
     }
     return () => {
       if (map.current) {
@@ -203,6 +214,13 @@ const lazyMap = ({ mapConfig }) => {
           </div>
         </SectionInner>
       )}
+      <div className={s.tableContainer}>
+        <Table
+          collectSignaturesLocationsFiltered={
+            collectSignaturesLocationsFilteredTableData
+          }
+        />
+      </div>
     </>
   );
 };

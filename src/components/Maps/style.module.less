@@ -16,6 +16,7 @@
 
 .tooltipDescription {
   p {
+    font-size: @DesktopFontSizeXS;
     margin: 0.2em 0;
 
     &:last-child {
@@ -36,4 +37,97 @@
   @media (min-width: @breakPointS) {
     display: none;
   }
+}
+
+.tableContainer {
+  margin: 3rem 0;
+}
+
+.tableBody {
+  border-collapse: collapse;
+  width: 100%;
+
+  &.tableBody th {
+    padding: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  &.tableBody td,
+  &.tableBody tr {
+    border: none;
+    padding: 1rem 2rem;
+  }
+}
+
+.tableRow {
+  color: black;
+  background: lighten(@violetLight, 10%);
+  &:nth-child(even) {
+    background: @white;
+  }
+}
+
+.tableHead {
+  text-align: left;
+  background: @white;
+  color: @violet;
+
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.pageSelectorElement {
+  padding: 0.35rem 0.25rem 0.25rem;
+  cursor: pointer;
+  min-width: 2rem;
+  text-align: center;
+
+  &:hover {
+    color: @white;
+    background-color: @red;
+  }
+
+  &.activePageSelector {
+    background: @white;
+    color: @violet;
+  }
+}
+
+.pageSelectorContainer {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 2rem 0;
+}
+
+.tabSelectorElement {
+  padding: 1rem 0.25rem 0.7rem;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  min-width: 25%;
+  margin: 0 0.25rem;
+  background: @white; // fallback for IE
+  background: var(--button-bg-color);
+  font-size: @DesktopFontSizeS;
+  font-weight: 600;
+
+  &:hover {
+    color: @white;
+    background-color: @red;
+  }
+
+  &.activeTabSelector {
+    padding: calc(1rem - 1px) 0.25rem 0.7rem;
+    background: @white;
+    color: @violet;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.tabSelectorContainer {
+  display: flex;
 }
