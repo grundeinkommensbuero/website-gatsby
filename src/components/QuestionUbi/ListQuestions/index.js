@@ -13,20 +13,50 @@ export default () => {
   const { userId } = useContext(AuthContext);
 
   useEffect(() => {
-    getQuestions(null, 6);
+    getQuestions(null, 0);
   }, []);
 
   return (
     <SectionInner wide={true}>
+      <h2 className={s.headingViolet}>Alle Sammelpakete</h2>
+      <p>Intro-Text zu Sammelpaketen</p>
+      <p>
+        <b>Schon XX Pakete verteilt und davon XX erledigt!</b>
+      </p>
+      <h3 className={s.headingViolet}>Deine Pakete</h3>
+      <p>
+        Du hast dir XX Pakete geschnappt und somit versprochen, XX
+        Unterschriften zu sammeln.
+      </p>
+      <div className={s.container}>
+        {questions.map((question, index) => {
+          if (question.user.userId === userId) {
+            return <Question key={index} {...question} />;
+          } else {
+            return null;
+          }
+        })}
+      </div>
+
+      <div className={s.CTA}>
+        {userId && (
+          <CTALink to={`/mensch/${userId}/paket-nehmen`}>
+            {questions.some(question => question.user.userId === userId)
+              ? 'Nimm dein Paket'
+              : 'Weiteres Paket nehmen'}
+          </CTALink>
+        )}
+      </div>
+
+      <h3 className={s.headingViolet}>
+        Diese Pakete hat sich schon jemand geschnappt
+      </h3>
+
       <div className={s.container}>
         {questions.map((question, index) => {
           return <Question key={index} {...question} />;
         })}
       </div>
-
-      {userId && (
-        <CTALink to={`/mensch/${userId}/paket-nehmen`}>Nimm dein Paket</CTALink>
-      )}
     </SectionInner>
   );
 };

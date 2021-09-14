@@ -11,7 +11,7 @@ const PlaygroundQuestion = () => {
         <title>Playground</title>
       </Helmet>
       <SectionWrapper>
-        <Section title="Frage">
+        <Section title="">
           <ListQuestions />
         </Section>
       </SectionWrapper>
