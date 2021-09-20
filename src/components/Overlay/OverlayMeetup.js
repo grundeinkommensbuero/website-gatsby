@@ -35,7 +35,9 @@ export const MeetupOverlay = () => {
                   alt="Modal schließen"
                 />
               </button>
-              <CreateMeetup type={type} mapConfig={mapConfig} />
+              <div className={s.meetupContent}>
+                <CreateMeetup type={type} mapConfig={mapConfig} />
+              </div>
             </>
           </Modal>
         </div>
