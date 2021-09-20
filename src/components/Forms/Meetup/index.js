@@ -3,7 +3,7 @@
  * Including steps from the following tutorial: https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/
  */
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import Map from '../../Maps/Map';
@@ -23,8 +23,15 @@ export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
   const [location, setLocation] = useState();
   const [createMeetupState, createMeetup] = useCreateMeetup();
 
+  const scrollToRef = useRef(null);
+
   const handleLocationChosen = e => {
     setLocation(e.result);
+
+    // Scroll to form
+    if (scrollToRef?.current) {
+      scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
   };
 
   if (
@@ -93,31 +100,34 @@ export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
               <FormWrapper>
                 <form onSubmit={handleSubmit}>
                   {type === 'collect' && (
-                    <FormSection
-                      className={s.formSection}
-                      fieldContainerClassName={s.inlineFieldSection}
-                    >
-                      <span className={s.eventText}>
-                        Du planst ein Event am
-                      </span>
-                      <Field
-                        name="date"
-                        label="Datum"
-                        component={DateInputWrapped}
-                      ></Field>
-                      <span className={s.eventText}>von</span>
-                      <Field
-                        name="start"
-                        label="Start"
-                        component={TimeInputWrapped}
-                      ></Field>
-                      <span className={s.eventText}>bis</span>
-                      <Field
-                        name="end"
-                        label="Ende"
-                        component={TimeInputWrapped}
-                      ></Field>
-                    </FormSection>
+                    <>
+                      <FormSection
+                        className={s.formSection}
+                        fieldContainerClassName={s.inlineFieldSection}
+                      >
+                        <span className={s.eventText}>
+                          Du planst ein Event am
+                        </span>
+                        <Field
+                          name="date"
+                          label="Datum"
+                          component={DateInputWrapped}
+                        ></Field>
+                        <span className={s.eventText}>von</span>
+                        <Field
+                          name="start"
+                          label="Start"
+                          component={TimeInputWrapped}
+                        ></Field>
+                        <span className={s.eventText}>bis</span>
+                        <Field
+                          name="end"
+                          label="Ende"
+                          component={TimeInputWrapped}
+                        ></Field>
+                      </FormSection>
+                      <div ref={scrollToRef}></div>
+                    </>
                   )}
                   {type === 'lists' && (
                     <FormSection className={s.formSection}>
