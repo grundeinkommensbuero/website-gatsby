@@ -8,6 +8,7 @@ export const MeetupOverlayProvider = ({ children }) => {
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [type, setType] = useState('collect');
   const [mapConfig, setMapConfig] = useState();
+  const [createdMeetup, setCreatedMeetup] = useState(false);
 
   useEffect(() => {
     document.body.classList.toggle(s.bodyOverlayOpen, overlayOpen);
@@ -22,6 +23,8 @@ export const MeetupOverlayProvider = ({ children }) => {
         setType,
         mapConfig,
         setMapConfig,
+        createdMeetup,
+        setCreatedMeetup,
       }}
     >
       {children}

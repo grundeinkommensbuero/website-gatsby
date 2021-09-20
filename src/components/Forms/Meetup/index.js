@@ -3,7 +3,7 @@
  * Including steps from the following tutorial: https://docs.mapbox.com/help/tutorials/local-search-geocoding-api/
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import Map from '../../Maps/Map';
@@ -19,7 +19,11 @@ import { useCreateMeetup } from '../../../hooks/Api/Meetups/Create';
 import { FinallyMessage } from '../FinallyMessage';
 
 // Type can be either collect or lists
-export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
+export const CreateMeetup = ({
+  mapConfig,
+  type = 'collect',
+  setCreatedMeetup,
+}) => {
   const [location, setLocation] = useState();
   const [createMeetupState, createMeetup] = useCreateMeetup();
 
@@ -33,6 +37,13 @@ export const CreateMeetup = ({ mapConfig, type = 'collect' }) => {
       scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   };
+
+  useEffect(() => {
+    if (createMeetupState === 'saved') {
+      // Set flag in context, so we can reload meetups in map
+      setCreatedMeetup(true);
+    }
+  }, [createMeetupState]);
 
   if (
     createMeetupState === 'saving' ||

@@ -7,9 +7,13 @@ import { CreateMeetup } from '../Forms/Meetup';
 import closeIcon from './close-icon.svg';
 
 export const MeetupOverlay = () => {
-  const { overlayOpen, setOverlayOpen, type, mapConfig } = useContext(
-    MeetupOverlayContext
-  );
+  const {
+    overlayOpen,
+    setOverlayOpen,
+    type,
+    mapConfig,
+    setCreatedMeetup,
+  } = useContext(MeetupOverlayContext);
   const renderBackdrop = () => <div className={s.backdrop} />;
 
   return (
@@ -36,7 +40,11 @@ export const MeetupOverlay = () => {
                 />
               </button>
               <div className={s.meetupContent}>
-                <CreateMeetup type={type} mapConfig={mapConfig} />
+                <CreateMeetup
+                  type={type}
+                  mapConfig={mapConfig}
+                  setCreatedMeetup={setCreatedMeetup}
+                />
               </div>
             </>
           </Modal>

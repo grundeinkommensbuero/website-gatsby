@@ -140,13 +140,16 @@ const lazyMap = ({
         });
       }
     }
+  }, [hasWebGl, locations]);
 
+  // Cleanup map
+  useEffect(() => {
     return () => {
       if (map.current) {
         map.current.remove();
       }
     };
-  }, [hasWebGl, locations]);
+  }, []);
 
   return (
     <>

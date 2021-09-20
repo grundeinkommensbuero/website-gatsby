@@ -34,9 +34,13 @@ export const ShowMeetups = ({ mapConfig }) => {
       }
     }
   `);
-  const { setType, setOverlayOpen, setMapConfig } = useContext(
-    MeetupOverlayContext
-  );
+  const {
+    setType,
+    setOverlayOpen,
+    setMapConfig,
+    createdMeetup,
+    setCreatedMeetup,
+  } = useContext(MeetupOverlayContext);
   const [meetups, getMeetups] = useGetMeetups();
   const [locationsFiltered, setLocationsFiltered] = useState();
 
@@ -51,10 +55,17 @@ export const ShowMeetups = ({ mapConfig }) => {
     setMapConfig(mapConfig);
   }, [mapConfig]);
 
+  // Reload meetups after new meetup was created
+  useEffect(() => {
+    if (createdMeetup) {
+      getMeetups();
+      setCreatedMeetup(false);
+    }
+  }, [createdMeetup]);
+
   useEffect(() => {
     if (!isBerlin || (isBerlin && meetups)) {
       let collectSignaturesLocationsFiltered = [];
-      console.log(meetups);
       if (isBerlin) {
         // We want to bring the meetups from the backend into the same format as
         // the ones from contentful
