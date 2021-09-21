@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Link from 'gatsby-link';
 
 // import { OverlayContext } from '../../../context/Overlay';
@@ -8,10 +8,8 @@ import * as s from './style.module.less';
 import Logo from './logo.svg';
 import Menu from './Menu';
 // import { HertieCrowdfunding } from './StickyDonationBar/HertieCrowdfunding';
-import { MunicipalityContext } from '../../../context/Municipality';
 
 const Header = ({ menu, stickyBannerVisible }) => {
-  const { setPageContext } = useContext(MunicipalityContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -23,16 +21,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
       <header className={s.header}>
         <div className={s.headerItemContainer}>
           <h2 className={s.title}>
-            <Link
-              to="/"
-              onClick={() => {
-                setPageContext({
-                  slug: '/',
-                  isMunicipality: false,
-                  isSpecificMunicipality: false,
-                });
-              }}
-            >
+            <Link to="/">
               <img
                 src={Logo}
                 className={s.logo}
