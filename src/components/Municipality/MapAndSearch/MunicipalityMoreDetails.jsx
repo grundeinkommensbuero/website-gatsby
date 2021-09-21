@@ -1,16 +1,21 @@
 import { navigate } from 'gatsby';
-import React from 'react';
+import React, { useContext } from 'react';
 import { CampainVisualisation } from '../../CampaignVisualisations/index';
 import { Button } from '../../Forms/Button/index';
 import * as s from './style.module.less';
+import { MunicipalityContext } from '../../../context/Municipality/index';
 
-export const MunicipalityMoreDetails = ({ municipality }) => {
+export const MunicipalityMoreDetails = ({
+  municipality: municipalityToDisplay,
+}) => {
+  const { municipality } = useContext(MunicipalityContext);
+
   return (
     <section className={s.expandedRow}>
-      {municipality?.goal && (
+      {municipalityToDisplay?.goal && (
         <CampainVisualisation
-          goal={municipality.goal}
-          count={municipality.signups}
+          goal={municipalityToDisplay.goal}
+          count={municipalityToDisplay.signups}
           onWhiteBackground={true}
           // showCTA={visualisations.length !== 1 && visualisation.ctaLink}
           labels={{
@@ -29,14 +34,16 @@ export const MunicipalityMoreDetails = ({ municipality }) => {
           currency="Anmeldungen"
         />
       )}
-      <div className={s.buttonContainer}>
-        <Button
-          className={s.municipalityButton}
-          onClick={() => navigate(`/gemeinden/${municipality.slug}`)}
-        >
-          Zur Ortsseite
-        </Button>
-      </div>
+      {municipality?.ags !== municipalityToDisplay?.ags && (
+        <div className={s.buttonContainer}>
+          <Button
+            className={s.municipalityButton}
+            onClick={() => navigate(`/gemeinden/${municipalityToDisplay.slug}`)}
+          >
+            Zur Ortsseite
+          </Button>
+        </div>
+      )}
     </section>
   );
 };
