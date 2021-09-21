@@ -176,7 +176,11 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                 </>
               ) : (
                 <div>
-                  <p>Hier findest du die Unterschriftenlisten für das Volksbegehren zum Download. Lade dir eine Liste herunter, unterschreibe sie und schick sie an uns zurück!</p>
+                  <p>
+                    Hier findest du die Unterschriftenlisten für das
+                    Volksbegehren zum Download. Lade dir eine Liste herunter,
+                    unterschreibe sie und schick sie an uns zurück!
+                  </p>
                 </div>
               )}
               <CTAButtonContainer>
@@ -188,7 +192,7 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                   <>
                     <div className={s.iconParagraph}>
                       <div
-                        className={cN(s.icon, s.iconAnonymous)}
+                        className={cN(s.icon)}
                         dangerouslySetInnerHTML={{ __html: iconIncognito }}
                       ></div>
                       <p>
@@ -231,7 +235,6 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                   </>
                 )}
               </div>
-
             </form>
           );
         }}

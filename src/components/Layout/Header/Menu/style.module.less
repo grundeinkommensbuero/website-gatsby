@@ -184,3 +184,18 @@
     background-color: darken(@red, 10%);
   }
 }
+
+.loginLink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.loginIcon {
+  width: 36px;
+  margin-left: -5px;
+
+  @media (max-width: @breakPointM) {
+    width: 28px;
+    margin-left: 0;
+  }
+}
