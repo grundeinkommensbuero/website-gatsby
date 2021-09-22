@@ -9,7 +9,7 @@ import {
 import { Button } from '../Forms/Button';
 import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
 
-export const ShowMeetups = ({ mapConfig }) => {
+export const ShowMeetups = ({ mapConfig, className }) => {
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
   } = useStaticQuery(graphql`
@@ -106,7 +106,11 @@ export const ShowMeetups = ({ mapConfig }) => {
 
   return (
     <>
-      <Map mapConfig={mapConfig} locations={locationsFiltered} />
+      <Map
+        mapConfig={mapConfig}
+        locations={locationsFiltered}
+        className={className}
+      />
       {isBerlin && (
         <SectionComponentContainer>
           <SectionComponent column={'left'}>

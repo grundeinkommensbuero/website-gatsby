@@ -128,6 +128,10 @@ export function formatTime(date) {
   return new Intl.DateTimeFormat('de', options).format(date);
 }
 
+export function getDayAsString(date) {
+  return date.toLocaleString('de-de', { weekday: 'long' });
+}
+
 // Takes campaign code in the format of e.g. schleswig-holstein-1 or berlin-1
 // and transforms it to Schleswig-Holstein or Berlin
 export function mapCampaignCodeToState(campaignCode) {

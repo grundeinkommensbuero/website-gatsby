@@ -1,11 +1,19 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { formatDateTime } from '../utils';
+import {
+  formatDateShort,
+  formatDateTime,
+  formatTime,
+  getDayAsString,
+} from '../utils';
 import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import { FinallyMessage } from '../Forms/FinallyMessage';
+
+import calenderIcon from './icon-calendar.svg';
+import pinIcon from './icon-pin.svg';
 
 import { detectWebGLContext } from '../utils';
 
@@ -60,6 +68,7 @@ const lazyMap = ({
   mapConfig,
   withSearch = false,
   onLocationChosen,
+  className
 }) => {
   const [hasWebGl, setHasWebGL] = useState(null);
 
@@ -121,6 +130,7 @@ const lazyMap = ({
       if (locations) {
         locations.forEach(meetup => {
           if (meetup.location) {
+            console.log(meetup);
             new mapboxgl.Marker()
               .setLngLat([meetup.location.lon, meetup.location.lat])
               .addTo(map.current)
@@ -153,7 +163,7 @@ const lazyMap = ({
 
   return (
     <>
-      <SectionInner wide={true}>
+      <SectionInner wide={true} className={className}>
         {hasWebGl === false && (
           <FinallyMessage>
             Entschuldige bitte, dein Browser unterstützt leider unsere Karte
@@ -188,27 +198,58 @@ const PopupContent = ({
   endTime,
   contact,
   address,
+  city,
+  zipCode,
 }) => (
   <div className={s.tooltip}>
-    {date && (
-      <div className={s.tooltopDate}>{formatDateTime(new Date(date))}</div>
-    )}
-    <div className={s.tooltopTitle}>{title}</div>
-    {startTime && endTime && (
-      <div className={s.tooltopDate}>
-        Von {formatDateTime(new Date(startTime))} bis{' '}
-        {formatDateTime(new Date(endTime))}
+    {date && <div>{formatDateTime(new Date(date))}</div>}
+    <h3 className={s.tooltipTitle}>{title}</h3>
+    {((startTime && endTime) || address) && (
+      <div className={s.tooltipTimeAndPlace}>
+        {startTime && endTime && (
+          <div className={s.tooltipInfoWithIcon}>
+            <img
+              src={calenderIcon}
+              alt="Illustration eines Kalenders"
+              className={s.tooltipIcon}
+            />
+            <div className={s.tooltipDate}>
+              <span className={s.tooltipDay}>
+                {getDayAsString(new Date(startTime))},{' '}
+                {formatDateShort(new Date(startTime))}
+              </span>
+              <br />
+              <span className={s.tooltipTime}>
+                {formatTime(new Date(startTime))} -{' '}
+                {formatTime(new Date(startTime))} Uhr
+              </span>
+            </div>
+          </div>
+        )}
+        {address && (
+          <div className={s.tooltipInfoWithIcon}>
+            <img
+              src={pinIcon}
+              alt="Illustration einer Markierung"
+              className={s.tooltipIcon}
+            />
+            <div className={s.tooltipLocation}>
+              <span className={s.tooltipAddress}>{address}</span>
+              <br />
+              <span className={s.tooltipZipCode}>
+                {zipCode} {city}
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     )}
-    {address && <div>Wo? {address}</div>}
     {description && (
       <div className={s.tooltipDescription}>
-        <hr />
-        Information:
+        <h4 className={s.tooltipHeading}>Information</h4>
         {isRichText ? contentfulJsonToHtml(description) : description}
       </div>
     )}
-    {(phone || mail || contact) && <hr />}
     {phone && (
       <div>
         <span aria-label="phone" role="img">
@@ -225,7 +266,12 @@ const PopupContent = ({
         <a href={`mailto:${mail}`}>{mail}</a>
       </div>
     )}
-    {contact && <div>Kontakt: {contact}</div>}
+    {contact && (
+      <div>
+        <h4 className={s.tooltipHeading}>Kontakt</h4>
+        {contact}
+      </div>
+    )}
   </div>
 );
 

@@ -31,7 +31,7 @@ export const CreateMeetup = ({
 
   const handleLocationChosen = e => {
     setLocation(e.result);
-
+    console.log(e.result);
     // Scroll to form
     if (scrollToRef?.current) {
       scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -98,7 +98,11 @@ export const CreateMeetup = ({
                 description: e.description,
                 contact: e.contact,
                 coordinates: location.center,
-                address: location.place_name_de,
+                address: location.address
+                  ? `${location.text} ${location.address}`
+                  : location.text,
+                city: location.context[2]?.text,
+                zipCode: location.context[0]?.text,
                 startTime: new Date(`${e.date}T${e.start}`),
                 endTime: new Date(`${e.date}T${e.end}`),
                 type,
