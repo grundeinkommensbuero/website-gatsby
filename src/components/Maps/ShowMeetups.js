@@ -114,13 +114,27 @@ export const ShowMeetups = ({ mapConfig, className }) => {
       {isBerlin && (
         <SectionComponentContainer>
           <SectionComponent column={'left'}>
-            <h2>Plane eine Sammelaktion!</h2>
+            <h3>Plane eine Sammelaktion!</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet.
+            </p>
             <Button onClick={() => setOverlayOpen(true)}>
               Event erstellen
             </Button>
           </SectionComponent>
           <SectionComponent column={'right'}>
-            <h2>Lege Listen an einem Sammelort aus</h2>
+            <h3>Lege Listen an einem Sammelort aus</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet.
+            </p>
             <Button
               onClick={() => {
                 setType('lists');
