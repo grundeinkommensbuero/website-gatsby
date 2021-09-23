@@ -10,7 +10,11 @@ export const SignUpButton = ({ children, className }) => {
   return (
     <>
       <div className={s.signUpButton}>
-        <Button className={className} onClick={() => setOverlayOpen(true)}>
+        <Button
+          className={className}
+          ariaLabel="Anmelden"
+          onClick={() => setOverlayOpen(true)}
+        >
           {children}
         </Button>
       </div>
