@@ -4,6 +4,7 @@ import { useLocation } from '@reach/router';
 import AuthContext from '../../../../context/Authentication';
 import { useSignOut } from '../../../../hooks/Authentication';
 import AvatarImage from '../../../../components/AvatarImage';
+import LoginIcon from './icon-login.svg';
 
 import * as s from './style.module.less';
 import MenuItemParent from './MenuItemParent';
@@ -53,8 +54,10 @@ const LoginMenuItem = () => {
               }`
             : ''
         }`}
+        className={s.loginLink}
       >
         Einloggen
+        <img src={LoginIcon} className={s.loginIcon} alt="Login" />
       </MenuItemLink>
     );
   }

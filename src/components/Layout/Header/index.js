@@ -6,6 +6,8 @@ import Link from 'gatsby-link';
 
 import * as s from './style.module.less';
 import Logo from './logo.svg';
+import BurgerMenu from './icon-burgermenu.svg';
+import CloseMenu from './icon-close-menu.svg';
 import Menu from './Menu';
 // import { HertieCrowdfunding } from './StickyDonationBar/HertieCrowdfunding';
 import { MunicipalityContext } from '../../../context/Municipality';
@@ -50,11 +52,20 @@ const Header = ({ menu, stickyBannerVisible }) => {
                   aria-expanded={menuOpen}
                   aria-controls="menuHeader"
                 >
-                  <div className={s.menuButtonBars}>
-                    <div className={s.menuButtonBar} />
-                    <div className={s.menuButtonBar} />
-                    <div className={s.menuButtonBar} />
-                  </div>
+                  {!menuOpen && (
+                    <img
+                      src={BurgerMenu}
+                      className={s.menuIcon}
+                      alt="Expedition Grundeinkommen Home"
+                    />
+                  )}
+                  {menuOpen && (
+                    <img
+                      src={CloseMenu}
+                      className={s.menuIcon}
+                      alt="Expedition Grundeinkommen Home"
+                    />
+                  )}
                 </button>
                 <Menu menu={menu} menuOpen={menuOpen} />
               </nav>

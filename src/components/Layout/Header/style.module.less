@@ -16,8 +16,8 @@
   width: @headerWidth;
   height: @headerHeight;
   margin: auto;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
 
   @media (max-width: @breakPointXL) {
     width: 100%;
@@ -73,25 +73,21 @@
   align-items: center;
   background: transparent;
   border: none;
+  padding: 0;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: transparent;
+  }
 
   @media (min-width: @breakPointM) {
     display: none;
   }
 }
 
-.menuButtonBars {
-  height: 2rem;
-  width: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: stretch;
-  cursor: pointer;
-}
-
-.menuButtonBar {
-  background: #000000;
-  height: 0.3rem;
+.menuIcon {
+  width: 3rem;
 }
 
 .ctaButtonWrapper {

@@ -3,14 +3,6 @@ import * as s from './style.module.less';
 import ShareButtons from './ShareButtons.json';
 import cN from 'classnames';
 
-import {
-  EmailIcon,
-  FacebookIcon,
-  TelegramIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from 'react-share';
-
 export const ShareButtonRow = ({
   setShareChannel,
   setSharePreviewActive,
@@ -18,6 +10,11 @@ export const ShareButtonRow = ({
   executeScroll,
 }) => {
   const iconInstagram = require('!svg-inline-loader!./icons/Instagram.svg');
+  const iconTwitter = require('!svg-inline-loader!./icons/twitter.svg');
+  const iconFacebook = require('!svg-inline-loader!./icons/facebook.svg');
+  const iconTelegram = require('!svg-inline-loader!./icons/telegram.svg');
+  const iconWhatsApp = require('!svg-inline-loader!./icons/whatsapp.svg');
+  const iconMail = require('!svg-inline-loader!./icons/mail.svg');
 
   const activatePreview = channel => {
     const i = ShareButtons.findIndex(el => el.channelIdentifier === channel);
@@ -40,7 +37,11 @@ export const ShareButtonRow = ({
           onClick={() => activatePreview('twitter')}
         >
           <div className={s.shareButtonContainer}>
-            <TwitterIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
+            <div
+              aria-hidden="true"
+              className={cN(s.shareIcon)}
+              dangerouslySetInnerHTML={{ __html: iconTwitter }}
+            ></div>
             <p>Twitter</p>
           </div>
         </button>
@@ -50,7 +51,11 @@ export const ShareButtonRow = ({
           onClick={() => activatePreview('facebook')}
         >
           <div className={s.shareButtonContainer}>
-            <FacebookIcon size={60} round={true} bgStyle={{ fillOpacity: 0 }} />
+            <div
+              aria-hidden="true"
+              className={cN(s.shareIcon)}
+              dangerouslySetInnerHTML={{ __html: iconFacebook }}
+            ></div>
             <p>Facebook</p>
           </div>
         </button>
@@ -62,7 +67,7 @@ export const ShareButtonRow = ({
           <div className={s.shareButtonContainer}>
             <div
               aria-hidden="true"
-              className={s.iconInstagram}
+              className={cN(s.shareIcon, s.iconInstagram)}
               dangerouslySetInnerHTML={{ __html: iconInstagram }}
             ></div>
             <p>Instagram</p>
@@ -74,12 +79,11 @@ export const ShareButtonRow = ({
           onClick={() => activatePreview('telegram')}
         >
           <div className={s.shareButtonContainer}>
-            <TelegramIcon
-              size={50}
-              round={true}
-              bgStyle={{ fillOpacity: 0 }}
-              className={s.iconCorrection}
-            />
+            <div
+              aria-hidden="true"
+              className={cN(s.shareIcon)}
+              dangerouslySetInnerHTML={{ __html: iconTelegram }}
+            ></div>
             <p>Telegram</p>
           </div>
         </button>
@@ -89,12 +93,11 @@ export const ShareButtonRow = ({
           onClick={() => activatePreview('whatsapp')}
         >
           <div className={s.shareButtonContainer}>
-            <WhatsappIcon
-              size={50}
-              round={true}
-              bgStyle={{ fillOpacity: 0 }}
-              className={s.iconCorrection}
-            />
+            <div
+              aria-hidden="true"
+              className={cN(s.shareIcon)}
+              dangerouslySetInnerHTML={{ __html: iconWhatsApp }}
+            ></div>
             <p>WhatsApp</p>
           </div>
         </button>
@@ -104,7 +107,11 @@ export const ShareButtonRow = ({
           onClick={() => activatePreview('email')}
         >
           <div className={s.shareButtonContainer}>
-            <EmailIcon size={65} round={true} bgStyle={{ fillOpacity: 0 }} />
+            <div
+              aria-hidden="true"
+              className={cN(s.shareIcon, s.iconMail)}
+              dangerouslySetInnerHTML={{ __html: iconMail }}
+            ></div>
             <p>E-Mail</p>
           </div>
         </button>
