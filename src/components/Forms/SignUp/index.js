@@ -201,7 +201,7 @@ export default ({
 
   return (
     <>
-      <h3>Willkommen bei der Expedition!</h3>
+      <h3 aria-label="Anmeldeformular">Willkommen bei der Expedition!</h3>
       <br />
       <Form
         onSubmit={e => {
@@ -247,7 +247,9 @@ export default ({
                 </FormSection>
 
                 <CTAButtonContainer>
-                  <CTAButton type="submit">Ich bin dabei</CTAButton>
+                  <CTAButton type="submit" ariaLabel="Jetzt anmelden">
+                    Ich bin dabei
+                  </CTAButton>
                 </CTAButtonContainer>
               </form>
             </FormWrapper>
