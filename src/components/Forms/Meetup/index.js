@@ -23,17 +23,27 @@ export const CreateMeetup = ({
   mapConfig,
   type = 'collect',
   setCreatedMeetup,
+  setOverlayOpen,
 }) => {
   const [location, setLocation] = useState();
   const [createMeetupState, createMeetup] = useCreateMeetup();
 
   const scrollToRef = useRef(null);
+  const dateInputEl = useRef(null);
 
   const handleLocationChosen = e => {
     setLocation(e.result);
     // Scroll to form
     if (scrollToRef?.current) {
       scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    // Focus input
+    if (dateInputEl?.current) {
+      // Set timeout to first smooth scroll and then focus
+      setTimeout(() => {
+        dateInputEl.current.focus();
+      }, 1000);
     }
   };
 
@@ -62,7 +72,14 @@ export const CreateMeetup = ({
     return (
       <FinallyMessage state={messageState} className={s.message}>
         {createMeetupState === 'saving' && 'Wird gespeichert...'}
-        {createMeetupState === 'saved' && 'Erfolgreich gespeichert'}
+        {createMeetupState === 'saved' && (
+          <>
+            <p>Erfolgreich gespeichert</p>
+            <CTAButton onClick={() => setOverlayOpen(false)} size="MEDIUM">
+              Fenster schließen
+            </CTAButton>
+          </>
+        )}
         {createMeetupState === 'error' && (
           <>
             Da ist was schief gegangen. Melde dich bitte bei{' '}
@@ -126,6 +143,7 @@ export const CreateMeetup = ({
                           name="date"
                           label="Datum"
                           component={DateInputWrapped}
+                          customRef={dateInputEl}
                         ></Field>
                         <span className={s.eventText}>von</span>
                         <Field

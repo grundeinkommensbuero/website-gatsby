@@ -44,6 +44,7 @@ export const MeetupOverlay = () => {
                   type={type}
                   mapConfig={mapConfig}
                   setCreatedMeetup={setCreatedMeetup}
+                  setOverlayOpen={setOverlayOpen}
                 />
               </div>
             </>
