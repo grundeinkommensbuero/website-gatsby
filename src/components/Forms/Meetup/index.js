@@ -28,8 +28,14 @@ export const CreateMeetup = ({
   const [location, setLocation] = useState();
   const [createMeetupState, createMeetup] = useCreateMeetup();
 
+  const [overlayCloseTimer, setOverlayCloseTimer] = useState(0);
+
   const scrollToRef = useRef(null);
+
+  // Date input element is only available in form of type collect
   const dateInputEl = useRef(null);
+  // Name input element is only available in form of type lists
+  const nameInputEl = useRef(null);
 
   const handleLocationChosen = e => {
     setLocation(e.result);
@@ -38,21 +44,40 @@ export const CreateMeetup = ({
       scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
-    // Focus input
-    if (dateInputEl?.current) {
-      // Set timeout to first smooth scroll and then focus
-      setTimeout(() => {
+    // Set timeout to first smooth scroll and then focus
+    setTimeout(() => {
+      // Depending on the form type a different input element will
+      // be rendered
+      if (dateInputEl?.current) {
         dateInputEl.current.focus();
-      }, 1000);
-    }
+      } else if (nameInputEl?.current) {
+        nameInputEl.current.focus();
+      }
+    }, 1000);
   };
 
   useEffect(() => {
     if (createMeetupState === 'saved') {
       // Set flag in context, so we can reload meetups in map
       setCreatedMeetup(true);
+
+      countdown();
     }
   }, [createMeetupState]);
+
+  const countdown = () => {
+    let seconds = 5;
+    const tick = () => {
+      seconds--;
+      setOverlayCloseTimer(seconds);
+      if (seconds > 0) {
+        setTimeout(tick, 1000);
+      } else {
+        setOverlayOpen(false);
+      }
+    };
+    tick();
+  };
 
   if (
     createMeetupState === 'saving' ||
@@ -74,10 +99,10 @@ export const CreateMeetup = ({
         {createMeetupState === 'saving' && 'Wird gespeichert...'}
         {createMeetupState === 'saved' && (
           <>
-            <p>Erfolgreich gespeichert</p>
-            <CTAButton onClick={() => setOverlayOpen(false)} size="MEDIUM">
-              Fenster schließen
-            </CTAButton>
+            <p>
+              Erfolgreich gespeichert. Fenster wird geschlossen in{' '}
+              {overlayCloseTimer}
+            </p>
           </>
         )}
         {createMeetupState === 'error' && (
@@ -131,35 +156,32 @@ export const CreateMeetup = ({
               <FormWrapper>
                 <form onSubmit={handleSubmit}>
                   {type === 'collect' && (
-                    <>
-                      <FormSection
-                        className={s.formSection}
-                        fieldContainerClassName={s.inlineFieldSection}
-                      >
-                        <span className={s.eventText}>
-                          Du planst ein Event am
-                        </span>
-                        <Field
-                          name="date"
-                          label="Datum"
-                          component={DateInputWrapped}
-                          customRef={dateInputEl}
-                        ></Field>
-                        <span className={s.eventText}>von</span>
-                        <Field
-                          name="start"
-                          label="Start"
-                          component={TimeInputWrapped}
-                        ></Field>
-                        <span className={s.eventText}>bis</span>
-                        <Field
-                          name="end"
-                          label="Ende"
-                          component={TimeInputWrapped}
-                        ></Field>
-                      </FormSection>
-                      <div ref={scrollToRef}></div>
-                    </>
+                    <FormSection
+                      className={s.formSection}
+                      fieldContainerClassName={s.inlineFieldSection}
+                    >
+                      <span className={s.eventText}>
+                        Du planst ein Event am
+                      </span>
+                      <Field
+                        name="date"
+                        label="Datum"
+                        component={DateInputWrapped}
+                        customRef={dateInputEl}
+                      ></Field>
+                      <span className={s.eventText}>von</span>
+                      <Field
+                        name="start"
+                        label="Start"
+                        component={TimeInputWrapped}
+                      ></Field>
+                      <span className={s.eventText}>bis</span>
+                      <Field
+                        name="end"
+                        label="Ende"
+                        component={TimeInputWrapped}
+                      ></Field>
+                    </FormSection>
                   )}
                   {type === 'lists' && (
                     <FormSection className={s.formSection}>
@@ -170,9 +192,12 @@ export const CreateMeetup = ({
                         type="text"
                         inputClassName={s.textInput}
                         component={TextInputWrapped}
+                        customRef={nameInputEl}
                       ></Field>
                     </FormSection>
                   )}
+                  <div ref={scrollToRef}></div>
+
                   <FormSection>
                     <p>
                       Bitte gib ein paar zusätzliche Infos an. Wo willst du
