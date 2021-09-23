@@ -68,7 +68,7 @@ const lazyMap = ({
   mapConfig,
   withSearch = false,
   onLocationChosen,
-  className
+  className,
 }) => {
   const [hasWebGl, setHasWebGL] = useState(null);
 
@@ -130,8 +130,10 @@ const lazyMap = ({
       if (locations) {
         locations.forEach(meetup => {
           if (meetup.location) {
-            console.log(meetup);
-            new mapboxgl.Marker()
+            const element = document.createElement('div');
+            element.className = s.marker;
+
+            new mapboxgl.Marker(element)
               .setLngLat([meetup.location.lon, meetup.location.lat])
               .addTo(map.current)
               .setPopup(

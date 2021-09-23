@@ -72,6 +72,7 @@
     border: 1px solid @violet;
     border-radius: 2px !important;
     width: 25rem;
+    max-height: 25rem;
   }
 
   .mapboxgl-ctrl-bottom-right {
@@ -96,7 +97,6 @@
   color: @black;
   font-family: 'Ideal', Tahoma, Arial, Helvetica, sans-serif;
   font-size: @DesktopFontSizeS;
-  max-height: 25rem;
 
   hr {
     border: 0;
@@ -165,4 +165,15 @@
   @media (min-width: @breakPointS) {
     display: none;
   }
+}
+
+.marker {
+  background-image: url('icon-pin-filled.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 25px;
+  height: 30px;
+  top: -18px !important;
+  cursor: pointer;
 }
