@@ -31,7 +31,6 @@ export const CreateMeetup = ({
 
   const handleLocationChosen = e => {
     setLocation(e.result);
-    console.log(e.result);
     // Scroll to form
     if (scrollToRef?.current) {
       scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -203,7 +202,6 @@ export const CreateMeetup = ({
 
 const validate = (values, type) => {
   const errors = {};
-  console.log(values);
 
   if (!values.description) {
     errors.description = 'Bitte gib eine kurze Beschreibung an';
