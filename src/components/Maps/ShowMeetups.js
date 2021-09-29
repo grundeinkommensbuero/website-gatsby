@@ -8,6 +8,7 @@ import {
 } from '../Layout/Sections';
 import { Button } from '../Forms/Button';
 import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
+import { EventsListed } from './EventsListed';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -104,6 +105,8 @@ export const ShowMeetups = ({ mapConfig, className }) => {
     }
   }, [meetups]);
 
+  console.log(locationsFiltered);
+
   return (
     <>
       <Map
@@ -112,39 +115,44 @@ export const ShowMeetups = ({ mapConfig, className }) => {
         className={className}
       />
       {isBerlin && (
-        <SectionComponentContainer>
-          <SectionComponent column={'left'}>
-            <h3>Plane eine Sammelaktion!</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.
-            </p>
-            <Button onClick={() => setOverlayOpen(true)}>
-              Event erstellen
-            </Button>
-          </SectionComponent>
-          <SectionComponent column={'right'}>
-            <h3>Lege Listen an einem Sammelort aus</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.
-            </p>
-            <Button
-              onClick={() => {
-                setType('lists');
-                setOverlayOpen(true);
-              }}
-            >
-              Ort eintragen
-            </Button>
-          </SectionComponent>
-        </SectionComponentContainer>
+        <div>
+          <SectionComponentContainer>
+            <SectionComponent column={'left'}>
+              <h3>Plane eine Sammelaktion!</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet.
+              </p>
+              <Button onClick={() => setOverlayOpen(true)}>
+                Event erstellen
+              </Button>
+            </SectionComponent>
+            <SectionComponent column={'right'}>
+              <h3>Lege Listen an einem Sammelort aus</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet.
+              </p>
+              <Button
+                onClick={() => {
+                  setType('lists');
+                  setOverlayOpen(true);
+                }}
+              >
+                Ort eintragen
+              </Button>
+            </SectionComponent>
+          </SectionComponentContainer>
+          {/* <br />
+          <br />
+          <EventsListed locationsFiltered={locationsFiltered} /> */}
+        </div>
       )}
     </>
   );
