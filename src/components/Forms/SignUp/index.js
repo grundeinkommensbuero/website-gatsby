@@ -247,7 +247,7 @@ export default ({
                 </FormSection>
 
                 <CTAButtonContainer>
-                  <CTAButton type="submit" ariaLabel="Jetzt anmelden">
+                  <CTAButton type="submit" aria-label="Jetzt anmelden">
                     Ich bin dabei
                   </CTAButton>
                 </CTAButtonContainer>
