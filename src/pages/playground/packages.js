@@ -2,9 +2,9 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import { Helmet } from 'react-helmet-async';
 import { SectionWrapper, Section } from '../../components/Layout/Sections';
-import ListQuestions from '../../components/QuestionUbi/ListQuestions';
+import ListPledgePackages from '../../components/PledgePackage/ListPledgePackages';
 
-const PlaygroundQuestion = () => {
+const PlaygroundPledgePackages = () => {
   return (
     <Layout>
       <Helmet>
@@ -12,11 +12,11 @@ const PlaygroundQuestion = () => {
       </Helmet>
       <SectionWrapper>
         <Section title="">
-          <ListQuestions />
+          <ListPledgePackages />
         </Section>
       </SectionWrapper>
     </Layout>
   );
 };
 
-export default PlaygroundQuestion;
+export default PlaygroundPledgePackages;

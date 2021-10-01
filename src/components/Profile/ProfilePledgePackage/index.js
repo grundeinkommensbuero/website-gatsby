@@ -1,11 +1,11 @@
 import React from 'react';
-import CreateQuestion from '../../QuestionUbi/CreateQuestion';
+import CreatePledgePackage from '../../PledgePackage/CreatePledgePackage';
 import * as gS from '../style.module.less';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 
-export const ProfileQuestionUbi = ({
+export const ProfilePledgePackage = ({
   userId,
   userData,
   updateCustomUserData,
@@ -16,13 +16,13 @@ export const ProfileQuestionUbi = ({
         className={cN(
           gS.editPageSection,
           gS.editSettings,
-          s.createQuestionSection
+          s.createPledgePackageSection
         )}
       >
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
-        <CreateQuestion
+        <CreatePledgePackage
           userData={userData}
           updateCustomUserData={updateCustomUserData}
         />

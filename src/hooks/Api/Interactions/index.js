@@ -9,23 +9,23 @@ import AuthContext from '../../../context/Authentication';
   - saved
   - error
 */
-export const useSaveQuestion = () => {
+export const useSaveInteraction = () => {
   // we are calling useState to 1) return the state and 2) pass the setState function
-  // to our saveQuestion function, so we can set the state from there
+  // to our saveInteraction function, so we can set the state from there
   const [state, setState] = useState(null);
 
   // Get user id and token from global context
   const { userId, token } = useContext(AuthContext);
 
-  return [state, data => saveQuestion(userId, data, token, setState)];
+  return [state, data => saveInteraction(userId, data, token, setState)];
 };
 
-// Function which calls the aws api to create a new question
-const saveQuestion = async (userId, data, token, setState) => {
+// Function which calls the aws api to create a new interaction
+const saveInteraction = async (userId, data, token, setState) => {
   try {
     setState('saving');
 
-    // Make request to api to save question
+    // Make request to api to save interaction
     const request = {
       method: 'POST',
       mode: 'cors',
@@ -37,7 +37,7 @@ const saveQuestion = async (userId, data, token, setState) => {
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/users/${userId}/questions`,
+      `${CONFIG.API.INVOKE_URL}/users/${userId}/interactions`,
       request
     );
 
@@ -52,45 +52,46 @@ const saveQuestion = async (userId, data, token, setState) => {
   }
 };
 
-export const useGetMostRecentQuestions = () => {
+export const useGetMostRecentInteractions = () => {
   const [state, setState] = useState();
-  const [questions, setQuestions] = useState([]);
+  const [interactions, setInteractions] = useState([]);
 
   return [
     state,
-    questions,
-    (userId, limit) =>
-      getMostRecentQuestions(userId, limit, setState, setQuestions),
+    interactions,
+    (userId, limit, type) =>
+      getMostRecentInteractions(userId, limit, type, setState, setInteractions),
   ];
 };
 
-const getMostRecentQuestions = async (
+const getMostRecentInteractions = async (
   userId,
   limit,
+  type,
   setState,
-  setQuestions
+  setInteractions
 ) => {
   try {
     setState('loading');
 
-    // Make request to api to save question
+    // Make request to api to save interaction
     const request = {
       method: 'GET',
       mode: 'cors',
     };
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/questions?limit=${limit}${
+      `${CONFIG.API.INVOKE_URL}/interactions?limit=${limit}${
         userId ? `&userId=${userId}` : ''
-      }`,
+      }${type ? `&type=${type}` : ''}`,
       request
     );
 
     if (response.status === 200) {
-      const { questions } = await response.json();
-      // structure: questions: [body, timestamp, user: {profilePictures, username, city }]
+      const { interactions } = await response.json();
+      // structure: interactions: [body, timestamp, user: {profilePictures, username, city }]
       setState('success');
-      setQuestions(questions);
+      setInteractions(interactions);
     } else {
       console.log('Api response not 200');
       setState('error');

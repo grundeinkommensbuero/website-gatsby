@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AvatarImage from '../../AvatarImage';
 import SignatureStats from '../../SignatureStats';
 import { formatDate } from '../../utils';
@@ -11,6 +11,8 @@ import { getCustomNewsletterEnumeration } from '../utils/customNewsletterEnumera
 const BERLIN_AGS = '11000000';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
+  const [pledgePackages, setPledgePackages] = useState([]);
+
   // list newsletters of current user as human readable string
   const customNewsletterEnumeration = getCustomNewsletterEnumeration({
     userData,
@@ -21,7 +23,17 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   const isSignedUpForBerlin =
     userData.municipalities?.findIndex(({ ags }) => ags === BERLIN_AGS) !== -1;
 
-  console.log('userdata', userData, { isSignedUpForBerlin });
+  // Filter interactions to only use interactions which were created
+  // as pledge package
+  useEffect(() => {
+    if (userData?.interactions) {
+      setPledgePackages(
+        userData.interactions.filter(
+          interaction => interaction.type === 'pledgePackage'
+        )
+      );
+    }
+  }, [userData]);
 
   return (
     <section className={gS.profilePageGrid}>
@@ -151,17 +163,22 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
           <section>
             <h2>Dein Sammelpaket</h2>
             <p>
-              {userData?.questions?.length ? (
+              {pledgePackages.length ? (
                 <>
-                  Du hast dir {userData.questions.length} Paket
-                  {userData.questions.length > 1 && 'e'} geschnappt und somit
+                  Du hast dir {pledgePackages.length} Paket
+                  {pledgePackages.length > 1 && 'e'} geschnappt und somit
                   versprochen, 50 Unterschriften zu sammeln.
                   <br />
                   <br />
                   {/* TODO: design package */}
-                  {/* Find question with message if exists to show this package (maybe in the future
+                  {/* Find package with message if exists to show this package (maybe in the future
                     show most recent (was kinda in a hurry) */}
-                  "{userData.questions.find(question => question.body)?.body}"
+                  "
+                  {
+                    pledgePackages.find(pledgePackage => pledgePackage.body)
+                      ?.body
+                  }
+                  "
                 </>
               ) : (
                 <>Du hast noch kein Sammelpaket genommen.</>
@@ -169,7 +186,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
             </p>
             <div className={s.sectionLink}>
               <span>
-                {userData?.questions?.length
+                {pledgePackages.length
                   ? 'Weiteres Paket nehmen'
                   : 'Nimm dein Paket'}
               </span>

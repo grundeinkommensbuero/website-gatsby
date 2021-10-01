@@ -7,12 +7,12 @@ import { Form, Field } from 'react-final-form';
 import { CTAButton } from '../../Layout/CTAButton';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
-import { useSaveQuestion } from '../../../hooks/Api/Questions';
+import { useSaveInteraction } from '../../../hooks/Api/Interactions';
 import AvatarImage from '../../AvatarImage';
 
 export default ({ userData, updateCustomUserData }) => {
-  const [questionState, uploadQuestion] = useSaveQuestion();
-  const [, setQuestion] = useState();
+  const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
+  const [, setPledgePackage] = useState();
   const [campaignCode, setCampaignCode] = useState();
 
   useEffect(() => {
@@ -21,16 +21,18 @@ export default ({ userData, updateCustomUserData }) => {
   }, []);
 
   useEffect(() => {
-    if (questionState === 'saved') {
+    if (pledgePackageState === 'saved') {
       updateCustomUserData();
     }
-  }, [questionState]);
+  }, [pledgePackageState]);
 
-  if (questionState === 'error') {
+  if (pledgePackageState === 'error') {
     return (
       <SectionInner>
         <FinallyMessage>
-          {questionState === 'error' && <>Das Absenden hat nicht geklappt. </>}
+          {pledgePackageState === 'error' && (
+            <>Das Absenden hat nicht geklappt. </>
+          )}
           <br />
           <br />
           Probiere es bitte ein weiteres Mal oder melde dich bei uns mit dem
@@ -46,7 +48,7 @@ export default ({ userData, updateCustomUserData }) => {
     );
   }
 
-  if (questionState === 'saving') {
+  if (pledgePackageState === 'saving') {
     return (
       <SectionInner>
         <FinallyMessage state="progress">Speichere...</FinallyMessage>
@@ -56,25 +58,20 @@ export default ({ userData, updateCustomUserData }) => {
 
   return (
     <>
-      {questionState === 'saved' && (
+      {pledgePackageState === 'saved' && (
         <SectionInner>
           <FinallyMessage>Du hast dir ein Paket genommen!</FinallyMessage>
         </SectionInner>
       )}
       <Form
         onSubmit={data => {
-          setQuestion({
-            body: data.question,
+          setPledgePackage({
+            body: data.body,
           });
 
-          uploadQuestion({ ...data, campaignCode });
+          uploadPledgePackage({ ...data, campaignCode, type: 'pledgePackage' });
         }}
         validate={validate}
-        // Initial value not needed for now, because user should be able to create multiple
-        // initialValues={{
-        //   // Use question from state, if question was just uploaded
-        //   question: question?.body || userData?.questions?.[0]?.body,
-        // }}
         render={({ handleSubmit }) => (
           <SectionInner>
             <form onSubmit={handleSubmit}>
@@ -82,18 +79,18 @@ export default ({ userData, updateCustomUserData }) => {
               <p>
                 Mit dem Sammelpaket versprichst du, 50 Unterschriften
                 einzusammeln. Das ist super! <br />
-                Optional: Erzähle der Welt, warum du fürs Grundeinkommen
+                Optional: Erzähle der Welt, warum du für's Grundeinkommen
                 sammelst.
               </p>
               <Speechbubble>
                 <Field
-                  name="question"
-                  label="Deine Frage an das Grundeinkommen"
+                  name="body"
+                  label="Warum sammelst du für's Grundeinkommen?"
                   placeholder="Dein Grund (Maximal 70 Zeichen)"
                   type="textarea"
                   maxLength={300}
                   component={TextInputWrapped}
-                  inputClassName={s.questionInput}
+                  inputClassName={s.bodyInput}
                   errorClassName={s.error}
                   hideLabel={true}
                 />
@@ -101,7 +98,7 @@ export default ({ userData, updateCustomUserData }) => {
               <div className={s.belowBubble}>
                 <AvatarImage
                   user={userData.user}
-                  className={s.createQuestionProfile}
+                  className={s.avatar}
                   sizes="80px"
                 />
 
@@ -122,8 +119,8 @@ export default ({ userData, updateCustomUserData }) => {
 const validate = values => {
   const errors = {};
 
-  if (values.question?.length > 70) {
-    errors.question = 'Der Text darf nicht länger als 70 Zeichen sein.';
+  if (values.body?.length > 70) {
+    errors.body = 'Der Text darf nicht länger als 70 Zeichen sein.';
   }
 
   return errors;
