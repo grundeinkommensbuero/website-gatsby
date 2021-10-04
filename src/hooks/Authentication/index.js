@@ -6,6 +6,7 @@ import { sleep, getReferral } from '../utils';
 import { useContext, useState } from 'react';
 import querystring from 'query-string';
 import { navigate } from '@reach/router';
+import { TrackJS } from 'trackjs';
 import AuthContext from '../../context/Authentication';
 import { createUser } from '../Api/Users/Create';
 import CONFIG from '../../../backend-config';
@@ -48,6 +49,7 @@ export const useSignIn = () => {
             setState('userNotFound');
           } else {
             setState('error');
+            TrackJS.track(error);
             console.log('Error while signing in', error);
           }
         });
