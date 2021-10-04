@@ -105,8 +105,6 @@ export const ShowMeetups = ({ mapConfig, className }) => {
     }
   }, [meetups]);
 
-  console.log(locationsFiltered);
-
   return (
     <>
       <Map
