@@ -11,6 +11,7 @@ const icons = {
   WhatsAppSquare: require('!svg-inline-loader!./icons/whatsapp-square-brands.svg'),
   Telegram: require('!svg-inline-loader!./icons/telegram-plane-brands.svg'),
   TelegramRound: require('!svg-inline-loader!./icons/telegram-brands.svg'),
+  Youtube: require('!svg-inline-loader!./icons/youtube.svg'),
 };
 
 export default ({ link, label, className, icon, iconSize }) => (
