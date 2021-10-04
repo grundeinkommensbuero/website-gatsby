@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { TrackJS } from 'trackjs';
 import AuthContext from '../../../context/Authentication';
 import { updateUser } from '../../Api/Users/Update';
 
@@ -69,6 +70,7 @@ const answerCustomChallenge = async (
     } catch (error) {
       setState('wrongCode');
       console.log('Apparently the user did not enter the right code', error);
+      TrackJS.track(error);
     }
   } catch (error) {
     // If we wanted to resend the code after used waited more than 3 minutes
@@ -82,6 +84,7 @@ const answerCustomChallenge = async (
         'User entered wrong code three times or user was never set',
         error
       );
+      TrackJS.track(error);
     }
   }
 };
