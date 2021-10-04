@@ -134,7 +134,7 @@ export const CreateMeetup = ({
 
           <Form
             onSubmit={e => {
-              createMeetup({
+              const data = {
                 locationName: e.name,
                 description: e.description,
                 contact: e.contact,
@@ -142,14 +142,23 @@ export const CreateMeetup = ({
                 address: location.address
                   ? `${location.text} ${location.address}`
                   : location.text,
-                city: location.context[2]?.text,
-                zipCode: location.context[0]?.text,
-                startTime: new Date(`${e.date}T${e.start}`),
-                endTime: new Date(`${e.date}T${e.end}`),
+                city: location.context.find(({ id }) => id.startsWith('place'))
+                  ?.text,
+                zipCode: location.context.find(({ id }) =>
+                  id.startsWith('postcode')
+                )?.text,
                 type,
                 // TODO: needs to be passed as variable for other campaigns
                 campaignCode: 'berlin-2',
-              });
+              };
+
+              // Only had dates if type is collect
+              if (type === 'collect') {
+                data.startTime = new Date(`${e.date}T${e.start}`);
+                data.endTime = new Date(`${e.date}T${e.end}`);
+              }
+
+              createMeetup(data);
             }}
             validate={values => validate(values, type)}
             render={({ handleSubmit }) => (
