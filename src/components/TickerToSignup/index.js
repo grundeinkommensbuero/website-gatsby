@@ -29,6 +29,8 @@ export const TickerToSignup = ({
 
   return (
     <>
+      {/* A hidden Heading to improve accessibility */}
+      <h2 className={s.hiddenHeading}>Anmelden</h2>
       {municipality?.ags ? (
         <TickerMunicipality
           tickerDescription={tickerDescription}

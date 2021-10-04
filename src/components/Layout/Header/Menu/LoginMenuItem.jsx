@@ -44,21 +44,27 @@ const LoginMenuItem = () => {
   // should be the current page
   if (!userId) {
     return (
-      <MenuItemLink
-        slug={`login${
-          location.pathname !== '/'
-            ? `/?nextPage=${
-                location.pathname.slice(-1) === '/'
-                  ? location.pathname.slice(1, -1)
-                  : location.pathname.slice(1)
-              }`
-            : ''
-        }`}
-        className={s.loginLink}
-      >
-        Einloggen
-        <img src={LoginIcon} className={s.loginIcon} alt="Login" />
-      </MenuItemLink>
+      <>
+        <MenuItemLink
+          slug={`login${
+            location.pathname !== '/'
+              ? `/?nextPage=${
+                  location.pathname.slice(-1) === '/'
+                    ? location.pathname.slice(1, -1)
+                    : location.pathname.slice(1)
+                }`
+              : ''
+          }`}
+          className={s.loginLink}
+        >
+          Einloggen
+          <img src={LoginIcon} className={s.loginIcon} alt="Login" />
+        </MenuItemLink>
+        {/* A hidden Link to improve accessibility */}
+        <a className={s.hiddenLink} href="#ticker">
+          Anmelden
+        </a>
+      </>
     );
   }
 
