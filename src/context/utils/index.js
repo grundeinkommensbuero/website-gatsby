@@ -44,7 +44,7 @@ history.pushToHistoryState = (municipality, pageContext) => {
       window.history.pushState(
         { municipality, pageContext },
         null,
-        `${window.location.origin}/gemeinden/${municipality.slug}`
+        `${window.location.origin}/orte/${municipality.slug}`
       );
       adjustDocumentTitle(municipality, municipality.name);
       setWindowLocationOriginForIE();
