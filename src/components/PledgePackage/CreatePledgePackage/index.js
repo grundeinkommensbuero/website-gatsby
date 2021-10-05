@@ -13,7 +13,8 @@ import AvatarImage from '../../AvatarImage';
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
   const [, setPledgePackage] = useState();
-  const [campaignCode, setCampaignCode] = useState();
+  // TODO: set campaign code depending on user data
+  const [campaignCode, setCampaignCode] = useState('bremen-1');
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);

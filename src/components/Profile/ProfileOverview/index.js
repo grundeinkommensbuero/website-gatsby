@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import AvatarImage from '../../AvatarImage';
 import SignatureStats from '../../SignatureStats';
-import { formatDate } from '../../utils';
+import { formatDate, stateToAgs } from '../../utils';
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
 import { getReferredUserMessage } from '../utils/referredUserMessage';
 import { getCustomNewsletterEnumeration } from '../utils/customNewsletterEnumeration';
-const BERLIN_AGS = '11000000';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   const [pledgePackages, setPledgePackages] = useState([]);
@@ -20,8 +19,16 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   // list referred users, if any
   const referredUserMessage = getReferredUserMessage({ userData });
 
-  const isSignedUpForBerlin =
-    userData.municipalities?.findIndex(({ ags }) => ags === BERLIN_AGS) !== -1;
+  // NOTE: not needed for now, reactivate as soon as pledge packages are used for berlin
+  // const isSignedUpForBerlin =
+  //   userData.municipalities?.findIndex(
+  //     ({ ags }) => ags === stateToAgs('berlin')
+  //   ) !== -1;
+
+  const isSignedUpForBremen =
+    userData.municipalities?.findIndex(
+      ({ ags }) => ags === stateToAgs('bremen')
+    ) !== -1;
 
   // Filter interactions to only use interactions which were created
   // as pledge package
@@ -102,7 +109,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
       <Link
         to="unterschriften-eintragen"
         className={cN(s.profilePageSection, {
-          [s.profilePageSectionLarge]: !isSignedUpForBerlin,
+          [s.profilePageSectionLarge]: !isSignedUpForBremen,
         })}
       >
         <section className={s.signaturesSection}>
@@ -153,11 +160,11 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
       )} */}
 
       {/* Only show this section if user is signed up for berlin */}
-      {isSignedUpForBerlin && (
+      {isSignedUpForBremen && (
         <Link
           to="paket-nehmen"
           className={cN(s.profilePageSection, {
-            [s.profilePageSectionLarge]: !isSignedUpForBerlin,
+            [s.profilePageSectionLarge]: !isSignedUpForBremen,
           })}
         >
           <section>
