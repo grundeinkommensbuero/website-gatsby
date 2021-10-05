@@ -388,6 +388,11 @@ export const pageQuery = graphql`
                 __typename
                 column
               }
+              ... on ContentfulSectionComponentListDownload {
+                __typename
+                column
+                signaturesId
+              }
               ... on ContentfulSectionComponentTextAndImage {
                 __typename
                 column
@@ -508,6 +513,41 @@ export const pageQuery = graphql`
                     center
                   }
                 }
+                text {
+                  raw
+                }
+              }
+              ... on ContentfulSectionComponentCampaignVisualisation {
+                __typename
+                column
+                campaignVisualisations {
+                  campainCode
+                  goal
+                  startDate
+                  title
+                  minimum
+                  maximum
+                  addToSignatureCount
+                  ctaLink
+                  eyeCatcher {
+                    raw
+                  }
+                  eyeCatcherLink
+                  goalUnbuffered
+                  goalInbetweenMultiple
+                  startnextId
+                  hint {
+                    hint
+                  }
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                title
                 text {
                   raw
                 }

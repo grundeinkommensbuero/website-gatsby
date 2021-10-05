@@ -15,9 +15,10 @@
     top: 100%;
     width: 100%;
     padding: 1rem;
-    background: @grey;
+    background: @white;
     display: none;
     height: auto;
+    border-bottom: 1px solid black;
 
     &.isOpen,
     &:focus-within {
@@ -183,4 +184,28 @@
   &:active {
     background-color: darken(@red, 10%);
   }
+}
+
+.loginLink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.loginIcon {
+  width: 36px;
+  margin-left: -5px;
+
+  @media (max-width: @breakPointM) {
+    width: 28px;
+    margin-left: 0;
+  }
+}
+
+.hiddenLink {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }

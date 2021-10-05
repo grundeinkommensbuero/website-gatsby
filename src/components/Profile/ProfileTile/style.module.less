@@ -1,17 +1,26 @@
 @import '../../../components/style/vars.less';
 
 .tileContainer {
+  padding: 3rem 2rem 2rem 0;
+  background: @violet;
+  color: @white;
+  font-weight: normal;
+}
+
+.tileFlexContainer {
   margin: auto;
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
-  margin-top: 7rem;
-  padding: 3rem;
-  background: @aqua;
-  color: @white;
+
+  @media (max-width: @breakPointS) {
+    flex-wrap: wrap;
+    padding-left: 2rem;
+  }
 
   p {
     font-size: @DesktopFontSizeM;
+    margin: 0.7rem 0;
+
     @media (max-width: @breakPointM) {
       font-size: @MobileFontSizeM;
       margin-bottom: 1.5rem;
@@ -19,6 +28,7 @@
     @media (max-width: @breakPointS) {
       font-size: @MobileFontSizeM;
       line-height: 1.625rem;
+      text-align: center;
     }
   }
 
@@ -28,6 +38,20 @@
     font-weight: bold;
     font-size: @DesktopFontSizeL;
   }
+}
+
+&.sectionViolet {
+  background-color: @violet;
+  color: @white;
+  --bg-color: @violet;
+  --font-color: @white;
+  --secondary-color: @white;
+  --text-on-secondary-color: @black;
+  --button-font-color: @white;
+  --button-bg-color: @black; // IE Fallback
+  --button-bg-color: @whiteTransparent;
+  --button-hover-bg-color: @white;
+  --button-hover-font-color: @violet;
 }
 
 &.sectionAqua {
@@ -61,7 +85,7 @@
 }
 
 .flexElement {
-  width: 47.5%;
+  //width: 47.5%;
 
   @media (max-width: @breakPointL) {
     width: 100%;
@@ -70,8 +94,10 @@
 
 .headline {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.4rem;
   color: @white !important;
+  font-size: @DesktopFontSizeLL;
+
   @media (max-width: @breakPointM) {
     margin-top: 1.5rem;
   }
@@ -79,33 +105,25 @@
 
 .avatarAndInfo {
   margin: 0 auto;
-  width: 47.5%;
   display: flex;
-  justify-content: space-between;
-  align-content: flex-start;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+
   @media (max-width: @breakPointL) {
     width: 100%;
-    margin-bottom: 4rem;
+    //margin-bottom: 4rem;
     justify-content: center;
   }
 }
 
 .avatar {
-  width: 7em;
-  height: 7em;
-  margin-right: 0.75rem;
-
-  @media (max-width: @breakPointS) {
-    margin-bottom: 1.5rem;
-    margin-right: 0;
-  }
+  width: 8em;
+  height: 8em;
 }
 
 .info {
   min-width: 270px;
-  width: 70%;
-  margin-left: 0.75rem;
   @media (max-width: @breakPointL) {
     width: 50%;
   }
@@ -125,7 +143,7 @@
   font-size: @DesktopFontSizeM;
   list-style-type: none;
   padding-left: 0;
-  margin-left: 0;
+  margin: 0;
 
   li {
     margin-bottom: 0.25rem;
@@ -147,6 +165,15 @@
   }
 }
 
+.userCity,
+.userCreated {
+  font-size: @DesktopFontSizeS;
+}
+
+.userCreated {
+  opacity: 0.6;
+}
+
 .centerMobile {
   @media (max-width: @breakPointS) {
     text-align: center;
@@ -155,6 +182,8 @@
 
 .referredUsersMessage {
   margin-top: 1rem;
-  padding: 0 1rem;
-  font-size: @DesktopFontSizeL;
+  padding: 0.5rem;
+  padding-left: 2rem;
+  font-size: @DesktopFontSizeM;
+  text-align: center;
 }

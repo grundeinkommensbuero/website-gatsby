@@ -94,18 +94,32 @@ municipalities = getAndStoreDataVariations(municipalities);
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-
   municipalities.forEach(municipality => {
-    createPage({
-      path: `/gemeinden/${municipality.slug}`,
-      component: require.resolve('./src/components/StaticPage/index.js'),
-      context: {
-        municipality: { ...municipality },
-        isMunicipality: true,
-        isSpecificMunicipality: true,
-        slug: 'gemeinden',
-      },
-    });
+    if (process.env.GATSBY_PROJECT === 'Berlin') {
+      if (municipality.ags === '11000000') {
+        createPage({
+          path: `/`,
+          component: require.resolve('./src/components/StaticPage/index.js'),
+          context: {
+            municipality: { ...municipality },
+            isMunicipality: true,
+            isSpecificMunicipality: true,
+            slug: '/',
+          },
+        });
+      }
+    } else {
+      createPage({
+        path: `/gemeinden/${municipality.slug}`,
+        component: require.resolve('./src/components/StaticPage/index.js'),
+        context: {
+          municipality: { ...municipality },
+          isMunicipality: true,
+          isSpecificMunicipality: true,
+          slug: 'gemeinden',
+        },
+      });
+    }
   });
 
   return new Promise((resolve, reject) => {
@@ -124,7 +138,11 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allWpPost {
+            allWpPost(
+              filter: {
+                categories: { nodes: { elemMatch: { name: { ne: "news" } } } }
+              }
+            ) {
               edges {
                 node {
                   uri
@@ -141,6 +159,12 @@ exports.createPages = ({ graphql, actions }) => {
 
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
+          if (
+            process.env.GATSBY_PROJECT === 'Berlin' &&
+            page.node.slug === '/'
+          ) {
+            return;
+          }
           const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
           const isMunicipality = page.node.slug === 'gemeinden';
           createPage({

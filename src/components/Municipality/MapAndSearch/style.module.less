@@ -142,6 +142,8 @@
   border-bottom: 8.6px solid transparent;
   animation-name: rotateTriangle;
   background: none;
+  // for some reason, this is neccessary for the triangle to show up in Safari
+  transform: rotate(0deg);
 
   &:hover {
     background: none;

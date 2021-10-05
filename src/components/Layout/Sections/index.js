@@ -55,10 +55,14 @@ const Components = {
   PledgePackages: loadable(() =>
     import('../../PledgePackage/ListPledgePackages')
   ),
+  CampaignVisualisation: loadable(() =>
+    import('../../Municipality/MunicipalityCampaignVisualisations')
+  ),
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
   Pledge,
+  ListDownload: SignatureListDownload,
 };
 
 export const getRenderedSections = ({
@@ -81,17 +85,23 @@ export const getRenderedSections = ({
 
   if (displayedSections && displayedSections.length) {
     displayedSections.forEach((section, index) => {
-      renderedSections.push(
-        <ContentfulSection
-          section={section}
-          pageContext={pageContext}
-          key={index}
-        />
-      );
+      if (!isMapOnBerlinPage(municipality?.ags, section.sectionId)) {
+        renderedSections.push(
+          <ContentfulSection
+            section={section}
+            pageContext={pageContext}
+            key={index}
+          />
+        );
+      }
     });
     return renderedSections;
   }
   return null;
+};
+
+const isMapOnBerlinPage = (ags, sectionId) => {
+  return ags === '11000000' && sectionId === 'map';
 };
 
 export function SectionWrapper({ children, className }) {

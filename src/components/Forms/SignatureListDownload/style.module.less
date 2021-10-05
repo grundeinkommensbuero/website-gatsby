@@ -20,23 +20,33 @@
   font-size: @DesktopFontSizeM;
 }
 
+.iconParagraphContainer {
+  margin-top: 2rem;
+}
+
 .iconParagraph {
   display: flex;
   align-items: center;
   font-size: @DesktopFontSizeM;
 
-  @media (max-width: @breakPointS) {
-    flex-wrap: wrap;
+  // this is needed to get the icons to scale correctly
+  p {
+    width: 90%;
+
+    @media (max-width: @breakPointS) {
+      width: 80%;
+    }
   }
 }
 
 .icon {
-  width: 4rem;
-  height: 4rem;
+  display: flex;
+  align-items: center;
+  width: 10%;
+  max-width: 5rem;
   margin-right: 2rem;
 
   @media (max-width: @breakPointS) {
-    width: 6rem;
-    height: 6rem;
+    width: 20%;
   }
 }
