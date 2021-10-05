@@ -247,6 +247,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
 
 /**
  * Allows routes for user profile pages, and serves the user profile pages to those routes
+ * and allows routes for /me to redirect to profile
  */
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions;
@@ -254,6 +255,10 @@ exports.onCreatePage = async ({ page, actions }) => {
   if (page.path.match(/^\/mensch/)) {
     page.matchPath = '/mensch/*';
     page.component = path.resolve('src/pages/mensch/index.js');
+    createPage(page);
+  } else if (page.path.match(/^\/me/)) {
+    page.matchPath = '/me/*';
+    page.component = path.resolve('src/pages/me/index.js');
     createPage(page);
   }
 };
