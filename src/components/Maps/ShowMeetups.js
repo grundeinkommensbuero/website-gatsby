@@ -8,7 +8,7 @@ import {
 } from '../Layout/Sections';
 import { Button } from '../Forms/Button';
 import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
-import { EventsListed } from './EventsListed';
+// import { EventsListed } from './EventsListed';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
