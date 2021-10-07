@@ -100,7 +100,8 @@ export const CreateMeetup = ({
         {createMeetupState === 'saved' && (
           <>
             <p>
-              Erfolgreich gespeichert. Fenster wird geschlossen in{' '}
+              Dein Eintrag wurde gespeichert. Vielen Dank! Du kannst dieses
+              Fenster jetzt schließen. Es schließt sich automatisch in{' '}
               {overlayCloseTimer}
             </p>
           </>
