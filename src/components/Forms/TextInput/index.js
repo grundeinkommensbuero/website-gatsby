@@ -78,6 +78,7 @@ export const TextInputWrapped = ({
   pattern,
   autoComplete,
   customRef,
+  errorClassName,
 }) => {
   if (hide) {
     return null;
@@ -88,6 +89,7 @@ export const TextInputWrapped = ({
       label={!hideLabel && outputLabel}
       meta={meta}
       className={className}
+      errorClassName={errorClassName}
       explanation={explanation}
       theme={theme}
     >

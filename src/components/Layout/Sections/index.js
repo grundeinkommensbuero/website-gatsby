@@ -52,6 +52,9 @@ const Components = {
   CollectionMap: loadable(() =>
     import('../../Municipality/MunicipalityCollectionMap')
   ),
+  PledgePackages: loadable(() =>
+    import('../../PledgePackage/ListPledgePackages')
+  ),
   CampaignVisualisation: loadable(() =>
     import('../../Municipality/MunicipalityCampaignVisualisations')
   ),

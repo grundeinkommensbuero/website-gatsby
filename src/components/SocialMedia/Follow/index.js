@@ -4,9 +4,9 @@ import SocialMediaButton from '../Button';
 export default ({ className }) => (
   <div className={className}>
     <SocialMediaButton
-      icon="Facebook"
-      link="https://www.facebook.com/expedition.grundeinkommen"
-      label="Folge auf Facebook"
+      icon="Instagram"
+      link="https://www.instagram.com/expedition.grundeinkommen/"
+      label="Folge auf Instagram"
     />
     <SocialMediaButton
       icon="Twitter"
@@ -14,9 +14,14 @@ export default ({ className }) => (
       label="Folge auf Twitter"
     />
     <SocialMediaButton
-      icon="Instagram"
-      link="https://www.instagram.com/expedition.grundeinkommen/"
-      label="Folge auf Instagram"
+      icon="Youtube"
+      link="https://www.youtube.com/channel/UCOxYY2kaKTBz2FSnk83qFDA"
+      label="Folge auf Youtube"
+    />
+    <SocialMediaButton
+      icon="Facebook"
+      link="https://www.facebook.com/expedition.grundeinkommen"
+      label="Folge auf Facebook"
     />
   </div>
 );

@@ -1,9 +1,9 @@
 @import '../../style/vars.less';
 
 .container {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 3rem;
   font-size: @DesktopFontSizeS;
 
   @media (max-width: @breakPointS) {
@@ -16,25 +16,34 @@
   }
 }
 
-.question {
-  @media (max-width: @breakPointS) {
-    width: 70%;
-    scroll-snap-align: center;
-    flex: none;
-    padding: 1rem;
-  }
+.fullPackage {
+  display: flex;
+  flex: 1 1 0px;
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  max-width: 20rem;
 }
 
-.questionContent {
-  padding: 0.5rem;
-  hyphens: auto;
+.packageIconContainer {
+  position: relative;
+  width: 10rem;
+  height: 7.5rem;
+}
+
+.packageTextContainer {
+  width: 10rem;
+}
+
+.packageIcon {
+  position: absolute;
 }
 
 .avatar {
-  width: 2rem;
-  height: 2rem;
-  flex: 0 0 auto;
-  margin-right: 0.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+  top: 3.5rem;
+  left: 5.5rem;
 }
 
 .belowSpeechBubble {
@@ -47,7 +56,21 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  font-size: @DesktopFontSizeS;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.timestamp {
   font-size: @DesktopFontSizeXS;
+  color: gray;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.quote {
+  font-size: @DesktopFontSizeS;
+  margin: 0;
 }
 
 .justSent {
@@ -69,4 +92,12 @@
   100% {
     transform: translateY(0);
   }
+}
+
+.headingViolet {
+  color: @violet;
+}
+
+.CTA {
+  margin: 4rem 0;
 }
