@@ -31,9 +31,6 @@ export const BecomeActive = ({ headline, body }) => {
           Aktiv werden
         </CTAButton>
       </div>
-      <div className={s.flexElement}>
-        <div className={s.illustration}></div>
-      </div>
     </div>
   );
 };

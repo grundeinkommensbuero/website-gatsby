@@ -4,6 +4,7 @@ import { useLocation } from '@reach/router';
 import AuthContext from '../../../../context/Authentication';
 import { useSignOut } from '../../../../hooks/Authentication';
 import AvatarImage from '../../../../components/AvatarImage';
+import LoginIcon from './icon-login.svg';
 
 import * as s from './style.module.less';
 import MenuItemParent from './MenuItemParent';
@@ -43,19 +44,27 @@ const LoginMenuItem = () => {
   // should be the current page
   if (!userId) {
     return (
-      <MenuItemLink
-        slug={`login${
-          location.pathname !== '/'
-            ? `/?nextPage=${
-                location.pathname.slice(-1) === '/'
-                  ? location.pathname.slice(1, -1)
-                  : location.pathname.slice(1)
-              }`
-            : ''
-        }`}
-      >
-        Einloggen
-      </MenuItemLink>
+      <>
+        <MenuItemLink
+          slug={`login${
+            location.pathname !== '/'
+              ? `/?nextPage=${
+                  location.pathname.slice(-1) === '/'
+                    ? location.pathname.slice(1, -1)
+                    : location.pathname.slice(1)
+                }`
+              : ''
+          }`}
+          className={s.loginLink}
+        >
+          Einloggen
+          <img src={LoginIcon} className={s.loginIcon} alt="Login" />
+        </MenuItemLink>
+        {/* A hidden Link to improve accessibility */}
+        <a className={s.hiddenLink} href="#ticker">
+          Anmelden
+        </a>
+      </>
     );
   }
 

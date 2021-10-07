@@ -4,10 +4,10 @@ import cN from 'classnames';
 
 import * as s from './style.module.less';
 
-const MenuItemLink = ({ slug, isChild, children, ...rest }) => (
+const MenuItemLink = ({ slug, isChild, children, className, ...rest }) => (
   <li className={cN(s.navItem, { [s.navItemChild]: isChild })}>
     <Link
-      className={s.link}
+      className={cN(s.link, className)}
       activeClassName={s.linkActive}
       to={slug === '/' ? '/' : `/${slug}/`}
       {...rest}
