@@ -22,12 +22,12 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   // NOTE: not needed for now, reactivate as soon as pledge packages are used for berlin
   // const isSignedUpForBerlin =
   //   userData.municipalities?.findIndex(
-  //     ({ ags }) => ags === stateToAgs('berlin')
+  //     ({ ags }) => ags === stateToAgs['berlin']
   //   ) !== -1;
 
   const isSignedUpForBremen =
     userData.municipalities?.findIndex(
-      ({ ags }) => ags === stateToAgs('bremen')
+      ({ ags }) => ags === stateToAgs['bremen']
     ) !== -1;
 
   // Filter interactions to only use interactions which were created
