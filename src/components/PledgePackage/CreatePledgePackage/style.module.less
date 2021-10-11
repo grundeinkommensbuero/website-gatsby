@@ -12,15 +12,42 @@
   }
 }
 
-.submitButtonContainer {
-  align-self: center;
-  grid-column: 3;
-  justify-self: end;
-  margin-bottom: 0.4rem;
+.flexContainer {
+  display: flex;
 
-  @media (max-width: @breakPointM) {
-    grid-column: 2;
-    margin-top: 2rem;
+  @media (max-width: @breakPointL) {
+    display: block;
+  }
+}
+
+.bubbleElement {
+  margin: 1rem;
+  min-width: 45%;
+
+  @media (max-width: @breakPointL) {
+    margin: 0;
+    min-width: 100%;
+  }
+}
+
+.descriptionTextElement {
+  margin: 0 0 0 2rem;
+  padding-right: 3rem;
+  min-width: 55%;
+
+  @media (max-width: @breakPointL) {
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+  }
+}
+
+.submitButtonContainer {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 600px) {
+    justify-content: center;
   }
 }
 
@@ -31,8 +58,14 @@
 }
 
 .submitButton {
-  // visibility: hidden;
+  height: 100%;
   margin-top: 1rem;
+  margin-right: 1rem;
+  padding: 1rem 2rem;
+
+  @media (max-width: 600px) {
+    margin-right: 0;
+  }
 }
 
 .submitButtonDirty {
@@ -40,12 +73,13 @@
 }
 
 .bodyInput {
-  color: inherit;
+  color: @violet;
   background: transparent;
-  padding: 2rem;
-  font-size: inherit;
+  padding: 1.5rem;
+  font-size: @DesktopFontSizeL;
   font-weight: inherit;
   width: 100%;
+  border: none;
 
   &:focus {
     box-shadow: none;
@@ -69,9 +103,48 @@
 
 .avatar {
   max-width: 80px;
+  margin-left: 0.5rem;
+}
+
+.packageIcon {
+  width: 7.5rem;
+
+  @media (max-width: @breakPointM) {
+    width: 6rem;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 }
 
 .error {
   margin-left: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.speechbubbleSquare {
+  position: relative;
+  background: white;
+  border-radius: 0em;
+  margin-bottom: 3rem;
+  padding: 0.25rem;
+}
+
+.speechbubbleSquare:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 2.5rem;
+  width: 0;
+  height: 0;
+  border: 31px solid transparent;
+  border-top-color: white;
+  border-bottom: 0;
+  margin-left: -25px;
+  margin-bottom: -30px;
+
+  @media (max-width: @breakPointS) {
+    left: 2rem;
+  }
 }

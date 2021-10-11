@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import querystring from 'query-string';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
-import { Speechbubble } from '../Speechbubble';
 import { Form, Field } from 'react-final-form';
-import { CTAButton } from '../../Layout/CTAButton';
+import { Button } from '../../Forms/Button';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useSaveInteraction } from '../../../hooks/Api/Interactions';
 import AvatarImage from '../../AvatarImage';
+import packageV2 from '../paket-v2.svg';
 
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
@@ -77,38 +77,51 @@ export default ({ userData, updateCustomUserData }) => {
           <SectionInner>
             <form onSubmit={handleSubmit}>
               <h2>Sammelpaket nehmen</h2>
-              <p>
-                Mit dem Sammelpaket versprichst du, 50 Unterschriften
-                einzusammeln. Das ist super! <br />
-                Optional: Erzähle der Welt, warum du für's Grundeinkommen
-                sammelst.
-              </p>
-              <Speechbubble>
-                <Field
-                  name="body"
-                  label="Warum sammelst du für's Grundeinkommen?"
-                  placeholder="Dein Grund (Maximal 70 Zeichen)"
-                  type="textarea"
-                  maxLength={300}
-                  component={TextInputWrapped}
-                  inputClassName={s.bodyInput}
-                  errorClassName={s.error}
-                  hideLabel={true}
-                />
-              </Speechbubble>
-              <div className={s.belowBubble}>
-                <AvatarImage
-                  user={userData.user}
-                  className={s.avatar}
-                  sizes="80px"
-                />
-
-                <div className={s.submitButtonContainer}>
-                  <CTAButton type="submit" className={s.submitButton}>
-                    Paket nehmen
-                  </CTAButton>
+              <section className={s.flexContainer}>
+                <div className={s.bubbleElement}>
+                  <div className={s.speechbubbleSquare}>
+                    <Field
+                      name="body"
+                      label="Warum sammelst du für's Grundeinkommen?"
+                      placeholder="Dein Grund (Maximal 70 Zeichen)"
+                      type="textarea"
+                      maxLength={70}
+                      component={TextInputWrapped}
+                      inputClassName={s.bodyInput}
+                      errorClassName={s.error}
+                      onWhite={true}
+                      hideLabel={true}
+                    />
+                  </div>
+                  <div className={s.belowBubble}>
+                    <AvatarImage
+                      user={userData}
+                      className={s.avatar}
+                      sizes="120px"
+                    />
+                  </div>
                 </div>
-              </div>
+                <div className={s.descriptionTextElement}>
+                  <p>
+                    Mit dem Sammelpaket versprichst du, 50 Unterschriften
+                    einzusammeln. Das ist super!
+                    <br />
+                    <br />
+                    Optional: Erzähle der Welt, warum du für's Grundeinkommen
+                    sammelst.
+                  </p>
+                  <div className={s.submitButtonContainer}>
+                    <img
+                      src={packageV2}
+                      alt="Grafik eines Paketes"
+                      className={s.packageIcon}
+                    />
+                    <Button type="submit" className={s.submitButton}>
+                      Paket schnappen
+                    </Button>
+                  </div>
+                </div>
+              </section>
             </form>
           </SectionInner>
         )}

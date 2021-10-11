@@ -28,7 +28,13 @@ export function TextInput({ children, className, label, size, ...input }) {
   );
 }
 
-export function Textarea({ children, className, label, ...input }) {
+export function Textarea({
+  children,
+  className,
+  label,
+  onWhite = false,
+  ...input
+}) {
   let charLeft;
   if (input.maxLength && input.value) {
     charLeft = input.maxLength - input.value.length;
@@ -42,7 +48,7 @@ export function Textarea({ children, className, label, ...input }) {
         {...input}
       />
       {input.maxLength && charLeft < 100 && (
-        <div className={s.charLeftDisplay}>
+        <div className={cN(s.charLeftDisplay, { [s.onWhite]: onWhite })}>
           {charCount} / {input.maxLength}
         </div>
       )}
@@ -64,6 +70,7 @@ export const TextInputWrapped = ({
   min,
   max,
   hideLabel,
+  onWhite,
   explanation,
   inputMode,
   pattern,
@@ -86,6 +93,7 @@ export const TextInputWrapped = ({
       {input.type === 'textarea' ? (
         <Textarea
           {...input}
+          onWhite={onWhite}
           placeholder={placeholder}
           className={inputClassName}
           maxLength={maxLength}
