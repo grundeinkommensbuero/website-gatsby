@@ -640,7 +640,7 @@
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: auto;
 
-  @media (max-width: @breakPointM) {
+  @media (max-width: @breakPointL) {
     grid-template-columns: none;
     // Works for map section
     grid-template-columns: 1fr;
@@ -653,7 +653,7 @@
   grid-column-start: 1;
   grid-column-end: last-line;
 
-  @media (min-width: @breakPointM) {
+  @media (min-width: @breakPointL) {
     padding-right: 2.5rem;
     grid-column-start: 1;
     grid-column-end: 3;
@@ -664,7 +664,7 @@
 .componentRight {
   grid-column-start: 1;
   grid-column-end: last-line;
-  @media (min-width: @breakPointM) {
+  @media (min-width: @breakPointL) {
     padding-left: 2.5rem;
     grid-column-start: 3;
     grid-column-end: last-line;
