@@ -38,7 +38,7 @@ export const MunicipalityMoreDetails = ({
         <div className={s.buttonContainer}>
           <Button
             className={s.municipalityButton}
-            onClick={() => navigate(`/gemeinden/${municipalityToDisplay.slug}`)}
+            onClick={() => navigate(`/orte/${municipalityToDisplay.slug}`)}
           >
             Zur Ortsseite
           </Button>

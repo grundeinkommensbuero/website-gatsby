@@ -39,7 +39,7 @@ export const FinalNote = ({
         className={s.redirectButton}
         onClick={() => {
           setCurrentElementByIndex(compIndex + 1);
-          navigate(`/gemeinden/${municipality.slug}`);
+          navigate(`/orte/${municipality.slug}`);
         }}
       >
         Zur Unterseite
