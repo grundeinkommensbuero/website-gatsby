@@ -9,6 +9,7 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useSaveInteraction } from '../../../hooks/Api/Interactions';
 import AvatarImage from '../../AvatarImage';
 import packageV2 from '../paket-v2.svg';
+import { Speechbubble } from '../Speechbubble/index';
 
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
@@ -79,7 +80,7 @@ export default ({ userData, updateCustomUserData }) => {
               <h2>Sammelpaket nehmen</h2>
               <section className={s.flexContainer}>
                 <div className={s.bubbleElement}>
-                  <div className={s.speechbubbleSquare}>
+                  <Speechbubble>
                     <Field
                       name="body"
                       label="Warum sammelst du für's Grundeinkommen?"
@@ -89,10 +90,9 @@ export default ({ userData, updateCustomUserData }) => {
                       component={TextInputWrapped}
                       inputClassName={s.bodyInput}
                       errorClassName={s.error}
-                      onWhite={true}
                       hideLabel={true}
                     />
-                  </div>
+                  </Speechbubble>
                   <div className={s.belowBubble}>
                     <AvatarImage
                       user={userData}

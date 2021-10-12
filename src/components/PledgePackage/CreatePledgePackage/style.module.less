@@ -44,11 +44,7 @@
 
 .submitButtonContainer {
   display: flex;
-  justify-content: space-between;
-
-  @media (max-width: 600px) {
-    justify-content: center;
-  }
+  justify-content: flex-start;
 }
 
 .textInput {
@@ -59,9 +55,9 @@
 
 .submitButton {
   height: 100%;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-right: 1rem;
-  padding: 1rem 2rem;
+  padding: 0.75rem 2rem 0.5rem;
 
   @media (max-width: 600px) {
     margin-right: 0;
@@ -73,10 +69,10 @@
 }
 
 .bodyInput {
-  color: @violet;
+  color: inherit;
   background: transparent;
-  padding: 1.5rem;
-  font-size: @DesktopFontSizeL;
+  padding: 2rem;
+  font-size: inherit;
   font-weight: inherit;
   width: 100%;
   border: none;
@@ -108,6 +104,7 @@
 
 .packageIcon {
   width: 7.5rem;
+  margin-right: 2rem;
 
   @media (max-width: @breakPointM) {
     width: 6rem;
@@ -121,30 +118,4 @@
 .error {
   margin-left: 1rem;
   margin-bottom: 0.5rem;
-}
-
-.speechbubbleSquare {
-  position: relative;
-  background: white;
-  border-radius: 0em;
-  margin-bottom: 3rem;
-  padding: 0.25rem;
-}
-
-.speechbubbleSquare:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 2.5rem;
-  width: 0;
-  height: 0;
-  border: 31px solid transparent;
-  border-top-color: white;
-  border-bottom: 0;
-  margin-left: -25px;
-  margin-bottom: -30px;
-
-  @media (max-width: @breakPointS) {
-    left: 2rem;
-  }
 }
