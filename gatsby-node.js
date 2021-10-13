@@ -1,7 +1,7 @@
 const fs = require('fs');
 const Promise = require('bluebird');
 const path = require('path');
-const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
 const webpack = require('webpack');
 const gitRevisionPlugin = new GitRevisionPlugin();
 const LoadablePlugin = require('@loadable/webpack-plugin');
