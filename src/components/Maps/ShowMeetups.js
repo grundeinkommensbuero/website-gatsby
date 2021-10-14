@@ -8,6 +8,7 @@ import {
 } from '../Layout/Sections';
 import { Button } from '../Forms/Button';
 import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
+import * as s from './style.module.less';
 // import { EventsListed } from './EventsListed';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
@@ -115,29 +116,32 @@ export const ShowMeetups = ({ mapConfig, className }) => {
       {isBerlin && (
         <div>
           <SectionComponentContainer>
-            <SectionComponent column={'left'}>
+            <SectionComponent column={'left'} className={s.createMeetupContent}>
               <h3>Plane eine Sammelaktion!</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet.
+                Du hast Lust vor Ort in der Expedition mitzumachen? Hier kannst
+                du eine Sammelaktion veröffentlichen um so mehr
+                Unterschriftensammler*innen zu mobilisieren.
               </p>
-              <Button onClick={() => setOverlayOpen(true)}>
+              <Button
+                className={s.createMeetupButton}
+                onClick={() => setOverlayOpen(true)}
+              >
                 Event erstellen
               </Button>
             </SectionComponent>
-            <SectionComponent column={'right'}>
+            <SectionComponent
+              column={'right'}
+              className={s.createMeetupContent}
+            >
               <h3>Lege Listen an einem Sammelort aus</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet.
+                Markiere einen Ort, an dem du eine neue Unterschriftenliste
+                ausgelegt hast, um sie für andere sichtbar zu machen. Melde dich
+                gern bei uns, wenn du Material benötigst.
               </p>
               <Button
+                className={s.createMeetupButton}
                 onClick={() => {
                   setType('lists');
                   setOverlayOpen(true);

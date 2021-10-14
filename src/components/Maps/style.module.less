@@ -188,3 +188,27 @@
 h3 {
   color: @violet;
 }
+
+.createMeetupContent {
+  position: relative;
+  min-height: 18rem;
+
+  @media (max-width: @breakPointXL) {
+    min-height: 20rem;
+  }
+
+  @media (max-width: @breakPointL) {
+    min-height: 22rem;
+  }
+
+  @media (max-width: @breakPointM) {
+    min-height: auto;
+  }
+}
+
+.createMeetupButton {
+  @media (min-width: @breakPointM) {
+    position: absolute;
+    bottom: 0;
+  }
+}

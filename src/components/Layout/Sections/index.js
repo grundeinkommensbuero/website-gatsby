@@ -631,15 +631,18 @@ export function SectionComponentContainer({ children }) {
   return <div className={s.componentElementContainer}>{children}</div>;
 }
 
-export function SectionComponent({ children, column }) {
+export function SectionComponent({ children, column, className }) {
   return (
     <div
-      className={cN({
-        [s.componentLeft]: column === 'left',
-        [s.componentRight]: column === 'right',
-        [s.componentCenterWide]: column === 'centerWide',
-        [s.componentCenterNarrow]: column === 'centerNarrow',
-      })}
+      className={cN(
+        {
+          [s.componentLeft]: column === 'left',
+          [s.componentRight]: column === 'right',
+          [s.componentCenterWide]: column === 'centerWide',
+          [s.componentCenterNarrow]: column === 'centerNarrow',
+        },
+        className
+      )}
     >
       {children}
     </div>
