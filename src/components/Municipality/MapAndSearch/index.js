@@ -40,7 +40,7 @@ export const MapAndSearch = () => {
             <WrappedMunicipalitySearch />
             {!municipality ? (
               <h5 className={s.elementHeading}>
-                {'Aufsteiger der Woche'.toUpperCase()}
+                {'Aufsteiger der Woche!'.toUpperCase()}
               </h5>
             ) : (
               <h5 className={s.elementHeading}>
