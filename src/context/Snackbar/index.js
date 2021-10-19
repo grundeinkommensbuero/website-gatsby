@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'react-simple-snackbar';
 import snackbarTheme from './snackbarTheme.json';
 
-
-
 export const SnackbarMessageContext = React.createContext({
   message: '',
-  setMessage: () => { }
+  setMessage: () => {},
 });
 
 export const SnackbarMessageProvider = ({ children }) => {
-
   const [openSnackbar] = useSnackbar(snackbarTheme);
   const [message, setMessage] = useState('');
 
@@ -25,5 +22,5 @@ export const SnackbarMessageProvider = ({ children }) => {
     <SnackbarMessageContext.Provider value={{ message, setMessage }}>
       {children}
     </SnackbarMessageContext.Provider>
-  )
-}
+  );
+};

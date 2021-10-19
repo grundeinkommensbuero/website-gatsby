@@ -29,10 +29,8 @@ export const Onboarding = ({ setOverlayOpen }) => {
   const { municipality } = useContext(MunicipalityContext);
   const [engagementOption, setEngagementOption] = useState();
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
-  const [
-    isForMunicipalityAuthenticated,
-    setIsForMunicipalityAuthenticated,
-  ] = useState(false);
+  const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] =
+    useState(false);
   const [, updateUser] = useUpdateUser();
 
   const closeIcon = require('!svg-inline-loader!./close-icon.svg');

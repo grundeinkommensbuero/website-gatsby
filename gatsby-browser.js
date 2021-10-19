@@ -51,7 +51,7 @@ const waitForElementToDisplay = (
       callback(element);
       return;
     } else {
-      setTimeout(function() {
+      setTimeout(function () {
         if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs) return;
         loopSearch();
       }, checkFrequencyInMs);

@@ -14,11 +14,8 @@ import { validateEmail } from '../../utils';
 
 export const ChangeEmail = ({ userData, updateCustomUserData }) => {
   const [tempEmail, setTempEmail] = useState();
-  const [
-    changedEmailState,
-    changeEmail,
-    setChangedEmailState,
-  ] = useChangeEmail();
+  const [changedEmailState, changeEmail, setChangedEmailState] =
+    useChangeEmail();
 
   // In comparison to changeEmail this is used to change the email
   // in the dynamo database, while changeEmail starts a process to change it in cognito

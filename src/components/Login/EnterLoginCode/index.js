@@ -20,11 +20,8 @@ export const EnterLoginCode = ({
   onAnswerChallengeSuccess,
 }) => {
   const { tempEmail, setTempEmail, isAuthenticated } = useContext(AuthContext);
-  const [
-    answerChallengeState,
-    setCode,
-    setAnswerChallengeState,
-  ] = useAnswerChallenge();
+  const [answerChallengeState, setCode, setAnswerChallengeState] =
+    useAnswerChallenge();
   const [signInState, startSignIn] = useSignIn();
   const [triggerMinuteTimer, setTriggerOneMinuteTimer] = useState(0);
   const [timerCounter, setTimerCounter] = useState(0);

@@ -27,9 +27,11 @@ const LoginTitle = ({ userData, userId }) => {
 };
 
 const LoginMenuItem = () => {
-  const { customUserData: userData, userId, isAuthenticated } = useContext(
-    AuthContext
-  );
+  const {
+    customUserData: userData,
+    userId,
+    isAuthenticated,
+  } = useContext(AuthContext);
   const signOut = useSignOut();
   const location = useLocation();
 

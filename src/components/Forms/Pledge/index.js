@@ -37,9 +37,11 @@ const SignaturePledge = ({ pledgeId }) => {
   const [updateUserState, updateUser] = useUpdateUser();
   const [pledge, setPledgeLocally] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { isAuthenticated, userId, customUserData: userData } = useContext(
-    AuthContext
-  );
+  const {
+    isAuthenticated,
+    userId,
+    customUserData: userData,
+  } = useContext(AuthContext);
 
   // After signin process is done we can save the pledge
   useEffect(() => {

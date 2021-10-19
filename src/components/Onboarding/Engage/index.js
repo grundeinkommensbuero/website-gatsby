@@ -7,11 +7,11 @@ import cN from 'classnames';
 import { MunicipalityInfo } from './MunicipalityInfo';
 
 export const Engage = ({ userData, compIndex, setCurrentElementByIndex }) => {
-
   return (
     <section className={gS.pageContainer}>
-
-      <h3 className={gS.moduleTitle}>Willkommen bei der Expedition Grundeinkommen!</h3>
+      <h3 className={gS.moduleTitle}>
+        Willkommen bei der Expedition Grundeinkommen!
+      </h3>
       <p className={gS.descriptionTextLarge}>Hallo {userData.username}!</p>
       <p className={gS.descriptionTextLarge}>
         Unser Ziel ist es, das Grundeinkommen in die Städte und Gemeinden{' '}
@@ -29,17 +29,23 @@ export const Engage = ({ userData, compIndex, setCurrentElementByIndex }) => {
 
       <h4>Wie kannst du dich einbringen?</h4>
       <p className={gS.descriptionTextLarge}>
-        Wir werden dich per Email benachrichtigen, sobald sie Unterschriftensammlung{' '}
-        in GEMEINDE losgeht.
+        Wir werden dich per Email benachrichtigen, sobald sie
+        Unterschriftensammlung in GEMEINDE losgeht.
       </p>
       <p className={gS.descriptionTextLarge}>
         Weißt du schon, wie du helfen kannst?
       </p>
       <br />
 
-      <Button className={cN(s.fullWidthBtn, s.marginBottom)}>Ich kann unterschreiben</Button>
-      <Button className={cN(s.fullWidthBtn, s.marginBottom)}>Ich kann Unterschriften sammeln</Button>
-      <Button className={cN(s.fullWidthBtn, s.marginBottom)}>Ich kann Sammelevents organisieren</Button>
+      <Button className={cN(s.fullWidthBtn, s.marginBottom)}>
+        Ich kann unterschreiben
+      </Button>
+      <Button className={cN(s.fullWidthBtn, s.marginBottom)}>
+        Ich kann Unterschriften sammeln
+      </Button>
+      <Button className={cN(s.fullWidthBtn, s.marginBottom)}>
+        Ich kann Sammelevents organisieren
+      </Button>
 
       <div className={gS.fullWidthFlex}>
         <Button
@@ -53,7 +59,8 @@ export const Engage = ({ userData, compIndex, setCurrentElementByIndex }) => {
         <span
           aria-hidden="true"
           className={gS.linkLikeFormatted}
-          onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+          onClick={() => setCurrentElementByIndex(compIndex + 1)}
+        >
           Jetzt nicht
         </span>
       </div>

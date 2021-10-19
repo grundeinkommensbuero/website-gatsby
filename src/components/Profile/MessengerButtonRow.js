@@ -27,5 +27,5 @@ export const MessengerButtonRow = ({ iconSize }) => {
         className={gS.messengerIcon}
       />
     </div>
-  )
-}
+  );
+};

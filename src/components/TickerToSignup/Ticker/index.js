@@ -13,10 +13,8 @@ export const Ticker = ({ tickerDescription }) => {
   const [peopleCount, setPeopleCount] = useState(0);
   const [municipalityCount, setMunicipalityCount] = useState(0);
   const [updatedSummary, setUpdatedSummary] = useState(0);
-  const [
-    timePassedInIntervalInPercent,
-    setTimePassedInIntervalInPercent,
-  ] = useState(0);
+  const [timePassedInIntervalInPercent, setTimePassedInIntervalInPercent] =
+    useState(0);
 
   const prevTimestamp = new Date(statsSummary?.previous.timestamp);
   const currTimestamp = new Date(statsSummary?.timestamp);

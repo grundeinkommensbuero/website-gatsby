@@ -4,14 +4,17 @@ import * as gS from '../style.module.less';
 import { Textarea } from '../../Forms/TextInput';
 import { Button } from '../../Forms/Button';
 
-export const QuestionUBI = ({ userData, compIndex, setCurrentElementByIndex }) => {
-
+export const QuestionUBI = ({
+  userData,
+  compIndex,
+  setCurrentElementByIndex,
+}) => {
   return (
     <section className={gS.pageContainer}>
-
       <h3 className={gS.moduleTitle}>Deine Frage ans Grundeinkommen</h3>
       <p className={gS.descriptionTextLarge}>
-        Was erhoffst du dir vom Grundeinkommen? Welche Fragen soll der Modellversuch beantworten?
+        Was erhoffst du dir vom Grundeinkommen? Welche Fragen soll der
+        Modellversuch beantworten?
       </p>
 
       <Textarea
@@ -31,11 +34,11 @@ export const QuestionUBI = ({ userData, compIndex, setCurrentElementByIndex }) =
         <span
           aria-hidden="true"
           className={gS.linkLikeFormatted}
-          onClick={() => setCurrentElementByIndex(compIndex + 1)}>
+          onClick={() => setCurrentElementByIndex(compIndex + 1)}
+        >
           Jetzt nicht
         </span>
       </div>
-
     </section>
   );
 };

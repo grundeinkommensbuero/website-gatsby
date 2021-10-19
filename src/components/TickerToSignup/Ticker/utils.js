@@ -13,7 +13,7 @@ export const diffCount = (c2, c1) => {
 export const calcTickerValues = ({
   prevTimestamp,
   currTimestamp,
-  setTimePassedInIntervalInPercent
+  setTimePassedInIntervalInPercent,
 }) => {
   // prepare variables for calulation of time passed in percent
   const currTime = new Date();
@@ -30,26 +30,38 @@ export const updateTicker = ({
   setMunicipalityCount,
   updatedSummary,
   setUpdatedSummary,
-  refreshContextStats
+  refreshContextStats,
 }) => {
-  debugLog && console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
+  debugLog &&
+    console.log('Percent of Interval passed:', timePassedInIntervalInPercent);
   // Get users and calculate users won in the last 15 minutes
   const prevCountUsers = statsSummary?.previous?.users;
   const currCountUsers = statsSummary?.users;
   const usersWonInInterval = diffCount(prevCountUsers, currCountUsers);
-  const usersToAdd = Math.floor(usersWonInInterval * timePassedInIntervalInPercent);
+  const usersToAdd = Math.floor(
+    usersWonInInterval * timePassedInIntervalInPercent
+  );
   debugLog && console.log('Users to add:', usersToAdd);
   // Get municiplaities and calculate users won in the last 15 minutes
   const prevCountMunicipalities = statsSummary?.previous?.municipalities;
   const currCountMunicipalities = statsSummary?.municipalities;
-  const municipalitiesWonInInterval = diffCount(prevCountMunicipalities, currCountMunicipalities);
-  const municipalitiesToAdd = Math.floor(municipalitiesWonInInterval * timePassedInIntervalInPercent);
+  const municipalitiesWonInInterval = diffCount(
+    prevCountMunicipalities,
+    currCountMunicipalities
+  );
+  const municipalitiesToAdd = Math.floor(
+    municipalitiesWonInInterval * timePassedInIntervalInPercent
+  );
   debugLog && console.log('Municipalities to add:', municipalitiesToAdd);
 
   if (timePassedInIntervalInPercent <= 1) {
     debugLog && console.log('Setting Users to:', prevCountUsers + usersToAdd);
     setPeopleCount(prevCountUsers + usersToAdd);
-    debugLog && console.log('Setting Municipalities to:', prevCountMunicipalities + municipalitiesToAdd);
+    debugLog &&
+      console.log(
+        'Setting Municipalities to:',
+        prevCountMunicipalities + municipalitiesToAdd
+      );
     setMunicipalityCount(prevCountMunicipalities + municipalitiesToAdd);
     setTimeout(() => {
       setUpdatedSummary(updatedSummary + 1);

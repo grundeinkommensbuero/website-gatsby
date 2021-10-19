@@ -78,8 +78,9 @@ const getSharingFactorAnnouncement = municipality => {
       return `Wenn einer von ${factor} angemeldeten Mensch in ${name} einen Menschen einlädt, ist das
       Ziel erreicht!`;
     } else {
-      return `Wenn noch ${goal -
-        signups} angemeldete Menschen in ${name} einen Menschen einladen, ist das
+      return `Wenn noch ${
+        goal - signups
+      } angemeldete Menschen in ${name} einen Menschen einladen, ist das
       Ziel erreicht!`;
     }
   }

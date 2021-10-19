@@ -11,14 +11,11 @@ import { MunicipalityContext } from '../../../context/Municipality';
 const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
 export const MapAndSearch = () => {
-  const { municipality, leaderboardSegments, statsInDays } = useContext(
-    MunicipalityContext
-  );
+  const { municipality, leaderboardSegments, statsInDays } =
+    useContext(MunicipalityContext);
   const [highlightedMunicipality, setHighlightedMunicipality] = useState();
-  const [
-    almostQualifiedMunicipality,
-    setAlmostQualifiedMunicipality,
-  ] = useState();
+  const [almostQualifiedMunicipality, setAlmostQualifiedMunicipality] =
+    useState();
 
   useEffect(() => {
     setHighlightedMunicipality(leaderboardSegments.hot[0]);

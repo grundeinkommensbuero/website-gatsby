@@ -56,10 +56,8 @@ export const MunicipalityProvider = ({ children }) => {
     getSingleMunicipalityStats,
   ] = useGetMunicipalityStats();
 
-  const [
-    municipalityContentfulState,
-    setMunicipalityContentfulState,
-  ] = useState('noMunicipality');
+  const [municipalityContentfulState, setMunicipalityContentfulState] =
+    useState('noMunicipality');
 
   // Get general municipality stats (of all munics)
   useEffect(() => {
@@ -68,11 +66,8 @@ export const MunicipalityProvider = ({ children }) => {
 
   useEffect(() => {
     if (pageContext) {
-      const {
-        isMunicipality,
-        isSpecificMunicipality,
-        municipality,
-      } = pageContext;
+      const { isMunicipality, isSpecificMunicipality, municipality } =
+        pageContext;
 
       if (isMunicipality) {
         setIsMunicipality(true);

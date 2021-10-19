@@ -15,4 +15,3 @@
 6. [Turf.js: Verschieben der Labels ans unter Ende der Kreise](https://turfjs.org/docs/#along)
 7. [DelayedScatterPlotLayer von Peter Beshai, um die Animation der Kreise ohne Events in WebGl zu rendern](https://peterbeshai.com/blog/2019-08-10-deckgl-point-animation/)
 8. [Anime.js: Animation der Events](https://animejs.com/documentation/#timelineBasicshttps://animejs.com/documentation/#timelineBasics)
-

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 const COOKIE_NAME = 'bannerHasBeenDismissed';
-const EXCLUDED_ROUTES = [
-  'playground',
-  'teilen'
-];
+const EXCLUDED_ROUTES = ['playground', 'teilen'];
 
 export const StickyBannerContext = React.createContext();
 
 export const StickyBannerProvider = ({ children }) => {
   const hasBeenDismissed = useHasBeenDismissed();
-  const [stickyBannerVisible, setStickyBannerVisible] = useState(!hasBeenDismissed);
+  const [stickyBannerVisible, setStickyBannerVisible] = useState(
+    !hasBeenDismissed
+  );
   const [currentURL, setCurrentURL] = useState();
 
   useEffect(() => {
     if (currentURL) {
-      const routeExcluded = EXCLUDED_ROUTES.find(route => currentURL.includes(route));
+      const routeExcluded = EXCLUDED_ROUTES.find(route =>
+        currentURL.includes(route)
+      );
       if (!hasBeenDismissed && routeExcluded) {
         setStickyBannerVisible(false);
       } else if (!hasBeenDismissed && !routeExcluded) {
@@ -34,7 +35,7 @@ export const StickyBannerProvider = ({ children }) => {
       value={{
         stickyBannerVisible,
         closeStickyBanner,
-        setCurrentURL
+        setCurrentURL,
       }}
     >
       {children}

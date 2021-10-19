@@ -9,7 +9,11 @@ import { Button } from '../../Forms/Button';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 
-export const ProfileNotifications = ({ userData, userId, updateCustomUserData }) => {
+export const ProfileNotifications = ({
+  userData,
+  userId,
+  updateCustomUserData,
+}) => {
   const [componentToBeUpdated, setComponentToBeUpdated] = useState();
   const [updateUserState, updateUser] = useUpdateUser();
   const [waitingForApi, setWaitingForApi] = useState(false);
@@ -17,8 +21,14 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   const [reminderMailConsent, setReminderMailConsent] = useState();
   const [customNewsletterSettings, setCustomNewsletterSettings] = useState([]);
   const [municipality, setMunicipality] = useState();
-  const [unsubscribeMainNewsletterDialogActive, setUnsubscribeMainNewsletterDialog] = useState(false);
-  const [unsubscribeReminderMailsDialogActive, setUnsubscribeReminderMailsDialog] = useState(false);
+  const [
+    unsubscribeMainNewsletterDialogActive,
+    setUnsubscribeMainNewsletterDialog,
+  ] = useState(false);
+  const [
+    unsubscribeReminderMailsDialogActive,
+    setUnsubscribeReminderMailsDialog,
+  ] = useState(false);
   const [unsubscribeAllDialogActive, setShowUnsubscribeAllDialog] = useState();
 
   useEffect(() => {
@@ -38,16 +48,13 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
 
   // setup newsletter state depending on userData
   useEffect(() => {
-    if (userData &&
-      userData.newsletterConsent) {
+    if (userData && userData.newsletterConsent) {
       setMainNewsletterConsent(userData.newsletterConsent);
     }
-    if (userData &&
-      userData.reminderMails) {
+    if (userData && userData.reminderMails) {
       setReminderMailConsent(userData.reminderMails);
     }
-    if (userData &&
-      userData.customNewsletters) {
+    if (userData && userData.customNewsletters) {
       setCustomNewsletterSettings(userData.customNewsletters);
     }
   }, [userData]);
@@ -195,12 +202,12 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     updateUser({
       userId: userId,
       newsletterConsent: false,
-      customNewsletters: updatedNewsletters
+      customNewsletters: updatedNewsletters,
     });
     setCustomNewsletterSettings(updatedNewsletters);
     setMainNewsletterConsent({ value: false });
     setShowUnsubscribeAllDialog(false);
-  }
+  };
 
   const MainCard = () => {
     return (
@@ -250,9 +257,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   const MailSettingCard = () => {
     return (
       <div className={s.newsletterCard}>
-        <p className={s.newsletterCardHeading}>
-          Erinnerungsmails
-        </p>
+        <p className={s.newsletterCardHeading}>Erinnerungsmails</p>
         {/* remindermail info claim */}
         {reminderMailConsent && reminderMailConsent.value ? (
           <p className={s.newsletterCardDescription}>
@@ -327,8 +332,7 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
     return (
       <section className={s.newsletterCard}>
         <p className={s.newsletterCardHeading}>
-          Bist du sicher, dass du keine Erinnerungsmails mehr bekommen
-          möchtest?
+          Bist du sicher, dass du keine Erinnerungsmails mehr bekommen möchtest?
         </p>
         <br />
         <p className={s.newsletterCardDescription}>
@@ -388,13 +392,15 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
   // return active newsletter components
   const activeNewsletterCards = customNewsletterSettings.map(newsletter => {
     return (
-      newsletter.value && <NewsletterCard
-        newsletter={newsletter}
-        key={`${newsletter.name}${newsletter.ags}`}
-        updateSingleNewsletter={updateSingleNewsletter}
-        waitingForApi={waitingForApi}
-        componentToBeUpdated={componentToBeUpdated}
-      />
+      newsletter.value && (
+        <NewsletterCard
+          newsletter={newsletter}
+          key={`${newsletter.name}${newsletter.ags}`}
+          updateSingleNewsletter={updateSingleNewsletter}
+          waitingForApi={waitingForApi}
+          componentToBeUpdated={componentToBeUpdated}
+        />
+      )
     );
   });
 
@@ -406,14 +412,16 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         </div>
 
         <h2>Newsletter & Kontakt</h2>
-        <h3 className={gS.optionSectionHeading}>
-          E-Mail Einstellungen
-        </h3>
+        <h3 className={gS.optionSectionHeading}>E-Mail Einstellungen</h3>
 
         {userData?.newsletterConsent && (
           <section>
             {/* Main Card is always visible */}
-            {!unsubscribeReminderMailsDialogActive ? <MailSettingCard /> : <UnsubscribeReminderMailsDialog />}
+            {!unsubscribeReminderMailsDialogActive ? (
+              <MailSettingCard />
+            ) : (
+              <UnsubscribeReminderMailsDialog />
+            )}
           </section>
         )}
 
@@ -424,13 +432,19 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
         {userData?.newsletterConsent && (
           <section>
             {/* Main Card is always visible */}
-            {!unsubscribeMainNewsletterDialogActive ? <MainCard /> : <UnsubscribeNewsletterDialog />}
+            {!unsubscribeMainNewsletterDialogActive ? (
+              <MainCard />
+            ) : (
+              <UnsubscribeNewsletterDialog />
+            )}
             {/* Conditionally render custom newsletter Cards */}
             <div>{activeNewsletterCards}</div>
           </section>
         )}
 
-        <h3 className={gS.optionSectionHeading}>Regionale Newsletter hinzufügen</h3>
+        <h3 className={gS.optionSectionHeading}>
+          Regionale Newsletter hinzufügen
+        </h3>
         <div className={s.searchPlaces}>
           <SearchPlaces
             label={''}
@@ -442,14 +456,16 @@ export const ProfileNotifications = ({ userData, userId, updateCustomUserData })
           />
         </div>
 
-        {!unsubscribeAllDialogActive ?
+        {!unsubscribeAllDialogActive ? (
           <button
             className={cN(gS.linkLikeFormattedButton, gS.bottomRightLink)}
-            onClick={() => setShowUnsubscribeAllDialog(true)}>
+            onClick={() => setShowUnsubscribeAllDialog(true)}
+          >
             Alle abbestellen
           </button>
-          : <UnsubscribeAllDialog />
-        }
+        ) : (
+          <UnsubscribeAllDialog />
+        )}
       </section>
     </section>
   );

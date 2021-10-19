@@ -19,10 +19,7 @@ export const StickyDonationBar = () => {
           auf dem Weg zum Ziel. Hilf mit weitere Orte ins Ziel zu bringen!
         </p>
         {/* <button className={s.donationBarCTA}>Sei dabei</button> */}
-        <button
-          className={s.closeButton}
-          onClick={() => closeStickyBanner()}
-        >
+        <button className={s.closeButton} onClick={() => closeStickyBanner()}>
           <img
             className={s.closeIcon}
             src={closeIcon}

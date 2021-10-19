@@ -22,27 +22,27 @@
     },
     {
       "ags": "08221000",
-      "signups": [1000, 1500], 
+      "signups": [1000, 1500],
       "category": "change"
     },
     {
       "ags": "08416041",
-      "signups": [2000, 3000], 
+      "signups": [2000, 3000],
       "category": "change"
     },
     {
       "ags": "03241001",
-      "signups": [4000, 5600], 
+      "signups": [4000, 5600],
       "category": "change"
     },
     {
       "ags": "03241001",
-      "signups": [4000, 5600], 
+      "signups": [4000, 5600],
       "category": "change"
     },
     {
       "ags": "14713000",
-      "signups": [6000, 10000], 
+      "signups": [6000, 10000],
       "category": "change"
     },
     {
@@ -55,8 +55,7 @@
       "signups": [0, 700],
       "category": "win"
     },
-    { "ags": "11000000", "signups": [30000, 40000],
-    "category": "win" }
+    { "ags": "11000000", "signups": [30000, 40000], "category": "win" }
   ],
   "municipalities": [
     { "ags": "08335001", "signups": 13 },

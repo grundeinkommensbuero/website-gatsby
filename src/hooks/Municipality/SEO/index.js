@@ -3,9 +3,8 @@ import { getStringFromPlaceholderText } from '../../../components/utils';
 import { MunicipalityContext } from '../../../context/Municipality';
 
 export const useSEO = page => {
-  const { isMunicipality, isSpecific, municipality } = useContext(
-    MunicipalityContext
-  );
+  const { isMunicipality, isSpecific, municipality } =
+    useContext(MunicipalityContext);
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();

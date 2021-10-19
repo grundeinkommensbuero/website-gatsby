@@ -13,11 +13,8 @@ import { getReferredUserMessage } from '../utils/referredUserMessage';
 
 export const ProfileTile = ({ children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);
-  const {
-    municipality,
-    setMunicipality,
-    municipalityContentfulState,
-  } = useContext(MunicipalityContext);
+  const { municipality, setMunicipality, municipalityContentfulState } =
+    useContext(MunicipalityContext);
   const tileData = {
     userId,
     userData,
