@@ -246,7 +246,7 @@ function Template({ children, sections, pageContext, title, description }) {
       sortedMunicipalities.slice(0, num).forEach(item => {
         menuItems.push({
           title: `Mein Ort: ${item.name}`,
-          slug: `gemeinden/${item.slug}`,
+          slug: `orte/${item.slug}`,
           shortTitle: null,
         });
       });

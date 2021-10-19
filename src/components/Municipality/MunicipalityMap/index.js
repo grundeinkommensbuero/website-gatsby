@@ -473,7 +473,7 @@ const flyTo = ({
 };
 
 const goToMunicipalityPage = info => {
-  navigate(`/gemeinden/${info.object.slug}`);
+  navigate(`/orte/${info.object.slug}`);
 };
 
 const Map = ({

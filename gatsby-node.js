@@ -1,7 +1,7 @@
 const fs = require('fs');
 const Promise = require('bluebird');
 const path = require('path');
-const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
 const webpack = require('webpack');
 const gitRevisionPlugin = new GitRevisionPlugin();
 const LoadablePlugin = require('@loadable/webpack-plugin');
@@ -110,13 +110,13 @@ exports.createPages = ({ graphql, actions }) => {
       }
     } else {
       createPage({
-        path: `/gemeinden/${municipality.slug}`,
+        path: `/orte/${municipality.slug}`,
         component: require.resolve('./src/components/StaticPage/index.js'),
         context: {
           municipality: { ...municipality },
           isMunicipality: true,
           isSpecificMunicipality: true,
-          slug: 'gemeinden',
+          slug: 'orte',
         },
       });
     }
@@ -166,7 +166,7 @@ exports.createPages = ({ graphql, actions }) => {
             return;
           }
           const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
-          const isMunicipality = page.node.slug === 'gemeinden';
+          const isMunicipality = page.node.slug === 'orte';
           createPage({
             path: path,
             component: staticPage,

@@ -111,7 +111,7 @@ const Package = ({ body, user, timestamp }) => {
           className={s.packageIcon}
           alt="Symbolbild eines Paketes"
         />
-        <AvatarImage className={s.avatar} user={user} />
+        <AvatarImage className={s.avatar} user={user} sizes="120px" />
       </div>
       <div className={s.packageTextContainer}>
         <h4 className={s.name}>{user.username}</h4>

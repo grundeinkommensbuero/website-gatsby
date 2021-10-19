@@ -12,16 +12,39 @@
   }
 }
 
-.submitButtonContainer {
-  align-self: center;
-  grid-column: 3;
-  justify-self: end;
-  margin-bottom: 0.4rem;
+.flexContainer {
+  display: flex;
 
-  @media (max-width: @breakPointM) {
-    grid-column: 2;
-    margin-top: 2rem;
+  @media (max-width: @breakPointL) {
+    display: block;
   }
+}
+
+.bubbleElement {
+  margin: 1rem;
+  min-width: 45%;
+
+  @media (max-width: @breakPointL) {
+    margin: 0;
+    min-width: 100%;
+  }
+}
+
+.descriptionTextElement {
+  margin: 0 0 0 2rem;
+  padding-right: 3rem;
+  min-width: 55%;
+
+  @media (max-width: @breakPointL) {
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+  }
+}
+
+.submitButtonContainer {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .textInput {
@@ -31,8 +54,14 @@
 }
 
 .submitButton {
-  // visibility: hidden;
-  margin-top: 1rem;
+  height: 100%;
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+  padding: 0.75rem 2rem 0.5rem;
+
+  @media (max-width: 600px) {
+    margin-right: 0;
+  }
 }
 
 .submitButtonDirty {
@@ -46,6 +75,7 @@
   font-size: inherit;
   font-weight: inherit;
   width: 100%;
+  border: none;
 
   &:focus {
     box-shadow: none;
@@ -69,6 +99,20 @@
 
 .avatar {
   max-width: 80px;
+  margin-left: 0.5rem;
+}
+
+.packageIcon {
+  width: 7.5rem;
+  margin-right: 2rem;
+
+  @media (max-width: @breakPointM) {
+    width: 6rem;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 }
 
 .error {

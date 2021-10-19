@@ -61,8 +61,8 @@ const ColumnQualifying = ({
               {municipalityStats.signups === 1
                 ? 'eine Anmeldung '
                 : `${municipalityStats.signups?.toLocaleString(
-                  'de'
-                )} Anmeldungen `}
+                    'de'
+                  )} Anmeldungen `}
               {municipality ? `in ${municipality.name}` : ''}!{' '}
             </p>
           ) : (
@@ -210,9 +210,9 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
       }
     } else {
       const { slug } = pageContext;
-      if (slug === 'gemeinden') {
+      if (slug === 'orte') {
         setType('qualifying');
-      } else if (slug === 'gemeinden-sammelphase') {
+      } else if (slug === 'orte-sammelphase') {
         setType('collecting');
       } else {
         setType('state');
@@ -277,7 +277,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
     }
     return () => {
       if (typeof window !== `undefined`) {
-        window.onpopstate = () => { };
+        window.onpopstate = () => {};
       }
     };
   }, [municipality]);
@@ -302,7 +302,7 @@ export const MunicipalityIntro = ({ pageContext, className, title, body }) => {
   //           window.history.pushState(
   //             selected,
   //             null,
-  //             `${window.location.origin}/gemeinden/${selected.ags}`
+  //             `${window.location.origin}/orte/${selected.ags}`
   //           );
   //           adjustDocumentTitle(municipality, selected.name);
   //           setWindowLocationOriginForIE();

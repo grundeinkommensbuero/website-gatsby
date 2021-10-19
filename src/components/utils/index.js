@@ -244,6 +244,7 @@ export const detectWebGLContext = () => {
   }
   return false;
 };
+
 export const stateToAgs = {
   berlin: '11000000',
   bremen: '04011000',

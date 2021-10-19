@@ -181,17 +181,9 @@ export const ImageInput = ({
       {showUploadLabel ? (
         <>
           {(user && user.profilePictures) || unsavedChanges ? (
-            <button className={
-              cN(s.avatarImageLabel,
-                s.linkLikeFormattedButton,
-                s.alignLeft)
-            }>Bild ändern</button>
+            <div className={cN(s.avatarImageLabel)}>Bild ändern</div>
           ) : (
-            <button className={
-              cN(s.avatarImageLabel,
-                s.linkLikeFormattedButton,
-                s.alignLeft)
-            }>Lad’ ein Bild hoch!</button>
+            <div className={cN(s.avatarImageLabel)}>Lad’ ein Bild hoch!</div>
           )}
         </>
       ) : null}
