@@ -8,6 +8,9 @@ command = "npm run build-dev-backend"
 CONTENTFUL_ENVIRONMENT = "launch"
 GATSBY_USE_DEV_BACKEND = "override"
 
+[context.gemeinden-to-orte.environment]
+CONTENTFUL_ENVIRONMENT = "2021-10-04"
+
 [context.deploy-preview]
 command = "npm run build-dev-backend"
 

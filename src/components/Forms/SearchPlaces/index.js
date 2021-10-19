@@ -189,11 +189,11 @@ export const SearchPlaces = ({
   const validate = () => {
     let slug;
     if (selectedPlace.ags) {
-      slug = `/gemeinden/${selectedPlace.slug}`;
+      slug = `/orte/${selectedPlace.slug}`;
       return { status: 'success', slug };
     }
     if (results.length > 0 && results[0].score < 0.001) {
-      slug = `/gemeinden/${results[0].slug}`;
+      slug = `/orte/${results[0].slug}`;
       return { status: 'success', slug };
     }
     const touched = true;
