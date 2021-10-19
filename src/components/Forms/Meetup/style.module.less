@@ -36,19 +36,26 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-
-  @media (max-width: @breakPointM) {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  margin-bottom: 2rem;
 }
 
 .eventText {
-  padding-top: 2.5rem;
   font-size: @DesktopFontSizeM;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
 
-  @media (max-width: @breakPointM) {
-    padding-top: 0;
-  }
+.placeName {
+  margin-left: 0.5rem;
+}
+
+.timeInputRow {
+  display: flex;
+}
+
+.timeInput {
+  margin-right: 1rem;
 }
 
 .textarea {
