@@ -16,7 +16,6 @@ const contentfulConfig = {
 
 const config = {
   plugins: [
-    'gatsby-plugin-netlify-cache',
     'gatsby-plugin-react-helmet-async',
     'gatsby-plugin-netlify',
     'gatsby-transformer-sharp',
