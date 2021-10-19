@@ -16,23 +16,28 @@
   "author": "Timur Celikel <me@timurcelikel.com>",
   "contributors": [
     "Valentin Schagerl <Vali_Schagerl@web.de>",
-    "Johann Barbie <johannbarbie@me.com>"
+    "Johann Barbie <johannbarbie@me.com>",
+    "Tatiana Schaer",
+    "Nicolai Mauersberg",
+    "Felix Buchholz",
+    "Joy Ponader",
+    "River H"
   ],
   "scripts": {
+    "start": "npm run develop",
     "dev": "npm run develop",
     "dev-m": "gatsby develop -H 0.0.0.0",
     "develop": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
+    "build": "cross-env gatsby build",
+    "build-dev-backend": "cross-env GATSBY_USE_DEV_BACKEND=override gatsby build",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "test": "jest",
-    "test-watch": "jest --watch",
-    "build": "cross-env gatsby build",
-    "build-dev-backend": "cross-env GATSBY_USE_DEV_BACKEND=override gatsby build",
-    "start": "npm run develop",
+    "test:watch": "jest --watch",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "clean-start": "npm run clean && npm i && npm start"
+    "clean:start": "npm run clean && npm i && npm start"
   },
   "dependencies": {
     "@aws-amplify/auth": "^4.3.10",
