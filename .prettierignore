@@ -1,0 +1,8 @@
+# Ignore generated municipality data:
+/content
+municipalitiesForSearch.json
+municipalitiesForMap.json
+
+# Ignore build artifacts:
+/.cache
+/public
