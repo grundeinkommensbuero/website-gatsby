@@ -9,7 +9,7 @@ import {
 import { Button } from '../Forms/Button';
 import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
 import * as s from './style.module.less';
-// import { EventsListed } from './EventsListed';
+import { EventsListed } from './EventsListed';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -151,9 +151,9 @@ export const ShowMeetups = ({ mapConfig, className }) => {
               </Button>
             </SectionComponent>
           </SectionComponentContainer>
-          {/* <br />
           <br />
-          <EventsListed locationsFiltered={locationsFiltered} /> */}
+          <br />
+          <EventsListed locationsFiltered={locationsFiltered} />
         </div>
       )}
     </>
