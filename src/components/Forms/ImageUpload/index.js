@@ -21,9 +21,8 @@ export default ({
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [imageUploadIsProcessing, setImageUploadIsProcessing] = useState(false);
-  const [showUploadSuccessMessage, setShowUploadSuccessMessage] = useState(
-    false
-  );
+  const [showUploadSuccessMessage, setShowUploadSuccessMessage] =
+    useState(false);
   const [showUploadErrorMessage, setShowUploadErrorMessage] = useState(false);
 
   const { updateCustomUserData } = useContext(AuthContext);

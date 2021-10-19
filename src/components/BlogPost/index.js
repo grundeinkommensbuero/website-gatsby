@@ -103,39 +103,40 @@ const BlogPost = ({
 
 export default BlogPost;
 
-export const pageQuery = graphql`query WordpressPostByPath($path: String!) {
-  wpPost(uri: {eq: $path}) {
-    title
-    content
-    excerpt
-    date
-    featuredImage {
-      node {
-        localFile {
-          childImageSharp {
-            hero: gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
-            og: gatsbyImageData(
-              width: 1200
-              quality: 90
-              placeholder: BLURRED
-              layout: FIXED
-            )
+export const pageQuery = graphql`
+  query WordpressPostByPath($path: String!) {
+    wpPost(uri: { eq: $path }) {
+      title
+      content
+      excerpt
+      date
+      featuredImage {
+        node {
+          localFile {
+            childImageSharp {
+              hero: gatsbyImageData(placeholder: NONE, layout: FULL_WIDTH)
+              og: gatsbyImageData(
+                width: 1200
+                quality: 90
+                placeholder: BLURRED
+                layout: FIXED
+              )
+            }
           }
+          uri
         }
-        uri
       }
     }
-  }
-  allWpTag {
-    edges {
-      node {
-        id
-        name
+    allWpTag {
+      edges {
+        node {
+          id
+          name
+        }
       }
     }
+    contentfulGlobalStuff(contentful_id: { eq: "3mMymrVLEHYrPI9b6wgBzg" }) {
+      siteTitle
+    }
   }
-  contentfulGlobalStuff(contentful_id: {eq: "3mMymrVLEHYrPI9b6wgBzg"}) {
-    siteTitle
-  }
-}
 `;

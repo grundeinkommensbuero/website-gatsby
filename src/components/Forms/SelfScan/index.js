@@ -19,16 +19,10 @@ import { TextInputWrapped } from '../TextInput';
 import * as s from './style.module.less';
 
 export default ({ successMessage, className }) => {
-  const [
-    state,
-    updateSignatureList,
-    resetSignatureListState,
-  ] = useUpdateSignatureListByUser();
-  const [
-    signatureCountOfUser,
-    getSignatureCountOfUser,
-    resetSignatureCount,
-  ] = useSignatureCountOfUser();
+  const [state, updateSignatureList, resetSignatureListState] =
+    useUpdateSignatureListByUser();
+  const [signatureCountOfUser, getSignatureCountOfUser, resetSignatureCount] =
+    useSignatureCountOfUser();
 
   // Updating a list should be possible via list id or user id
   const [listId, setListId] = useState(null);
@@ -55,8 +49,6 @@ export default ({ successMessage, className }) => {
     }
   }, [userId]);
 
-
-
   const countSignaturesFormProps = {
     state,
     updateSignatureList,
@@ -81,11 +73,9 @@ export default ({ successMessage, className }) => {
           />
           <div className={s.visualisation}>
             <CountSignaturesForm {...countSignaturesFormProps} />
-
           </div>
         </Section>
-      ) : null
-      }
+      ) : null}
     </>
   );
 };
@@ -169,7 +159,7 @@ const CountSignaturesForm = ({
                 const data = {
                   userId,
                   listId,
-                  count
+                  count,
                 };
                 setCount(parseInt(data.count));
                 await updateSignatureList(data);
@@ -300,7 +290,9 @@ const CountSignaturesForm = ({
                     </div>
                     {!listId && (
                       <div className={s.fieldContainer}>
-                        <p className={s.fieldLabel}>Barcode auf der Unterschriftenliste</p>
+                        <p className={s.fieldLabel}>
+                          Barcode auf der Unterschriftenliste
+                        </p>
                         <Field
                           name="listId"
                           label=""

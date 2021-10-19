@@ -29,10 +29,8 @@ const ProfilePage = ({ id: slugId }) => {
     updateCustomUserData,
   } = useContext(AuthContext);
 
-  const [
-    signatureCountOfUser,
-    getSignatureCountOfUser,
-  ] = useSignatureCountOfUser();
+  const [signatureCountOfUser, getSignatureCountOfUser] =
+    useSignatureCountOfUser();
 
   const bounceToIdentifiedState = useBounceToIdentifiedState();
 

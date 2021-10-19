@@ -3,7 +3,7 @@ import React from 'react';
 export const EventsListed = ({ locationsFiltered }) => {
   const locationsSorted = locationsFiltered
     ?.filter(location => location.startTime && location.endTime)
-    .sort(function(a, b) {
+    .sort(function (a, b) {
       return new Date(a.startTime) - new Date(b.startTime);
     });
 

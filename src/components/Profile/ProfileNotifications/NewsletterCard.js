@@ -52,7 +52,8 @@ export const NewsletterCard = ({
     }
   };
 
-  const isEmptyObj = obj => Object.keys(obj).length === 0 && obj.constructor === Object ? true : false;
+  const isEmptyObj = obj =>
+    Object.keys(obj).length === 0 && obj.constructor === Object ? true : false;
 
   return (
     <div className={s.newsletterCard}>
@@ -118,7 +119,8 @@ export const NewsletterCard = ({
           <div className={s.revokeButtonRow}>
             <Button
               className={s.revokeButton}
-              onClick={toggleNewsletterConsent}>
+              onClick={toggleNewsletterConsent}
+            >
               Abbestellen
             </Button>
             <div className={s.cancelRevokeProcess}>

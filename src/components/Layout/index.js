@@ -176,9 +176,8 @@ function Template({ children, sections, pageContext, title, description }) {
     campainVisualisations: visualisationsWithCrowdfunding,
   };
 
-  const { stickyBannerVisible, setCurrentURL } = useContext(
-    StickyBannerContext
-  );
+  const { stickyBannerVisible, setCurrentURL } =
+    useContext(StickyBannerContext);
   // update current URL in banner context, to check for pages where banner shoud not appear
   // context itself does not reload on route change, so we set it from layout component
   useEffect(() => {

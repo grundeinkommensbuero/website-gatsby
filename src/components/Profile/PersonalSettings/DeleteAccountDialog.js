@@ -11,21 +11,23 @@ import * as gS from '../style.module.less';
 import * as nS from '../ProfileNotifications/style.module.less';
 
 export const DeleteAccountDialog = ({ userId, setShowDeleteAccountDialog }) => {
-
   const deleteUser = useDeleteUser();
   const signOut = useSignOut();
   const [openSnackbar] = useSnackbar(snackbarTheme);
 
-  const deleteSnackbarMessage = <p className={gS.snackbarMsg}>
-    <span className={gS.loading}></span>{' '}
-    <b>Dein Account wird gelöscht!</b>
-  </p>;
+  const deleteSnackbarMessage = (
+    <p className={gS.snackbarMsg}>
+      <span className={gS.loading}></span> <b>Dein Account wird gelöscht!</b>
+    </p>
+  );
 
-  const accountDeletedMessage = <p className={gS.snackbarMsg}>
-    <b>Dein Account wurde gelöscht!</b>
-  </p>;
+  const accountDeletedMessage = (
+    <p className={gS.snackbarMsg}>
+      <b>Dein Account wurde gelöscht!</b>
+    </p>
+  );
 
-  const deleteUserAccount = (updateSnackbarMessage) => {
+  const deleteUserAccount = updateSnackbarMessage => {
     signOut();
     openSnackbar(deleteSnackbarMessage, [6000]);
     setTimeout(() => {
@@ -45,7 +47,6 @@ export const DeleteAccountDialog = ({ userId, setShowDeleteAccountDialog }) => {
         Diese Aktion kann nicht rückgängig gemacht werden!
       </p>
       <div className={s.revokeButtonRow}>
-
         <Button
           className={s.revokeButton}
           onClick={() => setShowDeleteAccountDialog(false)}

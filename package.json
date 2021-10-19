@@ -23,6 +23,8 @@
     "dev-m": "gatsby develop -H 0.0.0.0",
     "develop": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write .",
     "test": "jest",
     "test-watch": "jest --watch",
     "build": "cross-env gatsby build",

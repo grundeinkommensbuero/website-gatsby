@@ -1,10 +1,7 @@
 {
   "name": "Grundeinkommensbuero Website",
   "description": "Grundeinkommensbuero Website",
-  "keywords": [
-    "grundeinkommen",
-    "vertrauensgesellschaft"
-  ],
+  "keywords": ["grundeinkommen", "vertrauensgesellschaft"],
   "repository": "https://github.com/grundeinkommensbuero/website",
   "success_url": "/",
   "buildpacks": [

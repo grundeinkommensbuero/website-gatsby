@@ -80,8 +80,7 @@ export const SharePreview = ({
             className={s.imageButton}
             onClick={() =>
               downloadImage({
-                url:
-                  'https://images.ctfassets.net/af08tobnb0cl/15Vjd0mpP0FpMwmgvP5RHw/1ceaf02a8a52c1bd0d779e9281a552a9/Launch_Story_Ich_bin_dabei.jpg?h=1000',
+                url: 'https://images.ctfassets.net/af08tobnb0cl/15Vjd0mpP0FpMwmgvP5RHw/1ceaf02a8a52c1bd0d779e9281a552a9/Launch_Story_Ich_bin_dabei.jpg?h=1000',
                 filename: 'Launch_Story_Ich_bin_dabei.jpg',
               })
             }
@@ -97,8 +96,7 @@ export const SharePreview = ({
             className={s.imageButton}
             onClick={() =>
               downloadImage({
-                url:
-                  'https://images.ctfassets.net/af08tobnb0cl/4f7aQbZP37iUc0H0od4BAQ/c76cc9f24ef9970fffcd552ef6c45c5e/Launch_Story_Ich_bin_dabei_Nominierung.jpg?h=1000',
+                url: 'https://images.ctfassets.net/af08tobnb0cl/4f7aQbZP37iUc0H0od4BAQ/c76cc9f24ef9970fffcd552ef6c45c5e/Launch_Story_Ich_bin_dabei_Nominierung.jpg?h=1000',
                 filename: 'Launch_Story_Ich_bin_dabei_Nominierung.jpg',
               })
             }
@@ -145,8 +143,9 @@ export const SharePreview = ({
 
     // Quickfix, if user id for some reason is not available
     if (userId) {
-      return `${baseUrl}gemeinde-teilen/${userId}?ags=${municipality.ags
-        }&version=1${addProfileImage()}`;
+      return `${baseUrl}gemeinde-teilen/${userId}?ags=${
+        municipality.ags
+      }&version=1${addProfileImage()}`;
     } else {
       return baseUrl;
     }
@@ -155,9 +154,9 @@ export const SharePreview = ({
   const ShareButton = () => {
     let CaseButton =
       Components[
-      ShareButtons.find(
-        el => el.channelIdentifier === shareChannel?.channelIdentifier
-      )?.name
+        ShareButtons.find(
+          el => el.channelIdentifier === shareChannel?.channelIdentifier
+        )?.name
       ];
     const title = `Bring das Grundeinkommen mit mir an den Staat! Melde dich dafür bei der Expedition Grundeinkommen an. Ich bin schon in ${municipality.name} dabei :)`;
     const hashtags = [

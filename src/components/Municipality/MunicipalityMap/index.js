@@ -151,11 +151,8 @@ export const MunicipalityMap = ({
   className = s.defaultHeightContainer,
   animateOnScroll = true,
 }) => {
-  const {
-    municipality,
-    allMunicipalityStats,
-    allMunicipalityStatsState,
-  } = useContext(MunicipalityContext);
+  const { municipality, allMunicipalityStats, allMunicipalityStatsState } =
+    useContext(MunicipalityContext);
   const agsToFlyTo = municipality ? municipality.ags : undefined;
 
   // ---- useState -------------------------------------------------------------------------
@@ -241,18 +238,14 @@ export const MunicipalityMap = ({
             timePassed,
           } = allMunicipalityStats;
 
-          const {
-            dataSignups,
-            dataEvents,
-            dataLabels,
-            dataMunicipalities,
-          } = getLayeredData({
-            municipalities,
-            signups,
-            events,
-            labels,
-            initialMapAnimation,
-          });
+          const { dataSignups, dataEvents, dataLabels, dataMunicipalities } =
+            getLayeredData({
+              municipalities,
+              signups,
+              events,
+              labels,
+              initialMapAnimation,
+            });
 
           setDataSignups(dataSignups);
           setDataEvents(dataEvents);

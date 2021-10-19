@@ -229,13 +229,8 @@ export default ({ onboardingNextPage }) => {
           <>
             <Form
               onSubmit={data => {
-                const {
-                  customAmount,
-                  amount,
-                  privacy,
-                  sepa,
-                  ...inputData
-                } = data;
+                const { customAmount, amount, privacy, sepa, ...inputData } =
+                  data;
 
                 const donation = {
                   ...inputData,

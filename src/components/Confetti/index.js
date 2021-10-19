@@ -90,7 +90,7 @@ export default ({ className, componentTheme = 'default' }) => {
               shapes: theme.shapes,
               colors: [
                 ...theme.colors[
-                Math.round(Math.random() * (theme.colors.length - 1))
+                  Math.round(Math.random() * (theme.colors.length - 1))
                 ],
               ],
               ticks: theme.ticks,
@@ -106,7 +106,7 @@ export default ({ className, componentTheme = 'default' }) => {
               shapes: theme.shapes,
               colors: [
                 ...theme.colors[
-                Math.round(Math.random() * (theme.colors.length - 1))
+                  Math.round(Math.random() * (theme.colors.length - 1))
                 ],
               ],
               ticks: theme.ticks,
@@ -123,7 +123,7 @@ export default ({ className, componentTheme = 'default' }) => {
               shapes: theme.shapes,
               colors: [
                 ...theme.colors[
-                Math.round(Math.random() * (theme.colors.length - 1))
+                  Math.round(Math.random() * (theme.colors.length - 1))
                 ],
               ],
               ticks: theme.ticks,

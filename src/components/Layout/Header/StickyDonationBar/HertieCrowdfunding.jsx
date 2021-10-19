@@ -11,10 +11,7 @@ export const HertieCrowdfunding = () => {
   return (
     <div className={s.donationBar}>
       <div className={s.donationBarItemContainer}>
-        <button
-          className={s.closeButton}
-          onClick={() => closeStickyBanner()}
-        >
+        <button className={s.closeButton} onClick={() => closeStickyBanner()}>
           <img
             className={s.closeIcon}
             src={closeIcon}

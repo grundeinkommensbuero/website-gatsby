@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import cN from 'classnames';
 import * as s from './style.module.less';
 
-export const MunicipalityInfo = ({ start = 0, end = 0, goal = 0, title, description }) => {
+export const MunicipalityInfo = ({
+  start = 0,
+  end = 0,
+  goal = 0,
+  title,
+  description,
+}) => {
   const [displayCount, setDisplayCount] = useState(0);
   const [displayWidth, setDisplayWidth] = useState(0);
 
   // calulate percantage to derive progress bar style before animation
-  const finalPercentage = Math.round(end / goal * 100) || 0;
+  const finalPercentage = Math.round((end / goal) * 100) || 0;
 
   const time = 1000;
   const INTERVALL = 50;
@@ -30,7 +36,7 @@ export const MunicipalityInfo = ({ start = 0, end = 0, goal = 0, title, descript
         }, (round / rounds) * time);
       }
     }
-  }
+  };
 
   return (
     <div className={s.municipalityInfoContainer}>
@@ -50,24 +56,24 @@ export const MunicipalityInfo = ({ start = 0, end = 0, goal = 0, title, descript
           </div>
         </span>
         {/* actual status bar */}
-        <div className={cN(
-          s.barCurrent,
-          { [s.outside]: finalPercentage < 25 },
-          { [s.barAlmostFull]: finalPercentage > 95 },
-          { [s.completed]: true }
-        )}
+        <div
+          className={cN(
+            s.barCurrent,
+            { [s.outside]: finalPercentage < 25 },
+            { [s.barAlmostFull]: finalPercentage > 95 },
+            { [s.completed]: true }
+          )}
           style={{ width: `${displayWidth < 100 ? displayWidth : 100}%` }}
           aria-label={`${displayCount}`}
         >
-          <span className={s.barCurrentLabel}>
-            {displayCount}
-          </span>
+          <span className={s.barCurrentLabel}>{displayCount}</span>
         </div>
       </div>
-      {description ?
+      {description ? (
         <p className={s.progressBarDescription}>
           {displayCount}/{goal} {description}
-        </p> : null}
+        </p>
+      ) : null}
     </div>
-  )
-}
+  );
+};

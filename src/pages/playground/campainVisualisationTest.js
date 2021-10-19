@@ -35,8 +35,7 @@ const PlaygroundCampaignVisualisation = () => {
                   goalUnbuffered: 20000,
                   goalInbetweenMultiple: ['5000', '7000', '10000', '12000'],
                   hint: {
-                    hint:
-                      'Schon $COLLECTED Unterschriften von $GOAL! Nächstes Ziel: $GOAL_INBETWEEN Unterschriften.',
+                    hint: 'Schon $COLLECTED Unterschriften von $GOAL! Nächstes Ziel: $GOAL_INBETWEEN Unterschriften.',
                   },
                 },
                 {

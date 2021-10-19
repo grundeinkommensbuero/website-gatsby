@@ -7,4 +7,4 @@ export const getReferredUserMessage = ({ userData }) => {
     }
   }
   return null;
-}
+};

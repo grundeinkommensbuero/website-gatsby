@@ -367,7 +367,6 @@ export const Visualisation = ({
         )}
       </div>
       {hintWithVariables && <div className={s.hint}>{hintWithVariables}</div>}
-    
     </SectionInner>
   );
 };

@@ -44,5 +44,5 @@ export const CampainScanVisualisation = ({ campaignCode }) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};

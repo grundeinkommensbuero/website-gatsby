@@ -20,8 +20,8 @@ export const ProfileSignatures = ({ userId, userData }) => {
           if (mun.ags === campCode.ags) {
             activeCampaigns.push(campCode);
           }
-        })
-      })
+        });
+      });
       setUserCampaigns(activeCampaigns);
     }
   }, [userData]);
@@ -40,21 +40,31 @@ export const ProfileSignatures = ({ userId, userData }) => {
 
           <SectionWrapper>
             <SelfScan
-              successMessage={'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'}
+              successMessage={
+                'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'
+              }
               className={s.signatureWrapper}
             />
-            {userCampaigns[0] ? userCampaigns.map((scan, index) => {
-              return (
-                <div className={s.signatureContainer} key={index}>
-                  <h2>Eingegangene Unterschriften {scan.campaignName}</h2>
-                  <CampainScanVisualisation campaignCode={scan.campaignCode} />
-                </div>
-              )
-            }) :
-              <h3>Du bist für keine Kampagne angemeldet, die gerade Unterschriften sammelt.</h3>}
+            {userCampaigns[0] ? (
+              userCampaigns.map((scan, index) => {
+                return (
+                  <div className={s.signatureContainer} key={index}>
+                    <h2>Eingegangene Unterschriften {scan.campaignName}</h2>
+                    <CampainScanVisualisation
+                      campaignCode={scan.campaignCode}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <h3>
+                Du bist für keine Kampagne angemeldet, die gerade Unterschriften
+                sammelt.
+              </h3>
+            )}
           </SectionWrapper>
         </section>
       </section>
     </section>
-  )
+  );
 };
