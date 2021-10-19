@@ -40,6 +40,25 @@
   }
 }
 
+.lonelyCloseButton {
+  background-color: @red;
+  width: 2.4rem;
+  border-radius: 5px;
+  padding: 0.5rem 0.4rem 0.4rem 0.5rem;
+  margin: 1rem;
+  float: right;
+  cursor: pointer;
+  &:hover {
+    background-color: @red;
+  }
+}
+
+.innerCloseIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+  cursor: pointer;
+}
+
 .title {
   margin-top: 0;
 
@@ -53,7 +72,8 @@
   margin: 0 auto;
 }
 
-.onboardingContainer {
+.onboardingContainer,
+.meetupContainer {
   --font-color: @black;
   --secondary-color: @aqua;
   --text-on-secondary-color: @white;
@@ -123,4 +143,8 @@
 
 .bodyOverlayOpen {
   overflow: hidden;
+}
+
+.meetupContent {
+  margin-top: 4rem;
 }

@@ -3,7 +3,6 @@ import { List as Loader } from 'react-content-loader';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import CampaignVisualisations from '../../CampaignVisualisations';
-import Maps from '../../Maps';
 import { stringToId } from '../../utils';
 import MainIllustration from '../../MainIllustration';
 import AboutUs from '../../AboutUs';
@@ -29,6 +28,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
+import Maps from '../../Maps';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
@@ -220,32 +220,22 @@ export function ContentfulSection({ section, pageContext }) {
         >
           <SectionInner>
             {headline && <h2>{headline.headline}</h2>}
-            <div className={s.componentElementContainer}>
+            <SectionComponentContainer>
               {section.components.map((component, index) => {
                 if ('__typename' in component) {
                   return (
-                    <div
-                      key={index}
-                      className={cN({
-                        [s.componentLeft]: component.column === 'left',
-                        [s.componentRight]: component.column === 'right',
-                        [s.componentCenterWide]:
-                          component.column === 'centerWide',
-                        [s.componentCenterNarrow]:
-                          component.column === 'centerNarrow',
-                      })}
-                    >
+                    <SectionComponent key={index} column={component.column}>
                       {getComponentFromContentful({
                         Components,
                         component,
                       })}
-                    </div>
+                    </SectionComponent>
                   );
                 }
 
                 return null;
               })}
-            </div>
+            </SectionComponentContainer>
           </SectionInner>
         </Section>
       </>
@@ -634,5 +624,27 @@ function Slogan({ sloganLine1, sloganLine2 }) {
       <span className={s.sloganLine2}>{sloganLine2}</span>
       {/* <EmailListForm className={s.sloganLineSignup} /> */}
     </h2>
+  );
+}
+
+export function SectionComponentContainer({ children }) {
+  return <div className={s.componentElementContainer}>{children}</div>;
+}
+
+export function SectionComponent({ children, column, className }) {
+  return (
+    <div
+      className={cN(
+        {
+          [s.componentLeft]: column === 'left',
+          [s.componentRight]: column === 'right',
+          [s.componentCenterWide]: column === 'centerWide',
+          [s.componentCenterNarrow]: column === 'centerNarrow',
+        },
+        className
+      )}
+    >
+      {children}
+    </div>
   );
 }

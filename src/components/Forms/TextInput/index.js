@@ -4,7 +4,14 @@ import cN from 'classnames';
 import LabelInputErrorWrapper from '../LabelInputErrorWrapper';
 import { ValidationError } from '../ValidationError';
 
-export function TextInput({ children, className, label, size, ...input }) {
+export function TextInput({
+  children,
+  className,
+  label,
+  size,
+  customRef,
+  ...input
+}) {
   return (
     <input
       onFocus={e => {
@@ -23,12 +30,13 @@ export function TextInput({ children, className, label, size, ...input }) {
             input.name === 'zipCode' || input.name === 'listId',
         }
       )}
+      ref={customRef}
       {...input}
     />
   );
 }
 
-export function Textarea({ children, className, label, ...input }) {
+export function Textarea({ children, className, label, customRef, ...input }) {
   let charLeft;
   if (input.maxLength && input.value) {
     charLeft = input.maxLength - input.value.length;
@@ -40,6 +48,7 @@ export function Textarea({ children, className, label, ...input }) {
         aria-label={label}
         className={cN(s.textarea, className)}
         {...input}
+        ref={customRef}
       />
       {input.maxLength && charLeft < 100 && (
         <div className={s.charLeftDisplay}>
@@ -68,6 +77,7 @@ export const TextInputWrapped = ({
   inputMode,
   pattern,
   autoComplete,
+  customRef,
   errorClassName,
 }) => {
   if (hide) {
@@ -91,6 +101,7 @@ export const TextInputWrapped = ({
           maxLength={maxLength}
           label={outputLabel}
           autoComplete={autoComplete}
+          customRef={customRef}
         />
       ) : (
         <TextInput
@@ -104,6 +115,7 @@ export const TextInputWrapped = ({
           pattern={pattern}
           inputMode={inputMode}
           autoComplete={autoComplete}
+          customRef={customRef}
         />
       )}
     </LabelInputErrorWrapper>

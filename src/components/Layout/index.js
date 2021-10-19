@@ -12,6 +12,7 @@ import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import { MeetupOverlay } from '../Overlay/OverlayMeetup';
 // import cN from 'classnames';
 
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
@@ -277,6 +278,8 @@ function Template({ children, sections, pageContext, title, description }) {
       )}
 
       <OnboardingOverlay />
+
+      <MeetupOverlay />
 
       <Header
         menu={modifiedMainMenu}
