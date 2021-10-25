@@ -129,8 +129,8 @@ export const CreateMeetup = ({
       {location && (
         <>
           <p className={s.chosenLocation}>
-            <span className={s.coloredText}>Gewählter Ort: </span>
-            {location.place_name_de}
+            <span className={s.coloredText}>Gewählter Ort:</span>
+            <span className={s.placeName}>{location.place_name}</span>
           </p>
 
           <Form
@@ -170,27 +170,31 @@ export const CreateMeetup = ({
                       className={s.formSection}
                       fieldContainerClassName={s.inlineFieldSection}
                     >
-                      <span className={s.eventText}>
-                        Du planst ein Event am
-                      </span>
+                      <p className={s.eventText}>Du planst ein Event am:</p>
                       <Field
                         name="date"
                         label="Datum"
                         component={DateInputWrapped}
                         customRef={dateInputEl}
                       ></Field>
-                      <span className={s.eventText}>von</span>
-                      <Field
-                        name="start"
-                        label="Start"
-                        component={TimeInputWrapped}
-                      ></Field>
-                      <span className={s.eventText}>bis</span>
-                      <Field
-                        name="end"
-                        label="Ende"
-                        component={TimeInputWrapped}
-                      ></Field>
+                      <div className={s.timeInputRow}>
+                        <div className={s.timeInput}>
+                          <p className={s.eventText}>von:</p>
+                          <Field
+                            name="start"
+                            label="Start"
+                            component={TimeInputWrapped}
+                          ></Field>
+                        </div>
+                        <div className={s.timeInput}>
+                          <p className={s.eventText}>bis:</p>
+                          <Field
+                            name="end"
+                            label="Ende"
+                            component={TimeInputWrapped}
+                          ></Field>
+                        </div>
+                      </div>
                     </FormSection>
                   )}
                   {type === 'lists' && (
