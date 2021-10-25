@@ -151,8 +151,6 @@ export const ShowMeetups = ({ mapConfig, className }) => {
               </Button>
             </SectionComponent>
           </SectionComponentContainer>
-          <br />
-          <br />
           <EventsListed locationsFiltered={locationsFiltered} />
         </div>
       )}
