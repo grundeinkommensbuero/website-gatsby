@@ -222,6 +222,12 @@ h3 {
   flex: 50%;
   min-width: 50%;
   max-width: 50%;
+
+  @media (max-width: @breakPointL) {
+    flex: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 
 .moduleHeading {
@@ -229,21 +235,37 @@ h3 {
   margin-bottom: 4rem;
   color: @violet;
   font-size: @DesktopFontSizeXL;
+
+  @media (max-width: @breakPointM) {
+    font-size: @DesktopFontSizeL;
+  }
 }
 
 .descriptionHeading {
   margin: 0;
   color: @violet;
   font-size: 2.25rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: @DesktopFontSizeM;
+  }
 }
 
 .eventDescription {
   margin-top: 1rem;
   margin-bottom: 3rem;
   font-size: 1.5rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: 1rem;
+  }
 }
 
 .descriptionText {
   margin: 0;
   font-size: 1.5rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: 1rem;
+  }
 }
