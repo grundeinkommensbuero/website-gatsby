@@ -21,7 +21,7 @@ export default ({ userData, updateCustomUserData }) => {
     if (urlParams.campaignCode) {
       setCampaignCode(urlParams.campaignCode);
     } else {
-      if (userData?.municipalities[0]) {
+      if (userData?.municipalities && userData?.municipalities[0]) {
         // Find and sort all collecting municipalities of the user
         const collectingCitiesOfUser = getCities();
         if (collectingCitiesOfUser[0]) {
@@ -33,6 +33,10 @@ export default ({ userData, updateCustomUserData }) => {
             collectingCitiesOfUser[indexOfMostRecent].ags === '04011000'
           ) {
             setCampaignCode('bremen-1');
+          } else if (
+            collectingCitiesOfUser[indexOfMostRecent].ags === '02000000'
+          ) {
+            setCampaignCode('hamburg-1');
           }
         }
       }
@@ -49,7 +53,9 @@ export default ({ userData, updateCustomUserData }) => {
     return userData.municipalities
       .filter(
         municipality =>
-          municipality.ags === '11000000' || municipality.ags === '04011000'
+          municipality.ags === '11000000' ||
+          municipality.ags === '04011000' ||
+          municipality.ags === '02000000'
       )
       .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
   };
