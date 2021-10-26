@@ -14,12 +14,29 @@ import { Speechbubble } from '../Speechbubble/index';
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
   const [, setPledgePackage] = useState();
-  // TODO: set campaign code depending on user data
   const [campaignCode, setCampaignCode] = useState('bremen-1');
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
-    setCampaignCode(urlParams.campaignCode);
+    if (urlParams.campaignCode) {
+      setCampaignCode(urlParams.campaignCode);
+    } else {
+      if (userData?.municipalities[0]) {
+        // Find and sort all collecting municipalities of the user
+        const collectingCitiesOfUser = getCities();
+        if (collectingCitiesOfUser[0]) {
+          // If there were any, use the most recent one
+          const indexOfMostRecent = collectingCitiesOfUser.length - 1;
+          if (collectingCitiesOfUser[indexOfMostRecent].ags === '11000000') {
+            setCampaignCode('berlin-1');
+          } else if (
+            collectingCitiesOfUser[indexOfMostRecent].ags === '04011000'
+          ) {
+            setCampaignCode('bremen-1');
+          }
+        }
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -27,6 +44,15 @@ export default ({ userData, updateCustomUserData }) => {
       updateCustomUserData();
     }
   }, [pledgePackageState]);
+
+  const getCities = () => {
+    return userData.municipalities
+      .filter(
+        municipality =>
+          municipality.ags === '11000000' || municipality.ags === '04011000'
+      )
+      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  };
 
   if (pledgePackageState === 'error') {
     return (
