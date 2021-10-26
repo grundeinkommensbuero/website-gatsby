@@ -21,10 +21,10 @@ export default ({ userData, updateCustomUserData }) => {
     if (urlParams.campaignCode) {
       setCampaignCode(urlParams.campaignCode);
     } else {
-      if (userData?.municipalities && userData?.municipalities[0]) {
+      if (userData?.municipalities?.length > 0) {
         // Find and sort all collecting municipalities of the user
         const collectingCitiesOfUser = getCities();
-        if (collectingCitiesOfUser[0]) {
+        if (collectingCitiesOfUser.length > 0) {
           // If there were any, use the most recent one
           const indexOfMostRecent = collectingCitiesOfUser.length - 1;
           if (collectingCitiesOfUser[indexOfMostRecent].ags === '11000000') {

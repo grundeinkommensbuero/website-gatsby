@@ -7,7 +7,7 @@ import { CTALink } from '../../Layout/CTAButton';
 import AuthContext from '../../../context/Authentication';
 
 import paketSvg from '../paket-v2.svg';
-import { LoadingAnimation } from '../../Onboarding/LoadingAnimation';
+import { LoadingAnimation } from '../../LoadingAnimation';
 
 export default () => {
   const [state, pledgePackages, getInteractions] =
