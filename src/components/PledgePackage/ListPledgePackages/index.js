@@ -7,9 +7,11 @@ import { CTALink } from '../../Layout/CTAButton';
 import AuthContext from '../../../context/Authentication';
 
 import paketSvg from '../paket-v2.svg';
+import { LoadingAnimation } from '../../Onboarding/LoadingAnimation';
 
 export default () => {
-  const [, pledgePackages, getInteractions] = useGetMostRecentInteractions();
+  const [state, pledgePackages, getInteractions] =
+    useGetMostRecentInteractions();
   const { userId, customUserData: userData } = useContext(AuthContext);
   const [packagesDone, setPackagesDone] = useState(0);
   const [packagesOfUser, setPackagesOfUser] = useState([]);
@@ -44,12 +46,20 @@ export default () => {
     <SectionInner wide={true}>
       <h2 className={s.headingViolet}>Alle Sammelpakete</h2>
       <p>Intro-Text zu Sammelpaketen</p>
-      <p>
-        <b>
-          Schon {pledgePackages.length} Pakete verteilt
-          {packagesDone > 0 && ` und davon ${packagesDone} erledigt`}!
-        </b>
-      </p>
+
+      {state && state !== 'loading' && (
+        <p>
+          {pledgePackages[0] ? (
+            <b>
+              Schon {pledgePackages.length} Pakete verteilt
+              {packagesDone > 0 && ` und davon ${packagesDone} erledigt`}!
+            </b>
+          ) : (
+            <b>Noch keine Pakete verteilt!</b>
+          )}
+        </p>
+      )}
+
       {packagesOfUser.length > 0 && (
         <div>
           <h3 className={s.headingViolet}>Deine Pakete</h3>
@@ -82,22 +92,32 @@ export default () => {
         )}
       </div>
 
-      <h3 className={s.headingViolet}>
-        Diese Pakete hat sich schon jemand geschnappt
-      </h3>
+      {state && state !== 'loading' ? (
+        <>
+          {pledgePackages[0] ? (
+            <h3 className={s.headingViolet}>
+              Diese Pakete hat sich schon jemand geschnappt
+            </h3>
+          ) : (
+            <h3 className={s.headingViolet}>Noch keine Pakete verteilt!</h3>
+          )}
 
-      <div className={s.container}>
-        {pledgePackages.map((pledgePackage, index) => {
-          return (
-            <Package
-              key={index}
-              body={pledgePackage.body}
-              user={pledgePackage.user}
-              timestamp={pledgePackage.timestamp}
-            />
-          );
-        })}
-      </div>
+          <div className={s.container}>
+            {pledgePackages.map((pledgePackage, index) => {
+              return (
+                <Package
+                  key={index}
+                  body={pledgePackage.body}
+                  user={pledgePackage.user}
+                  timestamp={pledgePackage.timestamp}
+                />
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <LoadingAnimation />
+      )}
     </SectionInner>
   );
 };
