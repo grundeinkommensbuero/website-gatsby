@@ -1,0 +1,23 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install modules
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Check formating
+        run: npm run prettier:check
+
+      - name: Check linting
+        run: npm run lint
