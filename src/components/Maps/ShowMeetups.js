@@ -125,7 +125,10 @@ export const ShowMeetups = ({ mapConfig, className }) => {
               </p>
               <Button
                 className={s.createMeetupButton}
-                onClick={() => setOverlayOpen(true)}
+                onClick={() => {
+                  setType('collect');
+                  setOverlayOpen(true);
+                }}
               >
                 Event erstellen
               </Button>
