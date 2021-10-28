@@ -39,6 +39,7 @@ export function Button({
         s.button,
         className,
         { [s.medium]: size === 'MEDIUM' },
+        // Only use small buttons as exception!
         { [s.small]: size === 'SMALL' },
         { [s.disabled]: disabled }
       )}

@@ -6,10 +6,10 @@ import cN from 'classnames';
 
 import { useUploadImage } from '../../../hooks/images';
 import AvatarImage from '../../AvatarImage';
-import { CTAButton } from '../../Layout/CTAButton';
 import { Spinner } from '../../Spinner';
 
 import AuthContext from '../../../context/Authentication';
+import { Button } from '../Button';
 
 export default ({
   userData,
@@ -97,15 +97,15 @@ export default ({
             </div>
 
             {unsavedChanges ? (
-              <CTAButton
+              <Button
                 type="submit"
                 className={cN(s.submitButton, {
                   [s.buttonOnAquaBackground]: buttonOnAquaBackground,
-                  [s.smallButton]: smallSubmitButton,
                 })}
+                size={smallSubmitButton && 'SMALL'}
               >
                 Hochladen
-              </CTAButton>
+              </Button>
             ) : null}
 
             <div className={s.uploadMessageContainer}>

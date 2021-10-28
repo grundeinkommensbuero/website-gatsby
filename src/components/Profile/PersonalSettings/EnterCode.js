@@ -10,7 +10,6 @@ import FormSection from '../../Forms/FormSection';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { useValidateNewEmail } from '../../../hooks/Authentication';
 import * as gS from '../style.module.less';
-import * as s from './style.module.less';
 import { Button } from '../../Forms/Button';
 import { ErrorMessage } from './ChangeEmail';
 
@@ -62,9 +61,7 @@ export const EnterCode = ({ onAnswerChallengeSuccess }) => {
                   autoComplete="off"
                   component={TextInputWrapped}
                 ></Field>
-                <Button size="SMALL" className={s.mobileBtn} type="submit">
-                  code abschicken
-                </Button>
+                <Button type="submit">Code abschicken</Button>
 
                 {state === 'wrongCode' && (
                   <p>
