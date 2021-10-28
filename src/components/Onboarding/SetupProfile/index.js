@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import ImageUpload from '../../Forms/ImageUpload';
@@ -10,6 +10,10 @@ export const SetupProfile = ({
   compIndex,
   setCurrentElementByIndex,
 }) => {
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(
+    !userData?.profilePictures
+  );
+
   return (
     <>
       <section className={gS.pageContainer}>
@@ -26,7 +30,8 @@ export const SetupProfile = ({
             showUploadLabel={false}
             showEditLabel={true}
             size={'large'}
-            onUploadDone={() => {}}
+            onUploadDone={() => setButtonIsDisabled(false)}
+            onImageChosen={() => setButtonIsDisabled(true)}
           />
         </div>
 
@@ -34,6 +39,7 @@ export const SetupProfile = ({
           <Button
             className={gS.nextButton}
             onClick={() => setCurrentElementByIndex(compIndex + 1)}
+            disabled={buttonIsDisabled}
           >
             Weiter
           </Button>

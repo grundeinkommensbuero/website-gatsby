@@ -83,6 +83,7 @@ export const PersonalSettings = ({
               buttonOnAquaBackground={true}
               size={'large'}
               onUploadDone={() => {}}
+              smallSubmitButton={true}
             />
           </div>
           <div className={s.marginBottomOnMobile}>

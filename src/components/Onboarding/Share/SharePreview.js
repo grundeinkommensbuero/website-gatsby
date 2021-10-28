@@ -267,6 +267,7 @@ export const SharePreview = ({
                 showEditLabel={true}
                 size={'large'}
                 onUploadDone={() => {}}
+                smallSubmitButton={true}
               />
             </div>
           )}
