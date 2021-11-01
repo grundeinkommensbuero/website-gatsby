@@ -276,10 +276,6 @@ function Template({ children, sections, pageContext, title, description }) {
         </Overlay>
       )}
 
-      <OnboardingOverlay />
-
-      <MeetupOverlay />
-
       <Header
         menu={modifiedMainMenu}
         hasOverlay={!!project?.overlay}

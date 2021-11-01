@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { useGetMeetups } from '../../hooks/Api/Meetups/Get';
 import Map from './Map';
@@ -7,8 +7,9 @@ import {
   SectionComponentContainer,
 } from '../Layout/Sections';
 import { Button } from '../Forms/Button';
-import { MeetupOverlayContext } from '../../context/Overlay/MeetupOverlay';
 import * as s from './style.module.less';
+import { Modal } from '../Modal';
+import { CreateMeetup } from '../Forms/Meetup';
 // import { EventsListed } from './EventsListed';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
@@ -36,15 +37,10 @@ export const ShowMeetups = ({ mapConfig, className }) => {
       }
     }
   `);
-  const {
-    setType,
-    setOverlayOpen,
-    setMapConfig,
-    createdMeetup,
-    setCreatedMeetup,
-  } = useContext(MeetupOverlayContext);
   const [meetups, getMeetups] = useGetMeetups();
   const [locationsFiltered, setLocationsFiltered] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [type, setType] = useState('collect');
 
   const isBerlin = mapConfig.state === 'berlin';
 
@@ -53,17 +49,11 @@ export const ShowMeetups = ({ mapConfig, className }) => {
     if (isBerlin) {
       getMeetups();
     }
-
-    setMapConfig(mapConfig);
   }, [mapConfig]);
 
-  // Reload meetups after new meetup was created
-  useEffect(() => {
-    if (createdMeetup) {
-      getMeetups();
-      setCreatedMeetup(false);
-    }
-  }, [createdMeetup]);
+  const onCreatedMeetup = () => {
+    getMeetups();
+  };
 
   useEffect(() => {
     if (!isBerlin || (isBerlin && meetups)) {
@@ -127,7 +117,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
                 className={s.createMeetupButton}
                 onClick={() => {
                   setType('collect');
-                  setOverlayOpen(true);
+                  setShowModal(true);
                 }}
               >
                 Event erstellen
@@ -147,12 +137,20 @@ export const ShowMeetups = ({ mapConfig, className }) => {
                 className={s.createMeetupButton}
                 onClick={() => {
                   setType('lists');
-                  setOverlayOpen(true);
+                  setShowModal(true);
                 }}
               >
                 Ort eintragen
               </Button>
             </SectionComponent>
+            <Modal showModal={showModal} setShowModal={setShowModal}>
+              <CreateMeetup
+                type={type}
+                mapConfig={mapConfig}
+                setCreatedMeetup={onCreatedMeetup}
+                setShowModal={setShowModal}
+              />
+            </Modal>
           </SectionComponentContainer>
           {/* <br />
           <br />

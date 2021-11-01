@@ -92,21 +92,9 @@ export const Onboarding = ({ setOverlayOpen }) => {
   return (
     <>
       {!isForMunicipalityAuthenticated ? (
-        <>
-          <button
-            aria-label="Schließen"
-            className={cN(s.lonelyCloseButton)}
-            onClick={() => setOverlayOpen(false)}
-          >
-            <div
-              className={s.closeButton}
-              dangerouslySetInnerHTML={{ __html: closeIcon }}
-            ></div>
-          </button>
-          <div className={s.onboardingContent}>
-            <SignUpFlow />
-          </div>
-        </>
+        <div className={s.onboardingContent}>
+          <SignUpFlow />
+        </div>
       ) : (
         <>
           {/* Show onboarding content */}

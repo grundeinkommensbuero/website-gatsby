@@ -1,5 +1,7 @@
 import * as s from './style.module.less';
 import React, { useState, useEffect } from 'react';
+import { Modal } from '../../components/Modal';
+import Onboarding from '../../components/Onboarding';
 
 export const OnboardingOverlayContext = React.createContext();
 
@@ -17,6 +19,9 @@ export const OnboardingOverlayProvider = ({ children }) => {
         setOverlayOpen,
       }}
     >
+      <Modal showModal={overlayOpen} setShowModal={setOverlayOpen}>
+        <Onboarding />
+      </Modal>
       {children}
     </OnboardingOverlayContext.Provider>
   );
