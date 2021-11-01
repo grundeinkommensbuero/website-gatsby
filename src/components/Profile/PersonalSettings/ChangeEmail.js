@@ -109,9 +109,7 @@ export const ChangeEmail = ({ userData, updateCustomUserData }) => {
                             >
                               Abbrechen
                             </InlineButton>
-                            <Button type="submit">
-                              Speichern
-                            </Button>
+                            <Button type="submit">Speichern</Button>
                           </PrimarySecondaryButtonContainer>
                         )}
 

@@ -160,9 +160,7 @@ export const PersonalSettings = ({
                 >
                   Abbrechen
                 </InlineButton>
-                <Button onClick={saveUserDataChanges}>
-                  Speichern
-                </Button>
+                <Button onClick={saveUserDataChanges}>Speichern</Button>
               </PrimarySecondaryButtonContainer>
             ) : (
               <section>
