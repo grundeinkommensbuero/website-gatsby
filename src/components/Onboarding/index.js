@@ -17,8 +17,6 @@ import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
 import { FinalNote } from './FinalNote';
 
-import cN from 'classnames';
-
 export const Onboarding = ({ setOverlayOpen }) => {
   const {
     isAuthenticated,
@@ -32,8 +30,6 @@ export const Onboarding = ({ setOverlayOpen }) => {
   const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] =
     useState(false);
   const [, updateUser] = useUpdateUser();
-
-  const closeIcon = require('!svg-inline-loader!./close-icon.svg');
 
   const Components = {
     SignUpFlow,
