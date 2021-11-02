@@ -59,7 +59,9 @@ export const CreateMeetup = ({
   useEffect(() => {
     if (createMeetupState === 'saved') {
       // Set flag in context, so we can reload meetups in map
-      onCreatedMeetup();
+      if (onCreatedMeetup) {
+        onCreatedMeetup();
+      }
 
       countdown();
     }
