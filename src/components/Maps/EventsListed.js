@@ -9,12 +9,8 @@ export const EventsListed = ({ locationsFiltered }) => {
   const groupByDate = locations => {
     locations.forEach(location => {
       const eventDate = dsm.getGermanDateFormat(location.startTime);
-      if (!(eventDate in groupedEvents)) {
-        groupedEvents[eventDate] = [];
-        groupedEvents[eventDate].push(location);
-      } else {
-        groupedEvents[eventDate].push(location);
-      }
+      if (!(eventDate in groupedEvents)) groupedEvents[eventDate] = [];
+      groupedEvents[eventDate].push(location);
     });
   };
 
