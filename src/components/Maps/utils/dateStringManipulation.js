@@ -28,7 +28,8 @@ export const localeTime = date => {
 };
 
 export const getDayWithMonth = date => {
-  return getGermanDateFormat(date).slice(0, 6);
+  const dateString = getGermanDateFormat(new Date(date)).split('.');
+  return `${dateString[0]}.${dateString[1]}.`;
 };
 
 export const checkIfDateIsToday = date => {
