@@ -147,7 +147,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
               <CreateMeetup
                 type={type}
                 mapConfig={mapConfig}
-                setCreatedMeetup={onCreatedMeetup}
+                onCreatedMeetup={onCreatedMeetup}
                 setShowModal={setShowModal}
               />
             </Modal>
