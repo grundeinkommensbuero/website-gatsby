@@ -10,7 +10,7 @@ import { Button } from '../Forms/Button';
 import * as s from './style.module.less';
 import { Modal } from '../Modal';
 import { CreateMeetup } from '../Forms/Meetup';
-// import { EventsListed } from './EventsListed';
+import { EventsListed } from './EventsListed';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -152,9 +152,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
               />
             </Modal>
           </SectionComponentContainer>
-          {/* <br />
-          <br />
-          <EventsListed locationsFiltered={locationsFiltered} /> */}
+          <EventsListed locationsFiltered={locationsFiltered} />
         </div>
       )}
     </>
