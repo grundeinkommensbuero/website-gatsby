@@ -4,11 +4,10 @@ import { AuthProvider } from './src/context/Authentication';
 import { MunicipalityProvider } from './src/context/Municipality';
 import SurveySaver from './src/components/SurveySaver';
 import { OverlayProvider } from './src/context/Overlay';
-import { OnboardingOverlayProvider } from './src/context/Overlay/OnboardingOverlay';
+import { OnboardingModalProvider } from './src/context/OnboardingModal/';
 import { StickyBannerProvider } from './src/context/StickyBanner';
 import { SnackbarMessageProvider } from './src/context/Snackbar/index.js';
 import SnackbarProvider from 'react-simple-snackbar';
-import { MeetupOverlayProvider } from './src/context/Overlay/MeetupOverlay';
 
 // This is used to wrap the page, so we can configure AWS Cognito in this wrapper,
 // so it only gets configured once, not every time a page changes
@@ -36,15 +35,13 @@ export default (element, extractor) => {
       <MunicipalityProvider>
         <SurveySaver>
           <OverlayProvider>
-            <OnboardingOverlayProvider>
-              <MeetupOverlayProvider>
-                <StickyBannerProvider>
-                  <SnackbarProvider>
-                    <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
-                  </SnackbarProvider>
-                </StickyBannerProvider>
-              </MeetupOverlayProvider>
-            </OnboardingOverlayProvider>
+            <OnboardingModalProvider>
+              <StickyBannerProvider>
+                <SnackbarProvider>
+                  <SnackbarMessageProvider>{element}</SnackbarMessageProvider>
+                </SnackbarProvider>
+              </StickyBannerProvider>
+            </OnboardingModalProvider>
           </OverlayProvider>
         </SurveySaver>
       </MunicipalityProvider>

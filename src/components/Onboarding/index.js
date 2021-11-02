@@ -16,8 +16,9 @@ import { SharingFeature } from './Share';
 import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
 import { FinalNote } from './FinalNote';
+import { OnboardingModalContext } from '../../context/OnboardingModal';
 
-export const Onboarding = ({ setOverlayOpen }) => {
+export const Onboarding = () => {
   const {
     isAuthenticated,
     userId,
@@ -29,6 +30,7 @@ export const Onboarding = ({ setOverlayOpen }) => {
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
   const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] =
     useState(false);
+  const { setShowModal } = useContext(OnboardingModalContext);
   const [, updateUser] = useUpdateUser();
 
   const Components = {
@@ -61,8 +63,8 @@ export const Onboarding = ({ setOverlayOpen }) => {
   }, [userData, municipality]);
 
   const setCurrentElementByIndex = index => {
-    if (index === menuElements.length - 1) {
-      setOverlayOpen(false);
+    if (index === menuElements.length) {
+      setShowModal(false);
     } else {
       setCurrentElement(menuElements[index].name);
     }
@@ -98,7 +100,6 @@ export const Onboarding = ({ setOverlayOpen }) => {
             <BreadcrumbLinks
               setCurrentElement={setCurrentElement}
               currentElement={currentElement}
-              setOverlayOpen={setOverlayOpen}
             />
           </nav>
           <div className={s.onboardingContent}>
