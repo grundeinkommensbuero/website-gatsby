@@ -212,3 +212,62 @@ h3 {
     bottom: 0;
   }
 }
+
+.eventContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.eventDay {
+  flex: 50%;
+  min-width: 50%;
+  max-width: 50%;
+
+  @media (max-width: @breakPointL) {
+    flex: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
+.moduleHeading {
+  margin-top: 6rem;
+  margin-bottom: 4rem;
+  color: @violet;
+  font-size: @DesktopFontSizeXL;
+
+  @media (max-width: @breakPointM) {
+    font-size: @DesktopFontSizeL;
+  }
+}
+
+.descriptionHeading {
+  margin: 0;
+  color: @violet;
+  font-size: 2.25rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: @DesktopFontSizeM;
+  }
+}
+
+.eventDescription {
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  padding-right: 1rem;
+  font-size: 1.5rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: 1rem;
+    padding-right: 0rem;
+  }
+}
+
+.descriptionText {
+  margin: 0;
+  font-size: 1.5rem;
+
+  @media (max-width: @breakPointM) {
+    font-size: 1rem;
+  }
+}

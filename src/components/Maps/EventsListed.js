@@ -1,52 +1,55 @@
 import React from 'react';
+import * as s from './style.module.less';
+import * as dsm from './utils/dateStringManipulation';
 
 export const EventsListed = ({ locationsFiltered }) => {
-  const locationsSorted = locationsFiltered
-    ?.filter(location => location.startTime && location.endTime)
-    .sort(function (a, b) {
-      return new Date(a.startTime) - new Date(b.startTime);
-    });
+  let groupedEvents = {};
+  let locationsSorted = [];
 
   const groupByDate = locations => {
-    const groupedEvents = {};
-
     locations.forEach(location => {
-      if (!(location.startTime in groupedEvents)) {
-        groupedEvents[location.startTime] = [];
-        groupedEvents[location.startTime].push(location);
-      } else {
-        groupedEvents[location.startTime].push(location);
-      }
+      const eventDate = dsm.getGermanDateFormat(location.startTime);
+      if (!(eventDate in groupedEvents)) groupedEvents[eventDate] = [];
+      groupedEvents[eventDate].push(location);
     });
   };
 
-  if (locationsSorted) {
-    const groupedEvents = groupByDate(locationsSorted);
-    console.log(groupedEvents);
+  if (locationsFiltered) {
+    locationsSorted = locationsFiltered
+      ?.filter(location => location.startTime && location.endTime)
+      .sort(function (a, b) {
+        return new Date(a.startTime) - new Date(b.startTime);
+      });
+    groupByDate(locationsSorted);
   }
 
   return (
-    <div>
-      <h2>Komm zu einer Sammelaktion</h2>
-      {locationsSorted?.map((location, index) => {
-        return (
-          <div key={index}>
-            <p>{location.address}</p>
-            <p>{`${new Date(location.startTime).toLocaleDateString(
-              'de-DE'
-            )} ${new Date(location.startTime).toLocaleTimeString('de-DE', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}`}</p>
-            <p>{`${new Date(location.endTime).toLocaleDateString(
-              'de-DE'
-            )} ${new Date(location.endTime).toLocaleTimeString('de-DE', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}`}</p>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <h2 className={s.moduleHeading}>Komm zu einer Sammelaktion</h2>
+      <div className={s.eventContainer}>
+        {Object.keys(groupedEvents).map(key => {
+          return (
+            <div key={key} className={s.eventDay}>
+              <h3 className={s.descriptionHeading}>
+                {dsm.getDateWithWeekday(groupedEvents[key][0].startTime)}
+              </h3>
+              {groupedEvents[key].map(event => {
+                return (
+                  <div className={s.eventDescription}>
+                    <p className={s.descriptionText}>{event.description}</p>
+                    <b>
+                      {dsm.localeTime(event.startTime)}-
+                      {dsm.localeTime(event.endTime)}
+                      {' Uhr, '}
+                      {event.address}
+                    </b>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
