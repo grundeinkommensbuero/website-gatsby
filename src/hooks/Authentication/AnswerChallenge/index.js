@@ -73,7 +73,6 @@ const answerCustomChallenge = async (
     };
     try {
       await finalizeSignIn();
-      throw new Error('test login first try');
     } catch (error) {
       console.log('Apparently the user did not enter the right code', error);
       TrackJS.track(error);
@@ -82,7 +81,6 @@ const answerCustomChallenge = async (
       try {
         await sleep(500);
         await finalizeSignIn();
-        throw new Error('test login second try');
       } catch (secondError) {
         // Create object with cognito related values from local storage to send it to track js
         const localStorageObject = {};
