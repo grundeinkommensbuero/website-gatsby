@@ -11,7 +11,7 @@ import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
-import * as s from './style.module.less';
+import * as s from '../style.module.less';
 
 export const EnterLoginCode = ({
   children,
@@ -144,7 +144,7 @@ export const EnterLoginCode = ({
             children
           ) : (
             <>
-              <h3>Schön, dass du an Bord bist.</h3>
+              <h3 className={s.headingWhite}>Schön, dass du an Bord bist.</h3>
               <p>
                 Um dich zu identifizieren, haben wir dir einen Code per E-Mail
                 {tempEmail ? ` (${tempEmail})` : ''} geschickt.

@@ -13,6 +13,8 @@ import { TextInputWrapped } from '../../Forms/TextInput';
 
 import { validateEmail } from '../../utils';
 
+import * as s from '../style.module.less';
+
 import {
   CTAButtons,
   CTAButtonContainer,
@@ -54,7 +56,7 @@ export const RequestLoginCode = ({ children, buttonText }) => {
   // If there is a temporary email, show EnterLoginCode
   return (
     <EnterLoginCode>
-      <h3>Schön, dass du an Bord bist.</h3>
+      <h3 className={s.headingWhite}>Schön, dass du an Bord bist.</h3>
       <p>
         {' '}
         Um dich zu identifizieren, haben wir dir einen Code per E-Mail
