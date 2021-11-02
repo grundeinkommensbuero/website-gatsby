@@ -36,9 +36,9 @@ export const EventsListed = ({ locationsFiltered }) => {
                   <h3 className={s.descriptionHeading}>
                     {dsm.getDateWithWeekday(groupedEvents[key][0].startTime)}
                   </h3>
-                  {groupedEvents[key].map(event => {
+                  {groupedEvents[key].map((event, index) => {
                     return (
-                      <div className={s.eventDescription}>
+                      <div key={index} className={s.eventDescription}>
                         <p className={s.descriptionText}>{event.description}</p>
                         <b>
                           {dsm.localeTime(event.startTime)}-
