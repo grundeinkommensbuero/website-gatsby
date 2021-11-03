@@ -74,7 +74,7 @@ export default () => {
                   key={index}
                   body={pledgePackage.body}
                   user={userData}
-                  timestamp={pledgePackage.timestamp}
+                  timestamp={pledgePackage.createdAt}
                 />
               );
             })}
@@ -109,7 +109,7 @@ export default () => {
                   key={index}
                   body={pledgePackage.body}
                   user={pledgePackage.user}
-                  timestamp={pledgePackage.timestamp}
+                  timestamp={pledgePackage.createdAt}
                 />
               );
             })}
