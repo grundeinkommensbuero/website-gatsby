@@ -7,13 +7,16 @@ import { Button } from '../../Forms/Button';
 import { TextInputWrapped } from '../../Forms/TextInput';
 import { FinallyMessage } from '../../Forms/FinallyMessage';
 import { useSaveInteraction } from '../../../hooks/Api/Interactions';
+import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import AvatarImage from '../../AvatarImage';
 import packageV2 from '../paket-v2.svg';
 import { Speechbubble } from '../Speechbubble/index';
+import { campaignToAgs } from '../../utils';
 
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
   const [, setPledgePackage] = useState();
+  const [, updateUser] = useUpdateUser();
   const [campaignCode, setCampaignCode] = useState('bremen-1');
 
   useEffect(() => {
@@ -46,6 +49,16 @@ export default ({ userData, updateCustomUserData }) => {
   useEffect(() => {
     if (pledgePackageState === 'saved') {
       updateCustomUserData();
+
+      // Sign up user for municipality if they aren't already
+      if (
+        campaignToAgs[campaignCode] &&
+        !userData?.municipalities?.find(
+          ({ ags }) => ags === campaignToAgs[campaignCode]
+        )
+      ) {
+        updateUser({ ags: campaignToAgs[campaignCode] });
+      }
     }
   }, [pledgePackageState]);
 

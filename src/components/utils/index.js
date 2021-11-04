@@ -250,6 +250,12 @@ export const stateToAgs = {
   hamburg: '02000000',
 };
 
+export const campaignToAgs = {
+  'berlin-1': '11000000',
+  'bremen-1': '04011000',
+  'hamburg-1': '02000000',
+};
+
 // Map campaign code to ags by extracting state out of campaign code
 // ad mapping that state to the ags
 export function mapCampaignCodeToAgs(campaignCode) {
