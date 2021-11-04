@@ -50,14 +50,12 @@ export const DeleteAccountDialog = ({ userId, setShowDeleteAccountDialog }) => {
         <Button
           className={s.revokeButton}
           onClick={() => setShowDeleteAccountDialog(false)}
-          size="SMALL"
         >
           Abbrechen
         </Button>
         <SnackbarMessageContext.Consumer>
           {({ setMessage }) => (
             <Button
-              size="SMALL"
               className={s.revokeButton}
               onClick={() => {
                 deleteUserAccount(setMessage);

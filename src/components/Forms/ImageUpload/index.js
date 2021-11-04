@@ -6,17 +6,19 @@ import cN from 'classnames';
 
 import { useUploadImage } from '../../../hooks/images';
 import AvatarImage from '../../AvatarImage';
-import { CTAButton } from '../../Layout/CTAButton';
 import { Spinner } from '../../Spinner';
 
 import AuthContext from '../../../context/Authentication';
+import { Button } from '../Button';
 
 export default ({
   userData,
   userId,
   onUploadDone,
+  onImageChosen,
   size = 'default',
   buttonOnAquaBackground = false,
+  smallSubmitButton = false,
 }) => {
   const [uploadImageState, uploadImage] = useUploadImage();
   const [unsavedChanges, setUnsavedChanges] = useState(false);
@@ -34,7 +36,11 @@ export default ({
       setTimeout(() => {
         setShowUploadSuccessMessage(false);
       }, 1500);
-      onUploadDone();
+
+      if (onUploadDone) {
+        onUploadDone();
+      }
+
       let counter = 0;
       // Try to fetch new profile picture
       const tryUpdateUserData = setInterval(() => {
@@ -63,75 +69,69 @@ export default ({
       }}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className={s.imageUploadContainer}>
-          {userData?.user?.profilePictures ? (
-            <AvatarImage
-              user={userData.user}
-              className={cN(
-                s.avatarImage,
-                { [s.defaultSize]: size === 'default' },
-                { [s.large]: size === 'large' }
-              )}
-              sizes="80px"
-            />
-          ) : (
-            <>
-              <div className={s.avatarImageContainer}>
-                <Field
-                  name="image"
-                  component={ImageInput}
-                  user={userData}
-                  size={size}
-                  unsavedChanges={unsavedChanges}
-                  showUploadLabel={
-                    !(
-                      imageUploadIsProcessing ||
-                      showUploadSuccessMessage ||
-                      showUploadErrorMessage
-                    )
+          <>
+            <div className={s.avatarImageContainer}>
+              <Field
+                name="image"
+                component={ImageInput}
+                user={userData}
+                size={size}
+                unsavedChanges={unsavedChanges}
+                showUploadLabel={
+                  !(
+                    imageUploadIsProcessing ||
+                    showUploadSuccessMessage ||
+                    showUploadErrorMessage
+                  )
+                }
+                onChange={() => {}}
+              />
+              <OnChange name="image">
+                {() => {
+                  setUnsavedChanges(true);
+                  if (onImageChosen) {
+                    onImageChosen();
                   }
-                  onChange={() => {}}
-                />
-                <OnChange name="image">
-                  {() => setUnsavedChanges(true)}
-                </OnChange>
-              </div>
+                }}
+              </OnChange>
+            </div>
 
-              {unsavedChanges ? (
-                <CTAButton
-                  type="submit"
-                  className={cN(s.submitButton, {
-                    [s.buttonOnAquaBackground]: buttonOnAquaBackground,
-                  })}
-                >
-                  Hochladen
-                </CTAButton>
-              ) : null}
+            {unsavedChanges ? (
+              <Button
+                type="submit"
+                className={cN(s.submitButton, {
+                  [s.buttonOnAquaBackground]: buttonOnAquaBackground,
+                })}
+                size={smallSubmitButton && 'SMALL'}
+              >
+                Hochladen
+              </Button>
+            ) : null}
 
-              <div className={s.uploadMessageContainer}>
-                {imageUploadIsProcessing ? (
-                  <span className={s.uploadStateMessage}>
-                    <Spinner />
-                    <b className={s.loadingMsg}>Bild hochladen...</b>
-                  </span>
-                ) : (
-                  <>
-                    {showUploadSuccessMessage ? (
-                      <span className={s.uploadStateMessage}>
-                        Upload erfolgreich!
-                      </span>
-                    ) : null}
-                    {showUploadErrorMessage ? (
-                      <span className={s.uploadStateMessage}>
-                        Fehler beim Upload! :(
-                        <br />
-                        Bitte versuche es später erneut!
-                      </span>
-                    ) : null}
-                  </>
-                )}
-              </div>
-            </>
-          )}
+            <div className={s.uploadMessageContainer}>
+              {imageUploadIsProcessing ? (
+                <span className={s.uploadStateMessage}>
+                  <Spinner />
+                  <b className={s.loadingMsg}>Bild hochladen...</b>
+                </span>
+              ) : (
+                <>
+                  {showUploadSuccessMessage ? (
+                    <span className={s.uploadStateMessage}>
+                      Upload erfolgreich!
+                    </span>
+                  ) : null}
+                  {showUploadErrorMessage ? (
+                    <span className={s.uploadStateMessage}>
+                      Fehler beim Upload! :(
+                      <br />
+                      Bitte versuche es später erneut!
+                    </span>
+                  ) : null}
+                </>
+              )}
+            </div>
+          </>
         </form>
       )}
     />

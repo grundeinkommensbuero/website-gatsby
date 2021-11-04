@@ -3,7 +3,11 @@ import { Field, Form } from 'react-final-form';
 import cN from 'classnames';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { useChangeEmail } from '../../../hooks/Authentication';
-import { Button } from '../../Forms/Button';
+import {
+  Button,
+  InlineButton,
+  PrimarySecondaryButtonContainer,
+} from '../../Forms/Button';
 import FormSection from '../../Forms/FormSection';
 import FormWrapper from '../../Forms/FormWrapper';
 import { TextInputWrapped } from '../../Forms/TextInput';
@@ -95,26 +99,18 @@ export const ChangeEmail = ({ userData, updateCustomUserData }) => {
                         ></Field>
 
                         {dirtyFields.email && (
-                          <>
-                            <Button
-                              size="SMALL"
-                              className={s.mobileBtn}
+                          <PrimarySecondaryButtonContainer>
+                            <InlineButton
                               onClick={() => {
                                 form.reset();
                                 form.resetFieldState('email');
                               }}
                               type="button"
                             >
-                              abbrechen
-                            </Button>
-                            <Button
-                              size="SMALL"
-                              className={s.mobileBtn}
-                              type="submit"
-                            >
-                              speichern
-                            </Button>
-                          </>
+                              Abbrechen
+                            </InlineButton>
+                            <Button type="submit">Speichern</Button>
+                          </PrimarySecondaryButtonContainer>
                         )}
 
                         {updateEmailState === 'updated' && !modified.email && (

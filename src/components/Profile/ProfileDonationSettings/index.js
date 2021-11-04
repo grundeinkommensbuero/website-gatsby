@@ -53,16 +53,11 @@ export const ProfileDonationSettings = ({
         </p>
         <br />
         <div className={s.revokeButtonRow}>
-          <Button
-            onClick={() => setShowDeleteDonationDialog(false)}
-            size="SMALL"
-          >
+          <Button onClick={() => setShowDeleteDonationDialog(false)}>
             Abbrechen
           </Button>
           {!waitingForApi ? (
-            <Button onClick={removeDonation} size="SMALL">
-              Meine Spende löschen
-            </Button>
+            <Button onClick={removeDonation}>Meine Spende löschen</Button>
           ) : (
             <span className={s.loadingMessageContainer}>
               <span className={gS.loading}></span>

@@ -1,6 +1,9 @@
 @import '../../style/vars.less';
 .imageUploadContainer {
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .avatarImage {
@@ -114,21 +117,13 @@
 
 .submitButton {
   position: relative;
-  color: @aqua;
-  border: @aqua solid 1px;
   top: 4rem;
-  padding: 0.5rem 1.5rem 0.25rem 1.5rem;
-
-  &:hover {
-    color: @white;
-    background-color: @aqua;
-  }
 }
 
 .buttonOnAquaBackground {
   color: @white;
-  border: @white solid 1px;
-  padding: 0.5rem 1.5rem 0.25rem 1.5rem;
+  border: @white solid;
+  background-color: @whiteTransparent;
 
   &:hover {
     color: @aqua;
@@ -142,6 +137,7 @@
 
 .uploadStateMessage {
   position: absolute;
+  left: -2.5rem;
   top: 1rem;
   font-size: @DesktopFontSizeS;
 }

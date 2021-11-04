@@ -5,7 +5,11 @@ import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
-import { Button } from '../../Forms/Button';
+import {
+  Button,
+  InlineButton,
+  PrimarySecondaryButtonContainer,
+} from '../../Forms/Button';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
 import ImageUpload from '../../Forms/ImageUpload';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
@@ -83,6 +87,7 @@ export const PersonalSettings = ({
               buttonOnAquaBackground={true}
               size={'large'}
               onUploadDone={() => {}}
+              smallSubmitButton={true}
             />
           </div>
           <div className={s.marginBottomOnMobile}>
@@ -145,26 +150,18 @@ export const PersonalSettings = ({
             (tempName !== userData.username ||
               tempZIP !== userData.zipCode ||
               tempCity !== userData.city) ? (
-              <>
-                <Button
-                  size="SMALL"
-                  className={s.mobileBtn}
+              <PrimarySecondaryButtonContainer>
+                <InlineButton
                   onClick={() => {
                     setTempName(userData.username);
                     setTempZIP(userData.zipCode);
                     setTempCity(userData.city);
                   }}
                 >
-                  abbrechen
-                </Button>
-                <Button
-                  size="SMALL"
-                  className={s.mobileBtn}
-                  onClick={saveUserDataChanges}
-                >
-                  speichern
-                </Button>
-              </>
+                  Abbrechen
+                </InlineButton>
+                <Button onClick={saveUserDataChanges}>Speichern</Button>
+              </PrimarySecondaryButtonContainer>
             ) : (
               <section>
                 {waitingForApi && (
