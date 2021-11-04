@@ -22,6 +22,12 @@ let MapboxGeocoder;
 
 if (!process.env.STATIC) {
   mapboxgl = require('mapbox-gl');
+
+  // Workaround for mapbox v2 bug: https://docs.mapbox.com/mapbox-gl-js/guides/install/#transpiling
+  // Load worker code separately with worker-loader
+  // and wire up loaded worker to be used instead of the default
+  mapboxgl.workerClass =
+    require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
   mapboxgl.accessToken =
     'pk.eyJ1IjoiYW55a2V5IiwiYSI6ImNrM3JkZ2IwMDBhZHAzZHBpemswd3F3MjYifQ.RLinVZ2-Vdp9JwErHAJz6w';
   MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
