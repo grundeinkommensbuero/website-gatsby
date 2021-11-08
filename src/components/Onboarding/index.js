@@ -63,17 +63,14 @@ export const Onboarding = () => {
   }, [userData, municipality]);
 
   const setCurrentElementByIndex = index => {
-    if (index === menuElements.length) {
-      setShowModal(false);
-    } else {
-      setCurrentElement(menuElements[index].name);
-    }
+    setCurrentElement(menuElements[index].name);
   };
 
   const CurrentComponent = () => {
     const Comp = Components[currentElement];
     return (
       <Comp
+        setShowModal={setShowModal}
         compIndex={menuElements.findIndex(el => el.name === currentElement)}
         setCurrentElementByIndex={setCurrentElementByIndex}
         userData={userData}
