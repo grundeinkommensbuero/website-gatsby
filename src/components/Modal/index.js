@@ -16,7 +16,6 @@ export const Modal = ({ children, showModal, setShowModal }) => {
       show={showModal}
       onHide={() => setShowModal(false)}
       renderBackdrop={renderBackdrop}
-      aria-labelledby="modal-label"
     >
       <>
         <button
