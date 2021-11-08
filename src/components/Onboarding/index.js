@@ -16,10 +16,9 @@ import { SharingFeature } from './Share';
 import { Donate } from './Donate';
 import { SetupProfile } from './SetupProfile';
 import { FinalNote } from './FinalNote';
+import { OnboardingModalContext } from '../../context/OnboardingModal';
 
-import cN from 'classnames';
-
-export const Onboarding = ({ setOverlayOpen }) => {
+export const Onboarding = () => {
   const {
     isAuthenticated,
     userId,
@@ -31,9 +30,8 @@ export const Onboarding = ({ setOverlayOpen }) => {
   const [currentElement, setCurrentElement] = useState(menuElements[0].name);
   const [isForMunicipalityAuthenticated, setIsForMunicipalityAuthenticated] =
     useState(false);
+  const { setShowModal } = useContext(OnboardingModalContext);
   const [, updateUser] = useUpdateUser();
-
-  const closeIcon = require('!svg-inline-loader!./close-icon.svg');
 
   const Components = {
     SignUpFlow,
@@ -65,17 +63,14 @@ export const Onboarding = ({ setOverlayOpen }) => {
   }, [userData, municipality]);
 
   const setCurrentElementByIndex = index => {
-    if (index === menuElements.length - 1) {
-      setOverlayOpen(false);
-    } else {
-      setCurrentElement(menuElements[index].name);
-    }
+    setCurrentElement(menuElements[index].name);
   };
 
   const CurrentComponent = () => {
     const Comp = Components[currentElement];
     return (
       <Comp
+        setShowModal={setShowModal}
         compIndex={menuElements.findIndex(el => el.name === currentElement)}
         setCurrentElementByIndex={setCurrentElementByIndex}
         userData={userData}
@@ -92,21 +87,9 @@ export const Onboarding = ({ setOverlayOpen }) => {
   return (
     <>
       {!isForMunicipalityAuthenticated ? (
-        <>
-          <button
-            aria-label="Schließen"
-            className={cN(s.lonelyCloseButton)}
-            onClick={() => setOverlayOpen(false)}
-          >
-            <div
-              className={s.closeButton}
-              dangerouslySetInnerHTML={{ __html: closeIcon }}
-            ></div>
-          </button>
-          <div className={s.onboardingContent}>
-            <SignUpFlow />
-          </div>
-        </>
+        <div className={s.onboardingContent}>
+          <SignUpFlow />
+        </div>
       ) : (
         <>
           {/* Show onboarding content */}
@@ -114,7 +97,6 @@ export const Onboarding = ({ setOverlayOpen }) => {
             <BreadcrumbLinks
               setCurrentElement={setCurrentElement}
               currentElement={currentElement}
-              setOverlayOpen={setOverlayOpen}
             />
           </nav>
           <div className={s.onboardingContent}>

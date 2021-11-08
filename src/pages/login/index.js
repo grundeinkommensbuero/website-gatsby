@@ -2,6 +2,7 @@ import Layout from '../../components/Layout';
 import React, { useContext, useEffect, useState } from 'react';
 import querystring from 'query-string';
 import { navigate } from '@reach/router';
+import * as s from './style.module.less';
 
 import AuthContext from '../../context/Authentication';
 
@@ -47,7 +48,9 @@ const LoginPage = () => {
           <Section>
             <SectionInner>
               <RequestLoginCodeWithEmail>
-                <h3>Hey! Schön, dass du da bist. Hier geht's zum Login.</h3>
+                <h3 className={s.headingWhite}>
+                  Hey! Schön, dass du da bist. Hier geht's zum Login.
+                </h3>
               </RequestLoginCodeWithEmail>
             </SectionInner>
           </Section>

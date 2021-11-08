@@ -5,11 +5,7 @@ import { Button } from '../../Forms/Button';
 import Confetti from '../../Confetti';
 import { navigate } from 'gatsby';
 
-export const FinalNote = ({
-  compIndex,
-  setCurrentElementByIndex,
-  municipality,
-}) => {
+export const FinalNote = ({ municipality, setShowModal }) => {
   return (
     <section className={gS.pageContainer}>
       <h3 className={gS.moduleTitle}>Wie geht es jetzt weiter?</h3>
@@ -20,7 +16,7 @@ export const FinalNote = ({
       <Button
         className={s.redirectButton}
         onClick={() => {
-          setCurrentElementByIndex(compIndex + 1);
+          setShowModal(false);
           navigate('/aktiv-werden', { replace: true });
         }}
       >
@@ -38,8 +34,8 @@ export const FinalNote = ({
       <Button
         className={s.redirectButton}
         onClick={() => {
-          setCurrentElementByIndex(compIndex + 1);
-          navigate(`/orte/${municipality.slug}`);
+          setShowModal(false);
+          navigate(`/orte/${municipality.slug}`, { replace: true });
         }}
       >
         Zur Unterseite

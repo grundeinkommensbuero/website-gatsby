@@ -22,8 +22,8 @@ import { FinallyMessage } from '../FinallyMessage';
 export const CreateMeetup = ({
   mapConfig,
   type = 'collect',
-  setCreatedMeetup,
-  setOverlayOpen,
+  onCreatedMeetup,
+  setShowModal,
 }) => {
   const [location, setLocation] = useState();
   const [createMeetupState, createMeetup] = useCreateMeetup();
@@ -59,7 +59,9 @@ export const CreateMeetup = ({
   useEffect(() => {
     if (createMeetupState === 'saved') {
       // Set flag in context, so we can reload meetups in map
-      setCreatedMeetup(true);
+      if (onCreatedMeetup) {
+        onCreatedMeetup();
+      }
 
       countdown();
     }
@@ -73,7 +75,7 @@ export const CreateMeetup = ({
       if (seconds > 0) {
         setTimeout(tick, 1000);
       } else {
-        setOverlayOpen(false);
+        setShowModal(false);
       }
     };
     tick();

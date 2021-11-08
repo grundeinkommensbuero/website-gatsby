@@ -8,12 +8,9 @@ import { RenderPage } from './Sections/RenderPage';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Overlay } from '../Overlay';
-import { OnboardingOverlay } from '../Overlay/OverlayOnboarding';
 import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
-import { MeetupOverlay } from '../Overlay/OverlayMeetup';
-// import cN from 'classnames';
 
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
 const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
@@ -275,10 +272,6 @@ function Template({ children, sections, pageContext, title, description }) {
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
         </Overlay>
       )}
-
-      <OnboardingOverlay />
-
-      <MeetupOverlay />
 
       <Header
         menu={modifiedMainMenu}
