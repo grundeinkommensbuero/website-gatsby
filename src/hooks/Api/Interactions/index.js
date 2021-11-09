@@ -134,7 +134,7 @@ const updateInteraction = async (userId, data, token, setState) => {
       request
     );
 
-    if (response.status === 201) {
+    if (response.status === 204) {
       setState('saved');
     } else {
       setState('error');
