@@ -159,7 +159,7 @@ const Package = ({ body, user, createdAt, id, done, isUserOwn = false }) => {
               </div>
             ) : (
               <>
-                {!done ? (
+                {!done && pledgeUpdateState !== 'saved' ? (
                   <button
                     onClick={() =>
                       updatePledgePackage({
