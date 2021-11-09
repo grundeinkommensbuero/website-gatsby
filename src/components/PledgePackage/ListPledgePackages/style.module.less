@@ -19,14 +19,18 @@
 .fullPackage {
   display: flex;
   flex: 1 1 0px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   margin-right: 1.5rem;
-  max-width: 20rem;
+  max-width: 21rem;
+}
+
+.extraBottomMargin {
+  margin-bottom: 4rem;
 }
 
 .packageIconContainer {
   position: relative;
-  width: 10rem;
+  width: 11rem;
   height: 7.5rem;
 }
 
@@ -46,6 +50,19 @@
   left: 5.5rem;
 }
 
+.doneOption {
+  position: absolute;
+  top: 7.75rem;
+  font-size: 0.95rem;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+.loadingPackageUpdate {
+  position: absolute;
+  top: 6rem;
+}
+
 .belowSpeechBubble {
   display: flex;
   align-items: center;
@@ -61,7 +78,7 @@
   margin-bottom: 0.25rem;
 }
 
-.timestamp {
+.createdAt {
   font-size: @DesktopFontSizeXS;
   color: gray;
   margin-top: 0;

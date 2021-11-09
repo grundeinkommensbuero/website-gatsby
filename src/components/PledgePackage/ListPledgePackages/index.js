@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
 import AvatarImage from '../../AvatarImage';
-import { useGetMostRecentInteractions } from '../../../hooks/Api/Interactions';
+import {
+  useGetMostRecentInteractions,
+  useUpdateInteraction,
+} from '../../../hooks/Api/Interactions';
+
 import { CTALink } from '../../Layout/CTAButton';
 import AuthContext from '../../../context/Authentication';
 
 import paketSvg from '../paket-v2.svg';
 import { LoadingAnimation } from '../../LoadingAnimation';
+import cN from 'classnames';
 
 export default () => {
   const [state, pledgePackages, getInteractions] =
@@ -71,10 +76,13 @@ export default () => {
             {packagesOfUser.map((pledgePackage, index) => {
               return (
                 <Package
+                  isUserOwn={true}
                   key={index}
                   body={pledgePackage.body}
                   user={userData}
-                  timestamp={pledgePackage.createdAt}
+                  createdAt={pledgePackage.createdAt}
+                  id={pledgePackage.id}
+                  done={pledgePackage.done}
                 />
               );
             })}
@@ -109,7 +117,7 @@ export default () => {
                   key={index}
                   body={pledgePackage.body}
                   user={pledgePackage.user}
-                  timestamp={pledgePackage.createdAt}
+                  createdAt={pledgePackage.createdAt}
                 />
               );
             })}
@@ -122,9 +130,20 @@ export default () => {
   );
 };
 
-const Package = ({ body, user, timestamp }) => {
+const Package = ({ body, user, createdAt, id, done, isUserOwn = false }) => {
+  const [pledgeUpdateState, updatePledgePackage] = useUpdateInteraction();
+  const { updateCustomUserData } = useContext(AuthContext);
+  const [, , getInteractions] = useGetMostRecentInteractions();
+
+  useEffect(() => {
+    if (pledgeUpdateState === 'saved') {
+      getInteractions(null, 0, 'pledgePackage');
+      updateCustomUserData();
+    }
+  }, [pledgeUpdateState]);
+
   return (
-    <div className={s.fullPackage}>
+    <div className={cN(s.fullPackage, { [s.extraBottomMargin]: isUserOwn })}>
       <div className={s.packageIconContainer}>
         <img
           src={paketSvg}
@@ -132,19 +151,52 @@ const Package = ({ body, user, timestamp }) => {
           alt="Symbolbild eines Paketes"
         />
         <AvatarImage className={s.avatar} user={user} sizes="120px" />
+        {isUserOwn && (
+          <>
+            {pledgeUpdateState === 'saving' ? (
+              <div className={s.loadingPackageUpdate}>
+                <LoadingAnimation />
+              </div>
+            ) : (
+              <>
+                {!done ? (
+                  <button
+                    onClick={() =>
+                      updatePledgePackage({
+                        id: id,
+                        done: true,
+                      })
+                    }
+                    className={cN(
+                      s.linkLikeFormattedButton,
+                      s.onWhiteBackground,
+                      s.doneOption
+                    )}
+                  >
+                    <b>Als erledigt markieren</b>
+                  </button>
+                ) : (
+                  <p className={s.doneOption}>
+                    <b>Paket erledigt!</b>
+                  </p>
+                )}
+              </>
+            )}
+          </>
+        )}
       </div>
       <div className={s.packageTextContainer}>
         <h4 className={s.name}>{user.username}</h4>
-        <p className={s.timestamp}>Vor {getElapsedTime(timestamp)}</p>
+        <p className={s.createdAt}>Vor {getElapsedTime(createdAt)}</p>
         <p className={s.quote}>"{body}"</p>
       </div>
     </div>
   );
 };
 
-const getElapsedTime = timestamp => {
+const getElapsedTime = createdAt => {
   const endTime = new Date();
-  const startTime = new Date(timestamp);
+  const startTime = new Date(createdAt);
   const timeDiff = endTime.getTime() - startTime.getTime();
   const seconds = Math.floor(timeDiff / 1000);
   const minutes = Math.floor(seconds / 60);
