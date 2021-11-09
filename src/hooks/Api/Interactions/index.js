@@ -101,3 +101,46 @@ const getMostRecentInteractions = async (
     setState('error');
   }
 };
+
+export const useUpdateInteraction = () => {
+  // we are calling useState to 1) return the state and 2) pass the setState function
+  // to our updateInteraction function, so we can set the state from there
+  const [state, setState] = useState(null);
+
+  // Get user id and token from global context
+  const { userId, token } = useContext(AuthContext);
+
+  return [state, data => updateInteraction(userId, data, token, setState)];
+};
+
+// Function which calls the aws api to update an existing interaction
+const updateInteraction = async (userId, data, token, setState) => {
+  try {
+    setState('saving');
+
+    // Make request to api to save interaction
+    const request = {
+      method: 'PATCH',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify(data),
+    };
+
+    const response = await fetch(
+      `${CONFIG.API.INVOKE_URL}/users/${userId}/interactions/${data.id}/`,
+      request
+    );
+
+    if (response.status === 201) {
+      setState('saved');
+    } else {
+      setState('error');
+    }
+  } catch (error) {
+    console.log('Error', error);
+    setState('error');
+  }
+};
