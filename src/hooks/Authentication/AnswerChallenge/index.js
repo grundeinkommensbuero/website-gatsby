@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { TrackJS } from 'trackjs';
 import AuthContext from '../../../context/Authentication';
 import { updateUser } from '../../Api/Users/Update';
+import { sleep } from '../../utils';
 
 export const useAnswerChallenge = () => {
   const [state, setState] = useState();
@@ -49,7 +50,9 @@ const answerCustomChallenge = async (
     // It we get here, the answer was sent successfully,
     // but it might have been wrong (1st or 2nd time)
     // So we should test if the user is authenticated now
-    try {
+
+    // Define function here to reuse it in the catch
+    const finalizeSignIn = async () => {
       // This will throw an error if the user is not yet authenticated:
       await Auth.currentSession();
       //User is now signed in
@@ -67,10 +70,30 @@ const answerCustomChallenge = async (
         tempUser.signInUserSession.idToken.jwtToken,
         answer
       );
+    };
+    try {
+      await finalizeSignIn();
     } catch (error) {
-      setState('wrongCode');
       console.log('Apparently the user did not enter the right code', error);
       TrackJS.track(error);
+      TrackJS.track({ tempUser, try: 'first' });
+
+      try {
+        await sleep(500);
+        await finalizeSignIn();
+      } catch (secondError) {
+        // Create object with cognito related values from local storage to send it to track js
+        const localStorageObject = {};
+        Object.keys(window.localStorage).forEach(key => {
+          if (key.startsWith('Cognito')) {
+            localStorageObject[key] = window.localStorage.getItem(key);
+          }
+        });
+        TrackJS.track(secondError);
+        TrackJS.track({ tempUser, try: 'second', localStorageObject });
+
+        setState('wrongCode');
+      }
     }
   } catch (error) {
     // If we wanted to resend the code after used waited more than 3 minutes
@@ -88,6 +111,9 @@ const answerCustomChallenge = async (
     }
   }
 };
+
+// This function checks if the authentication worked.
+// If yes, the context is updated and the sign
 
 // We use updateUser function to confirm user in dynamo db
 // Code needs to be saved in the db as well for legal reasons
