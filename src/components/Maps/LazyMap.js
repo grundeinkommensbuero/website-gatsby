@@ -208,6 +208,7 @@ const PopupContent = ({
   address,
   city,
   zipCode,
+  locationName,
 }) => (
   <div className={s.tooltip}>
     {date && <div>{formatDateTime(new Date(date))}</div>}
@@ -234,7 +235,7 @@ const PopupContent = ({
             </div>
           </div>
         )}
-        {address && (
+        {(address || locationName) && (
           <div className={s.tooltipInfoWithIcon}>
             <img
               src={pinIcon}
@@ -242,11 +243,15 @@ const PopupContent = ({
               className={s.tooltipIcon}
             />
             <div className={s.tooltipLocation}>
-              <span className={s.tooltipAddress}>{address}</span>
-              <br />
-              <span className={s.tooltipZipCode}>
-                {zipCode} {city}
+              <span className={s.tooltipAddress}>
+                {address || locationName}
               </span>
+              <br />
+              {zipCode && city && (
+                <span className={s.tooltipZipCode}>
+                  {zipCode} {city}
+                </span>
+              )}
             </div>
           </div>
         )}

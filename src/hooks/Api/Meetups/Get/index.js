@@ -14,16 +14,24 @@ export const useGetMeetups = () => {
 // gets meetups (only for berlin for now) from dwe backend
 const getMeetups = async setMeetups => {
   try {
+    // Endpoint is POST to optionally receive  a filter as body
     const request = {
-      method: 'GET',
+      method: 'POST',
       mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
     };
 
-    const response = await fetch(`${CONFIG.API.INVOKE_URL}/meetups`, request);
+    const response = await fetch(
+      `${CONFIG.APP_API.INVOKE_URL}/service/termine`,
+      request
+    );
 
     if (response.status === 200) {
       const json = await response.json();
-      setMeetups(json.data);
+      setMeetups(json.features);
     } else {
       console.log('Response is not 200', response.status);
     }

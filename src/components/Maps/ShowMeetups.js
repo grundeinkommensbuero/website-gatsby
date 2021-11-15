@@ -62,17 +62,18 @@ export const ShowMeetups = ({ mapConfig, className }) => {
         // We want to bring the meetups from the backend into the same format as
         // the ones from contentful
         collectSignaturesLocationsFiltered = meetups.map(
-          ({ coordinates, description, type, locationName, ...rest }) => ({
+          ({ beginn, ende, latitude, longitude, ort, beschreibung, typ }) => ({
             location: {
-              lon: coordinates[0],
-              lat: coordinates[1],
+              lon: longitude,
+              lat: latitude,
             },
-            description: description,
-            title:
-              type === 'collect'
-                ? 'Sammelaktion'
-                : `Unterschreiben: ${locationName}`,
-            ...rest,
+            description: beschreibung,
+            title: typ === 'Sammeln' ? 'Sammelaktion' : 'Unterschreiben',
+            //  NOTE: maybe introduce the name again in the future
+            // : `Unterschreiben: ${locationName}`,
+            startTime: beginn,
+            endTime: ende,
+            locationName: ort,
           })
         );
       } else {
