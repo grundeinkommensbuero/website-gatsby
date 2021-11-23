@@ -43,39 +43,25 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   const [type, setType] = useState('collect');
 
   const isBerlin = mapConfig.state === 'berlin';
+  const isHamburg = mapConfig.state === 'hamburg';
 
   useEffect(() => {
-    // We only need to fetch meetups from secondary API if it's the berlin map
-    if (isBerlin) {
-      getMeetups();
+    // We only need to fetch meetups from secondary API if it's the berlin or hamburg map
+    if (isBerlin || isHamburg) {
+      // We pass isBerlin flag to differentiate between APIs
+      getMeetups(isBerlin);
     }
   }, [mapConfig]);
 
   const onCreatedMeetup = () => {
-    getMeetups();
+    getMeetups(isBerlin);
   };
 
   useEffect(() => {
-    if (!isBerlin || (isBerlin && meetups)) {
+    if (!(isBerlin || isHamburg) || ((isBerlin || isHamburg) && meetups)) {
       let collectSignaturesLocationsFiltered = [];
       if (isBerlin) {
-        // We want to bring the meetups from the backend into the same format as
-        // the ones from contentful
-        collectSignaturesLocationsFiltered = meetups.map(
-          ({ beginn, ende, latitude, longitude, ort, beschreibung, typ }) => ({
-            location: {
-              lon: longitude,
-              lat: latitude,
-            },
-            description: beschreibung,
-            title: typ === 'Sammeln' ? 'Sammelaktion' : 'Unterschreiben',
-            //  NOTE: maybe introduce the name again in the future
-            // : `Unterschreiben: ${locationName}`,
-            startTime: beginn,
-            endTime: ende,
-            locationName: ort,
-          })
-        );
+        collectSignaturesLocationsFiltered = meetups;
       } else {
         collectSignaturesLocationsFiltered = collectSignaturesLocations
           .filter(({ node: location }) => {

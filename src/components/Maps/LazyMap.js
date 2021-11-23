@@ -230,7 +230,7 @@ const PopupContent = ({
               <br />
               <span className={s.tooltipTime}>
                 {formatTime(new Date(startTime))} -{' '}
-                {formatTime(new Date(startTime))} Uhr
+                {formatTime(new Date(endTime))} Uhr
               </span>
             </div>
           </div>

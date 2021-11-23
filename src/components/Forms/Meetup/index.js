@@ -151,17 +151,16 @@ export const CreateMeetup = ({
                   id.startsWith('postcode')
                 )?.text,
                 type,
-                // TODO: needs to be passed as variable for other campaigns
-                campaignCode: 'berlin-2',
+                campaignCode: `${mapConfig.state}-2`, // This should be only hamburg-2 anyway
               };
 
               // Only had dates if type is collect
               if (type === 'collect') {
-                data.startTime = new Date(`${e.date}T${e.start}`);
-                data.endTime = new Date(`${e.date}T${e.end}`);
+                data.startTime = new Date(`${e.date}T${e.start}`).toISOString();
+                data.endTime = new Date(`${e.date}T${e.end}`).toISOString();
               }
 
-              createMeetup(data);
+              createMeetup(data, mapConfig.state === 'berlin');
             }}
             validate={values => validate(values, type)}
             render={({ handleSubmit }) => (
