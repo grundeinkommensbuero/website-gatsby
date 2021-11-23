@@ -76,7 +76,7 @@ export default () => {
             {packagesOfUser.map((pledgePackage, index) => {
               return (
                 <Package
-                  isUserOwn={true}
+                  belongsToCurrentUser={true}
                   key={index}
                   body={pledgePackage.body}
                   user={userData}
@@ -130,7 +130,14 @@ export default () => {
   );
 };
 
-const Package = ({ body, user, createdAt, id, done, isUserOwn = false }) => {
+const Package = ({
+  body,
+  user,
+  createdAt,
+  id,
+  done,
+  belongsToCurrentUser = false,
+}) => {
   const [pledgeUpdateState, updatePledgePackage] = useUpdateInteraction();
   const { updateCustomUserData } = useContext(AuthContext);
   const [, , getInteractions] = useGetMostRecentInteractions();
@@ -143,7 +150,11 @@ const Package = ({ body, user, createdAt, id, done, isUserOwn = false }) => {
   }, [pledgeUpdateState]);
 
   return (
-    <div className={cN(s.fullPackage, { [s.extraBottomMargin]: isUserOwn })}>
+    <div
+      className={cN(s.fullPackage, {
+        [s.extraBottomMargin]: belongsToCurrentUser,
+      })}
+    >
       <div className={s.packageIconContainer}>
         <img
           src={paketSvg}
@@ -151,7 +162,7 @@ const Package = ({ body, user, createdAt, id, done, isUserOwn = false }) => {
           alt="Symbolbild eines Paketes"
         />
         <AvatarImage className={s.avatar} user={user} sizes="120px" />
-        {isUserOwn && (
+        {belongsToCurrentUser && (
           <>
             {pledgeUpdateState === 'saving' ? (
               <div className={s.loadingPackageUpdate}>
