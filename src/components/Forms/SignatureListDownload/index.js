@@ -4,13 +4,7 @@ import * as s from './style.module.less';
 
 import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
-import {
-  validateEmail,
-  addActionTrackingId,
-  trackEvent,
-  // mapCampaignCodeToAgs,
-  // mapCampaignCodeToState,
-} from '../../utils';
+import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { LinkButton, InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';

@@ -11,7 +11,7 @@ import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import AvatarImage from '../../AvatarImage';
 import packageV2 from '../paket-v2.svg';
 import { Speechbubble } from '../Speechbubble/index';
-import { campaignToAgs } from '../../utils';
+import { mapCampaignCodeToAgs, mapCampaignCodeToState } from '../../utils';
 
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
@@ -48,17 +48,50 @@ export default ({ userData, updateCustomUserData }) => {
 
   useEffect(() => {
     if (pledgePackageState === 'saved') {
-      updateCustomUserData();
+      const ags = mapCampaignCodeToAgs(campaignCode);
 
       // Sign up user for municipality if they aren't already
-      if (
-        campaignToAgs[campaignCode] &&
+      const shouldSignUpForMunicipality =
+        ags &&
         !userData?.municipalities?.find(
-          ({ ags }) => ags === campaignToAgs[campaignCode]
-        )
-      ) {
-        updateUser({ ags: campaignToAgs[campaignCode] });
+          municipality => municipality.ags === ags
+        );
+
+      // If user does not have newsletter consent, or already has newsletter of campaign
+      // or already has unsubscribed from campaign (newsletter.value is false in that case), we do nothing.
+      // Otherwise we give user newsletter for campaign.
+      const shouldSubscribeToNewsletter =
+        userData.newsletterConsent.value &&
+        userData.customNewsletters.findIndex(
+          newsletter => newsletter.ags === ags
+        ) === -1;
+
+      const data = {};
+
+      if (shouldSignUpForMunicipality) {
+        data.ags = ags;
       }
+
+      if (shouldSubscribeToNewsletter) {
+        data.customNewsletters = [
+          ...userData.customNewsletters,
+          {
+            name: mapCampaignCodeToState(campaignCode),
+            ags,
+            value: true,
+            extraInfo: false,
+            timestamp: new Date().toISOString(),
+          },
+        ];
+      }
+
+      console.log('about to update user with data', data);
+
+      if (shouldSubscribeToNewsletter || shouldSignUpForMunicipality) {
+        updateUser(data);
+      }
+
+      updateCustomUserData();
     }
   }, [pledgePackageState]);
 
