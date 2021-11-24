@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "de.expeditiongrundeinkommen.app",
+        "paths": [
+          "/die-sammel-app/",
+          "/die-sammel-app"
+        ]
+      }
+    ]
+  }
+}
