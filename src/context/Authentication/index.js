@@ -100,7 +100,7 @@ const AuthProvider = ({ children }) => {
       });
 
       // Update user in db to leave a "trace" that they've been active
-      const store = { lastAction: new Date().toISOString() };
+      const store = { lastActivity: new Date().toISOString() };
       updateUser({ userId, token, store });
     } else if (!userId && !isAuthenticated) {
       // If userId is not set and is Authenticated is not true,
