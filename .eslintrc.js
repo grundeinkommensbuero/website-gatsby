@@ -1,7 +1,6 @@
 // const { printSchema } = require('graphql');
-
 module.exports = {
-  extends: ['eslint-config-react-app'],
+  extends: ['eslint-config-react-app', 'plugin:storybook/recommended'],
   env: {
     browser: true,
     node: true,
