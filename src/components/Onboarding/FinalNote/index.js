@@ -6,6 +6,30 @@ import Confetti from '../../Confetti';
 import { navigate } from 'gatsby';
 
 export const FinalNote = ({ municipality, setShowModal }) => {
+  const isLotteryPage =
+    typeof window !== 'undefined'
+      ? window.location.pathname.includes('verlosung')
+      : false;
+
+  // Kind of hacky, but we can probably just remove it after the christmas lottery
+  // Did not come up with a more clever solution just now
+  if (isLotteryPage) {
+    return (
+      <section className={gS.pageContainer}>
+        <h3 className={gS.moduleTitle}>Vielen Dank für die Anmeldung!</h3>
+
+        <Button
+          className={s.redirectButton}
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          Weiter zur Verlosung
+        </Button>
+      </section>
+    );
+  }
+
   return (
     <section className={gS.pageContainer}>
       <h3 className={gS.moduleTitle}>Wie geht es jetzt weiter?</h3>

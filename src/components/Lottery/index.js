@@ -12,14 +12,23 @@ import * as s from './style.module.less';
 
 export const Lottery = () => {
   const [wantsToDonate, setWantsToDonate] = useState(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { isAuthenticated, customUserData: userData } = useContext(AuthContext);
   const [updateUserState, updateUser] = useUpdateUser();
 
   useEffect(() => {
     // If user has signed in and does not have username, we want to
     // sign em up for the lotto right away.
-    if (isAuthenticated && userData.username && wantsToDonate !== null) {
+    if (
+      isAuthenticated &&
+      userData.username &&
+      wantsToDonate !== null &&
+      !hasSubmitted
+    ) {
       updateUser({ lottery: '2021' });
+      // We need to set a flag, otherwise it will trigger multiple times,
+      // while user goes through onboarding
+      setHasSubmitted(true);
     }
   }, [isAuthenticated, wantsToDonate, userData]);
 
