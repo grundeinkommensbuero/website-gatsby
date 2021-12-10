@@ -58,6 +58,7 @@ const Components = {
   CampaignVisualisation: loadable(() =>
     import('../../Municipality/MunicipalityCampaignVisualisations')
   ),
+  Lottery: loadable(() => import('../../Lottery')),
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
