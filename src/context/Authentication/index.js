@@ -3,6 +3,7 @@ import querystring from 'query-string';
 
 import { getCurrentUser, getUser } from '../../hooks/Api/Users/Get';
 import { useLocalStorageUser, signOut } from '../../hooks/Authentication/';
+import { updateUser } from '../../hooks/Api/Users/Update';
 
 /**
  * This class serves as a provider (reacts context API) which is used
@@ -97,6 +98,10 @@ const AuthProvider = ({ children }) => {
         setCustomUserData,
         signUserOut,
       });
+
+      // Update user in db to leave a "trace" that they've been active
+      const store = { lastActivity: new Date().toISOString() };
+      updateUser({ userId, token, store });
     } else if (!userId && !isAuthenticated) {
       // If userId is not set and is Authenticated is not true,
       // we want to reset userData (this would happen after a signout)
