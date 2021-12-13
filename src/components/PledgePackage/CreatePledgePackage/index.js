@@ -85,8 +85,6 @@ export default ({ userData, updateCustomUserData }) => {
         ];
       }
 
-      console.log('about to update user with data', data);
-
       if (shouldSubscribeToNewsletter || shouldSignUpForMunicipality) {
         updateUser(data);
       }
