@@ -99,9 +99,11 @@ const AuthProvider = ({ children }) => {
         signUserOut,
       });
 
-      // Update user in db to leave a "trace" that they've been active
-      const store = { lastActivity: new Date().toISOString() };
-      updateUser({ userId, token, store });
+      if (isAuthenticated) {
+        // Update user in db to leave a "trace" that they've been active
+        const store = { lastActivity: new Date().toISOString() };
+        updateUser({ userId, token, store });
+      }
     } else if (!userId && !isAuthenticated) {
       // If userId is not set and is Authenticated is not true,
       // we want to reset userData (this would happen after a signout)
