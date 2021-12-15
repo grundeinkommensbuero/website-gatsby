@@ -35,9 +35,9 @@ export const Lottery = () => {
   if (wantsToDonate === null) {
     return (
       <>
-        <h3>
+        <h2>
           Spende für die Expedition - und zieh automatisch dein Weihnachtslos!
-        </h3>
+        </h2>
         <p>
           Zeit für Geschenke: Bei unserer Weihnachtsverlosung kannst du
           nachhaltige und innovative Preise gewinnen - vom Päckchen Kaffee über
