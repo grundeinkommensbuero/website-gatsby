@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { navigate } from 'gatsby';
 import { Form, Field } from 'react-final-form';
 
 import AuthContext from '../../../context/Authentication';
@@ -12,6 +11,7 @@ import { TextInputWrapped } from '../../Forms/TextInput';
 import { InlineButton } from '../../Forms/Button';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import * as s from '../style.module.less';
+import { OnboardingModalContext } from '../../../context/OnboardingModal';
 
 export const EnterLoginCode = ({
   children,
@@ -19,6 +19,8 @@ export const EnterLoginCode = ({
   buttonText,
   onAnswerChallengeSuccess,
 }) => {
+  const { setShowModal } = useContext(OnboardingModalContext);
+
   const { tempEmail, setTempEmail, isAuthenticated } = useContext(AuthContext);
   const [answerChallengeState, setCode, setAnswerChallengeState] =
     useAnswerChallenge();
@@ -98,9 +100,8 @@ export const EnterLoginCode = ({
           Oh! Es scheint, diese Email-Addresse ist noch nicht bei uns
           registriert.{' '}
           <InlineButton
-            onClick={() => {
-              navigate('/registrieren/');
-            }}
+            aria-label="Registrieren"
+            onClick={() => setShowModal(true)}
           >
             Hier kannst du dich neu registrieren.
           </InlineButton>
