@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import AuthContext from '../../context/Authentication';
 import { useUpdateUser } from '../../hooks/Api/Users/Update';
-import { InlineButton } from '../Forms/Button';
+import {
+  InlineButton,
+  InlineLinkButton,
+  LinkButtonLocal,
+} from '../Forms/Button';
 import DonationForm from '../Forms/DonationForm';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 import { TextInputWrapped } from '../Forms/TextInput';
@@ -70,6 +74,10 @@ export const Lottery = () => {
           >
             ohne Spende an der Verlosung teilnehmen
           </InlineButton>
+          . Die Teilnahmebedingungen findest du{' '}
+          <InlineLinkButton href={'/teilnahmebedingungen'} target="_blank">
+            hier
+          </InlineLinkButton>
           .
         </p>
       </>
