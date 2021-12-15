@@ -34,8 +34,20 @@ export const Lottery = () => {
 
   if (wantsToDonate === null) {
     return (
-      <div className={s.container}>
-        <CTAButtonContainer>
+      <>
+        <h3>
+          Spende für die Expedition - und zieh automatisch dein Weihnachtslos!
+        </h3>
+        <p>
+          Zeit für Geschenke: Bei unserer Weihnachtsverlosung kannst du
+          nachhaltige und innovative Preise gewinnen - vom Päckchen Kaffee über
+          Bücher zum Grundeinkommen bis zum Kinogutschein! Spende jetzt für die
+          Kampagnen der Expedition Grundeinkommen im Jahr 2022 - und du nimmst
+          automatisch am Gewinnspiel teil. Die Verlosung findet Anfang Januar
+          statt.
+        </p>
+
+        <CTAButtonContainer className={s.primaryButtonContainer}>
           <CTAButton
             onClick={() => {
               setWantsToDonate(true);
@@ -45,16 +57,22 @@ export const Lottery = () => {
             Spenden und an der Verlosung teilnehmen
           </CTAButton>
         </CTAButtonContainer>
-        <p className={s.buttonText}>
+
+        <p>
+          Als Expedition Grundeinkommen freuen wir uns sehr über deine Spende!
+          Unten auf dieser Seite erfährst du, warum sie so wichtig ist, um
+          Grundeinkommen in Deutschland nach vorne zu bringen. Wenn du möchtest,
+          kannst du aber auch{' '}
           <InlineButton
             onClick={() => {
               setWantsToDonate(false);
             }}
           >
-            Nur an der Verlosung teilnehmen
+            ohne Spende an der Verlosung teilnehmen
           </InlineButton>
+          .
         </p>
-      </div>
+      </>
     );
   }
 
@@ -71,7 +89,10 @@ export const Lottery = () => {
   if (updateUserState === 'loading') {
     return (
       <FinallyMessage state="progress">
-        Los wird generiert, bitte einen Moment Geduld...
+        {wantsToDonate && <p>Bitte einen Moment Geduld...</p>}
+        {!wantsToDonate && (
+          <p>Los wird generiert, bitte einen Moment Geduld...</p>
+        )}
       </FinallyMessage>
     );
   }
@@ -80,7 +101,16 @@ export const Lottery = () => {
     return (
       <>
         <FinallyMessage>
-          Dein Los wurde dir per E-Mail zugesendet. Viel Glück!
+          {wantsToDonate && (
+            <p>
+              Vielen Dank für die Teilnahme. Dein Los wird dir per E-Mail
+              zugesendet. <br />
+              Im nächsten Schritt kannst du eine Spende hinterlassen.{' '}
+            </p>
+          )}
+          {!wantsToDonate && (
+            <p>Dein Los wurde dir per E-Mail zugesendet. Viel Glück!</p>
+          )}
         </FinallyMessage>
         {wantsToDonate && <DonationForm theme={'christmas'} />}
       </>

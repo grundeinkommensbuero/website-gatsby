@@ -563,7 +563,7 @@ export function SectionHeader({
               className={s.heroImage}
               alt=""
             />
-            <div className={s.heroImageOverlay} />
+            {/* <div className={s.heroImageOverlay} /> */}
           </>
         ) : (
           <>
