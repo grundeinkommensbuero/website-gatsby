@@ -51,10 +51,11 @@ export const MunicipalityGroups = ({ body }) => {
 
             {!groups && <NoGroupInfo municipalityName={name} />}
 
-            {groups?.map(({ medium, link }) => (
+            {groups?.map(({ medium, link, name }) => (
               <p>
+                {medium}:{' '}
                 <InlineLinkButton href={link} target="_blank">
-                  {medium}
+                  {name}
                 </InlineLinkButton>
               </p>
             ))}
