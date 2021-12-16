@@ -58,6 +58,7 @@ const Components = {
   CampaignVisualisation: loadable(() =>
     import('../../Municipality/MunicipalityCampaignVisualisations')
   ),
+  Groups: loadable(() => import('../../Municipality/MunicipalityGroups')),
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,

@@ -468,6 +468,10 @@ export const pageQuery = graphql`
                   raw
                 }
               }
+              ... on ContentfulSectionComponentGroups {
+                __typename
+                column
+              }
               ... on ContentfulSectionComponentBecomeActive {
                 __typename
                 headline

@@ -50,3 +50,43 @@ const getMunicipalityStats = async (ags, setState, setStats) => {
     setState('error');
   }
 };
+
+// Gets data of municipality from database
+export const useGetMunicipalityData = () => {
+  const [state, setState] = useState();
+  const [data, setData] = useState({});
+
+  return [state, data, ags => getMunicipalityData(ags, setState, setData)];
+};
+
+// This function fetches the municipality data (e.g. groups, not stats) from the backend.
+const getMunicipalityData = async (ags, setState, setData) => {
+  try {
+    setState('loading');
+
+    // Make request to api to save question
+    const request = {
+      method: 'GET',
+      mode: 'cors',
+    };
+
+    const endpoint = `/municipalities/${ags}`;
+
+    const response = await fetch(
+      `${CONFIG.API.INVOKE_URL}${endpoint}`,
+      request
+    );
+
+    if (response.status === 200) {
+      const { data } = await response.json();
+      setState('success');
+      setData(data);
+    } else {
+      console.log('Api response not 200');
+      setState('error');
+    }
+  } catch (error) {
+    console.log('Error', error);
+    setState('error');
+  }
+};
