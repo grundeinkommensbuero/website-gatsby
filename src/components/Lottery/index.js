@@ -41,9 +41,10 @@ export const Lottery = () => {
         <p>
           Zeit für Geschenke: Bei unserer Weihnachtsverlosung kannst du
           nachhaltige und innovative Preise gewinnen - vom Päckchen Kaffee über
-          inspirierende Bücher bis zum Kinogutschein! Spende jetzt für die Kampagnen der
-          Expedition Grundeinkommen im Jahr 2022 - und du nimmst automatisch am
-          Gewinnspiel teil. Die Verlosung findet Anfang Januar statt.
+          inspirierende Bücher bis zum Kinogutschein! Spende jetzt für die
+          Kampagnen der Expedition Grundeinkommen im Jahr 2022 - und du nimmst
+          automatisch am Gewinnspiel teil. Die Verlosung findet Anfang Januar
+          statt.
         </p>
 
         <CTAButtonContainer className={s.primaryButtonContainer}>
