@@ -3,16 +3,9 @@ import * as s from './style.module.less';
 import { StickyBannerContext } from '../../../../context/StickyBanner';
 import closeIcon from './close-icon.svg';
 import { navigate } from 'gatsby';
-import { useLocation } from '@reach/router';
 
 export const StickyDonationBar = () => {
   const { closeStickyBanner } = useContext(StickyBannerContext);
-  const { pathname } = useLocation();
-
-  // Deactive banner on lottery page
-  if (pathname?.includes('verlosung')) {
-    return null;
-  }
 
   return (
     <div className={s.donationBar}>
