@@ -7,8 +7,8 @@
 .donationBarItemContainer {
   display: flex;
   min-height: @donationBarHeight;
-  //justify-content: flex-end;
   justify-content: space-between;
+  align-items: center;
   width: @headerWidth;
   margin: auto;
   padding: 0.5rem 1rem;
@@ -31,36 +31,58 @@
   }
 }
 
+.noMargin {
+  margin: 0;
+}
+
 .donationBarCTA {
   font-size: @DesktopFontSizeS;
   font-weight: 600;
   color: @white;
   border: 3px solid @white;
   border-radius: 30px;
-  padding: 0 4rem;
-  padding-top: 0.15rem;
+  padding: 0.65rem 4rem 0.5rem;
   background-color: rgba(239, 239, 239, 0.37);
 
   &:hover {
     cursor: pointer;
-    border: 3px solid @red;
+    color: @aqua;
   }
 
   @media (max-width: @breakPointS) {
-    padding: 0 1rem;
+    padding: 0.35rem 1rem 0.25rem;
   }
 }
 
 .closeButton {
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
   margin: auto 1rem;
+  background: transparent;
+  outline: none;
+  border: none;
+
+  &:hover {
+    background: transparent;
+    outline: none;
+    border: none;
+  }
 
   @media (max-width: @breakPointM) {
     width: 1.25rem;
     height: 1.25rem;
   }
+
+  @media (max-width: @breakPointS) {
+    margin: auto 0.25rem;
+  }
+}
+
+.closeIconBanner {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
 
   @media (max-width: @breakPointS) {
     margin: auto 0.25rem;
