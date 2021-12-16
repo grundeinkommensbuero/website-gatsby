@@ -1,20 +1,24 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
-
-// import * as s from './style.module.less';
+import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { InlineLinkButton } from '../../Forms/Button';
 import { SignUpButton } from '../../TickerToSignup/SignupButton';
+import * as s from './style.module.less';
 
-export const MunicipalityGroups = () => {
+export const MunicipalityGroups = ({ body }) => {
   const { isAuthenticated, customUserData: userData } = useContext(AuthContext);
   const { municipality } = useContext(MunicipalityContext);
+
+  const introText = body && contentfulJsonToHtml(body);
 
   // If municipality is set (meaning user is on municipality page) we want to show groups
   // for this municipality
   if (municipality) {
     return (
       <>
+        <p>{introText}</p>
+
         {!municipality?.groups && (
           <NoGroupInfo municipalityName={municipality.name} />
         )}
@@ -26,6 +30,8 @@ export const MunicipalityGroups = () => {
             </InlineLinkButton>
           </p>
         ))}
+
+        <CreateGroupInfo />
       </>
     );
   }
@@ -37,6 +43,8 @@ export const MunicipalityGroups = () => {
 
     return (
       <>
+        <p>{introText}</p>
+
         {sortedMunicipalites?.map(({ name, groups }) => (
           <>
             <h3>{name}</h3>
@@ -52,12 +60,15 @@ export const MunicipalityGroups = () => {
             ))}
           </>
         ))}
+
+        <CreateGroupInfo />
       </>
     );
   }
 
   return (
     <>
+      <p>{introText}</p>
       <p>
         Du bist noch in keinem Ort angemeldet. Sobald du dich für einen Ort
         anmeldest, siehst du hier (falls vorhanden) Gruppen zur Vernetzung.
@@ -68,8 +79,11 @@ export const MunicipalityGroups = () => {
 };
 
 const NoGroupInfo = ({ municipalityName }) => (
-  <p>
-    Es gibt noch keine Gruppen für {municipalityName}.{' '}
+  <p>Es gibt noch keine Gruppen für {municipalityName}.</p>
+);
+
+const CreateGroupInfo = () => (
+  <p className={s.createGroupInfo}>
     <InlineLinkButton href="/gruppen">Hier</InlineLinkButton> erfährst du, wie
     du eine neue Gruppe erstellen kannst.
   </p>

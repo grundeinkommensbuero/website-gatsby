@@ -471,6 +471,9 @@ export const pageQuery = graphql`
               ... on ContentfulSectionComponentGroups {
                 __typename
                 column
+                body {
+                  raw
+                }
               }
               ... on ContentfulSectionComponentBecomeActive {
                 __typename
