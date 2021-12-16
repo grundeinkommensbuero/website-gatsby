@@ -59,6 +59,7 @@ const Components = {
     import('../../Municipality/MunicipalityCampaignVisualisations')
   ),
   Groups: loadable(() => import('../../Municipality/MunicipalityGroups')),
+  Lottery: loadable(() => import('../../Lottery')),
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
@@ -563,7 +564,7 @@ export function SectionHeader({
               className={s.heroImage}
               alt=""
             />
-            <div className={s.heroImageOverlay} />
+            {/* <div className={s.heroImageOverlay} /> */}
           </>
         ) : (
           <>
