@@ -71,8 +71,6 @@ export const MunicipalityProvider = ({ children }) => {
     getAllMunicipalityStats();
   }, []);
 
-  console.log('municipality', municipality);
-
   useEffect(() => {
     if (pageContext) {
       const { isMunicipality, isSpecificMunicipality, municipality } =
@@ -160,7 +158,6 @@ export const MunicipalityProvider = ({ children }) => {
   }, [allMunicipalityStats]);
 
   useEffect(() => {
-    console.log({ singleMunicipalityData });
     if (municipality) {
       setMunicipality({ ...municipality, ...singleMunicipalityData });
     }
