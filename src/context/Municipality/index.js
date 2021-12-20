@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useGetMunicipalityStats } from '../../hooks/Api/Municipalities';
+import {
+  useGetMunicipalityStats,
+  useGetMunicipalityData,
+} from '../../hooks/Api/Municipalities';
 
 import municipalities from '../../components/Municipality/MunicipalityMap/data/municipalitiesForMap.json';
 
@@ -56,6 +59,10 @@ export const MunicipalityProvider = ({ children }) => {
     getSingleMunicipalityStats,
   ] = useGetMunicipalityStats();
 
+  // Data for just one municipality, will be set if a municipality is set
+  const [, singleMunicipalityData, getSingleMunicipalityData] =
+    useGetMunicipalityData();
+
   const [municipalityContentfulState, setMunicipalityContentfulState] =
     useState('noMunicipality');
 
@@ -77,6 +84,8 @@ export const MunicipalityProvider = ({ children }) => {
           // Get stats for single municipality
           // (needed if municipality page is opened directly which is the case here)
           getSingleMunicipalityStats(municipality.ags);
+          // This call is needed to get groups
+          getSingleMunicipalityData(municipality.ags);
           setMunicipality(municipality);
         } else {
           setIsSpecific(false);
@@ -147,6 +156,12 @@ export const MunicipalityProvider = ({ children }) => {
     }
     setMunicipalitiesInObject(municipalityObject);
   }, [allMunicipalityStats]);
+
+  useEffect(() => {
+    if (municipality) {
+      setMunicipality({ ...municipality, ...singleMunicipalityData });
+    }
+  }, [singleMunicipalityData]);
 
   useEffect(() => {
     // Find all municipalities with signups and goal
