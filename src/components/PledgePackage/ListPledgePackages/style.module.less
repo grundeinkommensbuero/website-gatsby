@@ -19,15 +19,20 @@
 .fullPackage {
   display: flex;
   flex: 1 1 0px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   margin-right: 1.5rem;
-  max-width: 20rem;
+  max-width: 21rem;
+}
+
+.extraBottomMargin {
+  margin-bottom: 4rem;
 }
 
 .packageIconContainer {
   position: relative;
-  width: 10rem;
+  width: 9.5rem;
   height: 7.5rem;
+  margin-right: 1.5rem;
 }
 
 .packageTextContainer {
@@ -38,12 +43,44 @@
   position: absolute;
 }
 
+.checkIcon {
+  height: 0.8rem;
+  margin: 0rem 0.5rem 0 0;
+}
+
 .avatar {
   width: 60px;
   height: 60px;
   position: absolute;
   top: 3.5rem;
   left: 5.5rem;
+}
+
+.setDone {
+  position: absolute;
+  top: 7.75rem;
+  font-size: 0.95rem;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.isDone {
+  position: absolute;
+  top: 7.75rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0.5rem 0.35rem;
+  background: @aqua;
+  color: white;
+  width: 100%;
+}
+
+.loadingPackageUpdate {
+  position: absolute;
+  top: 6rem;
 }
 
 .belowSpeechBubble {
@@ -61,7 +98,7 @@
   margin-bottom: 0.25rem;
 }
 
-.timestamp {
+.createdAt {
   font-size: @DesktopFontSizeXS;
   color: gray;
   margin-top: 0;

@@ -2,36 +2,39 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
 import AvatarImage from '../../AvatarImage';
-import { useGetMostRecentInteractions } from '../../../hooks/Api/Interactions';
+import {
+  useGetMostRecentInteractions,
+  useUpdateInteraction,
+} from '../../../hooks/Api/Interactions';
+
 import { CTALink } from '../../Layout/CTAButton';
 import AuthContext from '../../../context/Authentication';
 
 import paketSvg from '../paket-v2.svg';
+import check from '../check.svg';
+
 import { LoadingAnimation } from '../../LoadingAnimation';
+import cN from 'classnames';
 
 export default () => {
   const [state, pledgePackages, getInteractions] =
     useGetMostRecentInteractions();
   const { userId, customUserData: userData } = useContext(AuthContext);
-  const [packagesDone, setPackagesDone] = useState(0);
   const [packagesOfUser, setPackagesOfUser] = useState([]);
+  const [pledgePackagesDone, setPledgePackagesDone] = useState([]);
 
+  // Fetch all interactions once
   useEffect(() => {
     getInteractions(null, 0, 'pledgePackage');
   }, []);
 
+  // Get a list of all done packages
   useEffect(() => {
-    let counter = 0;
-    pledgePackages.forEach(pledgePackage => {
-      if (pledgePackage.done) {
-        counter = counter + 1;
-      }
-    });
-    setPackagesDone(counter);
+    const done = pledgePackages.filter(pledgePackage => pledgePackage.done);
+    setPledgePackagesDone(done);
   }, [pledgePackages]);
 
-  // Filter interactions to only use interactions which were created
-  // as pledge package
+  // Get only pledge packages from user interactions
   useEffect(() => {
     if (userData?.interactions) {
       setPackagesOfUser(
@@ -52,7 +55,9 @@ export default () => {
           {pledgePackages[0] ? (
             <b>
               Schon {pledgePackages.length} Pakete verteilt
-              {packagesDone > 0 && ` und davon ${packagesDone} erledigt`}!
+              {pledgePackagesDone.length > 0 &&
+                ` und davon ${pledgePackagesDone.length} erledigt`}
+              !
             </b>
           ) : (
             <b>Noch keine Pakete verteilt!</b>
@@ -71,10 +76,13 @@ export default () => {
             {packagesOfUser.map((pledgePackage, index) => {
               return (
                 <Package
+                  belongsToCurrentUser={true}
                   key={index}
                   body={pledgePackage.body}
                   user={userData}
-                  timestamp={pledgePackage.createdAt}
+                  createdAt={pledgePackage.createdAt}
+                  id={pledgePackage.id}
+                  done={pledgePackage.done}
                 />
               );
             })}
@@ -94,7 +102,7 @@ export default () => {
 
       {state && state !== 'loading' ? (
         <>
-          {pledgePackages[0] ? (
+          {pledgePackages.length > 0 ? (
             <h3 className={s.headingViolet}>
               Diese Pakete hat sich schon jemand geschnappt
             </h3>
@@ -109,11 +117,32 @@ export default () => {
                   key={index}
                   body={pledgePackage.body}
                   user={pledgePackage.user}
-                  timestamp={pledgePackage.createdAt}
+                  createdAt={pledgePackage.createdAt}
                 />
               );
             })}
           </div>
+
+          {pledgePackagesDone.length > 0 && (
+            <>
+              <h3 className={s.headingViolet}>
+                Diese Pakete wurden schon erledigt!
+              </h3>
+              <div className={s.container}>
+                {pledgePackagesDone.map((pledgePackage, index) => {
+                  return (
+                    <Package
+                      key={index}
+                      body={pledgePackage.body}
+                      user={pledgePackage.user}
+                      createdAt={pledgePackage.createdAt}
+                      showDone={true}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )}
         </>
       ) : (
         <LoadingAnimation />
@@ -122,9 +151,32 @@ export default () => {
   );
 };
 
-const Package = ({ body, user, timestamp }) => {
+const Package = ({
+  body,
+  user,
+  createdAt,
+  id,
+  done,
+  belongsToCurrentUser = false,
+  showDone = false,
+}) => {
+  const [pledgeUpdateState, updatePledgePackage] = useUpdateInteraction();
+  const { updateCustomUserData } = useContext(AuthContext);
+  const [, , getInteractions] = useGetMostRecentInteractions();
+
+  useEffect(() => {
+    if (pledgeUpdateState === 'saved') {
+      getInteractions(null, 0, 'pledgePackage');
+      updateCustomUserData();
+    }
+  }, [pledgeUpdateState]);
+
   return (
-    <div className={s.fullPackage}>
+    <div
+      className={cN(s.fullPackage, {
+        [s.extraBottomMargin]: belongsToCurrentUser || showDone,
+      })}
+    >
       <div className={s.packageIconContainer}>
         <img
           src={paketSvg}
@@ -132,19 +184,66 @@ const Package = ({ body, user, timestamp }) => {
           alt="Symbolbild eines Paketes"
         />
         <AvatarImage className={s.avatar} user={user} sizes="120px" />
+        {belongsToCurrentUser ? (
+          <>
+            {pledgeUpdateState === 'saving' ? (
+              <div className={s.loadingPackageUpdate}>
+                <LoadingAnimation />
+              </div>
+            ) : (
+              <>
+                {!done && pledgeUpdateState !== 'saved' ? (
+                  <button
+                    onClick={() =>
+                      updatePledgePackage({
+                        id: id,
+                        done: true,
+                      })
+                    }
+                    className={cN(
+                      s.linkLikeFormattedButton,
+                      s.onWhiteBackground,
+                      s.setDone
+                    )}
+                  >
+                    <b>Als erledigt markieren</b>
+                  </button>
+                ) : (
+                  <p className={s.isDone}>
+                    <img
+                      src={check}
+                      className={s.checkIcon}
+                      alt="Häkchen-Icon"
+                    />
+                    <b>ERLEDIGT!</b>
+                  </p>
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {showDone && (
+              <p className={s.isDone}>
+                <img src={check} className={s.checkIcon} alt="Häkchen-Icon" />
+                <b>ERLEDIGT!</b>
+              </p>
+            )}
+          </>
+        )}
       </div>
       <div className={s.packageTextContainer}>
         <h4 className={s.name}>{user.username}</h4>
-        <p className={s.timestamp}>Vor {getElapsedTime(timestamp)}</p>
+        <p className={s.createdAt}>Vor {getElapsedTime(createdAt)}</p>
         <p className={s.quote}>"{body}"</p>
       </div>
     </div>
   );
 };
 
-const getElapsedTime = timestamp => {
+const getElapsedTime = createdAt => {
   const endTime = new Date();
-  const startTime = new Date(timestamp);
+  const startTime = new Date(createdAt);
   const timeDiff = endTime.getTime() - startTime.getTime();
   const seconds = Math.floor(timeDiff / 1000);
   const minutes = Math.floor(seconds / 60);
