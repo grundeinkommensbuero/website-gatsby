@@ -16,6 +16,23 @@
   }
 }
 
+.flexContainer {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: @breakPointM) {
+    flex-direction: column;
+  }
+}
+
+.flexItem {
+  max-width: 40%;
+
+  @media (max-width: @breakPointM) {
+    max-width: 100%;
+  }
+}
+
 .fullPackage {
   display: flex;
   flex: 1 1 0px;
@@ -131,10 +148,14 @@
   }
 }
 
-.headingViolet {
+.violet {
   color: @violet;
 }
 
 .CTA {
   margin: 4rem 0;
+}
+
+.listThree {
+  margin: 2rem 0;
 }
