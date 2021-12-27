@@ -55,27 +55,7 @@ export const PledgePackagesSection = () => {
                   zu sammeln.
                 </p>
               )}
-            </div>
-            <div className={s.flexItem}>
-              {state && state !== 'loading' && (
-                <p className={s.violet}>
-                  {pledgePackages[0] ? (
-                    <b>
-                      Schon {pledgePackages.length} Pakete verteilt
-                      {pledgePackagesDone.length > 0 &&
-                        ` und davon ${pledgePackagesDone.length} erledigt`}
-                      !
-                    </b>
-                  ) : (
-                    <b>Noch keine Pakete verteilt!</b>
-                  )}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className={s.flexContainer}>
-            <div className={s.flexItem}>
-              <div className={s.listThree}>
+              <div className={s.packagesColumnLeft}>
                 {packagesOfUser.slice(0, 2).map((pledgePackage, index) => {
                   return (
                     <Package
@@ -101,19 +81,36 @@ export const PledgePackagesSection = () => {
               </div>
             </div>
             <div className={s.flexItem}>
-              <div className={s.listThree}>
+              {state && state !== 'loading' && (
+                <p className={s.violet}>
+                  {pledgePackages[0] ? (
+                    <b>
+                      Schon {pledgePackages.length} Pakete verteilt
+                      {pledgePackagesDone.length > 0 &&
+                        ` und davon ${pledgePackagesDone.length} erledigt`}
+                      !
+                    </b>
+                  ) : (
+                    <b>Noch keine Pakete verteilt!</b>
+                  )}
+                </p>
+              )}
+              <div className={s.packagesColumnRight}>
                 {pledgePackages.slice(0, 3).map((pledgePackage, index) => {
                   return (
                     <Package
                       key={index}
                       body={pledgePackage.body}
-                      user={userData}
+                      user={pledgePackage.user}
                       createdAt={pledgePackage.createdAt}
                       id={pledgePackage.id}
                       done={pledgePackage.done}
                     />
                   );
                 })}
+              </div>
+              <div className={s.CTA}>
+                <CTALink to={`/pakete`}>Alle ansehen</CTALink>
               </div>
             </div>
           </div>
