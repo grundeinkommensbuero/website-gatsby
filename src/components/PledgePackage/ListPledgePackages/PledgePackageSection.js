@@ -38,84 +38,82 @@ export const PledgePackagesSection = () => {
     <>
       <h2 className={s.violet}>Schnapp dir ein Sammelpaket</h2>
       {packagesOfUser && pledgePackages && userData.interactions ? (
-        <div>
-          <div className={s.flexContainer}>
-            <div className={s.flexItem}>
-              {packagesOfUser.length === 0 ? (
-                <p>
-                  Zeig deinen Einsatz für's Grundeinkommen und setze dir ein
-                  Sammelziel! Es gibt Pakete mit jeweils einem Ziel von 50
-                  Unterschriften, von denen du dir so viele nehmen kannst, wie
-                  du möchtest! Mach mit und schnapp dir dein erstes Paket!
-                </p>
-              ) : (
-                <p>
-                  Du hast dir {packagesOfUser.length} Pakete geschnappt und
-                  somit versprochen, {packagesOfUser.length * 50} Unterschriften
-                  zu sammeln.
-                </p>
-              )}
-              <div className={s.packagesColumnLeft}>
-                {packagesOfUser
-                  .slice()
-                  .reverse()
-                  .slice(0, 2)
-                  .map((pledgePackage, index) => {
-                    return (
-                      <Package
-                        belongsToCurrentUser={true}
-                        key={index}
-                        body={pledgePackage.body}
-                        user={userData}
-                        createdAt={pledgePackage.createdAt}
-                        id={pledgePackage.id}
-                        done={pledgePackage.done}
-                      />
-                    );
-                  })}
-              </div>
-              <div className={s.CTA}>
-                {userId && (
-                  <CTALink to={`/mensch/${userId}/paket-nehmen`}>
-                    {userData && packagesOfUser.length === 0
-                      ? 'Nimm dein Paket'
-                      : 'Weiteres Paket nehmen'}
-                  </CTALink>
-                )}
-              </div>
-            </div>
-            <div className={s.flexItem}>
-              {state && state !== 'loading' && (
-                <p className={s.violet}>
-                  {pledgePackages[0] ? (
-                    <b>
-                      Schon {pledgePackages.length} Pakete verteilt
-                      {pledgePackagesDone.length > 0 &&
-                        ` und davon ${pledgePackagesDone.length} erledigt`}
-                      !
-                    </b>
-                  ) : (
-                    <b>Noch keine Pakete verteilt!</b>
-                  )}
-                </p>
-              )}
-              <div className={s.packagesColumnRight}>
-                {pledgePackages.slice(0, 3).map((pledgePackage, index) => {
+        <div className={s.flexContainer}>
+          <div className={s.flexItem}>
+            {packagesOfUser.length === 0 ? (
+              <p>
+                Zeig deinen Einsatz für's Grundeinkommen und setze dir ein
+                Sammelziel! Es gibt Pakete mit jeweils einem Ziel von 50
+                Unterschriften, von denen du dir so viele nehmen kannst, wie du
+                möchtest! Mach mit und schnapp dir dein erstes Paket!
+              </p>
+            ) : (
+              <p>
+                Du hast dir {packagesOfUser.length} Pakete geschnappt und somit
+                versprochen, {packagesOfUser.length * 50} Unterschriften zu
+                sammeln.
+              </p>
+            )}
+            <div className={s.packagesColumnLeft}>
+              {packagesOfUser
+                .slice()
+                .reverse()
+                .slice(0, 2)
+                .map((pledgePackage, index) => {
                   return (
                     <Package
+                      belongsToCurrentUser={true}
                       key={index}
                       body={pledgePackage.body}
-                      user={pledgePackage.user}
+                      user={userData}
                       createdAt={pledgePackage.createdAt}
                       id={pledgePackage.id}
                       done={pledgePackage.done}
                     />
                   );
                 })}
-              </div>
-              <div className={s.CTA}>
-                <CTALink to={`/pakete`}>Alle ansehen</CTALink>
-              </div>
+            </div>
+            <div className={s.CTA}>
+              {userId && (
+                <CTALink to={`/mensch/${userId}/paket-nehmen`}>
+                  {userData && packagesOfUser.length === 0
+                    ? 'Nimm dein Paket'
+                    : 'Weiteres Paket nehmen'}
+                </CTALink>
+              )}
+            </div>
+          </div>
+          <div className={s.flexItem}>
+            {state && state !== 'loading' && (
+              <p className={s.violet}>
+                {pledgePackages[0] ? (
+                  <b>
+                    Schon {pledgePackages.length} Pakete verteilt
+                    {pledgePackagesDone.length > 0 &&
+                      ` und davon ${pledgePackagesDone.length} erledigt`}
+                    !
+                  </b>
+                ) : (
+                  <b>Noch keine Pakete verteilt!</b>
+                )}
+              </p>
+            )}
+            <div className={s.packagesColumnRight}>
+              {pledgePackages.slice(0, 3).map((pledgePackage, index) => {
+                return (
+                  <Package
+                    key={index}
+                    body={pledgePackage.body}
+                    user={pledgePackage.user}
+                    createdAt={pledgePackage.createdAt}
+                    id={pledgePackage.id}
+                    done={pledgePackage.done}
+                  />
+                );
+              })}
+            </div>
+            <div className={s.CTA}>
+              <CTALink to={`/pakete`}>Alle ansehen</CTALink>
             </div>
           </div>
         </div>
