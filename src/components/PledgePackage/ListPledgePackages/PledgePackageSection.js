@@ -56,19 +56,23 @@ export const PledgePackagesSection = () => {
                 </p>
               )}
               <div className={s.packagesColumnLeft}>
-                {packagesOfUser.slice(0, 2).map((pledgePackage, index) => {
-                  return (
-                    <Package
-                      belongsToCurrentUser={true}
-                      key={index}
-                      body={pledgePackage.body}
-                      user={userData}
-                      createdAt={pledgePackage.createdAt}
-                      id={pledgePackage.id}
-                      done={pledgePackage.done}
-                    />
-                  );
-                })}
+                {packagesOfUser
+                  .slice()
+                  .reverse()
+                  .slice(0, 2)
+                  .map((pledgePackage, index) => {
+                    return (
+                      <Package
+                        belongsToCurrentUser={true}
+                        key={index}
+                        body={pledgePackage.body}
+                        user={userData}
+                        createdAt={pledgePackage.createdAt}
+                        id={pledgePackage.id}
+                        done={pledgePackage.done}
+                      />
+                    );
+                  })}
               </div>
               <div className={s.CTA}>
                 {userId && (
