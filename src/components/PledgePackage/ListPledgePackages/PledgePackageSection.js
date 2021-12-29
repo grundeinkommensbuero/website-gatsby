@@ -5,6 +5,8 @@ import { useGetMostRecentInteractions } from '../../../hooks/Api/Interactions';
 import { LoadingAnimation } from '../../LoadingAnimation';
 import { Package } from './Package';
 import { CTALink } from '../../Layout/CTAButton';
+import { Button } from '../../Forms/Button';
+import { OnboardingModalContext } from '../../../context/OnboardingModal/index';
 
 export const PledgePackagesSection = () => {
   const [state, pledgePackages, getInteractions] =
@@ -12,6 +14,7 @@ export const PledgePackagesSection = () => {
   const [pledgePackagesDone, setPledgePackagesDone] = useState([]);
   const { customUserData: userData, userId } = useContext(AuthContext);
   const [packagesOfUser, setPackagesOfUser] = useState([]);
+  const { setShowModal } = useContext(OnboardingModalContext);
 
   // Fetch all interactions once
   useEffect(() => {
@@ -37,7 +40,7 @@ export const PledgePackagesSection = () => {
   return (
     <>
       <h2 className={s.violet}>Schnapp dir ein Sammelpaket</h2>
-      {packagesOfUser && pledgePackages && userData.interactions ? (
+      {state && state !== 'loading' ? (
         <div className={s.flexContainer}>
           <div className={s.flexItem}>
             {packagesOfUser.length === 0 ? (
@@ -74,12 +77,19 @@ export const PledgePackagesSection = () => {
                 })}
             </div>
             <div className={s.CTA}>
-              {userId && (
+              {userId ? (
                 <CTALink to={`/mensch/${userId}/paket-nehmen`}>
                   {userData && packagesOfUser.length === 0
                     ? 'Nimm dein Paket'
                     : 'Weiteres Paket nehmen'}
                 </CTALink>
+              ) : (
+                <Button
+                  aria-label="Anmelden"
+                  onClick={() => setShowModal(true)}
+                >
+                  Hier kannst du dich anmelden.
+                </Button>
               )}
             </div>
           </div>
