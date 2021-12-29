@@ -7,6 +7,7 @@ import { Package } from './Package';
 import { CTALink } from '../../Layout/CTAButton';
 import { Button } from '../../Forms/Button';
 import { OnboardingModalContext } from '../../../context/OnboardingModal/index';
+import paketSvg from '../paket-v2.svg';
 
 export const PledgePackagesSection = () => {
   const [state, pledgePackages, getInteractions] =
@@ -44,12 +45,19 @@ export const PledgePackagesSection = () => {
         <div className={s.flexContainer}>
           <div className={s.flexItem}>
             {packagesOfUser.length === 0 ? (
-              <p>
-                Zeig deinen Einsatz für's Grundeinkommen und setze dir ein
-                Sammelziel! Es gibt Pakete mit jeweils einem Ziel von 50
-                Unterschriften, von denen du dir so viele nehmen kannst, wie du
-                möchtest! Mach mit und schnapp dir dein erstes Paket!
-              </p>
+              <>
+                <p>
+                  Zeig deinen Einsatz für's Grundeinkommen und setze dir ein
+                  Sammelziel! Es gibt Pakete mit jeweils einem Ziel von 50
+                  Unterschriften, von denen du dir so viele nehmen kannst, wie
+                  du möchtest! Mach mit und schnapp dir dein erstes Paket!
+                </p>
+                <img
+                  src={paketSvg}
+                  className={s.packageIconOnly}
+                  alt="Symbolbild eines Paketes"
+                />
+              </>
             ) : (
               <p>
                 Du hast dir {packagesOfUser.length} Pakete geschnappt und somit
@@ -57,25 +65,27 @@ export const PledgePackagesSection = () => {
                 sammeln.
               </p>
             )}
-            <div className={s.packagesColumnLeft}>
-              {packagesOfUser
-                .slice()
-                .reverse()
-                .slice(0, 2)
-                .map((pledgePackage, index) => {
-                  return (
-                    <Package
-                      belongsToCurrentUser={true}
-                      key={index}
-                      body={pledgePackage.body}
-                      user={userData}
-                      createdAt={pledgePackage.createdAt}
-                      id={pledgePackage.id}
-                      done={pledgePackage.done}
-                    />
-                  );
-                })}
-            </div>
+            {packagesOfUser.length !== 0 && (
+              <div className={s.packagesColumnLeft}>
+                {packagesOfUser
+                  .slice()
+                  .reverse()
+                  .slice(0, 2)
+                  .map((pledgePackage, index) => {
+                    return (
+                      <Package
+                        belongsToCurrentUser={true}
+                        key={index}
+                        body={pledgePackage.body}
+                        user={userData}
+                        createdAt={pledgePackage.createdAt}
+                        id={pledgePackage.id}
+                        done={pledgePackage.done}
+                      />
+                    );
+                  })}
+              </div>
+            )}
             <div className={s.CTA}>
               {userId ? (
                 <CTALink to={`/mensch/${userId}/paket-nehmen`}>
