@@ -81,6 +81,7 @@ const lazyMap = ({
   const container = useRef(null);
   const map = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
@@ -134,12 +135,16 @@ const lazyMap = ({
       }
 
       if (locations) {
+        // Remove old markers from map
+        markers.forEach(marker => marker.remove());
+
+        const markerArray = [];
         locations.forEach(meetup => {
           if (meetup.location) {
             const element = document.createElement('div');
             element.className = s.marker;
 
-            new mapboxgl.Marker(element)
+            const marker = new mapboxgl.Marker(element)
               .setLngLat([meetup.location.lon, meetup.location.lat])
               .addTo(map.current)
               .setPopup(
@@ -154,8 +159,12 @@ const lazyMap = ({
                     setHighlightedPoint([...highlightedPoint]);
                   })
               );
+
+            markerArray.push(marker);
           }
         });
+
+        setMarkers(markerArray);
       }
     }
   }, [hasWebGl, locations]);

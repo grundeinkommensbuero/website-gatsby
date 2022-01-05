@@ -131,6 +131,31 @@ export function getDayAsString(date) {
   return date.toLocaleString('de-de', { weekday: 'long' });
 }
 
+export function isToday(date) {
+  const now = new Date();
+
+  return (
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate()
+  );
+}
+
+export function isTomorrow(date) {
+  const now = new Date();
+  const tomorrow = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1
+  );
+
+  return (
+    date.getFullYear() === tomorrow.getFullYear() &&
+    date.getMonth() === tomorrow.getMonth() &&
+    date.getDate() === tomorrow.getDate()
+  );
+}
+
 // Takes campaign code in the format of e.g. schleswig-holstein-1 or berlin-1
 // and transforms it to Schleswig-Holstein or Berlin
 export function mapCampaignCodeToState(campaignCode) {

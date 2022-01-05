@@ -11,6 +11,10 @@ import * as s from './style.module.less';
 import { Modal } from '../Modal';
 import { CreateMeetup } from '../Forms/Meetup';
 import { EventsListed } from './EventsListed';
+import { Checkbox } from '../Forms/Checkbox';
+import FormWrapper from '../Forms/FormWrapper';
+import FormSection from '../Forms/FormSection';
+import { isToday, isTomorrow } from '../utils';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -39,8 +43,15 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   `);
   const [meetups, getMeetups] = useGetMeetups();
   const [locationsFiltered, setLocationsFiltered] = useState();
+  const [allLocations, setAllLocations] = useState();
   const [showModal, setShowModal] = useState(false);
   const [type, setType] = useState('collect');
+
+  // Map filters
+  const [showLists, setShowLists] = useState(true);
+  const [showCollectionEvents, setShowCollectionEvents] = useState(true);
+  const [filterToday, setFilterToday] = useState(false);
+  const [filterTomorrow, setFilterTomorrow] = useState(false);
 
   const isBerlin = mapConfig.state === 'berlin';
 
@@ -72,6 +83,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
               type === 'collect'
                 ? 'Sammelaktion'
                 : `Unterschreiben: ${locationName}`,
+            type,
             ...rest,
           })
         );
@@ -92,12 +104,76 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           .map(({ node }) => ({ ...node, isRichText: true }));
       }
 
-      setLocationsFiltered(collectSignaturesLocationsFiltered);
+      setAllLocations(collectSignaturesLocationsFiltered);
     }
   }, [meetups]);
 
+  useEffect(() => {
+    if (allLocations) {
+      // Filter by type and filter by date (endTime exists = only for collection events)
+      const newLocationsFiltered = allLocations.filter(
+        ({ type, endTime }) =>
+          ((showLists && type === 'lists') ||
+            (showCollectionEvents && type === 'collect')) &&
+          (!endTime ||
+            (!filterToday && !filterTomorrow) ||
+            (filterToday && isToday(new Date(endTime))) ||
+            (filterTomorrow && isTomorrow(new Date(endTime))))
+      );
+
+      setLocationsFiltered(newLocationsFiltered);
+    }
+  }, [
+    showLists,
+    showCollectionEvents,
+    filterToday,
+    filterTomorrow,
+    allLocations,
+  ]);
+
   return (
     <>
+      <FormWrapper className={s.filter}>
+        <FormSection heading="Filter">
+          <Checkbox
+            label="Unterschreiben"
+            type="checkbox"
+            checked={showLists}
+            onChange={() => setShowLists(!showLists)}
+          />
+          <Checkbox
+            label="Mitsammeln"
+            type="checkbox"
+            checked={showCollectionEvents}
+            onChange={() => setShowCollectionEvents(!showCollectionEvents)}
+          />
+        </FormSection>
+
+        <FormSection heading="Wann?">
+          <Checkbox
+            label="Egal"
+            type="checkbox"
+            checked={!filterTomorrow && !filterToday}
+            onChange={() => {
+              setFilterToday(false);
+              setFilterTomorrow(false);
+            }}
+          />
+          <Checkbox
+            label="Heute"
+            type="checkbox"
+            checked={filterToday}
+            onChange={() => setFilterToday(!filterToday)}
+          />
+          <Checkbox
+            label="Morgen"
+            type="checkbox"
+            checked={filterTomorrow}
+            onChange={() => setFilterTomorrow(!filterTomorrow)}
+          />
+        </FormSection>
+      </FormWrapper>
+
       <Map
         mapConfig={mapConfig}
         locations={locationsFiltered}
