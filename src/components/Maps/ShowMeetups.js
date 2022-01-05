@@ -134,7 +134,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   return (
     <>
       <FormWrapper className={s.filter}>
-        <FormSection heading="Filter">
+        <FormSection heading="Art des Events">
           <Checkbox
             label="Unterschreiben"
             type="checkbox"
