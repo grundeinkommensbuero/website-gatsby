@@ -14,7 +14,10 @@ import { EventsListed } from './EventsListed';
 import { Checkbox } from '../Forms/Checkbox';
 import FormWrapper from '../Forms/FormWrapper';
 import FormSection from '../Forms/FormSection';
-import { isToday, isTomorrow } from '../utils';
+import {
+  checkIfDateIsToday,
+  checkIfDateIsTomorrow,
+} from './utils/dateStringManipulation';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -124,15 +127,13 @@ export const ShowMeetups = ({ mapConfig, className }) => {
         ({ type, startTime, endTime }) => {
           const startInHours = startTime && new Date(startTime).getHours();
 
-          console.log({ startInHours });
-
           return (
             ((showLists && type === 'lists') ||
               (showCollectionEvents && type === 'collect')) &&
             (!endTime ||
               (!filterToday && !filterTomorrow) ||
-              (filterToday && isToday(new Date(endTime))) ||
-              (filterTomorrow && isTomorrow(new Date(endTime)))) &&
+              (filterToday && checkIfDateIsToday(new Date(endTime))) ||
+              (filterTomorrow && checkIfDateIsTomorrow(new Date(endTime)))) &&
             (!startTime ||
               (filterBefore12 && startInHours < 12) ||
               (filterBefore18 && startInHours >= 12 && startInHours < 18) ||
