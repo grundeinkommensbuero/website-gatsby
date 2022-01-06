@@ -183,6 +183,13 @@
   height: 30px;
   top: -18px !important;
   cursor: pointer;
+
+  &.collect {
+    background-image: url('icon-collect.png');
+    width: 35px;
+    height: 50px;
+    top: -8px !important;
+  }
 }
 
 h3 {
@@ -284,5 +291,26 @@ h3 {
 
   @media (max-width: @breakPointM) {
     margin-bottom: 2rem;
+  }
+}
+
+.legend {
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+
+  @media (max-width: @breakPointXS) {
+    justify-content: start;
+  }
+
+  img {
+    position: relative;
+    top: 0.8rem;
+    height: 2.5rem;
+
+    &.legendPinIcon {
+      height: 1.8rem;
+      margin: 0.4rem;
+    }
   }
 }

@@ -14,6 +14,7 @@ import { FinallyMessage } from '../Forms/FinallyMessage';
 
 import calenderIcon from './icon-calendar.svg';
 import pinIcon from './icon-pin.svg';
+import collectIcon from './icon-collect.png';
 
 import { detectWebGLContext } from '../utils';
 
@@ -142,7 +143,9 @@ const lazyMap = ({
         locations.forEach(meetup => {
           if (meetup.location) {
             const element = document.createElement('div');
-            element.className = s.marker;
+            element.className = `${s.marker} ${
+              meetup.type === 'collect' && s.collect
+            }`;
 
             const marker = new mapboxgl.Marker(element)
               .setLngLat([meetup.location.lon, meetup.location.lat])
@@ -193,6 +196,20 @@ const lazyMap = ({
           <div ref={container} className={s.container} />
         )}
       </SectionInner>
+      <div className={s.legend}>
+        <div>
+          <img
+            src={pinIcon}
+            alt="Illustration einer Markierung"
+            className={s.legendPinIcon}
+          />
+          <span>Ausgelegte Listen</span>
+        </div>
+        <div>
+          <img src={collectIcon} alt="Illustration eines Sammelevents" />
+          <span>Sammelevent</span>
+        </div>
+      </div>
       {highlightedPoint.length !== 0 && (
         <SectionInner className={s.popUpOutside}>
           <div>
