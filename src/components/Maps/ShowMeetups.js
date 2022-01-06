@@ -48,10 +48,18 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   const [type, setType] = useState('collect');
 
   // Map filters
+  // Type filters
   const [showLists, setShowLists] = useState(true);
   const [showCollectionEvents, setShowCollectionEvents] = useState(true);
+
+  // Day filters
   const [filterToday, setFilterToday] = useState(false);
   const [filterTomorrow, setFilterTomorrow] = useState(false);
+
+  // Time filters
+  const [filterBefore12, setFilterBefore12] = useState(true);
+  const [filterBefore18, setFilterBefore18] = useState(true);
+  const [filterAfter18, setFilterAfter18] = useState(true);
 
   const isBerlin = mapConfig.state === 'berlin';
 
@@ -110,15 +118,27 @@ export const ShowMeetups = ({ mapConfig, className }) => {
 
   useEffect(() => {
     if (allLocations) {
-      // Filter by type and filter by date (endTime exists = only for collection events)
+      // Filter by type, filter by date (endTime exists = only for collection events)
+      // and filter by time (also only for collection events)
       const newLocationsFiltered = allLocations.filter(
-        ({ type, endTime }) =>
-          ((showLists && type === 'lists') ||
-            (showCollectionEvents && type === 'collect')) &&
-          (!endTime ||
-            (!filterToday && !filterTomorrow) ||
-            (filterToday && isToday(new Date(endTime))) ||
-            (filterTomorrow && isTomorrow(new Date(endTime))))
+        ({ type, startTime, endTime }) => {
+          const startInHours = startTime && new Date(startTime).getHours();
+
+          console.log({ startInHours });
+
+          return (
+            ((showLists && type === 'lists') ||
+              (showCollectionEvents && type === 'collect')) &&
+            (!endTime ||
+              (!filterToday && !filterTomorrow) ||
+              (filterToday && isToday(new Date(endTime))) ||
+              (filterTomorrow && isTomorrow(new Date(endTime)))) &&
+            (!startTime ||
+              (filterBefore12 && startInHours < 12) ||
+              (filterBefore18 && startInHours >= 12 && startInHours < 18) ||
+              (filterAfter18 && startInHours >= 18))
+          );
+        }
       );
 
       setLocationsFiltered(newLocationsFiltered);
@@ -128,6 +148,9 @@ export const ShowMeetups = ({ mapConfig, className }) => {
     showCollectionEvents,
     filterToday,
     filterTomorrow,
+    filterBefore12,
+    filterBefore18,
+    filterAfter18,
     allLocations,
   ]);
 
@@ -149,7 +172,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           />
         </FormSection>
 
-        <FormSection heading="Wann?">
+        <FormSection heading="An welchem Tag?">
           <Checkbox
             label="Egal"
             type="checkbox"
@@ -170,6 +193,27 @@ export const ShowMeetups = ({ mapConfig, className }) => {
             type="checkbox"
             checked={filterTomorrow}
             onChange={() => setFilterTomorrow(!filterTomorrow)}
+          />
+        </FormSection>
+
+        <FormSection heading="Beginn um wieviel Uhr?">
+          <Checkbox
+            label="Vor 12 Uhr"
+            type="checkbox"
+            checked={filterBefore12}
+            onChange={() => setFilterBefore12(!filterBefore12)}
+          />
+          <Checkbox
+            label="Zwischen 12 und 18 Uhr"
+            type="checkbox"
+            checked={filterBefore18}
+            onChange={() => setFilterBefore18(!filterBefore18)}
+          />
+          <Checkbox
+            label="Nach 18 Uhr"
+            type="checkbox"
+            checked={filterAfter18}
+            onChange={() => setFilterAfter18(!filterAfter18)}
           />
         </FormSection>
       </FormWrapper>
