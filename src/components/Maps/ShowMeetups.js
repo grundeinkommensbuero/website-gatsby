@@ -158,7 +158,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   return (
     <>
       <FormWrapper className={s.filter}>
-        <FormSection heading="Art des Events">
+        <FormSection heading="Art des Events" className={s.filterSection}>
           <Checkbox
             label="Unterschreiben"
             type="checkbox"
@@ -173,7 +173,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           />
         </FormSection>
 
-        <FormSection heading="An welchem Tag?">
+        <FormSection heading="An welchem Tag?" className={s.filterSection}>
           <Checkbox
             label="Egal"
             type="checkbox"
@@ -197,7 +197,10 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           />
         </FormSection>
 
-        <FormSection heading="Beginn um wieviel Uhr?">
+        <FormSection
+          heading="Beginn um wieviel Uhr?"
+          className={s.filterSection}
+        >
           <Checkbox
             label="Vor 12 Uhr"
             type="checkbox"

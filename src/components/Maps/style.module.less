@@ -275,6 +275,14 @@ h3 {
 .filter {
   display: flex;
   flex-direction: row;
-  width: 60%;
-  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.filterSection {
+  margin-right: 2rem;
+  min-width: 10rem;
+
+  @media (max-width: @breakPointM) {
+    margin-bottom: 2rem;
+  }
 }
