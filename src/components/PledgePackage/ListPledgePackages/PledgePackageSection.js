@@ -13,7 +13,11 @@ export const PledgePackagesSection = () => {
   const [state, pledgePackages, getInteractions] =
     useGetMostRecentInteractions();
   const [pledgePackagesDone, setPledgePackagesDone] = useState([]);
-  const { customUserData: userData, userId } = useContext(AuthContext);
+  const {
+    customUserData: userData,
+    isAuthenticated,
+    userId,
+  } = useContext(AuthContext);
   const [packagesOfUser, setPackagesOfUser] = useState([]);
   const { setShowModal } = useContext(OnboardingModalContext);
 
@@ -87,7 +91,7 @@ export const PledgePackagesSection = () => {
               </div>
             )}
             <div className={s.CTA}>
-              {userId ? (
+              {isAuthenticated ? (
                 <CTALink to={`/mensch/${userId}/paket-nehmen`}>
                   {userData && packagesOfUser.length === 0
                     ? 'Nimm dein Paket'
