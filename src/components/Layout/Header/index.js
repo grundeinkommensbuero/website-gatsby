@@ -9,7 +9,7 @@ import Logo from './logo.svg';
 import BurgerMenu from './icon-burgermenu.svg';
 import CloseMenu from './icon-close-menu.svg';
 import Menu from './Menu';
-import { StickyDonationBar } from './StickyDonationBar';
+// import { StickyDonationBar } from './StickyDonationBar';
 
 const Header = ({ menu, stickyBannerVisible }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,7 +61,7 @@ const Header = ({ menu, stickyBannerVisible }) => {
             )}
           </>
         </div>
-        {stickyBannerVisible && <StickyDonationBar />}
+        {/* {stickyBannerVisible && <StickyDonationBar />} */}
       </header>
     </>
   );
