@@ -11,7 +11,6 @@ import { Overlay } from '../Overlay';
 import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
-import cN from 'classnames';
 
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
 const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
@@ -185,9 +184,9 @@ function Template({ children, sections, pageContext, title, description }) {
   });
 
   // NOTE: not needed until banner is activated again
-  const variableMarginClass = () => {
-    return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
-  };
+  // const variableMarginClass = () => {
+  //   return stickyBannerVisible ? 'withStickyBanner' : 'withoutStickyBanner';
+  // };
 
   const checkUrlProtocolIdentifier = url => {
     if (typeof url === 'string' && !url.includes('https://')) {
@@ -300,7 +299,7 @@ function Template({ children, sections, pageContext, title, description }) {
         <link rel="alternate icon" type="image/png" href="/favicon.png" />
         <html lang="de" />
       </Helmet>
-      <main className={cN(s[variableMarginClass()])}>
+      <main className={s.withoutStickyBanner}>
         {children}
         <RenderPage
           sections={sectionsWithColorScheme}
