@@ -283,6 +283,12 @@ h3 {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  height: 6rem;
+
+  @media (max-width: @breakPointM) {
+    height: auto;
+    flex-direction: column;
+  }
 }
 
 .filterSection {
@@ -292,6 +298,23 @@ h3 {
   @media (max-width: @breakPointM) {
     margin-bottom: 2rem;
   }
+}
+
+.dropdownButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 10rem;
+  margin-top: 0.2rem;
+  height: auto;
+}
+
+.dropdownContent {
+  background-color: white;
+  position: relative;
+  z-index: 9;
+  padding: 0.5rem;
+  margin-bottom: 0;
 }
 
 .legend {
@@ -312,5 +335,34 @@ h3 {
       height: 1.8rem;
       margin: 0.4rem;
     }
+  }
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 8.6px solid transparent;
+  border-left: 10px solid #3e3e3e;
+  border-bottom: 8.6px solid transparent;
+  animation-name: rotateTriangle;
+  background: none;
+  // for some reason, this is neccessary for the triangle to show up in Safari
+  transform: rotate(0deg);
+
+  &:hover {
+    background: none;
+  }
+}
+
+.animateTriangle {
+  transform: rotate(90deg);
+}
+
+@keyframes rotateTriangle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
   }
 }

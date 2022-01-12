@@ -6,7 +6,7 @@ import {
   SectionComponent,
   SectionComponentContainer,
 } from '../Layout/Sections';
-import { Button } from '../Forms/Button';
+import { Button, InlineButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import { Modal } from '../Modal';
 import { CreateMeetup } from '../Forms/Meetup';
@@ -18,6 +18,7 @@ import {
   checkIfDateIsToday,
   checkIfDateIsTomorrow,
 } from './utils/dateStringManipulation';
+import cN from 'classnames';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -63,6 +64,9 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   const [filterBefore12, setFilterBefore12] = useState(true);
   const [filterBefore18, setFilterBefore18] = useState(true);
   const [filterAfter18, setFilterAfter18] = useState(true);
+
+  const [showDayFilters, setShowDayFilters] = useState(false);
+  const [showTimeFilters, setShowTimeFilters] = useState(false);
 
   const isBerlin = mapConfig.state === 'berlin';
 
@@ -158,9 +162,9 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   return (
     <>
       <FormWrapper className={s.filter}>
-        <FormSection heading="Art des Events" className={s.filterSection}>
+        <FormSection className={s.filterSection}>
           <Checkbox
-            label="Unterschreiben"
+            label="Orte zum Unterschreiben"
             type="checkbox"
             checked={showLists}
             onChange={() => setShowLists(!showLists)}
@@ -173,52 +177,81 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           />
         </FormSection>
 
-        <FormSection heading="An welchem Tag?" className={s.filterSection}>
-          <Checkbox
-            label="Egal"
-            type="checkbox"
-            checked={!filterTomorrow && !filterToday}
-            onChange={() => {
-              setFilterToday(false);
-              setFilterTomorrow(false);
-            }}
-          />
-          <Checkbox
-            label="Heute"
-            type="checkbox"
-            checked={filterToday}
-            onChange={() => setFilterToday(!filterToday)}
-          />
-          <Checkbox
-            label="Morgen"
-            type="checkbox"
-            checked={filterTomorrow}
-            onChange={() => setFilterTomorrow(!filterTomorrow)}
-          />
+        <FormSection className={s.filterSection}>
+          <InlineButton
+            className={s.dropdownButton}
+            onClick={() => setShowDayFilters(!showDayFilters)}
+          >
+            Tag auswählen
+            <div
+              className={cN(s.triangle, {
+                [s.animateTriangle]: showDayFilters,
+              })}
+            ></div>
+          </InlineButton>
+
+          {showDayFilters && (
+            <FormSection className={s.dropdownContent}>
+              <Checkbox
+                label="Egal"
+                type="checkbox"
+                checked={!filterTomorrow && !filterToday}
+                onChange={() => {
+                  setFilterToday(false);
+                  setFilterTomorrow(false);
+                }}
+              />
+              <Checkbox
+                label="Heute"
+                type="checkbox"
+                checked={filterToday}
+                onChange={() => setFilterToday(!filterToday)}
+              />
+              <Checkbox
+                label="Morgen"
+                type="checkbox"
+                checked={filterTomorrow}
+                onChange={() => setFilterTomorrow(!filterTomorrow)}
+              />
+            </FormSection>
+          )}
         </FormSection>
 
-        <FormSection
-          heading="Beginn um wieviel Uhr?"
-          className={s.filterSection}
-        >
-          <Checkbox
-            label="Vor 12 Uhr"
-            type="checkbox"
-            checked={filterBefore12}
-            onChange={() => setFilterBefore12(!filterBefore12)}
-          />
-          <Checkbox
-            label="Zwischen 12 und 18 Uhr"
-            type="checkbox"
-            checked={filterBefore18}
-            onChange={() => setFilterBefore18(!filterBefore18)}
-          />
-          <Checkbox
-            label="Nach 18 Uhr"
-            type="checkbox"
-            checked={filterAfter18}
-            onChange={() => setFilterAfter18(!filterAfter18)}
-          />
+        <FormSection className={s.filterSection}>
+          <InlineButton
+            className={s.dropdownButton}
+            onClick={() => setShowTimeFilters(!showTimeFilters)}
+          >
+            Uhrzeit auswählen
+            <div
+              className={cN(s.triangle, {
+                [s.animateTriangle]: showTimeFilters,
+              })}
+            ></div>
+          </InlineButton>
+
+          {showTimeFilters && (
+            <FormSection className={s.dropdownContent}>
+              <Checkbox
+                label="Vor 12 Uhr"
+                type="checkbox"
+                checked={filterBefore12}
+                onChange={() => setFilterBefore12(!filterBefore12)}
+              />
+              <Checkbox
+                label="Zwischen 12 und 18 Uhr"
+                type="checkbox"
+                checked={filterBefore18}
+                onChange={() => setFilterBefore18(!filterBefore18)}
+              />
+              <Checkbox
+                label="Nach 18 Uhr"
+                type="checkbox"
+                checked={filterAfter18}
+                onChange={() => setFilterAfter18(!filterAfter18)}
+              />
+            </FormSection>
+          )}
         </FormSection>
       </FormWrapper>
 
