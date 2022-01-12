@@ -1,6 +1,7 @@
 import React from 'react';
 import * as s from './style.module.less';
 import { ValidationError } from '../ValidationError';
+import cN from 'classnames';
 
 export const Checkbox = ({
   input,
@@ -11,13 +12,14 @@ export const Checkbox = ({
   type,
   checked,
   onChange,
+  className,
 }) => {
   if (hide) {
     return null;
   }
 
   return (
-    <label className={s.container}>
+    <label className={cN(s.container, className)}>
       <input
         className={s.checkbox}
         type={type}

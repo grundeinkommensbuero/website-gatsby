@@ -6,7 +6,7 @@ import {
   SectionComponent,
   SectionComponentContainer,
 } from '../Layout/Sections';
-import { Button, InlineButton } from '../Forms/Button';
+import { Button, DropdownButton, InlineButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import { Modal } from '../Modal';
 import { CreateMeetup } from '../Forms/Meetup';
@@ -162,33 +162,30 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   return (
     <>
       <FormWrapper className={s.filter}>
-        <FormSection className={s.filterSection}>
-          <Checkbox
-            label="Orte zum Unterschreiben"
-            type="checkbox"
-            checked={showLists}
-            onChange={() => setShowLists(!showLists)}
-          />
-          <Checkbox
-            label="Mitsammeln"
-            type="checkbox"
-            checked={showCollectionEvents}
-            onChange={() => setShowCollectionEvents(!showCollectionEvents)}
-          />
-        </FormSection>
+        <Checkbox
+          label="Orte zum Unterschreiben"
+          type="checkbox"
+          checked={showLists}
+          onChange={() => setShowLists(!showLists)}
+          className={s.inlineCheckbox}
+        />
+        <Checkbox
+          label="Mitsammeln"
+          type="checkbox"
+          checked={showCollectionEvents}
+          onChange={() => setShowCollectionEvents(!showCollectionEvents)}
+          className={s.inlineCheckbox}
+        />
 
         <FormSection className={s.filterSection}>
-          <InlineButton
+          <DropdownButton
             className={s.dropdownButton}
             onClick={() => setShowDayFilters(!showDayFilters)}
+            isOpen={showDayFilters}
+            isActive={filterTomorrow || filterToday}
           >
             Tag auswählen
-            <div
-              className={cN(s.triangle, {
-                [s.animateTriangle]: showDayFilters,
-              })}
-            ></div>
-          </InlineButton>
+          </DropdownButton>
 
           {showDayFilters && (
             <FormSection className={s.dropdownContent}>
@@ -218,17 +215,14 @@ export const ShowMeetups = ({ mapConfig, className }) => {
         </FormSection>
 
         <FormSection className={s.filterSection}>
-          <InlineButton
+          <DropdownButton
             className={s.dropdownButton}
             onClick={() => setShowTimeFilters(!showTimeFilters)}
+            isOpen={showTimeFilters}
+            isActive={!filterBefore12 || !filterBefore18 || !filterAfter18}
           >
             Uhrzeit auswählen
-            <div
-              className={cN(s.triangle, {
-                [s.animateTriangle]: showTimeFilters,
-              })}
-            ></div>
-          </InlineButton>
+          </DropdownButton>
 
           {showTimeFilters && (
             <FormSection className={s.dropdownContent}>
