@@ -13,6 +13,7 @@ export const Checkbox = ({
   checked,
   onChange,
   className,
+  labelClassName,
 }) => {
   if (hide) {
     return null;
@@ -27,7 +28,7 @@ export const Checkbox = ({
         onChange={onChange}
         {...input}
       />
-      <div className={s.label}>
+      <div className={cN(s.label, labelClassName)}>
         {label}
         {meta?.error && meta?.touched && (
           <>

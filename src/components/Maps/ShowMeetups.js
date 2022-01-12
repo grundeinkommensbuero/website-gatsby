@@ -6,7 +6,7 @@ import {
   SectionComponent,
   SectionComponentContainer,
 } from '../Layout/Sections';
-import { Button, DropdownButton, InlineButton } from '../Forms/Button';
+import { Button, DropdownButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import { Modal } from '../Modal';
 import { CreateMeetup } from '../Forms/Meetup';
@@ -18,7 +18,6 @@ import {
   checkIfDateIsToday,
   checkIfDateIsTomorrow,
 } from './utils/dateStringManipulation';
-import cN from 'classnames';
 
 export const ShowMeetups = ({ mapConfig, className }) => {
   const {
@@ -168,6 +167,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           checked={showLists}
           onChange={() => setShowLists(!showLists)}
           className={s.inlineCheckbox}
+          labelClassName={s.inlineCheckboxLabel}
         />
         <Checkbox
           label="Mitsammeln"
@@ -175,6 +175,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
           checked={showCollectionEvents}
           onChange={() => setShowCollectionEvents(!showCollectionEvents)}
           className={s.inlineCheckbox}
+          labelClassName={s.inlineCheckboxLabel}
         />
 
         <FormSection className={s.filterSection}>
