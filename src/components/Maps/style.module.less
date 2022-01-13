@@ -283,34 +283,55 @@ h3 {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 5rem;
+  height: 4rem;
 
-  @media (max-width: @breakPointM) {
+  @media (max-width: @breakPointL) {
+    height: 7rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    height: auto;
+  }
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  height: 2rem;
+
+  @media (max-width: @breakPointS) {
     height: auto;
     flex-direction: column;
   }
 }
 
-.filterSection {
+.inlineCheckbox {
   margin-right: 1.5rem;
-  min-width: 10rem;
 
-  @media (max-width: @breakPointM) {
-    margin-bottom: 2rem;
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1rem;
   }
 }
 
-.inlineCheckbox {
-  margin-right: 1.5rem;
-  align-items: stretch;
+.inlineCheckboxLabel {
+  margin-top: 0;
 }
 
-.inlineCheckboxLabel {
-  margin-top: 0.4rem;
+.dropdown {
+  margin-right: 1.5rem;
 }
 
 .dropdownButton {
   margin-top: -0.3rem;
+
+  @media (max-width: @breakPointL) {
+    min-width: 13rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
 }
 
 .dropdownContent {
@@ -319,6 +340,10 @@ h3 {
   z-index: 9;
   padding: 0.5rem;
   margin-bottom: 0;
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1rem;
+  }
 }
 
 .legend {
