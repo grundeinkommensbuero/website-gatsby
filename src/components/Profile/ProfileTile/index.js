@@ -8,6 +8,7 @@ import { LinkButtonLocal, Button } from '../../Forms/Button';
 import { SignUpButton } from '../../TickerToSignup/SignupButton';
 import { formatDate } from '../../utils';
 import * as s from './style.module.less';
+import * as cS from '../../style/colorSchemes.module.less';
 import cN from 'classnames';
 import { getReferredUserMessage } from '../utils/referredUserMessage';
 
@@ -56,7 +57,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
     <>
       {userData && (
         <section className={s.tileContainer}>
-          <div className={cN(s.tileFlexContainer, s.sectionViolet)}>
+          <div className={cN(s.tileFlexContainer, cS.colorSchemeViolet)}>
             <div className={s.avatarAndInfo}>
               <div>
                 <AvatarImage user={userData} className={s.avatar} />
@@ -111,7 +112,7 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
   return (
     <>
       {userData && (
-        <div className={cN(s.tileContainer, s.sectionWhite)}>
+        <div className={cN(s.tileContainer, cS.colorSchemeWhite)}>
           <div className={s.flexElement}>
             <h3 className={s.headline}>Hallo {userData.username}! </h3>
 
@@ -173,7 +174,7 @@ const TileMunicipalityLoggedInOtherMunicipality = ({
   return (
     <>
       {userData && (
-        <div className={cN(s.tileContainer, s.sectionWhite)}>
+        <div className={cN(s.tileContainer, cS.colorSchemeWhite)}>
           <div className={s.flexElement}>
             <h3 className={s.headline}>Hallo {userData.username}! </h3>
 
@@ -236,7 +237,7 @@ const TileMunicipalityLoggedInOtherMunicipality = ({
 
 export const WelcomeBack = ({ children }) => {
   return (
-    <div className={cN(s.tileContainer, s.sectionWhite)}>
+    <div className={cN(s.tileContainer, cS.colorSchemeWhite)}>
       <div>
         <h3>Willkommen zurück!</h3>
         <p>

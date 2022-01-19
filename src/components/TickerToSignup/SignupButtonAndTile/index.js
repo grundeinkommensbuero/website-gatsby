@@ -31,7 +31,7 @@ export const SignupButtonAndTile = ({ className }) => {
     return (
       <>
         <p>Komm dazu.</p>
-        <div className={cN(s.tileContainer, s.sectionWhite)}>
+        <div className={s.tileContainer}>
           <h3>Willkommen zurück!</h3>
           <p>{welcomeExistingMessage}</p>
           <SignUpButton className={cN(className, s.signUpCTA)}>

@@ -1,0 +1,69 @@
+@import 'vars';
+
+// COLOR SCHEMES
+.colorSchemeWhite {
+  background-color: @white;
+  color: @black;
+  --bg-color: @white;
+  --font-color: @black;
+  --secondary-color: @violet;
+  --text-on-secondary-color: @white;
+  --button-font-color: @violet;
+  --button-bg-color: rgb(152, 133, 255); // IE Fallback
+  --button-bg-color: @violetTransparent;
+  --button-hover-bg-color: @violet;
+  --button-hover-font-color: @white;
+
+  h1,
+  h2,
+  h3 {
+    color: @violet;
+  }
+}
+
+.colorSchemeViolet {
+  background-color: @violet;
+  color: @white;
+  --bg-color: @violet;
+  --font-color: @white;
+  --secondary-color: @white;
+  --text-on-secondary-color: @black;
+  --button-font-color: @white;
+  --button-bg-color: @black; // IE Fallback
+  --button-bg-color: @whiteTransparent;
+  --button-hover-bg-color: @white;
+  --button-hover-font-color: @violet;
+  h1,
+  h2,
+  h3 {
+    color: @white;
+  }
+}
+
+.colorSchemeAqua {
+  background-color: @aqua;
+  color: @white;
+  --bg-color: @aqua;
+  --font-color: @white;
+  --secondary-color: @white;
+  --text-on-secondary-color: @black;
+  --button-font-color: @white;
+  --button-bg-color: @black; // IE Fallback
+  --button-bg-color: @whiteTransparent;
+  --button-hover-bg-color: @white;
+  --button-hover-font-color: @aqua;
+}
+
+.colorSchemeRed {
+  background-color: @red;
+  color: @white;
+  --bg-color: @red;
+  --font-color: @white;
+  --secondary-color: @white;
+  --text-on-secondary-color: @black;
+  --button-font-color: @white;
+  --button-bg-color: @black; // IE Fallback
+  --button-bg-color: @whiteTransparent;
+  --button-hover-bg-color: @white;
+  --button-hover-font-color: @red;
+}
