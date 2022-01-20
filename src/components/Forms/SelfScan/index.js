@@ -66,7 +66,7 @@ export default ({ successMessage, className }) => {
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
-        <Section className={className}>
+        <div className={className}>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}
@@ -74,7 +74,7 @@ export default ({ successMessage, className }) => {
           <div className={s.visualisation}>
             <CountSignaturesForm {...countSignaturesFormProps} />
           </div>
-        </Section>
+        </div>
       ) : null}
     </>
   );
