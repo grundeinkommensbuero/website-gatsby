@@ -1,4 +1,5 @@
-@import '../../components/style/vars.less';
+@import '../style/vars.less';
+@import '../style/colorSchemes.module.less';
 
 .onboardingContent {
   margin-top: 0.5rem;
@@ -23,16 +24,7 @@
   //margin-top: 2rem;
   margin-bottom: 2rem;
 
-  background-color: @white;
-  color: @black;
-  --bg-color: @white;
-  --font-color: @black;
-  --secondary-color: @aqua;
-  --text-on-secondary-color: @white;
-  --button-font-color: @violet;
-  --button-bg-color: @violetTransparent;
-  --button-hover-bg-color: @violet;
-  --button-hover-font-color: @white;
+  .colorSchemeWhite;
 
   @media (max-width: @breakPointM) {
     max-width: 72rem;
