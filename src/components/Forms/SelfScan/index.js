@@ -8,7 +8,6 @@ import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import AuthContext from '../../../context/Authentication';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
-import { Section } from '../../Layout/Sections';
 
 import SignatureStats from '../../SignatureStats';
 import SignUp from '../SignUp';
