@@ -104,11 +104,10 @@
 }
 
 .avatarAndInfo {
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  margin: 0 1.5rem;
 
   @media (max-width: @breakPointL) {
     width: 100%;
@@ -120,6 +119,11 @@
 .avatar {
   width: 130px;
   height: 130px;
+
+  @media (max-width: @breakPointXL) {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .info {
