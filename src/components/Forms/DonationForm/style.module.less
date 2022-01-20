@@ -23,8 +23,8 @@
   }
 
   .selectionElement {
-    border: @borderWidthThick solid @violet;
-    color: @violet;
+    border: @borderWidthThick solid var(--button-font-color);
+    color: var(--button-font-color);
     font-size: 1.25rem;
     padding: 1.2rem 2rem 1rem;
     margin-right: 1rem;
@@ -32,17 +32,14 @@
     min-width: 10rem;
     text-align: center;
     background-color: transparent;
-  }
 
-  .selectionElement:hover {
-    cursor: pointer;
-    background-color: @violet;
-    color: @white;
-  }
-
-  .selectionElementActive {
-    background-color: @violet;
-    color: @white;
+    &:hover,
+    &:focus,
+    &.selectionElementActive {
+      cursor: pointer;
+      color: var(--button-hover-font-color);
+      background: var(--button-hover-bg-color);
+    }
   }
 
   h3 {
