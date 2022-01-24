@@ -72,7 +72,6 @@ export default ({
 
       // Now set municipality in context
       if (municipalityInForm) {
-        console.log(municipalityInForm);
         navigate(`/orte/${municipalityInForm.slug}`);
       }
 
