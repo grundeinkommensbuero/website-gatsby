@@ -40,13 +40,19 @@ const BlogPost = ({
         {featuredImage && (
           <meta
             property="og:image"
-            content={featuredImage.node.localFile.childImageSharp.og.src}
+            content={
+              featuredImage.node.localFile.childImageSharp.og.images.fallback
+                .src
+            }
           />
         )}
         {featuredImage && (
           <meta
             name="twitter:image"
-            content={featuredImage.node.localFile.childImageSharp.og.src}
+            content={
+              featuredImage.node.localFile.childImageSharp.og.images.fallback
+                .src
+            }
           />
         )}
         {!featuredImage && <meta property="og:image" content={OGImage} />}
