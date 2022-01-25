@@ -95,3 +95,33 @@ export function PrimarySecondaryButtonContainer({
     </div>
   );
 }
+
+export function DropdownButton({
+  children,
+  isActive,
+  isOpen,
+  onClick,
+  className,
+  ...other
+}) {
+  return (
+    <span
+      tabIndex="0"
+      role="button"
+      className={cN(s.dropdownButton, className, { [s.active]: isActive })}
+      onKeyDown={e => {
+        // Emulate click when enter or space are pressed
+        if (e.key === 'Enter' || e.key === ' ') onClick(e);
+      }}
+      onClick={onClick}
+      {...other}
+    >
+      {children}
+      <div
+        className={cN(s.triangle, {
+          [s.animateTriangle]: isOpen,
+        })}
+      ></div>
+    </span>
+  );
+}

@@ -14,6 +14,7 @@ import { FinallyMessage } from '../Forms/FinallyMessage';
 
 import calenderIcon from './icon-calendar.svg';
 import pinIcon from './icon-pin.svg';
+import collectIcon from './icon-collect.png';
 
 import { detectWebGLContext } from '../utils';
 
@@ -81,6 +82,7 @@ const lazyMap = ({
   const container = useRef(null);
   const map = useRef(null);
   const [highlightedPoint, setHighlightedPoint] = useState([]);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     setHasWebGL(detectWebGLContext());
@@ -134,12 +136,18 @@ const lazyMap = ({
       }
 
       if (locations) {
+        // Remove old markers from map
+        markers.forEach(marker => marker.remove());
+
+        const markerArray = [];
         locations.forEach(meetup => {
           if (meetup.location) {
             const element = document.createElement('div');
-            element.className = s.marker;
+            element.className = `${s.marker} ${
+              meetup.type === 'collect' && s.collect
+            }`;
 
-            new mapboxgl.Marker(element)
+            const marker = new mapboxgl.Marker(element)
               .setLngLat([meetup.location.lon, meetup.location.lat])
               .addTo(map.current)
               .setPopup(
@@ -154,8 +162,12 @@ const lazyMap = ({
                     setHighlightedPoint([...highlightedPoint]);
                   })
               );
+
+            markerArray.push(marker);
           }
         });
+
+        setMarkers(markerArray);
       }
     }
   }, [hasWebGl, locations]);
@@ -184,6 +196,20 @@ const lazyMap = ({
           <div ref={container} className={s.container} />
         )}
       </SectionInner>
+      <div className={s.legend}>
+        <div>
+          <img
+            src={pinIcon}
+            alt="Illustration einer Markierung"
+            className={s.legendPinIcon}
+          />
+          <span>Ausgelegte Listen</span>
+        </div>
+        <div>
+          <img src={collectIcon} alt="Illustration eines Sammelevents" />
+          <span>Sammelevent</span>
+        </div>
+      </div>
       {highlightedPoint.length !== 0 && (
         <SectionInner className={s.popUpOutside}>
           <div>
@@ -229,7 +255,7 @@ const PopupContent = ({
               <br />
               <span className={s.tooltipTime}>
                 {formatTime(new Date(startTime))} -{' '}
-                {formatTime(new Date(startTime))} Uhr
+                {formatTime(new Date(endTime))} Uhr
               </span>
             </div>
           </div>
