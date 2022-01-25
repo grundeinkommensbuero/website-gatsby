@@ -56,11 +56,7 @@ export const PledgePackagesSection = () => {
                   Unterschriften, von denen du dir so viele nehmen kannst, wie
                   du möchtest! Mach mit und schnapp dir dein erstes Paket!
                 </p>
-                <img
-                  src={paketSvg}
-                  className={s.packageIconOnly}
-                  alt="Symbolbild eines Paketes"
-                />
+                <img src={paketSvg} alt="Symbolbild eines Paketes" />
               </>
             ) : (
               <p>
