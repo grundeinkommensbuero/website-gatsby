@@ -67,6 +67,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   const [showDayFilters, setShowDayFilters] = useState(false);
   const [showTimeFilters, setShowTimeFilters] = useState(false);
 
+  const isBremen = mapConfig.state === 'bremen';
   const isBerlin = mapConfig.state === 'berlin';
 
   useEffect(() => {
@@ -124,28 +125,32 @@ export const ShowMeetups = ({ mapConfig, className }) => {
 
   useEffect(() => {
     if (allLocations) {
-      // Filter by type, filter by date (endTime exists = only for collection events)
-      // and filter by time (also only for collection events)
-      const newLocationsFiltered = allLocations.filter(
-        ({ type, startTime, endTime }) => {
-          const startInHours = startTime && new Date(startTime).getHours();
+      if (isBremen) {
+        setLocationsFiltered(allLocations);
+      } else {
+        // Filter by type, filter by date (endTime exists = only for collection events)
+        // and filter by time (also only for collection events)
+        const newLocationsFiltered = allLocations.filter(
+          ({ type, startTime, endTime }) => {
+            const startInHours = startTime && new Date(startTime).getHours();
 
-          return (
-            ((showLists && type === 'lists') ||
-              (showCollectionEvents && type === 'collect')) &&
-            (!endTime ||
-              (!filterToday && !filterTomorrow) ||
-              (filterToday && checkIfDateIsToday(new Date(endTime))) ||
-              (filterTomorrow && checkIfDateIsTomorrow(new Date(endTime)))) &&
-            (!startTime ||
-              (filterBefore12 && startInHours < 12) ||
-              (filterBefore18 && startInHours >= 12 && startInHours < 18) ||
-              (filterAfter18 && startInHours >= 18))
-          );
-        }
-      );
+            return (
+              ((showLists && type === 'lists') ||
+                (showCollectionEvents && type === 'collect')) &&
+              (!endTime ||
+                (!filterToday && !filterTomorrow) ||
+                (filterToday && checkIfDateIsToday(new Date(endTime))) ||
+                (filterTomorrow && checkIfDateIsTomorrow(new Date(endTime)))) &&
+              (!startTime ||
+                (filterBefore12 && startInHours < 12) ||
+                (filterBefore18 && startInHours >= 12 && startInHours < 18) ||
+                (filterAfter18 && startInHours >= 18))
+            );
+          }
+        );
 
-      setLocationsFiltered(newLocationsFiltered);
+        setLocationsFiltered(newLocationsFiltered);
+      }
     }
   }, [
     showLists,
@@ -160,99 +165,101 @@ export const ShowMeetups = ({ mapConfig, className }) => {
 
   return (
     <>
-      <FormWrapper className={s.filter}>
-        <div className={s.flexRow}>
-          <Checkbox
-            label="Orte zum Unterschreiben"
-            type="checkbox"
-            checked={showLists}
-            onChange={() => setShowLists(!showLists)}
-            className={s.inlineCheckbox}
-            labelClassName={s.inlineCheckboxLabel}
-          />
-          <Checkbox
-            label="Mitsammeln"
-            type="checkbox"
-            checked={showCollectionEvents}
-            onChange={() => setShowCollectionEvents(!showCollectionEvents)}
-            className={s.inlineCheckbox}
-            labelClassName={s.inlineCheckboxLabel}
-          />
-        </div>
-
-        <div className={s.flexRow}>
-          <div className={s.dropdown}>
-            <DropdownButton
-              className={s.dropdownButton}
-              onClick={() => setShowDayFilters(!showDayFilters)}
-              isOpen={showDayFilters}
-              isActive={filterTomorrow || filterToday}
-            >
-              Tag auswählen
-            </DropdownButton>
-
-            {showDayFilters && (
-              <FormSection className={s.dropdownContent}>
-                <Checkbox
-                  label="Egal"
-                  type="checkbox"
-                  checked={!filterTomorrow && !filterToday}
-                  onChange={() => {
-                    setFilterToday(false);
-                    setFilterTomorrow(false);
-                  }}
-                />
-                <Checkbox
-                  label="Heute"
-                  type="checkbox"
-                  checked={filterToday}
-                  onChange={() => setFilterToday(!filterToday)}
-                />
-                <Checkbox
-                  label="Morgen"
-                  type="checkbox"
-                  checked={filterTomorrow}
-                  onChange={() => setFilterTomorrow(!filterTomorrow)}
-                />
-              </FormSection>
-            )}
+      {!isBremen && (
+        <FormWrapper className={s.filter}>
+          <div className={s.flexRow}>
+            <Checkbox
+              label="Orte zum Unterschreiben"
+              type="checkbox"
+              checked={showLists}
+              onChange={() => setShowLists(!showLists)}
+              className={s.inlineCheckbox}
+              labelClassName={s.inlineCheckboxLabel}
+            />
+            <Checkbox
+              label="Mitsammeln"
+              type="checkbox"
+              checked={showCollectionEvents}
+              onChange={() => setShowCollectionEvents(!showCollectionEvents)}
+              className={s.inlineCheckbox}
+              labelClassName={s.inlineCheckboxLabel}
+            />
           </div>
 
-          <div className={s.dropdown}>
-            <DropdownButton
-              className={s.dropdownButton}
-              onClick={() => setShowTimeFilters(!showTimeFilters)}
-              isOpen={showTimeFilters}
-              isActive={!filterBefore12 || !filterBefore18 || !filterAfter18}
-            >
-              Uhrzeit auswählen
-            </DropdownButton>
+          <div className={s.flexRow}>
+            <div className={s.dropdown}>
+              <DropdownButton
+                className={s.dropdownButton}
+                onClick={() => setShowDayFilters(!showDayFilters)}
+                isOpen={showDayFilters}
+                isActive={filterTomorrow || filterToday}
+              >
+                Tag auswählen
+              </DropdownButton>
 
-            {showTimeFilters && (
-              <FormSection className={s.dropdownContent}>
-                <Checkbox
-                  label="Vor 12 Uhr"
-                  type="checkbox"
-                  checked={filterBefore12}
-                  onChange={() => setFilterBefore12(!filterBefore12)}
-                />
-                <Checkbox
-                  label="Zwischen 12 und 18 Uhr"
-                  type="checkbox"
-                  checked={filterBefore18}
-                  onChange={() => setFilterBefore18(!filterBefore18)}
-                />
-                <Checkbox
-                  label="Nach 18 Uhr"
-                  type="checkbox"
-                  checked={filterAfter18}
-                  onChange={() => setFilterAfter18(!filterAfter18)}
-                />
-              </FormSection>
-            )}
+              {showDayFilters && (
+                <FormSection className={s.dropdownContent}>
+                  <Checkbox
+                    label="Egal"
+                    type="checkbox"
+                    checked={!filterTomorrow && !filterToday}
+                    onChange={() => {
+                      setFilterToday(false);
+                      setFilterTomorrow(false);
+                    }}
+                  />
+                  <Checkbox
+                    label="Heute"
+                    type="checkbox"
+                    checked={filterToday}
+                    onChange={() => setFilterToday(!filterToday)}
+                  />
+                  <Checkbox
+                    label="Morgen"
+                    type="checkbox"
+                    checked={filterTomorrow}
+                    onChange={() => setFilterTomorrow(!filterTomorrow)}
+                  />
+                </FormSection>
+              )}
+            </div>
+
+            <div className={s.dropdown}>
+              <DropdownButton
+                className={s.dropdownButton}
+                onClick={() => setShowTimeFilters(!showTimeFilters)}
+                isOpen={showTimeFilters}
+                isActive={!filterBefore12 || !filterBefore18 || !filterAfter18}
+              >
+                Uhrzeit auswählen
+              </DropdownButton>
+
+              {showTimeFilters && (
+                <FormSection className={s.dropdownContent}>
+                  <Checkbox
+                    label="Vor 12 Uhr"
+                    type="checkbox"
+                    checked={filterBefore12}
+                    onChange={() => setFilterBefore12(!filterBefore12)}
+                  />
+                  <Checkbox
+                    label="Zwischen 12 und 18 Uhr"
+                    type="checkbox"
+                    checked={filterBefore18}
+                    onChange={() => setFilterBefore18(!filterBefore18)}
+                  />
+                  <Checkbox
+                    label="Nach 18 Uhr"
+                    type="checkbox"
+                    checked={filterAfter18}
+                    onChange={() => setFilterAfter18(!filterAfter18)}
+                  />
+                </FormSection>
+              )}
+            </div>
           </div>
-        </div>
-      </FormWrapper>
+        </FormWrapper>
+      )}
 
       <Map
         mapConfig={mapConfig}
