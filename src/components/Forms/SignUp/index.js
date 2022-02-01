@@ -16,6 +16,7 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import * as s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { SearchPlaces } from '../SearchPlaces';
+import { navigate } from 'gatsby';
 
 // Not needed at the moment
 /* const AuthenticatedDialogDefault = () => {
@@ -49,7 +50,7 @@ export default ({
   } = useContext(AuthContext);
   const [formData, setFormData] = useState();
 
-  const { municipality, setMunicipality } = useContext(MunicipalityContext);
+  const { municipality } = useContext(MunicipalityContext);
   const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
 
   let prefilledZip;
@@ -71,7 +72,7 @@ export default ({
 
       // Now set municipality in context
       if (municipalityInForm) {
-        setMunicipality(municipalityInForm);
+        navigate(`/orte/${municipalityInForm.slug}`);
       }
 
       if (updateUserState === 'updated') {

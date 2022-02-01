@@ -43,7 +43,6 @@ export const ProfileSignatures = ({ userId, userData }) => {
               successMessage={
                 'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'
               }
-              className={s.signatureWrapper}
             />
             {userCampaigns[0] ? (
               userCampaigns.map((scan, index) => {

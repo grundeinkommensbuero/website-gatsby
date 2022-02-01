@@ -8,7 +8,6 @@ import { useSignatureCountOfUser } from '../../../hooks/Api/Signatures/Get';
 import AuthContext from '../../../context/Authentication';
 import { CTAButtonContainer, CTAButton } from '../../Layout/CTAButton';
 import { validateEmail } from '../../utils';
-import { Section } from '../../Layout/Sections';
 
 import SignatureStats from '../../SignatureStats';
 import SignUp from '../SignUp';
@@ -66,7 +65,7 @@ export default ({ successMessage, className }) => {
   return (
     <>
       {signatureCountOfUser && state !== 'userNotFound' && state !== 'error' ? (
-        <Section className={className}>
+        <div className={className}>
           <SignatureStats
             signatureCount={signatureCountOfUser}
             className={s.statisticsOverall}
@@ -74,7 +73,7 @@ export default ({ successMessage, className }) => {
           <div className={s.visualisation}>
             <CountSignaturesForm {...countSignaturesFormProps} />
           </div>
-        </Section>
+        </div>
       ) : null}
     </>
   );

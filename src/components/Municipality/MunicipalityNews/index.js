@@ -2,7 +2,6 @@ import { useStaticQuery, graphql } from 'gatsby';
 import React, { useContext } from 'react';
 import { MunicipalityContext } from '../../../context/Municipality';
 import * as s from './style.module.less';
-import * as sectionS from '../../Layout/Sections/style.module.less';
 import { Section } from '../../Layout/Sections';
 
 export const MunicipalityNews = () => {
@@ -66,7 +65,7 @@ export const MunicipalityNews = () => {
   }
 
   return (
-    <Section className={sectionS.sectionWhite}>
+    <Section>
       <h2>Aktuelles</h2>
       <div className={s.container}>{renderedPosts}</div>
     </Section>

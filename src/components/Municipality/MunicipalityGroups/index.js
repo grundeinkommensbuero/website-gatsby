@@ -17,14 +17,14 @@ export const MunicipalityGroups = ({ body }) => {
   if (municipality) {
     return (
       <>
-        <p>{introText}</p>
+        {introText}
 
         {!municipality?.groups && (
           <NoGroupInfo municipalityName={municipality.name} />
         )}
 
-        {municipality?.groups?.map(({ medium, link }) => (
-          <p>
+        {municipality?.groups?.map(({ medium, link }, index) => (
+          <p key={index}>
             <InlineLinkButton href={link} target="_blank">
               {medium}
             </InlineLinkButton>
@@ -43,23 +43,23 @@ export const MunicipalityGroups = ({ body }) => {
 
     return (
       <>
-        <p>{introText}</p>
+        {introText}
 
-        {sortedMunicipalites?.map(({ name, groups }) => (
-          <>
+        {sortedMunicipalites?.map(({ name, groups }, municipalityIndex) => (
+          <div key={municipalityIndex}>
             <h3>{name}</h3>
 
             {!groups && <NoGroupInfo municipalityName={name} />}
 
-            {groups?.map(({ medium, link, name }) => (
-              <p>
+            {groups?.map(({ medium, link, name }, groupIndex) => (
+              <p key={groupIndex}>
                 {medium}:{' '}
                 <InlineLinkButton href={link} target="_blank">
                   {name}
                 </InlineLinkButton>
               </p>
             ))}
-          </>
+          </div>
         ))}
 
         <CreateGroupInfo />
@@ -69,7 +69,7 @@ export const MunicipalityGroups = ({ body }) => {
 
   return (
     <>
-      <p>{introText}</p>
+      {introText}
       <p>
         Du bist noch in keinem Ort angemeldet. Sobald du dich für einen Ort
         anmeldest, siehst du hier (falls vorhanden) Gruppen zur Vernetzung.

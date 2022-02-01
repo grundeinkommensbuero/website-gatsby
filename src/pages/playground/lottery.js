@@ -6,7 +6,6 @@ import {
   Section,
   SectionInner,
 } from '../../components/Layout/Sections';
-import * as s from '../../components/Layout/Sections/style.module.less';
 
 import { Lottery } from '../../components/Lottery';
 
@@ -17,7 +16,7 @@ const PlaygroundLottery = () => {
         <title>Playground</title>
       </Helmet>
       <SectionWrapper>
-        <Section title="karte" className={s.sectionWhite}>
+        <Section title="karte">
           <SectionInner wide={true}>
             <Lottery />
           </SectionInner>
