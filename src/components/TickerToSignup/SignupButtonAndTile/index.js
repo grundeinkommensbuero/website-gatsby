@@ -16,7 +16,11 @@ export const SignupButtonAndTile = ({ className }) => {
   const welcomeExistingMessage = getWelcomeExistingMessage(municipality);
   const buttonText = getButtonText(municipality, userMunicipalityState);
 
-  if (municipality && userMunicipalityState === 'loggedOut') {
+  if (
+    userMunicipalityState === 'loggedOut' ||
+    (municipality &&
+      userMunicipalityState === 'loggedInOtherMunicipalitySignup')
+  ) {
     return (
       <>
         <SignUpButton className={cN(className, s.signUpCTA)}>
@@ -31,7 +35,7 @@ export const SignupButtonAndTile = ({ className }) => {
     return (
       <>
         <p>Komm dazu.</p>
-        <div className={cN(s.tileContainer, s.sectionWhite)}>
+        <div className={s.tileContainer}>
           <h3>Willkommen zurück!</h3>
           <p>{welcomeExistingMessage}</p>
           <SignUpButton className={cN(className, s.signUpCTA)}>
@@ -40,23 +44,8 @@ export const SignupButtonAndTile = ({ className }) => {
         </div>
       </>
     );
-  } else if (
-    municipality &&
-    userMunicipalityState === 'loggedInOtherMunicipalitySignup'
-  ) {
-    return (
-      <>
-        <SignUpButton className={cN(className, s.signUpCTA)}>
-          {buttonText}
-        </SignUpButton>
-      </>
-    );
   } else {
-    return (
-      <SignUpButton className={cN(className, s.signUpCTA)}>
-        {buttonText}
-      </SignUpButton>
-    );
+    return null;
   }
 };
 
