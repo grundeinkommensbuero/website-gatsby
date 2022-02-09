@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
@@ -135,7 +135,7 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
                           </p>
                           <Button
                             onClick={() => {
-                              setMunicipality(municipality);
+                              navigate(`/orte/${municipality.slug}`);
                             }}
                           >
                             Zur Seite von {municipality.name}
