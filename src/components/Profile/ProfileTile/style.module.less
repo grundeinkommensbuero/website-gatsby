@@ -1,20 +1,20 @@
 @import '../../../components/style/vars.less';
 
 .tileContainer {
-  padding: 3rem 2rem 2rem 0;
-  background: var(--secondary-color);
-  color: var(--text-on-secondary-color);
-  font-weight: normal;
+  padding: 3rem 0rem 2rem 0rem;
 }
 
 .tileFlexContainer {
+  font-weight: normal;
   margin: auto;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem;
 
   @media (max-width: @breakPointS) {
-    flex-wrap: wrap;
-    padding-left: 2rem;
+    padding: 1.5rem;
   }
 
   p {
@@ -28,7 +28,6 @@
     @media (max-width: @breakPointS) {
       font-size: @MobileFontSizeM;
       line-height: 1.625rem;
-      text-align: center;
     }
   }
 
@@ -40,39 +39,57 @@
   }
 }
 
-.flexElement {
-  //width: 47.5%;
-
-  @media (max-width: @breakPointL) {
-    width: 100%;
-  }
-}
-
 .headline {
   margin-top: 0;
   margin-bottom: 0.4rem;
-  color: @white !important;
   font-size: @DesktopFontSizeLL;
+
+  &.centerDesktop {
+    margin-top: 1.5rem;
+  }
 
   @media (max-width: @breakPointM) {
     margin-top: 1.5rem;
   }
 }
 
-.avatarAndInfo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 1.5rem;
+.flexElementOnlyInfo {
+  @media (max-width: @breakPointL) {
+    width: 70%;
+  }
+
+  @media (max-width: @breakPointM) {
+    width: 60%;
+  }
+
+  @media (max-width: @breakPointS) {
+    width: 100%;
+  }
+}
+
+.flexElement {
+  width: 50%;
 
   @media (max-width: @breakPointL) {
     width: 100%;
-    //margin-bottom: 4rem;
-    justify-content: center;
+  }
+}
+
+.avatarAndInfo {
+  display: flex;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+
+  @media (max-width: @breakPointS) {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
 .avatar {
+  margin-right: 1.5rem;
   width: 130px;
   height: 130px;
 
@@ -84,6 +101,20 @@
   @media (max-width: @breakPointL) {
     width: 130px;
     height: 130px;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-right: 0;
+  }
+}
+
+.centeredAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .avatar {
+    margin-right: 0;
   }
 }
 
@@ -141,6 +172,12 @@
 
 .centerMobile {
   @media (max-width: @breakPointS) {
+    text-align: center;
+  }
+}
+
+.centerDesktop {
+  @media (min-width: @breakPointL) {
     text-align: center;
   }
 }
