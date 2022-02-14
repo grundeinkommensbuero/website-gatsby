@@ -94,6 +94,8 @@ export const MunicipalityProvider = ({ children }) => {
         setIsMunicipality(false);
         setIsSpecific(false);
         setMunicipality(undefined);
+        // Reset municipalityContentfulState
+        setMunicipalityContentfulState('noMunicipality');
       }
     }
   }, [pageContext]);

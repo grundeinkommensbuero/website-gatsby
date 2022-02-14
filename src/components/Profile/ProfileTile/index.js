@@ -4,8 +4,7 @@ import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
 import AvatarImage from '../../AvatarImage';
-import { LinkButtonLocal, Button } from '../../Forms/Button';
-import { SignUpButton } from '../../TickerToSignup/SignupButton';
+import { Button } from '../../Forms/Button';
 import { formatDate } from '../../utils';
 import * as s from './style.module.less';
 import * as cS from '../../style/colorSchemes.module.less';
@@ -45,7 +44,10 @@ export const ProfileTile = ({ children }) => {
     municipalityContentfulState !== 'noMunicipality' &&
     userMunicipalityState === 'loggedInOtherMunicipalitySignup'
   ) {
-    return <TileMunicipalityLoggedInOtherMunicipality {...tileData} />;
+    // NOTE: if TileMunicipalityLoggedInOtherMunicipality is used in the future it would need
+    // to be redesigned
+    return null;
+    // return <TileMunicipalityLoggedInOtherMunicipality {...tileData} />;
   }
   return <></>;
 };
@@ -180,6 +182,8 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
   );
 };
 
+// NOTE: if TileMunicipalityLoggedInOtherMunicipality is used in the future it would need
+/*
 const TileMunicipalityLoggedInOtherMunicipality = ({
   userId,
   userData,
@@ -248,6 +252,7 @@ const TileMunicipalityLoggedInOtherMunicipality = ({
     </>
   );
 };
+*/
 
 export const WelcomeBack = ({ children }) => {
   return (
