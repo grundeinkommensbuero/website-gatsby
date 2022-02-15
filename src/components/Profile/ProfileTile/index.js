@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import AuthContext from '../../../context/Authentication';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
 import AvatarImage from '../../AvatarImage';
-import { LinkButtonLocal, Button } from '../../Forms/Button';
-import { SignUpButton } from '../../TickerToSignup/SignupButton';
+import { Button } from '../../Forms/Button';
 import { formatDate } from '../../utils';
 import * as s from './style.module.less';
 import * as cS from '../../style/colorSchemes.module.less';
@@ -45,7 +44,10 @@ export const ProfileTile = ({ children }) => {
     municipalityContentfulState !== 'noMunicipality' &&
     userMunicipalityState === 'loggedInOtherMunicipalitySignup'
   ) {
-    return <TileMunicipalityLoggedInOtherMunicipality {...tileData} />;
+    // NOTE: if TileMunicipalityLoggedInOtherMunicipality is used in the future it would need
+    // to be redesigned
+    return null;
+    // return <TileMunicipalityLoggedInOtherMunicipality {...tileData} />;
   }
   return <></>;
 };
@@ -56,23 +58,29 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
   return (
     <>
       {userData && (
-        <section className={s.tileContainer}>
+        <section>
           <div className={cN(s.tileFlexContainer, cS.colorSchemeViolet)}>
-            <div className={s.avatarAndInfo}>
-              <div>
-                <AvatarImage user={userData} className={s.avatar} />
-              </div>
+            <div className={s.centeredAvatar}>
+              <AvatarImage user={userData} className={s.avatar} />
             </div>
-            <div className={s.flexElement}>
+            <div className={s.flexElementOnlyInfo}>
               <div className={s.info}>
-                <h3 className={cN(s.headline, s.centerMobile)}>
+                <h3 className={cN(s.headline, s.centerDesktop, s.centerMobile)}>
                   {userData.username}
                 </h3>
-                <ul className={cN(s.infoText, s.centerMobile)}>
-                  <li className={cN(s.centerMobile, s.userCity)}>
+                <ul className={cN(s.infoText, s.centerDesktop, s.centerMobile)}>
+                  <li
+                    className={cN(s.centerDesktop, s.centerMobile, s.userCity)}
+                  >
                     {userData.city}
                   </li>
-                  <li className={cN(s.centerMobile, s.userCreated)}>
+                  <li
+                    className={cN(
+                      s.centerDesktop,
+                      s.centerMobile,
+                      s.userCreated
+                    )}
+                  >
                     Dabei seit dem{' '}
                     {userData.createdAt &&
                       formatDate(new Date(userData.createdAt))}
@@ -112,48 +120,56 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
   return (
     <>
       {userData && (
-        <div className={cN(s.tileContainer, cS.colorSchemeWhite)}>
-          <div className={s.flexElement}>
-            <h3 className={s.headline}>Hallo {userData.username}! </h3>
+        <div className={s.tileContainer}>
+          <div className={cN(s.tileFlexContainer, cS.colorSchemeWhite)}>
+            <div className={s.flexElement}>
+              <h3 className={s.headline}>Hallo {userData.username}! </h3>
 
-            <p>Du bist bereits in folgenden Orten angemeldet:</p>
-            <div className={s.municipalityButtonGroup}>
-              {userData.municipalities &&
-                userData.municipalities.map(municipality => {
-                  return (
-                    <div key={municipality.ags}>
-                      <p className={s.municipalityLabel}>{municipality.name}</p>
-                      <Button
-                        onClick={() => {
-                          setMunicipality(municipality);
-                        }}
-                      >
-                        Zur Seite von {municipality.name}
-                      </Button>
-                    </div>
-                  );
-                })}
+              <p>Du bist bereits in folgenden Orten angemeldet:</p>
+              <div className={s.municipalityButtonGroup}>
+                {userData.municipalities &&
+                  userData.municipalities.map((municipality, index) => {
+                    if (index <= 1) {
+                      return (
+                        <div key={municipality.ags}>
+                          <p className={s.municipalityLabel}>
+                            {municipality.name}
+                          </p>
+                          <Button
+                            onClick={() => {
+                              navigate(`/orte/${municipality.slug}`);
+                            }}
+                          >
+                            Zur Seite von {municipality.name}
+                          </Button>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+              </div>
             </div>
-          </div>
-          <div className={s.avatarAndInfo}>
-            <div>
-              <AvatarImage user={userData} className={s.avatar} />
-            </div>
+            <div className={s.flexElement}>
+              <div className={s.avatarAndInfo}>
+                <div>
+                  <AvatarImage user={userData} className={s.avatar} />
+                </div>
 
-            <div className={s.info}>
-              <h3 className={cN(s.headline, s.centerMobile)}>
-                {userData.username}
-              </h3>
-              <ul className={cN(s.infoText, s.centerMobile)}>
-                <li className={s.centerMobile}>{userData.city}</li>
-                <li className={s.centerMobile}>
-                  Dabei seit dem{' '}
-                  {userData.createdAt &&
-                    formatDate(new Date(userData.createdAt))}
-                </li>
-              </ul>
-            </div>
-            <div>
+                <div className={s.info}>
+                  <h3 className={cN(s.headline, s.centerMobile)}>
+                    {userData.username}
+                  </h3>
+                  <ul className={cN(s.infoText, s.centerMobile)}>
+                    <li className={s.centerMobile}>{userData.city}</li>
+                    <li className={s.centerMobile}>
+                      Dabei seit dem{' '}
+                      {userData.createdAt &&
+                        formatDate(new Date(userData.createdAt))}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
               <p>
                 <Link to={`/mensch/${userId}`}>Besuche dein Profil</Link>, um
                 deine Einstellungen zu ändern.
@@ -166,6 +182,8 @@ const TileNoMunicipalityLoggedInOtherMunicipality = ({
   );
 };
 
+// NOTE: if TileMunicipalityLoggedInOtherMunicipality is used in the future it would need
+/*
 const TileMunicipalityLoggedInOtherMunicipality = ({
   userId,
   userData,
@@ -234,6 +252,7 @@ const TileMunicipalityLoggedInOtherMunicipality = ({
     </>
   );
 };
+*/
 
 export const WelcomeBack = ({ children }) => {
   return (
