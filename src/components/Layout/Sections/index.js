@@ -210,15 +210,7 @@ export function ContentfulSection({ section, pageContext }) {
           </Section>
         )}
 
-        <Section
-          jumpToId={id}
-          className={cN({
-            // [s.sectionConfetti]: backgroundIllustration === 'confetti',
-            [s.sectionViolet]: colorScheme === 'violet',
-            [s.sectionAqua]: colorScheme === 'aqua',
-            [s.sectionRed]: colorScheme === 'red',
-          })}
-        >
+        <Section jumpToId={id} colorScheme={colorScheme}>
           <SectionInner>
             {headline && <h2>{headline.headline}</h2>}
             <SectionComponentContainer>
@@ -270,13 +262,7 @@ export function ContentfulSection({ section, pageContext }) {
     return (
       <>
         {userData.municipalities && (
-          <Section
-            className={cN({
-              [s.sectionViolet]: colorScheme === 'violet',
-              [s.sectionAqua]: colorScheme === 'aqua',
-              [s.sectionRed]: colorScheme === 'red',
-            })}
-          >
+          <Section colorScheme={colorScheme}>
             <h2>{title}</h2>
             <div ref={scrollToRef}></div>
             <SectionInner>
@@ -344,6 +330,7 @@ export function ContentfulSection({ section, pageContext }) {
           {backgroundIllustration === 'confetti' && <Confetti />}
         </>
       }
+      colorScheme={colorScheme}
       className={cN({
         [s.sectionPledge]: !!pledgeId,
         [s.sectionNewsletter]: !!emailSignup,
@@ -353,9 +340,6 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
-        [s.sectionViolet]: colorScheme === 'violet',
-        [s.sectionAqua]: colorScheme === 'aqua',
-        [s.sectionRed]: colorScheme === 'red',
       })}
       // NOTE (felix): isVideoSection was in this before, not sure why
       // Breaks the possibility to add a CTA Button to the video section
@@ -517,11 +501,15 @@ export function Section({
   afterBodyContent,
   isHeader,
   sectionBodyNoEvents,
+  colorScheme,
 }) {
   return (
     <section
       className={cN(s.section, className, {
         [s.sectionHeader]: isHeader,
+        [s.sectionViolet]: colorScheme === 'violet',
+        [s.sectionAqua]: colorScheme === 'aqua',
+        [s.sectionRed]: colorScheme === 'red',
       })}
     >
       {jumpToId && (
