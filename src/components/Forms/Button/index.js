@@ -2,6 +2,7 @@ import React from 'react';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
+import successIcon from './success.svg';
 
 export function LinkButton({ children, className, size, ...other }) {
   return (
@@ -31,24 +32,35 @@ export function Button({
   disabled,
   size,
   customRef,
+  loading,
+  success,
   ...other
 }) {
   return (
-    <button
-      className={cN(
-        s.button,
-        className,
-        { [s.medium]: size === 'MEDIUM' },
-        // Only use small buttons as exception!
-        { [s.small]: size === 'SMALL' },
-        { [s.disabled]: disabled }
-      )}
-      ref={customRef}
-      disabled={disabled}
-      {...other}
-    >
-      {children}
-    </button>
+    <>
+      <button
+        className={cN(
+          s.button,
+          className,
+          { [s.medium]: size === 'MEDIUM' },
+          // Only use small buttons as exception!
+          { [s.small]: size === 'SMALL' },
+          { [s.disabled]: disabled },
+          { [s.loading]: loading },
+          { [s.success]: success }
+        )}
+        ref={customRef}
+        disabled={disabled}
+        {...other}
+      >
+        <div className={s.buttonText}>{children}</div>
+        <div className={s.progressBar}></div>
+
+        <div className={s.successIcon}>
+          <img alt="Illustration des Erfolgs" src={successIcon} />
+        </div>
+      </button>
+    </>
   );
 }
 
