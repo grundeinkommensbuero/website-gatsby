@@ -58,6 +58,8 @@ const Components = {
   CampaignVisualisation: loadable(() =>
     import('../../Municipality/MunicipalityCampaignVisualisations')
   ),
+  Groups: loadable(() => import('../../Municipality/MunicipalityGroups')),
+  Lottery: loadable(() => import('../../Lottery')),
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
@@ -123,7 +125,7 @@ export function ContentfulSection({ section, pageContext }) {
     sloganLine2,
     __typename,
     teamMembers,
-    colorScheme = 'white',
+    colorScheme,
     bodyTextSizeHuge,
     pledgeId,
     signaturesId,
@@ -183,7 +185,7 @@ export function ContentfulSection({ section, pageContext }) {
     return (
       <>
         {section.keyVisual && (
-          <Section className={cN(s.sectionWhite, s.keyVisualSection)}>
+          <Section className={s.keyVisualSection}>
             <div className={s.keyVisuallowerBorder}>
               <div className={s.keyVisualWrapper}>
                 <div className={s.keyVisualContainer}>
@@ -212,7 +214,6 @@ export function ContentfulSection({ section, pageContext }) {
           jumpToId={id}
           className={cN({
             // [s.sectionConfetti]: backgroundIllustration === 'confetti',
-            [s.sectionWhite]: colorScheme === 'white',
             [s.sectionViolet]: colorScheme === 'violet',
             [s.sectionAqua]: colorScheme === 'aqua',
             [s.sectionRed]: colorScheme === 'red',
@@ -271,7 +272,6 @@ export function ContentfulSection({ section, pageContext }) {
         {userData.municipalities && (
           <Section
             className={cN({
-              [s.sectionWhite]: colorScheme === 'white',
               [s.sectionViolet]: colorScheme === 'violet',
               [s.sectionAqua]: colorScheme === 'aqua',
               [s.sectionRed]: colorScheme === 'red',
@@ -353,7 +353,6 @@ export function ContentfulSection({ section, pageContext }) {
         [s.sectionCrowdTravel]: backgroundIllustration === 'crowd_travel',
         [s.sectionCrowdQuestion]: backgroundIllustration === 'crowd_question',
         [s.sectionConfetti]: backgroundIllustration === 'confetti',
-        [s.sectionWhite]: colorScheme === 'white',
         [s.sectionViolet]: colorScheme === 'violet',
         [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',

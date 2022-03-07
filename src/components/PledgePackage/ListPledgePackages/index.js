@@ -1,37 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SectionInner } from '../../Layout/Sections';
 import * as s from './style.module.less';
-import AvatarImage from '../../AvatarImage';
 import { useGetMostRecentInteractions } from '../../../hooks/Api/Interactions';
+
 import { CTALink } from '../../Layout/CTAButton';
 import AuthContext from '../../../context/Authentication';
 
-import paketSvg from '../paket-v2.svg';
 import { LoadingAnimation } from '../../LoadingAnimation';
+import { Package } from './Package';
 
 export default () => {
   const [state, pledgePackages, getInteractions] =
     useGetMostRecentInteractions();
   const { userId, customUserData: userData } = useContext(AuthContext);
-  const [packagesDone, setPackagesDone] = useState(0);
   const [packagesOfUser, setPackagesOfUser] = useState([]);
+  const [pledgePackagesDone, setPledgePackagesDone] = useState([]);
 
+  // Fetch all interactions once
   useEffect(() => {
     getInteractions(null, 0, 'pledgePackage');
   }, []);
 
+  // Get a list of all done packages
   useEffect(() => {
-    let counter = 0;
-    pledgePackages.forEach(pledgePackage => {
-      if (pledgePackage.done) {
-        counter = counter + 1;
-      }
-    });
-    setPackagesDone(counter);
+    const done = pledgePackages.filter(pledgePackage => pledgePackage.done);
+    setPledgePackagesDone(done);
   }, [pledgePackages]);
 
-  // Filter interactions to only use interactions which were created
-  // as pledge package
+  // Get only pledge packages from user interactions
   useEffect(() => {
     if (userData?.interactions) {
       setPackagesOfUser(
@@ -44,15 +40,24 @@ export default () => {
 
   return (
     <SectionInner wide={true}>
-      <h2 className={s.headingViolet}>Alle Sammelpakete</h2>
-      <p>Intro-Text zu Sammelpaketen</p>
+      <h2 className={s.violet}>Alle Sammelpakete</h2>
+      <p>
+        Zeig deinen Einsatz für's Grundeinkommen und setze dir ein Sammelziel!
+        Es gibt Pakete mit jeweils einem Ziel von 50 Unterschriften, von denen
+        du dir so viele nehmen kannst, wie du möchtest!{' '}
+        {userData.interactions &&
+          packagesOfUser.length === 0 &&
+          'Mach mit und schnapp dir dein erstes Paket!'}
+      </p>
 
       {state && state !== 'loading' && (
         <p>
           {pledgePackages[0] ? (
             <b>
               Schon {pledgePackages.length} Pakete verteilt
-              {packagesDone > 0 && ` und davon ${packagesDone} erledigt`}!
+              {pledgePackagesDone.length > 0 &&
+                ` und davon ${pledgePackagesDone.length} erledigt`}
+              !
             </b>
           ) : (
             <b>Noch keine Pakete verteilt!</b>
@@ -62,7 +67,7 @@ export default () => {
 
       {packagesOfUser.length > 0 && (
         <div>
-          <h3 className={s.headingViolet}>Deine Pakete</h3>
+          <h3 className={s.violet}>Deine Pakete</h3>
           <p>
             Du hast dir {packagesOfUser.length} Pakete geschnappt und somit
             versprochen, {packagesOfUser.length * 50} Unterschriften zu sammeln.
@@ -71,10 +76,13 @@ export default () => {
             {packagesOfUser.map((pledgePackage, index) => {
               return (
                 <Package
+                  belongsToCurrentUser={true}
                   key={index}
                   body={pledgePackage.body}
                   user={userData}
-                  timestamp={pledgePackage.createdAt}
+                  createdAt={pledgePackage.createdAt}
+                  id={pledgePackage.id}
+                  done={pledgePackage.done}
                 />
               );
             })}
@@ -94,12 +102,12 @@ export default () => {
 
       {state && state !== 'loading' ? (
         <>
-          {pledgePackages[0] ? (
-            <h3 className={s.headingViolet}>
+          {pledgePackages.length > 0 ? (
+            <h3 className={s.violet}>
               Diese Pakete hat sich schon jemand geschnappt
             </h3>
           ) : (
-            <h3 className={s.headingViolet}>Noch keine Pakete verteilt!</h3>
+            <h3 className={s.violet}>Noch keine Pakete verteilt!</h3>
           )}
 
           <div className={s.container}>
@@ -109,64 +117,34 @@ export default () => {
                   key={index}
                   body={pledgePackage.body}
                   user={pledgePackage.user}
-                  timestamp={pledgePackage.createdAt}
+                  createdAt={pledgePackage.createdAt}
                 />
               );
             })}
           </div>
+
+          {pledgePackagesDone.length > 0 && (
+            <>
+              <h3 className={s.violet}>Diese Pakete wurden schon erledigt!</h3>
+              <div className={s.container}>
+                {pledgePackagesDone.map((pledgePackage, index) => {
+                  return (
+                    <Package
+                      key={index}
+                      body={pledgePackage.body}
+                      user={pledgePackage.user}
+                      createdAt={pledgePackage.createdAt}
+                      showDone={true}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )}
         </>
       ) : (
         <LoadingAnimation />
       )}
     </SectionInner>
   );
-};
-
-const Package = ({ body, user, timestamp }) => {
-  return (
-    <div className={s.fullPackage}>
-      <div className={s.packageIconContainer}>
-        <img
-          src={paketSvg}
-          className={s.packageIcon}
-          alt="Symbolbild eines Paketes"
-        />
-        <AvatarImage className={s.avatar} user={user} sizes="120px" />
-      </div>
-      <div className={s.packageTextContainer}>
-        <h4 className={s.name}>{user.username}</h4>
-        <p className={s.timestamp}>Vor {getElapsedTime(timestamp)}</p>
-        <p className={s.quote}>"{body}"</p>
-      </div>
-    </div>
-  );
-};
-
-const getElapsedTime = timestamp => {
-  const endTime = new Date();
-  const startTime = new Date(timestamp);
-  const timeDiff = endTime.getTime() - startTime.getTime();
-  const seconds = Math.floor(timeDiff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const weeks = Math.floor(days / 7);
-  const months = Math.floor(weeks / 4);
-  const years = Math.floor(months / 12);
-
-  if (years > 0) {
-    return `${years} ${years === 1 ? 'Jahr' : 'Jahre'}`;
-  } else if (months > 0) {
-    return `${months} ${months === 1 ? 'Monat' : 'Monate'}`;
-  } else if (weeks > 0) {
-    return `${weeks} ${weeks === 1 ? 'Woche' : 'Wochen'}`;
-  } else if (days > 0) {
-    return `${days} ${days === 1 ? 'Tag' : 'Tage'}`;
-  } else if (hours > 0) {
-    return `${hours} ${hours === 1 ? 'Stunde' : 'Stunden'}`;
-  } else if (minutes > 0) {
-    return `${minutes} ${minutes === 1 ? 'Minute' : 'Minuten'}`;
-  } else if (seconds > 0) {
-    return `${seconds} ${seconds === 1 ? 'Sekunde' : 'Sekunden'}`;
-  }
 };

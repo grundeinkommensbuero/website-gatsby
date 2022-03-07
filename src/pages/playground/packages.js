@@ -2,7 +2,8 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import { Helmet } from 'react-helmet-async';
 import { SectionWrapper, Section } from '../../components/Layout/Sections';
-import ListPledgePackages from '../../components/PledgePackage/ListPledgePackages';
+import { PledgePackagesSection } from '../../components/PledgePackage/ListPledgePackages/PledgePackageSection';
+import PledgePackagesPage from '../../components/PledgePackage/ListPledgePackages/index';
 
 const PlaygroundPledgePackages = () => {
   return (
@@ -12,7 +13,8 @@ const PlaygroundPledgePackages = () => {
       </Helmet>
       <SectionWrapper>
         <Section title="">
-          <ListPledgePackages />
+          <PledgePackagesSection />
+          <PledgePackagesPage />
         </Section>
       </SectionWrapper>
     </Layout>

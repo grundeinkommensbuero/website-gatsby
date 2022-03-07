@@ -1,20 +1,20 @@
 @import '../../../components/style/vars.less';
 
 .tileContainer {
-  padding: 3rem 2rem 2rem 0;
-  background: @violet;
-  color: @white;
-  font-weight: normal;
+  padding: 3rem 0rem 2rem 0rem;
 }
 
 .tileFlexContainer {
+  font-weight: normal;
   margin: auto;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem;
 
   @media (max-width: @breakPointS) {
-    flex-wrap: wrap;
-    padding-left: 2rem;
+    padding: 1.5rem;
   }
 
   p {
@@ -28,7 +28,6 @@
     @media (max-width: @breakPointS) {
       font-size: @MobileFontSizeM;
       line-height: 1.625rem;
-      text-align: center;
     }
   }
 
@@ -40,90 +39,86 @@
   }
 }
 
-&.sectionViolet {
-  background-color: @violet;
-  color: @white;
-  --bg-color: @violet;
-  --font-color: @white;
-  --secondary-color: @white;
-  --text-on-secondary-color: @black;
-  --button-font-color: @white;
-  --button-bg-color: @black; // IE Fallback
-  --button-bg-color: @whiteTransparent;
-  --button-hover-bg-color: @white;
-  --button-hover-font-color: @violet;
-}
-
-&.sectionAqua {
-  background-color: @aqua;
-  color: @white;
-  --bg-color: @aqua;
-  --font-color: @white;
-  --secondary-color: @white;
-  --text-on-secondary-color: @white;
-  --button-font-color: @white;
-  --button-bg-color: @whiteTransparent;
-}
-
-&.sectionWhite {
-  background-color: @white;
-  color: @black;
-  --bg-color: @white;
-  --font-color: @black;
-  --secondary-color: @violet;
-  --text-on-secondary-color: @white;
-  --button-font-color: @violet;
-  --button-bg-color: @violetTransparent;
-
-  h1,
-  h2,
-  h3 {
-    // Note: is that ok ?
-    // color: @violet;
-    color: var(--secondary-color);
-  }
-}
-
-.flexElement {
-  //width: 47.5%;
-
-  @media (max-width: @breakPointL) {
-    width: 100%;
-  }
-}
-
 .headline {
   margin-top: 0;
   margin-bottom: 0.4rem;
-  color: @white !important;
   font-size: @DesktopFontSizeLL;
+
+  &.centerDesktop {
+    margin-top: 1.5rem;
+  }
 
   @media (max-width: @breakPointM) {
     margin-top: 1.5rem;
   }
 }
 
-.avatarAndInfo {
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 350px;
+.flexElementOnlyInfo {
+  @media (max-width: @breakPointL) {
+    width: 70%;
+  }
+
+  @media (max-width: @breakPointM) {
+    width: 60%;
+  }
+
+  @media (max-width: @breakPointS) {
+    width: 100%;
+  }
+}
+
+.flexElement {
+  width: 50%;
 
   @media (max-width: @breakPointL) {
     width: 100%;
-    //margin-bottom: 4rem;
-    justify-content: center;
+  }
+}
+
+.avatarAndInfo {
+  display: flex;
+
+  @media (max-width: @breakPointL) {
+    width: 100%;
+  }
+
+  @media (max-width: @breakPointS) {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
 .avatar {
+  margin-right: 1.5rem;
   width: 130px;
   height: 130px;
+
+  @media (max-width: @breakPointXL) {
+    width: 100px;
+    height: 100px;
+  }
+
+  @media (max-width: @breakPointL) {
+    width: 130px;
+    height: 130px;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-right: 0;
+  }
+}
+
+.centeredAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .avatar {
+    margin-right: 0;
+  }
 }
 
 .info {
-  min-width: 270px;
   @media (max-width: @breakPointL) {
     width: 50%;
   }
@@ -176,6 +171,12 @@
 
 .centerMobile {
   @media (max-width: @breakPointS) {
+    text-align: center;
+  }
+}
+
+.centerDesktop {
+  @media (min-width: @breakPointL) {
     text-align: center;
   }
 }

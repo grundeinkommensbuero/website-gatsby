@@ -1,9 +1,19 @@
 @import '../../style/vars.less';
+@import '../../style/colorSchemes.module.less';
 
 .sections .section {
   position: relative;
   overflow: hidden;
   padding: 5rem 3rem 5rem 3rem;
+
+  // Set white color scheme as default for sections
+  .colorSchemeWhite;
+
+  h1,
+  h2,
+  h3 {
+    color: var(--heading-color);
+  }
 
   @media (max-width: @breakPointM) {
     padding: 3rem 2rem 3rem 2rem;
@@ -17,75 +27,19 @@
     background-image: url('./backgrounds/newsletter_red.svg');
   }
 
-  // COLOR SCHEMES
-
-  &.sectionWhite {
-    background-color: @white;
-    color: @black;
-    --bg-color: @white;
-    --font-color: @black;
-    --secondary-color: @violet;
-    --text-on-secondary-color: @white;
-    --button-font-color: @violet;
-    --button-bg-color: rgb(152, 133, 255); // IE Fallback
-    --button-bg-color: @violetTransparent;
-    --button-hover-bg-color: @violet;
-    --button-hover-font-color: @white;
-
-    h1,
-    h2,
-    h3 {
-      color: @violet;
-    }
-  }
-
+  // Use mixins for other section color schemes
+  // Color schemes are in base.less
   &.sectionViolet {
-    background-color: @violet;
-    color: @white;
-    --bg-color: @violet;
-    --font-color: @white;
-    --secondary-color: @white;
-    --text-on-secondary-color: @black;
-    --button-font-color: @white;
-    --button-bg-color: @black; // IE Fallback
-    --button-bg-color: @whiteTransparent;
-    --button-hover-bg-color: @white;
-    --button-hover-font-color: @violet;
-    h1,
-    h2,
-    h3 {
-      color: @white;
-    }
+    .colorSchemeViolet;
   }
 
   &.sectionAqua {
-    background-color: @aqua;
-    color: @white;
-    --bg-color: @aqua;
-    --font-color: @white;
-    --secondary-color: @white;
-    --text-on-secondary-color: @black;
-    --button-font-color: @white;
-    --button-bg-color: @black; // IE Fallback
-    --button-bg-color: @whiteTransparent;
-    --button-hover-bg-color: @white;
-    --button-hover-font-color: @aqua;
+    .colorSchemeAqua;
   }
 
   &.sectionRed {
-    background-color: @red;
-    color: @white;
-    --bg-color: @red;
-    --font-color: @white;
-    --secondary-color: @white;
-    --text-on-secondary-color: @black;
-    --button-font-color: @white;
-    --button-bg-color: @black; // IE Fallback
-    --button-bg-color: @whiteTransparent;
-    --button-hover-bg-color: @white;
-    --button-hover-font-color: @red;
+    .colorSchemeRed;
   }
-
   // Illustrations need a Redo
 
   /* &:nth-child(3n + 1):not(:only-child),
@@ -438,6 +392,10 @@
   min-height: 30vw;
   display: flex;
   align-items: flex-end;
+
+  .headerTitle {
+    --heading-color: @black;
+  }
 }
 
 .spaceBetweenBlogAndCTA {

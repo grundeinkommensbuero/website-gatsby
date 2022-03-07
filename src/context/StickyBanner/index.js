@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 const COOKIE_NAME = 'bannerHasBeenDismissed';
-const EXCLUDED_ROUTES = ['playground', 'teilen'];
+const EXCLUDED_ROUTES = ['playground', 'teilen', 'verlosung'];
 
 export const StickyBannerContext = React.createContext();
 

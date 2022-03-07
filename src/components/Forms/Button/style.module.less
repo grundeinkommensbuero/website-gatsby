@@ -103,3 +103,57 @@ p a.linkButton {
     flex-direction: column-reverse;
   }
 }
+
+.dropdownButton {
+  cursor: pointer;
+  border: @black solid @borderWidth;
+  border-radius: @borderRadius;
+  padding: 0.67rem 1.2rem 0.35rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 14rem;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &.active {
+    background-color: @aqua;
+    color: @white;
+
+    .triangle {
+      border-left-color: @white;
+    }
+  }
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  margin-left: 0.5rem;
+  border-top: 8.6px solid transparent;
+  border-left: 10px solid #3e3e3e;
+  border-bottom: 8.6px solid transparent;
+  animation-name: rotateTriangle;
+  background: none;
+  // for some reason, this is neccessary for the triangle to show up in Safari
+  transform: rotate(0deg);
+
+  &:hover {
+    background: none;
+  }
+}
+
+.animateTriangle {
+  transform: rotate(90deg);
+}
+
+@keyframes rotateTriangle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}

@@ -1,4 +1,5 @@
-@import '../../components/style/vars.less';
+@import '../style/vars.less';
+@import '../style/colorSchemes.module.less';
 
 .profilePageGrid {
   width: 100%;
@@ -90,8 +91,9 @@
 
 .editSettings {
   grid-column: 1 / span 2;
-  background-color: @aqua;
-  color: @white;
+  //background-color: @aqua;
+  //color: @white;
+  .colorSchemeAqua;
 
   @media (max-width: @breakPointS) {
     grid-column: 1 / span 1;

@@ -183,10 +183,13 @@
   height: 30px;
   top: -18px !important;
   cursor: pointer;
-}
 
-h3 {
-  color: @violet;
+  &.collect {
+    background-image: url('icon-collect.png');
+    width: 35px;
+    height: 50px;
+    top: -8px !important;
+  }
 }
 
 .createMeetupContent {
@@ -269,5 +272,93 @@ h3 {
 
   @media (max-width: @breakPointM) {
     font-size: 1rem;
+  }
+}
+
+.filter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 4rem;
+
+  @media (max-width: @breakPointL) {
+    height: 7rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    height: auto;
+  }
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  height: 2rem;
+
+  @media (max-width: @breakPointS) {
+    height: auto;
+    flex-direction: column;
+  }
+}
+
+.inlineCheckbox {
+  margin-right: 1.5rem;
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1rem;
+  }
+}
+
+.inlineCheckboxLabel {
+  margin-top: 0;
+}
+
+.dropdown {
+  margin-right: 1.5rem;
+}
+
+.dropdownButton {
+  margin-top: -0.3rem;
+
+  @media (max-width: @breakPointL) {
+    min-width: 13rem;
+  }
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+}
+
+.dropdownContent {
+  background-color: white;
+  position: relative;
+  z-index: 9;
+  padding: 0.5rem;
+  margin-bottom: 0;
+
+  @media (max-width: @breakPointS) {
+    margin-bottom: 1rem;
+  }
+}
+
+.legend {
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+
+  @media (max-width: @breakPointXS) {
+    justify-content: start;
+  }
+
+  img {
+    position: relative;
+    top: 0.8rem;
+    height: 2.5rem;
+
+    &.legendPinIcon {
+      height: 1.8rem;
+      margin: 0.4rem;
+    }
   }
 }

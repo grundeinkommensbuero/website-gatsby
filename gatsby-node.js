@@ -202,7 +202,7 @@ const clientId =
     : process.env.PROD_COGNITO_APP_CLIENT_ID;
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
-  actions.setWebpackConfig({
+  const config = {
     plugins: [
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(gitRevisionPlugin.version()),
@@ -228,7 +228,13 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         util: false,
       },
     },
-  });
+  };
+
+  if (stage === 'develop') {
+    config.devtool = 'cheap-module-source-map';
+  }
+
+  actions.setWebpackConfig(config);
 
   // Css chunk order warning can be ignored when using css modules
   // https://spectrum.chat/gatsby-js/general/having-issue-related-to-chunk-commons-mini-css-extract-plugin~0ee9c456-a37e-472a-a1a0-cc36f8ae6033

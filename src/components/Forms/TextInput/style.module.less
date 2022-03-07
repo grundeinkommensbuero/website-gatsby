@@ -5,8 +5,8 @@
 .textInputInline,
 .textarea {
   background: @white;
-  border: 2px solid @violet;
-  color: @violet;
+  border: 2px solid var(--secondary-color);
+  color: var(--input-font-color);
   font-family: inherit;
   border-radius: 0;
   padding: @inputPadding;
@@ -29,7 +29,9 @@
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 @borderWidthThick @violet;
+    border: transparent;
+    border: 2px solid var(--input-border-color);
+    box-shadow: inset 0 0 0 @borderWidthThick var(--input-border-color);
   }
 }
 
