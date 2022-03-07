@@ -70,23 +70,27 @@ export const ShowMeetups = ({ mapConfig, className }) => {
   const isBremen = mapConfig.state === 'bremen';
   const isBerlin = mapConfig.state === 'berlin';
   const isHamburg = mapConfig.state === 'hamburg';
+  const isDemocracy = mapConfig.state === 'democracy';
 
   useEffect(() => {
     // We only need to fetch meetups from secondary API if it's the berlin or hamburg map
-    if (isBerlin || isHamburg) {
-      // We pass isBerlin flag to differentiate between APIs
-      getMeetups(isBerlin);
+    if (isBerlin || isHamburg || isDemocracy) {
+      // We pass state to differentiate between APIs
+      getMeetups(mapConfig.state);
     }
   }, [mapConfig]);
 
   const onCreatedMeetup = () => {
-    getMeetups(isBerlin);
+    getMeetups(mapConfig.state);
   };
 
   useEffect(() => {
-    if (!(isBerlin || isHamburg) || ((isBerlin || isHamburg) && meetups)) {
+    if (
+      !(isBerlin || isHamburg || isDemocracy) ||
+      ((isBerlin || isHamburg || isDemocracy) && meetups)
+    ) {
       let collectSignaturesLocationsFiltered = [];
-      if (isBerlin) {
+      if (isBerlin || isHamburg || isDemocracy) {
         collectSignaturesLocationsFiltered = meetups;
       } else {
         collectSignaturesLocationsFiltered = collectSignaturesLocations
@@ -252,7 +256,7 @@ export const ShowMeetups = ({ mapConfig, className }) => {
         locations={locationsFiltered}
         className={className}
       />
-      {isBerlin && (
+      {(isBerlin || isHamburg || isDemocracy) && (
         <div>
           <SectionComponentContainer>
             <SectionComponent column={'left'} className={s.createMeetupContent}>

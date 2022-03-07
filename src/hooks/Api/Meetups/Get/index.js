@@ -8,13 +8,15 @@ import CONFIG from '../../../../../backend-config';
 export const useGetMeetups = () => {
   const [meetups, setMeetups] = useState();
 
-  return [meetups, isBerlin => getMeetups(isBerlin, setMeetups)];
+  return [meetups, state => getMeetups(state, setMeetups)];
 };
 
 // gets meetups: berlin meetups are fetched from app backend
 // everything else are fetched from our backend
-const getMeetups = async (isBerlin, setMeetups) => {
+const getMeetups = async (state, setMeetups) => {
   try {
+    const isBerlin = state === 'berlin';
+
     let response;
     if (isBerlin) {
       response = await getMeetupsFromAppApi();
@@ -25,7 +27,17 @@ const getMeetups = async (isBerlin, setMeetups) => {
     if (response.status === 200) {
       const json = await response.json();
 
-      setMeetups(formatMeetups(isBerlin, json));
+      // Filter meetups so they are only from democracy campaign
+      let filteredMeetups;
+      if (!isBerlin) {
+        filteredMeetups = json.data.filter(
+          ({ campaign }) => campaign?.state === state
+        );
+      } else {
+        filteredMeetups = json;
+      }
+
+      setMeetups(formatMeetups(isBerlin, filteredMeetups));
     } else {
       console.log('Response is not 200', response.status);
     }
@@ -57,12 +69,12 @@ const getMeetupsFromWebsiteApi = () => {
   return fetch(`${CONFIG.API.INVOKE_URL}/meetups`, request);
 };
 
-const formatMeetups = (isBerlin, json) => {
+const formatMeetups = (isBerlin, meetups) => {
   // We want to bring the meetups from the backend into the same format as
   // the ones from contentful
   if (isBerlin) {
     // Using reduce to filter and map ad same time
-    return json.reduce(
+    return meetups.reduce(
       (
         filteredArray,
         { beginn, ende, latitude, longitude, ort, details, typ }
@@ -86,6 +98,7 @@ const formatMeetups = (isBerlin, json) => {
             endTime: typ === 'Sammeln' ? ende : null,
             locationName: ort,
             address: details?.treffpunkt,
+            type: typ === 'Sammeln' ? 'collect' : 'lists',
           });
         }
         return filteredArray;
@@ -93,7 +106,7 @@ const formatMeetups = (isBerlin, json) => {
       []
     );
   } else {
-    return json.data.map(
+    return meetups.map(
       ({ coordinates, description, type, locationName, ...rest }) => ({
         location: {
           lon: coordinates[0],
@@ -104,6 +117,7 @@ const formatMeetups = (isBerlin, json) => {
           type === 'collect'
             ? 'Sammelaktion'
             : `Unterschreiben: ${locationName}`,
+        type,
         ...rest,
       })
     );

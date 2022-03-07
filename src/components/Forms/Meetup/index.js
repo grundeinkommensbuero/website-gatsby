@@ -151,7 +151,9 @@ export const CreateMeetup = ({
                   id.startsWith('postcode')
                 )?.text,
                 type,
-                campaignCode: `${mapConfig.state}-2`, // This should be only hamburg-2 anyway
+                campaignCode: `${mapConfig.state}-${
+                  mapConfig.state === 'democracy' ? '1' : '2' // If not democracy this should be only hamburg-2 anyway
+                }`,
               };
 
               // Only had dates if type is collect
