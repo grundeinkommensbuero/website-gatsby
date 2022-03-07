@@ -165,7 +165,7 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                       label="E-Mail"
                       placeholder="E-Mail"
                       component={TextInputWrapped}
-                    ></Field>
+                    />
                   </div>
                 </>
               ) : (
