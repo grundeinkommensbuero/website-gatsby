@@ -19,7 +19,7 @@ import {
   checkIfDateIsTomorrow,
 } from './utils/dateStringManipulation';
 
-export const ShowMeetups = ({ mapConfig, className }) => {
+export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   const {
     allContentfulSammelort: { edges: collectSignaturesLocations },
   } = useStaticQuery(graphql`
@@ -268,53 +268,60 @@ export const ShowMeetups = ({ mapConfig, className }) => {
       />
       {isBerlin && (
         <div>
-          <SectionComponentContainer>
-            <SectionComponent column={'left'} className={s.createMeetupContent}>
-              <h3>Plane eine Sammelaktion!</h3>
-              <p>
-                Du hast Lust vor Ort in der Expedition mitzumachen? Hier kannst
-                du eine Sammelaktion veröffentlichen um so mehr
-                Unterschriftensammler*innen zu mobilisieren.
-              </p>
-              <Button
-                className={s.createMeetupButton}
-                onClick={() => {
-                  setType('collect');
-                  setShowModal(true);
-                }}
-              >
-                Event erstellen
-              </Button>
-            </SectionComponent>
-            <SectionComponent
-              column={'right'}
-              className={s.createMeetupContent}
-            >
-              <h3>Lege Listen an einem Sammelort aus</h3>
-              <p>
-                Markiere einen Ort, an dem du eine neue Unterschriftenliste
-                ausgelegt hast, um sie für andere sichtbar zu machen. Melde dich
-                gern bei uns, wenn du Material benötigst.
-              </p>
-              <Button
-                className={s.createMeetupButton}
-                onClick={() => {
-                  setType('lists');
-                  setShowModal(true);
-                }}
-              >
-                Ort eintragen
-              </Button>
-            </SectionComponent>
-            <Modal showModal={showModal} setShowModal={setShowModal}>
-              <CreateMeetup
-                type={type}
-                mapConfig={mapConfig}
-                onCreatedMeetup={onCreatedMeetup}
-                setShowModal={setShowModal}
-              />
-            </Modal>
-          </SectionComponentContainer>
+          {!isIframe && (
+            <>
+              <SectionComponentContainer>
+                <SectionComponent
+                  column={'left'}
+                  className={s.createMeetupContent}
+                >
+                  <h3>Plane eine Sammelaktion!</h3>
+                  <p>
+                    Du hast Lust vor Ort in der Expedition mitzumachen? Hier
+                    kannst du eine Sammelaktion veröffentlichen um so mehr
+                    Unterschriftensammler*innen zu mobilisieren.
+                  </p>
+                  <Button
+                    className={s.createMeetupButton}
+                    onClick={() => {
+                      setType('collect');
+                      setShowModal(true);
+                    }}
+                  >
+                    Event erstellen
+                  </Button>
+                </SectionComponent>
+                <SectionComponent
+                  column={'right'}
+                  className={s.createMeetupContent}
+                >
+                  <h3>Lege Listen an einem Sammelort aus</h3>
+                  <p>
+                    Markiere einen Ort, an dem du eine neue Unterschriftenliste
+                    ausgelegt hast, um sie für andere sichtbar zu machen. Melde
+                    dich gern bei uns, wenn du Material benötigst.
+                  </p>
+                  <Button
+                    className={s.createMeetupButton}
+                    onClick={() => {
+                      setType('lists');
+                      setShowModal(true);
+                    }}
+                  >
+                    Ort eintragen
+                  </Button>
+                </SectionComponent>
+                <Modal showModal={showModal} setShowModal={setShowModal}>
+                  <CreateMeetup
+                    type={type}
+                    mapConfig={mapConfig}
+                    onCreatedMeetup={onCreatedMeetup}
+                    setShowModal={setShowModal}
+                  />
+                </Modal>
+              </SectionComponentContainer>
+            </>
+          )}
           <EventsListed locationsFiltered={locationsFiltered} />
         </div>
       )}

@@ -1,9 +1,10 @@
 import React from 'react';
-import { CreateMeetup } from '../../components/Forms/Meetup';
+import { ShowMeetups } from '../../components/Maps/ShowMeetups';
 
 const IframeMap = () => {
   return (
-    <CreateMeetup
+    <ShowMeetups
+      isIframe={true}
       mapConfig={{
         state: 'berlin',
         config: {
