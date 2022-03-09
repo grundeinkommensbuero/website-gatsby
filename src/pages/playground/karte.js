@@ -19,7 +19,7 @@ const PlaygroundMap = () => {
           <SectionInner wide={true}>
             <ShowMeetups
               mapConfig={{
-                state: 'berlin',
+                state: 'democracy',
                 config: {
                   maxBounds: [
                     [13.05, 52.2],
