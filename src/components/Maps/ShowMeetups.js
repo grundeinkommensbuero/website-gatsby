@@ -69,39 +69,29 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
 
   const isBremen = mapConfig.state === 'bremen';
   const isBerlin = mapConfig.state === 'berlin';
+  const isHamburg = mapConfig.state === 'hamburg';
+  const isDemocracy = mapConfig.state === 'democracy';
 
   useEffect(() => {
-    // We only need to fetch meetups from secondary API if it's the berlin map
-    if (isBerlin) {
-      getMeetups();
+    // We only need to fetch meetups from secondary API if it's the berlin or hamburg map
+    if (isBerlin || isHamburg || isDemocracy) {
+      // We pass state to differentiate between APIs
+      getMeetups(mapConfig.state);
     }
   }, [mapConfig]);
 
   const onCreatedMeetup = () => {
-    getMeetups();
+    getMeetups(mapConfig.state);
   };
 
   useEffect(() => {
-    if (!isBerlin || (isBerlin && meetups)) {
+    if (
+      !(isBerlin || isHamburg || isDemocracy) ||
+      ((isBerlin || isHamburg || isDemocracy) && meetups)
+    ) {
       let collectSignaturesLocationsFiltered = [];
-      if (isBerlin) {
-        // We want to bring the meetups from the backend into the same format as
-        // the ones from contentful
-        collectSignaturesLocationsFiltered = meetups.map(
-          ({ coordinates, description, type, locationName, ...rest }) => ({
-            location: {
-              lon: coordinates[0],
-              lat: coordinates[1],
-            },
-            description: description,
-            title:
-              type === 'collect'
-                ? 'Sammelaktion'
-                : `Unterschreiben: ${locationName}`,
-            type,
-            ...rest,
-          })
-        );
+      if (isBerlin || isHamburg || isDemocracy) {
+        collectSignaturesLocationsFiltered = meetups;
       } else {
         collectSignaturesLocationsFiltered = collectSignaturesLocations
           .filter(({ node: location }) => {
@@ -266,7 +256,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
         locations={locationsFiltered}
         className={className}
       />
-      {isBerlin && (
+      {(isBerlin || isHamburg || isDemocracy) && (
         <div>
           {!isIframe && (
             <>

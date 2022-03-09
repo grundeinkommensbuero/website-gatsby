@@ -19,6 +19,9 @@ export default {
     INVOKE_URL: API_INVOKE_URL,
   },
   APP_API: {
-    INVOKE_URL: 'https://app-server.xbge.de',
+    INVOKE_URL:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:18080'
+        : 'https://app-server.xbge.de',
   },
 };

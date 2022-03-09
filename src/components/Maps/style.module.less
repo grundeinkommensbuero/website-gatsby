@@ -3,6 +3,7 @@
 :global {
   .mapboxgl-map {
     overflow: visible !important;
+    z-index: 2;
   }
 
   .mapboxgl-canvas-container {
@@ -175,19 +176,22 @@
 }
 
 .marker {
-  background-image: url('icon-pin-filled.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 25px;
-  height: 30px;
-  top: -18px !important;
   cursor: pointer;
 
   &.collect {
     background-image: url('icon-collect.png');
-    width: 35px;
+    width: 50px;
     height: 50px;
+    top: -10px !important;
+  }
+
+  &.sign {
+    background-image: url('icon-sign.png');
+    width: 45px;
+    height: 60px;
     top: -8px !important;
   }
 }
@@ -355,10 +359,5 @@
     position: relative;
     top: 0.8rem;
     height: 2.5rem;
-
-    &.legendPinIcon {
-      height: 1.8rem;
-      margin: 0.4rem;
-    }
   }
 }

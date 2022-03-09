@@ -12,9 +12,10 @@ import * as s from './style.module.less';
 import { SectionInner } from '../Layout/Sections';
 import { FinallyMessage } from '../Forms/FinallyMessage';
 
-import calenderIcon from './icon-calendar.svg';
 import pinIcon from './icon-pin.svg';
+import calenderIcon from './icon-calendar.svg';
 import collectIcon from './icon-collect.png';
+import signIcon from './icon-sign.png';
 
 import { detectWebGLContext } from '../utils';
 
@@ -144,7 +145,7 @@ const lazyMap = ({
           if (meetup.location) {
             const element = document.createElement('div');
             element.className = `${s.marker} ${
-              meetup.type === 'collect' && s.collect
+              meetup.type === 'collect' ? s.collect : s.sign
             }`;
 
             const marker = new mapboxgl.Marker(element)
@@ -198,11 +199,7 @@ const lazyMap = ({
       </SectionInner>
       <div className={s.legend}>
         <div>
-          <img
-            src={pinIcon}
-            alt="Illustration einer Markierung"
-            className={s.legendPinIcon}
-          />
+          <img src={signIcon} alt="Illustration einer UnterschriftenListe" />
           <span>Ausgelegte Listen</span>
         </div>
         <div>
@@ -234,6 +231,7 @@ const PopupContent = ({
   address,
   city,
   zipCode,
+  locationName,
 }) => (
   <div className={s.tooltip}>
     {date && <div>{formatDateTime(new Date(date))}</div>}
@@ -260,7 +258,7 @@ const PopupContent = ({
             </div>
           </div>
         )}
-        {address && (
+        {(address || locationName) && (
           <div className={s.tooltipInfoWithIcon}>
             <img
               src={pinIcon}
@@ -268,11 +266,15 @@ const PopupContent = ({
               className={s.tooltipIcon}
             />
             <div className={s.tooltipLocation}>
-              <span className={s.tooltipAddress}>{address}</span>
-              <br />
-              <span className={s.tooltipZipCode}>
-                {zipCode} {city}
+              <span className={s.tooltipAddress}>
+                {address || locationName}
               </span>
+              <br />
+              {zipCode && city && (
+                <span className={s.tooltipZipCode}>
+                  {zipCode} {city}
+                </span>
+              )}
             </div>
           </div>
         )}
