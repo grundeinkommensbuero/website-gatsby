@@ -6,25 +6,23 @@ import { Form, Field } from 'react-final-form';
 import { TextInputWrapped } from '../TextInput';
 import { validateEmail, addActionTrackingId, trackEvent } from '../../utils';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
-import { LinkButton, InlineButton } from '../Button';
+import { InlineButton } from '../Button';
 import { FinallyMessage } from '../FinallyMessage';
-import { StepListItem } from '../../StepList';
 import { useCreateSignatureList } from '../../../hooks/Api/Signatures/Create';
 import { useSignUp } from '../../../hooks/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
-import DownloadListsNextSteps from '../DownloadListsNextSteps';
+import { navigate } from 'gatsby';
 
 const trackingCategory = 'ListDownload';
 
-export default ({ signaturesId, disableRequestListsByMail }) => {
+export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, userExists, signUp] = useSignUp();
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
-  const isDisabledRequestListsByMail = !!disableRequestListsByMail;
-  const iconMail = require('!svg-inline-loader!./mail_violet.svg');
   const iconIncognito = require('!svg-inline-loader!./incognito_violet.svg');
+  const iconMail = require('!svg-inline-loader!./mail_violet.svg');
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
@@ -38,6 +36,14 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
       });
     }
   }, [isAuthenticated, loginCodeRequested]);
+
+  // As soon as signature list is created we navigate to to "checkpoints" page
+  // But only if download was not anonymous
+  useEffect(() => {
+    if (state === 'created' && pdf.url && !anonymous) {
+      navigate('/unterschreiben-schritte', { state: { pdfUrl: pdf.url } });
+    }
+  }, [state, pdf]);
 
   // After user starts sign in process or if they are identified and request the list,
   // show EnterLoginCode component
@@ -65,7 +71,12 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
     );
   }
 
-  if (state === 'creating' || signUpState === 'loading') {
+  // Also include created state (if not anonymous) to avoid flashing of content before navigating
+  if (
+    state === 'creating' ||
+    (state === 'created' && !anonymous) ||
+    signUpState === 'loading'
+  ) {
     return (
       <FinallyMessage state="progress">
         Liste wird generiert, bitte einen Moment Geduld...
@@ -90,39 +101,20 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
     );
   }
 
-  if (state === 'created') {
+  if (state === 'created' && anonymous) {
     return (
-      <>
-        {!anonymous ? (
-          <p>
-            Juhu! Die Unterschriftslisten und unser Sammelleitfaden sind in
-            deinem Postfach. Du kannst sie dir auch{' '}
-            <a target="_blank" rel="noreferrer" href={pdf.url}>
-              direkt im Browser herunterladen
-            </a>{' '}
-            - alle weiteren Infos findest du dort!
-          </p>
-        ) : (
-          <p>
-            Juhu!{' '}
-            <a target="_blank" rel="noreferrer" href={pdf.url}>
-              Hier
-            </a>{' '}
-            kannst du die Unterschriftslisten samt Leitfaden herunterladen!
-          </p>
-        )}
-        <DownloadListsNextSteps>
-          {anonymous && (
-            <StepListItem icon="download">
-              <LinkButton target="_blank" href={pdf.url}>
-                Listen herunterladen
-              </LinkButton>
-            </StepListItem>
-          )}
-        </DownloadListsNextSteps>
-      </>
+      <FinallyMessage state="success">
+        <p>
+          Juhu!{' '}
+          <a target="_blank" rel="noreferrer" href={pdf.url}>
+            Hier
+          </a>{' '}
+          kannst du die Unterschriftslisten samt Leitfaden herunterladen!
+        </p>
+      </FinallyMessage>
     );
   }
+
   return (
     <>
       <Form
@@ -206,28 +198,24 @@ export default ({ signaturesId, disableRequestListsByMail }) => {
                     </div>
                   </>
                 )}
+              </div>
 
-                {!isDisabledRequestListsByMail && (
-                  <>
-                    <div className={s.iconParagraph}>
-                      <div
-                        className={s.icon}
-                        dangerouslySetInnerHTML={{ __html: iconMail }}
-                      ></div>
-                      <p>
-                        Kein Drucker?{' '}
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href="https://expeditionbge.typeform.com/to/Dq3SOi"
-                        >
-                          Bitte schickt mir Unterschriftenlisten per Post
-                        </a>
-                        !
-                      </p>
-                    </div>
-                  </>
-                )}
+              <div className={s.iconParagraph}>
+                <div
+                  className={s.icon}
+                  dangerouslySetInnerHTML={{ __html: iconMail }}
+                ></div>
+                <p>
+                  Kein Drucker? Bei{' '}
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://innn.it/demokratiefueralle"
+                  >
+                    innn.it
+                  </a>{' '}
+                  könnt ihr euch die Liste per Post schicken lassen.
+                </p>
               </div>
             </form>
           );

@@ -9,13 +9,13 @@ import {
 import { SignatureListJourney } from '../../components/SignatureListJourney';
 import * as s from './style.module.less';
 
-const JourneyPage = () => {
+const JourneyPage = ({ location }) => {
   return (
     <Layout>
       <SectionWrapper>
         <Section colorScheme="violet" className={s.section}>
           <SectionInner wide={true}>
-            <SignatureListJourney />
+            <SignatureListJourney pdfUrl={location?.state?.pdfUrl} />
           </SectionInner>
         </Section>
       </SectionWrapper>

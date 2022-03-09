@@ -18,26 +18,38 @@ import cN from 'classnames';
 import { useUpdateUser } from '../../hooks/Api/Users/Update';
 import { LoadingAnimation } from '../LoadingAnimation';
 import querystring from 'query-string';
+import { navigate } from 'gatsby';
 
-export const SignatureListJourney = () => {
+export const SignatureListJourney = ({ pdfUrl }) => {
   const { customUserData, isAuthenticated, updateCustomUserData } =
     useContext(AuthContext);
-  const [stepParam, setStepParam] = useState();
+  const [urlParams, setUrlParams] = useState();
 
   const { listFlow } = customUserData;
 
   // Process url params to update user automatically
   useEffect(() => {
-    const { step } = querystring.parse(window.location.search);
+    const { step, success } = querystring.parse(window.location.search);
+
+    const params = {};
 
     if (step) {
-      setStepParam(step);
+      params.step = step;
     }
+
+    if (success) {
+      params.success = success === 'true' ? true : false;
+    }
+
+    setUrlParams(params);
   }, []);
 
-  if (isAuthenticated === false) {
-    return <p>TODO: Ausgeloggter Zustand</p>;
-  }
+  // If signed out navigate to login
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      navigate('/login/?nextPage=unterschreiben-schritte');
+    }
+  }, [isAuthenticated]);
 
   // We want the loading animation to wait until the user data is fetched
   // Otherwise the ui would show state in the beginning --> not so smooth
@@ -57,16 +69,23 @@ export const SignatureListJourney = () => {
         ctaText="Ich habe die Liste bekommen!"
         attributeToSet="downloadedList"
         secondaryCtaText="Hilfe, die Liste kommt nicht an!"
-        // TODO: secondary CTA
-        onSecondaryCtaClick={() => {}}
+        onSecondaryCtaClick={() => {
+          window.open(
+            'mailto:support@expedition-grundeinkommen.de?subject=Ich%20habe%20keine%20Liste%20bekommen'
+          );
+        }}
         done={listFlow?.downloadedList?.value}
         updateUserData={updateCustomUserData}
-        urlParam={stepParam}
+        urlParams={urlParams}
         step={1}
       >
         Wir haben dir eine Unterschriftenliste per Email geschickt. Falls du sie
         direkt downloaden willst, findest du sie auch{' '}
-        <InlineLinkButton target="_blank" href={'TODO: url'}>
+        {/* TODO: change link for berlin campaign */}
+        <InlineLinkButton
+          target="_blank"
+          href={pdfUrl || '/demokratie-fuer-alle'}
+        >
           HIER
         </InlineLinkButton>
         .
@@ -80,12 +99,14 @@ export const SignatureListJourney = () => {
         ctaText="Ich habe die Liste gedruckt!"
         attributeToSet="printedList"
         secondaryCtaText="Hilfe, ich habe keinen Drucker!"
-        // TODO: secondary CTA
-        onSecondaryCtaClick={() => {}}
+        // TODO: change for berlin campaign
+        onSecondaryCtaClick={() => {
+          window.open('https://innn.it/demokratiefueralle', '_blank');
+        }}
         done={listFlow?.printedList?.value}
         disabled={!hasReachedStep(listFlow, 'printedList')}
         updateUserData={updateCustomUserData}
-        urlParam={stepParam}
+        urlParams={urlParams}
         step={2}
       >
         Unterschriften für Volksbegehren müssen handschriftlich auf Papier
@@ -103,7 +124,7 @@ export const SignatureListJourney = () => {
         done={listFlow?.signedList?.value}
         disabled={!hasReachedStep(listFlow, 'signedList')}
         updateUserData={updateCustomUserData}
-        urlParam={stepParam}
+        urlParams={urlParams}
         step={3}
       >
         ...auf der ausgedruckten Liste.
@@ -121,7 +142,7 @@ export const SignatureListJourney = () => {
         done={listFlow?.sharedList?.value}
         disabled={!hasReachedStep(listFlow, 'sharedList')}
         updateUserData={updateCustomUserData}
-        urlParam={stepParam}
+        urlParams={urlParams}
         step={4}
       >
         Hast du Mitbewohner*innen, Freund*innen oder Kolleg*innen in der Nähe?
@@ -138,7 +159,7 @@ export const SignatureListJourney = () => {
         done={listFlow?.sentList?.value}
         disabled={!hasReachedStep(listFlow, 'sentList')}
         updateUserData={updateCustomUserData}
-        urlParam={stepParam}
+        urlParams={urlParams}
         step={5}
       >
         Lauf gleich los zum nächsten Briefkasten und wirf den Brief ein. Gute
@@ -164,7 +185,7 @@ const Step = ({
   disabled,
   children,
   updateUserData,
-  urlParam,
+  urlParams,
   step,
 }) => {
   const [updateUserState, updateUser] = useUpdateUser();
@@ -183,20 +204,22 @@ const Step = ({
 
   // Process url params to update user automatically
   useEffect(() => {
-    if (urlParam === attributeToSet) {
+    if (urlParams?.step === attributeToSet) {
       if (scrollToRef?.current) {
         scrollToRef.current.scrollIntoView({
           block: 'end',
         });
       }
 
-      if (!done) {
+      // If attribute is not set yet and the success param is passed
+      //  we want to set it automatically
+      if (!done && urlParams.success) {
         setTimeout(() => {
           setAttribute();
         }, 600);
       }
     }
-  }, [urlParam, scrollToRef]);
+  }, [urlParams, scrollToRef]);
 
   useEffect(() => {
     if (updateUserState === 'updated') {
