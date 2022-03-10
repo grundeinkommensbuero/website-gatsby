@@ -12,8 +12,13 @@
   font-weight: bold;
   padding: @buttonPadding;
   text-decoration: none;
+  min-height: 1rem;
+  min-width: 1rem;
+  position: relative;
 
-  @media (max-width: @breakPointXS) {
+  transition: padding 0.3s ease;
+
+  @media (max-width: @breakPointS) {
     padding: @buttonPaddingSmall;
   }
 
@@ -43,6 +48,82 @@
     border-color: @greyMedium;
     background: @greyBright;
     color: @greyMedium;
+  }
+
+  .buttonText {
+    opacity: 1;
+    transition: opacity 0.2s ease, font-size 0.2s ease 0.5s;
+  }
+
+  .progressBar {
+    background-color: var(--secondary-color);
+    border-radius: @borderRadius;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s ease-out 0.5s;
+  }
+
+  .successIcon {
+    position: relative;
+    top: -2.5rem;
+    // Needs to stay zero even when rendered because of spacing issues
+    height: 0rem;
+
+    img {
+      height: 0rem;
+      width: 0rem;
+      transition: all 0.5s ease 0.4s;
+    }
+  }
+
+  &.loading {
+    padding: 0;
+    background-color: @greyMedium;
+    border: none;
+    margin-top: 2.5rem;
+    pointer-events: none;
+    margin-bottom: 2rem;
+
+    .buttonText {
+      opacity: 0;
+    }
+
+    .progressBar {
+      width: 95%;
+    }
+  }
+
+  &.success {
+    background-color: var(--bg-color);
+    border: none;
+    padding: 0;
+    margin-bottom: 2.6rem;
+    margin-top: 2.2rem;
+    transition: background-color 0.1s ease 0.6s;
+    pointer-events: none;
+
+    .buttonText {
+      opacity: 0;
+    }
+
+    .progressBar {
+      transition: width 0.5s ease, background-color 0.1s ease 0.6s;
+      width: 100%;
+      background-color: var(--bg-color);
+    }
+
+    .buttonText {
+      font-size: 0.05rem;
+    }
+
+    .successIcon {
+      img {
+        width: 73px;
+        height: 73px;
+      }
+    }
   }
 }
 

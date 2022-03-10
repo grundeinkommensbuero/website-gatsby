@@ -13,6 +13,17 @@
   font-size: @DesktopFontSizeS;
   position: relative;
 }
+.emailInput {
+  width: 50%;
+
+  @media (max-width: @breakPointL) {
+    width: 75%;
+  }
+
+  @media (max-width: @breakPointM) {
+    width: 100%;
+  }
+}
 
 .hint {
   margin-top: 0;
