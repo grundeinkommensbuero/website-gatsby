@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import AuthContext from '../../context/Authentication';
+import { SnackbarMessageContext } from '../../context/Snackbar';
 import { InlineLinkButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../Layout/CTAButton';
@@ -24,6 +25,7 @@ export const SignatureListJourney = ({ pdfUrl }) => {
   const { customUserData, isAuthenticated, updateCustomUserData } =
     useContext(AuthContext);
   const [urlParams, setUrlParams] = useState();
+  const { setMessage } = useContext(SnackbarMessageContext);
 
   const { listFlow } = customUserData;
 
@@ -39,6 +41,11 @@ export const SignatureListJourney = ({ pdfUrl }) => {
 
     if (success) {
       params.success = success === 'true' ? true : false;
+
+      // Show snackbar message if user responded with no success
+      if (success === 'false') {
+        setMessage('Super, vielen Dank für dein Feedback!')
+      }
     }
 
     setUrlParams(params);
