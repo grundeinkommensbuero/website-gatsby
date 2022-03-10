@@ -1,3 +1,5 @@
+// WIRD AKTUELL NICHT BENUTZT
+
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import { useVerification } from '../../hooks/Authentication';
