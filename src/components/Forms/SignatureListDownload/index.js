@@ -157,6 +157,7 @@ export default ({ signaturesId }) => {
                       label="E-Mail"
                       placeholder="E-Mail"
                       component={TextInputWrapped}
+                      inputClassName={s.emailInput}
                     />
                   </div>
                 </>
