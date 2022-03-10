@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import AuthContext from '../../context/Authentication';
 import { SnackbarMessageContext } from '../../context/Snackbar';
-import { InlineLinkButton } from '../Forms/Button';
+import { InlineButton, InlineLinkButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import { CTAButton, CTAButtonContainer } from '../Layout/CTAButton';
 import downloadIcon from './download.svg';
@@ -20,12 +20,15 @@ import { useUpdateUser } from '../../hooks/Api/Users/Update';
 import { LoadingAnimation } from '../LoadingAnimation';
 import querystring from 'query-string';
 import { navigate } from 'gatsby';
+import { Modal } from '../Modal';
+import { Link } from 'gatsby';
 
 export const SignatureListJourney = ({ pdfUrl }) => {
   const { customUserData, isAuthenticated, updateCustomUserData } =
     useContext(AuthContext);
-  const [urlParams, setUrlParams] = useState();
   const { setMessage } = useContext(SnackbarMessageContext);
+  const [urlParams, setUrlParams] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   const { listFlow } = customUserData;
 
@@ -68,111 +71,125 @@ export const SignatureListJourney = ({ pdfUrl }) => {
   }
 
   return (
-    <div className={s.container}>
-      <Step
-        icon={downloadIcon}
-        iconAlt="Illustration einer E-Mail"
-        headline="Schau in dein Postfach!"
-        ctaText="Ich habe die Liste bekommen!"
-        attributeToSet="downloadedList"
-        secondaryCtaText="Hilfe, die Liste kommt nicht an!"
-        onSecondaryCtaClick={() => {
-          window.open(
-            'mailto:support@expedition-grundeinkommen.de?subject=Ich%20habe%20keine%20Liste%20bekommen'
-          );
-        }}
-        done={listFlow?.downloadedList?.value}
-        updateUserData={updateCustomUserData}
-        urlParams={urlParams}
-        step={1}
-      >
-        Wir haben dir eine Unterschriftenliste per Email geschickt. Falls du sie
-        direkt downloaden willst, findest du sie auch{' '}
-        {/* TODO: change link for berlin campaign */}
-        <InlineLinkButton
-          target="_blank"
-          href={pdfUrl || '/demokratie-fuer-alle'}
+    <>
+      <div className={s.container}>
+        <Step
+          icon={downloadIcon}
+          iconAlt="Illustration einer E-Mail"
+          headline="Schau in dein Postfach!"
+          ctaText="Ich habe die Liste bekommen!"
+          attributeToSet="downloadedList"
+          secondaryCtaText="Hilfe, die Liste kommt nicht an!"
+          onSecondaryCtaClick={() => {
+            window.open(
+              'mailto:support@expedition-grundeinkommen.de?subject=Ich%20habe%20keine%20Liste%20bekommen'
+            );
+          }}
+          done={listFlow?.downloadedList?.value}
+          updateUserData={updateCustomUserData}
+          urlParams={urlParams}
+          step={1}
         >
-          HIER
-        </InlineLinkButton>
-        .
-      </Step>
+          Wir haben dir eine Unterschriftenliste per Email geschickt. Falls du
+          sie direkt downloaden willst, findest du sie auch{' '}
+          {/* TODO: change link for berlin campaign */}
+          <InlineLinkButton
+            target="_blank"
+            href={pdfUrl || '/demokratie-fuer-alle'}
+          >
+            HIER
+          </InlineLinkButton>
+          .
+        </Step>
 
-      <Step
-        icon={printIcon}
-        iconDisabled={printIconDisabled}
-        iconAlt="Illustration eines Druckers"
-        headline="Druck die Liste aus!"
-        ctaText="Ich habe die Liste gedruckt!"
-        attributeToSet="printedList"
-        secondaryCtaText="Listen per Post bestellen"
-        // TODO: change for berlin campaign
-        onSecondaryCtaClick={() => {
-          window.open('https://innn.it/demokratiefueralle', '_blank');
-        }}
-        done={listFlow?.printedList?.value}
-        disabled={!hasReachedStep(listFlow, 'printedList')}
-        updateUserData={updateCustomUserData}
-        urlParams={urlParams}
-        step={2}
-      >
-        Unterschriften für Volksbegehren müssen handschriftlich auf Papier
-        erfolgen. Wirf am besten gleich deinen Drucker an und druck die Liste
-        aus.
-      </Step>
+        <Step
+          icon={printIcon}
+          iconDisabled={printIconDisabled}
+          iconAlt="Illustration eines Druckers"
+          headline="Druck die Liste aus!"
+          ctaText="Ich habe die Liste gedruckt!"
+          attributeToSet="printedList"
+          secondaryCtaText="Listen per Post bestellen"
+          // TODO: change for berlin campaign
+          onSecondaryCtaClick={() => {
+            window.open('https://innn.it/demokratiefueralle', '_blank');
+          }}
+          done={listFlow?.printedList?.value}
+          disabled={!hasReachedStep(listFlow, 'printedList')}
+          updateUserData={updateCustomUserData}
+          urlParams={urlParams}
+          step={2}
+        >
+          Unterschriften für Volksbegehren müssen handschriftlich auf Papier
+          erfolgen. Wirf am besten gleich deinen Drucker an und druck die Liste
+          aus.
+        </Step>
 
-      <Step
-        icon={signIcon}
-        iconDisabled={signIconDisabled}
-        iconAlt="Illustration des Unterschreibens"
-        headline="Unterschreibe direkt..."
-        ctaText="Ich habe unterschrieben!"
-        attributeToSet="signedList"
-        done={listFlow?.signedList?.value}
-        disabled={!hasReachedStep(listFlow, 'signedList')}
-        updateUserData={updateCustomUserData}
-        urlParams={urlParams}
-        step={3}
-      >
-        ...auf der ausgedruckten Liste.
-      </Step>
+        <Step
+          icon={signIcon}
+          iconDisabled={signIconDisabled}
+          iconAlt="Illustration des Unterschreibens"
+          headline="Unterschreibe direkt..."
+          ctaText="Ich habe unterschrieben!"
+          attributeToSet="signedList"
+          done={listFlow?.signedList?.value}
+          disabled={!hasReachedStep(listFlow, 'signedList')}
+          updateUserData={updateCustomUserData}
+          urlParams={urlParams}
+          step={3}
+        >
+          ...auf der ausgedruckten Liste.
+        </Step>
 
-      <Step
-        icon={shareIcon}
-        iconDisabled={shareIconDisabled}
-        iconAlt="Illustration von Freund:innen"
-        headline="...und frag gleich noch ein paar Bekannte!"
-        ctaText="Hab ich gemacht!"
-        attributeToSet="sharedList"
-        secondaryCtaText="Ich frage sie später!"
-        secondaryCtaAddProperty={{ willDoLater: true }}
-        done={listFlow?.sharedList?.value}
-        disabled={!hasReachedStep(listFlow, 'sharedList')}
-        updateUserData={updateCustomUserData}
-        urlParams={urlParams}
-        step={4}
-      >
-        Hast du Mitbewohner*innen, Freund*innen oder Kolleg*innen in der Nähe?
-        Lass sie gleich mitunterschreiben!
-      </Step>
+        <Step
+          icon={shareIcon}
+          iconDisabled={shareIconDisabled}
+          iconAlt="Illustration von Freund:innen"
+          headline="...und frag gleich noch ein paar Bekannte!"
+          ctaText="Hab ich gemacht!"
+          attributeToSet="sharedList"
+          secondaryCtaText="Ich frage sie später!"
+          secondaryCtaAddProperty={{ willDoLater: true }}
+          done={listFlow?.sharedList?.value}
+          disabled={!hasReachedStep(listFlow, 'sharedList')}
+          updateUserData={updateCustomUserData}
+          urlParams={urlParams}
+          step={4}
+        >
+          Hast du Mitbewohner*innen, Freund*innen oder Kolleg*innen in der Nähe?
+          Lass sie gleich mitunterschreiben!
+        </Step>
 
-      <Step
-        icon={sendIcon}
-        iconDisabled={sendIconDisabled}
-        iconAlt="Illustration von Freund:innen"
-        headline="Schick den Brief auf die Reise!"
-        ctaText="Ich habe den Brief abgeschickt!"
-        attributeToSet="sentList"
-        done={listFlow?.sentList?.value}
-        disabled={!hasReachedStep(listFlow, 'sentList')}
-        updateUserData={updateCustomUserData}
-        urlParams={urlParams}
-        step={5}
-      >
-        Lauf gleich los zum nächsten Briefkasten und wirf den Brief ein. Gute
-        Reise!
-      </Step>
-    </div>
+        <Step
+          icon={sendIcon}
+          iconDisabled={sendIconDisabled}
+          iconAlt="Illustration von Freund:innen"
+          headline="Schick den Brief auf die Reise!"
+          ctaText="Ich habe den Brief abgeschickt!"
+          attributeToSet="sentList"
+          done={listFlow?.sentList?.value}
+          onDone={() => setShowModal(true)}
+          disabled={!hasReachedStep(listFlow, 'sentList')}
+          updateUserData={updateCustomUserData}
+          urlParams={urlParams}
+          step={5}
+        >
+          Lauf gleich los zum nächsten Briefkasten und wirf den Brief ein. Gute
+          Reise!
+        </Step>
+      </div>
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <div className={s.modal}>
+          <p>
+            Vielen Dank, dass du den Brief abgeschickt hast und der Initiative
+            zum Erfolg verhilfst! Möchtest du noch mehr tun? Dann schließ dich
+            doch einem unserer Sammelevents an! Schau mal{' '}
+            <Link to="/demokratie-fuer-alle#karte">auf der Karte</Link> vorbei
+            um zu sehen, wo Events in deiner Nähe stattfinden.
+          </p>
+        </div>
+      </Modal>
+    </>
   );
 };
 
@@ -189,6 +206,7 @@ const Step = ({
   secondaryCtaAddProperty,
   onSecondaryCtaClick,
   done,
+  onDone,
   disabled,
   children,
   updateUserData,
@@ -241,6 +259,13 @@ const Step = ({
           });
         }, 1000);
       }
+
+      if (onDone) {
+        // Wait for success animation to finish
+        setTimeout(() => {
+          onDone();
+        }, 1000);
+      }
     }
   }, [updateUserState]);
 
@@ -277,7 +302,7 @@ const Step = ({
 
         {secondaryCtaText && !updateUserState && !done && (
           <div className={s.secondaryCta}>
-            <InlineLinkButton
+            <InlineButton
               onClick={() => {
                 if (secondaryCtaAddProperty) {
                   setAttribute(secondaryCtaAddProperty);
@@ -287,7 +312,7 @@ const Step = ({
               }}
             >
               {secondaryCtaText}
-            </InlineLinkButton>
+            </InlineButton>
           </div>
         )}
       </div>
