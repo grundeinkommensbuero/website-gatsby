@@ -44,7 +44,7 @@ export const SignatureListJourney = ({ pdfUrl }) => {
 
       // Show snackbar message if user responded with no success
       if (success === 'false') {
-        setMessage('Super, vielen Dank für dein Feedback!')
+        setMessage('Super, vielen Dank für dein Feedback!');
       }
     }
 
@@ -105,7 +105,7 @@ export const SignatureListJourney = ({ pdfUrl }) => {
         headline="Druck die Liste aus!"
         ctaText="Ich habe die Liste gedruckt!"
         attributeToSet="printedList"
-        secondaryCtaText="Hilfe, ich habe keinen Drucker!"
+        secondaryCtaText="Listen per Post bestellen"
         // TODO: change for berlin campaign
         onSecondaryCtaClick={() => {
           window.open('https://innn.it/demokratiefueralle', '_blank');
