@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AvatarImage from '../../AvatarImage';
 import SignatureStats from '../../SignatureStats';
-import { formatDate, stateToAgs } from '../../utils';
+import { formatDate /*stateToAgs*/ } from '../../utils';
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import cN from 'classnames';
@@ -10,7 +10,7 @@ import { getReferredUserMessage } from '../utils/referredUserMessage';
 import { getCustomNewsletterEnumeration } from '../utils/customNewsletterEnumeration';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
-  const [pledgePackages, setPledgePackages] = useState([]);
+  const [, setPledgePackages] = useState([]);
 
   // list newsletters of current user as human readable string
   const customNewsletterEnumeration = getCustomNewsletterEnumeration({
@@ -25,10 +25,10 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   //     ({ ags }) => ags === stateToAgs['berlin']
   //   ) !== -1;
 
-  const isSignedUpForBremen =
-    userData.municipalities?.findIndex(
-      ({ ags }) => ags === stateToAgs['bremen']
-    ) !== -1;
+  // const isSignedUpForBremen =
+  //   userData.municipalities?.findIndex(
+  //     ({ ags }) => ags === stateToAgs['bremen']
+  //   ) !== -1;
 
   // Filter interactions to only use interactions which were created
   // as pledge package
@@ -108,9 +108,7 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
 
       <Link
         to="unterschriften-eintragen"
-        className={cN(s.profilePageSection, {
-          [s.profilePageSectionLarge]: !isSignedUpForBremen,
-        })}
+        className={cN(s.profilePageSection, s.profilePageSectionLarge)}
       >
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
@@ -158,49 +156,6 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
           </section>
         </a>
       )} */}
-
-      {/* Only show this section if user is signed up for berlin */}
-      {isSignedUpForBremen && (
-        <Link
-          to="paket-nehmen"
-          className={cN(s.profilePageSection, {
-            [s.profilePageSectionLarge]: !isSignedUpForBremen,
-          })}
-        >
-          <section>
-            <h2>Dein Sammelpaket</h2>
-            <p>
-              {pledgePackages.length ? (
-                <>
-                  Du hast dir {pledgePackages.length} Paket
-                  {pledgePackages.length > 1 && 'e'} geschnappt und somit
-                  versprochen, 50 Unterschriften zu sammeln.
-                  <br />
-                  <br />
-                  {/* TODO: design package */}
-                  {/* Find package with message if exists to show this package (maybe in the future
-                    show most recent (was kinda in a hurry) */}
-                  "
-                  {
-                    pledgePackages.find(pledgePackage => pledgePackage.body)
-                      ?.body
-                  }
-                  "
-                </>
-              ) : (
-                <>Du hast noch kein Sammelpaket genommen.</>
-              )}
-            </p>
-            <div className={s.sectionLink}>
-              <span>
-                {pledgePackages.length
-                  ? 'Weiteres Paket nehmen'
-                  : 'Nimm dein Paket'}
-              </span>
-            </div>
-          </section>
-        </Link>
-      )}
     </section>
   );
 };
