@@ -22,7 +22,10 @@ export const TickerToSignup = ({
   const userMunicipalityState = useUserMunicipalityState();
 
   // Don't render this component if user has signed up for this municipality
-  if (userMunicipalityState === 'loggedInThisMunicipalitySignup') {
+  if (
+    userMunicipalityState === 'loggedInThisMunicipalitySignup' &&
+    currentURL.includes('orte')
+  ) {
     return null;
   }
 

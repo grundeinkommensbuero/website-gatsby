@@ -4,6 +4,7 @@ import { MunicipalityContext } from '../../../context/Municipality';
 
 import * as s from './style.module.less';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
+import { currentURL } from '../../utils/currentURL';
 
 export const MunicipalityProgress = ({
   showHeadline = true,
@@ -14,9 +15,11 @@ export const MunicipalityProgress = ({
   const userMunicipalityState = useUserMunicipalityState();
 
   // Don't render this component if user has not signed up for this municipality
+  // Or if user is not on municipality page
   if (
-    !isPartOfInfoText &&
-    userMunicipalityState !== 'loggedInThisMunicipalitySignup'
+    (!isPartOfInfoText &&
+      userMunicipalityState !== 'loggedInThisMunicipalitySignup') ||
+    !currentURL.includes('orte')
   ) {
     return null;
   }

@@ -8,6 +8,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 
 import { SignupButtonAndTile } from '../TickerToSignup/SignupButtonAndTile';
 import { useUserMunicipalityState } from '../../hooks/Municipality/UserMunicipalityState';
+import { currentURL } from '../utils/currentURL';
 
 export const IntroText = ({
   highlightText: { highlightText },
@@ -16,7 +17,10 @@ export const IntroText = ({
   const userMunicipalityState = useUserMunicipalityState();
 
   // Don't render this component if user has signed up for this municipality
-  if (userMunicipalityState === 'loggedInThisMunicipalitySignup') {
+  if (
+    userMunicipalityState === 'loggedInThisMunicipalitySignup' &&
+    currentURL.includes('orte')
+  ) {
     return null;
   }
 
