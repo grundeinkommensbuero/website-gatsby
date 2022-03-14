@@ -312,7 +312,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
               </SectionComponentContainer>
             </>
           )}
-          <EventsListed locationsFiltered={locationsFiltered} />
+          {!isIframe && <EventsListed locationsFiltered={locationsFiltered} />}
         </div>
       )}
     </>
