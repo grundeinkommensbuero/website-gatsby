@@ -7,6 +7,7 @@ import * as s from './style.module.less';
 import cN from 'classnames';
 
 import { SignUpButton } from '../SignupButton';
+import { currentURL } from '../../utils/currentURL';
 
 export const SignupButtonAndTile = ({ className }) => {
   // const { userId, customUserData: userData } = useContext(AuthContext);
@@ -50,7 +51,7 @@ export const SignupButtonAndTile = ({ className }) => {
 };
 
 export const getButtonText = (municipality, userMunicipalityState) => {
-  if (!municipality) {
+  if (!municipality || !currentURL.includes('orte')) {
     return 'Ich will dabei sein';
   }
 
@@ -75,7 +76,7 @@ export const getButtonText = (municipality, userMunicipalityState) => {
 };
 
 const getWelcomeExistingMessage = municipality => {
-  if (!municipality) {
+  if (!municipality || !currentURL.includes('orte')) {
     return '';
   }
   // Berlin

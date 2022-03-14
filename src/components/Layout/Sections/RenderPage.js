@@ -18,9 +18,7 @@ export const RenderPage = ({ sections, pageContext }) => {
     sections,
     pageContext,
     userMunicipalityState,
-  })?.map((section, index) => (
-    <React.Fragment key={index}>{section}</React.Fragment>
-  ));
+  })?.map((section, index) => <div key={index}>{section}</div>);
 
   if (municipality) {
     // Add news component as second component

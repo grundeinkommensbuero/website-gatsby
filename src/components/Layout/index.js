@@ -11,6 +11,7 @@ import { Overlay } from '../Overlay';
 import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import { currentURL } from '../utils/currentURL';
 
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
 const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
@@ -178,9 +179,7 @@ function Template({ children, sections, pageContext, title, description }) {
   // update current URL in banner context, to check for pages where banner shoud not appear
   // context itself does not reload on route change, so we set it from layout component
   useEffect(() => {
-    setCurrentURL(
-      typeof window !== 'undefined' ? window.location.pathname : ''
-    );
+    setCurrentURL(currentURL);
   });
 
   // NOTE: not needed until banner is activated again

@@ -29,6 +29,7 @@ import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
 import Maps from '../../Maps';
+import { currentURL } from '../../utils/currentURL';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
@@ -194,7 +195,7 @@ export function ContentfulSection({ section, pageContext }) {
                 <div className={s.keyClaim}>
                   <h1>
                     Hol das Grundeinkommen jetzt{' '}
-                    {municipality
+                    {municipality && currentURL.includes('orte')
                       ? `nach ${municipality.name}`
                       : 'in deinen Wohnort'}
                     .
