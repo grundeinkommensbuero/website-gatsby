@@ -3,7 +3,7 @@ import * as s from './style.module.less';
 import { MunicipalityProgress } from '../MunicipalityProgress';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { useUserMunicipalityState } from '../../../hooks/Municipality/UserMunicipalityState';
-import { currentURL } from '../../utils/currentURL';
+import { isMunicipalityPage } from '../../utils/currentURL';
 
 export const MunicipalityInfoText = () => {
   const { municipality } = useContext(MunicipalityContext);
@@ -17,7 +17,7 @@ export const MunicipalityInfoText = () => {
     return null;
   }
 
-  if (municipality && currentURL.includes('orte')) {
+  if (municipality && isMunicipalityPage) {
     return (
       <div className={s.municipalityText}>
         <p className={s.municipalityTextIntro}>

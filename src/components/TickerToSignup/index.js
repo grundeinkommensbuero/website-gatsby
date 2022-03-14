@@ -8,7 +8,7 @@ import * as s from './style.module.less';
 import loadable from '@loadable/component';
 import { List as Loader } from 'react-content-loader';
 import { useUserMunicipalityState } from '../../hooks/Municipality/UserMunicipalityState';
-import { currentURL } from '../utils/currentURL';
+import { isMunicipalityPage } from '../utils/currentURL';
 
 const Ticker = loadable(() => import('./Ticker'));
 const TickerMunicipality = loadable(() =>
@@ -24,7 +24,7 @@ export const TickerToSignup = ({
   // Don't render this component if user has signed up for this municipality
   if (
     userMunicipalityState === 'loggedInThisMunicipalitySignup' &&
-    currentURL.includes('orte')
+    isMunicipalityPage
   ) {
     return null;
   }
@@ -35,7 +35,7 @@ export const TickerToSignup = ({
     <>
       {/* A hidden Heading to improve accessibility */}
       <h2 className={s.hiddenHeading}>Anmelden</h2>
-      {municipality?.ags && currentURL.includes('orte') ? (
+      {municipality?.ags && isMunicipalityPage ? (
         <TickerMunicipality
           tickerDescription={tickerDescription}
           fallback={<Loader />}

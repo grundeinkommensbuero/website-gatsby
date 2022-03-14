@@ -10,7 +10,7 @@ import * as s from './style.module.less';
 import * as cS from '../../style/colorSchemes.module.less';
 import cN from 'classnames';
 import { getReferredUserMessage } from '../utils/referredUserMessage';
-import { currentURL } from '../../utils/currentURL';
+import { isMunicipalityPage } from '../../utils/currentURL';
 
 export const ProfileTile = ({ children }) => {
   const { userId, customUserData: userData } = useContext(AuthContext);
@@ -58,7 +58,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
 
   return (
     <>
-      {userData && currentURL.includes('orte') && (
+      {userData && isMunicipalityPage && (
         <section>
           <div className={cN(s.tileFlexContainer, cS.colorSchemeViolet)}>
             <div className={s.centeredAvatar}>
