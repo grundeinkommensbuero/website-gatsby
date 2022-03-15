@@ -7,7 +7,6 @@ import { Leaderboard } from '../Leaderboard';
 import { QualifiedBoard } from '../Leaderboard/QualifiedBoard';
 import { ExpandableRow } from './ExpandableRow';
 import { MunicipalityContext } from '../../../context/Municipality';
-import { isMunicipalityPage } from '../../utils/currentURL';
 
 const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
 
@@ -24,7 +23,7 @@ export const MapAndSearch = () => {
   }, [leaderboardSegments]);
 
   useEffect(() => {
-    if (municipality && isMunicipalityPage) {
+    if (municipality) {
       setHighlightedMunicipality(municipality);
     }
   }, [municipality]);
