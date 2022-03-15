@@ -1,5 +1,6 @@
 import React from 'react';
 import { List as Loader } from 'react-content-loader';
+import { isMunicipalityPage } from './currentURL';
 // create a valid ID for usage in the DOM
 export function stringToId(string) {
   return string && string.toString().replace(/^[^a-z]+|[^\w:.-]+/gi, '');
@@ -305,6 +306,11 @@ export const getFilteredElementsByContentfulState = ({
       userMunicipalityState === 'loggedInThisMunicipalitySignup'
     ) {
       showState = false;
+    }
+
+    // Check if we are on a municipality page and render section if not
+    if (!isMunicipalityPage) {
+      showState = true;
     }
 
     return showState;

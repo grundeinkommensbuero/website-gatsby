@@ -113,11 +113,7 @@ const TileLoggedInThisMunicipality = ({ userId, userData, municipality }) => {
   );
 };
 
-const TileNoMunicipalityLoggedInOtherMunicipality = ({
-  userId,
-  userData,
-  setMunicipality,
-}) => {
+const TileNoMunicipalityLoggedInOtherMunicipality = ({ userId, userData }) => {
   return (
     <>
       {userData && (

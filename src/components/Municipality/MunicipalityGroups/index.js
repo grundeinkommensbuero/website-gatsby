@@ -5,6 +5,7 @@ import { contentfulJsonToHtml } from '../../utils/contentfulJsonToHtml';
 import { InlineLinkButton } from '../../Forms/Button';
 import { SignUpButton } from '../../TickerToSignup/SignupButton';
 import * as s from './style.module.less';
+import { isMunicipalityPage } from '../../utils/currentURL';
 
 export const MunicipalityGroups = ({ body }) => {
   const { isAuthenticated, customUserData: userData } = useContext(AuthContext);
@@ -14,7 +15,7 @@ export const MunicipalityGroups = ({ body }) => {
 
   // If municipality is set (meaning user is on municipality page) we want to show groups
   // for this municipality
-  if (municipality) {
+  if (municipality && isMunicipalityPage) {
     return (
       <>
         {introText}
