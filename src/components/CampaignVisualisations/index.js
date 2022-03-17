@@ -55,7 +55,13 @@ export default ({ visualisations }) => {
           );
         }
         if (visualisation.startnextId) {
-          return <CrowdFundingVisualistation key={index} {...visualisation} />;
+          return (
+            <CrowdFundingVisualistation
+              key={index}
+              {...visualisation}
+              onWhiteBackground={visualisation.campainCode === 'democracy-1'}
+            />
+          );
         }
         return null;
       })}
