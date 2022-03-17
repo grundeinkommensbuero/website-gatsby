@@ -124,18 +124,16 @@ export const CampainVisualisation = ({
 }) => {
   let count = currentCount || 0;
 
-  if (currentCount) {
-    if (addToSignatureCount) {
-      count += addToSignatureCount;
-    }
+  if (addToSignatureCount) {
+    count += addToSignatureCount;
+  }
 
-    if (minimum) {
-      count = Math.max(count, minimum);
-    }
+  if (minimum) {
+    count = Math.max(count, minimum);
+  }
 
-    if (maximum) {
-      count = Math.min(count, maximum);
-    }
+  if (maximum) {
+    count = Math.min(count, maximum);
   }
 
   return (
