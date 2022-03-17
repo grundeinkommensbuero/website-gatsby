@@ -50,18 +50,13 @@ export default ({ visualisations }) => {
                 CTA: () => <>Mitmachen</>,
               }}
               currency="Unterschriften"
+              onWhiteBackground={visualisation.campainCode === 'democracy-1'}
               {...visualisation}
             />
           );
         }
         if (visualisation.startnextId) {
-          return (
-            <CrowdFundingVisualistation
-              key={index}
-              {...visualisation}
-              onWhiteBackground={visualisation.campainCode === 'democracy-1'}
-            />
-          );
+          return <CrowdFundingVisualistation key={index} {...visualisation} />;
         }
         return null;
       })}
