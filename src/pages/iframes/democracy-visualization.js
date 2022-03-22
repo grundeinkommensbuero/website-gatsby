@@ -8,7 +8,7 @@ const democracyVisualisation = ({
   },
 }) => {
   return (
-    <div style={{ padding: '0rem 0.25rem' }}>
+    <div style={{ padding: '0rem 0.25rem', overflow: 'hidden' }}>
       <CampaignVisualisation
         visualisations={campaignVisualisation.map(v => v.node)}
       />
