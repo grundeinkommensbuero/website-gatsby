@@ -25,6 +25,9 @@ export const pageQuery = graphql`
       edges {
         node {
           goal
+          goalUnbuffered
+          goalInbetweenMultiple
+          addToSignatureCount
           minimum
           startDate
           title
