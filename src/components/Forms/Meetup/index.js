@@ -121,146 +121,153 @@ export const CreateMeetup = ({
   }
 
   return (
-    <SectionInner className={s.section}>
-      <h3>Wähle einen Ort aus!</h3>
-      <Map
-        onLocationChosen={handleLocationChosen}
-        withSearch={true}
-        mapConfig={mapConfig}
-      />
-      {location && (
-        <>
-          <p className={s.chosenLocation}>
-            <span className={s.coloredText}>Gewählter Ort:</span>
-            <span className={s.placeName}>{location.place_name}</span>
-          </p>
+    <section className={s.section}>
+      <SectionInner>
+        <h3>Wähle einen Ort aus!</h3>
+        <Map
+          onLocationChosen={handleLocationChosen}
+          withSearch={true}
+          mapConfig={mapConfig}
+        />
+        {location && (
+          <>
+            <p className={s.chosenLocation}>
+              <span className={s.coloredText}>Gewählter Ort:</span>
+              <span className={s.placeName}>{location.place_name}</span>
+            </p>
 
-          <Form
-            onSubmit={e => {
-              const data = {
-                locationName: e.name,
-                description: e.description,
-                contact: e.contact,
-                coordinates: location.center,
-                address: location.address
-                  ? `${location.text} ${location.address}`
-                  : location.text,
-                city: location.context.find(({ id }) => id.startsWith('place'))
-                  ?.text,
-                zipCode: location.context.find(({ id }) =>
-                  id.startsWith('postcode')
-                )?.text,
-                type,
-                campaignCode: `${mapConfig.state}-${
-                  mapConfig.state === 'democracy' ? '1' : '2' // If not democracy this should be only hamburg-2 anyway
-                }`,
-              };
+            <Form
+              onSubmit={e => {
+                const data = {
+                  locationName: e.name,
+                  description: e.description,
+                  contact: e.contact,
+                  coordinates: location.center,
+                  address: location.address
+                    ? `${location.text} ${location.address}`
+                    : location.text,
+                  city: location.context.find(({ id }) =>
+                    id.startsWith('place')
+                  )?.text,
+                  zipCode: location.context.find(({ id }) =>
+                    id.startsWith('postcode')
+                  )?.text,
+                  type,
+                  campaignCode: `${mapConfig.state}-${
+                    mapConfig.state === 'democracy' ? '1' : '2' // If not democracy this should be only hamburg-2 anyway
+                  }`,
+                };
 
-              // Only had dates if type is collect
-              if (type === 'collect') {
-                data.startTime = new Date(`${e.date}T${e.start}`).toISOString();
-                data.endTime = new Date(`${e.date}T${e.end}`).toISOString();
-              }
+                // Only had dates if type is collect
+                if (type === 'collect') {
+                  data.startTime = new Date(
+                    `${e.date}T${e.start}`
+                  ).toISOString();
+                  data.endTime = new Date(`${e.date}T${e.end}`).toISOString();
+                }
 
-              createMeetup(data, mapConfig.state === 'berlin');
-            }}
-            validate={values => validate(values, type)}
-            render={({ handleSubmit }) => (
-              <FormWrapper>
-                <form onSubmit={handleSubmit}>
-                  {type === 'collect' && (
-                    <FormSection
-                      className={s.formSection}
-                      fieldContainerClassName={s.inlineFieldSection}
-                    >
-                      <div className={s.formContainer}>
-                        <div className={s.dateInputRow}>
-                          <p className={s.eventText}>Du planst ein Event am:</p>
-                          <Field
-                            name="date"
-                            label="Datum"
-                            component={DateInputWrapped}
-                            customRef={dateInputEl}
-                          ></Field>
-                        </div>
-                        <div className={s.timeInputRow}>
-                          <div className={s.timeInput}>
-                            <p className={s.eventText}>von:</p>
+                createMeetup(data, mapConfig.state === 'berlin');
+              }}
+              validate={values => validate(values, type)}
+              render={({ handleSubmit }) => (
+                <FormWrapper>
+                  <form onSubmit={handleSubmit}>
+                    {type === 'collect' && (
+                      <FormSection
+                        className={s.formSection}
+                        fieldContainerClassName={s.inlineFieldSection}
+                      >
+                        <div className={s.formContainer}>
+                          <div className={s.dateInputRow}>
+                            <p className={s.eventText}>
+                              Du planst ein Event am:
+                            </p>
                             <Field
-                              name="start"
-                              label="Start"
-                              component={TimeInputWrapped}
+                              name="date"
+                              label="Datum"
+                              component={DateInputWrapped}
+                              customRef={dateInputEl}
                             ></Field>
                           </div>
-                          <div className={s.timeInput}>
-                            <p className={s.eventText}>bis:</p>
-                            <Field
-                              name="end"
-                              label="Ende"
-                              component={TimeInputWrapped}
-                            ></Field>
+                          <div className={s.timeInputRow}>
+                            <div className={s.timeInput}>
+                              <p className={s.eventText}>von:</p>
+                              <Field
+                                name="start"
+                                label="Start"
+                                component={TimeInputWrapped}
+                              ></Field>
+                            </div>
+                            <div className={s.timeInput}>
+                              <p className={s.eventText}>bis:</p>
+                              <Field
+                                name="end"
+                                label="Ende"
+                                component={TimeInputWrapped}
+                              ></Field>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </FormSection>
-                  )}
-                  {type === 'lists' && (
-                    <FormSection className={s.formSection}>
+                      </FormSection>
+                    )}
+                    {type === 'lists' && (
+                      <FormSection className={s.formSection}>
+                        <Field
+                          name="name"
+                          label="Name"
+                          placeholder="Name"
+                          type="text"
+                          inputClassName={s.textInput}
+                          component={TextInputWrapped}
+                          customRef={nameInputEl}
+                        ></Field>
+                      </FormSection>
+                    )}
+                    <div ref={scrollToRef}></div>
+
+                    <FormSection>
+                      <p>
+                        Bitte gib ein paar zusätzliche Infos an. Wo willst du
+                        sammeln? Sollen die anderen Sammler*innen etwas
+                        mitbringen? Wie findet ihr zueinander?
+                      </p>
                       <Field
-                        name="name"
-                        label="Name"
-                        placeholder="Name"
-                        type="text"
-                        inputClassName={s.textInput}
+                        name="description"
+                        label="Beschreibung"
+                        placeholder="Sag ein paar Sätze zum geplanten Event..."
+                        type="textarea"
+                        inputClassName={s.textarea}
                         component={TextInputWrapped}
-                        customRef={nameInputEl}
+                      ></Field>
+                      <p>
+                        Gib ein paar Infos über dich an: Woran erkennt man dich
+                        vor Ort und wie kann man dich kontaktieren? Bitte
+                        beachte, dass diese Angaben öffentlich auf der Karte zu
+                        sehen sein werden.
+                      </p>
+                      <Field
+                        name="contact"
+                        label="Informationen über dich"
+                        placeholder="Beschreibung"
+                        type="textarea"
+                        inputClassName={cN(s.textarea, s.shortTextarea)}
+                        component={TextInputWrapped}
                       ></Field>
                     </FormSection>
-                  )}
-                  <div ref={scrollToRef}></div>
 
-                  <FormSection>
-                    <p>
-                      Bitte gib ein paar zusätzliche Infos an. Wo willst du
-                      sammeln? Sollen die anderen Sammler*innen etwas
-                      mitbringen? Wie findet ihr zueinander?
-                    </p>
-                    <Field
-                      name="description"
-                      label="Beschreibung"
-                      placeholder="Sag ein paar Sätze zum geplanten Event..."
-                      type="textarea"
-                      inputClassName={s.textarea}
-                      component={TextInputWrapped}
-                    ></Field>
-                    <p>
-                      Gib ein paar Infos über dich an: Woran erkennt man dich
-                      vor Ort und wie kann man dich kontaktieren? Bitte beachte,
-                      dass diese Angaben öffentlich auf der Karte zu sehen sein
-                      werden.
-                    </p>
-                    <Field
-                      name="contact"
-                      label="Informationen über dich"
-                      placeholder="Beschreibung"
-                      type="textarea"
-                      inputClassName={cN(s.textarea, s.shortTextarea)}
-                      component={TextInputWrapped}
-                    ></Field>
-                  </FormSection>
-
-                  <CTAButtonContainer className={s.buttonContainer}>
-                    <CTAButton type="submit" size="MEDIUM">
-                      Ort eintragen
-                    </CTAButton>
-                  </CTAButtonContainer>
-                </form>
-              </FormWrapper>
-            )}
-          />
-        </>
-      )}
-    </SectionInner>
+                    <CTAButtonContainer className={s.buttonContainer}>
+                      <CTAButton type="submit" size="MEDIUM">
+                        Ort eintragen
+                      </CTAButton>
+                    </CTAButtonContainer>
+                  </form>
+                </FormWrapper>
+              )}
+            />
+          </>
+        )}
+      </SectionInner>
+    </section>
   );
 };
 
