@@ -342,7 +342,6 @@ const validate = (values, municipalityInForm, fields) => {
   //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
   // }
 
-  console.log({ errors });
   return errors;
 };
 
