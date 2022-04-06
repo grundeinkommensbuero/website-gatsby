@@ -625,6 +625,9 @@ export function SectionComponent({ children, column, className }) {
         {
           [s.componentLeft]: column === 'left',
           [s.componentRight]: column === 'right',
+          [s.componentLeftThird]: column === 'leftThird',
+          [s.componentCenterThird]: column === 'centerThird',
+          [s.componentRightThird]: column === 'rightThird',
           [s.componentCenterWide]: column === 'centerWide',
           [s.componentCenterNarrow]: column === 'centerNarrow',
         },
