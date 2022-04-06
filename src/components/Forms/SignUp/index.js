@@ -39,6 +39,8 @@ export default ({
   fieldsToRender,
   // This can be used to overwrite fields which would usually not be mandatory
   overwriteMandatoryFields = [],
+  // This can be used to not render a specific field if user already has attribute
+  fieldsToHideIfValueExists = [],
   // Data which should be saved during creation o fuser
   additionalData,
   showHeading = true,
@@ -66,6 +68,8 @@ export default ({
   } else {
     prefilledZip = '';
   }
+
+  console.log('customUserData', userData);
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -176,15 +180,18 @@ export default ({
       type: 'email',
       disabled: isAuthenticated,
       component: TextInputWrapped,
+      hide: fieldsToHideIfValueExists.includes('email') && userData?.email,
     },
     username: {
       name: 'username',
-      label: 'Vorname',
+      label: 'Name',
       description:
         overwriteMandatoryFields.includes('username') && 'Pflichtfeld',
-      placeholder: 'Vorname',
+      placeholder: 'Wie wirst du genannt?',
       type: 'text',
       component: TextInputWrapped,
+      hide:
+        fieldsToHideIfValueExists.includes('username') && userData?.username,
     },
     municipality: {
       name: 'municipality',
@@ -195,6 +202,9 @@ export default ({
       onPlaceSelect: handlePlaceSelect,
       initialPlace: municipality || {},
       isInsideForm: true,
+      hide:
+        fieldsToHideIfValueExists.includes('municipality') &&
+        userData?.municipalities,
     },
     zipCode: {
       name: 'zipCode',
@@ -204,6 +214,7 @@ export default ({
       placeholder: '12345',
       type: 'number',
       component: TextInputWrapped,
+      hide: fieldsToHideIfValueExists.includes('zipCode') && userData?.zipCode,
     },
     phoneNumber: {
       name: 'phoneNumber',
@@ -212,6 +223,18 @@ export default ({
         overwriteMandatoryFields.includes('phoneNumber') && 'Pflichtfeld',
       placeholder: 'Telefonnummer',
       type: 'text',
+      component: TextInputWrapped,
+      hide:
+        fieldsToHideIfValueExists.includes('phoneNumber') &&
+        userData?.phoneNumber,
+    },
+    question: {
+      name: 'question',
+      label: 'Offene Fragen',
+      description:
+        overwriteMandatoryFields.includes('question') && 'Pflichtfeld',
+      placeholder: 'Hier ist Platz für deine Fragen, Anregungen, Ideen',
+      type: 'textarea',
       component: TextInputWrapped,
     },
     nudgeBox: {
@@ -225,6 +248,10 @@ export default ({
       label: 'Haltet mich über die nächsten Schritte auf dem Laufenden.',
       type: 'checkbox',
       component: Checkbox,
+      // In comparison to the other fields this one should only be hidden if newsletter consent is true
+      hide:
+        fieldsToHideIfValueExists.includes('newsletterConsent') &&
+        userData?.newsletterConsent?.value,
     },
   };
 
@@ -256,7 +283,16 @@ export default ({
             delete e.phoneNumber;
           }
 
+          if (e.question === '') {
+            delete e.question;
+          }
+
           if (additionalData) {
+            // Add question to wantsToCollect object if it was passed via prop
+            if (additionalData.wantsToCollect && e.question) {
+              additionalData.wantsToCollect.question = e.question;
+            }
+
             e = { ...e, ...additionalData };
           }
 
@@ -276,7 +312,9 @@ export default ({
             ? userData?.phoneNumber
             : '',
         }}
-        validate={values => validate(values, municipalityInForm, fields)}
+        validate={values =>
+          validate(values, municipalityInForm, fields, overwriteMandatoryFields)
+        }
         keepDirtyOnReinitialize={true}
         render={({ handleSubmit }) => {
           return (
@@ -304,7 +342,12 @@ export default ({
   );
 };
 
-const validate = (values, municipalityInForm, fields) => {
+const validate = (
+  values,
+  municipalityInForm,
+  fields,
+  overwriteMandatoryFields
+) => {
   const errors = {};
 
   if (values.email && values.email.includes('+')) {
@@ -337,10 +380,37 @@ const validate = (values, municipalityInForm, fields) => {
     errors.newsletterConsent = 'Bitte wähle einen Ort aus.';
   }
 
-  // if (!values.zipCode) {
-  //   errors.zipCode =
-  //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
-  // }
+  if (
+    fields.includes('username') &&
+    overwriteMandatoryFields.includes('username') &&
+    !values.username
+  ) {
+    errors.username = 'Wir benötigen einen Namen.';
+  }
+
+  if (
+    fields.includes('zipCode') &&
+    overwriteMandatoryFields.includes('zipCode') &&
+    !values.zipCode
+  ) {
+    errors.zipCode = 'Wir benötigen eine Postleitzahl.';
+  }
+
+  if (
+    fields.includes('phoneNumber') &&
+    overwriteMandatoryFields.includes('phoneNumber') &&
+    !values.phoneNumber
+  ) {
+    errors.phoneNumer = 'Wir benötigen eine Telefonnummer.';
+  }
+
+  if (
+    fields.includes('question') &&
+    overwriteMandatoryFields.includes('question') &&
+    !values.question
+  ) {
+    errors.question = 'Bitte fülle das Feld aus.';
+  }
 
   return errors;
 };

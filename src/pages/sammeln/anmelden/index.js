@@ -42,8 +42,15 @@ const CollectorSignUpPage = () => {
               )}
 
               <SignUp
-                fieldsToRender={['email', 'username', 'phoneNumber']}
+                fieldsToRender={[
+                  'email',
+                  'username',
+                  'phoneNumber',
+                  'zipCode',
+                  'question',
+                ]}
                 overwriteMandatoryFields={['username']}
+                fieldsToHideIfValueExists={['phoneNumber', 'zipCode']}
                 // If this is a signup for a specific collection (date and location set), that should be saved.
                 // Otherwise we pass that user wants to collect in general
                 additionalData={{
