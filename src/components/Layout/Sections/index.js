@@ -29,6 +29,7 @@ import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
 import Maps from '../../Maps';
+import FullscreenHero from './FullscreenHero';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
@@ -154,6 +155,7 @@ export function ContentfulSection({ section, pageContext }) {
     previewDescription,
     theme,
     headline,
+    heroImage,
   } = section;
 
   const id = stringToId(titleShort);
@@ -316,6 +318,12 @@ export function ContentfulSection({ section, pageContext }) {
           </Section>
         )}
       </>
+    );
+  }
+
+  if (__typename === 'ContentfulPageSectionFullscreenHero') {
+    return (
+      <FullscreenHero heroImage={heroImage} title={title} subTitle={subTitle} />
     );
   }
 

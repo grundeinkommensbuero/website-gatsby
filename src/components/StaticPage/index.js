@@ -320,6 +320,14 @@ export const pageQuery = graphql`
             sloganLine1
             sloganLine2
           }
+          ... on ContentfulPageSectionFullscreenHero {
+            __typename
+            heroImage {
+              gatsbyImageData(width: 1500, layout: CONSTRAINED, quality: 90)
+            }
+            title
+            subTitle
+          }
           ... on ContentfulPageSectionIntro {
             __typename
             preTitle
