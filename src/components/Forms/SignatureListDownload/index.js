@@ -92,7 +92,7 @@ export default ({ signaturesId }) => {
 
     return (
       <FinallyMessage state="error">
-        Da ist was schief gegangen. Melde dich bitte bei uns{' '}
+        Da ist was schief gegangen. Melde dich bitte bei{' '}
         <a href="mailto:support@expedition-grundeinkommen.de">
           support@expedition-grundeinkommen.de
         </a>

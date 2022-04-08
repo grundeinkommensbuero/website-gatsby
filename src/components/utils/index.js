@@ -32,6 +32,11 @@ export function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
+export function validatePhoneNumber(phoneNumber) {
+  const regex = /^[0-9]*$/g;
+  return regex.test(phoneNumber);
+}
+
 // https://stackoverflow.com/questions/8922107/javascript-scrollintoview-middle-alignment
 export function scrollIntoView(element) {
   const elementRect = element.getBoundingClientRect();

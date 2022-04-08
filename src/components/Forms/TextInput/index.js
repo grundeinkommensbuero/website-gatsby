@@ -10,6 +10,7 @@ export function TextInput({
   label,
   size,
   customRef,
+  disabled,
   ...input
 }) {
   return (
@@ -24,6 +25,7 @@ export function TextInput({
       className={cN(
         s.textInput,
         { [s.textInputSmall]: size === 'SMALL' },
+        { [s.disabled]: disabled },
         className,
         {
           [s.hideNumberArrows]:
@@ -32,11 +34,19 @@ export function TextInput({
       )}
       ref={customRef}
       {...input}
+      disabled={disabled}
     />
   );
 }
 
-export function Textarea({ children, className, label, customRef, ...input }) {
+export function Textarea({
+  children,
+  className,
+  label,
+  customRef,
+  disabled,
+  ...input
+}) {
   let charLeft;
   if (input.maxLength && input.value) {
     charLeft = input.maxLength - input.value.length;
@@ -46,9 +56,10 @@ export function Textarea({ children, className, label, customRef, ...input }) {
     <div>
       <textarea
         aria-label={label}
-        className={cN(s.textarea, className)}
+        className={cN(s.textarea, className, { [s.disabled]: disabled })}
         {...input}
         ref={customRef}
+        disabled={disabled}
       />
       {input.maxLength && charLeft < 100 && (
         <div className={s.charLeftDisplay}>
@@ -79,6 +90,7 @@ export const TextInputWrapped = ({
   autoComplete,
   customRef,
   errorClassName,
+  disabled,
 }) => {
   if (hide) {
     return null;
@@ -102,6 +114,7 @@ export const TextInputWrapped = ({
           label={outputLabel}
           autoComplete={autoComplete}
           customRef={customRef}
+          disabled={disabled}
         />
       ) : (
         <TextInput
@@ -116,6 +129,7 @@ export const TextInputWrapped = ({
           inputMode={inputMode}
           autoComplete={autoComplete}
           customRef={customRef}
+          disabled={disabled}
         />
       )}
     </LabelInputErrorWrapper>

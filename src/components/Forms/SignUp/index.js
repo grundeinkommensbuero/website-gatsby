@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
-import { validateEmail } from '../../utils';
+import { validateEmail, validatePhoneNumber } from '../../utils';
 import { TextInputWrapped } from '../TextInput';
 import FormSection from '../FormSection';
 import { Checkbox } from '../Checkbox';
@@ -13,7 +13,6 @@ import AuthContext from '../../../context/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 // import AuthInfo from '../../AuthInfo';
 // import { FinallyMessage } from '../FinallyMessage';
-import * as s from './style.module.less';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { SearchPlaces } from '../SearchPlaces';
 import { navigate } from 'gatsby';
@@ -38,6 +37,13 @@ export default ({
   postSignupAction,
   illustration = 'POINT_LEFT',
   fieldsToRender,
+  // This can be used to overwrite fields which would usually not be mandatory
+  overwriteMandatoryFields = [],
+  // This can be used to not render a specific field if user already has attribute
+  fieldsToHideIfValueExists = [],
+  // Data which should be saved during creation o fuser
+  additionalData,
+  showHeading = true,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [updateUserState, updateUser] = useUpdateUser();
@@ -63,20 +69,28 @@ export default ({
     prefilledZip = '';
   }
 
+  console.log('customUserData', userData);
+
   // After signup process is successful, do post signup
   useEffect(() => {
     if (hasSubmitted && isAuthenticated && userId) {
-      if (postSignupAction) {
+      // If user already existed we don't want to execute
+      // postSignupAction here, but after user is updated
+      if (userExists === false && postSignupAction) {
         postSignupAction();
+      }
+
+      if (updateUserState === 'updated') {
+        updateCustomUserData();
+
+        if (postSignupAction) {
+          postSignupAction();
+        }
       }
 
       // Now set municipality in context
       if (municipalityInForm) {
         navigate(`/orte/${municipalityInForm.slug}`);
-      }
-
-      if (updateUserState === 'updated') {
-        updateCustomUserData();
       }
     }
   }, [hasSubmitted, isAuthenticated, userId, updateUserState]);
@@ -107,20 +121,24 @@ export default ({
     return <EnterLoginCode preventSignIn={true} />;
   }
 
-  // TODO: clean up, most of the stuff is not used here anymore
-  // It is also not ideal to show the loading state even though
+  // It is maybe not ideal to show the loading state even though
   // updateUserState is saved, but otherwise the form would be shown
   // again before unmounting
   if (
     signUpState === 'loading' ||
+    signUpState === 'error' ||
     updateUserState === 'loading' ||
-    updateUserState === 'updated'
+    updateUserState === 'updated' ||
+    updateUserState === 'error'
   ) {
     return (
       <>
         <SignUpFeedbackMessage
-          className={s.adjustFinallyMessage}
-          state={'loading'}
+          state={
+            signUpState === 'error' || updateUserState === 'error'
+              ? 'error'
+              : 'loading'
+          }
           trackingId={'sign-up'}
           trackingCategory="SignUp"
         />
@@ -160,14 +178,20 @@ export default ({
       description: 'Pflichtfeld',
       placeholder: 'E-Mail',
       type: 'email',
+      disabled: isAuthenticated,
       component: TextInputWrapped,
+      hide: fieldsToHideIfValueExists.includes('email') && userData?.email,
     },
     username: {
       name: 'username',
-      label: 'Vorname',
-      placeholder: 'Vorname',
+      label: 'Name',
+      description:
+        overwriteMandatoryFields.includes('username') && 'Pflichtfeld',
+      placeholder: 'Wie wirst du genannt?',
       type: 'text',
       component: TextInputWrapped,
+      hide:
+        fieldsToHideIfValueExists.includes('username') && userData?.username,
     },
     municipality: {
       name: 'municipality',
@@ -178,12 +202,39 @@ export default ({
       onPlaceSelect: handlePlaceSelect,
       initialPlace: municipality || {},
       isInsideForm: true,
+      hide:
+        fieldsToHideIfValueExists.includes('municipality') &&
+        userData?.municipalities,
     },
     zipCode: {
       name: 'zipCode',
       label: 'Postleitzahl',
+      description:
+        overwriteMandatoryFields.includes('zipCode') && 'Pflichtfeld',
       placeholder: '12345',
       type: 'number',
+      component: TextInputWrapped,
+      hide: fieldsToHideIfValueExists.includes('zipCode') && userData?.zipCode,
+    },
+    phoneNumber: {
+      name: 'phoneNumber',
+      label: 'Telefonnummer',
+      description:
+        overwriteMandatoryFields.includes('phoneNumber') && 'Pflichtfeld',
+      placeholder: 'Telefonnummer',
+      type: 'text',
+      component: TextInputWrapped,
+      hide:
+        fieldsToHideIfValueExists.includes('phoneNumber') &&
+        userData?.phoneNumber,
+    },
+    question: {
+      name: 'question',
+      label: 'Hast du Fragen oder Kommentare?',
+      description:
+        overwriteMandatoryFields.includes('question') && 'Pflichtfeld',
+      placeholder: 'Hier ist Platz für deine Fragen, Anregungen, Ideen',
+      type: 'textarea',
       component: TextInputWrapped,
     },
     nudgeBox: {
@@ -197,17 +248,25 @@ export default ({
       label: 'Haltet mich über die nächsten Schritte auf dem Laufenden.',
       type: 'checkbox',
       component: Checkbox,
+      // In comparison to the other fields this one should only be hidden if newsletter consent is true
+      hide:
+        fieldsToHideIfValueExists.includes('newsletterConsent') &&
+        userData?.newsletterConsent?.value,
     },
   };
 
   return (
     <>
-      <h3 aria-label="Anmeldeformular">Willkommen bei der Expedition!</h3>
-      <br />
+      {showHeading && (
+        <>
+          <h3 aria-label="Anmeldeformular">Willkommen bei der Expedition!</h3>
+          <br />
+        </>
+      )}
       <Form
         onSubmit={e => {
           e.ags = municipalityInForm?.ags;
-          if (!e.newsletterConsent) {
+          if (!e.newsletterConsent && fields.includes('newsletterConsent')) {
             e.newsletterConsent = false;
           }
 
@@ -220,6 +279,23 @@ export default ({
             delete e.zipCode;
           }
 
+          if (e.phoneNumber === '') {
+            delete e.phoneNumber;
+          }
+
+          if (e.question === '') {
+            delete e.question;
+          }
+
+          if (additionalData) {
+            // Add question to wantsToCollect object if it was passed via prop
+            if (additionalData.wantsToCollect && e.question) {
+              additionalData.wantsToCollect.question = e.question;
+            }
+
+            e = { ...e, ...additionalData };
+          }
+
           setHasSubmitted(true);
           setFormData(e);
 
@@ -229,11 +305,16 @@ export default ({
         }}
         initialValues={{
           ...initialValues,
-          zipCode: prefilledZip,
           email: (isAuthenticated && userData?.email) || '',
-          username: userData?.username || '',
+          zipCode: fields.includes('zipCode') ? prefilledZip : '',
+          username: fields.includes('username') ? userData?.username : '',
+          phoneNumber: fields.includes('phoneNumber')
+            ? userData?.phoneNumber
+            : '',
         }}
-        validate={values => validate(values, municipalityInForm)}
+        validate={values =>
+          validate(values, municipalityInForm, fields, overwriteMandatoryFields)
+        }
         keepDirtyOnReinitialize={true}
         render={({ handleSubmit }) => {
           return (
@@ -261,7 +342,12 @@ export default ({
   );
 };
 
-const validate = (values, municipalityInForm) => {
+const validate = (
+  values,
+  municipalityInForm,
+  fields,
+  overwriteMandatoryFields
+) => {
   const errors = {};
 
   if (values.email && values.email.includes('+')) {
@@ -276,18 +362,55 @@ const validate = (values, municipalityInForm) => {
     errors.email = 'Wir benötigen eine valide E-Mail Adresse';
   }
 
-  if (!values.nudgeBox && !values.newsletterConsent) {
+  if (values.phoneNumber && !validatePhoneNumber(values.phoneNumber)) {
+    errors.phoneNumber = 'Wir benötigen eine valide Telefonnummer.';
+  }
+
+  // If fields do not include  consent, we don't need to validate
+  if (
+    fields.includes('newsletterConsent') &&
+    !values.nudgeBox &&
+    !values.newsletterConsent
+  ) {
     errors.newsletterConsent = 'Bitte bestätige, dass du dabei sein willst';
   }
 
-  if (!municipalityInForm) {
+  // If fields do not include municipality, we don't need to validate
+  if (fields.includes('municipality') && !municipalityInForm) {
     errors.newsletterConsent = 'Bitte wähle einen Ort aus.';
   }
 
-  // if (!values.zipCode) {
-  //   errors.zipCode =
-  //     'Wir benötigen deine Postleitzahl, um dich dem korrekten Bundesland zuzuordnen';
-  // }
+  if (
+    fields.includes('username') &&
+    overwriteMandatoryFields.includes('username') &&
+    !values.username
+  ) {
+    errors.username = 'Wir benötigen einen Namen.';
+  }
+
+  if (
+    fields.includes('zipCode') &&
+    overwriteMandatoryFields.includes('zipCode') &&
+    !values.zipCode
+  ) {
+    errors.zipCode = 'Wir benötigen eine Postleitzahl.';
+  }
+
+  if (
+    fields.includes('phoneNumber') &&
+    overwriteMandatoryFields.includes('phoneNumber') &&
+    !values.phoneNumber
+  ) {
+    errors.phoneNumer = 'Wir benötigen eine Telefonnummer.';
+  }
+
+  if (
+    fields.includes('question') &&
+    overwriteMandatoryFields.includes('question') &&
+    !values.question
+  ) {
+    errors.question = 'Bitte fülle das Feld aus.';
+  }
 
   return errors;
 };
