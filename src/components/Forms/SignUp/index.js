@@ -230,7 +230,7 @@ export default ({
     },
     question: {
       name: 'question',
-      label: 'Offene Fragen',
+      label: 'Hast du Fragen oder Kommentare?',
       description:
         overwriteMandatoryFields.includes('question') && 'Pflichtfeld',
       placeholder: 'Hier ist Platz für deine Fragen, Anregungen, Ideen',
