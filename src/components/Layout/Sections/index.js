@@ -193,11 +193,17 @@ export function ContentfulSection({ section, pageContext }) {
                 </div>
                 <div className={s.keyClaim}>
                   <h1>
-                    Hol das Grundeinkommen jetzt{' '}
-                    {municipality
-                      ? `nach ${municipality.name}`
-                      : 'in deinen Wohnort'}
-                    .
+                    {municipality?.ags === '11000000' ? (
+                      <>Wir starten ins Volksbegehren – am 5.5. geht's los!</>
+                    ) : (
+                      <>
+                        Hol das Grundeinkommen jetzt{' '}
+                        {municipality
+                          ? `nach ${municipality.name}`
+                          : 'in deinen Wohnort'}
+                        .
+                      </>
+                    )}
                   </h1>
                   {/* <p>
                   Gemeinsam starten wir den ersten staatlichen Modellversuch, um
