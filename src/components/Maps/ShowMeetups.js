@@ -76,6 +76,11 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
     // We only need to fetch meetups from secondary API if it's the berlin or hamburg map
     if (isBerlin || isHamburg || isDemocracy) {
       // We pass state to differentiate between APIs
+
+      // The whole naming of meetups does not really make that much sense anymore, since
+      // we are using the new api backend structure, where list locations and events are two
+      // entirely different api and schemas.
+      // I am leaving it like this anyway, just beware that meetups are events OR list locations
       getMeetups(mapConfig.state);
     }
   }, [mapConfig]);
@@ -138,7 +143,6 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
             );
           }
         );
-
         setLocationsFiltered(newLocationsFiltered);
       }
     }

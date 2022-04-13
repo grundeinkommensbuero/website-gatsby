@@ -60,7 +60,7 @@ export const EventsListed = ({ locationsFiltered }) => {
                           {dsm.localeTime(event.startTime)}-
                           {dsm.localeTime(event.endTime)}
                           {' Uhr, '}
-                          {event.address}
+                          {event.address || event.locationName}
                         </b>
                       </div>
                     );
