@@ -1,3 +1,5 @@
+@import '../../../style/vars.less';
+
 .titles {
   position: absolute;
   z-index: 2;
@@ -9,9 +11,31 @@
 .title {
   top: 3rem;
   --heading-color: black;
+
+  @media (min-width: @breakPointXXL) {
+    font-size: @DesktopFontSizeXXL;
+    top: 6rem;
+  }
+
+  @media (max-width: @breakPointM) {
+    top: 1rem;
+  }
 }
 
 .subTitle {
   bottom: 1rem;
   --heading-color: white;
+
+  @media (min-width: @breakPointXXL) {
+    font-size: @DesktopFontSizeXL;
+  }
+
+  @media (max-width: @breakPointM) {
+    bottom: -0.5rem;
+  }
+}
+
+.imageZoom {
+  transition: transform 2s !important;
+  transform: scale(1.05) !important;
 }
