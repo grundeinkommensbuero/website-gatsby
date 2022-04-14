@@ -323,7 +323,7 @@ export const pageQuery = graphql`
           ... on ContentfulPageSectionFullscreenHero {
             __typename
             heroImage {
-              gatsbyImageData(width: 1500, layout: CONSTRAINED, quality: 90)
+              gatsbyImageData(width: 2560, layout: FULL_WIDTH, quality: 90)
             }
             title
             subTitle
