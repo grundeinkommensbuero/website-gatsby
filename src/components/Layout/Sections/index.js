@@ -67,6 +67,8 @@ const Components = {
   ListDownload: SignatureListDownload,
 };
 
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
+
 export const getRenderedSections = ({
   sections,
   pageContext,
@@ -516,6 +518,9 @@ export function Section({
         [s.sectionViolet]: colorScheme === 'violet',
         [s.sectionAqua]: colorScheme === 'aqua',
         [s.sectionRed]: colorScheme === 'red',
+        [s.sectionRose]: colorScheme === 'rose',
+        [s.sectionRoseOnWhite]:
+          (!colorScheme || colorScheme === 'white') && IS_BERLIN_PROJECT,
       })}
     >
       {jumpToId && (

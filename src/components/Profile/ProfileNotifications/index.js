@@ -8,6 +8,7 @@ import { SearchPlaces } from '../../Forms/SearchPlaces';
 import { Button } from '../../Forms/Button';
 
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileNotifications = ({
   userData,
@@ -406,7 +407,11 @@ export const ProfileNotifications = ({
 
   return (
     <section className={gS.profilePageGrid}>
-      <section className={cN(gS.editPageSection, gS.editSettings)}>
+      <section
+        className={cN(gS.editPageSection, gS.editSettings, {
+          [gS.rose]: IS_BERLIN_PROJECT,
+        })}
+      >
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>

@@ -8,6 +8,7 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 import { getReferredUserMessage } from '../utils/referredUserMessage';
 import { getCustomNewsletterEnumeration } from '../utils/customNewsletterEnumeration';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   const [, setPledgePackages] = useState([]);
@@ -46,7 +47,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
     <section className={gS.profilePageGrid}>
       <Link
         to="stammdaten"
-        className={cN(s.profilePageSection, s.profilePageSectionLarge)}
+        className={cN(s.profilePageSection, s.profilePageSectionLarge, {
+          [s.rose]: IS_BERLIN_PROJECT,
+        })}
       >
         <section className={gS.userInfo}>
           <AvatarImage user={userData} className={gS.avatar} />
@@ -71,7 +74,12 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
         </section>
       </Link>
 
-      <Link to="spenden-einstellungen" className={s.profilePageSection}>
+      <Link
+        to="spenden-einstellungen"
+        className={cN(s.profilePageSection, {
+          [s.rose]: IS_BERLIN_PROJECT,
+        })}
+      >
         <section>
           <h2>Spenden-Einstellungen</h2>
           {userData?.donations?.recurringDonation?.amount > 0 ? (
@@ -89,7 +97,12 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
         </section>
       </Link>
 
-      <Link to="kontakt-einstellungen" className={s.profilePageSection}>
+      <Link
+        to="kontakt-einstellungen"
+        className={cN(s.profilePageSection, {
+          [s.rose]: IS_BERLIN_PROJECT,
+        })}
+      >
         <section>
           <h2>Newsletter & Kontakt</h2>
           {customNewsletterEnumeration.length > 0 ? (
@@ -108,7 +121,9 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
 
       <Link
         to="unterschriften-eintragen"
-        className={cN(s.profilePageSection, s.profilePageSectionLarge)}
+        className={cN(s.profilePageSection, s.profilePageSectionLarge, {
+          [s.rose]: IS_BERLIN_PROJECT,
+        })}
       >
         <section className={s.signaturesSection}>
           <h2>Eingegangene Unterschriften</h2>
