@@ -12,6 +12,10 @@ import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 
+if (process.env.GATSBY_PROJECT === 'Berlin') {
+  import('../style/baseBerlin.less');
+}
+
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
 const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
 
