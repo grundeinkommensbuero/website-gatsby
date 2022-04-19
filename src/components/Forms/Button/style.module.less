@@ -35,12 +35,12 @@
     background: var(--button-hover-bg-color);
   }
 
-  &:focus {
+  &:focus,
+  &:active {
     outline: none;
-    background-color: darken(@violet, 10%);
-    color: @white;
-    border-color: darken(@violet, 10%);
-    //box-shadow: inset 0 0 0 @borderWidthThick var(--button-hover-font-color);
+    background-color: var(--button-focus-bg-color);
+    color: var(--button-focus-font-color);
+    // border-color: var(--button-focus-bg-color);
   }
 
   &.disabled {
