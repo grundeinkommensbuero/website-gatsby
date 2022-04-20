@@ -267,7 +267,16 @@ const PopupContent = ({
             />
             <div className={s.tooltipLocation}>
               <span className={s.tooltipAddress}>
-                {address || locationName}
+                {/* If address and location name both exist, show both, otherwise only one */}
+                {address && locationName ? (
+                  <>
+                    {address}
+                    <br />
+                    {locationName}
+                  </>
+                ) : (
+                  address || locationName
+                )}
               </span>
               <br />
               {zipCode && city && (

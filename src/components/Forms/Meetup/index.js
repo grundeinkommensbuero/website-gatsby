@@ -138,6 +138,22 @@ export const CreateMeetup = ({
 
             <Form
               onSubmit={e => {
+                // Depemding on the type of the location a location has its street in the text property
+                // or not (if not, we have to extract it from place name)
+                let street;
+                let number;
+                if (location.place_type?.[0] === 'address') {
+                  street = location.text;
+                  number = location.address;
+                } else {
+                  // split by "," to get address and then split " " to remove number
+                  const addressArray = location.place_name
+                    .split(',')[1]
+                    .split(' ');
+                  number = addressArray.pop();
+                  street = addressArray.join(' ');
+                }
+
                 const data = {
                   locationName: e.name,
                   description: e.description,
@@ -146,6 +162,8 @@ export const CreateMeetup = ({
                   address: location.address
                     ? `${location.text} ${location.address}`
                     : location.text,
+                  street,
+                  number,
                   city: location.context.find(({ id }) =>
                     id.startsWith('place')
                   )?.text,
@@ -225,35 +243,37 @@ export const CreateMeetup = ({
                     )}
                     <div ref={scrollToRef}></div>
 
-                    <FormSection>
-                      <p>
-                        Bitte gib ein paar zusätzliche Infos an. Wo willst du
-                        sammeln? Sollen die anderen Sammler*innen etwas
-                        mitbringen? Wie findet ihr zueinander?
-                      </p>
-                      <Field
-                        name="description"
-                        label="Beschreibung"
-                        placeholder="Sag ein paar Sätze zum geplanten Event..."
-                        type="textarea"
-                        inputClassName={s.textarea}
-                        component={TextInputWrapped}
-                      ></Field>
-                      <p>
-                        Gib ein paar Infos über dich an: Woran erkennt man dich
-                        vor Ort und wie kann man dich kontaktieren? Bitte
-                        beachte, dass diese Angaben öffentlich auf der Karte zu
-                        sehen sein werden.
-                      </p>
-                      <Field
-                        name="contact"
-                        label="Informationen über dich"
-                        placeholder="Beschreibung"
-                        type="textarea"
-                        inputClassName={cN(s.textarea, s.shortTextarea)}
-                        component={TextInputWrapped}
-                      ></Field>
-                    </FormSection>
+                    {type === 'collect' && (
+                      <FormSection>
+                        <p>
+                          Bitte gib ein paar zusätzliche Infos an. Wo willst du
+                          sammeln? Sollen die anderen Sammler*innen etwas
+                          mitbringen? Wie findet ihr zueinander?
+                        </p>
+                        <Field
+                          name="description"
+                          label="Beschreibung"
+                          placeholder="Sag ein paar Sätze zum geplanten Event..."
+                          type="textarea"
+                          inputClassName={s.textarea}
+                          component={TextInputWrapped}
+                        ></Field>
+                        <p>
+                          Gib ein paar Infos über dich an: Woran erkennt man
+                          dich vor Ort und wie kann man dich kontaktieren? Bitte
+                          beachte, dass diese Angaben öffentlich auf der Karte
+                          zu sehen sein werden.
+                        </p>
+                        <Field
+                          name="contact"
+                          label="Informationen über dich"
+                          placeholder="Beschreibung"
+                          type="textarea"
+                          inputClassName={cN(s.textarea, s.shortTextarea)}
+                          component={TextInputWrapped}
+                        ></Field>
+                      </FormSection>
+                    )}
 
                     <CTAButtonContainer className={s.buttonContainer}>
                       <CTAButton type="submit" size="MEDIUM">
@@ -274,10 +294,6 @@ export const CreateMeetup = ({
 const validate = (values, type) => {
   const errors = {};
 
-  if (!values.description) {
-    errors.description = 'Bitte gib eine kurze Beschreibung an';
-  }
-
   if (type === 'lists' && !values.name) {
     errors.name = 'Bitte gib einen Namen des Sammelortes an';
   }
@@ -293,6 +309,10 @@ const validate = (values, type) => {
 
     if (!values.end) {
       errors.end = 'Bitte gib ein Ende an';
+    }
+
+    if (!values.description) {
+      errors.description = 'Bitte gib eine kurze Beschreibung an';
     }
   }
 
