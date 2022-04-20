@@ -16,6 +16,7 @@ const FullscreenHero = ({ heroImage, title, subTitle }) => {
         onLoad={() => {
           setImageLoaded(true);
         }}
+        className={s.image}
         imgClassName={cN({ [s.imageZoom]: imageLoaded })}
       />
       <h1 className={cN(s.title, s.titles)}>{title}</h1>
