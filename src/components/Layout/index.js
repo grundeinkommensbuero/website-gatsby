@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import * as s from './style.module.less';
 import '../style/base.less';
+import '../style/baseBerlin.less';
 import { ContentfulSection } from './Sections';
 import { RenderPage } from './Sections/RenderPage';
 import { Helmet } from 'react-helmet-async';
@@ -11,6 +12,9 @@ import { Overlay } from '../Overlay';
 import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
+import cN from 'classnames';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
 const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
@@ -266,7 +270,7 @@ function Template({ children, sections, pageContext, title, description }) {
   };
 
   return (
-    <>
+    <div className={cN({ fontBerlin: IS_BERLIN_PROJECT })}>
       {project.overlayActive && project.overlay && (
         <Overlay delay={project.overlayDelay}>
           <ContentfulSection section={overlayDefninitionWithCrowdfunding} />
@@ -307,7 +311,7 @@ function Template({ children, sections, pageContext, title, description }) {
         />
       </main>
       <Footer footerText={project.footerText} footerMenu={project.footerMenu} />
-    </>
+    </div>
   );
 }
 

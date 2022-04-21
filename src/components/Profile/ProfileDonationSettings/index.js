@@ -8,6 +8,7 @@ import { Button } from '../../Forms/Button';
 import DonationForm from '../../Forms/DonationForm';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import rocketIcon from './rocket-icon.min.svg';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileDonationSettings = ({
   userId,
@@ -71,7 +72,11 @@ export const ProfileDonationSettings = ({
 
   return (
     <section className={gS.profilePageGrid}>
-      <section className={cN(gS.editPageSection, gS.editSettings)}>
+      <section
+        className={cN(gS.editPageSection, gS.editSettings, {
+          [gS.rose]: IS_BERLIN_PROJECT,
+        })}
+      >
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>

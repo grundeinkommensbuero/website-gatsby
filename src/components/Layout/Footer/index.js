@@ -2,9 +2,12 @@ import React from 'react';
 import Link from 'gatsby-link';
 import * as s from './style.module.less';
 import SocialMediaButtons from '../../SocialMedia/Follow';
+import cN from 'classnames';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export default ({ footerText, footerMenu }) => (
-  <footer className={s.footer}>
+  <footer className={cN(s.footer, { [s.black]: IS_BERLIN_PROJECT })}>
     <div className={s.itemContainer}>
       <div>{footerText}</div>
       <SocialMediaButtons className={s.socialMedia} />

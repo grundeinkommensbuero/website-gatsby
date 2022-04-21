@@ -4,6 +4,7 @@ import * as gS from '../style.module.less';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfilePledgePackage = ({
   userId,
@@ -16,6 +17,9 @@ export const ProfilePledgePackage = ({
         className={cN(
           gS.editPageSection,
           gS.editSettings,
+          {
+            [gS.rose]: IS_BERLIN_PROJECT,
+          },
           s.createPledgePackageSection
         )}
       >

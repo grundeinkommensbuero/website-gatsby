@@ -1,4 +1,5 @@
-@import '../../../components/style/vars.less';
+@import '../../style/vars.less';
+@import '../../style/colorSchemes.module.less';
 
 .profilePageSection {
   position: relative;
@@ -12,9 +13,17 @@
   &:focus {
     background-color: lighten(@aqua, 5%);
 
+    &.rose {
+      background-color: lighten(@rose, 5%);
+    }
+
     h2 {
       text-decoration: underline;
     }
+  }
+
+  &.rose {
+    .colorSchemeRose;
   }
 
   @media (max-width: @breakPointS) {

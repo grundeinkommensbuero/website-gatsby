@@ -8,6 +8,7 @@ import { SectionWrapper } from '../../../components/Layout/Sections';
 import SelfScan from '../../../components/Forms/SelfScan';
 import campaignCodes from './campaignCodes.json';
 import { CampainScanVisualisation } from '../../Forms/SelfScan/CampaignScanVisualisation';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileSignatures = ({ userId, userData }) => {
   const [userCampaigns, setUserCampaigns] = useState([]);
@@ -28,7 +29,11 @@ export const ProfileSignatures = ({ userId, userData }) => {
 
   return (
     <section className={gS.profilePageGrid}>
-      <section className={cN(gS.editPageSection, gS.editSettings)}>
+      <section
+        className={cN(gS.editPageSection, gS.editSettings, {
+          [gS.rose]: IS_BERLIN_PROJECT,
+        })}
+      >
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>

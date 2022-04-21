@@ -14,6 +14,7 @@ import { DeleteAccountDialog } from './DeleteAccountDialog';
 import ImageUpload from '../../Forms/ImageUpload';
 import { useUpdateUser } from '../../../hooks/Api/Users/Update';
 import { ChangeEmail } from './ChangeEmail';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const PersonalSettings = ({
   userData,
@@ -73,7 +74,11 @@ export const PersonalSettings = ({
 
   return (
     <section className={gS.profilePageGrid}>
-      <section className={cN(gS.editPageSection, gS.editSettings)}>
+      <section
+        className={cN(gS.editPageSection, gS.editSettings, {
+          [gS.rose]: IS_BERLIN_PROJECT,
+        })}
+      >
         <div className={gS.backToProfile}>
           <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
         </div>
