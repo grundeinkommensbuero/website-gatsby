@@ -265,10 +265,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
           {!isIframe && (
             <>
               <SectionComponentContainer>
-                <SectionComponent
-                  column={'left'}
-                  className={s.createMeetupContent}
-                >
+                <SectionComponent column={'left'}>
                   <h3>Plane eine Sammelaktion!</h3>
                   <p>
                     Du hast Lust vor Ort in der Expedition mitzumachen? Hier
@@ -285,10 +282,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
                     Event erstellen
                   </Button>
                 </SectionComponent>
-                <SectionComponent
-                  column={'right'}
-                  className={s.createMeetupContent}
-                >
+                <SectionComponent column={'right'}>
                   <h3>Lege Listen an einem Sammelort aus</h3>
                   <p>
                     Markiere einen Ort, an dem du eine neue Unterschriftenliste
