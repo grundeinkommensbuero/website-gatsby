@@ -149,6 +149,7 @@ export const CreateMeetup = ({
                   // split by "," to get address and then split " " to remove number
                   const addressArray = location.place_name
                     .split(',')[1]
+                    .slice(1)
                     .split(' ');
                   number = addressArray.pop();
                   street = addressArray.join(' ');
@@ -270,6 +271,23 @@ export const CreateMeetup = ({
                           placeholder="Beschreibung"
                           type="textarea"
                           inputClassName={cN(s.textarea, s.shortTextarea)}
+                          component={TextInputWrapped}
+                        ></Field>
+                      </FormSection>
+                    )}
+
+                    {type === 'lists' && (
+                      <FormSection>
+                        <p>
+                          Gib optional eine Beschreibung oder ein paar
+                          zusätzliche Infos zum Ort an.
+                        </p>
+                        <Field
+                          name="description"
+                          label="Beschreibung"
+                          placeholder="Sag ein paar Sätze zum Ort..."
+                          type="textarea"
+                          inputClassName={s.textarea}
                           component={TextInputWrapped}
                         ></Field>
                       </FormSection>

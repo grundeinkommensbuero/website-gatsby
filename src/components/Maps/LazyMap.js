@@ -236,7 +236,7 @@ const PopupContent = ({
   <div className={s.tooltip}>
     {date && <div>{formatDateTime(new Date(date))}</div>}
     <h3 className={s.tooltipTitle}>{title}</h3>
-    {((startTime && endTime) || address) && (
+    {((startTime && endTime) || address || locationName) && (
       <div className={s.tooltipTimeAndPlace}>
         {startTime && endTime && (
           <div className={s.tooltipInfoWithIcon}>
@@ -258,6 +258,7 @@ const PopupContent = ({
             </div>
           </div>
         )}
+        {console.log({ address, locationName })}
         {(address || locationName) && (
           <div className={s.tooltipInfoWithIcon}>
             <img

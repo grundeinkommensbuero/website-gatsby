@@ -60,6 +60,7 @@ const createMeetup = async (userId, data, isBerlin, setState) => {
           initiativenIds: [1], // 1 is Expedition
           street: data.street,
           number: data.number,
+          description: data.description,
         };
 
         endpoint = `${CONFIG.APP_API.INVOKE_URL}/service/listlocations/neu`;
