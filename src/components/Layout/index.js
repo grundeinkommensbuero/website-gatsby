@@ -239,23 +239,25 @@ function Template({ children, sections, pageContext, title, description }) {
     const menuItems = [];
     // After logout the customuserData gets populated again,
     // so we check for isAuthenticated here too
-    if (customUserData.municipalities && isAuthenticated) {
-      sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      });
-      sortedMunicipalities.slice(0, num).forEach(item => {
+    if (!IS_BERLIN_PROJECT) {
+      if (customUserData.municipalities && isAuthenticated) {
+        sortedMunicipalities = customUserData.municipalities.sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+        sortedMunicipalities.slice(0, num).forEach(item => {
+          menuItems.push({
+            title: `Mein Ort: ${item.name}`,
+            slug: `orte/${item.slug}`,
+            shortTitle: null,
+          });
+        });
+      } else {
         menuItems.push({
-          title: `Mein Ort: ${item.name}`,
-          slug: `orte/${item.slug}`,
+          title: 'Mein Ort',
+          slug: 'registrieren',
           shortTitle: null,
         });
-      });
-    } else {
-      menuItems.push({
-        title: 'Mein Ort',
-        slug: 'registrieren',
-        shortTitle: null,
-      });
+      }
     }
     return menuItems;
   };
