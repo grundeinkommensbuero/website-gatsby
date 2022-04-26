@@ -2,14 +2,14 @@ https://www.expedition-grundeinkommen.com/*     https://expedition-grundeinkomme
 http://www.expedition-grundeinkommen.com/*      https://expedition-grundeinkommen.de/:splat 301!
 www.expedition-grundeinkommen.com/*             https://expedition-grundeinkommen.de/:splat 301!
 
-https://www.volksentscheid-grundeinkommen.de    https://www.volksentscheid-grundeinkommen.de/berlin 200!
-https://www.volksentscheid-grundeinkommen.com   https://www.volksentscheid-grundeinkommen.com/berlin 200!
-https://volksentscheid-grundeinkommen.com       https://volksentscheid-grundeinkommen.com/berlin 200!
-https://www.volksentscheid-grundeinkommen.org   https://www.volksentscheid-grundeinkommen.org/berlin 200!
-https://volksentscheid-grundeinkommen.org       https://volksentscheid-grundeinkommen.org/berlin 200!
-https://www.volksentscheidgrundeinkommen.de     https://www.volksentscheidgrundeinkommen.de/berlin 200!
-https://volksentscheidgrundeinkommen.de         https://volksentscheidgrundeinkommen.de/berlin 200!
-https://nostalgic-mayer-d764d7.netlify.app      https://nostalgic-mayer-d764d7.netlify.app/berlin 200!
+https://www.volksentscheid-grundeinkommen.de/*    https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://www.volksentscheid-grundeinkommen.com/*   https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://volksentscheid-grundeinkommen.com/*       https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://www.volksentscheid-grundeinkommen.org/*   https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://volksentscheid-grundeinkommen.org/*       https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://www.volksentscheidgrundeinkommen.de/*     https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://volksentscheidgrundeinkommen.de/*         https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
+https://nostalgic-mayer-d764d7.netlify.app/*      https://nostalgic-mayer-d764d7.netlify.app/berlin/:splat 200!
 
 https://expedition-grundeinkommen.de/berlin       https://www.volksentscheid-grundeinkommen.de 301!
 https://expedition-grundeinkommen.de/orte/berlin  https://www.volksentscheid-grundeinkommen.de 301!
