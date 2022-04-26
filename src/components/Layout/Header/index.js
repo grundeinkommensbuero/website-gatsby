@@ -6,10 +6,13 @@ import Link from 'gatsby-link';
 
 import * as s from './style.module.less';
 import Logo from './logo.svg';
+import LogoBerlin from './logo-berlin.svg';
 import BurgerMenu from './icon-burgermenu.svg';
 import CloseMenu from './icon-close-menu.svg';
 import Menu from './Menu';
 // import { StickyDonationBar } from './StickyDonationBar';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 const Header = ({ menu, stickyBannerVisible }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,9 +28,13 @@ const Header = ({ menu, stickyBannerVisible }) => {
           <h2 className={s.title}>
             <Link to="/">
               <img
-                src={Logo}
+                src={IS_BERLIN_PROJECT ? LogoBerlin : Logo}
                 className={s.logo}
-                alt="Expedition Grundeinkommen Home"
+                alt={
+                  IS_BERLIN_PROJECT
+                    ? 'Volksentscheid Grundeinkommen Home'
+                    : 'Expedition Grundeinkommen Home'
+                }
               />
             </Link>
           </h2>
