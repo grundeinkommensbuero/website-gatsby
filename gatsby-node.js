@@ -95,20 +95,7 @@ municipalities = getAndStoreDataVariations(municipalities);
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
   municipalities.forEach(municipality => {
-    if (process.env.GATSBY_PROJECT === 'Berlin') {
-      if (municipality.ags === '11000000') {
-        createPage({
-          path: `/`,
-          component: require.resolve('./src/components/StaticPage/index.js'),
-          context: {
-            municipality: { ...municipality },
-            isMunicipality: true,
-            isSpecificMunicipality: true,
-            slug: '/',
-          },
-        });
-      }
-    } else {
+    if (process.env.GATSBY_PROJECT !== 'Berlin') {
       createPage({
         path: `/orte/${municipality.slug}`,
         component: require.resolve('./src/components/StaticPage/index.js'),
@@ -159,13 +146,16 @@ exports.createPages = ({ graphql, actions }) => {
 
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
-          if (
-            process.env.GATSBY_PROJECT === 'Berlin' &&
-            page.node.slug === '/'
-          ) {
-            return;
+          let path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
+
+          if (process.env.GATSBY_PROJECT === 'Berlin') {
+            if (page.node.slug === '/') {
+              return;
+            } else if (page.node.slug === 'berlin') {
+              // We want to deploy the /berlin page to root /
+              path = '/';
+            }
           }
-          const path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
           const isMunicipality = page.node.slug === 'orte';
           createPage({
             path: path,
