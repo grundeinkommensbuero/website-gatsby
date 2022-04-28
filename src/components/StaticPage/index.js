@@ -387,6 +387,11 @@ export const pageQuery = graphql`
                   }
                 }
               }
+              ... on ContentfulSectionComponentSmallSignup {
+                __typename
+                column
+                ags
+              }
               ... on ContentfulSectionComponentPledge {
                 __typename
                 column

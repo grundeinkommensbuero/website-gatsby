@@ -44,6 +44,7 @@ export default ({
   // Data which should be saved during creation o fuser
   additionalData,
   showHeading = true,
+  smallFormMargin = false,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [updateUserState, updateUser] = useUpdateUser();
@@ -68,8 +69,6 @@ export default ({
   } else {
     prefilledZip = '';
   }
-
-  console.log('customUserData', userData);
 
   // After signup process is successful, do post signup
   useEffect(() => {
@@ -320,7 +319,7 @@ export default ({
           return (
             <FormWrapper>
               <form onSubmit={handleSubmit}>
-                <FormSection>
+                <FormSection smallMargin={smallFormMargin}>
                   {fields.map((field, i) => {
                     return (
                       <Field key={`form-field-${i}`} {...fieldData[field]} />
