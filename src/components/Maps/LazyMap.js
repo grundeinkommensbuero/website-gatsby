@@ -232,6 +232,7 @@ const PopupContent = ({
   city,
   zipCode,
   locationName,
+  type,
 }) => (
   <div className={s.tooltip}>
     {date && <div>{formatDateTime(new Date(date))}</div>}
@@ -258,7 +259,6 @@ const PopupContent = ({
             </div>
           </div>
         )}
-        {console.log({ address, locationName })}
         {(address || locationName) && (
           <div className={s.tooltipInfoWithIcon}>
             <img
@@ -273,6 +273,7 @@ const PopupContent = ({
                   <>
                     {address}
                     <br />
+                    {type === 'collect' && 'Kiez: '}
                     {locationName}
                   </>
                 ) : (

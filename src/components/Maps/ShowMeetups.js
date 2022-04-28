@@ -9,7 +9,6 @@ import {
 import { Button, DropdownButton } from '../Forms/Button';
 import * as s from './style.module.less';
 import { Modal } from '../Modal';
-import { CreateMeetup } from '../Forms/Meetup';
 import { EventsListed } from './EventsListed';
 import { Checkbox } from '../Forms/Checkbox';
 import FormWrapper from '../Forms/FormWrapper';
@@ -18,6 +17,8 @@ import {
   checkIfDateIsToday,
   checkIfDateIsTomorrow,
 } from './utils/dateStringManipulation';
+import loadable from '@loadable/component';
+const CreateMeetup = loadable(() => import('../Forms/Meetup'));
 
 export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   const {
@@ -273,7 +274,6 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
                     Unterschriftensammler*innen zu mobilisieren.
                   </p>
                   <Button
-                    className={s.createMeetupButton}
                     onClick={() => {
                       setType('collect');
                       setShowModal(true);
@@ -290,7 +290,6 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
                     dich gern bei uns, wenn du Material benötigst.
                   </p>
                   <Button
-                    className={s.createMeetupButton}
                     onClick={() => {
                       setType('lists');
                       setShowModal(true);

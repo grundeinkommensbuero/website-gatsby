@@ -17,6 +17,7 @@ import { DateInputWrapped, TimeInputWrapped } from '../DateTimeInput';
 import { CTAButton, CTAButtonContainer } from '../../Layout/CTAButton';
 import { useCreateMeetup } from '../../../hooks/Api/Meetups/Create';
 import { FinallyMessage } from '../FinallyMessage';
+import { useMapDistricts } from '../../../hooks/Districts';
 
 // Type can be either collect or lists
 export const CreateMeetup = ({
@@ -27,6 +28,7 @@ export const CreateMeetup = ({
 }) => {
   const [location, setLocation] = useState();
   const [createMeetupState, createMeetup] = useCreateMeetup();
+  const [district, mapLocationToDistrict] = useMapDistricts();
 
   const [overlayCloseTimer, setOverlayCloseTimer] = useState(0);
 
@@ -39,6 +41,7 @@ export const CreateMeetup = ({
 
   const handleLocationChosen = e => {
     setLocation(e.result);
+    mapLocationToDistrict(e.result.center);
     // Scroll to form
     if (scrollToRef?.current) {
       scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -129,7 +132,14 @@ export const CreateMeetup = ({
           withSearch={true}
           mapConfig={mapConfig}
         />
-        {location && (
+        {location && !district && (
+          <p>
+            Der ausgewählte Ort konnte keinem Kiez zugeordnet werden. Bitte
+            wähle einen anderen Ort oder melde dich beim{' '}
+            <a href="mailto:support@expedition-grundeinkommen.de">Support</a>.
+          </p>
+        )}
+        {location && district && (
           <>
             <p className={s.chosenLocation}>
               <span className={s.coloredText}>Gewählter Ort:</span>
@@ -156,6 +166,7 @@ export const CreateMeetup = ({
                 }
 
                 const data = {
+                  district,
                   locationName: e.name,
                   description: e.description,
                   contact: e.contact,
@@ -336,3 +347,6 @@ const validate = (values, type) => {
 
   return errors;
 };
+
+// Default export needed for lazy loading
+export default CreateMeetup;
