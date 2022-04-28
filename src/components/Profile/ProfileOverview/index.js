@@ -31,6 +31,8 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   //     ({ ags }) => ags === stateToAgs['bremen']
   //   ) !== -1;
 
+  const showPackageSection = IS_BERLIN_PROJECT || isSignedUpForBerlin;
+
   // Filter interactions to only use interactions which were created
   // as pledge package
   useEffect(() => {
@@ -142,14 +144,12 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
         </section>
       </Link>
 
-      {/* Only show this section if user is signed up for berlin */}
-      {(IS_BERLIN_PROJECT || isSignedUpForBerlin) && (
+      {/* Only show this section if user is signed up for berlin or if berlin page */}
+      {showPackageSection && (
         <Link
           to="paket-nehmen"
-          className={cN(s.profilePageSection, {
-            [s.profilePageSectionLarge]: !(
-              IS_BERLIN_PROJECT || isSignedUpForBerlin
-            ),
+          className={cN(s.profilePageSection, s.profilePageSectionLarge, {
+            [s.rose]: IS_BERLIN_PROJECT,
           })}
         >
           <section>
