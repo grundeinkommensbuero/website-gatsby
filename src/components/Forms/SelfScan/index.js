@@ -272,7 +272,7 @@ const CountSignaturesForm = ({
                     className={s.formSection}
                     fieldContainerClassName={s.formSectionCombined}
                   >
-                    <div className={s.fieldContainer}>
+                    <div>
                       <p className={s.fieldLabel}>Anzahl Unterschriften</p>
                       <Field
                         name="count"
@@ -288,7 +288,7 @@ const CountSignaturesForm = ({
                       ></Field>
                     </div>
                     {!listId && (
-                      <div className={s.fieldContainer}>
+                      <div>
                         <p className={s.fieldLabel}>
                           Barcode auf der Unterschriftenliste
                         </p>
