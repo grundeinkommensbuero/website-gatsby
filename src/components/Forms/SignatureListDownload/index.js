@@ -15,13 +15,16 @@ import AuthContext from '../../../context/Authentication';
 import { navigate } from 'gatsby';
 
 const trackingCategory = 'ListDownload';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export default ({ signaturesId }) => {
   const [state, pdf, anonymous, createPdf] = useCreateSignatureList();
   const [signUpState, userExists, signUp] = useSignUp();
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
-  const iconIncognito = require('!svg-inline-loader!./incognito_violet.svg');
+  const iconIncognito = IS_BERLIN_PROJECT
+    ? require('!svg-inline-loader!./incognito-berlin.svg')
+    : require('!svg-inline-loader!./incognito_violet.svg');
   // const iconMail = require('!svg-inline-loader!./mail_violet.svg');
 
   useEffect(() => {
