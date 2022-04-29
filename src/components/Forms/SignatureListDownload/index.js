@@ -22,7 +22,7 @@ export default ({ signaturesId }) => {
   const [loginCodeRequested, setLoginCodeRequested] = useState();
   const { isAuthenticated, userId } = useContext(AuthContext);
   const iconIncognito = require('!svg-inline-loader!./incognito_violet.svg');
-  const iconMail = require('!svg-inline-loader!./mail_violet.svg');
+  // const iconMail = require('!svg-inline-loader!./mail_violet.svg');
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
@@ -53,7 +53,29 @@ export default ({ signaturesId }) => {
     !anonymous
   ) {
     return (
-      <EnterLoginCode preventSignIn={signUpState === 'success'}>
+      <EnterLoginCode
+        preventSignIn={signUpState === 'success'}
+        wrongCodeMessage={
+          <>
+            <p>
+              Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
+              überprüfe die Email erneut oder fordere unten einen neuen Code an.
+            </p>
+            <p>
+              Du kannst auch eine Liste{' '}
+              <InlineButton
+                onClick={() => {
+                  createPdf({ campaignCode: signaturesId, anonymous: true });
+                }}
+                type="button"
+              >
+                hier
+              </InlineButton>{' '}
+              anonym herunterladen.
+            </p>
+          </>
+        }
+      >
         <p>
           Zur Verifizierung gib bitte den Code ein, den wir dir gerade in einer
           E-Mail geschickt haben. Alternativ kannst du auch eine Liste{' '}
@@ -109,7 +131,7 @@ export default ({ signaturesId }) => {
           <a target="_blank" rel="noreferrer" href={pdf.url}>
             Hier
           </a>{' '}
-          kannst du die Unterschriftslisten samt Leitfaden herunterladen!
+          kannst du die Unterschriftslisten herunterladen!
         </p>
       </FinallyMessage>
     );
@@ -200,7 +222,7 @@ export default ({ signaturesId }) => {
                   </>
                 )}
               </div>
-
+              {/* 
               <div className={s.iconParagraph}>
                 <div
                   className={s.icon}
@@ -217,7 +239,7 @@ export default ({ signaturesId }) => {
                   </a>{' '}
                   könnt ihr euch die Liste per Post schicken lassen.
                 </p>
-              </div>
+              </div> */}
             </form>
           );
         }}
