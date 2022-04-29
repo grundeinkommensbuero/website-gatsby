@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AvatarImage from '../../AvatarImage';
 import SignatureStats from '../../SignatureStats';
-import { formatDate /*stateToAgs*/ } from '../../utils';
+import { formatDate, stateToAgs } from '../../utils';
 import * as s from './style.module.less';
 import * as gS from '../style.module.less';
 import cN from 'classnames';
@@ -11,7 +11,7 @@ import { getCustomNewsletterEnumeration } from '../utils/customNewsletterEnumera
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
-  const [, setPledgePackages] = useState([]);
+  const [pledgePackages, setPledgePackages] = useState([]);
 
   // list newsletters of current user as human readable string
   const customNewsletterEnumeration = getCustomNewsletterEnumeration({
@@ -21,15 +21,17 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
   const referredUserMessage = getReferredUserMessage({ userData });
 
   // NOTE: not needed for now, reactivate as soon as pledge packages are used for berlin
-  // const isSignedUpForBerlin =
-  //   userData.municipalities?.findIndex(
-  //     ({ ags }) => ags === stateToAgs['berlin']
-  //   ) !== -1;
+  const isSignedUpForBerlin =
+    userData.municipalities?.findIndex(
+      ({ ags }) => ags === stateToAgs['berlin']
+    ) !== -1;
 
   // const isSignedUpForBremen =
   //   userData.municipalities?.findIndex(
   //     ({ ags }) => ags === stateToAgs['bremen']
   //   ) !== -1;
+
+  const showPackageSection = IS_BERLIN_PROJECT || isSignedUpForBerlin;
 
   // Filter interactions to only use interactions which were created
   // as pledge package
@@ -142,6 +144,48 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
         </section>
       </Link>
 
+      {/* Only show this section if user is signed up for berlin or if berlin page */}
+      {showPackageSection && (
+        <Link
+          to="paket-nehmen"
+          className={cN(s.profilePageSection, s.profilePageSectionLarge, {
+            [s.rose]: IS_BERLIN_PROJECT,
+          })}
+        >
+          <section>
+            <h2>Dein Sammelpaket</h2>
+            <p>
+              {pledgePackages.length ? (
+                <>
+                  Du hast dir {pledgePackages.length} Paket
+                  {pledgePackages.length > 1 && 'e'} geschnappt und somit
+                  versprochen, 50 Unterschriften zu sammeln.
+                  <br />
+                  <br />
+                  {/* TODO: design package */}
+                  {/* Find package with message if exists to show this package (maybe in the future
+                    show most recent (was kinda in a hurry) */}
+                  "
+                  {
+                    pledgePackages.find(pledgePackage => pledgePackage.body)
+                      ?.body
+                  }
+                  "
+                </>
+              ) : (
+                <>Du hast noch kein Sammelpaket genommen.</>
+              )}
+            </p>
+            <div className={s.sectionLink}>
+              <span>
+                {pledgePackages.length
+                  ? 'Weiteres Paket nehmen'
+                  : 'Nimm dein Paket'}
+              </span>
+            </div>
+          </section>
+        </Link>
+      )}
       {/* {signatureCountOfUser && (
         <a className={cN(s.profilePageSection, s.profilePageSectionLarge)}
           href={`/${signatureCountOfUser.mostRecentCampaign

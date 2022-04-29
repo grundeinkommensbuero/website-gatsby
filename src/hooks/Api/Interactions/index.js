@@ -80,8 +80,12 @@ const getMostRecentInteractions = async (
       mode: 'cors',
     };
 
+    // TODO: change campaign code or pass it from somewhere if there are mor campaigns
+    // simultaneously
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/interactions?limit=${limit}${
+      `${
+        CONFIG.API.INVOKE_URL
+      }/interactions?limit=${limit}&campaignCode=berlin-2${
         userId ? `&userId=${userId}` : ''
       }${type ? `&type=${type}` : ''}`,
       request

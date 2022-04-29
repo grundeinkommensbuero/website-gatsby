@@ -6,11 +6,7 @@ import cN from 'classnames';
 import { Link } from 'gatsby';
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
-export const ProfilePledgePackage = ({
-  userId,
-  userData,
-  updateCustomUserData,
-}) => {
+export const ProfilePledgePackage = ({ userData, updateCustomUserData }) => {
   return (
     <section className={gS.profilePageGrid}>
       <section
@@ -24,7 +20,7 @@ export const ProfilePledgePackage = ({
         )}
       >
         <div className={gS.backToProfile}>
-          <Link to={`/mensch/${userId}/`}>Zurück zum Profil</Link>
+          <Link to={'/berlin/sammelpakete'}>Zurück zu allen Paketen</Link>
         </div>
         <CreatePledgePackage
           userData={userData}

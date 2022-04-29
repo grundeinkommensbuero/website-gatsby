@@ -12,7 +12,7 @@ import { Package } from './Package';
 export default () => {
   const [state, pledgePackages, getInteractions] =
     useGetMostRecentInteractions();
-  const { userId, customUserData: userData } = useContext(AuthContext);
+  const { customUserData: userData } = useContext(AuthContext);
   const [packagesOfUser, setPackagesOfUser] = useState([]);
   const [pledgePackagesDone, setPledgePackagesDone] = useState([]);
 
@@ -43,7 +43,7 @@ export default () => {
       <h2 className={s.violet}>Alle Sammelpakete</h2>
       <p>
         Zeig deinen Einsatz für's Grundeinkommen und setze dir ein Sammelziel!
-        Es gibt Pakete mit jeweils einem Ziel von 50 Unterschriften, von denen
+        Es gibt Pakete mit jeweils einem Ziel von 25 Unterschriften, von denen
         du dir so viele nehmen kannst, wie du möchtest!{' '}
         {userData.interactions &&
           packagesOfUser.length === 0 &&
@@ -70,7 +70,7 @@ export default () => {
           <h3 className={s.violet}>Deine Pakete</h3>
           <p>
             Du hast dir {packagesOfUser.length} Pakete geschnappt und somit
-            versprochen, {packagesOfUser.length * 50} Unterschriften zu sammeln.
+            versprochen, {packagesOfUser.length * 25} Unterschriften zu sammeln.
           </p>
           <div className={s.container}>
             {packagesOfUser.map((pledgePackage, index) => {
@@ -91,13 +91,11 @@ export default () => {
       )}
 
       <div className={s.CTA}>
-        {userId && (
-          <CTALink to={`/mensch/${userId}/paket-nehmen`}>
-            {userData && packagesOfUser.length === 0
-              ? 'Nimm dein Paket'
-              : 'Weiteres Paket nehmen'}
-          </CTALink>
-        )}
+        <CTALink to={`/me/paket-nehmen`}>
+          {userData && packagesOfUser.length === 0
+            ? 'Nimm dein Paket'
+            : 'Weiteres Paket nehmen'}
+        </CTALink>
       </div>
 
       {state && state !== 'loading' ? (

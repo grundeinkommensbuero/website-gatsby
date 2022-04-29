@@ -17,7 +17,7 @@ export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
   const [, setPledgePackage] = useState();
   const [, updateUser] = useUpdateUser();
-  const [campaignCode, setCampaignCode] = useState('bremen-1');
+  const [campaignCode, setCampaignCode] = useState('berlin-2');
 
   useEffect(() => {
     const urlParams = querystring.parse(window.location.search);
@@ -179,7 +179,7 @@ export default ({ userData, updateCustomUserData }) => {
                 </div>
                 <div className={s.descriptionTextElement}>
                   <p>
-                    Mit dem Sammelpaket versprichst du, 50 Unterschriften
+                    Mit dem Sammelpaket versprichst du, 25 Unterschriften
                     einzusammeln. Das ist super!
                     <br />
                     <br />

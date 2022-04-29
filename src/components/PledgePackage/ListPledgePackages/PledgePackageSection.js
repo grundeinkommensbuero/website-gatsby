@@ -61,7 +61,7 @@ export const PledgePackagesSection = () => {
             ) : (
               <p>
                 Du hast dir {packagesOfUser.length} Pakete geschnappt und somit
-                versprochen, {packagesOfUser.length * 50} Unterschriften zu
+                versprochen, {packagesOfUser.length * 25} Unterschriften zu
                 sammeln.
               </p>
             )}
