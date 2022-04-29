@@ -38,14 +38,14 @@ const createMeetup = async (userId, data, isBerlin, setState) => {
             typ: 'Sammeln',
             beginn: startTime.split('.')[0], // App backend does not accept the ms part
             ende: endTime.split('.')[0],
-            ort: data.locationName || data.address,
+            ort: data.district,
             longitude: data.coordinates[0],
             latitude: data.coordinates[1],
             initiativenIds: [1], // 1 is Expedition
             details: {
               beschreibung: data.description,
               kontakt: data.contact,
-              treffpunkt: data.locationName ? data.address : null,
+              treffpunkt: data.locationName || data.address,
             },
           },
         };
@@ -60,6 +60,7 @@ const createMeetup = async (userId, data, isBerlin, setState) => {
           initiativenIds: [1], // 1 is Expedition
           street: data.street,
           number: data.number,
+          description: data.description,
         };
 
         endpoint = `${CONFIG.APP_API.INVOKE_URL}/service/listlocations/neu`;

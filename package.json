@@ -85,6 +85,7 @@
     "less": "^4.1.2",
     "lodash": "^4.17.20",
     "mapbox-gl": "^2.5.1",
+    "point-in-polygon": "^1.1.0",
     "query-string": "^5.1.1",
     "react": "^17.0.2",
     "react-content-loader": "^6.0.3",

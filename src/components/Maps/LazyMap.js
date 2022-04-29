@@ -232,11 +232,12 @@ const PopupContent = ({
   city,
   zipCode,
   locationName,
+  type,
 }) => (
   <div className={s.tooltip}>
     {date && <div>{formatDateTime(new Date(date))}</div>}
     <h3 className={s.tooltipTitle}>{title}</h3>
-    {((startTime && endTime) || address) && (
+    {((startTime && endTime) || address || locationName) && (
       <div className={s.tooltipTimeAndPlace}>
         {startTime && endTime && (
           <div className={s.tooltipInfoWithIcon}>
@@ -272,6 +273,7 @@ const PopupContent = ({
                   <>
                     {address}
                     <br />
+                    {type === 'collect' && 'Kiez: '}
                     {locationName}
                   </>
                 ) : (
