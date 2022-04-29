@@ -7,9 +7,12 @@ export default function FormSection({
   className,
   heading,
   fieldContainerClassName,
+  smallMargin,
 }) {
   return (
-    <div className={cN(className, s.container)}>
+    <div
+      className={cN(className, s.container, { [s.smallMargin]: smallMargin })}
+    >
       {heading && <h4 className={s.heading}>{heading}</h4>}
       <div className={cN(s.fieldContainer, fieldContainerClassName)}>
         {children}

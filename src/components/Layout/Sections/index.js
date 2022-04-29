@@ -23,6 +23,7 @@ import {
 import { TextAndImage } from './TextAndImage';
 import { StandardSectionComponent } from './StandardSectionComponent';
 import { IntroText } from '../../IntroText';
+import { SmallSignup } from '../../Forms/SmallSignup';
 
 import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
@@ -65,6 +66,7 @@ const Components = {
   TextAndImage,
   Standard: StandardSectionComponent,
   Pledge,
+  SmallSignup,
   ListDownload: SignatureListDownload,
 };
 
