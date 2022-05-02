@@ -11,6 +11,7 @@ import {
   SectionInner,
 } from '../../components/Layout/Sections';
 import { RequestLoginCodeWithEmail } from '../../components/Login/RequestLoginCode';
+import * as s from './style.module.less';
 
 const LoginPage = () => {
   const { isAuthenticated, setTempEmail } = useContext(AuthContext);
@@ -44,11 +45,11 @@ const LoginPage = () => {
     return (
       <Layout>
         <SectionWrapper>
-          <Section>
-            <SectionInner>
-              <RequestLoginCodeWithEmail>
-                <h3>Hey! Schön, dass du da bist. Hier geht's zum Login.</h3>
-              </RequestLoginCodeWithEmail>
+          <Section colorScheme="rose" className={s.section}>
+            <SectionInner className={s.wrapper}>
+              <div className={s.content}>
+                <RequestLoginCodeWithEmail inputClassName={s.input} />
+              </div>
             </SectionInner>
           </Section>
         </SectionWrapper>
