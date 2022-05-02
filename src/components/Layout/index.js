@@ -17,7 +17,7 @@ import cN from 'classnames';
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 const DEFAULT_SITE_TITLE = 'Expedition Grundeinkommen';
-const BERLIN_SITE_TITLE = 'Expedition Grundeinkommen Berlin';
+const BERLIN_SITE_TITLE = 'Volksentscheid Grundeinkommen Berlin';
 
 function Template({ children, sections, pageContext, title, description }) {
   const { contentfulProjects } = useStaticQuery(graphql`
