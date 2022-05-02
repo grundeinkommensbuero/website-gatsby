@@ -16,6 +16,7 @@ import FormSection from '../FormSection';
 import { FinallyMessage } from '../FinallyMessage';
 import { TextInputWrapped } from '../TextInput';
 import * as s from './style.module.less';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export default ({ successMessage, className }) => {
   const [state, updateSignatureList, resetSignatureListState] =
@@ -93,14 +94,19 @@ const CountSignaturesForm = ({
   resetSignatureListState,
 }) => {
   const needsEMail = !userId && !eMail;
+  const colorScheme = IS_BERLIN_PROJECT ? 'roseOnWhite' : null;
 
   if (state === 'saving') {
-    return <FinallyMessage state="progress">Speichere...</FinallyMessage>;
+    return (
+      <FinallyMessage state="progress" color={colorScheme}>
+        Speichere...
+      </FinallyMessage>
+    );
   }
 
   if (state === 'saved') {
     return (
-      <FinallyMessage>
+      <FinallyMessage color={colorScheme}>
         {successMessage}
         <CTAButtonContainer className={s.buttonContainer}>
           <CTAButton
@@ -124,7 +130,7 @@ const CountSignaturesForm = ({
     state === 'listAndUserNotFound'
   ) {
     return (
-      <FinallyMessage state="error">
+      <FinallyMessage state="error" color={colorScheme}>
         {state === 'userNotFound' && (
           <>
             <h2>Hoppla!</h2>
@@ -250,7 +256,7 @@ const CountSignaturesForm = ({
         validate={values => validate(values, needsEMail, !listId)}
         render={({ handleSubmit }) => {
           return (
-            <FinallyMessage>
+            <FinallyMessage color={colorScheme}>
               <h2 className={s.headingSelfScan}>
                 Unterschriften selber eintragen
               </h2>
@@ -295,7 +301,7 @@ const CountSignaturesForm = ({
                         <Field
                           name="listId"
                           label=""
-                          placeholder=""
+                          placeholder="123456"
                           component={TextInputWrapped}
                           type="text"
                           inputMode="numeric"
