@@ -27,6 +27,7 @@ export const SmallSignup = ({ ags = stateToAgs.berlin }) => {
       showHeading={false}
       smallFormMargin={true}
       postSignupAction={() => setSuccess(true)}
+      loginCodeInModal={true}
     />
   );
 };
