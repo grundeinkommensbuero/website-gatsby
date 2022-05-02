@@ -25,7 +25,9 @@ export default ({ signaturesId }) => {
   const iconIncognito = IS_BERLIN_PROJECT
     ? require('!svg-inline-loader!./incognito-berlin.svg')
     : require('!svg-inline-loader!./incognito_violet.svg');
-  // const iconMail = require('!svg-inline-loader!./mail_violet.svg');
+  /*   const iconMail = IS_BERLIN_PROJECT
+    ? require('!svg-inline-loader!./mail-berlin.svg')
+    : require('!svg-inline-loader!./mail_violet.svg'); */
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
@@ -225,8 +227,8 @@ export default ({ signaturesId }) => {
                   </>
                 )}
               </div>
-              {/* 
-              <div className={s.iconParagraph}>
+
+              {/* <div className={s.iconParagraph}>
                 <div
                   className={s.icon}
                   dangerouslySetInnerHTML={{ __html: iconMail }}
