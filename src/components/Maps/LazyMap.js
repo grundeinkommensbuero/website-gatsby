@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
   formatDateShort,
+  formatDateShortIso,
   formatDateTime,
   formatTime,
   getDayAsString,
@@ -18,6 +19,7 @@ import collectIcon from './icon-collect.png';
 import signIcon from './icon-sign.png';
 
 import { detectWebGLContext } from '../utils';
+import { InlineLinkButton } from '../Forms/Button';
 
 let mapboxgl;
 let MapboxGeocoder;
@@ -317,6 +319,20 @@ const PopupContent = ({
       <div>
         <h4 className={s.tooltipHeading}>Kontakt</h4>
         {contact}
+      </div>
+    )}
+    {type === 'collect' && (
+      <div>
+        <h4 className={s.tooltipHeading}>Du bist dabei?</h4>
+        <InlineLinkButton
+          href={`/sammeln/anmelden?location=${
+            address || locationName
+          }&date=${formatDateShortIso(new Date(startTime))}`}
+          target="_blank"
+        >
+          Hier
+        </InlineLinkButton>{' '}
+        kannst du dich für das Sammel-Event anmelden.{' '}
       </div>
     )}
   </div>

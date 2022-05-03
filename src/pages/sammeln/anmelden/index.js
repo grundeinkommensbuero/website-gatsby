@@ -35,7 +35,7 @@ const CollectorSignUpPage = () => {
               {date && location ? (
                 <p>
                   Du willst an der Sammlung oder dem Event am{' '}
-                  {formatDate(new Date(date))} in {location} teilnehmen?
+                  {formatDate(new Date(date))} in/am {location} teilnehmen?
                 </p>
               ) : (
                 <p>Du willst uns bei der Sammlung unterstützen?</p>
