@@ -11,10 +11,14 @@ import { CampainScanVisualisation } from '../../Forms/SelfScan/CampaignScanVisua
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileSignatures = ({ userId, userData }) => {
-  const [userCampaigns, setUserCampaigns] = useState([]);
+  // Berlin page should by default show berlin campaign
+  // even if user is not signed up for berlin for some reason
+  const [userCampaigns, setUserCampaigns] = useState(
+    IS_BERLIN_PROJECT ? [campaignCodes[0]] : []
+  );
 
   useEffect(() => {
-    if (userData && 'municipalities' in userData) {
+    if (userData && 'municipalities' in userData && !IS_BERLIN_PROJECT) {
       const activeCampaigns = [];
       userData.municipalities.forEach(mun => {
         campaignCodes.forEach(campCode => {
