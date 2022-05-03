@@ -7,7 +7,7 @@ import {
 } from '../../../components/Layout/Sections';
 import * as s from './style.module.less';
 import AvatarImage from '../../../components/AvatarImage';
-import { CTALink } from '../../../components/Layout/CTAButton';
+import { CTALink, CTALinkExternal } from '../../../components/Layout/CTAButton';
 import AuthContext from '../../../context/Authentication';
 
 const CollectorNextStepsPage = () => {
@@ -28,15 +28,23 @@ const CollectorNextStepsPage = () => {
                   Hallo {customUserData?.username}! <br />
                   Danke, dass du mitsammelst. Wir melden uns bei dir, wenn wir
                   eine Aktion planen. Bitte hilf uns, indem du selbst aktiv
-                  wirst, dich mit anderen vernetzt und Sammelevents planst!
-                  Folgendes kannst du jetzt tun:
+                  wirst, dich mit anderen vernetzt und Sammelevents planst! Wenn
+                  du mitsammeln oder selbst ein Event planen willst, kannst du
+                  das über einen dieser Wege:
                 </p>
 
-                <h3>Mitsammeln oder ein Event planen</h3>
-                <CTALink to="/aktiv-werden">Aktiv werden</CTALink>
+                <h3>Über die Website</h3>
+                <CTALink to="/berlin/termine#karte">Zur Sammelkarte</CTALink>
 
-                <h3>Dich mit anderen in deinem Kiez vernetzen</h3>
-                <CTALink to="/aktiv-werden">Vernetze dich</CTALink>
+                <h3>Über die Sammelapp</h3>
+                <CTALinkExternal href="https://play.google.com/store/apps/details?id=berlin.sammelapp">
+                  Zur Android App
+                </CTALinkExternal>
+                <br />
+                <br />
+                <CTALinkExternal href="https://apps.apple.com/us/app/berliner-sammel-app/id1619980654">
+                  Zur iOS App
+                </CTALinkExternal>
               </div>
             </div>
           </SectionInner>
