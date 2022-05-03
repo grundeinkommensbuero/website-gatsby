@@ -13,14 +13,14 @@
   margin: 0;
   cursor: pointer;
   font-size: @DesktopFontSizeL;
-  color: @violet;
+  color: var(--heading-color);
   text-align: left;
   position: relative;
   width: 100%;
 
   &:focus,
   &:hover {
-    color: @violet;
+    color: var(--heading-color);
     outline: none;
     text-decoration: underline;
     background: transparent;
@@ -80,11 +80,11 @@
 
 .questionAndAnswer {
   padding: 2rem 0;
-  border-top: 1px solid @violet;
+  border-top: 1px solid var(--secondary-color);
   position: relative;
 
   &:last-of-type {
-    border-bottom: 1px solid @violet;
+    border-bottom: 1px solid var(--secondary-color);
   }
 
   &:first-of-type {
