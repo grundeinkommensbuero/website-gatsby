@@ -115,6 +115,11 @@ export function formatDateShort(date) {
   return new Intl.DateTimeFormat('de', options).format(date);
 }
 
+// Format date to YYYY-MM-DD
+export function formatDateShortIso(date) {
+  return date.toISOString().split('T')[0];
+}
+
 export function formatDateMonthYear(date) {
   const options = {
     year: 'numeric',

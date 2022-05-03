@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import * as s from './style.module.less';
 import * as dsm from './utils/dateStringManipulation';
 import { LoadingAnimation } from '../LoadingAnimation';
+import { LinkButtonLocal } from '../Forms/Button';
+import { formatDateShortIso } from '../utils';
 
 /* The "EventsListed" Component should only display data,
 when there were events in the next days.
@@ -56,12 +58,25 @@ export const EventsListed = ({ locationsFiltered }) => {
                     return (
                       <div key={index} className={s.eventDescription}>
                         <p className={s.descriptionText}>{event.description}</p>
-                        <b>
-                          {dsm.localeTime(event.startTime)}-
-                          {dsm.localeTime(event.endTime)}
-                          {' Uhr, '}
-                          {event.address || event.locationName}
-                        </b>
+                        <p>
+                          <b>
+                            {dsm.localeTime(event.startTime)}-
+                            {dsm.localeTime(event.endTime)}
+                            {' Uhr, '}
+                            {event.address || event.locationName}
+                          </b>
+                        </p>
+
+                        <LinkButtonLocal
+                          to={`/sammeln/anmelden?location=${
+                            event.address || event.locationName
+                          }&date=${formatDateShortIso(
+                            new Date(event.startTime)
+                          )}`}
+                          target="_blank"
+                        >
+                          Für Event anmelden
+                        </LinkButtonLocal>
                       </div>
                     );
                   })}
