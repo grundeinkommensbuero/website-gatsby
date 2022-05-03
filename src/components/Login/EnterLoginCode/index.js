@@ -18,6 +18,7 @@ export const EnterLoginCode = ({
   preventSignIn,
   buttonText,
   onAnswerChallengeSuccess,
+  wrongCodeMessage,
 }) => {
   const { setShowModal } = useContext(OnboardingModalContext);
 
@@ -124,12 +125,13 @@ export const EnterLoginCode = ({
 
   return (
     <FinallyMessage state="error">
-      {answerChallengeState === 'wrongCode' && (
-        <p>
-          Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
-          überprüfe die Email erneut oder fordere unten einen neuen Code an.
-        </p>
-      )}
+      {answerChallengeState === 'wrongCode' &&
+        (wrongCodeMessage || (
+          <p>
+            Der eingegebene Code ist falsch oder bereits abgelaufen. Bitte
+            überprüfe die Email erneut oder fordere unten einen neuen Code an.
+          </p>
+        ))}
 
       {(answerChallengeState === 'resentCode' ||
         answerChallengeState === 'restartSignIn') && (
