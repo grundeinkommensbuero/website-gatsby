@@ -28,7 +28,7 @@ const CollectorImageUploadPage = () => {
   // If not authenticated we want to navigate to anmeldung page
   useEffect(() => {
     if (isAuthenticated === false) {
-      navigate('/sammeln/anmeldung');
+      navigate('/sammeln/anmelden');
     }
   }, [isAuthenticated]);
 

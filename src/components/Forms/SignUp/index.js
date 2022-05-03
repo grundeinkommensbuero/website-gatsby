@@ -104,9 +104,10 @@ export default ({
       userExists !== false
     ) {
       updateUser({
-        ...formData,
-        updatedOnXbge: true,
+        // TODO: check if we need to add ags here at all
         ags: municipalityInForm?.ags,
+        updatedOnXbge: true,
+        ...formData,
       });
       setSignUpState('signedIn');
     }

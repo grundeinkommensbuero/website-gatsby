@@ -8,7 +8,7 @@ import {
 } from '../../../components/Layout/Sections';
 import * as s from './style.module.less';
 import querystring from 'query-string';
-import { formatDate } from '../../../components/utils';
+import { formatDate, stateToAgs } from '../../../components/utils';
 import { navigate } from 'gatsby';
 
 const CollectorSignUpPage = () => {
@@ -58,6 +58,10 @@ const CollectorSignUpPage = () => {
                     date && location
                       ? { meetup: { date, location } }
                       : { inGeneral: true },
+                  newsletterConsent: true,
+                  extraInfo: true,
+                  // TODO: handle different states
+                  ags: stateToAgs.berlin,
                 }}
                 postSignupAction={() => navigate('/sammeln/bild-hochladen')}
                 showHeading={false}
