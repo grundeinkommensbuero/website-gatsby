@@ -2,7 +2,12 @@ import React from 'react';
 import * as s from './style.module.less';
 import cN from 'classnames';
 import { Link } from 'gatsby';
-import successIcon from './success.svg';
+import successIconStandard from './success.svg';
+import successIconBerlin from './success-rosa.svg';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
+
+const successIcon = IS_BERLIN_PROJECT ? successIconBerlin : successIconStandard;
 
 export function LinkButton({ children, className, size, ...other }) {
   return (
