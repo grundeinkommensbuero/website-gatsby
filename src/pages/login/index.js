@@ -13,6 +13,8 @@ import {
 import { RequestLoginCodeWithEmail } from '../../components/Login/RequestLoginCode';
 import * as s from './style.module.less';
 
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
+
 const LoginPage = () => {
   const { isAuthenticated, setTempEmail } = useContext(AuthContext);
   const [urlParams, setUrlParams] = useState();
@@ -45,7 +47,10 @@ const LoginPage = () => {
     return (
       <Layout>
         <SectionWrapper>
-          <Section colorScheme="rose" className={s.section}>
+          <Section
+            colorScheme={IS_BERLIN_PROJECT ? 'rose' : 'violet'}
+            className={s.section}
+          >
             <SectionInner className={s.wrapper}>
               <div className={s.content}>
                 <RequestLoginCodeWithEmail inputClassName={s.input} />
