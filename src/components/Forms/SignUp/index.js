@@ -16,6 +16,10 @@ import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import { MunicipalityContext } from '../../../context/Municipality';
 import { SearchPlaces } from '../SearchPlaces';
 import { navigate } from 'gatsby';
+import { Modal } from '../../Modal';
+import * as s from './style.module.less';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 // Not needed at the moment
 /* const AuthenticatedDialogDefault = () => {
@@ -45,6 +49,7 @@ export default ({
   additionalData,
   showHeading = true,
   smallFormMargin = false,
+  loginCodeInModal = false,
 }) => {
   const [signUpState, userExists, signUp, setSignUpState] = useSignUp();
   const [updateUserState, updateUser] = useUpdateUser();
@@ -59,6 +64,7 @@ export default ({
 
   const { municipality } = useContext(MunicipalityContext);
   const [municipalityInForm, setMunicipalityInForm] = useState(municipality);
+  const [showModal, setShowModal] = useState(true);
 
   let prefilledZip;
 
@@ -118,6 +124,19 @@ export default ({
   }, [isAuthenticated, hasSubmitted, formData, userId]);
 
   if (signUpState === 'success') {
+    if (loginCodeInModal) {
+      return (
+        <Modal showModal={showModal} setShowModal={setShowModal}>
+          <div className={s.modalContent}>
+            <EnterLoginCode
+              preventSignIn={true}
+              color={IS_BERLIN_PROJECT ? 'roseOnWhite' : 'white'}
+            />
+          </div>
+        </Modal>
+      );
+    }
+
     return <EnterLoginCode preventSignIn={true} />;
   }
 

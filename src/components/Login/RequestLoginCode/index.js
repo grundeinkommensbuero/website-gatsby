@@ -14,12 +14,15 @@ import { TextInputWrapped } from '../../Forms/TextInput';
 import { validateEmail } from '../../utils';
 
 import * as s from '../style.module.less';
+import handIcon from '../icon-hand.svg';
 
 import {
   CTAButtons,
   CTAButtonContainer,
   CTAButton,
 } from '../../Layout/CTAButton';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const RequestLoginCode = ({ children, buttonText }) => {
   const { customUserData: userData } = useContext(AuthContext);
@@ -66,7 +69,11 @@ export const RequestLoginCode = ({ children, buttonText }) => {
   );
 };
 
-export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
+export const RequestLoginCodeWithEmail = ({
+  children,
+  buttonText,
+  inputClassName,
+}) => {
   const { tempEmail, setTempEmail } = useContext(AuthContext);
 
   // Add event listener on url hash change
@@ -78,7 +85,21 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
     return (
       <FinallyMessage type="success">
         {/* Custom text */}
-        {children}
+        {children ? (
+          children
+        ) : (
+          <>
+            {IS_BERLIN_PROJECT && (
+              <img alt="Illustration einer Hand" src={handIcon} />
+            )}
+            <h2>Hey! Schön, dass du da bist.</h2>
+            <p>
+              Wenn du einen Account bei der Expedition Grundeinkommen hast,
+              kannst du dich damit auch hier einloggen. Gib dafür einfach deine
+              E-Mail-Adresse ein, und wir schicken dir dann einen Login-Code.
+            </p>
+          </>
+        )}
         {/* Form for getting email */}
         <Form
           onSubmit={e => {
@@ -109,6 +130,7 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
                       type="text"
                       autoComplete="on"
                       component={TextInputWrapped}
+                      inputClassName={inputClassName}
                     ></Field>
                   </FormSection>
 
@@ -127,5 +149,5 @@ export const RequestLoginCodeWithEmail = ({ children, buttonText }) => {
   }
 
   // If there is a temporary email, show EnterLoginCode
-  return <EnterLoginCode />;
+  return <EnterLoginCode inputClassName={inputClassName} />;
 };

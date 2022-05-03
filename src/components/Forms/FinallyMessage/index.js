@@ -4,13 +4,14 @@ import * as cS from '../../style/colorSchemes.module.less';
 import { scrollIntoView } from '../../utils';
 import cN from 'classnames';
 // import { HurrayCrowd } from '../../HurrayCrowd';
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const FinallyMessage = ({
   state,
   children,
   className,
   preventScrolling,
-  color = 'violet',
+  color = IS_BERLIN_PROJECT ? 'rose' : 'violet',
 }) => {
   useEffect(() => {
     if (!preventScrolling) {
@@ -27,6 +28,8 @@ export const FinallyMessage = ({
           [cS.colorSchemeViolet]: color === 'violet',
           [cS.colorSchemeWhite]: color === 'white',
           [cS.colorSchemeAqua]: color === 'aqua',
+          [cS.colorSchemeRose]: color === 'rose',
+          [cS.colorSchemeRoseOnWhite]: color === 'roseOnWhite',
         })}
         ref={messageRef}
       >
