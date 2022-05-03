@@ -301,8 +301,22 @@ function Template({ children, sections, pageContext, title, description }) {
           property="og:image"
           content={checkUrlProtocolIdentifier(project.ogimage.fixed.src)}
         />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="alternate icon" type="image/png" href="/favicon.png" />
+        {!IS_BERLIN_PROJECT && (
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        )}
+        {!IS_BERLIN_PROJECT && (
+          <link rel="alternate icon" type="image/png" href="/favicon.png" />
+        )}
+        {IS_BERLIN_PROJECT && (
+          <link rel="icon" type="image/svg+xml" href="/favicon-berlin.svg" />
+        )}
+        {IS_BERLIN_PROJECT && (
+          <link
+            rel="alternate icon"
+            type="image/png"
+            href="/favicon-berlin.png"
+          />
+        )}
         <html lang="de" />
       </Helmet>
       <main className={s.withoutStickyBanner}>
