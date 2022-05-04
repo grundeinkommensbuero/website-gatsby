@@ -147,21 +147,27 @@ exports.createPages = ({ graphql, actions }) => {
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
           let path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
+          let slug = page.node.slug;
 
           if (process.env.GATSBY_PROJECT === 'Berlin') {
-            if (page.node.slug === '/') {
-              return;
-            } else if (page.node.slug === 'berlin') {
+            if (page.node.slug === 'berlin') {
               // We want to deploy the /berlin page to root /
               path = '/';
+            } else if (page.node.slug.includes('berlin')) {
+              path = path.replace('berlin/', '');
+              slug = slug.replace('berlin/', '');
+            } else {
+              // Don't render any page that is not /berlin/*
+              return;
             }
           }
+
           const isMunicipality = page.node.slug === 'orte';
           createPage({
-            path: path,
+            path,
             component: staticPage,
             context: {
-              slug: page.node.slug,
+              slug,
               isMunicipality,
               isSpecificMunicipality: false,
             },

@@ -13,3 +13,4 @@ https://expedition-grundeinkommen.de/gemeinde-teilen/*  https://ag5gu1z06h.execu
 /bremen                                         /orte/bremen
 /gemeinden/*                                    /orte/:splat
 /teilen/:userId                                 /teilen/?userId=:userId
+/berlin/*                                       /:splat
