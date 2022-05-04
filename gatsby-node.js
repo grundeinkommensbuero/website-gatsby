@@ -156,12 +156,8 @@ exports.createPages = ({ graphql, actions }) => {
               // We want to deploy the /berlin page to root /
               path = '/';
             } else if (page.node.slug.includes('berlin')) {
-              // So the navigation does not break locally due to missing redirects,
-              // we don't override the path locally
-              if (process.env.NODE_ENV !== 'development') {
-                path = path.replace('berlin/', '');
-                slug = slug.replace('berlin/', '');
-              }
+              path = path.replace('berlin/', '');
+              slug = slug.replace('berlin/', '');
             } else if (
               page.node.slug !== 'impressum' &&
               page.node.slug !== 'datenschutz'
