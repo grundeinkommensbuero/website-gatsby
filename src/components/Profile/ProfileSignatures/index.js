@@ -31,6 +31,7 @@ export const ProfileSignatures = ({ userId, userData }) => {
     }
   }, [userData]);
 
+  console.log({ userCampaigns });
   return (
     <section className={gS.profilePageGrid}>
       <section
@@ -51,6 +52,11 @@ export const ProfileSignatures = ({ userId, userData }) => {
             <SelfScan
               successMessage={
                 'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'
+              }
+              campaignCode={
+                userCampaigns.length === 1
+                  ? userCampaigns[0].campaignCode
+                  : null
               }
             />
             {userCampaigns[0] ? (
