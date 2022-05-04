@@ -24,6 +24,11 @@
   transform: translate(-50%, -50%);
   overflow: hidden;
   padding-bottom: 2rem;
+  max-height: 40rem;
+
+  @media (max-width: @breakPointS) {
+    max-height: 35rem;
+  }
 }
 
 .lonelyCloseButton {

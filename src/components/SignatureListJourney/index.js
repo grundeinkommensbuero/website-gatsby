@@ -183,7 +183,7 @@ export const SignatureListJourney = ({ pdfUrl }) => {
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <>
           <div className={s.modal}>
-            <h3>Fast geschafft!</h3>
+            <h3>Hurra, geschafft!</h3>
             <p>
               Vielen Dank, dass du den Brief abgeschickt hast und der Initiative
               zum Erfolg verhilfst!{' '}
