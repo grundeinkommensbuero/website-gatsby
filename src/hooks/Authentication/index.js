@@ -259,7 +259,9 @@ const changeEmail = async (email, setState, cognitoUser) => {
       /* webpackChunkName: "Amplify" */ '@aws-amplify/auth'
     );
 
-    await Auth.updateUserAttributes(cognitoUser, { email });
+    await Auth.updateUserAttributes(cognitoUser, {
+      email: email?.toLowerCase(),
+    });
     setState('success');
   } catch (error) {
     if (error.code === 'AliasExistsException') {

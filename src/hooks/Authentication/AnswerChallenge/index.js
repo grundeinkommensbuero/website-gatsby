@@ -31,7 +31,7 @@ const answerCustomChallenge = async (
     );
 
     // If there is no email we definitely should have a userId
-    const param = tempEmail || userId;
+    const param = tempEmail?.toLowerCase() || userId;
 
     // We call the signIn function of Amplify to then immediately send the challenge answer.
     // The email with the code has already been sent via the /sign-in endpoint, so this function basically
