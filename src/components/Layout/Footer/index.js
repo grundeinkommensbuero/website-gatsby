@@ -15,7 +15,10 @@ export default ({ footerText, footerMenu }) => (
         <ul className={s.nav}>
           {footerMenu.map((item, index) => (
             <li className={s.navItem} key={index}>
-              <Link to={`/${item.slug}/`} className={s.link}>
+              <Link
+                to={`/${item.slug.replace('berlin/', '')}/`}
+                className={s.link}
+              >
                 {item.title}
               </Link>
             </li>

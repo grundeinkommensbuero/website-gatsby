@@ -9,7 +9,7 @@ const MenuItemLink = ({ slug, isChild, children, className, ...rest }) => (
     <Link
       className={cN(s.link, className)}
       activeClassName={s.linkActive}
-      to={slug === '/' ? '/' : `/${slug.replace('/berlin', '')}/`}
+      to={slug === '/' ? '/' : `/${slug.replace('berlin/', '')}/`}
       {...rest}
     >
       {children}

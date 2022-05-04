@@ -157,7 +157,7 @@ exports.createPages = ({ graphql, actions }) => {
               path = '/';
             } else if (page.node.slug.includes('berlin')) {
               path = path.replace('berlin/', '');
-              slug = slug.replace('berlin/', '');
+              // slug = slug.replace('berlin/', '');
             } else if (
               page.node.slug !== 'impressum' &&
               page.node.slug !== 'datenschutz'
