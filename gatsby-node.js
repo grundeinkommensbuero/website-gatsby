@@ -149,6 +149,7 @@ exports.createPages = ({ graphql, actions }) => {
           const isMunicipality = page.node.slug === 'orte';
 
           let path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
+          let slug = page.node.slug;
 
           if (process.env.GATSBY_PROJECT === 'Berlin') {
             if (page.node.slug === 'berlin') {
@@ -158,7 +159,8 @@ exports.createPages = ({ graphql, actions }) => {
               // So the navigation does not break locally due to missing redirects,
               // we don't override the path locally
               if (process.env.NODE_ENV !== 'development') {
-                path = page.node.slug.replace('berlin/', '');
+                path = path.replace('berlin/', '');
+                slug = slug.replace('berlin/', '');
               }
             } else if (
               page.node.slug !== 'impressum' &&
@@ -173,7 +175,7 @@ exports.createPages = ({ graphql, actions }) => {
             path,
             component: staticPage,
             context: {
-              slug: page.node.slug,
+              slug,
               isMunicipality,
               isSpecificMunicipality: false,
             },
