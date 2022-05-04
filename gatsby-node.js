@@ -146,28 +146,34 @@ exports.createPages = ({ graphql, actions }) => {
 
         const pages = result.data.allContentfulStaticContent.edges;
         pages.forEach(page => {
+          const isMunicipality = page.node.slug === 'orte';
+
           let path = page.node.slug === '/' ? '/' : `/${page.node.slug}/`;
-          let slug = page.node.slug;
 
           if (process.env.GATSBY_PROJECT === 'Berlin') {
             if (page.node.slug === 'berlin') {
               // We want to deploy the /berlin page to root /
               path = '/';
             } else if (page.node.slug.includes('berlin')) {
-              path = path.replace('berlin/', '');
-              slug = slug.replace('berlin/', '');
-            } else {
-              // Don't render any page that is not /berlin/*
+              // So the navigation does not break locally due to missing redirects,
+              // we don't override the path locally
+              if (process.env.NODE_ENV !== 'development') {
+                path = page.node.slug.replace('berlin/', '');
+              }
+            } else if (
+              page.node.slug !== 'impressum' &&
+              page.node.slug !== 'datenschutz'
+            ) {
+              // Don't render any page that is not /berlin/* or impressum or datenschutz
               return;
             }
           }
 
-          const isMunicipality = page.node.slug === 'orte';
           createPage({
             path,
             component: staticPage,
             context: {
-              slug,
+              slug: page.node.slug,
               isMunicipality,
               isSpecificMunicipality: false,
             },
