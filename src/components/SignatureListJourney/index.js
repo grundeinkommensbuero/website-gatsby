@@ -196,8 +196,8 @@ export const SignatureListJourney = ({ pdfUrl }) => {
             <p>
               Möchtest du noch mehr tun? Dann schließ dich doch einem unserer
               Sammelevents an! Schau mal{' '}
-              <Link to="/demokratie-fuer-alle#karte">auf der Karte</Link> vorbei
-              um zu sehen, wo Events in deiner Nähe stattfinden.
+              <Link to="/termine#karte">auf der Karte</Link> vorbei um zu sehen,
+              wo Events in deiner Nähe stattfinden.
             </p>
           </div>
           <HurrayCrowd small={true} />
