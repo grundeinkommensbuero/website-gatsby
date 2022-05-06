@@ -123,7 +123,7 @@ const formatMeetups = (isBerlin, isListLocation, meetups) => {
           { beginn, ende, latitude, longitude, ort, details, typ }
         ) => {
           // Filter out events of the past
-          if (new Date(beginn) > new Date()) {
+          if (new Date(ende) > new Date()) {
             filteredArray.push({
               location: {
                 lon: longitude,
