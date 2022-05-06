@@ -343,6 +343,10 @@ const validate = (values, type) => {
     if (!values.description) {
       errors.description = 'Bitte gib eine kurze Beschreibung an';
     }
+
+    if (!values.contact) {
+      errors.contact = 'Bitte gib einen Kontakt an';
+    }
   }
 
   return errors;
