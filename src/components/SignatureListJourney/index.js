@@ -183,12 +183,21 @@ export const SignatureListJourney = ({ pdfUrl }) => {
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <>
           <div className={s.modal}>
+            <h3>Hurra, geschafft!</h3>
             <p>
               Vielen Dank, dass du den Brief abgeschickt hast und der Initiative
-              zum Erfolg verhilfst! Möchtest du noch mehr tun? Dann schließ dich
-              doch einem unserer Sammelevents an! Schau mal{' '}
-              <Link to="/demokratie-fuer-alle#karte">auf der Karte</Link> vorbei
-              um zu sehen, wo Events in deiner Nähe stattfinden.
+              zum Erfolg verhilfst!{' '}
+              <InlineLinkButton href="/me/unterschriften-eintragen">
+                Trag hier deine Unterschriften ein
+              </InlineLinkButton>{' '}
+              und lass den Balken steigen.
+            </p>
+
+            <p>
+              Möchtest du noch mehr tun? Dann schließ dich doch einem unserer
+              Sammelevents an! Schau mal{' '}
+              <Link to="/termine#karte">auf der Karte</Link> vorbei um zu sehen,
+              wo Events in deiner Nähe stattfinden.
             </p>
           </div>
           <HurrayCrowd small={true} />

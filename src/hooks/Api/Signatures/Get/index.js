@@ -97,7 +97,13 @@ const getSignatureCount = async () => {
 // Either a list id, user id or email can be passed
 // For list id it will return the count for all lists of the user
 // If no param was passed, return null
-const getSignatureCountOfUser = async ({ listId, userId, email }) => {
+// Campaign code can be passed to only get signature count of one campaign
+const getSignatureCountOfUser = async ({
+  listId,
+  userId,
+  email,
+  campaignCode,
+}) => {
   try {
     const request = {
       method: 'GET',
@@ -122,7 +128,9 @@ const getSignatureCountOfUser = async ({ listId, userId, email }) => {
     }
 
     const response = await fetch(
-      `${CONFIG.API.INVOKE_URL}/analytics/signatures?${queryParam}`,
+      `${CONFIG.API.INVOKE_URL}/analytics/signatures?${queryParam}${
+        campaignCode ? `&campaignCode=${campaignCode}` : ''
+      }`,
       request
     );
 

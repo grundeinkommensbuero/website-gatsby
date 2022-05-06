@@ -11,10 +11,14 @@ import { CampainScanVisualisation } from '../../Forms/SelfScan/CampaignScanVisua
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 export const ProfileSignatures = ({ userId, userData }) => {
-  const [userCampaigns, setUserCampaigns] = useState([]);
+  // Berlin page should by default show berlin campaign
+  // even if user is not signed up for berlin for some reason
+  const [userCampaigns, setUserCampaigns] = useState(
+    IS_BERLIN_PROJECT ? [campaignCodes[0]] : []
+  );
 
   useEffect(() => {
-    if (userData && 'municipalities' in userData) {
+    if (userData && 'municipalities' in userData && !IS_BERLIN_PROJECT) {
       const activeCampaigns = [];
       userData.municipalities.forEach(mun => {
         campaignCodes.forEach(campCode => {
@@ -27,6 +31,7 @@ export const ProfileSignatures = ({ userId, userData }) => {
     }
   }, [userData]);
 
+  console.log({ userCampaigns });
   return (
     <section className={gS.profilePageGrid}>
       <section
@@ -47,6 +52,11 @@ export const ProfileSignatures = ({ userId, userData }) => {
             <SelfScan
               successMessage={
                 'Danke! Bitte schicke die Listen möglichst schnell an: Expedition Grundeinkommen, Gneisenaustraße 63, 10961 Berlin'
+              }
+              campaignCode={
+                userCampaigns.length === 1
+                  ? userCampaigns[0].campaignCode
+                  : null
               }
             />
             {userCampaigns[0] ? (
