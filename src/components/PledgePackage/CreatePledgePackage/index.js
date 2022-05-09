@@ -13,6 +13,8 @@ import packageV2 from '../paket-v2.svg';
 import { Speechbubble } from '../Speechbubble/index';
 import { mapCampaignCodeToAgs, mapCampaignCodeToState } from '../../utils';
 
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
+
 export default ({ userData, updateCustomUserData }) => {
   const [pledgePackageState, uploadPledgePackage] = useSaveInteraction();
   const [, setPledgePackage] = useState();
@@ -20,26 +22,28 @@ export default ({ userData, updateCustomUserData }) => {
   const [campaignCode, setCampaignCode] = useState('berlin-2');
 
   useEffect(() => {
-    const urlParams = querystring.parse(window.location.search);
-    if (urlParams.campaignCode) {
-      setCampaignCode(urlParams.campaignCode);
-    } else {
-      if (userData?.municipalities?.length > 0) {
-        // Find and sort all collecting municipalities of the user
-        const collectingCitiesOfUser = getCities();
-        if (collectingCitiesOfUser.length > 0) {
-          // If there were any, use the most recent one
-          const indexOfMostRecent = collectingCitiesOfUser.length - 1;
-          if (collectingCitiesOfUser[indexOfMostRecent].ags === '11000000') {
-            setCampaignCode('berlin-1');
-          } else if (
-            collectingCitiesOfUser[indexOfMostRecent].ags === '04011000'
-          ) {
-            setCampaignCode('bremen-1');
-          } else if (
-            collectingCitiesOfUser[indexOfMostRecent].ags === '02000000'
-          ) {
-            setCampaignCode('hamburg-1');
+    if (!IS_BERLIN_PROJECT) {
+      const urlParams = querystring.parse(window.location.search);
+      if (urlParams.campaignCode) {
+        setCampaignCode(urlParams.campaignCode);
+      } else {
+        if (userData?.municipalities?.length > 0) {
+          // Find and sort all collecting municipalities of the user
+          const collectingCitiesOfUser = getCities();
+          if (collectingCitiesOfUser.length > 0) {
+            // If there were any, use the most recent one
+            const indexOfMostRecent = collectingCitiesOfUser.length - 1;
+            if (collectingCitiesOfUser[indexOfMostRecent].ags === '11000000') {
+              setCampaignCode('berlin-2');
+            } else if (
+              collectingCitiesOfUser[indexOfMostRecent].ags === '04011000'
+            ) {
+              setCampaignCode('bremen-1');
+            } else if (
+              collectingCitiesOfUser[indexOfMostRecent].ags === '02000000'
+            ) {
+              setCampaignCode('hamburg-1');
+            }
           }
         }
       }
