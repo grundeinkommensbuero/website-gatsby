@@ -124,6 +124,16 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           Unterschriften für Volksbegehren müssen handschriftlich auf Papier
           erfolgen. Wirf am besten gleich deinen Drucker an und druck die Liste
           aus.
+          <br />
+          <br />
+          <h3>Du hast keinen Drucker?</h3>
+          Dann komm doch bei einem unserer{' '}
+          <Link to="/termine#karte">Soli-Orte</Link> vorbei – oder lass dir die
+          Liste{' '}
+          <Link to="https://innn.it/Volksentscheid-Grundeinkommen">
+            von unserem Partner innn.it per Post schicken
+          </Link>
+          .
         </Step>
 
         <Step
