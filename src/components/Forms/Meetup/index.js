@@ -190,10 +190,12 @@ export const CreateMeetup = ({
 
                 // Only had dates if type is collect
                 if (type === 'collect') {
-                  data.startTime = new Date(
-                    `${e.date}T${e.start}`
-                  ).toISOString();
-                  data.endTime = new Date(`${e.date}T${e.end}`).toISOString();
+                  console.log('date', e.date, e.start);
+                  data.startTime = `${e.date}T${e.start}:00`;
+                  data.endTime = `${e.date}T${e.end}:00`;
+
+                  console.log('data start time', data.startTime);
+                  console.log('data end time', data.endTime);
                 }
 
                 createMeetup(data, mapConfig.state === 'berlin');
