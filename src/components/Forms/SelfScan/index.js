@@ -310,6 +310,9 @@ const CountSignaturesForm = ({
                           className={s.label}
                           inputClassName={s.listIdField}
                         ></Field>
+                        <p className={s.idHint}>
+                          Wenn die Liste keinen Barcode hat, gib bitte 0 ein.
+                        </p>
                       </div>
                     )}
                   </FormSection>
