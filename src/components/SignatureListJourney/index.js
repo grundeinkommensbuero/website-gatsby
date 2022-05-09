@@ -187,6 +187,14 @@ export const SignatureListJourney = ({ pdfUrl }) => {
         >
           Lauf gleich los zum nächsten Briefkasten und wirf den Brief ein. Gute
           Reise!
+          <br />
+          <br />
+          <h3>Keine Briefmarke zur Hand?</h3>
+          Wusstest du, dass die Post mittlerweile eine Online-Frankierung
+          anbietet? Das geht sogar ohne Drucker –{' '}
+          <Link to="https://www.deutschepost.de/de/m/mobile-briefmarke.html">
+            schau doch mal hier vorbei.
+          </Link>
         </Step>
       </div>
 
