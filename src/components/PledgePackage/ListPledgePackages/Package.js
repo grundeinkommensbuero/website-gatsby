@@ -95,7 +95,7 @@ export const Package = ({
       <div className={s.packageTextContainer}>
         <h4 className={s.name}>{user.username}</h4>
         <p className={s.createdAt}>Vor {getElapsedTime(createdAt)}</p>
-        <p className={s.quote}>"{body}"</p>
+        {body && <p className={s.quote}>"{body}"</p>}
       </div>
     </div>
   );
