@@ -25,9 +25,9 @@ export default ({ signaturesId }) => {
   const iconIncognito = IS_BERLIN_PROJECT
     ? require('!svg-inline-loader!./incognito-berlin.svg')
     : require('!svg-inline-loader!./incognito_violet.svg');
-  /*   const iconMail = IS_BERLIN_PROJECT
+  const iconMail = IS_BERLIN_PROJECT
     ? require('!svg-inline-loader!./mail-berlin.svg')
-    : require('!svg-inline-loader!./mail_violet.svg'); */
+    : require('!svg-inline-loader!./mail_violet.svg');
 
   useEffect(() => {
     // Create pdf if user has authenticated after requesting their login code.
@@ -228,23 +228,25 @@ export default ({ signaturesId }) => {
                 )}
               </div>
 
-              {/* <div className={s.iconParagraph}>
+              <div className={s.iconParagraph}>
                 <div
                   className={s.icon}
                   dangerouslySetInnerHTML={{ __html: iconMail }}
                 ></div>
                 <p>
-                  Kein Drucker? Bei{' '}
+                  Kein Drucker? Lade Dir Deine Unterschriftenliste mit einem
+                  Briefumschlag zum Selbstfalten auf{' '}
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href="https://innn.it/demokratiefueralle"
+                    href="https://innn.it/Volksentscheid-Grundeinkommen"
                   >
                     innn.it
                   </a>{' '}
-                  könnt ihr euch die Liste per Post schicken lassen.
+                  herunter. Einfach ausfüllen, unterschreiben und zurücksenden.
+                  Das Porto wird übernommen.
                 </p>
-              </div> */}
+              </div>
             </form>
           );
         }}
