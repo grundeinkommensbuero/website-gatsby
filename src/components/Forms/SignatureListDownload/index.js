@@ -234,7 +234,7 @@ export default ({ signaturesId }) => {
                   dangerouslySetInnerHTML={{ __html: iconMail }}
                 ></div>
                 <p>
-                  Kein Drucker? Lade Dir Deine Unterschriftenliste mit einem
+                  Kein Drucker? Lade Dir deine Unterschriftenliste mit einem
                   Briefumschlag zum Selbstfalten auf{' '}
                   <a
                     target="_blank"
