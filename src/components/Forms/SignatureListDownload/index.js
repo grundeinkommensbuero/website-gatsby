@@ -13,6 +13,7 @@ import { useSignUp } from '../../../hooks/Authentication';
 import { EnterLoginCode } from '../../Login/EnterLoginCode';
 import AuthContext from '../../../context/Authentication';
 import { navigate } from 'gatsby';
+import { Link } from 'gatsby';
 
 const trackingCategory = 'ListDownload';
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
@@ -236,13 +237,12 @@ export default ({ signaturesId }) => {
                 <p>
                   Kein Drucker? Lade Dir deine Unterschriftenliste mit einem
                   Briefumschlag zum Selbstfalten auf{' '}
-                  <a
+                  <Link
+                    to={'https://innn.it/Volksentscheid-Grundeinkommen'}
                     target="_blank"
-                    rel="noreferrer"
-                    href="https://innn.it/Volksentscheid-Grundeinkommen"
                   >
                     innn.it
-                  </a>{' '}
+                  </Link>{' '}
                   herunter. Einfach ausfüllen, unterschreiben und zurücksenden.
                   Das Porto wird übernommen.
                 </p>
