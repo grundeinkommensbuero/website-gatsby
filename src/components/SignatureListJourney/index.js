@@ -93,11 +93,7 @@ export const SignatureListJourney = ({ pdfUrl }) => {
         >
           Wir haben dir eine Unterschriftenliste per Email geschickt. Falls du
           sie direkt downloaden willst, findest du sie auch{' '}
-          {/* TODO: change link for berlin campaign */}
-          <InlineLinkButton
-            target="_blank"
-            href={pdfUrl || '/demokratie-fuer-alle'}
-          >
+          <InlineLinkButton target="_blank" href={pdfUrl || '/unterschreiben'}>
             HIER
           </InlineLinkButton>
           .
@@ -111,9 +107,11 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           ctaText="Ich habe die Liste gedruckt!"
           attributeToSet="printedList"
           secondaryCtaText="Listen per Post bestellen"
-          // TODO: change for berlin campaign
           onSecondaryCtaClick={() => {
-            window.open('https://innn.it/demokratiefueralle', '_blank');
+            window.open(
+              'https://innn.it/Volksentscheid-Grundeinkommen',
+              '_blank'
+            );
           }}
           done={listFlow?.printedList?.value}
           disabled={!hasReachedStep(listFlow, 'printedList')}
