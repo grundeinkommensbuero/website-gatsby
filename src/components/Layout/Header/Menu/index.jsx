@@ -42,7 +42,7 @@ const Menu = ({ menu, menuOpen }) => {
                     key={index}
                     isChild={true}
                     // Replace /, so internal links work with or without /
-                    slug={item.slug || item.internalLink.replace('/', '')}
+                    slug={item.slug || item.internalLink?.replace('/', '')}
                     externalLink={item.externalLink}
                   >
                     {item.shortTitle || item.title}
