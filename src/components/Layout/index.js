@@ -52,9 +52,18 @@ function Template({ children, sections, pageContext, title, description }) {
                 internalLink
                 externalLink
                 contentfulchildren {
-                  title
-                  slug
-                  shortTitle
+                  ... on ContentfulStaticContent {
+                    __typename
+                    slug
+                    title
+                    shortTitle
+                  }
+                  ... on ContentfulMenuOberpunkt {
+                    __typename
+                    title
+                    internalLink
+                    externalLink
+                  }
                 }
               }
             }
