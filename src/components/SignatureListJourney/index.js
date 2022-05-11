@@ -113,7 +113,10 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           secondaryCtaText="Listen per Post bestellen"
           // TODO: change for berlin campaign
           onSecondaryCtaClick={() => {
-            window.open('https://innn.it/demokratiefueralle', '_blank');
+            window.open(
+              'https://innn.it/Volksentscheid-Grundeinkommen',
+              '_blank'
+            );
           }}
           done={listFlow?.printedList?.value}
           disabled={!hasReachedStep(listFlow, 'printedList')}
@@ -130,7 +133,10 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           Dann komm doch bei einem unserer{' '}
           <Link to="/termine#karte">Soli-Orte</Link> vorbei – oder lass dir die
           Liste{' '}
-          <Link to="https://innn.it/Volksentscheid-Grundeinkommen">
+          <Link
+            to="https://innn.it/Volksentscheid-Grundeinkommen"
+            target="_blank"
+          >
             von unserem Partner innn.it per Post schicken
           </Link>
           .
