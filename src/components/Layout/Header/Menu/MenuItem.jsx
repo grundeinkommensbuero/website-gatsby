@@ -4,16 +4,35 @@ import cN from 'classnames';
 
 import * as s from './style.module.less';
 
-const MenuItemLink = ({ slug, isChild, children, className, ...rest }) => (
+const MenuItemLink = ({
+  slug,
+  isChild,
+  children,
+  className,
+  externalLink,
+  ...rest
+}) => (
   <li className={cN(s.navItem, { [s.navItemChild]: isChild })}>
-    <Link
-      className={cN(s.link, className)}
-      activeClassName={s.linkActive}
-      to={slug === '/' ? '/' : `/${slug.replace('berlin/', '')}/`}
-      {...rest}
-    >
-      {children}
-    </Link>
+    {externalLink && (
+      <a
+        className={s.link}
+        href={externalLink}
+        rel="noreferrer"
+        target="_blank"
+      >
+        {children}
+      </a>
+    )}
+    {slug && (
+      <Link
+        className={cN(s.link, className)}
+        activeClassName={s.linkActive}
+        to={slug === '/' ? '/' : `/${slug.replace('berlin/', '')}/`}
+        {...rest}
+      >
+        {children}
+      </Link>
+    )}
   </li>
 );
 

@@ -38,7 +38,13 @@ const Menu = ({ menu, menuOpen }) => {
               {/* Map thru children of the menu item and pass to the submenu */}
               {item.contentfulchildren &&
                 item.contentfulchildren.map((item, index) => (
-                  <MenuItemLink key={index} isChild={true} slug={item.slug}>
+                  <MenuItemLink
+                    key={index}
+                    isChild={true}
+                    // Replace /, so internal links work with or without /
+                    slug={item.slug || item.internalLink?.replace('/', '')}
+                    externalLink={item.externalLink}
+                  >
                     {item.shortTitle || item.title}
                   </MenuItemLink>
                 ))}

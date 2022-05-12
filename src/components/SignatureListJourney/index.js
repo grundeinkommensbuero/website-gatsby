@@ -122,6 +122,19 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           Unterschriften für Volksbegehren müssen handschriftlich auf Papier
           erfolgen. Wirf am besten gleich deinen Drucker an und druck die Liste
           aus.
+          <br />
+          <br />
+          <h3>Du hast keinen Drucker?</h3>
+          Dann komm doch bei einem unserer{' '}
+          <Link to="/termine#karte">Soli-Orte</Link> vorbei – oder lass dir die
+          Liste{' '}
+          <Link
+            to="https://innn.it/Volksentscheid-Grundeinkommen"
+            target="_blank"
+          >
+            von unserem Partner innn.it per Post schicken
+          </Link>
+          .
         </Step>
 
         <Step
@@ -175,6 +188,17 @@ export const SignatureListJourney = ({ pdfUrl }) => {
         >
           Lauf gleich los zum nächsten Briefkasten und wirf den Brief ein. Gute
           Reise!
+          <br />
+          <br />
+          <h3>Keine Briefmarke zur Hand?</h3>
+          Wusstest du, dass die Post mittlerweile eine Online-Frankierung
+          anbietet? Das geht sogar ohne Drucker –{' '}
+          <Link
+            to="https://www.deutschepost.de/de/m/mobile-briefmarke.html"
+            target="_blank"
+          >
+            schau doch mal hier vorbei.
+          </Link>
         </Step>
       </div>
 
