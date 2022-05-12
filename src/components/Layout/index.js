@@ -168,6 +168,7 @@ function Template({ children, sections, pageContext, title, description }) {
 
   const projects = contentfulProjects.projects;
 
+  console.log('env var', process.env.GATSBY_PROJECT);
   let project;
   if (process.env.GATSBY_PROJECT === 'Berlin') {
     console.log('grabbing project');
