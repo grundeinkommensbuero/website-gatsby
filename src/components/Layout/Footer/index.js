@@ -22,12 +22,12 @@ export default ({ footerText, footerMenu }) => (
             />
           </div>
           <span>
-            <Link
-              to="https://www.expedition-grundeinkommen.de"
+            <a
+              href="https://www.expedition-grundeinkommen.de"
               className={s.expeditionsLink}
             >
               expedition-grundeinkommen.de
-            </Link>
+            </a>
           </span>
         </>
       )}
