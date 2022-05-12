@@ -7,7 +7,9 @@ import AuthContext from '../../context/Authentication';
 import { MunicipalityContext } from '../../context/Municipality';
 import { useSEO } from '../../hooks/Municipality/SEO';
 
-const URL = 'https://expedition-grundeinkommen.de';
+const URL = process.env.GATSBY_PROJECT
+  ? 'https://www.volksentscheid-grundeinkommen.de'
+  : 'https://expedition-grundeinkommen.de';
 
 const staticPage = ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
