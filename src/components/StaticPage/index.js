@@ -22,7 +22,6 @@ const staticPage = ({ data, location, pageContext }) => {
   const { isAuthenticated } = useContext(AuthContext);
 
   const { title, description } = useSEO(page);
-
   return (
     <>
       {typeof isAuthenticated !== 'undefined' && (
@@ -40,7 +39,12 @@ const staticPage = ({ data, location, pageContext }) => {
               <meta name="description" content={description} />
             )}
             <meta property="og:type" content="website" />
-            <meta property="og:url" content={URL + location.pathname} />
+            <meta
+              property="og:url"
+              content={
+                URL + `${location.pathname !== '/' ? location.pathname : ''}`
+              }
+            />
             <script type="text/javascript">{MatomoTrackingStuff}</script>
           </Helmet>
         </Layout>
