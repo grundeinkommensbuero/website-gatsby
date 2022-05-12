@@ -128,12 +128,12 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           Dann komm doch bei einem unserer{' '}
           <Link to="/termine#karte">Soli-Orte</Link> vorbei – oder lass dir die
           Liste{' '}
-          <Link
+          <InlineLinkButton
             to="https://innn.it/Volksentscheid-Grundeinkommen"
             target="_blank"
           >
             von unserem Partner innn.it per Post schicken
-          </Link>
+          </InlineLinkButton>
           .
         </Step>
 
@@ -193,12 +193,12 @@ export const SignatureListJourney = ({ pdfUrl }) => {
           <h3>Keine Briefmarke zur Hand?</h3>
           Wusstest du, dass die Post mittlerweile eine Online-Frankierung
           anbietet? Das geht sogar ohne Drucker –{' '}
-          <Link
-            to="https://www.deutschepost.de/de/m/mobile-briefmarke.html"
+          <InlineLinkButton
+            href="https://www.deutschepost.de/de/m/mobile-briefmarke.html"
             target="_blank"
           >
             schau doch mal hier vorbei.
-          </Link>
+          </InlineLinkButton>
         </Step>
       </div>
 
@@ -209,9 +209,9 @@ export const SignatureListJourney = ({ pdfUrl }) => {
             <p>
               Vielen Dank, dass du den Brief abgeschickt hast und der Initiative
               zum Erfolg verhilfst!{' '}
-              <InlineLinkButton href="/me/unterschriften-eintragen">
+              <Link to="/me/unterschriften-eintragen">
                 Trag hier deine Unterschriften ein
-              </InlineLinkButton>{' '}
+              </Link>{' '}
               und lass den Balken steigen.
             </p>
 
