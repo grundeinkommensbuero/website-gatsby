@@ -170,10 +170,13 @@ function Template({ children, sections, pageContext, title, description }) {
 
   let project;
   if (process.env.GATSBY_PROJECT === 'Berlin') {
+    console.log('grabbing project');
     project = projects.find(entry => entry.siteTitle === BERLIN_SITE_TITLE);
   } else {
     project = projects.find(entry => entry.siteTitle === DEFAULT_SITE_TITLE);
   }
+
+  console.log('project', project);
 
   // Return list of visualisation definitions with project field for the startnext project data
   const visualisationsWithCrowdfunding = buildVisualisationsWithCrowdfunding(
