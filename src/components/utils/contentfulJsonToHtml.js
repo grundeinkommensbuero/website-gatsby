@@ -72,7 +72,6 @@ export function contentfulJsonToHtml(richText) {
           return <CrowdFundingVisualistation {...data.target} />;
         }
         if (contentTypeId === 'callToActionButton') {
-          console.log(data);
           if (data.target.linkLong) {
             return (
               <p>
