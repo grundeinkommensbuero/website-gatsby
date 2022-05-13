@@ -1,4 +1,4 @@
-import Loadable from '@loadable/component';
+import loadable from '@loadable/component';
 
-const LoadableMailIllustration = Loadable(() => import('./MailIllustration'));
-export default LoadableMailIllustration;
+const LoadableMainIllustration = loadable(() => import('./MainIllustration'));
+export default LoadableMainIllustration;

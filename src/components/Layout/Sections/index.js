@@ -28,54 +28,40 @@ import { SmallSignup } from '../../Forms/SmallSignup';
 import { MunicipalityContext } from '../../../context/Municipality';
 import AuthContext from '../../../context/Authentication';
 import { LinkButton } from '../../Forms/Button';
-import loadable from '@loadable/component';
 import Maps from '../../Maps';
 import FullscreenHero from './FullscreenHero';
+import SignUp from '../../Forms/SignUp';
+import Pledge from '../../Forms/Pledge';
 import SignatureListDownload from '../../Forms/SignatureListDownload';
+import DonationForm from '../../Forms/DonationForm';
+import SharingFeature from '../../Onboarding/Share';
 
-const SignUp = loadable(() => import('../../Forms/SignUp'));
-const Pledge = loadable(() => import('../../Forms/Pledge'));
-const DonationForm = loadable(() => import('../../Forms/DonationForm'));
-const SharingFeature = loadable(() => import('../../Onboarding/Share'));
+import InfoText from '../../Municipality/MunicipalityInfoText';
+import Groups from '../../Municipality/MunicipalityGroups';
+import Lottery from '../../Lottery';
+import BecomeActive from '../../BecomeActive';
+import CampaignVisualisation from '../../CampaignVisualisations';
+import ProfileTile from '../../Profile/ProfileTile';
+import LoadableComponents from '././LoadableComponents';
+import loadable from '@loadable/component';
+
 const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
-const TickerToSignup = loadable(() => import('../../TickerToSignup'));
-const MunicipalityMap = loadable(() =>
-  import('../../Municipality/MapAndSearch')
-);
-const InfoText = loadable(() =>
-  import('../../Municipality/MunicipalityInfoText')
-);
-const MunicipalityProgress = loadable(() =>
-  import('../../Municipality/MunicipalityProgress')
-);
-const InviteFriends = loadable(() => import('../../InviteFriends'));
-const BecomeActive = loadable(() => import('../../BecomeActive'));
-const ProfileTile = loadable(() => import('../../Profile/ProfileTile'));
-const CollectionMap = loadable(() =>
-  import('../../Municipality/MunicipalityCollectionMap')
-);
-const PledgePackages = loadable(() =>
-  import('../../PledgePackage/ListPledgePackages')
-);
-const CampaignVisualisation = loadable(() =>
-  import('../../Municipality/MunicipalityCampaignVisualisations')
-);
-const Groups = loadable(() => import('../../Municipality/MunicipalityGroups'));
-const Lottery = loadable(() => import('../../Lottery'));
 
+// This proxy pattern for loadable component is needed because of issues with loadable and ssr
+// See also: https://github.com/graysonhicks/gatsby-plugin-loadable-components-ssr
 const Components = {
-  TickerToSignup,
-  MunicipalityMap,
-  InfoText,
-  MunicipalityProgress,
-  InviteFriends,
-  BecomeActive,
+  TickerToSignup: LoadableComponents.LoadableTickerToSignup,
+  MunicipalityMap: LoadableComponents.LoadableMapAndSearch,
+  MunicipalityProgress: LoadableComponents.LoadableProgress,
+  InviteFriends: LoadableComponents.LoadableInviteFriends,
+  CollectionMap: LoadableComponents.LoadableCollectionMap,
+  PledgePackages: LoadableComponents.LoadablePledgePackages,
   ProfileTile,
-  CollectionMap,
-  PledgePackages,
   CampaignVisualisation,
-  Groups,
+  BecomeActive,
   Lottery,
+  Groups,
+  InfoText,
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,

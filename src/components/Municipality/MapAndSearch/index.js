@@ -2,13 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import { FallbackMap } from '../MunicipalityMap';
 import { WrappedMunicipalitySearch } from '../MunicipalitySearch/WrappedMunicipalitySearch';
 import * as s from './style.module.less';
-import loadable from '@loadable/component';
 import { Leaderboard } from '../Leaderboard';
 import { QualifiedBoard } from '../Leaderboard/QualifiedBoard';
 import { ExpandableRow } from './ExpandableRow';
 import { MunicipalityContext } from '../../../context/Municipality';
-
-const MunicipalityMap = loadable(() => import('../MunicipalityMap'));
+import MunicipalityMap from '../MunicipalityMap';
 
 export const MapAndSearch = () => {
   const { municipality, leaderboardSegments, statsInDays } =

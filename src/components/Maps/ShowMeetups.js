@@ -17,8 +17,7 @@ import {
   checkIfDateIsToday,
   checkIfDateIsTomorrow,
 } from './utils/dateStringManipulation';
-import loadable from '@loadable/component';
-const CreateMeetup = loadable(() => import('../Forms/Meetup'));
+import CreateMeetup from '../Forms/Meetup';
 
 export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   const {
