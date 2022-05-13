@@ -34,7 +34,7 @@ import FullscreenHero from './FullscreenHero';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
-const SignatureListDownload = loadable(() =>
+const ListDownload = loadable(() =>
   import('../../Forms/SignatureListDownload')
 );
 const DonationForm = loadable(() => import('../../Forms/DonationForm'));
@@ -83,7 +83,7 @@ const Components = {
   Standard: StandardSectionComponent,
   Pledge,
   SmallSignup,
-  ListDownload: SignatureListDownload,
+  ListDownload,
 };
 
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
@@ -460,7 +460,7 @@ export function ContentfulSection({ section, pageContext }) {
           {body && body.raw ? contentfulJsonToHtml(body) : body}
           {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
           {signaturesId && (
-            <SignatureListDownload
+            <ListDownload
               signaturesId={signaturesId}
               disableRequestListsByMail={disableRequestListsByMail}
               className={s.pledge}
