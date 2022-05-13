@@ -202,7 +202,7 @@ const lazyMap = ({
       <div className={s.legend}>
         <div>
           <img src={signIcon} alt="Illustration einer UnterschriftenListe" />
-          <span>Ausgelegte Listen</span>
+          <span>Soli-Ort</span>
         </div>
         <div>
           <img src={collectIcon} alt="Illustration eines Sammelevents" />

@@ -164,7 +164,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
         <FormWrapper className={s.filter}>
           <div className={s.flexRow}>
             <Checkbox
-              label="Orte zum Unterschreiben"
+              label="Soli-Orte anzeigen"
               type="checkbox"
               checked={showLists}
               onChange={() => setShowLists(!showLists)}
@@ -172,7 +172,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
               labelClassName={s.inlineCheckboxLabel}
             />
             <Checkbox
-              label="Mitsammeln"
+              label="Sammel-Termine anzeigen"
               type="checkbox"
               checked={showCollectionEvents}
               onChange={() => setShowCollectionEvents(!showCollectionEvents)}
@@ -283,7 +283,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
                   </Button>
                 </SectionComponent>
                 <SectionComponent column={'right'}>
-                  <h3>Lege Listen an einem Sammelort aus</h3>
+                  <h3>Lege Listen an einem Soli-Ort aus</h3>
                   <p>
                     Markiere einen Ort, an dem du eine neue Unterschriftenliste
                     ausgelegt hast, um sie für andere sichtbar zu machen. Melde
