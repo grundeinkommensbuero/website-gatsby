@@ -57,7 +57,9 @@ export default () => {
               Schon {pledgePackages.length} Pakete mit insgesamt{' '}
               {pledgePackages.length * 25} Unterschriften verteilt
               {pledgePackagesDone.length > 0 &&
-                ` und davon ${pledgePackagesDone.length} erledigt`}
+                ` - und davon ${pledgePackagesDone.length} Paket${
+                  pledgePackagesDone.length > 1 ? 'e' : ''
+                } erledigt`}
               !
             </b>
           ) : (
