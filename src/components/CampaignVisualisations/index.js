@@ -17,7 +17,7 @@ export default ({ visualisations }) => {
 
   return (
     <>
-      {visualisations.map((visualisation, index) => {
+      {visualisations?.map((visualisation, index) => {
         if (visualisation.campainCode) {
           return (
             <CampainVisualisation
