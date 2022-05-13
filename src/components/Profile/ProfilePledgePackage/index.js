@@ -20,7 +20,7 @@ export const ProfilePledgePackage = ({ userData, updateCustomUserData }) => {
         )}
       >
         <div className={gS.backToProfile}>
-          <Link to={'/berlin/sammelpakete'}>Zurück zu allen Paketen</Link>
+          <Link to={'/sammelpakete'}>Zurück zu allen Paketen</Link>
         </div>
         <CreatePledgePackage
           userData={userData}
