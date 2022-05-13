@@ -31,12 +31,10 @@ import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
 import Maps from '../../Maps';
 import FullscreenHero from './FullscreenHero';
+import SignatureListDownload from '../../Forms/SignatureListDownload';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
-const ListDownload = loadable(() =>
-  import('../../Forms/SignatureListDownload')
-);
 const DonationForm = loadable(() => import('../../Forms/DonationForm'));
 const SharingFeature = loadable(() => import('../../Onboarding/Share'));
 const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
@@ -83,7 +81,7 @@ const Components = {
   Standard: StandardSectionComponent,
   Pledge,
   SmallSignup,
-  ListDownload,
+  ListDownload: SignatureListDownload,
 };
 
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
