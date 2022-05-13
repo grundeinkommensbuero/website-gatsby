@@ -458,7 +458,7 @@ export function ContentfulSection({ section, pageContext }) {
           {body && body.raw ? contentfulJsonToHtml(body) : body}
           {pledgeId && <Pledge pledgeId={pledgeId} className={s.pledge} />}
           {signaturesId && (
-            <ListDownload
+            <SignatureListDownload
               signaturesId={signaturesId}
               disableRequestListsByMail={disableRequestListsByMail}
               className={s.pledge}
