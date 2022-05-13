@@ -10,16 +10,19 @@ export const SnackbarMessageContext = React.createContext({
 export const SnackbarMessageProvider = ({ children }) => {
   const [openSnackbar] = useSnackbar(snackbarTheme);
   const [message, setMessage] = useState('');
+  const [duration, setDuration] = useState(6000);
 
   useEffect(() => {
     if (message !== '') {
-      openSnackbar(message, [6000]);
+      openSnackbar(message, [duration]);
       setMessage('');
     }
   }, [message]);
 
   return (
-    <SnackbarMessageContext.Provider value={{ message, setMessage }}>
+    <SnackbarMessageContext.Provider
+      value={{ message, setMessage, setDuration }}
+    >
       {children}
     </SnackbarMessageContext.Provider>
   );

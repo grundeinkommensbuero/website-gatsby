@@ -10,6 +10,8 @@ import {
 import paketSvg from '../paket-v2.svg';
 import check from '../check.svg';
 import { LoadingAnimation } from '../../LoadingAnimation';
+import { SnackbarMessageContext } from '../../../context/Snackbar';
+import { Link } from 'gatsby';
 
 export const Package = ({
   body,
@@ -23,9 +25,21 @@ export const Package = ({
   const [pledgeUpdateState, updatePledgePackage] = useUpdateInteraction();
   const { updateCustomUserData } = useContext(AuthContext);
   const [, , getInteractions] = useGetMostRecentInteractions();
+  const { setMessage, setDuration } = useContext(SnackbarMessageContext);
 
   useEffect(() => {
     if (pledgeUpdateState === 'saved') {
+      // We want the snackbar to show longer in this case
+      setDuration(12000);
+      setMessage(
+        <p>
+          Super!{' '}
+          <Link to="/me/unterschriften-eintragen">
+            Trag hier deine Unterschriften ein
+          </Link>{' '}
+          und lass den Balken steigen.
+        </p>
+      );
       getInteractions(null, 0, 'pledgePackage');
       updateCustomUserData();
     }
