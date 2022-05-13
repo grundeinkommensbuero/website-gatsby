@@ -40,28 +40,44 @@ const SignatureListDownload = loadable(() =>
 const DonationForm = loadable(() => import('../../Forms/DonationForm'));
 const SharingFeature = loadable(() => import('../../Onboarding/Share'));
 const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
+const TickerToSignup = loadable(() => import('../../TickerToSignup'));
+const MunicipalityMap = loadable(() =>
+  import('../../Municipality/MapAndSearch')
+);
+const InfoText = loadable(() =>
+  import('../../Municipality/MunicipalityInfoText')
+);
+const MunicipalityProgress = loadable(() =>
+  import('../../Municipality/MunicipalityProgress')
+);
+const InviteFriends = loadable(() => import('../../InviteFriends'));
+const BecomeActive = loadable(() => import('../../BecomeActive'));
+const ProfileTile = loadable(() => import('../../Profile/ProfileTile'));
+const CollectionMap = loadable(() =>
+  import('../../Municipality/MunicipalityCollectionMap')
+);
+const PledgePackages = loadable(() =>
+  import('../../PledgePackage/ListPledgePackages')
+);
+const CampaignVisualisation = loadable(() =>
+  import('../../Municipality/MunicipalityCampaignVisualisations')
+);
+const Groups = loadable(() => import('../../Municipality/MunicipalityGroups'));
+const Lottery = loadable(() => import('../../Lottery'));
 
 const Components = {
-  TickerToSignup: loadable(() => import('../../TickerToSignup')),
-  MunicipalityMap: loadable(() => import('../../Municipality/MapAndSearch')),
-  InfoText: loadable(() => import('../../Municipality/MunicipalityInfoText')),
-  MunicipalityProgress: loadable(() =>
-    import('../../Municipality/MunicipalityProgress')
-  ),
-  InviteFriends: loadable(() => import('../../InviteFriends')),
-  BecomeActive: loadable(() => import('../../BecomeActive')),
-  ProfileTile: loadable(() => import('../../Profile/ProfileTile')),
-  CollectionMap: loadable(() =>
-    import('../../Municipality/MunicipalityCollectionMap')
-  ),
-  PledgePackages: loadable(() =>
-    import('../../PledgePackage/ListPledgePackages')
-  ),
-  CampaignVisualisation: loadable(() =>
-    import('../../Municipality/MunicipalityCampaignVisualisations')
-  ),
-  Groups: loadable(() => import('../../Municipality/MunicipalityGroups')),
-  Lottery: loadable(() => import('../../Lottery')),
+  TickerToSignup,
+  MunicipalityMap,
+  InfoText,
+  MunicipalityProgress,
+  InviteFriends,
+  BecomeActive,
+  ProfileTile,
+  CollectionMap,
+  PledgePackages,
+  CampaignVisualisation,
+  Groups,
+  Lottery,
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,
