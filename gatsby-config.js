@@ -22,6 +22,7 @@ const config = {
     'gatsby-plugin-sharp',
     'gatsby-plugin-image',
     'gatsby-plugin-eslint',
+    'gatsby-plugin-polyfill-io',
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -116,6 +117,12 @@ const config = {
           // "**/taxonomies",
           // "**/users",
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-polyfill-io`,
+      options: {
+        features: ['assert', 'os'],
       },
     },
     // {

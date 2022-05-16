@@ -213,6 +213,12 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         },
       }),
       new LoadablePlugin(),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+      }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+      }),
     ],
     resolve: {
       fallback: {
@@ -221,11 +227,14 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         net: false,
         path: false,
         zlib: false,
-        http: false,
-        https: false,
-        stream: false,
-        crypto: false,
         util: false,
+        crypto: 'crypto-browserify',
+        os: 'os-browserify',
+        stream: 'stream-browserify',
+        http: 'stream-http',
+        https: 'https-browserify',
+        assert: 'assert',
+        buffer: require.resolve('buffer/'),
       },
     },
   };
