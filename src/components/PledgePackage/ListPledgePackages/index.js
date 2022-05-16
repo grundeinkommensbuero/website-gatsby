@@ -72,8 +72,9 @@ export default () => {
         <div>
           <h3 className={s.violet}>Deine Pakete</h3>
           <p>
-            Du hast dir {packagesOfUser.length} Pakete geschnappt und somit
-            versprochen, {packagesOfUser.length * 25} Unterschriften zu sammeln.
+            Du hast dir {packagesOfUser.length} Paket
+            {packagesOfUser.length > 1 && 'e'} geschnappt und somit versprochen,{' '}
+            {packagesOfUser.length * 25} Unterschriften zu sammeln.
           </p>
           <div className={s.container}>
             {packagesOfUser.map((pledgePackage, index) => {

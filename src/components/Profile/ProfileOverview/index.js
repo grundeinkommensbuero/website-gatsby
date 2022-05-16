@@ -159,7 +159,8 @@ export const ProfileOverview = ({ userData, signatureCountOfUser }) => {
                 <>
                   Du hast dir {pledgePackages.length} Paket
                   {pledgePackages.length > 1 && 'e'} geschnappt und somit
-                  versprochen, 50 Unterschriften zu sammeln.
+                  versprochen, {pledgePackages.length * 25} Unterschriften zu
+                  sammeln.
                   <br />
                   <br />
                   {/* TODO: design package */}
