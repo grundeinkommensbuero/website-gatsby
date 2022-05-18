@@ -158,11 +158,8 @@ exports.createPages = ({ graphql, actions }) => {
             } else if (page.node.slug.includes('berlin')) {
               path = path.replace('berlin/', '');
               // slug = slug.replace('berlin/', '');
-            } else if (
-              page.node.slug !== 'impressum' &&
-              page.node.slug !== 'datenschutz'
-            ) {
-              // Don't render any page that is not /berlin/* or impressum or datenschutz
+            } else if (page.node.slug !== 'datenschutz') {
+              // Don't render any page that is not /berlin/* or datenschutz
               return;
             }
           }
