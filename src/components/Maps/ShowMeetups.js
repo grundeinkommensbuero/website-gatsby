@@ -266,7 +266,10 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
           {!isIframe && (
             <>
               {/* Jump to anchor */}
-              <div id="eintragen" />
+              <div className={s.jumpToAnchorWrapper}>
+                <div className={s.jumpToAnchor} id="eintragen" />
+              </div>
+
               <SectionComponentContainer>
                 <SectionComponent column={'left'}>
                   <h3>Plane eine Sammelaktion!</h3>
@@ -314,7 +317,10 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
           {!isIframe && (
             <>
               {/* Jump to anchor */}
-              <div id="events" />
+              <div className={s.jumpToAnchorWrapper}>
+                <div className={s.jumpToAnchor} id="events" />
+              </div>
+
               <EventsListed locationsFiltered={locationsFiltered} />
             </>
           )}
