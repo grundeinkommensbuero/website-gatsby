@@ -55,6 +55,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   // Type filters
   const [showLists, setShowLists] = useState(true);
   const [showCollectionEvents, setShowCollectionEvents] = useState(true);
+  const [showStorages, setShowStorages] = useState(true);
 
   // Day filters
   const [filterToday, setFilterToday] = useState(false);
@@ -132,7 +133,8 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
 
             return (
               ((showLists && type === 'lists') ||
-                (showCollectionEvents && type === 'collect')) &&
+                (showCollectionEvents && type === 'collect') ||
+                (showStorages && type === 'storage')) &&
               (!endTime ||
                 (!filterToday && !filterTomorrow) ||
                 (filterToday && checkIfDateIsToday(new Date(endTime))) ||
@@ -150,6 +152,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   }, [
     showLists,
     showCollectionEvents,
+    showStorages,
     filterToday,
     filterTomorrow,
     filterBefore12,
@@ -176,6 +179,14 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
               type="checkbox"
               checked={showCollectionEvents}
               onChange={() => setShowCollectionEvents(!showCollectionEvents)}
+              className={s.inlineCheckbox}
+              labelClassName={s.inlineCheckboxLabel}
+            />
+            <Checkbox
+              label="Materiallager anzeigen"
+              type="checkbox"
+              checked={showStorages}
+              onChange={() => setShowStorages(!showStorages)}
               className={s.inlineCheckbox}
               labelClassName={s.inlineCheckboxLabel}
             />
