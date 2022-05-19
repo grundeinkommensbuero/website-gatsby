@@ -31,12 +31,13 @@ import { LinkButton } from '../../Forms/Button';
 import loadable from '@loadable/component';
 import Maps from '../../Maps';
 import FullscreenHero from './FullscreenHero';
+import SignatureListDownload from '../../Forms/SignatureListDownload';
+import InfoText from '../../Municipality/MunicipalityInfoText';
+import MunicipalityCampaignVisualisation from '../../Municipality/MunicipalityCampaignVisualisations';
+import Groups from '../../Municipality/MunicipalityGroups';
 
 const SignUp = loadable(() => import('../../Forms/SignUp'));
 const Pledge = loadable(() => import('../../Forms/Pledge'));
-const SignatureListDownload = loadable(() =>
-  import('../../Forms/SignatureListDownload')
-);
 const DonationForm = loadable(() => import('../../Forms/DonationForm'));
 const SharingFeature = loadable(() => import('../../Onboarding/Share'));
 const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
@@ -44,7 +45,6 @@ const YoutubeEmbed = loadable(() => import('../../YoutubeEmbed'));
 const Components = {
   TickerToSignup: loadable(() => import('../../TickerToSignup')),
   MunicipalityMap: loadable(() => import('../../Municipality/MapAndSearch')),
-  InfoText: loadable(() => import('../../Municipality/MunicipalityInfoText')),
   MunicipalityProgress: loadable(() =>
     import('../../Municipality/MunicipalityProgress')
   ),
@@ -57,11 +57,10 @@ const Components = {
   PledgePackages: loadable(() =>
     import('../../PledgePackage/ListPledgePackages')
   ),
-  CampaignVisualisation: loadable(() =>
-    import('../../Municipality/MunicipalityCampaignVisualisations')
-  ),
-  Groups: loadable(() => import('../../Municipality/MunicipalityGroups')),
   Lottery: loadable(() => import('../../Lottery')),
+  Groups,
+  CampaignVisualisation: MunicipalityCampaignVisualisation,
+  InfoText,
   IntroText,
   TextAndImage,
   Standard: StandardSectionComponent,

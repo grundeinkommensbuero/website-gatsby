@@ -3,7 +3,6 @@ import { graphql } from 'gatsby';
 import Layout from '../Layout';
 import { Helmet } from 'react-helmet-async';
 import MatomoTrackingStuff from './MatomoTrackingStuff';
-import AuthContext from '../../context/Authentication';
 import { MunicipalityContext } from '../../context/Municipality';
 import { useSEO } from '../../hooks/Municipality/SEO';
 
@@ -15,41 +14,34 @@ const staticPage = ({ data, location, pageContext }) => {
   const page = data.contentfulStaticContent;
 
   const { setPageContext } = useContext(MunicipalityContext);
+
   useEffect(() => {
     setPageContext(pageContext);
   }, []);
 
-  const { isAuthenticated } = useContext(AuthContext);
-
   const { title, description } = useSEO(page);
   return (
-    <>
-      {typeof isAuthenticated !== 'undefined' && (
-        <Layout
-          location={location}
-          title={title}
-          sections={page.sections}
-          pageContext={pageContext}
-          description={description}
-        >
-          <Helmet>
-            <title>{title}</title>
+    <Layout
+      location={location}
+      title={title}
+      sections={page.sections}
+      pageContext={pageContext}
+      description={description}
+    >
+      <Helmet>
+        <title>{title}</title>
 
-            {page.description && (
-              <meta name="description" content={description} />
-            )}
-            <meta property="og:type" content="website" />
-            <meta
-              property="og:url"
-              content={
-                URL + `${location.pathname !== '/' ? location.pathname : ''}`
-              }
-            />
-            <script type="text/javascript">{MatomoTrackingStuff}</script>
-          </Helmet>
-        </Layout>
-      )}
-    </>
+        {page.description && <meta name="description" content={description} />}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={
+            URL + `${location.pathname !== '/' ? location.pathname : ''}`
+          }
+        />
+        <script type="text/javascript">{MatomoTrackingStuff}</script>
+      </Helmet>
+    </Layout>
   );
 };
 

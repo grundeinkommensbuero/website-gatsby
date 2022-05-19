@@ -103,8 +103,6 @@
     "worker-loader": "^3.0.8"
   },
   "devDependencies": {
-    "@loadable/babel-plugin": "^5.13.2",
-    "@loadable/webpack-plugin": "^5.15.1",
     "@netlify/plugin-gatsby": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.2.5",
