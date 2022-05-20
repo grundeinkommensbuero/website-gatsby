@@ -25,24 +25,26 @@ const getMeetups = async (state, setMeetups) => {
     if (isBerlin) {
       // In comparison to the way we handle events and list locations in our backend
       // those two types are two different api endpoints in the app backend
-      const [eventsResponse, listLocationsResponse] = await Promise.all([
-        getEventsFromAppApi(),
-        getListLocationsFromAppApi(),
-      ]);
+      const [eventsResponse, listLocationsResponse, storagesResponse] =
+        await Promise.all([
+          getEventsFromAppApi(),
+          getListLocationsFromAppApi(),
+          getStoragesFromAppApi(),
+        ]);
 
       if (
         eventsResponse.status === 200 &&
-        listLocationsResponse.status === 200
+        listLocationsResponse.status === 200 &&
+        storagesResponse.status === 200
       ) {
         // We don't need to thoroughly format list locations, only event meetups
-        const events = formatMeetups(true, false, await eventsResponse.json());
-        const listLocations = formatMeetups(
-          true,
-          true,
+        const events = formatMeetups(true, await eventsResponse.json());
+        const listLocations = formatListLocations(
           await listLocationsResponse.json()
         );
+        const storages = formatStorages(await storagesResponse.json());
 
-        setMeetups([...events, ...listLocations]);
+        setMeetups([...events, ...listLocations, ...storages]);
       } else {
         console.log(
           'Response is not 200',
@@ -62,7 +64,7 @@ const getMeetups = async (state, setMeetups) => {
         );
 
         // IsListLocation does not matter for non berlin meetups
-        setMeetups(formatMeetups(false, false, filteredMeetups));
+        setMeetups(formatMeetups(false, filteredMeetups));
       } else {
         console.log('Response is not 200', response.status);
       }
@@ -111,53 +113,50 @@ const getMeetupsFromWebsiteApi = () => {
   return fetch(`${CONFIG.API.INVOKE_URL}/meetups`, request);
 };
 
-const formatMeetups = (isBerlin, isListLocation, meetups) => {
+const getStoragesFromAppApi = () => {
+  const request = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  return fetch(`${CONFIG.APP_API.INVOKE_URL}/service/storages`, request);
+};
+
+const formatMeetups = (isBerlin, meetups) => {
   // We want to bring the meetups from the backend into the same format as
   // the ones from contentful
   if (isBerlin) {
-    if (!isListLocation) {
-      // Using reduce to filter and map ad same time
-      return meetups.reduce(
-        (
-          filteredArray,
-          { beginn, ende, latitude, longitude, ort, details, typ }
-        ) => {
-          // Filter out events of the past
-          if (new Date(ende) > new Date()) {
-            filteredArray.push({
-              location: {
-                lon: longitude,
-                lat: latitude,
-              },
-              description: details?.beschreibung,
-              contact: details?.kontakt,
-              title: typ === 'Sammeln' ? 'Sammelaktion' : typ,
-              startTime: beginn,
-              endTime: ende,
-              locationName: ort,
-              address: details?.treffpunkt,
-              // TODO: maybe diversify in the future to account for other events
-              type: 'collect',
-            });
-          }
-          return filteredArray;
-        },
-        []
-      );
-    } else {
-      // List locations
-      return meetups.map(location => ({
-        ...location,
-        location: { lon: location.longitude, lat: location.latitude },
-        locationName: location.name,
-        type: 'lists',
-        address:
-          location.street && location.number
-            ? `${location.street} ${location.number}`
-            : null,
-        title: 'Listen ausgelegt',
-      }));
-    }
+    // Using reduce to filter and map ad same time
+    return meetups.reduce(
+      (
+        filteredArray,
+        { beginn, ende, latitude, longitude, ort, details, typ }
+      ) => {
+        // Filter out events of the past
+        if (new Date(ende) > new Date()) {
+          filteredArray.push({
+            location: {
+              lon: longitude,
+              lat: latitude,
+            },
+            description: details?.beschreibung,
+            contact: details?.kontakt,
+            title: typ === 'Sammeln' ? 'Sammelaktion' : typ,
+            startTime: beginn,
+            endTime: ende,
+            locationName: ort,
+            address: details?.treffpunkt,
+            // TODO: maybe diversify in the future to account for other events
+            type: 'collect',
+          });
+        }
+        return filteredArray;
+      },
+      []
+    );
   } else {
     return meetups.map(
       ({ coordinates, description, type, locationName, ...rest }) => ({
@@ -175,4 +174,34 @@ const formatMeetups = (isBerlin, isListLocation, meetups) => {
       })
     );
   }
+};
+
+const formatListLocations = listLocations => {
+  return listLocations.map(location => ({
+    ...location,
+    location: { lon: location.longitude, lat: location.latitude },
+    locationName: location.name,
+    type: 'lists',
+    address:
+      location.street && location.number
+        ? `${location.street} ${location.number}`
+        : null,
+    title: 'Listen ausgelegt',
+  }));
+};
+
+const formatStorages = storages => {
+  return storages.map(location => ({
+    ...location,
+    location: { lon: location.longitude, lat: location.latitude },
+    locationName: location.name,
+    type: 'storage',
+    address:
+      location.street && location.number
+        ? `${location.street} ${location.number}`
+        : null,
+    title: 'Materiallager',
+    description: location.equipment,
+    typeOfStorage: location.type,
+  }));
 };

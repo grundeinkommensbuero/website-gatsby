@@ -17,6 +17,7 @@ import pinIcon from './icon-pin.svg';
 import calenderIcon from './icon-calendar.svg';
 import collectIcon from './icon-collect.png';
 import signIcon from './icon-sign.png';
+import storageIcon from './icon-storage.png';
 
 import { detectWebGLContext } from '../utils';
 import { InlineLinkButton } from '../Forms/Button';
@@ -146,9 +147,17 @@ const lazyMap = ({
         locations.forEach(meetup => {
           if (meetup.location) {
             const element = document.createElement('div');
-            element.className = `${s.marker} ${
-              meetup.type === 'collect' ? s.collect : s.sign
-            }`;
+
+            let markerClass;
+            if (meetup.type === 'collect') {
+              markerClass = s.collect;
+            } else if (meetup.type === 'lists') {
+              markerClass = s.sign;
+            } else {
+              markerClass = s.storage;
+            }
+
+            element.className = `${s.marker} ${markerClass}`;
 
             const marker = new mapboxgl.Marker(element)
               .setLngLat([meetup.location.lon, meetup.location.lat])
@@ -201,6 +210,10 @@ const lazyMap = ({
       </SectionInner>
       <div className={s.legend}>
         <div>
+          <img src={storageIcon} alt="Illustration eines Materiallagers" />
+          <span>Materiallager</span>
+        </div>
+        <div>
           <img src={signIcon} alt="Illustration einer UnterschriftenListe" />
           <span>Soli-Ort</span>
         </div>
@@ -235,6 +248,7 @@ const PopupContent = ({
   zipCode,
   locationName,
   type,
+  typeOfStorage,
 }) => (
   <div className={s.tooltip}>
     {date && <div>{formatDateTime(new Date(date))}</div>}
@@ -281,6 +295,12 @@ const PopupContent = ({
                 ) : (
                   address || locationName
                 )}
+                {typeOfStorage && (
+                  <>
+                    <br />
+                    {typeOfStorage}
+                  </>
+                )}
               </span>
               <br />
               {zipCode && city && (
@@ -295,7 +315,9 @@ const PopupContent = ({
     )}
     {description && (
       <div className={s.tooltipDescription}>
-        <h4 className={s.tooltipHeading}>Information</h4>
+        <h4 className={s.tooltipHeading}>
+          {type === 'storage' ? 'Was ist da?' : 'Information'}
+        </h4>
         {isRichText ? contentfulJsonToHtml(description) : description}
       </div>
     )}
