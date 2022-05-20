@@ -57,7 +57,11 @@ export const EventsListed = ({ locationsFiltered }) => {
                   {groupedEvents[key].map((event, index) => {
                     return (
                       <div key={index} className={s.eventDescription}>
-                        <p className={s.descriptionText}>{event.description}</p>
+                        <div className={s.descriptionText}>
+                          <p>{event.description}</p>
+                          <p>Kontakt: {event.contact}</p>
+                        </div>
+
                         <p>
                           <b>
                             {dsm.localeTime(event.startTime)}-

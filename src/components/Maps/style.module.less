@@ -199,19 +199,11 @@
 
 .eventContainer {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .eventDay {
-  flex: 50%;
-  min-width: 50%;
-  max-width: 50%;
-
-  @media (max-width: @breakPointL) {
-    flex: 100%;
-    min-width: 100%;
-    max-width: 100%;
-  }
+  width: 100%;
 }
 
 .moduleHeading {
@@ -238,7 +230,6 @@
 .eventDescription {
   margin-top: 1rem;
   margin-bottom: 3rem;
-  padding-right: 1rem;
   font-size: 1.5rem;
 
   @media (max-width: @breakPointM) {
