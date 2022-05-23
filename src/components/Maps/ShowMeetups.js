@@ -18,6 +18,7 @@ import {
   checkIfDateIsTomorrow,
 } from './utils/dateStringManipulation';
 import loadable from '@loadable/component';
+import { useLocation } from '@reach/router';
 const CreateMeetup = loadable(() => import('../Forms/Meetup'));
 
 export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
@@ -51,11 +52,19 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   const [showModal, setShowModal] = useState(false);
   const [type, setType] = useState('collect');
 
+  const location = useLocation();
+
   // Map filters
-  // Type filters
-  const [showLists, setShowLists] = useState(true);
-  const [showCollectionEvents, setShowCollectionEvents] = useState(true);
-  const [showStorages, setShowStorages] = useState(true);
+  // Type filters, depending on the slug we show different default filters
+  const [showLists, setShowLists] = useState(
+    location.pathname.includes('soli-orte')
+  );
+  const [showCollectionEvents, setShowCollectionEvents] = useState(
+    !location.pathname.includes('soli-orte')
+  );
+  const [showStorages, setShowStorages] = useState(
+    location.pathname.includes('soli-orte')
+  );
 
   // Day filters
   const [filterToday, setFilterToday] = useState(false);
