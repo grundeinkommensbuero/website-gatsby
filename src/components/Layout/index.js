@@ -13,6 +13,7 @@ import { StickyBannerContext } from '../../context/StickyBanner';
 import AuthContext from '../../context/Authentication';
 import { buildVisualisationsWithCrowdfunding } from '../../hooks/Api/Crowdfunding';
 import cN from 'classnames';
+import { stateToAgs } from '../utils';
 
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
@@ -256,7 +257,13 @@ function Template({ children, sections, pageContext, title, description }) {
         sortedMunicipalities.slice(0, num).forEach(item => {
           menuItems.push({
             title: `Mein Ort: ${item.name}`,
-            slug: `orte/${item.slug}`,
+            // Because netlify redirect does not work at this stage, we pass the volksentscheid page
+            // as external link if "Mein Ort" is berlin
+            slug: item.ags !== stateToAgs.berlin ? `orte/${item.slug}` : null,
+            externalLink:
+              item.ags === stateToAgs.berlin
+                ? 'https://www.volksentscheid-grundeinkommen.de'
+                : null,
             shortTitle: null,
           });
         });
