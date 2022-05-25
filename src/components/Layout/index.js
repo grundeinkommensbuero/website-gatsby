@@ -259,8 +259,11 @@ function Template({ children, sections, pageContext, title, description }) {
             title: `Mein Ort: ${item.name}`,
             // Because netlify redirect does not work at this stage, we pass the volksentscheid page
             // as external link if "Mein Ort" is berlin
-            slug: item.ags !== stateToAgs.berlin ?  `orte/${item.slug}` : null,
-            externalLink: item.ags === stateToAgs.berlin ? 'https://www.volksentscheid-grundeinkommen.de' : null,
+            slug: item.ags !== stateToAgs.berlin ? `orte/${item.slug}` : null,
+            externalLink:
+              item.ags === stateToAgs.berlin
+                ? 'https://www.volksentscheid-grundeinkommen.de'
+                : null,
             shortTitle: null,
           });
         });
