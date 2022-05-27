@@ -60,10 +60,10 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
     location.pathname.includes('soli-orte')
   );
   const [showCollectionEvents, setShowCollectionEvents] = useState(
-    !location.pathname.includes('soli-orte')
+    location.pathname.includes('termine')
   );
   const [showStorages, setShowStorages] = useState(
-    location.pathname.includes('soli-orte')
+    location.pathname.includes('material')
   );
 
   // Day filters
