@@ -18,9 +18,14 @@ import calenderIcon from './icon-calendar.svg';
 import collectIcon from './icon-collect.png';
 import signIcon from './icon-sign.png';
 import storageIcon from './icon-storage.png';
+import collectIconBerlin from './icon-collect-berlin.svg';
+import signIconBerlin from './icon-sign-berlin.svg';
+import storageIconBerlin from './icon-storage-berlin.svg';
 
 import { detectWebGLContext } from '../utils';
 import { InlineLinkButton } from '../Forms/Button';
+
+const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
 let mapboxgl;
 let MapboxGeocoder;
@@ -149,14 +154,24 @@ const lazyMap = ({
             const element = document.createElement('div');
 
             let markerClass;
-            if (meetup.type === 'collect') {
-              markerClass = s.collect;
-            } else if (meetup.type === 'lists') {
-              markerClass = s.sign;
+            if (IS_BERLIN_PROJECT) {
+              if (meetup.type === 'collect') {
+                markerClass = s.collectBerlin;
+              } else if (meetup.type === 'lists') {
+                markerClass = s.signBerlin;
+              } else {
+                markerClass = s.storageBerlin;
+              }
             } else {
-              markerClass = s.storage;
+              if (meetup.type === 'collect') {
+                markerClass = s.collect;
+              } else if (meetup.type === 'lists') {
+                markerClass = s.sign;
+              } else {
+                markerClass = s.storage;
+              }
             }
-
+            
             element.className = `${s.marker} ${markerClass}`;
 
             const marker = new mapboxgl.Marker(element)
@@ -210,15 +225,16 @@ const lazyMap = ({
       </SectionInner>
       <div className={s.legend}>
         <div>
-          <img src={storageIcon} alt="Illustration eines Materiallagers" />
+          <img src={IS_BERLIN_PROJECT ? storageIconBerlin : storageIcon} alt="Illustration eines Materiallagers" />
           <span>Materiallager</span>
         </div>
         <div>
-          <img src={signIcon} alt="Illustration einer UnterschriftenListe" />
+          <img src={IS_BERLIN_PROJECT ? signIconBerlin : signIcon} 
+          alt="Illustration einer UnterschriftenListe" />
           <span>Soli-Ort</span>
         </div>
         <div>
-          <img src={collectIcon} alt="Illustration eines Sammelevents" />
+          <img src={IS_BERLIN_PROJECT ? collectIconBerlin : collectIcon} alt="Illustration eines Sammelevents" />
           <span>Sammelevent</span>
         </div>
       </div>
