@@ -171,7 +171,7 @@ const lazyMap = ({
                 markerClass = s.storage;
               }
             }
-            
+
             element.className = `${s.marker} ${markerClass}`;
 
             const marker = new mapboxgl.Marker(element)
@@ -225,16 +225,24 @@ const lazyMap = ({
       </SectionInner>
       <div className={s.legend}>
         <div>
-          <img src={IS_BERLIN_PROJECT ? storageIconBerlin : storageIcon} alt="Illustration eines Materiallagers" />
+          <img
+            src={IS_BERLIN_PROJECT ? storageIconBerlin : storageIcon}
+            alt="Illustration eines Materiallagers"
+          />
           <span>Materiallager</span>
         </div>
         <div>
-          <img src={IS_BERLIN_PROJECT ? signIconBerlin : signIcon} 
-          alt="Illustration einer UnterschriftenListe" />
+          <img
+            src={IS_BERLIN_PROJECT ? signIconBerlin : signIcon}
+            alt="Illustration einer UnterschriftenListe"
+          />
           <span>Soli-Ort</span>
         </div>
         <div>
-          <img src={IS_BERLIN_PROJECT ? collectIconBerlin : collectIcon} alt="Illustration eines Sammelevents" />
+          <img
+            src={IS_BERLIN_PROJECT ? collectIconBerlin : collectIcon}
+            alt="Illustration eines Sammelevents"
+          />
           <span>Sammelevent</span>
         </div>
       </div>
