@@ -42,6 +42,8 @@ const createMeetup = async (userId, data, isBerlin, setState) => {
             longitude: data.coordinates[0],
             latitude: data.coordinates[1],
             initiativenIds: [1], // 1 is Expedition
+            // Set xbge team member as default participant
+            participants: [{ id: 112 }],
             details: {
               beschreibung: data.description,
               kontakt: data.contact,
