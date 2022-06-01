@@ -131,6 +131,7 @@ const lazyMap = ({
 
           geocoder.on('result', e => {
             if (onLocationChosen) {
+              console.log(e);
               onLocationChosen(e);
             }
           });

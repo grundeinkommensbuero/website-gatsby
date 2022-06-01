@@ -40,6 +40,7 @@ export const CreateMeetup = ({
   const nameInputEl = useRef(null);
 
   const handleLocationChosen = e => {
+    console.log(e);
     setLocation(e.result);
     mapLocationToDistrict(e.result.center);
     // Scroll to form
@@ -281,7 +282,7 @@ export const CreateMeetup = ({
                         <Field
                           name="contact"
                           label="Informationen über dich"
-                          placeholder="Beschreibung"
+                          placeholder="Kontakt"
                           type="textarea"
                           inputClassName={cN(s.textarea, s.shortTextarea)}
                           component={TextInputWrapped}
@@ -301,6 +302,21 @@ export const CreateMeetup = ({
                           placeholder="Sag ein paar Sätze zum Ort..."
                           type="textarea"
                           inputClassName={s.textarea}
+                          component={TextInputWrapped}
+                        ></Field>
+
+                        <p>
+                          Gib optional ein paar Infos über dich als
+                          Ansprechpartner*in an: Wie kann man dich kontaktieren?
+                          Bitte beachte, dass diese Angaben öffentlich auf der
+                          Karte zu sehen sein werden.
+                        </p>
+                        <Field
+                          name="contact"
+                          label="Informationen über dich"
+                          placeholder="Kontakt"
+                          type="textarea"
+                          inputClassName={cN(s.textarea, s.shortTextarea)}
                           component={TextInputWrapped}
                         ></Field>
                       </FormSection>
