@@ -15,7 +15,8 @@ export default ({ signatureCount, layout, className }) => {
           von dir gemeldet
         </div>
       </div>{' '}
-      <div className={s.statisticsCountItem}>
+      {/* Deactivate for now because the count is hard to track */}
+      {/* <div className={s.statisticsCountItem}>
         <div className={s.statisticsCount}>
           <VisualCounter end={signatureCount.received} />
         </div>
@@ -26,7 +27,7 @@ export default ({ signatureCount, layout, className }) => {
           {layout === 'horizontal' ? ' ' : <br />}
           angekommen
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
