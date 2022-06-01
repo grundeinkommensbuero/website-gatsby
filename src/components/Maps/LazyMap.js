@@ -223,7 +223,7 @@ const lazyMap = ({
           <div ref={container} className={s.container} />
         )}
       </SectionInner>
-      <div className={s.legend}>
+      <div className={IS_BERLIN_PROJECT ? s.legendBerlin : s.legend}>
         <div>
           <img src={IS_BERLIN_PROJECT ? storageIconBerlin : storageIcon} alt="Illustration eines Materiallagers" />
           <span>Materiallager</span>
