@@ -4,7 +4,11 @@ import { stateToAgs } from '../../utils';
 import { FinallyMessage } from '../FinallyMessage';
 import SignUp from '../SignUp';
 
-export const SmallSignup = ({ ags = stateToAgs.berlin }) => {
+export const SmallSignup = ({ ags, flag }) => {
+  if (!ags) {
+    ags = stateToAgs.berlin;
+  }
+
   const { isAuthenticated } = useContext(AuthContext);
   const [success, setSuccess] = useState(false);
 
@@ -16,14 +20,20 @@ export const SmallSignup = ({ ags = stateToAgs.berlin }) => {
     );
   }
 
+  const additionalData = { ags };
+
+  if (flag) {
+    additionalData.store = {
+      [flag]: { value: true, timestamp: new Date().toISOString() },
+    };
+  }
+
   return (
     <SignUp
       fieldsToRender={['email']}
       // If this is a signup for a specific collection (date and location set), that should be saved.
       // Otherwise we pass that user wants to collect in general
-      additionalData={{
-        ags,
-      }}
+      additionalData={additionalData}
       showHeading={false}
       smallFormMargin={true}
       postSignupAction={() => setSuccess(true)}
