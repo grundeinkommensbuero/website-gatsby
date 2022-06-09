@@ -389,6 +389,7 @@ export const pageQuery = graphql`
                 __typename
                 column
                 ags
+                flag
               }
               ... on ContentfulSectionComponentPledge {
                 __typename
