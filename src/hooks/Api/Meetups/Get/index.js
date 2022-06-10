@@ -83,7 +83,8 @@ const getEventsFromAppApi = () => {
       'Content-Type': 'application/json',
     },
     // Pass filter with attribute details to also fetch description
-    body: JSON.stringify({ details: true }),
+    // and pass filter to only show events for grundeinkommen
+    body: JSON.stringify({ details: true, initiativenIds: [1] }),
   };
 
   return fetch(`${CONFIG.APP_API.INVOKE_URL}/service/termine`, request);
@@ -91,11 +92,12 @@ const getEventsFromAppApi = () => {
 
 const getListLocationsFromAppApi = () => {
   const request = {
-    method: 'GET',
+    method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ initiativenIds: [1] }),
   };
 
   return fetch(
