@@ -14,5 +14,3 @@ https://expedition-grundeinkommen.de/gemeinde-teilen/_ https://ag5gu1z06h.execut
 /gemeinden/_ /orte/:splat
 /teilen/:userId /teilen/?userId=:userId
 /berlin/_ /:splat
-
-/phpmyadmin http://app-server.xbge.de:8000 200
