@@ -57,7 +57,8 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   // Map filters
   // Type filters, depending on the slug we show different default filters
   const [showLists, setShowLists] = useState(
-    location.pathname.includes('soli-orte')
+    location.pathname.includes('soli-orte') ||
+      location.pathname.includes('unterschreiben')
   );
   const [showCollectionEvents, setShowCollectionEvents] = useState(
     location.pathname.includes('termine')
