@@ -81,6 +81,10 @@ const getEventsFromAppApi = () => {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
+      // Pass auth for a default user to trigger filter on the server
+      // to only serve future events, maybe in the future we can handle
+      // it differently on the server
+      Authorization: `Basic ${process.env.GATSBY_APP_BACKEND_AUTH}`,
     },
     // Pass filter with attribute details to also fetch description
     // and pass filter to only show events for grundeinkommen
@@ -131,33 +135,24 @@ const formatMeetups = (isBerlin, meetups) => {
   // We want to bring the meetups from the backend into the same format as
   // the ones from contentful
   if (isBerlin) {
-    // Using reduce to filter and map ad same time
-    return meetups.reduce(
-      (
-        filteredArray,
-        { beginn, ende, latitude, longitude, ort, details, typ }
-      ) => {
-        // Filter out events of the past
-        if (new Date(ende) > new Date()) {
-          filteredArray.push({
-            location: {
-              lon: longitude,
-              lat: latitude,
-            },
-            description: details?.beschreibung,
-            contact: details?.kontakt,
-            title: typ === 'Sammeln' ? 'Sammelaktion' : typ,
-            startTime: beginn,
-            endTime: ende,
-            locationName: ort,
-            address: details?.treffpunkt,
-            // TODO: maybe diversify in the future to account for other events
-            type: 'collect',
-          });
-        }
-        return filteredArray;
-      },
-      []
+    // We used to filter out past events here, but since this is done on the server
+    // now, we don't need to do that anymore
+    return meetups.map(
+      ({ beginn, ende, latitude, longitude, ort, details, typ }) => ({
+        location: {
+          lon: longitude,
+          lat: latitude,
+        },
+        description: details?.beschreibung,
+        contact: details?.kontakt,
+        title: typ === 'Sammeln' ? 'Sammelaktion' : typ,
+        startTime: beginn,
+        endTime: ende,
+        locationName: ort,
+        address: details?.treffpunkt,
+        // TODO: maybe diversify in the future to account for other events
+        type: 'collect',
+      })
     );
   } else {
     return meetups.map(

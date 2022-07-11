@@ -420,7 +420,7 @@ const validate = (
     overwriteMandatoryFields.includes('phoneNumber') &&
     !values.phoneNumber
   ) {
-    errors.phoneNumer = 'Wir benötigen eine Telefonnummer.';
+    errors.phoneNumber = 'Wir benötigen eine Telefonnummer.';
   }
 
   if (
