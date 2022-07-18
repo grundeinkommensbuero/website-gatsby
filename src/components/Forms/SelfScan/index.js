@@ -18,7 +18,7 @@ import { TextInputWrapped } from '../TextInput';
 import * as s from './style.module.less';
 const IS_BERLIN_PROJECT = process.env.GATSBY_PROJECT === 'Berlin';
 
-export default ({ campaignCode, successMessage, className }) => {
+export default ({ campaignCode, successMessage, className, onUpdate }) => {
   const [state, updateSignatureList, resetSignatureListState] =
     useUpdateSignatureListByUser();
   const [signatureCountOfUser, getSignatureCountOfUser, resetSignatureCount] =
@@ -40,6 +40,10 @@ export default ({ campaignCode, successMessage, className }) => {
   useEffect(() => {
     if (userId || eMail) {
       getSignatureCountOfUser({ userId: userId, email: eMail, campaignCode });
+
+      if (state === 'saved' && onUpdate) {
+        onUpdate();
+      }
     }
   }, [userId, eMail, state]);
 
