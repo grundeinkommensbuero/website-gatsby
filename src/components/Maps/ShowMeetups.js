@@ -109,7 +109,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
       ((isBerlin || isHamburg || isDemocracy || isClimate) && meetups)
     ) {
       let collectSignaturesLocationsFiltered = [];
-      if (isBerlin || isHamburg || isDemocracy) {
+      if (isBerlin || isHamburg || isDemocracy || isClimate) {
         collectSignaturesLocationsFiltered = meetups;
       } else {
         collectSignaturesLocationsFiltered = collectSignaturesLocations
