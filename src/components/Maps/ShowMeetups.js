@@ -58,10 +58,11 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   // Type filters, depending on the slug we show different default filters
   const [showLists, setShowLists] = useState(
     location.pathname.includes('soli-orte') ||
-      location.pathname.includes('unterschreiben')
+      location.pathname.includes('unterschreiben') ||
+      isIframe
   );
   const [showCollectionEvents, setShowCollectionEvents] = useState(
-    location.pathname.includes('termine')
+    location.pathname.includes('termine') || isIframe
   );
   const [showStorages, setShowStorages] = useState(
     location.pathname.includes('material')
@@ -83,10 +84,11 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
   const isBerlin = mapConfig.state === 'berlin';
   const isHamburg = mapConfig.state === 'hamburg';
   const isDemocracy = mapConfig.state === 'democracy';
+  const isClimate = mapConfig.state === 'climate';
 
   useEffect(() => {
     // We only need to fetch meetups from secondary API if it's the berlin or hamburg map
-    if (isBerlin || isHamburg || isDemocracy) {
+    if (isBerlin || isHamburg || isDemocracy || isClimate) {
       // We pass state to differentiate between APIs
 
       // The whole naming of meetups does not really make that much sense anymore, since
@@ -103,8 +105,8 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
 
   useEffect(() => {
     if (
-      !(isBerlin || isHamburg || isDemocracy) ||
-      ((isBerlin || isHamburg || isDemocracy) && meetups)
+      !(isBerlin || isHamburg || isDemocracy || isClimate) ||
+      ((isBerlin || isHamburg || isDemocracy || isClimate) && meetups)
     ) {
       let collectSignaturesLocationsFiltered = [];
       if (isBerlin || isHamburg || isDemocracy) {
@@ -192,14 +194,16 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
               className={s.inlineCheckbox}
               labelClassName={s.inlineCheckboxLabel}
             />
-            <Checkbox
-              label="Materiallager anzeigen"
-              type="checkbox"
-              checked={showStorages}
-              onChange={() => setShowStorages(!showStorages)}
-              className={s.inlineCheckbox}
-              labelClassName={s.inlineCheckboxLabel}
-            />
+            {!isClimate && (
+              <Checkbox
+                label="Materiallager anzeigen"
+                type="checkbox"
+                checked={showStorages}
+                onChange={() => setShowStorages(!showStorages)}
+                className={s.inlineCheckbox}
+                labelClassName={s.inlineCheckboxLabel}
+              />
+            )}
           </div>
 
           <div className={s.flexRow}>
@@ -282,7 +286,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
         locations={locationsFiltered}
         className={className}
       />
-      {(isBerlin || isHamburg || isDemocracy) && (
+      {(isBerlin || isHamburg || isDemocracy || isClimate) && (
         <div>
           {!isIframe && (
             <>

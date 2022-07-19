@@ -7,7 +7,7 @@ const IframeMap = () => {
       <ShowMeetups
         isIframe={true}
         mapConfig={{
-          state: 'democracy',
+          state: 'climate',
           config: {
             maxBounds: [
               [13.05, 52.2],

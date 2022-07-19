@@ -21,14 +21,15 @@ export const useGetMeetups = () => {
 const getMeetups = async (state, setMeetups) => {
   try {
     const isBerlin = state === 'berlin';
+    const isClimate = state === 'climate';
 
-    if (isBerlin) {
+    if (isBerlin || isClimate) {
       // In comparison to the way we handle events and list locations in our backend
       // those two types are two different api endpoints in the app backend
       const [eventsResponse, listLocationsResponse, storagesResponse] =
         await Promise.all([
-          getEventsFromAppApi(),
-          getListLocationsFromAppApi(),
+          getEventsFromAppApi(isClimate),
+          getListLocationsFromAppApi(isClimate),
           getStoragesFromAppApi(),
         ]);
 
@@ -74,7 +75,7 @@ const getMeetups = async (state, setMeetups) => {
   }
 };
 
-const getEventsFromAppApi = () => {
+const getEventsFromAppApi = isClimate => {
   // Endpoint is POST to optionally receive  a filter as body
   const request = {
     method: 'POST',
@@ -88,20 +89,23 @@ const getEventsFromAppApi = () => {
     },
     // Pass filter with attribute details to also fetch description
     // and pass filter to only show events for grundeinkommen
-    body: JSON.stringify({ details: true, initiativenIds: [1] }),
+    body: JSON.stringify({
+      details: true,
+      initiativenIds: [isClimate ? 2 : 1],
+    }),
   };
 
   return fetch(`${CONFIG.APP_API.INVOKE_URL}/service/termine`, request);
 };
 
-const getListLocationsFromAppApi = () => {
+const getListLocationsFromAppApi = isClimate => {
   const request = {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ initiativenIds: [1] }),
+    body: JSON.stringify({ initiativenIds: [isClimate ? 2 : 1] }),
   };
 
   return fetch(
