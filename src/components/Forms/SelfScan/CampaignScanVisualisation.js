@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import CampaignVisualisations from '../../CampaignVisualisations';
 import * as s from './style.module.less';
 
-export const CampainScanVisualisation = ({ campaignCode }) => {
+export const CampainScanVisualisation = ({ campaignCode, triggerUpdate }) => {
   const {
     allContentfulKampagnenvisualisierung: { edges: campaignVisualisations },
   } = useStaticQuery(graphql`
@@ -40,6 +40,7 @@ export const CampainScanVisualisation = ({ campaignCode }) => {
         <div className={s.campaignVisualisations}>
           <CampaignVisualisations
             visualisations={campaignVisualisationsMapped}
+            triggerUpdate={triggerUpdate}
           />
         </div>
       )}

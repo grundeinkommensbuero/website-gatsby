@@ -20,7 +20,7 @@ export const useSignatureCount = () => {
     }
   });
 
-  return stats;
+  return [stats, () => getSignatureCount().then(data => setStats(data))];
 };
 
 // Hook to get signature count of a user
