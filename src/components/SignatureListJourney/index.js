@@ -58,7 +58,11 @@ export const SignatureListJourney = ({ pdfUrl }) => {
   // If signed out navigate to login
   useEffect(() => {
     if (isAuthenticated === false) {
-      navigate('/login/?nextPage=unterschreiben-schritte');
+      navigate(
+        `/login/?nextPage=unterschreiben-schritte${encodeURIComponent(
+          window.location.search
+        )}`
+      );
     }
   }, [isAuthenticated]);
 
