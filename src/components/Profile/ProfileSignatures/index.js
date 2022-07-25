@@ -17,6 +17,8 @@ export const ProfileSignatures = ({ userId, userData }) => {
     IS_BERLIN_PROJECT ? [campaignCodes[0]] : []
   );
 
+  const [updated, setUpdated] = useState(0);
+
   useEffect(() => {
     if (userData && 'municipalities' in userData && !IS_BERLIN_PROJECT) {
       const activeCampaigns = [];
@@ -58,6 +60,9 @@ export const ProfileSignatures = ({ userId, userData }) => {
                   ? userCampaigns[0].campaignCode
                   : null
               }
+              onUpdate={() => {
+                setUpdated(updated + 1);
+              }}
             />
             {userCampaigns[0] ? (
               userCampaigns.map((scan, index) => {
@@ -66,6 +71,7 @@ export const ProfileSignatures = ({ userId, userData }) => {
                     <h2>Eingegangene Unterschriften {scan.campaignName}</h2>
                     <CampainScanVisualisation
                       campaignCode={scan.campaignCode}
+                      triggerUpdate={updated}
                     />
                   </div>
                 );

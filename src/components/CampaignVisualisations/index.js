@@ -12,8 +12,14 @@ import VisualCounter from '../VisualCounter';
 import { useGetCrowdfundingDirectly } from '../../hooks/Api/Crowdfunding';
 import { contentfulJsonToHtml } from '../utils/contentfulJsonToHtml';
 
-export default ({ visualisations }) => {
-  const currentCounts = useSignatureCount();
+export default ({ visualisations, triggerUpdate }) => {
+  const [currentCounts, refetchCount] = useSignatureCount();
+
+  useEffect(() => {
+    if (triggerUpdate) {
+      refetchCount();
+    }
+  }, [triggerUpdate]);
 
   return (
     <>
