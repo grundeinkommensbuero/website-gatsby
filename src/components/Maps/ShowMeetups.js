@@ -65,7 +65,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
     location.pathname.includes('termine') || isIframe
   );
   const [showStorages, setShowStorages] = useState(
-    location.pathname.includes('material')
+    location.pathname.includes('material') || isIframe
   );
 
   // Day filters
@@ -194,16 +194,14 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
               className={s.inlineCheckbox}
               labelClassName={s.inlineCheckboxLabel}
             />
-            {!isClimate && (
-              <Checkbox
-                label="Materiallager anzeigen"
-                type="checkbox"
-                checked={showStorages}
-                onChange={() => setShowStorages(!showStorages)}
-                className={s.inlineCheckbox}
-                labelClassName={s.inlineCheckboxLabel}
-              />
-            )}
+            <Checkbox
+              label="Materiallager anzeigen"
+              type="checkbox"
+              checked={showStorages}
+              onChange={() => setShowStorages(!showStorages)}
+              className={s.inlineCheckbox}
+              labelClassName={s.inlineCheckboxLabel}
+            />
           </div>
 
           <div className={s.flexRow}>

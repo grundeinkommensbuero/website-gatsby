@@ -43,7 +43,10 @@ const getMeetups = async (state, setMeetups) => {
         const listLocations = formatListLocations(
           await listLocationsResponse.json()
         );
-        const storages = formatStorages(await storagesResponse.json());
+        const storages = formatStorages(
+          await storagesResponse.json(),
+          isClimate
+        );
 
         setMeetups([...events, ...listLocations, ...storages]);
       } else {
@@ -191,18 +194,22 @@ const formatListLocations = listLocations => {
   }));
 };
 
-const formatStorages = storages => {
-  return storages.map(location => ({
-    ...location,
-    location: { lon: location.longitude, lat: location.latitude },
-    locationName: location.name,
-    type: 'storage',
-    address:
-      location.street && location.number
-        ? `${location.street} ${location.number}`
-        : null,
-    title: 'Materiallager',
-    description: location.equipment,
-    typeOfStorage: location.type,
-  }));
+const formatStorages = (storages, isClimate = false) => {
+  return storages
+    .filter(({ initiativeId }) =>
+      isClimate ? initiativeId === 2 : initiativeId === 1
+    )
+    .map(location => ({
+      ...location,
+      location: { lon: location.longitude, lat: location.latitude },
+      locationName: location.name,
+      type: 'storage',
+      address:
+        location.street && location.number
+          ? `${location.street} ${location.number}`
+          : null,
+      title: 'Materiallager',
+      description: location.equipment,
+      typeOfStorage: location.type,
+    }));
 };
