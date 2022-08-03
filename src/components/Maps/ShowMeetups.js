@@ -19,6 +19,7 @@ import {
 } from './utils/dateStringManipulation';
 import loadable from '@loadable/component';
 import { useLocation } from '@reach/router';
+import { CTALink } from '../Layout/CTAButton';
 const CreateMeetup = loadable(() => import('../Forms/Meetup'));
 
 export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
@@ -349,6 +350,9 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
 
               <EventsListed locationsFiltered={locationsFiltered} />
             </>
+          )}
+          {location.pathname === '/' && (
+            <CTALink to="/termine">Weitere Events</CTALink>
           )}
         </div>
       )}
