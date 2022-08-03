@@ -62,14 +62,17 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
       isIframe
   );
   const [showCollectionEvents, setShowCollectionEvents] = useState(
-    location.pathname.includes('termine') || isIframe
+    location.pathname.includes('termine') ||
+      location.pathname === '/' ||
+      isIframe
   );
   const [showStorages, setShowStorages] = useState(
     location.pathname.includes('material') || isIframe
   );
 
   // Day filters
-  const [filterToday, setFilterToday] = useState(false);
+  // For the start page we only want to show events of today
+  const [filterToday, setFilterToday] = useState(location.pathname === '/');
   const [filterTomorrow, setFilterTomorrow] = useState(false);
 
   // Time filters
@@ -286,7 +289,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
       />
       {(isBerlin || isHamburg || isDemocracy || isClimate) && (
         <div>
-          {!isIframe && (
+          {!isIframe && location.pathname !== '/' && (
             <>
               {/* Jump to anchor */}
               <div className={s.jumpToAnchorWrapper}>
@@ -337,7 +340,7 @@ export const ShowMeetups = ({ mapConfig, className, isIframe = false }) => {
               </SectionComponentContainer>
             </>
           )}
-          {!isIframe && (
+          {!isIframe && location.pathname !== '/' && (
             <>
               {/* Jump to anchor */}
               <div className={s.jumpToAnchorWrapper}>
