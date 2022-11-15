@@ -1,3 +1,5 @@
+This repo is deprecated. We have moved to [here](https://github.com/grundeinkommensbuero/website-next).
+
 # Expedition Grundeinkommen
 
 Frontend for _Volksinitiativen_ Platform for Expedition Grundeinkommen.
